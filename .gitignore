@@ -1,0 +1,22 @@
+# Nodo GeoAbierto — archivos que no deben versionarse
+.DS_Store
+Thumbs.db
+node_modules/
+.netlify/
+*.log
+.env
+data/cache_consultas/*
+!data/cache_consultas/.gitkeep
+__pycache__/
+*.pyc
+*.numbers
+Entregables/
+*entregables*
+
+scratch/
+*.rar
+*.zip
+!src/docs/*.zip
+!docs/*.zip
+*.gpkg
+*_nacional_v4.geojson

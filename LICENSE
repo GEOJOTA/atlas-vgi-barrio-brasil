@@ -1,0 +1,83 @@
+================================================================================
+MARCO DE LICENCIAMIENTO ABIERTO Y RECIPROCIDAD COMUNITARIA (CHILE / VGI)
+Atlas de Información Geográfica Voluntaria para la Gestión Territorial
+Nodo GeoAbierto — Universidad Alberto Hurtado (Santiago Centro, Chile)
+================================================================================
+
+Este proyecto adopta un marco de licenciamiento abierto tripartito, diseñado
+específicamente para garantizar la soberanía de los datos públicos, la reciprocidad
+comunitaria (copyleft) y la plena compatibilidad con el ordenamiento jurídico chileno
+(Ley N° 17.336 de Propiedad Intelectual y Ley N° 20.285 sobre Acceso a la Información
+Pública del Estado) y los estándares globales de Información Geográfica Voluntaria (VGI).
+
+Se descartan expresamente licencias excesivamente permisivas (como MIT o BSD) para el
+proyecto en su conjunto, con el fin de evitar el cercamiento privativo (enclosure) y
+la explotación comercial cerrada de datos generados colaborativamente por la ciudadanía.
+
+--------------------------------------------------------------------------------
+1. CONTENIDO, CARTOGRAFÍA, PERFILES DE METADATOS Y DOCUMENTACIÓN
+--------------------------------------------------------------------------------
+Todo el material documental, textos metodológicos, fichas de metadatos, catálogos en
+hojas de cálculo (.xlsx), cartografía resultante y el Manual de Uso del Atlas se
+distribuyen bajo los términos de la licencia:
+
+    Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)
+    https://creativecommons.org/licenses/by-sa/4.0/deed.es
+
+Usted es libre de:
+- Compartir: copiar y redistribuir el material en cualquier medio o formato.
+- Adaptar: remezclar, transformar y construir a partir del material para cualquier
+  propósito, incluso comercialmente, siempre que:
+  a) Atribución: Debe dar crédito apropiado al "Atlas VGI UAH — Nodo GeoAbierto",
+     proporcionar un enlace a la licencia e indicar si se han realizado cambios.
+  b) CompartirIgual: Si remezcla, transforma o crea a partir del material, debe
+     distribuir sus contribuciones bajo la misma licencia CC BY-SA 4.0.
+
+--------------------------------------------------------------------------------
+2. BASES DE DATOS GEOESPACIALES Y CAPAS VECTORIALES (VGI)
+--------------------------------------------------------------------------------
+Los conjuntos de datos geográficos derivados de OpenStreetMap (OSM) se rigen por la:
+
+    Open Database License (ODbL) v1.0
+    Open Data Commons / OpenStreetMap Foundation
+    https://opendatacommons.org/licenses/odbl/
+
+Cualquier base de datos espacial enriquecida o derivada generada mediante las consultas
+de este Atlas debe ser compartida bajo la misma licencia ODbL 1.0 (cláusula Share-Alike),
+preservando la atribución obligatoria: "© Colaboradores de OpenStreetMap".
+
+Las observaciones biológicas y registros taxonómicos consultados vía GBIF se rigen
+por los términos específicos declarados por cada publicador (predominantemente CC0,
+CC BY 4.0 o CC BY-NC 4.0), respetando el estándar Darwin Core (TDWG).
+
+--------------------------------------------------------------------------------
+3. CÓDIGO FUENTE DE LA APLICACIÓN WEB Y SCRIPTS DE PROCESAMIENTO
+--------------------------------------------------------------------------------
+El código fuente de la plataforma web interactiva, los módulos JavaScript, los scripts
+de reproyección geodésica (EPSG:32719) y las utilidades de extracción en Python se
+distribuyen bajo los términos de la:
+
+    GNU Affero General Public License v3.0 (GNU AGPLv3)
+    Free Software Foundation, Inc.
+    https://www.gnu.org/licenses/agpl-3.0.html
+
+La licencia AGPLv3 asegura que cualquier persona, municipio o institución educativa
+que modifique esta plataforma y la ponga a disposición pública a través de una red
+(como un servicio web o visor local) está legalmente obligada a poner a disposición
+de la comunidad el código fuente completo modificado bajo esta misma licencia,
+protegiendo así el carácter público y transferible de las herramientas universitarias.
+
+--------------------------------------------------------------------------------
+4. MODELO DE CONTRIBUCIÓN AL REPOSITORIO GIT (POR PERMISO / REVISIÓN)
+--------------------------------------------------------------------------------
+El repositorio oficial del proyecto se aloja en:
+    https://github.com/GEOJOTA/atlas_vgi_uah
+
+El desarrollo del Atlas está abierto a la colaboración de estudiantes, investigadores
+y la comunidad de mapeadores de Chile. Por razones de trazabilidad académica y
+control de calidad cartográfica (ISO 19157 / IDE Chile), las contribuciones operan
+bajo el modelo de "Contribución por Permiso":
+- Cualquier colaborador puede realizar un 'Fork' del repositorio.
+- Las modificaciones deben enviarse mediante un 'Pull Request' estructurado.
+- La incorporación de cambios a la rama principal ('main') requiere la revisión técnica
+  y aprobación del mantenedor responsable del proyecto (Nodo GeoAbierto / UAH).

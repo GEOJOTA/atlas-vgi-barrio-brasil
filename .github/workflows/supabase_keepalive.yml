@@ -1,0 +1,31 @@
+name: Mantenimiento Anti-Pausa Permanente Supabase (Keep-Alive)
+
+on:
+  schedule:
+    # Se ejecuta cada 3 días a las 12:00 UTC para garantizar que el plan gratuito nunca se suspenda por inactividad
+    - cron: '0 12 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    name: Ping de Telemetría a Base de Datos PostGIS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Ejecutar ping de mantenimiento
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_ANON_KEY || secrets.SUPABASE_KEY }}
+        run: |
+          if [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_KEY" ]; then
+            python3 scripts/subir_base_datos_supabase.py --keep-alive --url "$SUPABASE_URL" --key "$SUPABASE_KEY"
+          else
+            echo "ℹ Secretos SUPABASE_URL y SUPABASE_ANON_KEY no configurados aún en GitHub Secrets. Omitiendo ping remoto."
+          fi
