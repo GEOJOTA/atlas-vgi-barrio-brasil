@@ -1,0 +1,63 @@
+# Configuración de despliegue para Netlify
+# Atlas de Información Geográfica Voluntaria para la Gestión Territorial
+
+[build]
+  publish = "src"
+  functions = "netlify/functions"
+  command = "(pip install -r requirements.txt || python3 -m pip install -r requirements.txt) && python3 scripts/verificar_integridad_despliegue.py && python3 scripts/verificar_conteo_capas.py && python3 scripts/analisis_metacalidad.py"
+
+[build.environment]
+  GIT_LFS_ENABLED = "true"
+  GIT_LFS_FETCH_INCLUDE = "*.geojson,data/*.geojson,src/data/*.geojson,*.zip,src/docs/*.zip,docs/*.zip"
+  SECRETS_SCAN_ENABLED = "false"
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL,SUPABASE_ANON_KEY"
+
+# Redirecciones de API serverless
+[[redirects]]
+  from = "/api/db-config"
+  to = "/.netlify/functions/db-config"
+  status = 200
+
+[[redirects]]
+  from = "/api/consulta"
+  to = "/.netlify/functions/consulta"
+  status = 200
+
+[[redirects]]
+  from = "/api/calidad"
+  to = "/.netlify/functions/calidad"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Encabezados de seguridad y MIME
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "*.geojson"
+  [headers.values]
+    Content-Type = "application/geo+json; charset=utf-8"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "*.xlsx"
+  [headers.values]
+    Content-Type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "*.zip"
+  [headers.values]
+    Content-Type = "application/zip"
+    Content-Disposition = "attachment; filename=\"geodatabase_completa_atlas_vgi.zip\""
+    Access-Control-Allow-Origin = "*"
+

@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "name": "atlas-vgi-barrio-brasil-uah",
+  "public": true,
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/(.*).geojson",
+      "headers": [
+        { "key": "Content-Type", "value": "application/geo+json; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/(.*).xlsx",
+      "headers": [
+        { "key": "Content-Type", "value": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}

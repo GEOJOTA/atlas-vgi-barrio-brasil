@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a5f"/>
+      <stop offset="40%" stop-color="#3b6998"/>
+      <stop offset="70%" stop-color="#e29b58"/>
+      <stop offset="100%" stop-color="#f8cf8d"/>
+    </linearGradient>
+    <linearGradient id="facadeUAH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c4823f"/>
+      <stop offset="50%" stop-color="#dd9c55"/>
+      <stop offset="100%" stop-color="#b67431"/>
+    </linearGradient>
+    <linearGradient id="facadeAlt" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a6984"/>
+      <stop offset="100%" stop-color="#2d4255"/>
+    </linearGradient>
+    <linearGradient id="pavement" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#60666d"/>
+      <stop offset="100%" stop-color="#3c4046"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Cielo atardecer en Santiago -->
+  <rect width="800" height="800" fill="url(#skyGrad)"/>
+
+  <!-- Cordillera y silueta urbana de fondo -->
+  <path d="M0,520 L80,480 L180,510 L300,450 L420,490 L560,440 L690,480 L800,460 L800,600 L0,600 Z" fill="#2d3748" opacity="0.4"/>
+  <path d="M0,535 L120,505 L260,530 L380,490 L510,515 L660,480 L800,510 L800,600 L0,600 Z" fill="#1a202c" opacity="0.6"/>
+
+  <!-- Fachadas Patrimoniales UAH (Cienfuegos / Almirante Barroso) -->
+  <!-- Edificio Izquierdo: Casona Neoclásica UAH -->
+  <rect x="40" y="240" width="280" height="340" fill="url(#facadeUAH)" rx="4"/>
+  <rect x="40" y="225" width="280" height="20" fill="#8c531b"/>
+  <!-- Mansarda y tejado -->
+  <polygon points="30,225 180,140 330,225" fill="#4a5568"/>
+  <rect x="150" y="160" width="60" height="50" fill="#cbd5e0" rx="3"/>
+  <path d="M150,160 Q180,140 210,160 Z" fill="#718096"/>
+  <!-- Ventanales con arcos de medio punto -->
+  <rect x="70" y="270" width="50" height="85" rx="25" fill="#1a202c"/>
+  <rect x="155" y="270" width="50" height="85" rx="25" fill="#1a202c"/>
+  <rect x="240" y="270" width="50" height="85" rx="25" fill="#1a202c"/>
+  <!-- Molduras y cornisas -->
+  <rect x="40" y="375" width="280" height="12" fill="#8c531b"/>
+  <!-- Ventanales piso inferior y portal universitario -->
+  <rect x="70" y="410" width="50" height="80" rx="4" fill="#2d3748"/>
+  <rect x="240" y="410" width="50" height="80" rx="4" fill="#2d3748"/>
+  <!-- Gran Portón Universitario UAH -->
+  <path d="M145,580 L145,430 Q180,395 215,430 L215,580 Z" fill="#2b1810"/>
+  <rect x="135" y="410" width="90" height="12" fill="#cbd5e0"/>
+  <!-- Letrero Campus UAH -->
+  <rect x="125" y="380" width="110" height="22" rx="3" fill="#0f172a" stroke="#cbd5e0" stroke-width="1.5"/>
+  <text x="180" y="395" font-family="'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="10" fill="#f8fafc" text-anchor="middle" letter-spacing="1.5">CAMPUS UAH</text>
+
+  <!-- Edificio Derecho: Casona Café & Librería Barrial -->
+  <rect x="340" y="280" width="420" height="300" fill="url(#facadeAlt)" rx="4"/>
+  <rect x="330" y="265" width="440" height="18" fill="#1e293b"/>
+  <!-- Balcones de hierro forjado -->
+  <rect x="370" y="320" width="60" height="90" fill="#1a202c"/>
+  <rect x="460" y="320" width="60" height="90" fill="#1a202c"/>
+  <rect x="550" y="320" width="60" height="90" fill="#1a202c"/>
+  <rect x="640" y="320" width="60" height="90" fill="#1a202c"/>
+  <rect x="360" y="380" width="350" height="15" fill="#0f172a"/>
+  <!-- Toldo de cafetería barrial -->
+  <polygon points="350,440 730,440 750,475 330,475" fill="#b91c1c"/>
+  <polygon points="350,440 390,440 400,475 360,475" fill="#fef08a"/>
+  <polygon points="430,440 470,440 480,475 440,475" fill="#fef08a"/>
+  <polygon points="510,440 550,440 560,475 520,475" fill="#fef08a"/>
+  <polygon points="590,440 630,440 640,475 600,475" fill="#fef08a"/>
+  <polygon points="670,440 710,440 720,475 680,475" fill="#fef08a"/>
+  <!-- Letrero Café & Libros -->
+  <rect x="440" y="420" width="180" height="24" rx="4" fill="#1e293b" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="530" y="436" font-family="'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="11" fill="#fef08a" text-anchor="middle">CAFÉ &amp; LIBRERÍA BRASIL</text>
+
+  <!-- Calzada y Adoquines de Calle Cienfuegos -->
+  <rect x="0" y="580" width="800" height="220" fill="url(#pavement)"/>
+  <!-- Vereda y solera -->
+  <rect x="0" y="570" width="800" height="20" fill="#94a3b8"/>
+  <line x1="0" y1="590" x2="800" y2="590" stroke="#cbd5e0" stroke-width="3"/>
+  <!-- Líneas de adoquín estilizadas -->
+  <g stroke="#262a2e" stroke-width="1.5" opacity="0.6">
+    <line x1="0" y1="620" x2="800" y2="620"/>
+    <line x1="0" y1="660" x2="800" y2="660"/>
+    <line x1="0" y1="710" x2="800" y2="710"/>
+    <line x1="0" y1="765" x2="800" y2="765"/>
+  </g>
+
+  <!-- Árbol centenario de Barrio Brasil -->
+  <g>
+    <!-- Tronco -->
+    <path d="M720,680 Q730,550 710,420 Q700,320 730,220" stroke="#5c4033" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <!-- Copa verde frondosa -->
+    <circle cx="730" cy="200" r="110" fill="#2d6a4f" opacity="0.95"/>
+    <circle cx="680" cy="160" r="90" fill="#40916c" opacity="0.9"/>
+    <circle cx="760" cy="140" r="85" fill="#52b788" opacity="0.85"/>
+  </g>
+
+  <!-- Mesas de terraza café al aire libre -->
+  <circle cx="430" cy="620" r="22" fill="#94a3b8"/>
+  <circle cx="430" cy="620" r="18" fill="#475569"/>
+  <circle cx="395" cy="620" r="10" fill="#334155"/>
+  <circle cx="465" cy="620" r="10" fill="#334155"/>
+
+  <!-- Figuras estilizadas de estudiantes caminando -->
+  <!-- Estudiante 1 con mochila -->
+  <circle cx="270" cy="590" r="12" fill="#fcd34d"/>
+  <path d="M260,605 L280,605 L285,670 L275,670 L273,630 L267,630 L265,670 L255,670 Z" fill="#1e3a8a"/>
+  <rect x="250" y="608" width="10" height="22" rx="3" fill="#dc2626"/>
+
+  <!-- Estudiante 2 con libros -->
+  <circle cx="310" cy="585" r="12" fill="#fed7aa"/>
+  <path d="M300,600 L320,600 L323,665 L315,665 L313,630 L307,630 L305,665 L297,665 Z" fill="#047857"/>
+  <rect x="318" y="612" width="14" height="18" rx="2" fill="#eab308"/>
+
+  <!-- Insignia Overlay Superior -->
+  <rect x="30" y="30" width="310" height="42" rx="8" fill="#0f172a" opacity="0.92" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="48" y="56" font-family="'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="14" fill="#38bdf8" letter-spacing="1">BARRIO BRASIL</text>
+  <text x="180" y="56" font-family="'Segoe UI', Roboto, sans-serif" font-weight="600" font-size="12" fill="#cbd5e1">· Ecosistema UAH</text>
+</svg>

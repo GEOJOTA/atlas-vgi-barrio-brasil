@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <linearGradient id="lisaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="gradHH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="gradLL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="gradHL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f472b6"/>
+      <stop offset="100%" stop-color="#be185d"/>
+    </linearGradient>
+    <linearGradient id="gradLH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#lisaBg)"/>
+
+  <!-- Cuadrantes de Dispersión de Moran -->
+  <g opacity="0.2" stroke="#94a3b8" stroke-width="1.5">
+    <line x1="400" y1="60" x2="400" y2="740" stroke-dasharray="4,4"/>
+    <line x1="60" y1="400" x2="740" y2="400" stroke-dasharray="4,4"/>
+  </g>
+
+  <!-- Hotspots Alto-Alto -->
+  <polygon points="450,220 520,180 580,240 530,310 460,290" fill="url(#gradHH)" stroke="#fecaca" stroke-width="2.5" opacity="0.95"/>
+  <polygon points="530,310 580,240 660,270 650,360 560,370" fill="url(#gradHH)" stroke="#fecaca" stroke-width="2.5" opacity="0.95"/>
+  <polygon points="460,290 530,310 560,370 510,430 430,380" fill="url(#gradHH)" stroke="#fecaca" stroke-width="2.5" opacity="0.95"/>
+  <text x="540" y="290" fill="#ffffff" font-family="system-ui, sans-serif" font-size="24" font-weight="900" text-anchor="middle">HH</text>
+
+  <!-- Coldspots Bajo-Bajo -->
+  <polygon points="200,480 270,440 330,500 290,580 210,560" fill="url(#gradLL)" stroke="#bae6fd" stroke-width="2.5" opacity="0.95"/>
+  <polygon points="290,580 330,500 410,530 400,620 310,650" fill="url(#gradLL)" stroke="#bae6fd" stroke-width="2.5" opacity="0.95"/>
+  <polygon points="140,540 210,560 220,650 150,670 120,600" fill="url(#gradLL)" stroke="#bae6fd" stroke-width="2.5" opacity="0.95"/>
+  <text x="260" y="530" fill="#ffffff" font-family="system-ui, sans-serif" font-size="24" font-weight="900" text-anchor="middle">LL</text>
+
+  <!-- Outliers Espaciales HL y LH -->
+  <polygon points="480,480 560,450 610,520 570,590 490,560" fill="url(#gradHL)" stroke="#fbcfe8" stroke-width="2" opacity="0.85"/>
+  <text x="540" y="535" fill="#ffffff" font-family="system-ui, sans-serif" font-size="20" font-weight="900" text-anchor="middle">HL</text>
+
+  <polygon points="220,240 300,210 340,280 300,340 230,320" fill="url(#gradLH)" stroke="#bbf7d0" stroke-width="2" opacity="0.85"/>
+  <text x="280" y="285" fill="#ffffff" font-family="system-ui, sans-serif" font-size="20" font-weight="900" text-anchor="middle">LH</text>
+
+  <!-- Unidades No Significativas -->
+  <polygon points="320,360 410,320 440,380 380,440 320,410" fill="#334155" stroke="#64748b" stroke-width="1.5" opacity="0.7"/>
+  <polygon points="120,380 190,350 230,420 180,470 110,430" fill="#334155" stroke="#64748b" stroke-width="1.5" opacity="0.7"/>
+  <polygon points="590,160 670,140 710,210 650,250" fill="#334155" stroke="#64748b" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- Aristas del Grafo de Contigüidad Espacial (Matriz W) -->
+  <g stroke="#38bdf8" stroke-width="2" stroke-dasharray="3,3" opacity="0.65">
+    <line x1="490" y1="250" x2="600" y2="300"/>
+    <line x1="490" y1="250" x2="480" y2="360"/>
+    <line x1="600" y1="300" x2="480" y2="360"/>
+    <line x1="260" y1="510" x2="350" y2="570"/>
+    <line x1="260" y1="510" x2="170" y2="610"/>
+    <line x1="480" y1="360" x2="380" y2="400" stroke="#f59e0b"/>
+  </g>
+
+  <!-- Nodos de Centroides -->
+  <circle cx="490" cy="250" r="6" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+  <circle cx="600" cy="300" r="6" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+  <circle cx="480" cy="360" r="6" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+  <circle cx="260" cy="510" r="6" fill="#ffffff" stroke="#38bdf8" stroke-width="2"/>
+  <circle cx="350" cy="570" r="6" fill="#ffffff" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- Eje Moran Scatterplot -->
+  <path d="M 100,700 L 700,100" stroke="#ec4899" stroke-width="3" stroke-dasharray="8,6" opacity="0.7"/>
+  <text x="680" y="130" fill="#f472b6" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">Pendiente = I Moran</text>
+
+  <!-- Rótulo -->
+  <rect x="40" y="40" width="380" height="80" rx="10" fill="#0f172a" fill-opacity="0.9" stroke="#f43f5e" stroke-width="1.5"/>
+  <text x="60" y="72" fill="#f43f5e" font-family="system-ui, sans-serif" font-size="13" font-weight="900" letter-spacing="2">AUTOCORRELACIÓN ESPACIAL LISA</text>
+  <text x="60" y="98" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="20" font-weight="800">Clusters y Outliers (Anselin)</text>
+</svg>
