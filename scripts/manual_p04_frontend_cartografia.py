@@ -311,7 +311,7 @@ function generarFichaNormativaHTML(zonaPRC, coordenadas) {
 
 ---
 
-## 22.3. Métodos de Cálculo Empleados para las Métricas Morfológicas y Dinámica Edificatoria (LGUC / OGUC)
+### 22.3. Métodos de Cálculo Empleados para las Métricas Morfológicas y Dinámica Edificatoria (LGUC / OGUC)
 
 A fin de brindar una evaluación rigurosa y cuantitativa del tejido urbano en la Comuna de Santiago, el Inspector Normativo y la base de datos espacial del Atlas VGI incorporan cuatro métricas morfológicas clave calculadas a partir de fuentes oficiales del **Instituto Nacional de Estadísticas (INE)** —Permisos de Edificación (2010–2025) y Certificados de Recepción Final (CRF 2011–2025)—, articuladas en tres escalas operativas: **huella de edificación** (OSM / catastro vectorial), **predio / conjunto habitacional** (polígonos CRF) y **manzana censal** (Censo 2024 / síntesis comunal).
 
@@ -383,16 +383,16 @@ El Inspector Normativo implementa la consulta espacial articulando simultáneame
 
 ---
 
-## 23. Los Cuatro Storyboards Territoriales y las 75 Cartografías Temáticas
+## 23. Los Cuatro Storyboards Territoriales y las 83 Cartografías Temáticas
 
-El Atlas implementa en el Módulo 05 (`src/js/modulos/indicadores_analisis.js`) un sistema de divulgación y síntesis territorial guiada denominado **Storyboards**. Cada storyboard constituye un documento analítico interactivo que articula secciones metodológicas intercaladas con gráficos estadísticos dinámicos, diagramas vectoriales de arquitectura SVG y el catálogo completo de **75 cartografías temáticas (`2200 × 1423 px`)**, además de permitir la activación directa de sus capas vectoriales asociadas en el visor interactivo.
+El Atlas implementa en el Módulo 05 (`src/js/modulos/indicadores_analisis.js`) un sistema de divulgación y síntesis territorial guiada denominado **Storyboards**. Cada storyboard constituye un documento analítico interactivo que articula secciones metodológicas intercaladas con gráficos estadísticos dinámicos, diagramas vectoriales de arquitectura SVG y el catálogo completo de **83 cartografías temáticas (`2200 × 1423 px` y `3264 × 2112 px`)**, además de permitir la activación directa de sus capas vectoriales asociadas en el visor interactivo.
 
 ```mermaid
 flowchart LR
     subgraph IN_SB["1. INPUT"]
-        CARTO_75["75 Cartografías Temáticas (img/cartografias/*.jpg)"]
+        CARTO_83["83 Cartografías Temáticas (img/cartografias/*.jpg)"]
         PORTADAS_4["4 Portadas Vectoriales SVG (img/storyboards/*.svg)"]
-        DATA_132["134 Capas GeoJSON + Estadísticas Censo 2024 / SUBDERE / MuniSTGO"]
+        DATA_134["134 Capas GeoJSON + Estadísticas Censo 2024 / SUBDERE / MuniSTGO"]
     end
 
     subgraph PROC_SB["2. PIPELINE DE SÍNTESIS Y NARRATIVA ESPACIAL"]
@@ -412,17 +412,17 @@ flowchart LR
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
-│       MATRIZ DE LOS 4 STORYBOARDS Y 75 CARTOGRAFÍAS TEMÁTICAS          │
+│       MATRIZ DE LOS 4 STORYBOARDS Y 83 CARTOGRAFÍAS TEMÁTICAS          │
 ├────────────────────────────────────────────────────────────────────────┤
-│ • Storyboard 01: Concentración Territorial y Densidad KDE [11 Mapas]   │
+│ • Storyboard 01: Concentración Territorial y Densidad KDE [14 Mapas]   │
 │ • Storyboard 02: Autocorrelación Espacial Local (LISA)    [11 Mapas]   │
-│ • Storyboard 03: Demografía, Habitabilidad y RSH Censo 24 [29 Mapas]   │
+│ • Storyboard 03: Demografía, Habitabilidad y RSH Censo 24 [34 Mapas]   │
 │ • Storyboard 04: Socioambiente, Movilidad y Residuos      [24 Mapas]   │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 23.1. Storyboard 01: Concentración Territorial y Núcleos de Actividad VGI (KDE — 11 Cartografías)
-- **Cobertura Cartográfica:** **11 cartografías temáticas** (10 macrocategorías VGI `CAT-01` a `CAT-10` + superficie de síntesis KDE Total Consolidado sobre los 10.166 registros multigeométricos).
+### 23.1. Storyboard 01: Concentración Territorial y Núcleos de Actividad VGI (KDE — 14 Cartografías)
+- **Cobertura Cartográfica:** **14 cartografías temáticas** (10 macrocategorías VGI `CAT-01` a `CAT-10` + superficie de síntesis KDE Total Consolidado sobre los 10.166 registros multigeométricos + semáforos UOCT + permisos DOM + recepciones finales CRF).
 - **Capas Vectoriales Asociadas:** `educacion` a `cobertura_suelo` (`data/capa_educacion.geojson` a `data/capa_cobertura_suelo.geojson` y consolidado `data/atlas_vgi_barrio_brasil_uah_completo.geojson`).
 - **Síntesis Analítica:** Evalúa las superficies continuas de densidad por núcleo de Kernel (`f_h(x)`) en los 27 barrios de la Comuna de Santiago, identificando la concentración en el eje Alameda–Barrio Brasil (`6.924,1 ent/km²` de media barrial y cima comunal de `20.203,8 ent/km²`), Santa Ana (`1.728,2 ent/km²`) y Ejército (`1.007,0 ent/km²`), frente a los vacíos de cobertura en el borde sur comunal (Sierra Bella `1,9 ent/km²` y Bogotá `1,4 ent/km²`).
 
@@ -431,9 +431,9 @@ flowchart LR
 - **Capas Vectoriales Asociadas:** `educacion` (`data/capa_educacion.geojson`), `servicios` (`data/capa_servicios.geojson`), `transporte` (`data/capa_transporte.geojson`), `movilidad_activa` (`data/capa_movilidad_activa.geojson`), `espacio_publico` (`data/capa_espacio_publico.geojson`), `censo2024_manzanas` (`data/ide_censo2024_manzanas.geojson`), `minvu_ipt_prc_santiago` (`data/ide_minvu_ipt_prc_santiago.geojson`).
 - **Síntesis Analítica:** Identifica los conglomerados estadísticamente significativos en las 1.711 manzanas comunales: 140 manzanas (`8,2%`) conforman el núcleo *Hotspot Alto-Alto* (concentradas en un 45% dentro de Barrio Brasil con 63 manzanas, seguidas de Santa Ana con 23 y Yungay con 17), mientras 615 manzanas (`35,9%`) integran bolsones *Coldspot Bajo-Bajo* en el suroriente comunal (Sierra Bella, Bogotá, Matta Sur y Diez de Julio).
 
-### 23.3. Storyboard 03: Estructura Sociodemográfica, Habitabilidad y Morfología Urbana (Censo 2024 y RSH — 29 Cartografías)
-- **Cobertura Cartográfica:** **29 cartografías temáticas** (Población total de 432.081 habitantes en manzanas, densidad habitacional, tipología constructiva con 92,7% de departamentos, régimen de tenencia con 72,1% de arriendo, hogares unipersonales 40,8%, migración 40,4%, cités, hacinamiento, vulnerabilidad 0–40% RSH, dependencia funcional e índice IGVUST).
-- **Capas Vectoriales Asociadas:** `censo2024_manzanas` (`data/ide_censo2024_manzanas.geojson`), `catastro_predial_sii` (`data/ide_sii_catastro_predial.geojson`), `minvu_patrimonio` (`data/ide_minvu_patrimonio_urbano.geojson`), `minvu_ipt_prc_santiago` (`data/ide_minvu_ipt_prc_santiago.geojson`), `bbdd_19` (`data/bbdd_19_santiago.geojson`), `bbdd_64` (`data/bbdd_64_santiago.geojson`), `bbdd_68` (`data/bbdd_68_santiago.geojson`), `bbdd_74` (`data/bbdd_74_santiago.geojson`).
+### 23.3. Storyboard 03: Estructura Sociodemográfica, Habitabilidad y Morfología Urbana (Censo 2024 y RSH — 34 Cartografías)
+- **Cobertura Cartográfica:** **34 cartografías temáticas** (Población total de 432.081 habitantes en manzanas, densidad habitacional, tipología constructiva con 92,7% de departamentos, régimen de tenencia con 72,1% de arriendo, hogares unipersonales 40,8%, migración 40,4%, cités, hacinamiento, vulnerabilidad 0–40% RSH, dependencia funcional, dinámica edificatoria DOM, recepciones finales CRF e índice IGVUST).
+- **Capas Vectoriales Asociadas:** `censo2024_manzanas` (`data/ide_censo2024_manzanas.geojson`), `catastro_predial_sii` (`data/ide_sii_catastro_predial.geojson`), `minvu_patrimonio` (`data/ide_minvu_patrimonio_urbano.geojson`), `minvu_ipt_prc_santiago` (`data/ide_minvu_ipt_prc_santiago.geojson`), `ine_permisos_edificacion_santiago`, `ine_crf_conjuntos_santiago`, `bbdd_19`, `bbdd_64`, `bbdd_68`, `bbdd_74`.
 - **Síntesis Analítica:** Caracteriza la coexistencia entre tres tejidos socio-morfológicos en Santiago: el corredor oriental hiperdensificado de torres en altura (Santa Isabel `650,5 hab/ha` y Santa Ana `618,0 hab/ha`), el pericentro patrimonial de escala media en Barrio Brasil y Yungay regulado por las Zonas de Conservación Histórica del PRC, y el arco sur donde convergen el arriendo sin contrato y el hacinamiento en cités.
 
 ### 23.4. Storyboard 04: Socioambiente, Proximidad Peatonal, Movilidad y Metabolismo Urbano (24 Cartografías)
@@ -453,7 +453,7 @@ sequenceDiagram
     participant Lightbox as Motor Lightbox HD (indicadores_analisis.js)
     participant Canvas as Contenedor #lightbox-canvas
 
-    alt Clic en Cartografía Temática JPG (2200x1423)
+    alt Clic en Cartografía Temática JPG (2200x1423 / 3264x2112)
         Usuario->>Lamina: Clic en tarjeta o miniatura cartográfica
         Lamina->>Lightbox: abrirLightboxCartografia(src, titulo, subtitulo, rutaAlternativa)
         Lightbox->>Canvas: Inyecta <img> con fallback automático (img/ <-> src/img/)
@@ -468,10 +468,10 @@ sequenceDiagram
     end
     Canvas-->>Usuario: Visualización en pantalla completa (100dvh)
     Usuario->>Canvas: Rueda de ratón / Pinch-to-Zoom (2 dedos) / Paneo táctil (1 dedo)
-    Canvas->>Lightbox: Actualiza matriz CSS translate3d(x, y, 0) scale(z) en tiempo real (0.5x a 5.0x)
+    Canvas->>Lightbox: Actualiza matriz CSS translate3d(x, y, 0) scale(z) en tiempo real (0.5x a 4.5x)
 ```
 
-Para inspeccionar las 75 láminas cartográficas de alta definición (`2200 × 1423 px`), los diagramas vectoriales SVG y los gráficos estadísticos sin pérdida de nitidez en cualquier pantalla (ordenadores de escritorio, tablets y teléfonos móviles), el sistema incorpora un motor modal interactivo con soporte dual de ratón y eventos táctiles (`touchstart`, `touchmove`, `touchend`):
+Para inspeccionar las 83 láminas cartográficas de alta definición (`2200 × 1423 px` y `3264 × 2112 px`), los diagramas vectoriales SVG y los gráficos estadísticos sin pérdida de nitidez en cualquier pantalla (ordenadores de escritorio, tablets y teléfonos móviles), el sistema incorpora un motor modal interactivo con soporte dual de ratón y eventos táctiles (`touchstart`, `touchmove`, `touchend`):
 
 ```javascript
 // Implementación del Visor Lightbox HD en src/js/modulos/indicadores_analisis.js
@@ -570,7 +570,7 @@ nodo-geoabierto/
     ├── js/config.js                        # Configuración de entorno, BBox y categorías VGI
     ├── js/app.js                           # Orquestador central de la aplicación
     ├── js/modulos/                         # 19 módulos JS IIFE (mapa, ide_chile, osm, ohsome, etc.)
-    ├── img/cartografias/                   # 75 cartografías temáticas JPG (2200x1423 px)
+    ├── img/cartografias/                   # 83 cartografías temáticas JPG (2200x1423 / 3264x2112 px)
     ├── img/storyboards/                    # 4 portadas vectoriales SVG de los Storyboards
     ├── data/                               # Espejo exacto de data/ servido en producción
     └── docs/                               # Espejo exacto de docs/ servido en producción
@@ -696,14 +696,14 @@ flowchart LR
 ---
 
 ### Módulo 05: Indicadores & Storyboards (`data-panel="indicadores"` — `src/js/modulos/indicadores_analisis.js`)
-* **Propósito Operativo:** Articulación de las 134 coberturas del Atlas en **5 Dimensiones Analíticas** (Sociodemográfica, Socioeconómica, Socioambiental, Sociosanitaria y Sociourbana/Habitabilidad) y **4 Storyboards de Resultados Territoriales** con **75 cartografías temáticas**, gráficos comparativos, diagramas vectoriales SVG y visor Lightbox multi-dispositivo.
+* **Propósito Operativo:** Articulación de las 134 coberturas del Atlas en **5 Dimensiones Analíticas** (Sociodemográfica, Socioeconómica, Socioambiental, Sociosanitaria y Sociourbana/Habitabilidad) y **4 Storyboards de Resultados Territoriales** con **83 cartografías temáticas**, gráficos comparativos, diagramas vectoriales SVG y visor Lightbox multi-dispositivo.
 
 ```mermaid
 flowchart LR
     subgraph IN_M5["1. INPUT"]
         DIM_5["5 Dimensiones Analíticas (134 Capas Asociadas)"]
         STORY_ID["4 Storyboards Temáticos (KDE, LISA, Censo 2024, Socioambiental)"]
-        CARTO_SET["75 Cartografías (2200x1423 px) + Diagramas SVG + Gráficos"]
+        CARTO_SET["83 Cartografías (2200x1423 / 3264x2112 px) + Diagramas SVG + Gráficos"]
     end
 
     subgraph PROC_M5["2. PIPELINE DE PROCESAMIENTO"]

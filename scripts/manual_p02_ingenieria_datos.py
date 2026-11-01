@@ -732,6 +732,8 @@ A continuación se expone la tabla maestra con el inventario universal de las 13
 | 130 | `subdere_rsd_sitios_disposicion_instalaciones_rm` | SUBDERE RSD 2024 - Rellenos Sanitarios e Instalaciones (RM) | Subsecretaría de Desarrollo Regional y Administrativo (SUBDERE) | Ministerio del Interior y Seguridad Pública | Puntos (Instalaciones) | `data/subdere_rsd_2024_rm/Sitios_Disposicion_RSD_Ene24_RM.geojson` |
 | 131 | `subdere_rsd_sitios_intermedios_transferencia_rm` | SUBDERE RSD 2024 - Estaciones de Transferencia Intermedia (RM) | Subsecretaría de Desarrollo Regional y Administrativo (SUBDERE) | Ministerio del Interior y Seguridad Pública | Puntos (Estaciones de Transferencia) | `data/subdere_rsd_2024_rm/Sitios_Intermedios_Disposicion_RSD_Ene24_RM.geojson` |
 | 132 | `munistgo_aseo_zonas_residuos_2026` | MuniSTGO - Catastro Zonas de Aseo, Contenedores y Papeleros (Junio 2026) | Ilustre Municipalidad de Santiago (Subdirección de Aseo y Gestión Integral de Residuos) | Municipalidad de Santiago / Ley N° 20.285 Transparencia | Polígonos (Macro-Zonas de Aseo) | `data/zonas_aseo_contenedores_papeleros_santiago.geojson` |
+| 133 | `ine_permisos_edificacion_santiago` | INE - Permisos de Edificación Georreferenciados Santiago (2010-2025) | Instituto Nacional de Estadísticas (INE) / DOM Santiago | Ministerio de Economía, Fomento y Turismo | Puntos (Permisos de Edificación) | `data/ine_permisos_edificacion_santiago.geojson` |
+| 134 | `ine_crf_conjuntos_santiago` | INE - Certificados de Recepción Final (CRF) de Conjuntos Habitacionales (2011-2025) | Instituto Nacional de Estadísticas (INE) / DOM Santiago | Ministerio de Economía, Fomento y Turismo | Polígonos (Conjuntos Habitacionales) | `data/ine_crf_conjuntos_santiago.geojson` |
 
 
 ---

@@ -294,18 +294,18 @@ r_xy = ∑(i=1..n) [ (x_i - x̄) × (y_i - ȳ) ] / [ √(∑(i=1..n) (x_i - x̄)
 sequenceDiagram
     autonumber
     actor Investigador as Usuario / Gestor IDE
-    participant Mod06 as Módulo 06 (metadatos.js)
+    participant Mod08 as Módulo 08 (metadatos.js)
     participant Cat as Registro de 134 Capas (app.js)
     participant Builder as Motor Serializador ISO 19139
     participant Descarga as Descarga Cliente (Blob XML/JSON)
 
-    Investigador->>Mod06: Selecciona capa de las 134 disponibles
-    Mod06->>Cat: Consulta metadatos, linaje, EPSG:4326 y BBox
-    Cat-->>Mod06: Objeto de metadatos normalizado
-    Mod06->>Builder: Ensambla 7 paquetes normativos ISO 19115-1:2014
-    Builder-->>Mod06: Vista previa estructurada en interfaz
-    Investigador->>Mod06: Solicita exportación oficial (XML ISO 19139 / JSON)
-    Mod06->>Builder: Serializa árbol gmd:MD_Metadata con namespaces OGC
+    Investigador->>Mod08: Selecciona capa de las 134 disponibles
+    Mod08->>Cat: Consulta metadatos, linaje, EPSG:4326 y BBox
+    Cat-->>Mod08: Objeto de metadatos normalizado
+    Mod08->>Builder: Ensambla 7 paquetes normativos ISO 19115-1:2014
+    Builder-->>Mod08: Vista previa estructurada en interfaz
+    Investigador->>Mod08: Solicita exportación oficial (XML ISO 19139 / JSON)
+    Mod08->>Builder: Serializa árbol gmd:MD_Metadata con namespaces OGC
     Builder->>Descarga: Genera archivo validable para GeoNetwork / IDE Chile
 ```
 

@@ -423,7 +423,7 @@ Edite el archivo `netlify.toml` en la raíz del repositorio:
 
 ---
 
-## 51. Tutorial 12: Incorporación de Nuevas Reglas de Validación en Pre-Despliegue
+## 50. Tutorial 11: Incorporación de Nuevas Reglas de Validación en Pre-Despliegue
 
 Para garantizar que futuras adiciones al Atlas cumplan con los estándares de calidad del proyecto, los desarrolladores pueden incorporar nuevas pruebas automatizadas en `scripts/verificar_integridad_despliegue.py`:
 
@@ -463,11 +463,11 @@ pruebas = [
 
 ---
 
-## 52. Tutorial 13: Sistema de Notificaciones Táctiles (Toast Notifications)
+## 51. Tutorial 12: Sistema de Notificaciones Táctiles (Toast Notifications)
 
 El Atlas cuenta con un sistema reactivo de notificaciones visuales flotantes (*Toasts*) que informa al usuario sobre el estado de las descargas, alertas de conectividad o resultados del Inspector Normativo sin interrumpir la navegación cartográfica.
 
-### 52.1. Implementación de la Función Controladora en `src/js/app.js`
+### 51.1. Implementación de la Función Controladora en `src/js/app.js`
 ```javascript
 function mostrarToast(mensaje, tipo = "info", duracionMs = 4000) {
   let contenedor = document.getElementById("contenedor-toasts");
@@ -500,7 +500,7 @@ function mostrarToast(mensaje, tipo = "info", duracionMs = 4000) {
 }
 ```
 
-### 52.2. Estilos Visuales en `src/css/estilos.css`
+### 51.2. Estilos Visuales en `src/css/estilos.css`
 ```css
 .pila-toasts-vgi {
   position: fixed;
@@ -542,11 +542,11 @@ function mostrarToast(mensaje, tipo = "info", duracionMs = 4000) {
 
 ---
 
-## 53. Tutorial 14: Integración de Geoservicios WMS/WFS Oficiales del Estado de Chile
+## 52. Tutorial 13: Integración de Geoservicios WMS/WFS Oficiales del Estado de Chile
 
 Si se requiere conectar capas servidas dinámicamente por ministerios del Estado a través del estándar OGC Web Map Service (WMS) —por ejemplo, la red de estaciones hidrométricas de la Dirección General de Aguas (DGA) o la cartografía catastral de la Dirección de Vialidad (MOP)—:
 
-### 53.1. Configuración de Capa WMS en Leaflet (`src/js/modulos/mapa.js`)
+### 52.1. Configuración de Capa WMS en Leaflet (`src/js/modulos/mapa.js`)
 ```javascript
 function cargarCapaOficialWMS(urlServidorWMS, nombreCapaWMS, tituloVisible) {
   const capaWMS = L.tileLayer.wms(urlServidorWMS, {
@@ -579,7 +579,7 @@ const capaIdeChileWMS = cargarCapaOficialWMS(
 
 ---
 
-## 54. Tutorial 15: Exportación Dinámica de Datos en Formatos GeoJSON, CSV y KML
+## 53. Tutorial 14: Exportación Dinámica de Datos en Formatos GeoJSON, CSV y KML
 
 Para empoderar a los investigadores locales, el visor permite exportar el subconjunto de datos filtrados en pantalla a diferentes formatos geográficos universales mediante generación dinámica de objetos binarios en el cliente (*Blobs*):
 
@@ -634,11 +634,11 @@ function exportarCapaCSV(coleccionFeatures, nombreCapa) {
 
 ---
 
-## 55. Tutorial 16: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 Nivel AAA)
+## 54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 Nivel AAA)
 
 En el marco del diseño universal e inclusivo de la plataforma web, la interfaz del Atlas cumple con el nivel más exigente de accesibilidad internacional: **WCAG 2.1 AAA**. Esto exige una relación de contraste cromático mínima de **7:1** para texto normal y soporte integral de navegación por teclado.
 
-### 55.1. Fórmula Matemática de Luminancia Relativa y Contraste
+### 54.1. Fórmula Matemática de Luminancia Relativa y Contraste
 La luminancia relativa (`L`) de cualquier color RGB normalizado en `[0, 1]` se calcula mediante:
 
 ```text
@@ -658,7 +658,7 @@ La relación de contraste entre dos colores con luminancias `L₁` (más claro) 
 Ratio de Contraste = (L₁ + 0.05) / (L₂ + 0.05) ≥ 7.00 : 1   (Estándar WCAG 2.1 AAA)
 ```
 
-### 55.2. Verificación de Accesibilidad en la Paleta del Atlas
+### 54.2. Verificación de Accesibilidad en la Paleta del Atlas
 - **Fondo Oscuro (`#0f172a`):** Luminancia `L₂ = 0.012`.
 - **Texto Blanco (`#ffffff`):** Luminancia `L₁ = 1.000`.
   ```text
@@ -668,7 +668,7 @@ Ratio de Contraste = (L₁ + 0.05) / (L₂ + 0.05) ≥ 7.00 : 1   (Estándar WCA
 
 ---
 
-## 56. Tutorial 17: Pipeline de Reempaquetado y Despliegue en Producción
+## 55. Tutorial 16: Pipeline de Reempaquetado y Despliegue en Producción
 
 Cada vez que se añadan, editen o depuren capas vectoriales, es imperativo regenerar el archivo comprimido masivo y auditar la integridad total del sistema antes de enviar a producción:
 

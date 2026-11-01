@@ -2,7 +2,7 @@
 
 * **Plataforma Web Interactiva:** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * **Repositorio Espejo (GitHub Pages):** [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* **Cobertura Espacial y Normativa:** **134 Capas Operativas** (`124` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) · **140 Descriptores ISO 19110:2016** · **5 Dimensiones Analíticas** · **4 Storyboards Territoriales (75 Cartografías Temáticas)** · **10 Módulos Funcionales (`01` al `10`)**.
+* **Cobertura Espacial y Normativa:** **134 Capas Operativas** (`124` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) · **140 Descriptores ISO 19110:2016** · **5 Dimensiones Analíticas** · **4 Storyboards Territoriales (83 Cartografías Temáticas)** · **10 Módulos Funcionales (`01` al `10`)**.
 
 ---
 
@@ -31,7 +31,7 @@ flowchart LR
 
     subgraph OUT["3. OUTPUT / ENTREGABLES DESCARGABLES EN WEB Y GIT"]
         O1["Capas GeoJSON Filtradas + Tabla CSV<br/>Certificado Normativo CIN-VGI (.txt / .html)"]
-        O2["Lectura Interactiva de 4 Storyboards (75 Mapas)<br/>Ranking WLC v2.0 + Score de Madurez ohsome"]
+        O2["Lectura Interactiva de 4 Storyboards (83 Mapas)<br/>Ranking WLC v2.0 + Score de Madurez ohsome"]
         O3["Fichas ISO 19115 (.json) / ISO 19139 (.xml)<br/>Libros Excel (.xlsx) y Geodatabase (.zip, 542,35 MB)"]
     end
 
@@ -148,7 +148,7 @@ Articula catastros ciudadanos elaborados sobre **uMap** (`src/js/modulos/umap.js
 
 ### MÓDULO 05 · Indicadores & Storyboards Territoriales (`#panel-indicadores`)
 
-El **Módulo 05** (`src/js/modulos/indicadores_analisis.js`) organiza las **134 coberturas operativas** en **5 Dimensiones Analíticas** y presenta **4 Storyboards Territoriales** que integran **75 cartografías temáticas** (`src/assets/mapas_storyboards/`), tarjetas de indicadores clave (KPI), gráficos comparativos, diagramas vectoriales SVG, análisis diferenciados para 4 perfiles de actores (`Institución Pública`, `Comunidad Vecinal`, `Voluntariado VGI`, `ONG / Academia`) y visor **Lightbox de alta magnificación** (`zoom` hasta `4x` y desplazamiento táctil).
+El **Módulo 05** (`src/js/modulos/indicadores_analisis.js`) organiza las **134 coberturas operativas** en **5 Dimensiones Analíticas** y presenta **4 Storyboards Territoriales** que integran **83 cartografías temáticas** (`src/img/cartografias/`), tarjetas de indicadores clave (KPI), gráficos comparativos, diagramas vectoriales SVG, análisis diferenciados para 4 perfiles de actores (`Institución Pública`, `Comunidad Vecinal`, `Voluntariado VGI`, `ONG / Academia`) y visor **Lightbox de alta magnificación** (`zoom` de `0.5x` a `4.5x` y desplazamiento táctil).
 
 ```mermaid
 flowchart TD
@@ -158,15 +158,15 @@ flowchart TD
     end
 
     subgraph PROC["2. PROCESAMIENTO (src/js/modulos/indicadores_analisis.js)"]
-        S1["Storyboard 01 · Densidad Kernel (KDE)<br/>11 Cartografías Temáticas<br/>Concentración de Equipamientos y Servicios"]
+        S1["Storyboard 01 · Densidad Kernel (KDE)<br/>14 Cartografías Temáticas<br/>Concentración de Equipamientos y Servicios"]
         S2["Storyboard 02 · Autocorrelación Espacial (LISA)<br/>11 Cartografías Temáticas<br/>Clusters I de Moran Bivariado (HH, LL, HL, LH)"]
-        S3["Storyboard 03 · Habitabilidad y Censo 2024 / RSH<br/>29 Cartografías Temáticas<br/>Demografía, Vivienda, Vulnerabilidad e Inversión BIP"]
+        S3["Storyboard 03 · Habitabilidad y Censo 2024 / RSH<br/>34 Cartografías Temáticas<br/>Demografía, Vivienda, Vulnerabilidad e Inversión BIP"]
         S4["Storyboard 04 · Socioambiente, Movilidad y Residuos<br/>24 Cartografías Temáticas<br/>SUBDERE RSD, Aseo Municipal, Ruido MMA y Red Vial"]
     end
 
     subgraph OUT["3. OUTPUT / VISUALIZACIÓN Y DESCARGA"]
         V1["Modal Interactivo de Lámina Storyboard<br/>KPIs + Tablas + Diagramas SVG + Matriz por Actor"]
-        V2["Visor Lightbox con Zoom 1x-4x y Navegación<br/>75 Cartografías en src/assets/mapas_storyboards/"]
+        V2["Visor Lightbox con Zoom 0.5x-4.5x y Navegación<br/>83 Cartografías en img/cartografias/"]
         V3["Activación Directa de Capas en el Visor (Módulo 01)"]
     end
 
@@ -174,10 +174,10 @@ flowchart TD
     S1 & S2 & S3 & S4 --> V1 & V2 & V3
 ```
 
-#### Desglose de los 4 Storyboards Territoriales (75 Cartografías Temáticas):
-1. **Storyboard 01 — Análisis de Concentración Espacial mediante Densidad de Kernel (KDE) (`11 cartografías`):** Evalúa la intensidad espacial de equipamientos educativos (`CAT-01`), salud y servicios (`CAT-02`), comercio, patrimonio (`CAT-06`) y accesibilidad peatonal (`CAT-07`) en el Barrio Brasil y el eje Alameda–Cumming.
+#### Desglose de los 4 Storyboards Territoriales (83 Cartografías Temáticas):
+1. **Storyboard 01 — Análisis de Concentración Espacial mediante Densidad de Kernel (KDE) (`14 cartografías`):** Evalúa la intensidad espacial de equipamientos educativos (`CAT-01`), salud y servicios (`CAT-02`), comercio, patrimonio (`CAT-06`) y accesibilidad peatonal (`CAT-07`) en el Barrio Brasil y el eje Alameda–Cumming.
 2. **Storyboard 02 — Autocorrelación Espacial Local (LISA / I de Moran) (`11 cartografías`):** Identifica agrupamientos estadísticamente significativos (*Hotspots* Alto-Alto `HH`, *Coldspots* Bajo-Bajo `LL` y valores atípicos espaciales `HL`/`LH`) cruzando la densidad de mapeo colaborativo VGI frente a las coberturas oficiales e indicadores censales.
-3. **Storyboard 03 — Dinámicas Demográficas, Habitabilidad Censo 2024, Vulnerabilidad RSH e Inversión Pública (`29 cartografías`):** Caracteriza a escala de manzana censal (`data/ide_censo2024_manzanas.geojson`) y unidad vecinal (`data/RSH_*_UV_2026_*.geojson`) la distribución poblacional, tipologías edificatorias, jefatura de hogar, estratificación socioeconómica del Registro Social de Hogares y localización de proyectos del Banco Integrado de Proyectos (`data/bip_inversiones_santiago.csv`).
+3. **Storyboard 03 — Dinámicas Demográficas, Habitabilidad Censo 2024, Vulnerabilidad RSH e Inversión Pública (`34 cartografías`):** Caracteriza a escala de manzana censal (`data/ide_censo2024_manzanas.geojson`) y unidad vecinal (`data/RSH_*_UV_2026_*.geojson`) la distribución poblacional, tipologías edificatorias, jefatura de hogar, estratificación socioeconómica del Registro Social de Hogares y localización de proyectos del Banco Integrado de Proyectos (`data/bip_inversiones_santiago.csv`).
 4. **Storyboard 04 — Metabolismo Urbano, Socioambiente, Movilidad Sustentable y Gestión de Residuos (`24 cartografías`):** Cruza el Catastro Nacional de Residuos Sólidos Domiciliarios SUBDERE (`data/subdere_rsd_*.geojson`), las rutas y contenedores de aseo municipal (`data/zonas_aseo_contenedores_papeleros_santiago.geojson`), niveles de ruido ambiental MMA (`data/mma_ruido_ambiental_santiago.geojson`), arbolado/áreas verdes y la red de movilidad y semáforos UOCT (`data/semaforos_rm_uoct_2026.geojson`).
 
 ---

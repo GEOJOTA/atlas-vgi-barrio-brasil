@@ -2,7 +2,7 @@
 
 * **Plataforma Web en Producción (CDN Primario):** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * **Repositorio Espejo (GitHub Pages):** [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* **Alcance Arquitectónico:** **134 Capas Operativas** (`124` Oficiales + `10` VGI) · **140 Descriptores ISO 19110:2016** · **5 Dimensiones Analíticas** · **4 Storyboards (75 Cartografías)** · **10 Módulos (`01` al `10`)** · **21 Módulos JS ES6+ (IIFE)** · **25 Scripts Python 3** · **Esquema Relacional PostGIS**.
+* **Alcance Arquitectónico:** **134 Capas Operativas** (`124` Oficiales + `10` VGI) · **140 Descriptores ISO 19110:2016** · **5 Dimensiones Analíticas** · **4 Storyboards (83 Cartografías)** · **10 Módulos (`01` al `10`)** · **21 Módulos JS ES6+ (IIFE)** · **25 Scripts Python 3** · **Esquema Relacional PostGIS**.
 
 ---
 
@@ -39,7 +39,7 @@ flowchart TB
     end
 
     subgraph CAPA3["3. OUTPUT / ENTREGABLES VERIFICABLES: Interfaz SPA (10 Módulos) y Paquetes de Datos"]
-        S1["Interfaz Web SPA (src/index.html + src/css/estilos.css)<br/>Módulos 01 al 10 + 75 Cartografías en Lightbox"]
+        S1["Interfaz Web SPA (src/index.html + src/css/estilos.css)<br/>Módulos 01 al 10 + 83 Cartografías en Lightbox"]
         S2["Certificados y Metadatos Exportables<br/>Certificado CIN-VGI (.txt) | ISO 19115 (.json) | ISO 19139 (.xml)"]
         S3["Paquetes Maestros en docs/ y src/docs/<br/>geodatabase_completa_atlas_vgi.zip (542,35 MB / 257 archivos)<br/>3 Libros Excel (.xlsx) + Matrices WLC (.csv / .json)"]
     end
@@ -145,7 +145,7 @@ Cada archivo del repositorio cumple un contrato técnico explícito según su le
 | `12` | [`src/js/modulos/importador_capas.js`](src/js/modulos/importador_capas.js) | `window.ImportadorCapas` | Analizador sintáctico local (*Drag & Drop*) para archivos `.geojson`, `.kml`, `.kmz`, `.gpx` y `.csv` georreferenciados. |
 | `13` | [`src/js/modulos/ide_chile.js`](src/js/modulos/ide_chile.js) | `window.ModuloIDEChile` | Catálogo maestro y cargador asíncrono de las **124 coberturas oficiales del Estado de Chile** (`CAPAS_OFICIALES`), con soporte GeoJSON local y servicios WMS OGC. |
 | `14` | [`src/js/modulos/evaluador_normativo.js`](src/js/modulos/evaluador_normativo.js) | `window.ModuloEvaluadorNormativo` | Motor del Inspector Normativo PRC/PRMS/OGUC (algoritmo *Ray-Casting*), generador del **Certificado CIN-VGI** y repositorio de los **10 hitos históricos del PRC en Barrio Brasil (1990–2024)**. |
-| `15` | [`src/js/modulos/indicadores_analisis.js`](src/js/modulos/indicadores_analisis.js) | `window.ModuloIndicadoresAnalisis` | Motor del **Módulo 05**: estructura las **5 Dimensiones Analíticas** (134 capas) y renderiza los **4 Storyboards Territoriales (75 cartografías)**, diagramas SVG y el visor Lightbox. |
+| `15` | [`src/js/modulos/indicadores_analisis.js`](src/js/modulos/indicadores_analisis.js) | `window.ModuloIndicadoresAnalisis` | Motor del **Módulo 05**: estructura las **5 Dimensiones Analíticas** (134 capas) y renderiza los **4 Storyboards Territoriales (83 cartografías)**, diagramas SVG y el visor Lightbox. |
 | `16` | [`src/js/modulos/manual.js`](src/js/modulos/manual.js) | `window.ModuloManual` | Motor del **Módulo 07**: renderiza interactivamente el Manual de Uso (`USO · 01` a `04` con tabla filtrable de las 134 capas) y el Manual de Actualización Técnica (`ACT · 01` a `05`). |
 | `17` | [`src/js/modulos/metadatos.js`](src/js/modulos/metadatos.js) | `window.ModuloMetadatos` | Motor del **Módulo 08**: autocompletado de fichas para las 134 capas y exportación conforme a **ISO 19115 (`.json`)** e **ISO 19139 / Perfil Nacional IDE Chile (`.xml`)**. |
 | `18` | [`src/js/modulos/diccionario.js`](src/js/modulos/diccionario.js) | `window.ModuloDiccionario` | Motor del **Módulo 09**: catálogo de **140 descriptores normativos ISO 19110:2016**, homologación institucional e identificación de las **86 brechas temáticas VGI**. |

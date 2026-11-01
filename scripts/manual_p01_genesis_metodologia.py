@@ -3,18 +3,20 @@ PARTE_01 = r"""# PARTE I: ALCANCE OPERATIVO, FORMULACIÓN ESTRATÉGICA Y PERFILE
 
 ---
 
-## Identificación y Alcance Operativo del Proyecto
+## 1. Identificación y Alcance Operativo del Proyecto
 
 El **Atlas de Información Geográfica Voluntaria para la Gestión Territorial (Nodo GeoAbierto)** constituye una infraestructura sociotécnica avanzada de datos espaciales, análisis urbano multinivel y visualización cartográfica interactiva. Su arquitectura metodológica e instrumental articula la rigurosidad analítica de los Sistemas de Información Geográfica (SIG) contemporáneos con los principios de reproducibilidad científica, ciencia comunitaria abierta e interoperabilidad espacial bajo estándares internacionales (OGC, ISO 19115, ISO 19157 e ISO 19110).
 
 El proyecto materializa una solución integral para el diagnóstico socioespacial, la evaluación normativa comunal y la democratización del acceso a la geoinformación en el sector poniente de la Comuna de Santiago, con foco piloto de demostración en el emblemático **Barrio Brasil** y su entorno universitario patrimonial.
 
-### Propósito y Misión Operativa
+### 1.1. Propósito y Misión Operativa
 El proyecto surge de la necesidad de subsanar los vacíos y asimetrías de información territorial a microescala existentes en los instrumentos tradicionales de planificación y en los catastros oficiales del Estado de Chile. Mientras las bases de datos institucionales suelen presentar desactualización temporal, agregación espacial restrictiva y baja granularidad para equipamientos de proximidad y espacio público barrial, la dinámica urbana cotidiana y las transformaciones morfológicas evolucionan de forma acelerada.
 
 Frente a este desafío, el Atlas opera como una **plataforma abierta, soberana y reproducible que integra y armoniza sistemáticamente geodatos colaborativos (OpenStreetMap y GBIF), coberturas institucionales oficiales (IDE Chile, MINVU, INE, MTT/UOCT, MDSF, SUBDERE, Municipalidad de Santiago y SII) y modelos analíticos multicriterio**, facilitando diagnósticos territoriales de alta precisión a escala de Manzana Censal y Unidad Vecinal.
 
-### Delimitación Geodésica y Cobertura Territorial
+---
+
+## 2. Delimitación Geodésica y Cobertura Territorial del Área de Estudio
 El área de estudio piloto corresponde a un polígono continuo de **223,75 hectáreas** emplazado en el sector poniente de la comuna de Santiago Centro. Su delimitación geodésica estricta se encuentra definida en coordenadas geográficas WGS84 (EPSG:4326) y en su proyección métrica conforme oficial SIRGAS-Chile / UTM Huso 19 Sur (EPSG:32719):
 
 ```text
@@ -30,7 +32,7 @@ BBox_Barrio_Brasil (EPSG:4326) = [-70.6720, -33.4505, -70.6580, -33.4350]
 
 ---
 
-## Formulación Estratégica: Objetivos del Proyecto
+## 3. Formulación Estratégica: Objetivos del Proyecto
 
 La estructura estratégica y operativa del proyecto se articula en un **Objetivo General** y **cuatro Objetivos Específicos (OE 1 a OE 4)** con fases secuenciales y metas verificables:
 
@@ -266,7 +268,7 @@ flowchart LR
 
 ---
 
-## Matriz de Cumplimiento de los 10 Hitos del Proyecto
+## 4. Matriz de Cumplimiento de los 10 Hitos del Proyecto
 
 ```mermaid
 flowchart TD
@@ -285,7 +287,7 @@ flowchart TD
     end
 
     subgraph FASE4["FASE IV: Validación & Transferibilidad"]
-        H9["Hito 9: Validación con Usuarios Territoriales"] --> H10["Hito 10: Manual Maestro, ZIP 558.5MB & Transferibilidad Técnica"]
+        H9["Hito 9: Validación con Usuarios Territoriales"] --> H10["Hito 10: Manual Maestro, ZIP 542,35 MB & Suite de Integridad"]
     end
 
     FASE1 --> FASE2
@@ -308,7 +310,7 @@ flowchart TD
 
 ---
 
-## Los Cuatro Perfiles de Actores Territoriales (Alineación con Plataforma Web en Vivo)
+## 5. Los Cuatro Perfiles de Actores Territoriales (Alineación con Plataforma Web en Vivo)
 
 En estricta coherencia con la interfaz web desplegada en producción (`https://atlasvgiuah.netlify.app/`) y el selector dinámico `#sel-perfil-usuario` configurado en `src/index.html` y `src/js/app.js`, el Atlas estructura sus herramientas y accesos en torno a **cuatro perfiles de actores territoriales** formulados bajo el enfoque de diseño centrado en el usuario:
 
@@ -325,7 +327,7 @@ En estricta coherencia con la interfaz web desplegada en producción (`https://a
 
 ---
 
-### Perfil 1: Autoridades / Instituciones (IDE / Municipio) [`institucion`]
+### 5.1. Perfil 1: Autoridades / Instituciones (IDE / Municipio) [`institucion`]
 * **Definición Canónica en Plataforma:**
   > *"🏛 Perfil Institucional / Municipal / IDE Chile: Prioriza metadatos normalizados (ISO 19115/19139), catastro de equipamiento crítico, licencias abiertas y control de calidad espacial."*
 * **Actores Destinatarios:** Profesionales de la Secretaría Comunal de Planificación (SECPLA), Dirección de Obras Municipales (DOM), Dirección de Medio Ambiente, Aseo y Ornato (DIMAO) de la Municipalidad de Santiago; analistas sectoriales de ministerios (MINVU, MOP, MIDESO/RSH, MTT/UOCT, SUBDERE) y equipo de IDE Chile / SNIT.
@@ -341,7 +343,7 @@ En estricta coherencia con la interfaz web desplegada en producción (`https://a
 
 ---
 
-### Perfil 2: Organizaciones Comunitarias / Vecinos [`comunidad`]
+### 5.2. Perfil 2: Organizaciones Comunitarias / Vecinos [`comunidad`]
 * **Definición Canónica en Plataforma:**
   > *"🗫 Perfil Comunitario / Vecinal: Facilita consultas rápidas en 1 clic para plazas, patrimonio, ciclovías, comercios locales y mapeo barrial colaborativo en UMap."*
 * **Actores Destinatarios:** Juntas de Vecinos de Barrio Brasil y Santiago, comités de vivienda de cités y pasajes residenciales, colectivos de patrimonio barrial, asambleas vecinales, comerciantes tradicionales y residentes locales.
@@ -358,7 +360,7 @@ En estricta coherencia con la interfaz web desplegada en producción (`https://a
 
 ---
 
-### Perfil 3: Mapeadores / Voluntarios OSM [`voluntario`]
+### 5.3. Perfil 3: Mapeadores / Voluntarios OSM [`voluntario`]
 * **Definición Canónica en Plataforma:**
   > *"⌖ Perfil Mapeador / Voluntario OSM: Herramientas analíticas avanzadas, métricas geométricas ohsome v1 (longitud/área/densidad), editor Overpass QL y taxonomía."*
 * **Actores Destinatarios:** Comunidad de mapeadores voluntarios de OpenStreetMap Chile, colaboradores de HOT (Humanitarian OpenStreetMap Team) y especialistas en geoinformación colaborativa.
@@ -375,7 +377,7 @@ En estricta coherencia con la interfaz web desplegada en producción (`https://a
 
 ---
 
-### Perfil 4: ONGs / Territoriales [`ong`]
+### 5.4. Perfil 4: ONGs / Territoriales [`ong`]
 * **Definición Canónica en Plataforma:**
   > *"🔬 Perfil ONGs / Territoriales: Proporciona cálculo de densidades territoriales rigurosas mediante reproyección EPSG:32719, calidad ISO 19157 con ohsome v1/v2, exportación GeoJSON para QGIS, articulación comunitaria y fuentes bibliográficas."*
 * **Actores Destinatarios:** Organizaciones no gubernamentales (ONGs) de derecho a la ciudad, corporaciones de desarrollo barrial, centros de investigación socioespacial, observatorios urbanos e investigadores territoriales.
@@ -385,9 +387,9 @@ En estricta coherencia con la interfaz web desplegada en producción (`https://a
   - Certificación y trazabilidad de calidad espacial conforme a la norma ISO 19157 (matriz WLC v2.0 Grado A+ e Índice de Saturación y Maduración Territorial).
   - Trazabilidad documental y bibliográfica formal con 125 referencias en norma APA 7ª edición para fundamentar estudios urbanos y propuestas de política pública local.
 * **Paneles y Módulos Prioritarios en la Plataforma Web:**
-  1. `indicadores` (Módulo 05): Diagnóstico barrial en las 5 dimensiones territoriales y 4 Storyboards analíticos (75 cartografías).
+  1. `indicadores` (Módulo 05): Diagnóstico barrial en las 5 dimensiones territoriales y 4 Storyboards analíticos (83 cartografías).
   2. `calidad-ohsome` (Módulo 06): Certificación de metacalidad ISO 19157 y métricas de saturación espacial.
-  3. `licencias` (Módulo 10): Descarga de catálogos maestros en OpenXML (.xlsx) y paquete ZIP unificado (558,5 MB).
+  3. `licencias` (Módulo 10): Descarga de catálogos maestros en OpenXML (.xlsx) y paquete ZIP unificado (542,35 MB).
   4. `metadatos-iso` (Módulo 08): Fichas técnicas completas con linaje de captura y fechas de actualización.
 
 ---

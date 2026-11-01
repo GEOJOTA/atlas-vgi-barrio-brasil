@@ -22,7 +22,7 @@ El sistema articula **134 coberturas geográficas operativas** (**124 capas ofic
 | :--- | :--- | :--- |
 | **Coberturas Geográficas Operativas** | **134 capas** (`124` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) | `src/js/modulos/ide_chile.js`, `src/js/config.js`, `data/*.geojson`, `src/data/*.geojson` |
 | **Descriptores Técnicos de Atributos** | **140 descriptores** bajo norma ISO 19110:2016 (`86` brechas VGI sin homólogo estatal) | Módulo `09` (`src/js/modulos/diccionario.js`), `docs/categorias_tematicas_osm.xlsx` |
-| **Dimensiones Analíticas y Storyboards** | **5 Dimensiones** y **4 Storyboards Territoriales** con **75 cartografías temáticas** | Módulo `05` (`src/js/modulos/indicadores_analisis.js`), `src/assets/mapas_storyboards/` |
+| **Dimensiones Analíticas y Storyboards** | **5 Dimensiones** y **4 Storyboards Territoriales** con **83 cartografías temáticas** | Módulo `05` (`src/js/modulos/indicadores_analisis.js`), `src/img/cartografias/` |
 | **Evaluación de Calidad Espacial** | Modelo multicriterio **WLC v2.0** (ISO 19157/19115) + **Índice de Saturación y Maduración Territorial** (ohsome API v1/v2) + **OSMCha** | Módulo `06` (`src/js/modulos/ohsome.js`, `calidad_analyst.js`, `evaluador_calidad_cuantitativa.js`) |
 | **Evaluación Normativa Urbana** | Inspector PRC/PRMS/OGUC + **Certificado CIN-VGI** + **10 Hitos Históricos PRC (1990–2024)** | Módulo `01` (`src/js/modulos/evaluador_normativo.js`) |
 | **Motor Geodésico de Doble Proyección** | Renderizado web en `EPSG:4326` (WGS84) y cálculo métrico en `EPSG:32719` (UTM Huso 19 Sur / SIRGAS-Chile) | `src/js/modulos/geodesia.js` (Serie de Redfearn / Gauss-Shoelace / Haversine) |
@@ -118,7 +118,7 @@ flowchart TD
 | **`02`** | **Consultas Overpass (OSM)** | `#panel-explorador-osm` | `modulos/osm.js`, `modulos/taginfo.js` | Consultas en vivo mediante Overpass QL con failover entre 3 servidores, reconstrucción topológica de nodos/vías, normalización al esquema de 14 atributos y auditoría semántica Taginfo API v4. |
 | **`03`** | **Biodiversidad GBIF** | `#panel-biodiversidad-gbif` | `modulos/gbif.js` | Consulta a GBIF API v1 bajo estándar **Darwin Core (DwC)** para registros de flora, arbolado y fauna urbana georreferenciada (`data/capa_biodiversidad.geojson`). |
 | **`04`** | **Cartografía uMap** | `#panel-proyectos-umap` | `modulos/umap.js`, `modulos/importador_capas.js` | Integración de proyectos comunitarios uMap e importador local *client-side* para archivos `.geojson`, `.kml`, `.kmz`, `.gpx` y `.csv`. |
-| **`05`** | **Indicadores & Storyboards** | `#panel-indicadores` | `modulos/indicadores_analisis.js` | Sistematización de las 134 capas en **5 Dimensiones Analíticas** y **4 Storyboards Territoriales** con **75 cartografías temáticas** (`01`: 11 mapas KDE; `02`: 11 mapas LISA; `03`: 29 mapas Censo 2024/RSH; `04`: 24 mapas Socioambiente/Movilidad/Residuos). |
+| **`05`** | **Indicadores & Storyboards** | `#panel-indicadores` | `modulos/indicadores_analisis.js` | Sistematización de las 134 capas en **5 Dimensiones Analíticas** y **4 Storyboards Territoriales** con **83 cartografías temáticas** (`01`: 14 mapas KDE; `02`: 11 mapas LISA; `03`: 34 mapas Censo 2024/RSH; `04`: 24 mapas Socioambiente/Movilidad/Residuos). |
 | **`06`** | **Calidad & ICV** | `#panel-calidad-ohsome` | `modulos/ohsome.js`, `modulos/calidad_analyst.js`, `modulos/evaluador_calidad_cuantitativa.js` | **Submódulo A**: Evaluador Universal WLC v2.0 (ISO 19157/19115). **Submódulo B**: Series históricas ohsome API v1/v2 con **Índice de Saturación y Maduración Territorial (Herfort et al., 2023 / ISO 19157)**. **Submódulo C**: Auditoría de changesets con OSMCha. |
 | **`07`** | **Manual de Uso** | `#panel-manual` | `modulos/manual.js` | Documentación interactiva integrada: **Parte I (Manual de Uso)** con inventario filtrable de las 134 capas, y **Parte II (Manual de Actualización Técnica)** con catálogo multi-lenguaje y pipelines de datos. |
 | **`08`** | **Metadatos ISO 19115** | `#panel-metadatos-iso` | `modulos/metadatos.js` | Generador de fichas de metadatos conformes al Perfil Nacional de IDE Chile (ISO 19115:2003 / ISO 19115-1:2014) con exportación directa en **JSON** y **XML (ISO 19139:2007)**. |
@@ -140,7 +140,7 @@ nodo-geoabierto/
 │   │   ├── config.js                         # Configuración global síncrona (window.NODO_CONFIG)
 │   │   ├── app.js                            # Orquestador principal de la interfaz y telemetría ICV
 │   │   └── modulos/                          # 19 módulos especializados (mapa, ide_chile, ohsome, etc.)
-│   ├── assets/mapas_storyboards/             # 75 cartografías temáticas (PNG) para los 4 Storyboards
+│   ├── img/cartografias/                     # 83 cartografías temáticas (JPG) para los 4 Storyboards
 │   ├── data/                                 # Espejo exacto de data/ para consumo directo vía Fetch API
 │   └── docs/                                 # Espejo exacto de docs/ para descarga directa desde el navegador
 ├── data/                                     # Repositorio maestro de capas GeoJSON (.geojson), GPKG (.gpkg) y CSV
@@ -168,7 +168,7 @@ nodo-geoabierto/
 
 Toda la documentación se encuentra sincronizada en la raíz del proyecto, en `docs/` y en `src/docs/`:
 
-1. **[`MANUAL_USO.md`](MANUAL_USO.md)** (`docs/MANUAL_USO.md` / `src/docs/MANUAL_USO.md`): Manual operativo de los 10 módulos de la plataforma web, flujos de trabajo con diagramas pipeline, uso del Inspector Normativo PRC/OGUC, los 4 Storyboards (75 cartografías) y los 3 submódulos de Calidad Espacial.
+1. **[`MANUAL_USO.md`](MANUAL_USO.md)** (`docs/MANUAL_USO.md` / `src/docs/MANUAL_USO.md`): Manual operativo de los 10 módulos de la plataforma web, flujos de trabajo con diagramas pipeline, uso del Inspector Normativo PRC/OGUC, los 4 Storyboards (83 cartografías) y los 3 submódulos de Calidad Espacial.
 2. **[`MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md)** (`docs/MANUAL_ACTUALIZACION_ATLAS.md` / `src/docs/MANUAL_ACTUALIZACION_ATLAS.md`): Manual de ingeniería de software, arquitectura, catálogo estandarizado multi-lenguaje, pipelines de datos y guía paso a paso para adaptar el Atlas a cualquier territorio.
 3. **[`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md)** y **[`PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md`](PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md)**: Especificación de la arquitectura cliente-servidor, motor geodésico `EPSG:4326` ↔ `EPSG:32719`, protocolo de 8 bancos de pruebas pre-despliegue y despliegue continuo en Netlify y GitHub Pages.
 4. **[`docs/ANALISIS_METACALIDAD.md`](docs/ANALISIS_METACALIDAD.md)**: Reporte técnico del modelo de Combinación Lineal Ponderada (WLC) bajo las normas ISO 19115:2014 e ISO 19157:2013 sobre el repositorio cartográfico.

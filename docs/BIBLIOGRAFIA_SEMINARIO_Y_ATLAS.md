@@ -209,8 +209,8 @@ A continuación se presenta la transcripción y verificación exacta de las 51 r
 - **Enlace / Identificador:** [https://doi.org/10.3390/ijgi5050055](https://doi.org/10.3390/ijgi5050055)
 - **Pertinencia Territorial:** Clarificación conceptual y taxonómica entre crowdsourcing espacial, ciencia ciudadana y cartografía voluntaria.
 
-### 22. Barron, C. Neis, P. Zipf, A. (2013). “A Comprehensive Framework for Intrinsic OpenStreetMap Quality Analysis”. Transactions in GIS, 2014, 18(6): 877–895.
-- **Cita Breve:** `(Barron et al., 2013/2014)`
+### 22. Barron, C., Neis, P., & Zipf, A. (2014). “A Comprehensive Framework for Intrinsic OpenStreetMap Quality Analysis”. Transactions in GIS, 18(6): 877–895.
+- **Cita Breve:** `(Barron et al., 2014)`
 - **Tipología:** Artículo en Revista Científica
 - **Enlace / Identificador:** [https://doi.org/10.1111/tgis.12073](https://doi.org/10.1111/tgis.12073)
 - **Pertinencia Territorial:** Marco metodológico seminal para el análisis intrínseco de calidad en OSM mediante métricas de linaje, consistencia lógica y patrones de edición histórica.
@@ -383,11 +383,11 @@ A continuación se presenta la transcripción y verificación exacta de las 51 r
 - **Enlace / Identificador:** [https://www.iso.org/standard/32520.html](https://www.iso.org/standard/32520.html)
 - **Pertinencia Territorial:** Protocolo estándar para servir imágenes de mapas georreferenciados en internet a través de clientes web y SIG de escritorio.
 
-### 51. Haklay, M. et al. (2014). “Crowdsourced Geographic Information Use in Government”. World Bank Report.
-- **Cita Breve:** `(Attard et al., 2016)`
-- **Tipología:** Artículo en Revista Científica
-- **Enlace / Identificador:** [https://doi.org/10.17645/up.v1i4.612](https://doi.org/10.17645/up.v1i4.612)
-- **Pertinencia Territorial:** Integración de VGI en la planificación y monitoreo de sistemas de transporte público urbano y movilidad activa.
+### 51. Herfort, B., Lautenbach, S., Porto de Albuquerque, J., Anderson, J., & Zipf, A. (2023). “The evolution of humanitarian mapping on OpenStreetMap”. Scientific Reports, 13(1), 1–15.
+- **Cita Breve:** `(Herfort et al., 2023)`
+- **Tipología:** Artículo en Revista Científica (Seminal)
+- **Enlace / Identificador:** [https://doi.org/10.1038/s41598-023-30789-x](https://doi.org/10.1038/s41598-023-30789-x)
+- **Pertinencia Territorial:** Análisis espacio-temporal y evolución metodológica del mapeo colaborativo global y humanitario en OpenStreetMap con herramientas de ohsome API.
 
 ---
 
@@ -431,8 +431,8 @@ Durante la formulación teórica y epistemológica del proyecto se identificaron
 - **Enlace:** [https://www.alianzaeditorial.es/](https://www.alianzaeditorial.es/)
 - **Pertinencia:** Dimensión sociológica de las redes informacionales y la morfología del espacio de flujos.
 
-### 58. Pickles, John (2006) — *Ground Truth: SIG Críticos*
-- **Referencia APA:** Pickles, J. (Ed.). (2006). Ground Truth: The Social Implications of Geographic Information Systems. New York: Guilford Press.
+### 58. Pickles, John (1995) — *Ground Truth: SIG Críticos*
+- **Referencia APA:** Pickles, J. (Ed.). (1995). Ground Truth: The Social Implications of Geographic Information Systems. New York: Guilford Press.
 - **Contexto Epistemológico:** Fundamentos de los SIG críticos y representaciones socioespaciales.
 - **Enlace:** [https://www.guilford.com/books/Ground-Truth/John-Pickles/9780898622959](https://www.guilford.com/books/Ground-Truth/John-Pickles/9780898622959)
 - **Pertinencia:** Geografía crítica y consecuencias sociopolíticas de la información territorial digital.
