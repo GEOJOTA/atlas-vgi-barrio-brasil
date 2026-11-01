@@ -39,7 +39,7 @@ flowchart LR
 
 ### 2.1. Estandarización Integral de Documentación, Pipelines y Rutas Verificables (Octubre 2026)
 1. **Alineación Estricta entre Plataforma Web, Repositorio Git y Documentación Técnica:**
-   * Sincronización de métricas y rutas en todos los documentos del proyecto (`README.md`, `MANUAL_USO.md`, `MANUAL_ACTUALIZACION_ATLAS.md`, `docs/ARQUITECTURA.md`, `PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md`, `CONTRIBUTING.md`, `docs/GUIA_BASE_DATOS_SUPABASE.md`, `docs/ANALISIS_METACALIDAD.md`, `INFORME_PROYECTO_ATLAS_VGI.md`, `docs/TRAZABILIDAD_ACADEMICA.md`, `docs/DICCIONARIO_CATASTRO_RSD_SUBDERE_2024.md` y `docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`) y sus réplicas en `docs/` y `src/docs/`.
+   * Sincronización de métricas y rutas en todos los documentos del proyecto (`README.md`, `MANUAL_USO.md`, `MANUAL_ACTUALIZACION_ATLAS.md`, `docs/ARQUITECTURA.md`, `PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md`, `CONTRIBUTING.md`, `docs/GUIA_BASE_DATOS_SUPABASE.md`, `docs/ANALISIS_METACALIDAD.md`, `docs/TRAZABILIDAD_ACADEMICA.md` y `docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`) y sus réplicas en `docs/` y `src/docs/`.
    * Integración de diagramas tipo pipeline (`1. INPUT / ENTRADA` → `2. PIPELINE DE PROCESAMIENTO / MÓDULO` → `3. OUTPUT / RUTAS EN GIT Y PLATAFORMA WEB`) en toda la documentación técnica.
    * Normalización de todas las expresiones matemáticas a bloques limpios en notación Unicode/ASCII, eliminando comandos LaTeX crudos para asegurar legibilidad directa en cualquier visor Markdown.
 2. **Denominación Metodológica en el Módulo 06 (`ohsome.js`, `calidad_analyst.js` y `index.html`):**

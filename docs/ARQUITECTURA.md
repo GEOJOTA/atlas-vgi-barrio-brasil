@@ -8,7 +8,7 @@
 
 ## 1. Principios de Diseño y Arquitectura General del Sistema
 
-El **Atlas de Información Geográfica Voluntaria (VGI)** implementa una **arquitectura web estática, modular y autónoma (*Zero-Build Client-Side GIS*)** articulada con un backend relacional opcional en **PostgreSQL 15+ / PostGIS 3.4+ (Supabase)** y un repositorio local espejo de alta disponibilidad (`data/` ↔ `src/data/` y `docs/` ↔ `src/docs/`).
+El **Atlas de Información Geográfica Voluntaria (VGI)** implementa una **arquitectura web estática, modular y autónoma (*Zero-Build Client-Side GIS*)** articulada con un backend relacional opcional en **PostgreSQL 17 / PostGIS 3.3 (Supabase)** y un repositorio local espejo de alta disponibilidad (`data/` ↔ `src/data/` y `docs/` ↔ `src/docs/`).
 
 ### Principios Rectores de Ingeniería:
 1. **Ejecución Nativa sin Empaquetadores Complejos (*No-Bundle ES6+ IIFE*):** El código cliente se estructura en **21 módulos JavaScript ES6+** bajo el **Patrón de Módulo Revelador (*Immediately Invoked Function Expression*, IIFE)** expuestos en el espacio de nombres `window.Modulo*`. Esto elimina vulnerabilidades por obsolescencia de dependencias `node_modules` y permite auditar o modificar cualquier archivo directamente en un editor de texto.
@@ -26,7 +26,7 @@ El **Atlas de Información Geográfica Voluntaria (VGI)** implementa una **arqui
 flowchart TB
     subgraph CAPA1["1. INPUT / ENTRADA: Fuentes Primarias, APIs Externas y Repositorio Local"]
         F1["APIs Colaborativas en Vivo<br/>Overpass API (OSM) | Taginfo API v4<br/>GBIF API v1 (DwC) | HeiGIT ohsome API v1"]
-        F2["Backend Relacional Espacial (Nivel 1)<br/>Supabase PostgreSQL 15+ / PostGIS 3.4+<br/>scripts/db/01_schema_postgis.sql & 02_seed_metadata.sql"]
+        F2["Backend Relacional Espacial (Nivel 1)<br/>Supabase PostgreSQL 17 / PostGIS 3.3<br/>scripts/db/01_schema_postgis.sql & 02_seed_metadata.sql"]
         F3["Repositorio Cartográfico Simétrico (Nivel 2)<br/>data/*.geojson ↔ src/data/*.geojson (134 Capas)<br/>docs/* ↔ src/docs/* (Libros .xlsx, .csv, .json, .zip)"]
     end
 

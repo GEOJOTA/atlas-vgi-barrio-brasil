@@ -172,10 +172,9 @@ Toda la documentación se encuentra sincronizada en la raíz del proyecto, en `d
 2. **[`MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md)** (`docs/MANUAL_ACTUALIZACION_ATLAS.md` / `src/docs/MANUAL_ACTUALIZACION_ATLAS.md`): Manual de ingeniería de software, arquitectura, catálogo estandarizado multi-lenguaje, pipelines de datos y guía paso a paso para adaptar el Atlas a cualquier territorio.
 3. **[`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md)** y **[`PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md`](PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md)**: Especificación de la arquitectura cliente-servidor, motor geodésico `EPSG:4326` ↔ `EPSG:32719`, protocolo de 8 bancos de pruebas pre-despliegue y despliegue continuo en Netlify y GitHub Pages.
 4. **[`docs/ANALISIS_METACALIDAD.md`](docs/ANALISIS_METACALIDAD.md)**: Reporte técnico del modelo de Combinación Lineal Ponderada (WLC) bajo las normas ISO 19115:2014 e ISO 19157:2013 sobre el repositorio cartográfico.
-5. **[`docs/GUIA_BASE_DATOS_SUPABASE.md`](docs/GUIA_BASE_DATOS_SUPABASE.md)**: Guía de despliegue y operación del backend relacional PostgreSQL 15+ / PostGIS 3.4+ en Supabase y automatización Keep-Alive mediante GitHub Actions.
-6. **[`docs/DICCIONARIO_CATASTRO_RSD_SUBDERE_2024.md`](docs/DICCIONARIO_CATASTRO_RSD_SUBDERE_2024.md)**: Diccionario de datos y especificación técnica de las coberturas del Catastro Nacional de Residuos Sólidos Domiciliarios (SUBDERE) integradas en el Atlas.
-7. **[`INFORME_PROYECTO_ATLAS_VGI.md`](INFORME_PROYECTO_ATLAS_VGI.md)** y **[`docs/TRAZABILIDAD_ACADEMICA.md`](docs/TRAZABILIDAD_ACADEMICA.md)**: Síntesis metodológica, marco conceptual VGI, homologación taxonómica y gobernanza territorial.
-8. **[`docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`](docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md)**: Compendio de **125 referencias bibliográficas y normativas** en formato APA 7ª edición que respaldan los módulos, indicadores y storyboards del sistema.
+5. **[`docs/GUIA_BASE_DATOS_SUPABASE.md`](docs/GUIA_BASE_DATOS_SUPABASE.md)**: Guía de despliegue y operación del backend relacional PostgreSQL 17 / PostGIS 3.3 en Supabase y automatización Keep-Alive mediante GitHub Actions.
+6. **[`docs/TRAZABILIDAD_ACADEMICA.md`](docs/TRAZABILIDAD_ACADEMICA.md)**: Síntesis metodológica, marco conceptual VGI, homologación taxonómica y gobernanza territorial.
+7. **[`docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`](docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md)**: Compendio de **125 referencias bibliográficas y normativas** en formato APA 7ª edición que respaldan los módulos, indicadores y storyboards del sistema.
 
 ---
 

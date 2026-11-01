@@ -52,7 +52,7 @@ flowchart TD
     subgraph RAIZ["Directorios Maestros en Raíz de Git"]
         R_DATA["data/*.geojson, *.gpkg, *.csv"]
         R_DOCS["docs/*.md, *.xlsx, *.csv, *.json, *.zip"]
-        R_MD["README.md, MANUAL_USO.md,<br/>MANUAL_ACTUALIZACION_ATLAS.md,<br/>INFORME_PROYECTO_ATLAS_VGI.md"]
+        R_MD["README.md, MANUAL_USO.md,<br/>MANUAL_ACTUALIZACION_ATLAS.md,<br/>ARQUITECTURA.md"]
     end
 
     subgraph SYNC["Sincronización y Verificación SHA-256"]

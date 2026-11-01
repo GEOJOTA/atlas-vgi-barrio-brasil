@@ -309,7 +309,7 @@ flowchart LR
 | **E-07** | Plataforma Web en Producción Operativa con 10 Módulos Funcionales (Leaflet 1.9.4). | Geoportal Web Interactivo | `src/index.html`, `src/js/app.js` y URL: https://atlasvgiuah.netlify.app/ |
 | **E-08** | Módulo Evaluador e Inspector Normativo Territorial del PRC de Santiago (Evaluación Espacial CIN-VGI). | Motor de Análisis Espacial en Navegador | `src/js/modulos/evaluador_normativo.js`, `src/data/ide_minvu_ipt_prc_santiago.geojson` y `src/data/capa_ipt_prc_comunal.geojson` |
 | **E-09** | Generador Interactivo de Metadatos Espaciales ISO 19115 / XML ISO 19139 para IDE Chile. | Motor de Metadatos XML | `src/js/modulos/metadatos.js` y `docs/perfil_metadatos_vgi.xlsx` (`src/docs/`) |
-| **E-10** | Diccionario Territorial Interactivo con 140 Descriptores Normativos y Etiquetas OSM. | Glosario Interactivo | `src/js/modulos/diccionario.js` y `docs/DICCIONARIO_CATASTRO_RSD_SUBDERE_2024.md` |
+| **E-10** | Diccionario Territorial Interactivo con 140 Descriptores Normativos y Etiquetas OSM. | Glosario Interactivo | `src/js/modulos/diccionario.js` |
 
 ---
 
@@ -2380,7 +2380,6 @@ nodo-geoabierto/
 ├── .github/                                # Workflows de GitHub Actions (keep-alive, testing)
 ├── .gitignore                              # Exclusiones de artefactos locales (.DS_Store, *.pyc)
 ├── CONTRIBUTING.md                         # Guía de contribución para desarrolladores
-├── INFORME_PROYECTO_ATLAS_VGI.md           # Memoria descriptiva del proyecto
 ├── LICENSE                                 # Licencia tripartita (ODbL 1.0, CC BY-SA 4.0, AGPLv3)
 ├── MANUAL_ACTUALIZACION_ATLAS.md           # Este manual maestro (>5000 líneas) en la raíz
 ├── MANUAL_USO.md                           # Manual de usuario final para la interfaz web

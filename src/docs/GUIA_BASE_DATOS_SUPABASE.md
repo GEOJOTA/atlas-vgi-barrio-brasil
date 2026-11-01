@@ -8,7 +8,7 @@
 
 ## 1. Propósito de la Arquitectura Relacional Híbrida (PostGIS + CDN Estático)
 
-El **Atlas de Información Geográfica Voluntaria (VGI)** implementa un modelo de persistencia espacial híbrida que combina la capacidad analítica de **PostgreSQL 15+ con la extensión espacial PostGIS 3.4+ (alojada en Supabase)** con la velocidad y disponibilidad perpetua de un **repositorio estático de archivos GeoJSON en CDN (`src/data/*.geojson` ↔ `data/*.geojson`)**.
+El **Atlas de Información Geográfica Voluntaria (VGI)** implementa un modelo de persistencia espacial híbrida que combina la capacidad analítica de **PostgreSQL 17 con la extensión espacial PostGIS 3.3 (alojada en Supabase)** con la velocidad y disponibilidad perpetua de un **repositorio estático de archivos GeoJSON en CDN (`src/data/*.geojson` ↔ `data/*.geojson`)**.
 
 Esta arquitectura asegura que la plataforma opere con **cero tiempo de inactividad**: si el cliente dispone de conexión al motor PostGIS, puede ejecutar recortes por *Bounding Box* e intersecciones espaciales mediante funciones **RPC (Remote Procedure Calls)**; si la instancia remota no se encuentra configurada o experimenta latencia, el módulo [`src/js/modulos/db_client.js`](src/js/modulos/db_client.js) conmuta de manera transparente hacia las **134 capas locales** y la caché en memoria RAM.
 
@@ -25,7 +25,7 @@ flowchart LR
         S2["scripts/db/02_seed_metadata.sql<br/>Catálogo de Capas, Perfiles ISO 19115<br/>y Métricas Base ISO 19157"]
     end
 
-    subgraph PROC["2. PROCESAMIENTO (Motor PostgreSQL 15+ / PostGIS 3.4+)"]
+    subgraph PROC["2. PROCESAMIENTO (Motor PostgreSQL 17 / PostGIS 3.3)"]
         P1["Creación de Tablas Relacionales y Espaciales<br/>catalogo_capas | entidades_vgi<br/>metricas_calidad_iso19157 | historial_ohsome"]
         P2["Indexación Espacial y Semántica<br/>Índices GiST sobre geom (EPSG:4326 y EPSG:32719)<br/>Índices GIN sobre atributos JSONB y etiquetas OSM"]
         P3["Seguridad Row Level Security (RLS) y Funciones RPC<br/>Políticas SELECT públicas (anon)<br/>RPC obtener_entidades_en_bbox()"]
@@ -91,7 +91,7 @@ flowchart TD
    supabase: {
      habilitado: true,
      url: 'https://tu-proyecto-id.supabase.co',
-     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+     anonKey: '<SUPABASE_ANON_KEY>',
      bucketStorage: 'geodatos-atlas',
      esquema: 'public'
    }
