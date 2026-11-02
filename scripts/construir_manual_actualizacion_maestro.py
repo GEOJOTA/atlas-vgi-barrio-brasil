@@ -134,7 +134,7 @@ INDICE_GENERAL = r"""# ATLAS DE INFORMACIÓN GEOGRÁFICA VOLUNTARIA (VGI) PARA L
 * [51. Tutorial 12: Sistema de Notificaciones Táctiles (Toast Notifications)](#51-tutorial-12-sistema-de-notificaciones-táctiles-toast-notifications)
 * [52. Tutorial 13: Integración de Geoservicios WMS/WFS Oficiales del Estado de Chile](#52-tutorial-13-integración-de-geoservicios-wmswfs-oficiales-del-estado-de-chile)
 * [53. Tutorial 14: Exportación Dinámica de Datos en Formatos GeoJSON, CSV y KML](#53-tutorial-14-exportación-dinámica-de-datos-en-formatos-geojson-csv-y-kml)
-* [54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 Nivel AAA)](#54-tutorial-15-protocolo-de-auditoría-de-accesibilidad-web-wcag-21-nivel-aaa)
+* [54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 AA General / AAA Tipográfico)](#54-tutorial-15-protocolo-de-auditoría-de-accesibilidad-web-wcag-21-aa-general--aaa-tipográfico)
 * [55. Tutorial 16: Pipeline de Reempaquetado y Despliegue en Producción](#55-tutorial-16-pipeline-de-reempaquetado-y-despliegue-en-producción)
 
 ---

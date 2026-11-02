@@ -1,8 +1,8 @@
 # Atlas de Información Geográfica Voluntaria para la Gestión Territorial
 
 [![Estado de Producción](https://img.shields.io/badge/Estado-En_Producci%C3%B3n-10b981?style=for-the-badge)](https://atlasvgiuah.netlify.app)
-[![Coberturas Espaciales](https://img.shields.io/badge/Capas_Operativas-132_(122_Oficiales_+_10_VGI)-0284c7?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
-[![Storyboards Territoriales](https://img.shields.io/badge/Storyboards-4_Ejes_(75_Cartograf%C3%ADas)-9333ea?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
+[![Coberturas Espaciales](https://img.shields.io/badge/Capas_Operativas-134_(124_Oficiales_+_10_VGI)-0284c7?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
+[![Storyboards Territoriales](https://img.shields.io/badge/Storyboards-4_Ejes_(83_Cartograf%C3%ADas)-9333ea?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
 [![Estándares ISO/OGC](https://img.shields.io/badge/Normas-ISO_19110_%7C_19115_%7C_19139_%7C_19157-d97706?style=for-the-badge)](#5-documentación-técnica-del-proyecto)
 [![Licencia de Datos](https://img.shields.io/badge/Licencias-ODbL_1.0_%7C_CC_BY--SA_4.0_%7C_AGPLv3-dc2626?style=for-the-badge)](#6-licenciamiento-y-gobernanza-de-datos-abiertos)
 
@@ -56,7 +56,7 @@ flowchart LR
         O1["data/capa_*.geojson (10 barriales + 10 RM)<br/>data/atlas_vgi_barrio_brasil_uah_completo.geojson<br/>docs/categorias_tematicas_osm.xlsx"]
         O2["Certificado CIN-VGI Interactivo (.txt / .html)<br/>10 Hitos PRC (1990-2024) en Módulo 01<br/>docs/catalogo_fuentes_vgi.xlsx"]
         O3["docs/ANALISIS_METACALIDAD.md<br/>docs/wlc_metacalidad_ranking.csv & .json<br/>docs/matriz_metacalidad.json & perfil_metadatos_vgi.xlsx"]
-        O4["4 Storyboards (75 Mapas) en Módulo 05<br/>data/matriz_sintesis_barrio_brasil_manzanas.geojson<br/>docs/geodatabase_completa_atlas_vgi.zip (542,35 MB)"]
+        O4["4 Storyboards (83 Mapas) en Módulo 05<br/>data/matriz_sintesis_barrio_brasil_manzanas.geojson<br/>docs/geodatabase_completa_atlas_vgi.zip (542,35 MB)"]
     end
 
     I1 --> P1 --> O1
@@ -88,7 +88,7 @@ flowchart TD
     end
 
     subgraph ANALISIS["Módulos 05 y 06: Síntesis Territorial y Auditoría de Calidad"]
-        M05["05. Indicadores & 4 Storyboards (75 Mapas)<br/>src/js/modulos/indicadores_analisis.js"]
+        M05["05. Indicadores & 4 Storyboards (83 Mapas)<br/>src/js/modulos/indicadores_analisis.js"]
         M06["06. Calidad & ICV (WLC v2.0 / ohsome / OSMCha)<br/>src/js/modulos/ohsome.js & calidad_analyst.js"]
     end
 

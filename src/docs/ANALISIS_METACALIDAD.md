@@ -186,7 +186,7 @@ flowchart TB
     end
     FuentesOficiales --> MotorNormalizacion
     FuentesComunitarias --> MotorNormalizacion
-    MotorNormalizacion --> P["Atlas VGI en Producción: Visor Leaflet · 10 Módulos Funcionales · 4 Storyboards (75 Mapas) · XML ISO 19139"]
+    MotorNormalizacion --> P["Atlas VGI en Producción: Visor Leaflet · 10 Módulos Funcionales · 4 Storyboards (83 Mapas) · XML ISO 19139"]
 ```
 
 
@@ -714,6 +714,8 @@ A continuación se presenta el desglose universal de las **134 capas** evaluadas
 3. **Doble Modelación Geodésica Documentada:** Cada conjunto de datos declara formalmente su proyección elipsoidal WGS84 (`EPSG:4326`) para renderizado web y su proyección métrica proyectada UTM Huso 19 Sur (`EPSG:32719` / SIRGAS-Chile) para cálculo conforme de distancias y polígonos mediante las ecuaciones de Redfearn / Snyder (1987) y la fórmula de Gauss en `src/js/modulos/geodesia.js`.
 
 4. **Calibración Multicriterio Interactiva y AHP:** Los ponderadores (`w_k`) del modelo lineal pueden recalibrarse mediante el Proceso Analítico Jerárquico (Saaty, 1980) y ajustarse dinámicamente en el Módulo 06, contrastando las prioridades de planificadores urbanos, equipos de investigación y organizaciones comunitarias.
+
+5. **Matriz de Correlación de Pearson entre las 10 Dimensiones (`docs/correlacion_dimensiones_calidad.csv`):** La evaluación estadística sobre los 134 componentes confirma la ortogonalidad entre la consistencia topológica (`score_topo`) y la completitud tabular (`score_comp`, `r = +0.038`) así como frente a la integridad posicional (`score_pos`, `r = -0.036`). Se registra una correlación positiva moderada entre el linaje normativo (`score_ll`) y la accesibilidad operativa (`score_ai`, `r = +0.362`), y entre la completitud de atributos (`score_comp`) y la estructura del esquema (`score_estruc`, `r = +0.337`); una correlación positiva débil entre completitud (`score_comp`) y linaje (`score_ll`, `r = +0.111`); y una correlación inversa moderada entre conformidad semántica (`score_cc`) y linaje (`score_ll`, `r = -0.512`), derivada del contraste entre las 10 macrocategorías VGI (`98.0%` en conformidad con el diccionario semántico y `91.0%` en linaje administrativo) y las 124 capas oficiales del Estado (`98.6%` en linaje legal y `93.7%` en conformidad de esquema).
 
 
 ---

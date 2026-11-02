@@ -366,7 +366,7 @@ const ModuloIndicadoresAnalisis = (() => {
   // =========================================================================
   // =========================================================================
   // =========================================================================
-  // 3. DEFINICIÓN DE LOS 4 GRANDES STORYBOARDS TERRITORIALES (75 CARTOGRAFÍAS DEL AUTOR)
+  // 3. DEFINICIÓN DE LOS 4 GRANDES STORYBOARDS TERRITORIALES (83 CARTOGRAFÍAS DEL AUTOR)
   // =========================================================================
   const STORYBOARDS = [
     // -----------------------------------------------------------------------
@@ -2351,7 +2351,7 @@ const ModuloIndicadoresAnalisis = (() => {
         <!-- Nota Metodológica de Transparencia -->
         <footer class="footer-articulo-blog">
           <small>
-            * Este storyboard sintetiza los resultados de las 75 cartografías temáticas del Atlas de Información Geográfica Voluntaria para la Gestión Territorial. Datos integrados de fuentes oficiales (INE Censo 2024, MINVU, MDSF BiDat RSH 2026, UOCT/MTT, Municipalidad de Santiago) y comunitarias (OpenStreetMap y GBIF).
+            * Este storyboard sintetiza los resultados de las 83 cartografías temáticas del Atlas de Información Geográfica Voluntaria para la Gestión Territorial. Datos integrados de fuentes oficiales (INE Censo 2024, MINVU, MDSF BiDat RSH 2026, UOCT/MTT, Municipalidad de Santiago) y comunitarias (OpenStreetMap y GBIF).
           </small>
         </footer>
 

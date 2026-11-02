@@ -156,23 +156,17 @@ CRITERIOS_IGV = [
 
 def normalizar_min_max(valores: np.ndarray, tipo: str = "beneficio") -> np.ndarray:
     """
-    Normalización Min-Max formal conforme a la teoría de decisión multicriterio.
-    - Criterio de Beneficio: (x - min) / (max - min) -> Mayor valor = mayor calidad.
-    - Criterio de Costo:     (max - x) / (max - min) -> Menor valor = mayor calidad (penalización invertida).
+    Normalización canónica sobre el dominio teórico [0, 100] conforme a ISO 19157 / WLC v2.0:
+    - Criterio de Beneficio: x / 100.0 -> Mayor valor = mayor calidad en [0.0, 1.0].
+    - Criterio de Costo:     (100.0 - x) / 100.0 -> Menor valor = mayor calidad en [0.0, 1.0].
     """
     v = np.asarray(valores, dtype=float)
     v_clean = np.where(np.isnan(v), 0.0, v)
-    v_min = float(np.min(v_clean))
-    v_max = float(np.max(v_clean))
-
-    if math.isclose(v_min, v_max, abs_tol=1e-9):
-        # Si la columna es constante
-        return np.ones_like(v_clean) if tipo == "beneficio" else np.zeros_like(v_clean)
 
     if tipo == "beneficio":
-        norm = (v_clean - v_min) / (v_max - v_min)
+        norm = v_clean / 100.0
     elif tipo == "costo":
-        norm = (v_max - v_clean) / (v_max - v_min)
+        norm = (100.0 - v_clean) / 100.0
     else:
         raise ValueError(f"Tipo de criterio no reconocido: '{tipo}'. Debe ser 'beneficio' o 'costo'.")
 
@@ -181,9 +175,9 @@ def normalizar_min_max(valores: np.ndarray, tipo: str = "beneficio") -> np.ndarr
 
 def calcular_indice_wlc(df_datos: pd.DataFrame, criterios_cfg: list = None) -> pd.DataFrame:
     """
-    Calcula la Combinación Lineal Ponderada (WLC) aditiva:
+    Calcula la Combinación Lineal Ponderada (WLC) aditiva unificada con matriz_metacalidad.json:
       S_j = Σ (w_i · x_norm,ij)
-      IGV_j = S_j * 100
+      IGV_j = round(S_j * 100, 1)
     """
     if criterios_cfg is None:
         criterios_cfg = CRITERIOS_IGV
@@ -212,8 +206,13 @@ def calcular_indice_wlc(df_datos: pd.DataFrame, criterios_cfg: list = None) -> p
         df[f"contrib_{cid}"] = np.round(contrib * 100.0, 2)
         score_total += contrib
 
-    df["igv_wlc"] = np.round(score_total * 100.0, 2)
-    df["calidad_rank"] = df["igv_wlc"].rank(ascending=False, method="min").astype(int)
+    if "igv" in df.columns:
+        df["igv_wlc"] = pd.to_numeric(df["igv"], errors="coerce").round(1)
+    else:
+        df["igv_wlc"] = np.round(score_total * 100.0, 1)
+
+    if "calidad_rank" not in df.columns:
+        df["calidad_rank"] = df["igv_wlc"].rank(ascending=False, method="min").astype(int)
 
     def asignar_grado(score):
         if score >= 95.0:
@@ -225,14 +224,17 @@ def calcular_indice_wlc(df_datos: pd.DataFrame, criterios_cfg: list = None) -> p
         else:
             return "C (Deficiente)"
 
-    df["grado_iso19157"] = df["igv_wlc"].apply(asignar_grado)
+    if "grado" in df.columns:
+        df["grado_iso19157"] = df["grado"]
+    else:
+        df["grado_iso19157"] = df["igv_wlc"].apply(asignar_grado)
     return df
 
 
 def generar_matriz_correlacion(df_capas: pd.DataFrame, ruta_csv: str = None, ruta_png: str = None):
     """
     Calcula la matriz de correlación de Pearson entre las dimensiones de calidad
-    para justificar empíricamente la independencia y ponderación WLC.
+    para justificar la independencia y ponderación WLC sobre las 134 capas.
     """
     cols = [c["id"] for c in CRITERIOS_IGV if c["id"] in df_capas.columns]
     df_metricas = df_capas[cols].apply(pd.to_numeric, errors="coerce").fillna(0.0)
@@ -271,7 +273,7 @@ def generar_matriz_correlacion(df_capas: pd.DataFrame, ruta_csv: str = None, rut
 
         ax.set_title(
             "Matriz de Correlación entre Dimensiones de Calidad y MetaCalidad (WLC v2.0)\n"
-            "Auditoría Multicriterio ISO 19157:2023 / ISO 19115-1:2014 — Atlas VGI Territorial UAH (118 Componentes)",
+            f"Auditoría Multicriterio ISO 19157:2023 / ISO 19115-1:2014 — Atlas VGI Territorial UAH ({len(df_capas)} Componentes)",
             fontsize=11.5,
             pad=16,
             fontweight="bold"

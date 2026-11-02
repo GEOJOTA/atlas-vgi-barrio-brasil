@@ -63,7 +63,7 @@ flowchart TD
 
     subgraph MOD["2. IMPLEMENTACIÓN EN MÓDULOS OPERATIVOS (01–10)"]
         M_A["Módulos 01, 02 y 09<br/>Catálogo 134 Capas, Inspector PRC/OGUC,<br/>Overpass QL y 140 Descriptores ISO 19110"]
-        M_B["Módulos 05 y 06<br/>4 Storyboards (75 Mapas: KDE, LISA, Censo, RSD)<br/>y Auditoría WLC v2.0 + ohsome + OSMCha"]
+        M_B["Módulos 05 y 06<br/>4 Storyboards (83 Mapas: KDE, LISA, Censo, RSD)<br/>y Auditoría WLC v2.0 + ohsome + OSMCha"]
         M_C["Módulos 07, 08 y 10<br/>Gobernanza ODbL/CC-BY, XML ISO 19139<br/>y Manual Interactivo + Geodatabase ZIP"]
     end
 

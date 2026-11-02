@@ -634,12 +634,12 @@ function exportarCapaCSV(coleccionFeatures, nombreCapa) {
 
 ---
 
-## 54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 Nivel AAA)
+## 54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 AA General / AAA Tipográfico)
 
-En el marco del diseño universal e inclusivo de la plataforma web, la interfaz del Atlas cumple con el nivel más exigente de accesibilidad internacional: **WCAG 2.1 AAA**. Esto exige una relación de contraste cromático mínima de **7:1** para texto normal y soporte integral de navegación por teclado.
+En el marco del diseño universal de la plataforma web, la hoja de estilos maestra (`src/css/estilos.css`) fue auditada algorítmicamente conforme a las directrices **W3C Web Content Accessibility Guidelines (WCAG) 2.1** (Criterios de Conformidad 1.4.3 *Contraste Mínimo AA*, 1.4.6 *Contraste Mejorado AAA* y 1.4.11 *Contraste de Elementos No Textuales AA*). El dictamen certifica **conformidad integral WCAG 2.1 Nivel AA en el 100 % de los elementos interactivos y acentos cromáticos (`4,58:1` a `8,87:1`)** y **conformidad WCAG 2.1 Nivel AAA en la totalidad del texto de lectura (`9,43:1` a `19,00:1`)**.
 
-### 54.1. Fórmula Matemática de Luminancia Relativa y Contraste
-La luminancia relativa (`L`) de cualquier color RGB normalizado en `[0, 1]` se calcula mediante:
+### 54.1. Fórmula Matemática de Luminancia Relativa y Razón de Contraste
+La luminancia relativa (`L`) de cualquier color sRGB normalizado en `[0, 1]` se calcula mediante:
 
 ```text
 L = 0.2126 × R + 0.7152 × G + 0.0722 × B
@@ -652,19 +652,30 @@ Si C_sRGB ≤ 0.03928  ⇒  C = C_sRGB / 12.92
 Si C_sRGB > 0.03928  ⇒  C = ((C_sRGB + 0.055) / 1.055)^2.4
 ```
 
-La relación de contraste entre dos colores con luminancias `L₁` (más claro) y `L₂` (más oscuro) se determina por:
+La razón de contraste (`CR`) entre dos colores con luminancias `L₁` (más claro) y `L₂` (más oscuro) se determina por:
 
 ```text
-Ratio de Contraste = (L₁ + 0.05) / (L₂ + 0.05) ≥ 7.00 : 1   (Estándar WCAG 2.1 AAA)
+CR = (L₁ + 0.05) / (L₂ + 0.05)
+• Umbral WCAG 2.1 Nivel AA:  CR ≥ 4.50 : 1 (texto normal) | CR ≥ 3.00 : 1 (texto grande ≥ 18pt / 14pt bold y componentes UI)
+• Umbral WCAG 2.1 Nivel AAA: CR ≥ 7.00 : 1 (texto normal) | CR ≥ 4.50 : 1 (texto grande ≥ 18pt / 14pt bold)
 ```
 
-### 54.2. Verificación de Accesibilidad en la Paleta del Atlas
-- **Fondo Oscuro (`#0f172a`):** Luminancia `L₂ = 0.012`.
-- **Texto Blanco (`#ffffff`):** Luminancia `L₁ = 1.000`.
-  ```text
-  Contraste = (1.000 + 0.05) / (0.012 + 0.05) = 1.05 / 0.062 ≈ 16.93 : 1   (Supera ampliamente el umbral AAA de 7:1)
-  ```
-- **Verde Institucional (`#2d5a27`) sobre Blanco (`#ffffff`):** Luminancia `L₂ = 0.088` ⇒ `Contraste = 1.05 / 0.138 ≈ 7.61 : 1` (Cumple WCAG 2.1 AAA).
+### 54.2. Matriz de Auditoría Formal sobre los Tokens de `src/css/estilos.css`
+
+| Par de Tokens Auditados (`Fondo` vs. `Primer Plano`) | Códigos Hexadecimales | Luminancias (`L₂` / `L₁`) | Razón de Contraste (`CR`) | Certificación WCAG 2.1 |
+| :--- | :---: | :---: | :---: | :---: |
+| `--papel-rehundido` vs. `--tinta` (Consolas y tablas de datos) | `#09101f` vs. `#ffffff` | `0,0053` / `1,0000` | **`19,00 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--fondo-app` vs. `--tinta` (Lienzo general y encabezados) | `#0c1527` vs. `#ffffff` | `0,0076` / `1,0000` | **`18,23 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel` vs. `--tinta` (Paneles laterales y vistas modulares) | `#132039` vs. `#ffffff` | `0,0147` / `1,0000` | **`16,24 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel` vs. `--tinta-suave` (Cuerpo de lectura principal) | `#132039` vs. `#f8fafc` | `0,0147` / `0,9560` | **`15,56 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel-alto` vs. `--tinta-suave` (Subpaneles y cabeceras) | `#1a2b4b` vs. `#f8fafc` | `0,0246` / `0,9560` | **`13,49 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel-tarjeta` vs. `--tinta` (Títulos en tarjetas GIS y KPI) | `#223861` vs. `#ffffff` | `0,0403` / `1,0000` | **`11,63 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel-tarjeta` vs. `--tinta-tenue` (Metadatos y glosas en tarjetas) | `#223861` vs. `#e2e8f0` | `0,0403` / `0,8012` | **`9,43 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--fondo-app` vs. `--ocre` (Indicadores de advertencia y semáforos) | `#0c1527` vs. `#f59e0b` | `0,0076` / `0,4410` | **`8,52 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--fondo-app` vs. `--agua` (Enlaces e indicadores interactivos) | `#0c1527` vs. `#38bdf8` | `0,0076` / `0,4326` | **`8,38 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel` vs. `--musgo` (Acentos cian en paneles laterales) | `#132039` vs. `#06b6d4` | `0,0147` / `0,3645` | **`6,41 : 1`** | **Nivel AA** (AAA texto grande) |
+| `--papel-tarjeta` vs. `--agua` (Enlaces y chips sobre tarjetas) | `#223861` vs. `#38bdf8` | `0,0403` / `0,4326` | **`5,35 : 1`** | **Nivel AA** (AAA texto grande) |
+| `--papel-tarjeta` vs. `--esmeralda` (Insignias de estado en tarjetas) | `#223861` vs. `#10b981` | `0,0403` / `0,3636` | **`4,58 : 1`** | **Nivel AA** (`≥ 4,5:1`) |
 
 ---
 

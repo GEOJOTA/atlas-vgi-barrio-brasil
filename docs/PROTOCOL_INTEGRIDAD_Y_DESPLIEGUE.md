@@ -2,7 +2,7 @@
 
 * **Entorno de Producción Primaria (Netlify CDN):** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * **Entorno de Respaldo (GitHub Pages):** [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* **Parámetros Auditados:** **134 Capas Operativas** (`124` Oficiales + `10` VGI) · **140 Descriptores ISO 19110:2016** · **4 Storyboards (75 Cartografías)** · **21 Módulos JS ES6+** · **Paridad Simétrica `data/` ↔ `src/data/` y `docs/` ↔ `src/docs/`**.
+* **Parámetros Auditados:** **134 Capas Operativas** (`124` Oficiales + `10` VGI) · **140 Descriptores ISO 19110:2016** · **4 Storyboards (83 Cartografías)** · **21 Módulos JS ES6+** · **Paridad Simétrica `data/` ↔ `src/data/` y `docs/` ↔ `src/docs/`**.
 
 ---
 

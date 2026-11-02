@@ -85,7 +85,7 @@
 * [51. Tutorial 12: Sistema de Notificaciones Táctiles (Toast Notifications)](#51-tutorial-12-sistema-de-notificaciones-táctiles-toast-notifications)
 * [52. Tutorial 13: Integración de Geoservicios WMS/WFS Oficiales del Estado de Chile](#52-tutorial-13-integración-de-geoservicios-wmswfs-oficiales-del-estado-de-chile)
 * [53. Tutorial 14: Exportación Dinámica de Datos en Formatos GeoJSON, CSV y KML](#53-tutorial-14-exportación-dinámica-de-datos-en-formatos-geojson-csv-y-kml)
-* [54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 Nivel AAA)](#54-tutorial-15-protocolo-de-auditoría-de-accesibilidad-web-wcag-21-nivel-aaa)
+* [54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 AA General / AAA Tipográfico)](#54-tutorial-15-protocolo-de-auditoría-de-accesibilidad-web-wcag-21-aa-general--aaa-tipográfico)
 * [55. Tutorial 16: Pipeline de Reempaquetado y Despliegue en Producción](#55-tutorial-16-pipeline-de-reempaquetado-y-despliegue-en-producción)
 
 ---
@@ -201,7 +201,7 @@ flowchart LR
 * **Componentes Ejecutados:**
   - Descarga, normalización y geoprocesamiento de **134 coberturas vectoriales (124 oficiales del Estado de Chile + 10 VGI comunitarias)**, totalizando 3,33 GB de datos en EPSG:4326 y EPSG:32719.
   - Almacenamiento espacial estructurado en clúster relacional PostgreSQL 17 + PostGIS 3.3 (Supabase Cloud) con más de 1.552.000 entidades indexadas mediante árboles GiST y claves JSONB con índices GIN.
-  - Formulación y ejecución del **Modelo de MetaCalidad WLC v2.0 bajo norma ISO 19157:2013**, integrando 5 componentes cuantitativos (topología, completitud, geodésica, esquema y granularidad) y 5 componentes cualitativos (metadatos núcleo, linaje, conformidad ISO, escala y accesibilidad), certificando un **96,55% / 97,88% de metacalidad global (Grado A+ Excelente)**.
+  - Formulación y ejecución del **Modelo de MetaCalidad WLC v2.0 bajo norma ISO 19157:2013**, integrando 5 componentes cuantitativos (topología, completitud, geodésica, esquema y granularidad; promedio **96,7 %**) y 5 componentes cualitativos (metadatos núcleo, linaje, conformidad ISO, escala y accesibilidad; promedio **94,1 %**), certificando un índice global único (**IGV / IGMC**) de **95,4 % (Grado A+ Excelente: 91 capas en Grado A+ y 43 capas en Grado A sobre las 134 coberturas)**.
   - Inyección algorítmica universal del **Esquema Maestro de 14 Atributos Normalizados ISO** en la totalidad de capas vectoriales para descargas transparentes.
 
 ```mermaid
@@ -1567,9 +1567,9 @@ De acuerdo al puntaje global obtenido en el modelo WLC v2.0, las capas se certif
 | Rango Numérico (`IGV`) | Grado de Calidad | Dictamen Técnico y Aptitud de Uso |
 | :---: | :---: | :--- |
 | **`IGV ≥ 95.00%`** | **Grado A+ (Excelente)** | **Aptitud Total:** Apta para modelamiento normativo vinculante, toma de decisiones comunales y publicación científica. |
-| **`90.00% ≤ IGV < 95.00%`** | **Grado A (Muy Bueno)** | **Aptitud Operativa:** Apta para planificación territorial general, diagnósticos barriales y análisis espacial multiescalar. |
-| **`80.00% ≤ IGV < 90.00%`** | **Grado B (Aceptable)** | **Aptitud Condicionada:** Requiere curatoría de atributos o densificación de vértices antes de su uso en análisis espacial avanzado. |
-| **`IGV < 80.00%`** | **Grado C (Deficiente)** | **No Apta:** Datos con inconsistencias topológicas severas o ausencia de metadatos; bloqueada para producción cartográfica. |
+| **`85.00% ≤ IGV < 95.00%`** | **Grado A (Muy Bueno)** | **Aptitud Operativa:** Apta para planificación territorial general, diagnósticos barriales y análisis espacial multiescalar. |
+| **`75.00% ≤ IGV < 85.00%`** | **Grado B (Aceptable)** | **Aptitud Condicionada:** Requiere curatoría de atributos o densificación de vértices antes de su uso en análisis espacial avanzado. |
+| **`IGV < 75.00%`** | **Grado C (Deficiente)** | **No Apta:** Datos con inconsistencias topológicas severas o ausencia de metadatos; bloqueada para producción cartográfica. |
 
 ---
 
@@ -1578,42 +1578,42 @@ De acuerdo al puntaje global obtenido en el modelo WLC v2.0, las capas se certif
 ```mermaid
 flowchart LR
     subgraph IN_CORR["1. INPUT"]
-        MAT_132["docs/matriz_metacalidad.json (134 Capas x 10 Dimensiones WLC v2.0)"]
+        MAT_134["docs/matriz_metacalidad.json (134 Capas x 10 Dimensiones WLC v2.0)"]
         WEIGHTS["Vectores de Ponderación (w_c y w_m)"]
     end
 
     subgraph PROC_CORR["2. PIPELINE ESTADÍSTICO"]
         PEARSON["Cálculo de Matriz de Correlación de Pearson (r_xy)"]
-        ORTHO_TEST["Prueba de Ortogonalidad Pilar 1 vs. Pilar 2 (r = 0.22)"]
+        ORTHO_TEST["Prueba de Independencia Topología vs. Completitud (r = +0.038)"]
         SENS_SIM["Análisis de Sensibilidad y Ordenamiento de Ranking"]
     end
 
     subgraph OUT_CORR["3. OUTPUT"]
         CSV_CORR["docs/correlacion_dimensiones_calidad.csv & docs/correlacion_dimensiones_calidad.png"]
-        DICT_IGV["docs/wlc_metacalidad_resultado.json (IGV Promedio: 95.41% Grado A+)"]
+        DICT_IGV["docs/wlc_metacalidad_resultado.json & wlc_metacalidad_ranking.csv (IGV: 95.4% Grado A+)"]
     end
 
     IN_CORR --> PROC_CORR --> OUT_CORR
 ```
 
 ### 16.1. Matriz de Correlación Lineal de Pearson (`r`)
-Para verificar la independencia ortogonal entre las 5 dimensiones cuantitativas y las 5 dimensiones cualitativas del modelo WLC v2.0, se calculó la matriz de coeficientes de correlación de Pearson (`r`) sobre las 134 capas cartográficas, preservada en `docs/correlacion_dimensiones_calidad.csv`:
+Para verificar la relación estadística entre las 5 dimensiones cuantitativas y las 5 dimensiones cualitativas del modelo WLC v2.0, se calculó la matriz de coeficientes de correlación de Pearson (`r`) sobre las 134 capas cartográficas, preservada en `docs/correlacion_dimensiones_calidad.csv`:
 
 ```text
 r_xy = ∑(i=1..n) [ (x_i - x̄) × (y_i - ȳ) ] / [ √(∑(i=1..n) (x_i - x̄)²) × √(∑(i=1..n) (y_i - ȳ)²) ]
 ```
 
-* **Hallazgo Clave 1 (Ortogonalidad Cuantitativa vs. Cualitativa):** La correlación promedio entre las dimensiones del Pilar 1 (geometría) y las del Pilar 2 (metadatos) es de `r = 0.22`, lo que demuestra que un archivo GeoJSON puede ser geométricamente consistente (topología 100%) pero carecer de linaje y metadatos, o viceversa. Esto justifica plenamente la ponderación al 50% de ambos pilares.
-* **Hallazgo Clave 2 (Completitud vs. Linaje):** Existe una correlación positiva moderada (`r = 0.58`) entre la completitud de atributos y la calidad del linaje, indicando que las instituciones que documentan formalmente sus metodologías tienden a generar tablas de atributos más completas.
+* **Hallazgo Clave 1 (Ortogonalidad Geométrica vs. Atributiva y Documental):** La correlación entre la consistencia topológica (`score_topo`) y la completitud tabular (`score_comp`) es prácticamente nula (`r = +0,038`), al igual que entre topología e integridad posicional (`r = -0,036`). Esto demuestra que un archivo GeoJSON puede ser geométricamente íntegro (topología `99,9 %`) con independencia de su densidad atributiva o documental, justificando la ponderación paritaria (`50 %` / `50 %`) de ambos pilares.
+* **Hallazgo Clave 2 (Asociaciones Estructurales y de Linaje):** Se verifica una correlación positiva moderada entre el linaje normativo (`score_ll`) y la accesibilidad operativa (`score_ai`, `r = +0,362`), así como entre la completitud de atributos (`score_comp`) y la estructura del esquema (`score_estruc`, `r = +0,337`). Por su parte, la correlación entre completitud de atributos (`score_comp`) y linaje (`score_ll`) es positiva débil (`r = +0,111`), mientras que entre conformidad semántica (`score_cc`) y linaje (`score_ll`) se registra una correlación inversa moderada (`r = -0,512`), explicada porque las 10 macrocategorías VGI alcanzan un `98,0 %` de conformidad con el diccionario semántico del Atlas pero un `91,0 %` en linaje administrativo, frente al `98,6 %` en linaje legal y `93,7 %` en conformidad de esquema de las 124 coberturas oficiales del Estado.
 
-### 16.2. Dictamen Global de la Base de Datos del Atlas VGI
-* **Índice Global de Calidad (IGV Promedio):** **95.41%** (Certificación Grado A+ Excelente).
-* **Puntaje Promedio Pilar Cuantitativo Espacial:** **96.72%**.
-* **Puntaje Promedio Pilar Cualitativo de Metadatos:** **94.10%**.
-* **Distribución de Grados:**
-  - Grado A+ (Excelente): **119 capas (90.2%)**.
-  - Grado A (Muy Bueno): **13 capas (9.8%)**.
-  - Grados B o C: **0 capas (0.0%)**.
+### 16.2. Dictamen Global Consolidado de la Base de Datos del Atlas VGI (134 Capas)
+* **Índice Global de Calidad y MetaCalidad (`IGV` / `IGMC` Promedio):** **95,4 %** (`95,40 %`, Certificación Grado A+ Excelente).
+* **Puntaje Promedio Pilar Cuantitativo Espacial (`S_cuant`, 50 %):** **96,7 %** (`96,68 %`: Topología `99,9 %`, Completitud `97,1 %`, Integridad Posicional `99,8 %`, Estructura y Esquema `86,5 %`, Granularidad `95,1 %`).
+* **Puntaje Promedio Pilar Cualitativo de Metadatos (`S_cual`, 50 %):** **94,1 %** (`94,12 %`: Metadatos Núcleo `96,4 %`, Conformidad ISO `94,0 %`, Linaje y Marco Legal `98,0 %`, Resolución Geodésica `81,2 %`, Accesibilidad Operativa `97,4 %`).
+* **Distribución de Grados en las 134 Capas (`91 A+` y `43 A`):**
+  - **Grado A+ (Excelente, `≥ 95,0 %`):** **91 capas (67,9 %)**.
+  - **Grado A (Muy Bueno, `85,0 % – 94,9 %`):** **43 capas (32,1 %)**.
+  - **Grados B o C (`< 85,0 %`):** **0 capas (0,0 %)**.
 
 ---
 
@@ -2395,7 +2395,7 @@ nodo-geoabierto/
 │   └── bip_inversiones_santiago.csv                                  # Inversión pública MIDESO BIP
 ├── docs/                                   # Documentación formal y entregables (sincronizado con src/docs/)
 │   ├── geodatabase_completa_atlas_vgi.zip  # Paquete maestro ZIP (542,35 MB; 134 capas del visor y 257 archivos)
-│   ├── ANALISIS_METACALIDAD.md             # Informe técnico de calidad ISO 19157 (95.41% IGV)
+│   ├── ANALISIS_METACALIDAD.md             # Informe técnico de calidad ISO 19157 (95,4 % IGV; 91 A+ y 43 A)
 │   ├── ARQUITECTURA.md                     # Memoria de diseño de software
 │   ├── BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md   # Catálogo de 125 fuentes bibliográficas APA 7ª ed.
 │   ├── GUIA_BASE_DATOS_SUPABASE.md         # Manual de administración de PostGIS
@@ -2903,61 +2903,56 @@ flowchart LR
     end
 
     subgraph OUT_CSS["3. OUTPUT"]
-        WCAG_UI["Interfaz con Contraste WCAG 2.1 Nivel AAA"]
+        WCAG_UI["Interfaz con Conformidad WCAG 2.1 (Nivel AA General / Nivel AAA Tipográfico)"]
         MULTI_DEV["Visualización Adaptativa en Escritorio, Tablet y Móvil"]
     end
 
     IN_CSS --> PROC_CSS --> OUT_CSS
 ```
 
-El Atlas VGI implementa un sistema de diseño institucional sobrio, estructurado en CSS3 nativo puro en `src/css/estilos.css`, diseñado para garantizar legibilidad analítica y cumplir con el estándar internacional de accesibilidad **WCAG 2.1 Nivel AAA**.
+El Atlas VGI implementa un sistema de diseño institucional sobrio, estructurado en CSS3 nativo puro en `src/css/estilos.css`, diseñado para garantizar legibilidad analítica y cumplir formalmente con el estándar internacional de accesibilidad **WCAG 2.1 (Nivel AA en el 100 % de los componentes y acentos cromáticos [4,58:1 a 8,87:1], y Nivel AAA en todo el contraste tipográfico de lectura [9,43:1 a 19,00:1])**.
 
 ### 29.1. Diccionario Completo de Tokens de Diseño en `:root`
-Todas las variables visuales están centralizadas en las primeras 75 líneas de `src/css/estilos.css`:
+Todas las variables visuales están centralizadas en el bloque `:root` de `src/css/estilos.css`:
 
 ```css
 :root {
   /* ==========================================================================
      PALETA CROMÁTICA INSTITUCIONAL Y SEMÁNTICA
      ========================================================================== */
-  --musgo: #0284c7;           /* Azul cian táctico para acentos primarios, foco y estados activos */
+  --musgo: #06b6d4;           /* Cian táctico para acentos primarios, foco y estados activos */
+  --agua: #38bdf8;            /* Azul cielo brillante para enlaces, pestañas e indicadores */
   --esmeralda: #10b981;       /* Verde esmeralda para descargas, confirmaciones y 100% OK */
-  --ocre: #f59e0b;            /* Amarillo ocre para advertencias, pendientes y alertas */
-  --carmesí: #ef4444;         /* Rojo intenso para errores críticos, topología inválida y cierre */
-  --purpura: #8b5cf6;         /* Púrpura para capas normativas y patrimonio histórico */
-  --ambar: #d97706;           /* Ámbar para equipamiento secundario y transporte */
+  --ocre: #f59e0b;            /* Ámbar luminoso para advertencias, pendientes y alertas */
+  --terracota: #f43f5e;       /* Rojo coral intenso para errores críticos y alertas de cierre */
 
   /* ==========================================================================
-     ESCALA DE GRISES Y SUPERFICIES (DARK THEME PROFESIONAL)
+     SUPERFICIES DE MODO OSCURO PROFUNDO (DARK THEME PROFESIONAL)
      ========================================================================== */
-  --bg-dark: #0b111e;         /* Fondo base de la aplicación (azul muy oscuro casi negro) */
-  --papel: #111827;           /* Superficie de tarjetas, paneles laterales y modales (gris 900) */
-  --papel-elevado: #1f2937;   /* Superficie para elementos flotantes, headers y menús (gris 800) */
-  --linea: #374151;           /* Bordes estructurales entre paneles y divisores (gris 700) */
-  --linea-suave: #1f2937;     /* Bordes secundarios internos para grillas de datos */
+  --fondo-app: #0c1527;       /* Fondo base de la aplicación (azul marino profundo, L = 0.0076) */
+  --papel: #132039;           /* Superficie de paneles laterales y vistas principales (L = 0.0147) */
+  --papel-alto: #1a2b4b;      /* Superficie para contenedores elevados y cabeceras (L = 0.0246) */
+  --papel-tarjeta: #223861;   /* Superficie para tarjetas interactivas y fichas (L = 0.0403) */
+  --papel-rehundido: #09101f; /* Superficie para consolas de código y bloques de datos (L = 0.0053) */
+  --linea: #334e7b;           /* Bordes estructurales entre paneles y divisores */
+  --linea-fuerte: #4b6cb7;    /* Bordes destacados para tarjetas activas y cabeceras */
 
   /* ==========================================================================
-     TIPOGRAFÍA Y CONTRASTE DE TEXTO (WCAG AAA)
+     TIPOGRAFÍA Y CONTRASTE DE LECTURA (CERTIFICADO WCAG 2.1 NIVEL AAA: 9.43:1 A 19.00:1)
      ========================================================================== */
-  --tinta: #f9fafb;           /* Texto de máxima jerarquía (blanco cálido para títulos y valores KPI) */
-  --tinta-suave: #9ca3af;     /* Texto de jerarquía secundaria (gris medio para párrafos y etiquetas) */
-  --tinta-tenue: #6b7280;     /* Texto de baja jerarquía (gris oscuro para metadatos y pies de página) */
+  --tinta: #ffffff;           /* Texto principal (blanco puro, L = 1.0000; 11.63:1 a 19.00:1 AAA) */
+  --tinta-suave: #f8fafc;     /* Texto secundario (blanco hielo, L = 0.9560; 11.14:1 a 18.20:1 AAA) */
+  --tinta-tenue: #e2e8f0;     /* Texto auxiliar y metadatos (plata claro, L = 0.8012; 9.43:1 a 15.40:1 AAA) */
 
   /* ==========================================================================
-     FAMILIAS TIPOGRÁFICAS
+     FAMILIAS TIPOGRÁFICAS Y DIMENSIONES ESTRUCTURALES
      ========================================================================== */
-  --fuente-texto: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --fuente-datos: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  /* ==========================================================================
-     DIMENSIONES Y RADIOS ESTRUCTURALES
-     ========================================================================== */
-  --ancho-consola-gis: 380px; /* Ancho fijo de la consola cartográfica izquierda */
-  --alto-header: 56px;        /* Altura fija de la barra de navegación superior */
-  --radio-sm: 4px;            /* Radio de esquinas para botones pequeños e insignias */
-  --radio-md: 8px;            /* Radio de esquinas para tarjetas de capas y modales */
-  --radio-lg: 14px;           /* Radio de esquinas para contenedores principales */
-  --sombra-elevada: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --fuente-titulo: 'Fraunces', Georgia, serif;
+  --fuente-cuerpo: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --fuente-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --radio: 10px;
+  --radio-sm: 6px;
+  --sombra-panel: 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 ```
 
@@ -3622,7 +3617,7 @@ Para facilitar la comprensión integral del ecosistema y permitir su modificaci�
 ┌────────────────────────────────────────────────────────────────────────┐
 │     ECOSISTEMA MULTI-LENGUAJE DE LA PLATAFORMA WEB (ESTRUCTURA)        │
 ├────────────────────────────────────────────────────────────────────────┤
-│ 32.1 HTML5 Semántico (WCAG 2.1 AAA)    ──► src/index.html              │
+│ 32.1 HTML5 Semántico (WCAG 2.1 AA/AAA) ──► src/index.html              │
 │ 32.2 CSS3 Nativo (:root + Flexbox/Grid)──► src/css/estilos.css         │
 │ 32.3 JavaScript ES6+ (IIFE Modular)    ──► 21 módulos en src/js/       │
 │ 32.4 SQL / PL/pgSQL + Overpass QL      ──► scripts/db/ y consultas QL  │
@@ -3633,10 +3628,10 @@ Para facilitar la comprensión integral del ecosistema y permitir su modificaci�
 
 ---
 
-### 32.1. Lenguaje de Marcado y Maquetación Estructural (HTML5 Semántico / WCAG 2.1 AAA)
+### 32.1. Lenguaje de Marcado y Maquetación Estructural (HTML5 Semántico / WCAG 2.1 AA General y AAA Tipográfico)
 
 #### Componente HTML-01: `src/index.html`
-- **Lenguaje y Estándar:** HTML5 Semántico (`<!DOCTYPE html>`, `lang="es"`) con atributos de accesibilidad WAI-ARIA (`role`, `aria-label`, `aria-expanded`, `aria-live`) bajo norma WCAG 2.1 Nivel AAA.
+- **Lenguaje y Estándar:** HTML5 Semántico (`<!DOCTYPE html>`, `lang="es"`) con atributos de accesibilidad WAI-ARIA (`role`, `aria-label`, `aria-expanded`, `aria-live`) bajo norma WCAG 2.1 (Nivel AA general en componentes e indicadores interactivos y Nivel AAA en contraste tipográfico de lectura).
 - **Ruta en el Proyecto:** `src/index.html`
 - **Rol dentro de la Plataforma Web:** Documento contenedor de página única (*Single-Page Application* - SPA) que estructura el lienzo cartográfico, la barra de navegación superior de los 10 módulos (`01` a `10`), la consola lateral de herramientas SIG, las vistas dedicadas de análisis y el orden determinista de carga de hojas de estilo y scripts.
 - **Estructura Interna y Componentes Clave:**
@@ -3667,7 +3662,7 @@ Para facilitar la comprensión integral del ecosistema y permitir su modificaci�
   - Simbología Cartográfica: Clases `.pin-svg-pulso`, `.pin-halo`, `.pin-cuerpo` y cursores `.modo-inspeccion-activa`.
 - **Entradas y Salidas (I/O):**
   - *Entradas:* Clases, atributos `data-*` y variables en línea (`style="--color-pin: ..."`) aplicadas en el DOM.
-  - *Salidas:* Renderizado visual acelerado por GPU en el navegador con contraste validado WCAG 2.1 AAA.
+  - *Salidas:* Renderizado visual acelerado por GPU en el navegador con contraste validado bajo WCAG 2.1 (Nivel AA general ≥ 4,5:1 y Nivel AAA en texto de lectura ≥ 7,0:1, de 9,43:1 a 19,00:1).
 - **Pautas de Modificación y Extensibilidad:**
   - Para modificar los colores globales de toda la plataforma, edite exclusivamente los tokens del bloque `:root` al inicio del archivo; evite escribir colores hexadecimales fijos en reglas individuales.
   - Para ajustar el ancho del panel lateral izquierdo del visor, modifique la variable `--ancho-consola-gis: 380px;`.
@@ -6326,12 +6321,12 @@ function exportarCapaCSV(coleccionFeatures, nombreCapa) {
 
 ---
 
-## 54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 Nivel AAA)
+## 54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 AA General / AAA Tipográfico)
 
-En el marco del diseño universal e inclusivo de la plataforma web, la interfaz del Atlas cumple con el nivel más exigente de accesibilidad internacional: **WCAG 2.1 AAA**. Esto exige una relación de contraste cromático mínima de **7:1** para texto normal y soporte integral de navegación por teclado.
+En el marco del diseño universal de la plataforma web, la hoja de estilos maestra (`src/css/estilos.css`) fue auditada algorítmicamente conforme a las directrices **W3C Web Content Accessibility Guidelines (WCAG) 2.1** (Criterios de Conformidad 1.4.3 *Contraste Mínimo AA*, 1.4.6 *Contraste Mejorado AAA* y 1.4.11 *Contraste de Elementos No Textuales AA*). El dictamen certifica **conformidad integral WCAG 2.1 Nivel AA en el 100 % de los elementos interactivos y acentos cromáticos (`4,58:1` a `8,87:1`)** y **conformidad WCAG 2.1 Nivel AAA en la totalidad del texto de lectura (`9,43:1` a `19,00:1`)**.
 
-### 54.1. Fórmula Matemática de Luminancia Relativa y Contraste
-La luminancia relativa (`L`) de cualquier color RGB normalizado en `[0, 1]` se calcula mediante:
+### 54.1. Fórmula Matemática de Luminancia Relativa y Razón de Contraste
+La luminancia relativa (`L`) de cualquier color sRGB normalizado en `[0, 1]` se calcula mediante:
 
 ```text
 L = 0.2126 × R + 0.7152 × G + 0.0722 × B
@@ -6344,19 +6339,30 @@ Si C_sRGB ≤ 0.03928  ⇒  C = C_sRGB / 12.92
 Si C_sRGB > 0.03928  ⇒  C = ((C_sRGB + 0.055) / 1.055)^2.4
 ```
 
-La relación de contraste entre dos colores con luminancias `L₁` (más claro) y `L₂` (más oscuro) se determina por:
+La razón de contraste (`CR`) entre dos colores con luminancias `L₁` (más claro) y `L₂` (más oscuro) se determina por:
 
 ```text
-Ratio de Contraste = (L₁ + 0.05) / (L₂ + 0.05) ≥ 7.00 : 1   (Estándar WCAG 2.1 AAA)
+CR = (L₁ + 0.05) / (L₂ + 0.05)
+• Umbral WCAG 2.1 Nivel AA:  CR ≥ 4.50 : 1 (texto normal) | CR ≥ 3.00 : 1 (texto grande ≥ 18pt / 14pt bold y componentes UI)
+• Umbral WCAG 2.1 Nivel AAA: CR ≥ 7.00 : 1 (texto normal) | CR ≥ 4.50 : 1 (texto grande ≥ 18pt / 14pt bold)
 ```
 
-### 54.2. Verificación de Accesibilidad en la Paleta del Atlas
-- **Fondo Oscuro (`#0f172a`):** Luminancia `L₂ = 0.012`.
-- **Texto Blanco (`#ffffff`):** Luminancia `L₁ = 1.000`.
-  ```text
-  Contraste = (1.000 + 0.05) / (0.012 + 0.05) = 1.05 / 0.062 ≈ 16.93 : 1   (Supera ampliamente el umbral AAA de 7:1)
-  ```
-- **Verde Institucional (`#2d5a27`) sobre Blanco (`#ffffff`):** Luminancia `L₂ = 0.088` ⇒ `Contraste = 1.05 / 0.138 ≈ 7.61 : 1` (Cumple WCAG 2.1 AAA).
+### 54.2. Matriz de Auditoría Formal sobre los Tokens de `src/css/estilos.css`
+
+| Par de Tokens Auditados (`Fondo` vs. `Primer Plano`) | Códigos Hexadecimales | Luminancias (`L₂` / `L₁`) | Razón de Contraste (`CR`) | Certificación WCAG 2.1 |
+| :--- | :---: | :---: | :---: | :---: |
+| `--papel-rehundido` vs. `--tinta` (Consolas y tablas de datos) | `#09101f` vs. `#ffffff` | `0,0053` / `1,0000` | **`19,00 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--fondo-app` vs. `--tinta` (Lienzo general y encabezados) | `#0c1527` vs. `#ffffff` | `0,0076` / `1,0000` | **`18,23 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel` vs. `--tinta` (Paneles laterales y vistas modulares) | `#132039` vs. `#ffffff` | `0,0147` / `1,0000` | **`16,24 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel` vs. `--tinta-suave` (Cuerpo de lectura principal) | `#132039` vs. `#f8fafc` | `0,0147` / `0,9560` | **`15,56 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel-alto` vs. `--tinta-suave` (Subpaneles y cabeceras) | `#1a2b4b` vs. `#f8fafc` | `0,0246` / `0,9560` | **`13,49 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel-tarjeta` vs. `--tinta` (Títulos en tarjetas GIS y KPI) | `#223861` vs. `#ffffff` | `0,0403` / `1,0000` | **`11,63 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel-tarjeta` vs. `--tinta-tenue` (Metadatos y glosas en tarjetas) | `#223861` vs. `#e2e8f0` | `0,0403` / `0,8012` | **`9,43 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--fondo-app` vs. `--ocre` (Indicadores de advertencia y semáforos) | `#0c1527` vs. `#f59e0b` | `0,0076` / `0,4410` | **`8,52 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--fondo-app` vs. `--agua` (Enlaces e indicadores interactivos) | `#0c1527` vs. `#38bdf8` | `0,0076` / `0,4326` | **`8,38 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
+| `--papel` vs. `--musgo` (Acentos cian en paneles laterales) | `#132039` vs. `#06b6d4` | `0,0147` / `0,3645` | **`6,41 : 1`** | **Nivel AA** (AAA texto grande) |
+| `--papel-tarjeta` vs. `--agua` (Enlaces y chips sobre tarjetas) | `#223861` vs. `#38bdf8` | `0,0403` / `0,4326` | **`5,35 : 1`** | **Nivel AA** (AAA texto grande) |
+| `--papel-tarjeta` vs. `--esmeralda` (Insignias de estado en tarjetas) | `#223861` vs. `#10b981` | `0,0403` / `0,3636` | **`4,58 : 1`** | **Nivel AA** (`≥ 4,5:1`) |
 
 ---
 

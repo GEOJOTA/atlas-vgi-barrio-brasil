@@ -515,7 +515,7 @@ Para facilitar la comprensión integral del ecosistema y permitir su modificaci�
 ┌────────────────────────────────────────────────────────────────────────┐
 │     ECOSISTEMA MULTI-LENGUAJE DE LA PLATAFORMA WEB (ESTRUCTURA)        │
 ├────────────────────────────────────────────────────────────────────────┤
-│ 32.1 HTML5 Semántico (WCAG 2.1 AAA)    ──► src/index.html              │
+│ 32.1 HTML5 Semántico (WCAG 2.1 AA/AAA) ──► src/index.html              │
 │ 32.2 CSS3 Nativo (:root + Flexbox/Grid)──► src/css/estilos.css         │
 │ 32.3 JavaScript ES6+ (IIFE Modular)    ──► 21 módulos en src/js/       │
 │ 32.4 SQL / PL/pgSQL + Overpass QL      ──► scripts/db/ y consultas QL  │
@@ -526,10 +526,10 @@ Para facilitar la comprensión integral del ecosistema y permitir su modificaci�
 
 ---
 
-### 32.1. Lenguaje de Marcado y Maquetación Estructural (HTML5 Semántico / WCAG 2.1 AAA)
+### 32.1. Lenguaje de Marcado y Maquetación Estructural (HTML5 Semántico / WCAG 2.1 AA General y AAA Tipográfico)
 
 #### Componente HTML-01: `src/index.html`
-- **Lenguaje y Estándar:** HTML5 Semántico (`<!DOCTYPE html>`, `lang="es"`) con atributos de accesibilidad WAI-ARIA (`role`, `aria-label`, `aria-expanded`, `aria-live`) bajo norma WCAG 2.1 Nivel AAA.
+- **Lenguaje y Estándar:** HTML5 Semántico (`<!DOCTYPE html>`, `lang="es"`) con atributos de accesibilidad WAI-ARIA (`role`, `aria-label`, `aria-expanded`, `aria-live`) bajo norma WCAG 2.1 (Nivel AA general en componentes e indicadores interactivos y Nivel AAA en contraste tipográfico de lectura).
 - **Ruta en el Proyecto:** `src/index.html`
 - **Rol dentro de la Plataforma Web:** Documento contenedor de página única (*Single-Page Application* - SPA) que estructura el lienzo cartográfico, la barra de navegación superior de los 10 módulos (`01` a `10`), la consola lateral de herramientas SIG, las vistas dedicadas de análisis y el orden determinista de carga de hojas de estilo y scripts.
 - **Estructura Interna y Componentes Clave:**
@@ -560,7 +560,7 @@ Para facilitar la comprensión integral del ecosistema y permitir su modificaci�
   - Simbología Cartográfica: Clases `.pin-svg-pulso`, `.pin-halo`, `.pin-cuerpo` y cursores `.modo-inspeccion-activa`.
 - **Entradas y Salidas (I/O):**
   - *Entradas:* Clases, atributos `data-*` y variables en línea (`style="--color-pin: ..."`) aplicadas en el DOM.
-  - *Salidas:* Renderizado visual acelerado por GPU en el navegador con contraste validado WCAG 2.1 AAA.
+  - *Salidas:* Renderizado visual acelerado por GPU en el navegador con contraste validado bajo WCAG 2.1 (Nivel AA general ≥ 4,5:1 y Nivel AAA en texto de lectura ≥ 7,0:1, de 9,43:1 a 19,00:1).
 - **Pautas de Modificación y Extensibilidad:**
   - Para modificar los colores globales de toda la plataforma, edite exclusivamente los tokens del bloque `:root` al inicio del archivo; evite escribir colores hexadecimales fijos en reglas individuales.
   - Para ajustar el ancho del panel lateral izquierdo del visor, modifique la variable `--ancho-consola-gis: 380px;`.

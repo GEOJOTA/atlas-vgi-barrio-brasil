@@ -156,61 +156,56 @@ flowchart LR
     end
 
     subgraph OUT_CSS["3. OUTPUT"]
-        WCAG_UI["Interfaz con Contraste WCAG 2.1 Nivel AAA"]
+        WCAG_UI["Interfaz con Conformidad WCAG 2.1 (Nivel AA General / Nivel AAA Tipográfico)"]
         MULTI_DEV["Visualización Adaptativa en Escritorio, Tablet y Móvil"]
     end
 
     IN_CSS --> PROC_CSS --> OUT_CSS
 ```
 
-El Atlas VGI implementa un sistema de diseño institucional sobrio, estructurado en CSS3 nativo puro en `src/css/estilos.css`, diseñado para garantizar legibilidad analítica y cumplir con el estándar internacional de accesibilidad **WCAG 2.1 Nivel AAA**.
+El Atlas VGI implementa un sistema de diseño institucional sobrio, estructurado en CSS3 nativo puro en `src/css/estilos.css`, diseñado para garantizar legibilidad analítica y cumplir formalmente con el estándar internacional de accesibilidad **WCAG 2.1 (Nivel AA en el 100 % de los componentes y acentos cromáticos [4,58:1 a 8,87:1], y Nivel AAA en todo el contraste tipográfico de lectura [9,43:1 a 19,00:1])**.
 
 ### 29.1. Diccionario Completo de Tokens de Diseño en `:root`
-Todas las variables visuales están centralizadas en las primeras 75 líneas de `src/css/estilos.css`:
+Todas las variables visuales están centralizadas en el bloque `:root` de `src/css/estilos.css`:
 
 ```css
 :root {
   /* ==========================================================================
      PALETA CROMÁTICA INSTITUCIONAL Y SEMÁNTICA
      ========================================================================== */
-  --musgo: #0284c7;           /* Azul cian táctico para acentos primarios, foco y estados activos */
+  --musgo: #06b6d4;           /* Cian táctico para acentos primarios, foco y estados activos */
+  --agua: #38bdf8;            /* Azul cielo brillante para enlaces, pestañas e indicadores */
   --esmeralda: #10b981;       /* Verde esmeralda para descargas, confirmaciones y 100% OK */
-  --ocre: #f59e0b;            /* Amarillo ocre para advertencias, pendientes y alertas */
-  --carmesí: #ef4444;         /* Rojo intenso para errores críticos, topología inválida y cierre */
-  --purpura: #8b5cf6;         /* Púrpura para capas normativas y patrimonio histórico */
-  --ambar: #d97706;           /* Ámbar para equipamiento secundario y transporte */
+  --ocre: #f59e0b;            /* Ámbar luminoso para advertencias, pendientes y alertas */
+  --terracota: #f43f5e;       /* Rojo coral intenso para errores críticos y alertas de cierre */
 
   /* ==========================================================================
-     ESCALA DE GRISES Y SUPERFICIES (DARK THEME PROFESIONAL)
+     SUPERFICIES DE MODO OSCURO PROFUNDO (DARK THEME PROFESIONAL)
      ========================================================================== */
-  --bg-dark: #0b111e;         /* Fondo base de la aplicación (azul muy oscuro casi negro) */
-  --papel: #111827;           /* Superficie de tarjetas, paneles laterales y modales (gris 900) */
-  --papel-elevado: #1f2937;   /* Superficie para elementos flotantes, headers y menús (gris 800) */
-  --linea: #374151;           /* Bordes estructurales entre paneles y divisores (gris 700) */
-  --linea-suave: #1f2937;     /* Bordes secundarios internos para grillas de datos */
+  --fondo-app: #0c1527;       /* Fondo base de la aplicación (azul marino profundo, L = 0.0076) */
+  --papel: #132039;           /* Superficie de paneles laterales y vistas principales (L = 0.0147) */
+  --papel-alto: #1a2b4b;      /* Superficie para contenedores elevados y cabeceras (L = 0.0246) */
+  --papel-tarjeta: #223861;   /* Superficie para tarjetas interactivas y fichas (L = 0.0403) */
+  --papel-rehundido: #09101f; /* Superficie para consolas de código y bloques de datos (L = 0.0053) */
+  --linea: #334e7b;           /* Bordes estructurales entre paneles y divisores */
+  --linea-fuerte: #4b6cb7;    /* Bordes destacados para tarjetas activas y cabeceras */
 
   /* ==========================================================================
-     TIPOGRAFÍA Y CONTRASTE DE TEXTO (WCAG AAA)
+     TIPOGRAFÍA Y CONTRASTE DE LECTURA (CERTIFICADO WCAG 2.1 NIVEL AAA: 9.43:1 A 19.00:1)
      ========================================================================== */
-  --tinta: #f9fafb;           /* Texto de máxima jerarquía (blanco cálido para títulos y valores KPI) */
-  --tinta-suave: #9ca3af;     /* Texto de jerarquía secundaria (gris medio para párrafos y etiquetas) */
-  --tinta-tenue: #6b7280;     /* Texto de baja jerarquía (gris oscuro para metadatos y pies de página) */
+  --tinta: #ffffff;           /* Texto principal (blanco puro, L = 1.0000; 11.63:1 a 19.00:1 AAA) */
+  --tinta-suave: #f8fafc;     /* Texto secundario (blanco hielo, L = 0.9560; 11.14:1 a 18.20:1 AAA) */
+  --tinta-tenue: #e2e8f0;     /* Texto auxiliar y metadatos (plata claro, L = 0.8012; 9.43:1 a 15.40:1 AAA) */
 
   /* ==========================================================================
-     FAMILIAS TIPOGRÁFICAS
+     FAMILIAS TIPOGRÁFICAS Y DIMENSIONES ESTRUCTURALES
      ========================================================================== */
-  --fuente-texto: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --fuente-datos: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  /* ==========================================================================
-     DIMENSIONES Y RADIOS ESTRUCTURALES
-     ========================================================================== */
-  --ancho-consola-gis: 380px; /* Ancho fijo de la consola cartográfica izquierda */
-  --alto-header: 56px;        /* Altura fija de la barra de navegación superior */
-  --radio-sm: 4px;            /* Radio de esquinas para botones pequeños e insignias */
-  --radio-md: 8px;            /* Radio de esquinas para tarjetas de capas y modales */
-  --radio-lg: 14px;           /* Radio de esquinas para contenedores principales */
-  --sombra-elevada: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --fuente-titulo: 'Fraunces', Georgia, serif;
+  --fuente-cuerpo: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --fuente-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --radio: 10px;
+  --radio-sm: 6px;
+  --sombra-panel: 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 ```
 

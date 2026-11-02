@@ -1426,7 +1426,7 @@ def generar_informe_markdown(datos, ruta_salida):
     md.append("    end")
     md.append("    FuentesOficiales --> MotorNormalizacion")
     md.append("    FuentesComunitarias --> MotorNormalizacion")
-    md.append("    MotorNormalizacion --> P[\"Atlas VGI en Producción: Visor Leaflet · 10 Módulos Funcionales · 4 Storyboards (75 Mapas) · XML ISO 19139\"]")
+    md.append("    MotorNormalizacion --> P[\"Atlas VGI en Producción: Visor Leaflet · 10 Módulos Funcionales · 4 Storyboards (83 Mapas) · XML ISO 19139\"]")
     md.append("```\n")
 
     md.append("\n---\n")

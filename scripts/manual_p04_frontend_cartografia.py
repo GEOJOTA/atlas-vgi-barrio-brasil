@@ -540,7 +540,7 @@ nodo-geoabierto/
 │   └── bip_inversiones_santiago.csv                                  # Inversión pública MIDESO BIP
 ├── docs/                                   # Documentación formal y entregables (sincronizado con src/docs/)
 │   ├── geodatabase_completa_atlas_vgi.zip  # Paquete maestro ZIP (542,35 MB; 134 capas del visor y 257 archivos)
-│   ├── ANALISIS_METACALIDAD.md             # Informe técnico de calidad ISO 19157 (95.41% IGV)
+│   ├── ANALISIS_METACALIDAD.md             # Informe técnico de calidad ISO 19157 (95,4 % IGV; 91 A+ y 43 A)
 │   ├── ARQUITECTURA.md                     # Memoria de diseño de software
 │   ├── BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md   # Catálogo de 125 fuentes bibliográficas APA 7ª ed.
 │   ├── GUIA_BASE_DATOS_SUPABASE.md         # Manual de administración de PostGIS

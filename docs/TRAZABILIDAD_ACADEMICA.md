@@ -3,7 +3,7 @@
 
 * **Plataforma Web en Producción (CDN Primario):** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * **Repositorio Espejo (GitHub Pages):** [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* **Cobertura del Sistema:** **134 Capas Operativas** (`124` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) · **140 Descriptores ISO 19110:2016** (`54` Oficiales + `86` Brechas VGI) · **5 Dimensiones Analíticas** · **4 Storyboards (75 Cartografías)** · **10 Módulos (`01` al `10`)**.
+* **Cobertura del Sistema:** **134 Capas Operativas** (`124` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) · **140 Descriptores ISO 19110:2016** (`54` Oficiales + `86` Brechas VGI) · **5 Dimensiones Analíticas** · **4 Storyboards (83 Cartografías)** · **10 Módulos (`01` al `10`)** · **Accesibilidad WCAG 2.1 (Nivel AA General / Nivel AAA Tipográfico)**.
 
 ---
 
@@ -183,12 +183,13 @@ Donde:
   S_cualitativo(i)  = 0.30 * MC(i)     + 0.20 * CC(i)     + 0.25 * LL(i)    + 0.15 * RG(i)       + 0.10 * AI(i)
 ```
 
-### Resultados Consolidados de la Auditoría (`docs/ANALISIS_METACALIDAD.md`):
+### Resultados Consolidados de la Auditoría (`docs/ANALISIS_METACALIDAD.md` y `docs/wlc_metacalidad_ranking.csv`):
 * **Total de coberturas evaluadas:** **`134` capas** (`124` Oficiales + `10` VGI).
-* **Índice Global de Calidad Geográfica (`IGV`):** **`95,38%` (`Grado A+ Excelente`)**.
-  * **Pilar Cuantitativo Espacial (`50%`):** **`96,67%`** (`Topología OGC = 99,89%`, `Completitud Tabular = 97,02%`, `Integridad Posicional = 99,79%`).
-  * **Pilar Cualitativo de Metadatos (`50%`):** **`94,10%`** (`Metadatos Núcleo MC = 96,33%`, `Conformidad CC = 93,96%`, `Linaje Legal LL = 98,16%`, `Accesibilidad AI = 97,31%`).
-* **Distribución por Grado ISO 19157:** **`91` capas en Grado A+ (`68,9%`)** y **`41` capas en Grado A (`31,1%`)**, con **`0` capas en Grado B o C (`0,0%`)**.
+* **Índice Global de Calidad y MetaCalidad (`IGV` / `IGMC`):** **`95,4 %`** (`95,40 %`, **`Grado A+ Excelente`**).
+  * **Pilar Cuantitativo Espacial (`50 %`):** **`96,7 %`** (`96,68 %`: `Topología OGC = 99,9 %`, `Completitud Tabular = 97,1 %`, `Integridad Posicional = 99,8 %`, `Estructura y Esquema = 86,5 %`, `Granularidad Geométrica = 95,1 %`).
+  * **Pilar Cualitativo de Metadatos (`50 %`):** **`94,1 %`** (`94,12 %`: `Metadatos Núcleo MC = 96,4 %`, `Conformidad CC = 94,0 %`, `Linaje Legal LL = 98,0 %`, `Resolución Geodésica RG = 81,2 %`, `Accesibilidad Operativa AI = 97,4 %`).
+* **Distribución por Grado ISO 19157:** **`91` capas en Grado A+ (`67,9 %`)** y **`43` capas en Grado A (`32,1 %`)**, con **`0` capas en Grado B o C (`0,0 %`)**.
+* **Correlaciones Lineales de Pearson (`docs/correlacion_dimensiones_calidad.csv`):** Independencia ortogonal entre consistencia topológica y completitud tabular (`r = +0,038`) y entre topología e integridad posicional (`r = -0,036`); correlación positiva moderada entre linaje y accesibilidad operativa (`r = +0,362`) y entre completitud y estructura de esquema (`r = +0,337`); correlación positiva débil entre completitud y linaje (`r = +0,111`); y correlación inversa moderada entre conformidad semántica y linaje (`r = -0,512`).
 * **Entregables verificables generados en `docs/` y `src/docs/`:**
   * [`docs/ANALISIS_METACALIDAD.md`](docs/ANALISIS_METACALIDAD.md)
   * [`docs/matriz_metacalidad.json`](docs/matriz_metacalidad.json)
@@ -200,11 +201,11 @@ Donde:
 
 ## 6. Aplicación Territorial en el Caso de Estudio: Barrio Brasil, Campus UAH y Santiago
 
-En el área de estudio del Barrio Brasil y el entorno del Campus Universidad Alberto Hurtado (`data/atlas_vgi_barrio_brasil_uah_completo.geojson` y `data/resumen_catastro_vgi.csv`), las **10 macrocategorías VGI** consolidan **3.677 entidades locales** (y **1.552.144 entidades** en los extractos metropolitanos `data/capa_osm_rm_cat01_educacion.geojson` a `cat10_cobertura_suelo.geojson`), las cuales se articulan con las **124 capas oficiales** en los **4 Storyboards Territoriales (`75` cartografías temáticas)** del **Módulo 05**:
+En el área de estudio del Barrio Brasil y el entorno del Campus Universidad Alberto Hurtado (`data/atlas_vgi_barrio_brasil_uah_completo.geojson` y `data/resumen_catastro_vgi.csv`), las **10 macrocategorías VGI** consolidan **3.677 entidades locales** (y **1.552.144 entidades** en los extractos metropolitanos `data/capa_osm_rm_cat01_educacion.geojson` a `cat10_cobertura_suelo.geojson`), las cuales se articulan con las **124 capas oficiales** en los **4 Storyboards Territoriales (`83` cartografías temáticas)** del **Módulo 05**:
 
-1. **Storyboard 01 (`11` mapas):** Densidad de Kernel (`KDE`) de equipamientos educativos, salud, comercio, patrimonio y accesibilidad peatonal.
+1. **Storyboard 01 (`14` mapas):** Densidad de Kernel (`KDE`) de equipamientos educativos, salud, comercio, patrimonio, semáforos UOCT, proyectos BIP y accesibilidad peatonal.
 2. **Storyboard 02 (`11` mapas):** Autocorrelación espacial local (`LISA` / `I de Moran`) entre densidad VGI y coberturas oficiales a escala de manzana (`data/matriz_sintesis_barrio_brasil_manzanas.geojson`).
-3. **Storyboard 03 (`29` mapas):** Demografía y habitabilidad del Censo 2024 (`data/ide_censo2024_manzanas.geojson`), vulnerabilidad del Registro Social de Hogares (`data/RSH_*_UV_2026_*.geojson`) e inversión pública BIP (`data/bip_inversiones_santiago.csv`).
+3. **Storyboard 03 (`34` mapas):** Demografía y habitabilidad del Censo 2024 (`data/ide_censo2024_manzanas.geojson`), vulnerabilidad del Registro Social de Hogares (`data/RSH_*_UV_2026_*.geojson`) e inversión pública BIP (`data/bip_inversiones_santiago.csv`).
 4. **Storyboard 04 (`24` mapas):** Metabolismo urbano, Catastro SUBDERE RSD 2024 (`data/subdere_rsd_*.geojson`), aseo municipal, ruido ambiental MMA (`data/mma_ruido_ambiental_santiago.geojson`) y red de semáforos UOCT (`data/semaforos_rm_uoct_2026.geojson`).
 
 ---

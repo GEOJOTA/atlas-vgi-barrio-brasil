@@ -108,7 +108,7 @@ flowchart LR
 * **Componentes Ejecutados:**
   - Descarga, normalización y geoprocesamiento de **134 coberturas vectoriales (124 oficiales del Estado de Chile + 10 VGI comunitarias)**, totalizando 3,33 GB de datos en EPSG:4326 y EPSG:32719.
   - Almacenamiento espacial estructurado en clúster relacional PostgreSQL 17 + PostGIS 3.3 (Supabase Cloud) con más de 1.552.000 entidades indexadas mediante árboles GiST y claves JSONB con índices GIN.
-  - Formulación y ejecución del **Modelo de MetaCalidad WLC v2.0 bajo norma ISO 19157:2013**, integrando 5 componentes cuantitativos (topología, completitud, geodésica, esquema y granularidad) y 5 componentes cualitativos (metadatos núcleo, linaje, conformidad ISO, escala y accesibilidad), certificando un **96,55% / 97,88% de metacalidad global (Grado A+ Excelente)**.
+  - Formulación y ejecución del **Modelo de MetaCalidad WLC v2.0 bajo norma ISO 19157:2013**, integrando 5 componentes cuantitativos (topología, completitud, geodésica, esquema y granularidad; promedio **96,7 %**) y 5 componentes cualitativos (metadatos núcleo, linaje, conformidad ISO, escala y accesibilidad; promedio **94,1 %**), certificando un índice global único (**IGV / IGMC**) de **95,4 % (Grado A+ Excelente: 91 capas en Grado A+ y 43 capas en Grado A sobre las 134 coberturas)**.
   - Inyección algorítmica universal del **Esquema Maestro de 14 Atributos Normalizados ISO** en la totalidad de capas vectoriales para descargas transparentes.
 
 ```mermaid

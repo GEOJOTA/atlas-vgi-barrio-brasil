@@ -126,9 +126,9 @@ const ModuloManual = (() => {
               </div>
             </div>
             <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:10px; padding:14px;">
-              <div style="font-size:1.35rem; font-weight:800; color:#34d399;">5 Dimensiones y 4 Storyboards (75 Mapas)</div>
+              <div style="font-size:1.35rem; font-weight:800; color:#34d399;">5 Dimensiones y 4 Storyboards (83 Mapas)</div>
               <div style="font-size:0.85rem; color:var(--tinta-suave); margin-top:4px;">
-                Estructuración multidimensional y 4 storyboards temáticos con 75 cartografías sobre densidad KDE, clusters LISA, habitabilidad censal y metabolismo urbano.
+                Estructuración multidimensional y 4 storyboards temáticos con 83 cartografías sobre densidad KDE, clusters LISA, habitabilidad censal y metabolismo urbano.
               </div>
             </div>
           </div>
@@ -231,7 +231,7 @@ const ModuloManual = (() => {
               <div>
                 <span style="font-size:0.74rem; font-weight:800; color:#c084fc;">MÓDULO 05</span>
                 <h4 style="margin:4px 0 6px 0;">Indicadores &amp; Storyboards</h4>
-                <p style="font-size:0.84rem; color:var(--tinta-suave); line-height:1.55;">Sistematización de las 134 coberturas en 5 Dimensiones Analíticas y 4 Storyboards territoriales con 75 cartografías temáticas.</p>
+                <p style="font-size:0.84rem; color:var(--tinta-suave); line-height:1.55;">Sistematización de las 134 coberturas en 5 Dimensiones Analíticas y 4 Storyboards territoriales con 83 cartografías temáticas.</p>
               </div>
               <button type="button" class="accion" onclick="ModuloManual.irAPanel('indicadores')" style="margin-top:10px; font-size:0.8rem;">Abrir Módulo 05 ↗</button>
             </div>
@@ -333,7 +333,7 @@ const ModuloManual = (() => {
 
           <h4 style="color:#38bdf8; margin:14px 0 8px 0;">1. Stack Tecnológico Consolidado</h4>
           <ul style="padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
-            <li><strong>Front-End</strong>: HTML5 semántico estructurado en 10 módulos (pestañas <code>01</code> a <code>10</code>) y CSS3 puro con variables nativas en <code>src/css/estilos.css</code> (diseño táctico oscuro, ratios WCAG 2.1 AA y microcomponentes de geometrías).</li>
+            <li><strong>Front-End</strong>: HTML5 semántico estructurado en 10 módulos (pestañas <code>01</code> a <code>10</code>) y CSS3 puro con variables nativas en <code>src/css/estilos.css</code> (diseño táctico oscuro, conformidad WCAG 2.1 Nivel AA general y Nivel AAA en contraste tipográfico de lectura [9,43:1 a 19,00:1], y microcomponentes de geometrías).</li>
             <li><strong>Lógica de Aplicación</strong>: Vanilla JavaScript ES6+ modular basado en el Patrón de Módulo Revelador (IIFE), encapsulando el estado interno en objetos globales <code>window.Modulo...</code>.</li>
             <li><strong>Motor Cartográfico y Métricas</strong>: Leaflet 1.9.4 articulado con un módulo de reproyección y métricas en <code>src/js/modulos/geodesia.js</code> para la Zona UTM 19 Sur (<code>EPSG:32719</code>; ISO 19111), configurable mediante el Manual de Actualización Técnica.</li>
             <li><strong>Procesamiento y Auditoría</strong>: Suite en Python 3.10+ para verificación topológica, validación de esquemas JSON, cálculo de metacalidad (ISO 19115/19157) y reproyecciones.</li>
@@ -429,7 +429,7 @@ const ModuloManual = (() => {
                 <tr>
                   <td><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/indicadores_analisis.js</code></td>
-                  <td>Módulo 05: Articulación de las 134 capas en <strong>5 Dimensiones Analíticas</strong> y motor de los <strong>4 Storyboards</strong> (75 cartografías, gráficos, SVG y Lightbox).</td>
+                  <td>Módulo 05: Articulación de las 134 capas en <strong>5 Dimensiones Analíticas</strong> y motor de los <strong>4 Storyboards</strong> (83 cartografías, gráficos, SVG y Lightbox).</td>
                   <td>IIFE <code>ModuloIndicadoresAnalisis</code> con arreglos <code>DIMENSIONES</code> y <code>STORYBOARDS</code>, modal de lectura y zoom pan/pinch.</td>
                   <td>Vincular nuevas capas en <code>capasIds</code> o agregar láminas y cartografías en <code>STORYBOARDS</code>.</td>
                 </tr>
@@ -536,7 +536,7 @@ const ModuloManual = (() => {
                 </div>
                 <div style="background:rgba(30,41,59,0.7); border-left:3px solid #f59e0b; padding:10px; border-radius:6px; font-size:0.8rem;">
                   <strong style="color:#fcd34d; display:block; margin-bottom:4px;">2. PROCESAMIENTO (src/js/modulos/indicadores_analisis.js &amp; scripts/empaquetar_base_datos_completa.py)</strong>
-                  Clasificación en 5 Dimensiones Analíticas + Articulación de los 4 Storyboards (75 cartografías) + Empaquetado e indexación SHA-256 de la Geodatabase completa.
+                  Clasificación en 5 Dimensiones Analíticas + Articulación de los 4 Storyboards (83 cartografías) + Empaquetado e indexación SHA-256 de la Geodatabase completa.
                 </div>
                 <div style="background:rgba(30,41,59,0.7); border-left:3px solid #10b981; padding:10px; border-radius:6px; font-size:0.8rem;">
                   <strong style="color:#6ee7b7; display:block; margin-bottom:4px;">3. OUTPUT / RUTAS EN GIT Y WEB</strong>

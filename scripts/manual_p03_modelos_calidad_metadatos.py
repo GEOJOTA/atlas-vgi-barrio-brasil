@@ -238,9 +238,9 @@ De acuerdo al puntaje global obtenido en el modelo WLC v2.0, las capas se certif
 | Rango Numérico (`IGV`) | Grado de Calidad | Dictamen Técnico y Aptitud de Uso |
 | :---: | :---: | :--- |
 | **`IGV ≥ 95.00%`** | **Grado A+ (Excelente)** | **Aptitud Total:** Apta para modelamiento normativo vinculante, toma de decisiones comunales y publicación científica. |
-| **`90.00% ≤ IGV < 95.00%`** | **Grado A (Muy Bueno)** | **Aptitud Operativa:** Apta para planificación territorial general, diagnósticos barriales y análisis espacial multiescalar. |
-| **`80.00% ≤ IGV < 90.00%`** | **Grado B (Aceptable)** | **Aptitud Condicionada:** Requiere curatoría de atributos o densificación de vértices antes de su uso en análisis espacial avanzado. |
-| **`IGV < 80.00%`** | **Grado C (Deficiente)** | **No Apta:** Datos con inconsistencias topológicas severas o ausencia de metadatos; bloqueada para producción cartográfica. |
+| **`85.00% ≤ IGV < 95.00%`** | **Grado A (Muy Bueno)** | **Aptitud Operativa:** Apta para planificación territorial general, diagnósticos barriales y análisis espacial multiescalar. |
+| **`75.00% ≤ IGV < 85.00%`** | **Grado B (Aceptable)** | **Aptitud Condicionada:** Requiere curatoría de atributos o densificación de vértices antes de su uso en análisis espacial avanzado. |
+| **`IGV < 75.00%`** | **Grado C (Deficiente)** | **No Apta:** Datos con inconsistencias topológicas severas o ausencia de metadatos; bloqueada para producción cartográfica. |
 
 ---
 
@@ -249,42 +249,42 @@ De acuerdo al puntaje global obtenido en el modelo WLC v2.0, las capas se certif
 ```mermaid
 flowchart LR
     subgraph IN_CORR["1. INPUT"]
-        MAT_132["docs/matriz_metacalidad.json (134 Capas x 10 Dimensiones WLC v2.0)"]
+        MAT_134["docs/matriz_metacalidad.json (134 Capas x 10 Dimensiones WLC v2.0)"]
         WEIGHTS["Vectores de Ponderación (w_c y w_m)"]
     end
 
     subgraph PROC_CORR["2. PIPELINE ESTADÍSTICO"]
         PEARSON["Cálculo de Matriz de Correlación de Pearson (r_xy)"]
-        ORTHO_TEST["Prueba de Ortogonalidad Pilar 1 vs. Pilar 2 (r = 0.22)"]
+        ORTHO_TEST["Prueba de Independencia Topología vs. Completitud (r = +0.038)"]
         SENS_SIM["Análisis de Sensibilidad y Ordenamiento de Ranking"]
     end
 
     subgraph OUT_CORR["3. OUTPUT"]
         CSV_CORR["docs/correlacion_dimensiones_calidad.csv & docs/correlacion_dimensiones_calidad.png"]
-        DICT_IGV["docs/wlc_metacalidad_resultado.json (IGV Promedio: 95.41% Grado A+)"]
+        DICT_IGV["docs/wlc_metacalidad_resultado.json & wlc_metacalidad_ranking.csv (IGV: 95.4% Grado A+)"]
     end
 
     IN_CORR --> PROC_CORR --> OUT_CORR
 ```
 
 ### 16.1. Matriz de Correlación Lineal de Pearson (`r`)
-Para verificar la independencia ortogonal entre las 5 dimensiones cuantitativas y las 5 dimensiones cualitativas del modelo WLC v2.0, se calculó la matriz de coeficientes de correlación de Pearson (`r`) sobre las 134 capas cartográficas, preservada en `docs/correlacion_dimensiones_calidad.csv`:
+Para verificar la relación estadística entre las 5 dimensiones cuantitativas y las 5 dimensiones cualitativas del modelo WLC v2.0, se calculó la matriz de coeficientes de correlación de Pearson (`r`) sobre las 134 capas cartográficas, preservada en `docs/correlacion_dimensiones_calidad.csv`:
 
 ```text
 r_xy = ∑(i=1..n) [ (x_i - x̄) × (y_i - ȳ) ] / [ √(∑(i=1..n) (x_i - x̄)²) × √(∑(i=1..n) (y_i - ȳ)²) ]
 ```
 
-* **Hallazgo Clave 1 (Ortogonalidad Cuantitativa vs. Cualitativa):** La correlación promedio entre las dimensiones del Pilar 1 (geometría) y las del Pilar 2 (metadatos) es de `r = 0.22`, lo que demuestra que un archivo GeoJSON puede ser geométricamente consistente (topología 100%) pero carecer de linaje y metadatos, o viceversa. Esto justifica plenamente la ponderación al 50% de ambos pilares.
-* **Hallazgo Clave 2 (Completitud vs. Linaje):** Existe una correlación positiva moderada (`r = 0.58`) entre la completitud de atributos y la calidad del linaje, indicando que las instituciones que documentan formalmente sus metodologías tienden a generar tablas de atributos más completas.
+* **Hallazgo Clave 1 (Ortogonalidad Geométrica vs. Atributiva y Documental):** La correlación entre la consistencia topológica (`score_topo`) y la completitud tabular (`score_comp`) es prácticamente nula (`r = +0,038`), al igual que entre topología e integridad posicional (`r = -0,036`). Esto demuestra que un archivo GeoJSON puede ser geométricamente íntegro (topología `99,9 %`) con independencia de su densidad atributiva o documental, justificando la ponderación paritaria (`50 %` / `50 %`) de ambos pilares.
+* **Hallazgo Clave 2 (Asociaciones Estructurales y de Linaje):** Se verifica una correlación positiva moderada entre el linaje normativo (`score_ll`) y la accesibilidad operativa (`score_ai`, `r = +0,362`), así como entre la completitud de atributos (`score_comp`) y la estructura del esquema (`score_estruc`, `r = +0,337`). Por su parte, la correlación entre completitud de atributos (`score_comp`) y linaje (`score_ll`) es positiva débil (`r = +0,111`), mientras que entre conformidad semántica (`score_cc`) y linaje (`score_ll`) se registra una correlación inversa moderada (`r = -0,512`), explicada porque las 10 macrocategorías VGI alcanzan un `98,0 %` de conformidad con el diccionario semántico del Atlas pero un `91,0 %` en linaje administrativo, frente al `98,6 %` en linaje legal y `93,7 %` en conformidad de esquema de las 124 coberturas oficiales del Estado.
 
-### 16.2. Dictamen Global de la Base de Datos del Atlas VGI
-* **Índice Global de Calidad (IGV Promedio):** **95.41%** (Certificación Grado A+ Excelente).
-* **Puntaje Promedio Pilar Cuantitativo Espacial:** **96.72%**.
-* **Puntaje Promedio Pilar Cualitativo de Metadatos:** **94.10%**.
-* **Distribución de Grados:**
-  - Grado A+ (Excelente): **119 capas (90.2%)**.
-  - Grado A (Muy Bueno): **13 capas (9.8%)**.
-  - Grados B o C: **0 capas (0.0%)**.
+### 16.2. Dictamen Global Consolidado de la Base de Datos del Atlas VGI (134 Capas)
+* **Índice Global de Calidad y MetaCalidad (`IGV` / `IGMC` Promedio):** **95,4 %** (`95,40 %`, Certificación Grado A+ Excelente).
+* **Puntaje Promedio Pilar Cuantitativo Espacial (`S_cuant`, 50 %):** **96,7 %** (`96,68 %`: Topología `99,9 %`, Completitud `97,1 %`, Integridad Posicional `99,8 %`, Estructura y Esquema `86,5 %`, Granularidad `95,1 %`).
+* **Puntaje Promedio Pilar Cualitativo de Metadatos (`S_cual`, 50 %):** **94,1 %** (`94,12 %`: Metadatos Núcleo `96,4 %`, Conformidad ISO `94,0 %`, Linaje y Marco Legal `98,0 %`, Resolución Geodésica `81,2 %`, Accesibilidad Operativa `97,4 %`).
+* **Distribución de Grados en las 134 Capas (`91 A+` y `43 A`):**
+  - **Grado A+ (Excelente, `≥ 95,0 %`):** **91 capas (67,9 %)**.
+  - **Grado A (Muy Bueno, `85,0 % – 94,9 %`):** **43 capas (32,1 %)**.
+  - **Grados B o C (`< 85,0 %`):** **0 capas (0,0 %)**.
 
 ---
 
