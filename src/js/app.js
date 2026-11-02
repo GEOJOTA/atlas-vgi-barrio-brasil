@@ -1046,31 +1046,9 @@ const METADATOS_PANELES_NAVEGACION = {
 };
 
 function configurarNavegacion() {
-  // Inicializar tema claro institucional por defecto (modo oscuro como opción secundaria)
-  const temaGuardado = localStorage.getItem('nodo-vgi:tema') || 'claro';
-  const aplicarTema = (tema) => {
-    if (tema === 'oscuro') {
-      document.documentElement.setAttribute('data-tema', 'oscuro');
-    } else {
-      document.documentElement.removeAttribute('data-tema');
-    }
-    const txtToggle = document.getElementById('texto-toggle-tema');
-    const btnToggle = document.getElementById('btn-toggle-tema');
-    if (txtToggle) {
-      txtToggle.textContent = tema === 'oscuro' ? 'Modo claro' : 'Modo oscuro';
-    }
-    if (btnToggle) {
-      btnToggle.setAttribute('aria-pressed', tema === 'oscuro' ? 'true' : 'false');
-    }
-  };
-  aplicarTema(temaGuardado);
-
-  document.getElementById('btn-toggle-tema')?.addEventListener('click', () => {
-    const actual = document.documentElement.getAttribute('data-tema') === 'oscuro' ? 'oscuro' : 'claro';
-    const nuevo = actual === 'oscuro' ? 'claro' : 'oscuro';
-    localStorage.setItem('nodo-vgi:tema', nuevo);
-    aplicarTema(nuevo);
-  });
+  // Asegurar el diseño visual oscuro original sin sobrescrituras de tema claro
+  document.documentElement.removeAttribute('data-tema');
+  try { localStorage.removeItem('nodo-vgi:tema'); } catch (e) {}
 
   // Modal de Glosario de Siglas
   const modalGlosario = document.getElementById('modal-glosario-siglas');
@@ -1101,17 +1079,20 @@ function configurarNavegacion() {
       vistaNombre: panelId
     };
 
-    // Actualizar botones de subpestañas
+    // Actualizar botones de subpestañas: mostrar únicamente las subpestañas de la sección activa
     const botonesNav = Array.from(new Set(document.querySelectorAll('#lista-navegacion button, .barra-pestanas-profundidad button')));
     botonesNav.forEach(b => {
       const coincide = b.dataset.panel === panelId;
+      const perteneceGrupo = !b.dataset.grupo || b.dataset.grupo === infoNav.grupo;
+      b.style.display = perteneceGrupo ? 'inline-flex' : 'none';
       b.setAttribute('aria-current', coincide ? 'true' : 'false');
       b.classList.toggle('activa', coincide);
     });
 
     // Actualizar los 5 botones de grupo por tarea
     document.querySelectorAll('.btn-grupo-tarea').forEach(btnGrupo => {
-      const coincideGrupo = btnGrupo.dataset.grupoTarea === infoNav.grupo;
+      const grupoBtn = btnGrupo.dataset.grupoTarea || btnGrupo.dataset.grupoNav;
+      const coincideGrupo = grupoBtn === infoNav.grupo;
       btnGrupo.classList.toggle('activo', coincideGrupo);
       btnGrupo.setAttribute('aria-expanded', coincideGrupo ? 'true' : 'false');
     });

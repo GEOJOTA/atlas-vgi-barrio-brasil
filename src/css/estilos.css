@@ -1,113 +1,69 @@
 /*
   ==========================================================================
   Nodo GeoAbierto — Atlas de Información Geográfica Voluntaria
-  Hoja de Estilos Institucional, Sobria y de Alta Legibilidad (WCAG 2.1 AAA)
+  Hoja de Estilos de Accesibilidad Universal, Alto Contraste y Legibilidad (WCAG AAA)
   ==========================================================================
-  Tema claro cálido institucional por defecto (#f7f5f0 / #ffffff / azul profundo #1e3a5f
-  y acento ocre/terracota #b45309 / #b91c1c), con modo oscuro opcional secundario
-  (html[data-tema="oscuro"]). Sin brillos neón ni fondos de partículas.
+  Diseño optimizado para legibilidad inmediata por personas que usan lentes o tienen
+  baja visión, con tipografía grande, jerarquías cromáticas por módulo, cajas y 
+  cuadrados elevados con bordes reforzados y amplio espaciado holgado sin compresión.
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
 
 :root {
-  /* Tipografía con carácter: Serif humanista para títulos, Sans legible para cuerpo, Mono solo para código/archivos */
+  /* Tipografía con carácter y jerarquía clara: Serif para títulos, Sans humanista para cuerpo, Mono para datos/código */
   --fuente-titulos: 'Fraunces', Georgia, 'Times New Roman', serif;
   --fuente-lectura: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --fuente-datos: 'JetBrains Mono', Consolas, monospace;
+  --fuente-datos: 'JetBrains Mono', 'IBM Plex Mono', Consolas, monospace;
 
-  /* Tema Claro Cálido e Institucional (Por Defecto) */
-  --fondo-app: #f7f5f0;         /* Blanco roto / papel cálido institucional */
-  --papel: #ffffff;             /* Nivel 1: Superficie blanca limpia */
-  --papel-alto: #f1efe9;        /* Nivel 2: Fondo secundario cálido */
-  --papel-tarjeta: #ffffff;     /* Nivel 3: Tarjetas y fichas */
-  --papel-hover: #eae6dd;       /* Nivel 4: Hover sutil */
-  --papel-rehundido: #f8fafc;   /* Inputs y áreas de formulario */
+  /* Paleta Táctica de Alto Contraste con Mayor Luminosidad y Blanco */
+  --fondo-app: #0c1527;         /* Base Slate-900 Iluminada */
+  --papel: #132039;             /* Nivel 1: Contenedor Slate-Navy Elevado */
+  --papel-alto: #1a2b4b;        /* Nivel 2: Sección Elevada con Mayor Claridad */
+  --papel-tarjeta: #223861;      /* Nivel 3: Tarjetas y Cuadrados */
+  --papel-hover: #2e4a7d;       /* Nivel 4: Hover Activo */
+  --papel-rehundido: #09101f;   /* Rehundido: Inputs y Consola */
 
-  /* Texto de Alto Contraste (WCAG 2.1 AAA > 8,5:1 sobre fondo claro) */
-  --tinta: #0f172a;             /* Texto principal pizarra profunda */
-  --tinta-suave: #1e293b;       /* Texto secundario de alta lectura */
-  --tinta-tenue: #334155;       /* Notas y etiquetas auxiliares */
+  /* Paleta Tipográfica Nítida para Usuarios con Lentes */
+  --tinta: #ffffff;             /* Texto Principal Blanco Puro (Máximo Contraste) */
+  --tinta-suave: #f8fafc;       /* Subtítulos y Texto Secundario (Blanco Nítido / Slate-50) */
+  --tinta-tenue: #e2e8f0;       /* Etiquetas y Notas Auxiliares (Slate-200) */
 
-  /* Bordes Finos y Sobrios */
-  --linea: #d6d3cb;
-  --linea-fuerte: #94a3b8;
-  --linea-tarjeta: #dcd9d0;
+  /* Bordes Ricos Estructurados con Mayor Blancura y Contraste */
+  --linea: rgba(255, 255, 255, 0.35);
+  --linea-fuerte: rgba(255, 255, 255, 0.70);
+  --linea-tarjeta: rgba(255, 255, 255, 0.45);
 
-  /* Paleta Institucional: Azul Profundo Principal + Acento Ocre y Terracota */
-  --musgo: #1e3a5f;             /* Azul profundo institucional (color principal) */
-  --musgo-oscuro: #152945;
-  --musgo-claro: rgba(30, 58, 95, 0.09);
+  /* Acentos Cromáticos Neón Distintivos por Módulo */
+  --musgo: #06b6d4;             /* Cyan Neón (Visor & Principal) */
+  --musgo-oscuro: #0891b2;
+  --musgo-claro: rgba(6, 182, 212, 0.22);
 
-  --agua: #1d4ed8;              /* Azul técnico de apoyo */
-  --agua-oscuro: #1e40af;
-  --agua-claro: rgba(29, 78, 216, 0.09);
+  --agua: #38bdf8;              /* Sky Neón (Consultas & Metadatos) */
+  --agua-oscuro: #0284c7;
+  --agua-claro: rgba(56, 189, 248, 0.22);
 
-  --ocre: #b45309;              /* Acento Ocre / Terracota cálido */
-  --ocre-claro: rgba(180, 83, 9, 0.10);
+  --ocre: #f59e0b;              /* Amber Neón (Overpass & Advertencias) */
+  --ocre-claro: rgba(245, 158, 11, 0.22);
 
-  --alerta: #b91c1c;            /* Terracota / Rojo institucional */
-  --alerta-claro: rgba(185, 28, 28, 0.09);
+  --alerta: #f43f5e;            /* Crimson Neón (Restricciones & UMap) */
+  --alerta-claro: rgba(244, 63, 94, 0.22);
 
-  --esmeralda: #15803d;         /* Verde bosque institucional */
-  --esmeralda-claro: rgba(21, 128, 61, 0.10);
+  --esmeralda: #10b981;         /* Emerald Neón (GBIF & Calidad) */
+  --esmeralda-claro: rgba(16, 185, 129, 0.22);
 
-  --violeta: #4338ca;           /* Índigo sobrio */
-  --violeta-claro: rgba(67, 56, 202, 0.09);
+  --violeta: #a855f7;           /* Purple Neón (ohsome & Trazabilidad) */
+  --violeta-claro: rgba(168, 85, 247, 0.22);
 
-  --teal: #0f766e;              /* Verde azulado sobrio */
+  --teal: #0d9488;              /* Teal Turquesa (Diccionario) */
 
-  /* Sombras Suaves y Bordes Finos (Sin resplandores luminosos) */
-  --radio-borde: 10px;
-  --radio-sm: 6px;
-  --sombra-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
-  --sombra-md: 0 2px 8px rgba(15, 23, 42, 0.07);
-  --sombra-lg: 0 6px 20px rgba(15, 23, 42, 0.09);
-  --glass-filter: none;
-}
-
-/* Modo Oscuro como Opción Secundaria */
-html[data-tema="oscuro"] {
-  --fondo-app: #0f172a;
-  --papel: #1e293b;
-  --papel-alto: #263349;
-  --papel-tarjeta: #1e293b;
-  --papel-hover: #334155;
-  --papel-rehundido: #09101f;
-
-  --tinta: #f8fafc;
-  --tinta-suave: #e2e8f0;
-  --tinta-tenue: #cbd5e1;
-
-  --linea: #334155;
-  --linea-fuerte: #64748b;
-  --linea-tarjeta: #334155;
-
-  --musgo: #38bdf8;
-  --musgo-oscuro: #0284c7;
-  --musgo-claro: rgba(56, 189, 248, 0.15);
-
-  --agua: #60a5fa;
-  --agua-oscuro: #3b82f6;
-  --agua-claro: rgba(96, 165, 250, 0.15);
-
-  --ocre: #f59e0b;
-  --ocre-claro: rgba(245, 158, 11, 0.15);
-
-  --alerta: #f87171;
-  --alerta-claro: rgba(248, 113, 113, 0.15);
-
-  --esmeralda: #34d399;
-  --esmeralda-claro: rgba(52, 211, 153, 0.15);
-
-  --violeta: #a78bfa;
-  --violeta-claro: rgba(167, 139, 250, 0.15);
-
-  --teal: #2dd4bf;
-
-  --sombra-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
-  --sombra-md: 0 4px 14px rgba(0, 0, 0, 0.45);
-  --sombra-lg: 0 10px 28px rgba(0, 0, 0, 0.55);
+  /* Sombras Tácticas y Radios Cómodos */
+  --radio-borde: 14px;
+  --radio-sm: 8px;
+  --sombra-sm: 0 4px 10px rgba(0, 0, 0, 0.4);
+  --sombra-md: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 2px rgba(255, 255, 255, 0.25);
+  --sombra-lg: 0 22px 50px rgba(0, 0, 0, 0.65), 0 0 35px rgba(6, 182, 212, 0.25);
+  --glass-filter: blur(20px);
 }
 
 * {
@@ -120,154 +76,234 @@ html, body {
   background: var(--fondo-app);
   color: var(--tinta);
   font-family: var(--fuente-lectura);
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: 16px;              /* Base Font Size Ampliada */
+  line-height: 1.68;            /* Espaciado Holgado */
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 body {
   background-color: var(--fondo-app);
-  background-image: none;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 65%),
+    radial-gradient(circle at 10% 25%, rgba(6, 182, 212, 0.14) 0%, transparent 50%),
+    radial-gradient(circle at 90% 75%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  background-attachment: fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--fuente-titulos);
-  color: var(--tinta);
-  letter-spacing: -0.015em;
+  color: #ffffff;
+  letter-spacing: -0.02em;
   margin-top: 0;
 }
 
-h1 { font-size: 2.0rem; font-weight: 700; line-height: 1.25; }
-h2 { font-size: 1.65rem; font-weight: 700; line-height: 1.3; }
-h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.35; }
-h4 { font-size: 1.12rem; font-weight: 600; line-height: 1.4; }
+h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.25; }
+h2 { font-size: 2.0rem; font-weight: 800; line-height: 1.3; }
+h3 { font-size: 1.5rem; font-weight: 800; line-height: 1.35; }
+h4 { font-size: 1.22rem; font-weight: 700; line-height: 1.4; }
 
 a {
   color: var(--musgo);
   text-decoration: underline;
-  text-underline-offset: 3px;
-  font-weight: 600;
-  transition: color 0.15s ease;
+  text-underline-offset: 4px;
+  font-weight: 700;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 a:hover {
-  color: var(--ocre);
-  text-shadow: none;
+  color: var(--agua);
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
 }
 
 a:focus, button:focus, input:focus, select:focus, textarea:focus {
-  outline: 2px solid var(--musgo);
-  outline-offset: 2px;
-  box-shadow: none;
+  outline: 3px solid var(--musgo);
+  outline-offset: 3px;
+  box-shadow: 0 0 18px rgba(6, 182, 212, 0.6);
 }
 
 /* ==========================================================================
-   INTRODUCCIÓN Y TARJETAS SOBRIAS (SIN EFECTO DE VIDRIO NI DEGRADADOS)
+   HERO / INTRODUCCIÓN PRINCIPAL EXPANDIDA Y ELEVADA
    ========================================================================== */
 
 .hero-introduccion-atlas {
-  background: var(--papel);
-  border: 1px solid var(--linea);
-  border-radius: var(--radio-borde);
-  padding: 20px 24px;
-  margin-bottom: 18px;
-  box-shadow: var(--sombra-sm);
+  background: linear-gradient(135deg, rgba(21, 35, 62, 0.94) 0%, rgba(29, 48, 83, 0.90) 100%);
+  border: 2px solid var(--musgo);
+  border-radius: 16px;
+  padding: 34px;
+  margin-bottom: 32px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
   position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  text-align: center;
 }
 
 .insignia-institucional {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--fuente-lectura);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--musgo);
-  background: var(--musgo-claro);
-  border: 1px solid var(--linea);
-  padding: 4px 12px;
-  border-radius: 6px;
-  margin: 0 auto 10px auto;
+  font-family: var(--fuente-datos);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  padding: 6px 16px;
+  border-radius: 8px;
+  margin: 0 auto 14px auto;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.06);
 }
 
 .titulo-hero {
-  font-size: 1.85rem;
-  font-weight: 700;
-  margin: 4px 0 8px 0;
-  color: var(--musgo);
-  background: none;
-  -webkit-text-fill-color: currentColor;
-  line-height: 1.25;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 8px auto 10px auto;
+  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
 }
 
 .subtitulo-hero {
-  font-size: 1.02rem;
+  font-size: 1.15rem;
   color: var(--tinta-suave);
-  margin: 0 0 12px 0;
-  font-weight: 500;
+  margin: 0 auto 24px auto;
+  font-weight: 600;
 }
 
 .grilla-resumen-introduccion {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
-  margin-top: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
 }
 
 .caja-tarjeta-hero {
-  background: var(--papel-alto);
-  border: 1px solid var(--linea);
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  border-radius: 12px;
+  padding: 22px;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 12px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+}
+
+.caja-tarjeta-hero:hover {
+  border-color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 24px rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.caja-tarjeta-hero .icono-hero {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
 }
 
 .caja-tarjeta-hero h3 {
-  font-size: 1.05rem;
-  color: var(--tinta);
-  margin: 0 0 6px 0;
-  font-weight: 700;
+  font-size: 1.18rem;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  font-weight: 800;
 }
 
 .caja-tarjeta-hero p {
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   color: var(--tinta-suave);
   margin: 0;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 /* ==========================================================================
-   BARRA SUPERIOR FIJA DE NAVEGACIÓN POR TAREA Y MIGAS DE PAN
+   BARRA SUPERIOR DE NAVEGACIÓN Y PESTAÑAS DE PROFUNDIDAD (RESPONSIVE PRO)
    ========================================================================== */
 
 .cabecera-principal-atlas {
   width: 100%;
-  background: var(--papel);
-  border-bottom: 1px solid var(--linea);
-  box-shadow: var(--sombra-sm);
+  background: rgba(15, 23, 42, 0.97);
+  backdrop-filter: var(--glass-filter);
+  border-bottom: 2.5px solid var(--musgo);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65), 0 2px 14px rgba(6, 182, 212, 0.25);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
+/* ==========================================================================
+   RECTÁNGULOS BLANCOS DINÁMICOS QUE LLENAN TODO EL ESPACIO VACÍO LATERAL
+   ========================================================================== */
+
 .panel-acento-dinamico {
-  display: none !important;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc((100% - 1560px) / 2);
+  background: #ffffff;
+  border: none;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.2s ease;
+}
+
+.panel-acento-izq {
+  left: 0;
+}
+
+.panel-acento-der {
+  right: 0;
+}
+
+/* Ocultar automáticamente si la pantalla es menor o igual al ancho del contenido (1560px) */
+@media (max-width: 1560px) {
+  .panel-acento-dinamico {
+    display: none !important;
+  }
 }
 
 .barra-pestanas-profundidad {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
-  gap: 6px;
-  padding: 0;
+  justify-content: center;
+  gap: 8px 10px;
+  padding: 10px 20px;
   max-width: 1560px;
   width: 100%;
-  margin: 0;
-  background: transparent;
-  border: none;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: var(--glass-filter);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.25);
   position: relative;
   z-index: 100;
+  pointer-events: auto !important;
+}
+
+@media (max-width: 992px) {
+  .barra-pestanas-profundidad {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    padding: 8px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.barra-pestanas-profundidad::-webkit-scrollbar {
+  height: 5px;
+}
+.barra-pestanas-profundidad::-webkit-scrollbar-thumb {
+  background: var(--musgo);
+  border-radius: 4px;
 }
 
 .pestana-nodo {
@@ -275,53 +311,59 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: var(--papel);
-  border: 1px solid var(--linea);
-  border-radius: 6px;
+  gap: 6px 8px;
+  padding: 7px 13px;
+  background: rgba(26, 41, 74, 0.80);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 9px;
   color: var(--tinta-suave);
-  font-family: var(--fuente-lectura);
-  font-size: 0.86rem;
-  font-weight: 600;
+  font-family: var(--fuente-titulos);
+  font-size: clamp(0.76rem, 0.85vw, 0.88rem);
+  font-weight: 700;
   cursor: pointer !important;
+  pointer-events: auto !important;
   white-space: nowrap;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-  box-shadow: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  position: relative;
+  z-index: 101;
   user-select: none;
 }
 
 .pestana-nodo:hover {
   background: var(--papel-hover);
-  color: var(--musgo);
+  color: #ffffff;
   border-color: var(--musgo);
-  transform: none;
-  box-shadow: none;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(6, 182, 212, 0.4);
 }
 
 .pestana-nodo.activa {
-  background: var(--musgo);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.5) 0%, rgba(16, 185, 129, 0.35) 100%);
   border-color: var(--musgo);
   color: #ffffff;
-  font-weight: 700;
-  box-shadow: none;
+  font-weight: 800;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.55);
 }
 
-html[data-tema="oscuro"] .pestana-nodo.activa {
-  color: #0f172a;
+.pestana-nodo.activa .insignia-nodo {
+  background: rgba(0, 0, 0, 0.85);
+  color: var(--musgo);
+  border: 1px solid var(--musgo);
 }
 
-.pestana-nodo.pestana-secundaria-perfil {
-  opacity: 0.58;
-}
-.pestana-nodo.pestana-destacada-perfil:not(.activa) {
-  border-color: var(--ocre);
-  background: var(--ocre-claro);
-  color: var(--tinta);
+.pestana-nodo .insignia-nodo {
+  font-family: var(--fuente-datos);
+  font-size: clamp(0.72rem, 0.78vw, 0.8rem);
+  padding: 2px 7px;
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 5px;
+  color: var(--musgo);
+  font-weight: 800;
 }
 
 /* ==========================================================================
-   CABECERA PRINCIPAL INSTITUCIONAL
+   CABECERA PRINCIPAL TÁCTICA Y DE COMANDO REFORMULADA (LAYOUT CENTRADO)
    ========================================================================== */
 
 .envoltorio {
@@ -335,9 +377,10 @@ html[data-tema="oscuro"] .pestana-nodo.activa {
 
 .barra-lateral {
   width: 100%;
-  background: var(--papel);
-  border-bottom: 1px solid var(--linea);
-  box-shadow: none;
+  background: rgba(18, 30, 54, 0.98);
+  backdrop-filter: var(--glass-filter);
+  border-bottom: 2.5px solid var(--musgo);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.55), 0 2px 14px rgba(6, 182, 212, 0.25);
   position: relative;
   z-index: 30;
 }
@@ -346,7 +389,7 @@ html[data-tema="oscuro"] .pestana-nodo.activa {
   max-width: 1560px;
   width: 100%;
   margin: 0 auto;
-  padding: 12px 28px 10px 28px;
+  padding: 20px 32px 14px 32px;
 }
 
 .cabecera-fila-marca {
@@ -354,7 +397,7 @@ html[data-tema="oscuro"] .pestana-nodo.activa {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 24px;
 }
 
 .marca {
@@ -363,25 +406,31 @@ html[data-tema="oscuro"] .pestana-nodo.activa {
   margin-bottom: 0;
   background: transparent;
   flex: 1;
-  min-width: 280px;
+  min-width: 320px;
 }
 
 .marca-header {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
 .marca-logo {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #ffffff;
-  padding: 4px;
-  box-shadow: var(--sombra-sm);
-  border: 1px solid var(--linea);
+  padding: 5px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55), 0 0 12px rgba(255, 255, 255, 0.4);
+  border: 2px solid #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.marca-logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65), 0 0 16px rgba(255, 255, 255, 0.6);
 }
 
 .marca-texto {
@@ -391,23 +440,25 @@ html[data-tema="oscuro"] .pestana-nodo.activa {
 
 .marca h1,
 .marca-texto h1 {
-  font-size: 1.28rem;
-  font-weight: 700;
-  margin: 0 0 2px 0;
-  color: var(--musgo);
-  background: none;
-  -webkit-text-fill-color: currentColor;
+  font-size: 1.35rem;
+  font-weight: 900;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 40%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   letter-spacing: -0.01em;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .marca p,
 .marca-texto p {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   line-height: 1.35;
   margin: 0;
   color: var(--tinta-suave);
   font-weight: 500;
+  word-break: break-word;
 }
 
 /* Crédito institucional sobrio en cabecera */
@@ -6094,79 +6145,79 @@ table.tabla-datos tr:hover td {
   }
 }
 
+
 /* ==========================================================================
-   SISTEMA VISUAL INSTITUCIONAL CLARO, NAVEGACIÓN POR TAREA, MIGAS DE PAN,
-   ESTADO VACÍO, BARRA DE PROGRESO Y PAGINACIÓN DE MÓDULOS LARGOS
+   ÍCONOS SVG DE LÍNEA UNIFORME Y NAVEGACIÓN AGRUPADA EN 5 SECCIONES POR TAREA
    ========================================================================== */
 
-/* Íconos SVG de línea coherentes */
-.ico-svg {
+.icono-svg {
   display: inline-block;
   vertical-align: middle;
   flex-shrink: 0;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  stroke: currentColor;
+  fill: none;
 }
 
-/* Controles de utilidad en cabecera (Selector de perfil, Glosario, Modo oscuro) */
 .cabecera-acciones-utilidad {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
-.selector-perfil-compacto {
+.control-perfil-cabecera {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--papel-alto);
-  border: 1px solid var(--linea);
-  border-radius: 6px;
-  padding: 4px 10px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  padding: 5px 12px;
+  border-radius: 9px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
-.etiqueta-perfil-nav {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+.etiqueta-perfil-cabecera {
   font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--tinta-suave);
+  font-weight: 700;
+  color: var(--agua);
+  margin: 0;
   white-space: nowrap;
 }
 
-.selector-perfil-compacto select {
-  background: var(--papel);
-  color: var(--tinta);
-  border: 1px solid var(--linea);
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 0.85rem;
-  font-weight: 600;
+.control-perfil-cabecera select {
+  padding: 4px 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: var(--papel-rehundido);
+  color: #ffffff;
   cursor: pointer;
 }
 
 .btn-utilidad-cabecera {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: var(--papel-alto);
-  border: 1px solid var(--linea);
-  border-radius: 6px;
-  color: var(--tinta);
+  gap: 7px;
+  padding: 7px 14px;
+  background: rgba(26, 43, 75, 0.88);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  border-radius: 9px;
+  color: #ffffff;
   font-family: var(--fuente-lectura);
   font-size: 0.84rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .btn-utilidad-cabecera:hover {
   background: var(--papel-hover);
   border-color: var(--musgo);
-  color: var(--musgo);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.45);
+  transform: translateY(-1px);
 }
 
 /* Barra principal de 5 secciones por tarea */
@@ -6174,108 +6225,161 @@ table.tabla-datos tr:hover td {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 10px;
   max-width: 1560px;
   width: 100%;
   margin: 0 auto;
-  padding: 8px 28px;
-  background: var(--papel-alto);
-  border-top: 1px solid var(--linea);
-  border-bottom: 1px solid var(--linea);
+  padding: 10px 24px;
+  background: rgba(12, 21, 39, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(6, 182, 212, 0.30);
+  position: relative;
+  z-index: 102;
 }
 
 .btn-grupo-tarea {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 8px 16px;
-  background: var(--papel);
-  border: 1px solid var(--linea);
-  border-radius: 6px;
+  padding: 9px 18px;
+  background: rgba(26, 43, 75, 0.82);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
   color: var(--tinta-suave);
-  font-family: var(--fuente-lectura);
+  font-family: var(--fuente-titulos);
   font-size: 0.92rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
 }
 
 .btn-grupo-tarea:hover {
   background: var(--papel-hover);
   border-color: var(--musgo);
-  color: var(--musgo);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(6, 182, 212, 0.38);
 }
 
 .btn-grupo-tarea.activo {
-  background: var(--musgo);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.55) 0%, rgba(16, 185, 129, 0.40) 100%);
   border-color: var(--musgo);
   color: #ffffff;
-  font-weight: 700;
-}
-
-html[data-tema="oscuro"] .btn-grupo-tarea.activo {
-  color: #0f172a;
+  font-weight: 800;
+  box-shadow: 0 0 22px rgba(6, 182, 212, 0.55);
 }
 
 .btn-grupo-tarea.grupo-destacado-perfil:not(.activo) {
   border-color: var(--ocre);
-  box-shadow: inset 0 -2px 0 var(--ocre);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
 }
 
-/* Barra de migas de pan + subpestañas contextuales */
+/* Subbarra: Migas de pan a la izquierda + Vistas de la sección activa a la derecha */
 .barra-migas-subnavegacion {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 12px 20px;
   max-width: 1560px;
   width: 100%;
   margin: 0 auto;
-  padding: 7px 28px;
-  background: var(--papel);
+  padding: 8px 24px;
+  background: rgba(19, 32, 57, 0.90);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  position: relative;
+  z-index: 101;
 }
 
 .migas-pan {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
+  gap: 8px;
+  font-size: 0.84rem;
   color: var(--tinta-tenue);
+  background: rgba(9, 16, 31, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 5px 12px;
+  border-radius: 8px;
 }
 
+.migas-pan ol {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.migas-pan li {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.migas-pan a,
 .miga-raiz {
-  font-weight: 600;
-  color: var(--tinta-tenue);
+  font-weight: 700;
+  color: var(--agua);
+  text-decoration: none;
 }
 
-.miga-item {
+.migas-pan a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.miga-item,
+#miga-grupo-actual {
   font-weight: 600;
   color: var(--tinta-suave);
 }
 
-.miga-actual {
+.miga-actual,
+#miga-vista-actual {
   font-weight: 700;
-  color: var(--musgo);
-  background: var(--musgo-claro);
-  padding: 2px 8px;
-  border-radius: 4px;
+  color: #ffffff;
+  background: rgba(6, 182, 212, 0.22);
+  border: 1px solid rgba(6, 182, 212, 0.45);
+  padding: 2px 9px;
+  border-radius: 6px;
 }
 
 .miga-separador {
-  color: var(--linea-fuerte);
+  color: var(--musgo);
+  font-weight: 800;
   user-select: none;
 }
 
-/* Franja compacta en portada (el mapa va primero) */
+.barra-migas-subnavegacion .barra-pestanas-profundidad {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   JERARQUÍA, COMPONENTES, PAGINACIÓN Y CARGA BAJO DEMANDA
+   ========================================================================== */
+
 .franja-intro-visor-compacta {
-  background: var(--papel);
-  border: 1px solid var(--linea);
-  border-left: 4px solid var(--musgo);
+  background: linear-gradient(135deg, rgba(19, 32, 57, 0.94) 0%, rgba(26, 43, 75, 0.90) 100%);
+  border: 1.5px solid rgba(6, 182, 212, 0.45);
+  border-left: 5px solid var(--musgo);
   border-radius: var(--radio-borde);
-  padding: 12px 18px;
-  margin-bottom: 14px;
-  box-shadow: var(--sombra-sm);
+  padding: 16px 22px;
+  margin-bottom: 18px;
+  box-shadow: var(--sombra-md);
 }
 
 .intro-visor-principal {
@@ -6283,18 +6387,18 @@ html[data-tema="oscuro"] .btn-grupo-tarea.activo {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 14px;
 }
 
 .titulo-visor-compacto {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--musgo);
-  margin: 0 0 2px 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px 0;
 }
 
 .bajada-visor-compacta {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--tinta-suave);
   margin: 0;
 }
@@ -6307,136 +6411,82 @@ html[data-tema="oscuro"] .btn-grupo-tarea.activo {
 }
 
 .contexto-plegable-portada {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid var(--linea);
-  font-size: 0.88rem;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.9rem;
   color: var(--tinta-suave);
 }
 
 .contexto-plegable-portada summary {
   cursor: pointer;
-  font-weight: 600;
-  color: var(--musgo);
+  font-weight: 700;
+  color: var(--agua);
   user-select: none;
 }
 
 .contenido-plegable-portada {
-  margin-top: 8px;
-  padding: 10px 14px;
-  background: var(--papel-alto);
-  border-radius: 6px;
-  border: 1px solid var(--linea);
+  margin-top: 10px;
+  padding: 12px 16px;
+  background: rgba(9, 16, 31, 0.65);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-/* Cabeceras limpias de módulo y detalles técnicos plegables */
 .cabecera-modulo-limpia {
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--linea);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .cabecera-modulo-limpia h2 {
-  margin: 0 0 4px 0;
-  color: var(--musgo);
-  font-size: 1.55rem;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+  font-size: 1.75rem;
 }
 
 .cabecera-modulo-limpia .descripcion {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 1.0rem;
   color: var(--tinta-suave);
 }
 
 .detalle-estandar-plegable {
-  margin-top: 8px;
-  font-size: 0.86rem;
+  margin-top: 10px;
+  font-size: 0.88rem;
   color: var(--tinta-tenue);
 }
 
 .detalle-estandar-plegable summary {
   cursor: pointer;
-  font-weight: 600;
-  color: var(--musgo);
+  font-weight: 700;
+  color: var(--agua);
 }
 
 .detalle-estandar-plegable p {
-  margin: 6px 0 0 0;
-  padding: 8px 12px;
-  background: var(--papel-alto);
+  margin: 8px 0 0 0;
+  padding: 10px 14px;
+  background: rgba(9, 16, 31, 0.7);
   border-left: 3px solid var(--musgo);
-  border-radius: 4px;
-  color: var(--tinta-suave);
-}
-
-/* Botones de acción: CTA primario con peso visual claro vs secundarios sobrios */
-button.accion,
-a.accion {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 9px 16px;
-  background: var(--musgo);
-  border: 1px solid var(--musgo);
   border-radius: 6px;
-  color: #ffffff;
-  font-family: var(--fuente-lectura);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--sombra-sm);
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
-  text-decoration: none;
-}
-
-html[data-tema="oscuro"] button.accion,
-html[data-tema="oscuro"] a.accion {
-  color: #0f172a;
-}
-
-button.accion:hover,
-a.accion:hover {
-  background: var(--musgo-oscuro);
-  border-color: var(--musgo-oscuro);
-  color: #ffffff;
-  transform: none;
-  box-shadow: var(--sombra-md);
+  color: var(--tinta-suave);
 }
 
 button.accion.primaria-cta,
 a.accion.primaria-cta {
-  background: var(--ocre);
-  border: 1px solid var(--ocre);
-  color: #ffffff !important;
-  font-weight: 700;
-  padding: 10px 20px;
-  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.25);
+  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%) !important;
+  border: 1.5px solid #34d399 !important;
+  color: #09101f !important;
+  font-weight: 800 !important;
+  padding: 10px 20px !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4) !important;
 }
 
 button.accion.primaria-cta:hover,
 a.accion.primaria-cta:hover {
-  background: #92400e;
-  border-color: #92400e;
-  color: #ffffff !important;
-}
-
-button.accion.secundaria,
-a.accion.secundaria {
-  background: var(--papel);
-  border: 1px solid var(--linea-fuerte);
-  color: var(--tinta);
-  font-weight: 600;
-  box-shadow: none;
-}
-
-button.accion.secundaria:hover,
-a.accion.secundaria:hover {
-  background: var(--papel-hover);
-  border-color: var(--musgo);
-  color: var(--musgo);
-  box-shadow: none;
-  transform: none;
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(6, 182, 212, 0.55) !important;
 }
 
 /* Barra de progreso de carga bajo demanda con peso aproximado */
@@ -6447,11 +6497,12 @@ a.accion.secundaria:hover {
   transform: translateX(-50%);
   z-index: 1150;
   width: min(460px, 90%);
-  background: var(--papel);
-  border: 1px solid var(--musgo);
-  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1.5px solid var(--musgo);
+  border-radius: 10px;
   padding: 10px 14px;
   box-shadow: var(--sombra-lg);
+  backdrop-filter: blur(12px);
 }
 
 .progreso-carga-info {
@@ -6460,8 +6511,8 @@ a.accion.secundaria:hover {
   align-items: center;
   gap: 8px;
   font-size: 0.84rem;
-  font-weight: 600;
-  color: var(--tinta);
+  font-weight: 700;
+  color: #ffffff;
   margin-bottom: 6px;
 }
 
@@ -6470,22 +6521,22 @@ a.accion.secundaria:hover {
   font-size: 0.78rem;
   color: var(--ocre);
   background: var(--ocre-claro);
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 2px 7px;
+  border-radius: 5px;
 }
 
 .pista-progreso-carga {
   width: 100%;
   height: 7px;
-  background: var(--papel-alto);
+  background: var(--papel-rehundido);
   border-radius: 999px;
   overflow: hidden;
-  border: 1px solid var(--linea);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .relleno-progreso-carga {
   height: 100%;
-  background: var(--musgo);
+  background: linear-gradient(90deg, var(--musgo), var(--esmeralda));
   transition: width 0.25s ease;
 }
 
@@ -6495,13 +6546,14 @@ a.accion.secundaria:hover {
   bottom: 24px;
   left: 24px;
   z-index: 950;
-  max-width: 420px;
-  background: var(--papel);
-  border: 1px solid var(--linea-fuerte);
-  border-left: 4px solid var(--ocre);
-  border-radius: 10px;
+  max-width: 430px;
+  background: rgba(15, 23, 42, 0.94);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  border-left: 4px solid var(--musgo);
+  border-radius: 12px;
   padding: 14px 16px;
   box-shadow: var(--sombra-lg);
+  backdrop-filter: blur(12px);
 }
 
 .estado-vacio-icono {
@@ -6510,7 +6562,7 @@ a.accion.secundaria:hover {
   justify-content: center;
   width: 34px;
   height: 34px;
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--musgo-claro);
   color: var(--musgo);
   margin-bottom: 6px;
@@ -6519,8 +6571,8 @@ a.accion.secundaria:hover {
 .estado-vacio-titulo {
   margin: 0 0 4px 0;
   font-size: 1.02rem;
-  font-weight: 700;
-  color: var(--tinta);
+  font-weight: 800;
+  color: #ffffff;
 }
 
 .estado-vacio-desc {
@@ -6538,13 +6590,13 @@ a.accion.secundaria:hover {
 
 .btn-sugerencia-vacio {
   padding: 5px 10px;
-  background: var(--papel-alto);
-  border: 1px solid var(--linea-fuerte);
+  background: rgba(26, 43, 75, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.45);
   border-radius: 6px;
-  color: var(--musgo);
+  color: var(--agua);
   font-family: var(--fuente-lectura);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -6552,13 +6604,13 @@ a.accion.secundaria:hover {
 .btn-sugerencia-vacio:hover {
   background: var(--musgo);
   border-color: var(--musgo);
-  color: #ffffff;
+  color: #09101f;
 }
 
 /* Caja de KPI de calidad explicada en lenguaje ciudadano */
 .caja-metacalidad-kpi {
-  background: var(--papel);
-  border: 1px solid var(--linea);
+  background: rgba(19, 32, 57, 0.92);
+  border: 1.5px solid rgba(16, 185, 129, 0.45);
   border-left: 4px solid var(--esmeralda);
   border-radius: var(--radio-borde);
   padding: 18px 20px;
@@ -6569,7 +6621,7 @@ a.accion.secundaria:hover {
 .insignia-calidad-explicada {
   font-size: 0.84rem;
   background: var(--esmeralda-claro);
-  color: var(--esmeralda);
+  color: #34d399;
   padding: 4px 12px;
   border-radius: 6px;
   border: 1px solid var(--esmeralda);
@@ -6577,9 +6629,8 @@ a.accion.secundaria:hover {
   cursor: help;
 }
 
-/* Etiquetas <abbr> con subrayado punteado discreto y cursor de ayuda */
 abbr[title] {
-  text-decoration: underline dotted var(--linea-fuerte);
+  text-decoration: underline dotted rgba(56, 189, 248, 0.65);
   text-underline-offset: 3px;
   cursor: help;
 }
@@ -6603,21 +6654,21 @@ abbr[title] {
 
 .indice-lateral-modulo {
   position: sticky;
-  top: 128px;
-  background: var(--papel);
-  border: 1px solid var(--linea);
+  top: 140px;
+  background: rgba(19, 32, 57, 0.94);
+  border: 1.5px solid rgba(56, 189, 248, 0.35);
   border-radius: var(--radio-borde);
   padding: 16px;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 160px);
   overflow-y: auto;
-  box-shadow: var(--sombra-sm);
+  box-shadow: var(--sombra-md);
 }
 
 .indice-lateral-modulo h4 {
   margin: 0 0 10px 0;
   font-size: 0.95rem;
-  color: var(--musgo);
-  border-bottom: 1px solid var(--linea);
+  color: var(--agua);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
   padding-bottom: 6px;
 }
 
@@ -6640,7 +6691,7 @@ abbr[title] {
   color: var(--tinta-suave);
   font-family: var(--fuente-lectura);
   font-size: 0.84rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
@@ -6651,13 +6702,13 @@ abbr[title] {
 
 .btn-ancla-indice:hover {
   background: var(--papel-hover);
-  color: var(--musgo);
+  color: #ffffff;
 }
 
 .btn-ancla-indice.activo {
   background: var(--musgo-claro);
   border-color: var(--musgo);
-  color: var(--musgo);
+  color: #ffffff;
   font-weight: 700;
 }
 
@@ -6672,9 +6723,9 @@ abbr[title] {
   flex-wrap: wrap;
   gap: 10px;
   padding: 12px 16px;
-  background: var(--papel);
-  border: 1px solid var(--linea);
-  border-radius: 8px;
+  background: rgba(19, 32, 57, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
   margin: 14px 0;
   box-shadow: var(--sombra-sm);
 }
@@ -6689,209 +6740,28 @@ abbr[title] {
 .btn-pagina-nav {
   padding: 6px 12px;
   background: var(--papel-alto);
-  border: 1px solid var(--linea-fuerte);
-  border-radius: 5px;
-  color: var(--tinta);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 6px;
+  color: #ffffff;
   font-size: 0.84rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .btn-pagina-nav:hover:not(:disabled) {
   background: var(--musgo);
   border-color: var(--musgo);
-  color: #ffffff;
+  color: #09101f;
 }
 
 .btn-pagina-nav:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 .btn-pagina-nav.activa {
   background: var(--musgo);
   border-color: var(--musgo);
-  color: #ffffff;
+  color: #09101f;
 }
-
-/* ==========================================================================
-   ADAPTACIÓN INTEGRAL DEL TEMA CLARO INSTITUCIONAL (SOBREESCRITURA DE FONDOS
-   Y TEXTOS HEREDADOS DEL MODO OSCURO NEÓN)
-   ========================================================================== */
-
-html:not([data-tema="oscuro"]) #mapa-atlas {
-  background: #e5e3dc;
-  border: 1px solid var(--linea-fuerte);
-  box-shadow: var(--sombra-md);
-}
-
-html:not([data-tema="oscuro"]) .panel-profundidad-derecha,
-html:not([data-tema="oscuro"]) .barra-herramientas-mapa,
-html:not([data-tema="oscuro"]) .bloque,
-html:not([data-tema="oscuro"]) .caja-cuadrado,
-html:not([data-tema="oscuro"]) .caja-guia-referencia,
-html:not([data-tema="oscuro"]) .ficha-normativa-hud,
-html:not([data-tema="oscuro"]) .caja-tarjeta-normativa,
-html:not([data-tema="oscuro"]) .tarjeta-categoria,
-html:not([data-tema="oscuro"]) .btn-categoria,
-html:not([data-tema="oscuro"]) .btn-sugerencia-ciudadana {
-  background: var(--papel);
-  color: var(--tinta);
-  border: 1px solid var(--linea);
-  box-shadow: var(--sombra-sm);
-}
-
-html:not([data-tema="oscuro"]) .caja-guia-referencia {
-  background: var(--papel-alto);
-  border-left: 4px solid var(--musgo);
-}
-
-html:not([data-tema="oscuro"]) .caja-guia-referencia h4,
-html:not([data-tema="oscuro"]) .valor-normativo-destacado,
-html:not([data-tema="oscuro"]) .tarjeta-categoria h4 {
-  color: var(--tinta);
-}
-
-html:not([data-tema="oscuro"]) .pestanas-profundidad-derecha button {
-  background: var(--papel-alto);
-  border: 1px solid var(--linea);
-  color: var(--tinta-suave);
-}
-
-html:not([data-tema="oscuro"]) .pestanas-profundidad-derecha button.activa {
-  background: var(--musgo);
-  border-color: var(--musgo);
-  color: #ffffff;
-  box-shadow: none;
-}
-
-html:not([data-tema="oscuro"]) .grupo-control-territorio select,
-html:not([data-tema="oscuro"]) select,
-html:not([data-tema="oscuro"]) input[type="text"],
-html:not([data-tema="oscuro"]) input[type="number"],
-html:not([data-tema="oscuro"]) input[type="email"],
-html:not([data-tema="oscuro"]) input[type="password"],
-html:not([data-tema="oscuro"]) textarea {
-  background: #ffffff;
-  border: 1px solid var(--linea-fuerte);
-  color: var(--tinta);
-}
-
-html:not([data-tema="oscuro"]) #sidebar-detalle-bidat {
-  background: #ffffff;
-  border-left: 2px solid var(--musgo);
-  box-shadow: -4px 0 20px rgba(15, 23, 42, 0.12);
-}
-
-html:not([data-tema="oscuro"]) .detalle-tabla tr {
-  border-bottom: 1px solid var(--linea);
-}
-
-html:not([data-tema="oscuro"]) .detalle-valor {
-  color: var(--tinta);
-}
-
-/* Tarjetas de dimensiones y relatos cartográficos en tema claro */
-html:not([data-tema="oscuro"]) .tarjeta-dimension-grande,
-html:not([data-tema="oscuro"]) .tarjeta-storyboard-cuadrada,
-html:not([data-tema="oscuro"]) .contenedor-acordeon-dimension,
-html:not([data-tema="oscuro"]) .seccion-galeria-cartografica,
-html:not([data-tema="oscuro"]) .item-cartografia-galeria,
-html:not([data-tema="oscuro"]) .bloque-narrativo-intercalado,
-html:not([data-tema="oscuro"]) .lamina-storyboard-modal,
-html:not([data-tema="oscuro"]) .lightbox-figura-contenedor,
-html:not([data-tema="oscuro"]) .modal-bd-contenedor {
-  background: #ffffff !important;
-  color: var(--tinta) !important;
-  border: 1px solid var(--linea) !important;
-  box-shadow: var(--sombra-md) !important;
-}
-
-html:not([data-tema="oscuro"]) .nombre-dimension,
-html:not([data-tema="oscuro"]) .titulo-tarjeta-storyboard,
-html:not([data-tema="oscuro"]) .titulo-modulo-indicadores,
-html:not([data-tema="oscuro"]) .titulo-storyboards,
-html:not([data-tema="oscuro"]) .subtitulo-centrado-seccion,
-html:not([data-tema="oscuro"]) .titulo-thumb-carto,
-html:not([data-tema="oscuro"]) .titulo-bloque-intercalado,
-html:not([data-tema="oscuro"]) .modal-bd-titulo,
-html:not([data-tema="oscuro"]) .lightbox-titulo {
-  color: var(--musgo) !important;
-  background: none !important;
-  -webkit-text-fill-color: currentColor !important;
-}
-
-html:not([data-tema="oscuro"]) .desc-dimension,
-html:not([data-tema="oscuro"]) .bajada-tarjeta-storyboard,
-html:not([data-tema="oscuro"]) .bajada-modulo-indicadores,
-html:not([data-tema="oscuro"]) .bajada-storyboards,
-html:not([data-tema="oscuro"]) .sub-thumb-carto,
-html:not([data-tema="oscuro"]) .lectura-territorial-carto {
-  color: var(--tinta-suave) !important;
-}
-
-html:not([data-tema="oscuro"]) .icono-dimension-gigante {
-  background: var(--musgo-claro) !important;
-  border: 1px solid var(--linea) !important;
-  color: var(--musgo) !important;
-}
-
-html:not([data-tema="oscuro"]) .badge-numero-dimension,
-html:not([data-tema="oscuro"]) .badge-conteo-dimension,
-html:not([data-tema="oscuro"]) .tag-chip {
-  background: var(--papel-alto) !important;
-  color: var(--musgo) !important;
-  border: 1px solid var(--linea-fuerte) !important;
-}
-
-html:not([data-tema="oscuro"]) table.tabla-datos th,
-html:not([data-tema="oscuro"]) .tabla-datos-institucional th {
-  background: var(--papel-alto) !important;
-  color: var(--musgo) !important;
-  border-bottom: 2px solid var(--musgo) !important;
-}
-
-html:not([data-tema="oscuro"]) table.tabla-datos td {
-  color: var(--tinta) !important;
-}
-
-html:not([data-tema="oscuro"]) table.tabla-datos tr:hover td {
-  background: var(--papel-hover) !important;
-  color: var(--tinta) !important;
-}
-
-/* Adaptación de tarjetas generadas dinámicamente con estilos oscuros inline en módulos JS */
-html:not([data-tema="oscuro"]) .panel [style*="background:#0f172a"],
-html:not([data-tema="oscuro"]) .panel [style*="background: #0f172a"],
-html:not([data-tema="oscuro"]) .panel [style*="background:#1e293b"],
-html:not([data-tema="oscuro"]) .panel [style*="background: #1e293b"],
-html:not([data-tema="oscuro"]) .panel [style*="background:rgba(15, 23, 42"],
-html:not([data-tema="oscuro"]) .panel [style*="background: rgba(15, 23, 42"],
-html:not([data-tema="oscuro"]) .panel [style*="background:rgba(30, 41, 59"],
-html:not([data-tema="oscuro"]) .panel [style*="background: rgba(30, 41, 59"],
-html:not([data-tema="oscuro"]) .panel [style*="background:linear-gradient(135deg, rgba(15, 23, 42"],
-html:not([data-tema="oscuro"]) .panel [style*="background: linear-gradient(135deg, rgba(15, 23, 42"] {
-  background: var(--papel) !important;
-  color: var(--tinta) !important;
-  border-color: var(--linea) !important;
-  box-shadow: var(--sombra-sm) !important;
-}
-
-html:not([data-tema="oscuro"]) .panel [style*="color:#f8fafc"],
-html:not([data-tema="oscuro"]) .panel [style*="color: #f8fafc"],
-html:not([data-tema="oscuro"]) .panel [style*="color:#ffffff"],
-html:not([data-tema="oscuro"]) .panel [style*="color: #ffffff"],
-html:not([data-tema="oscuro"]) .panel [style*="color:#e2e8f0"],
-html:not([data-tema="oscuro"]) .panel [style*="color: #e2e8f0"],
-html:not([data-tema="oscuro"]) .panel [style*="color:#cbd5e1"],
-html:not([data-tema="oscuro"]) .panel [style*="color: #cbd5e1"],
-html:not([data-tema="oscuro"]) .panel [style*="color:#94a3b8"],
-html:not([data-tema="oscuro"]) .panel [style*="color: #94a3b8"] {
-  color: var(--tinta-suave) !important;
-}
-
-html:not([data-tema="oscuro"]) .panel button[style*="color:#ffffff"],
-html:not([data-tema="oscuro"]) .panel a.accion[style*="color:#ffffff"] {
-  color: #ffffff !important;
-}
-

@@ -6,23 +6,26 @@
 <title>Atlas de Información Geográfica Voluntaria — Gestión Territorial</title>
 <meta name="description" content="Atlas y plataforma de Información Geográfica Voluntaria (VGI) para la gestión territorial en Barrio Brasil y la Comuna de Santiago.">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261102_v15">
+  <link rel="stylesheet" href="css/estilos.css?v=20261102_v16">
 </head>
 <body>
 
 <div class="envoltorio">
 
-  <!-- ============ CABECERA INSTITUCIONAL FIJA Y NAVEGACIÓN POR TAREA ============ -->
+  <!-- ============ CABECERA PRINCIPAL TÁCTICA Y NAVEGACIÓN AGRUPADA EN 5 SECCIONES ============ -->
   <header class="cabecera-principal-atlas" id="cabecera-atlas">
+    <div class="panel-acento-dinamico panel-acento-izq" aria-hidden="true"></div>
+    <div class="panel-acento-dinamico panel-acento-der" aria-hidden="true"></div>
+
     <div class="cabecera-interior">
-      <!-- Fila 1: Identidad Institucional, Selector de Perfil y Controles Globales -->
+      <!-- Fila 1: Identidad Institucional, Selector de Perfil y Glosario -->
       <div class="cabecera-fila-marca">
         <div class="marca">
           <div class="marca-header">
             <img src="img/UAH-Insignia.jpg" alt="Insignia Universidad Alberto Hurtado" class="marca-logo">
             <div class="marca-texto">
-              <h1>Atlas de Información Geográfica Voluntaria</h1>
-              <p id="nombre-organizacion">Gestión territorial en Barrio Brasil y Comuna de Santiago</p>
+              <h1>Atlas VGI Territorial</h1>
+              <p id="nombre-organizacion">Consulta, calidad y metadatos VGI | Gestión Territorial en Barrio Brasil y Santiago</p>
             </div>
           </div>
         </div>
@@ -43,93 +46,86 @@
             <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <span>Glosario de siglas</span>
           </button>
-
-          <button type="button" class="btn-utilidad-cabecera" id="btn-toggle-tema" title="Alternar entre el tema claro institucional y el modo oscuro opcional">
-            <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            <span id="texto-toggle-tema">Modo oscuro</span>
-          </button>
         </div>
       </div>
+    </div>
 
-      <!-- Fila 2: Navegación Principal Agrupada en 5 Secciones por Tarea -->
-      <div class="barra-grupos-tarea" role="navigation" aria-label="Secciones principales por tarea">
-        <button type="button" class="btn-grupo-tarea activo" data-grupo-nav="explorar" data-panel-default="inicio">
-          <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-          <span>Explorar mapa</span>
-        </button>
-        <button type="button" class="btn-grupo-tarea" data-grupo-nav="consultar" data-panel-default="explorador-osm">
-          <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <span>Consultar datos</span>
-        </button>
-        <button type="button" class="btn-grupo-tarea" data-grupo-nav="analisis" data-panel-default="indicadores">
-          <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          <span>Análisis y relatos</span>
-        </button>
-        <button type="button" class="btn-grupo-tarea" data-grupo-nav="calidad" data-panel-default="calidad-ohsome">
-          <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-          <span>Evaluar calidad</span>
-        </button>
-        <button type="button" class="btn-grupo-tarea" data-grupo-nav="documentacion" data-panel-default="diccionario">
-          <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          <span>Documentación y descargas</span>
-        </button>
+    <!-- Fila 2: Navegación Principal Agrupada en 5 Secciones por Tarea -->
+    <div class="barra-grupos-tarea" role="navigation" aria-label="Secciones principales por tarea">
+      <button type="button" class="btn-grupo-tarea activo" data-grupo-tarea="explorar" data-panel-defecto="inicio" aria-expanded="true">
+        <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+        <span>Explorar mapa</span>
+      </button>
+      <button type="button" class="btn-grupo-tarea" data-grupo-tarea="consultar" data-panel-defecto="explorador-osm" aria-expanded="false">
+        <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Consultar datos</span>
+      </button>
+      <button type="button" class="btn-grupo-tarea" data-grupo-tarea="analisis" data-panel-defecto="indicadores" aria-expanded="false">
+        <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Análisis y relatos</span>
+      </button>
+      <button type="button" class="btn-grupo-tarea" data-grupo-tarea="calidad" data-panel-defecto="calidad-ohsome" aria-expanded="false">
+        <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        <span>Evaluar calidad</span>
+      </button>
+      <button type="button" class="btn-grupo-tarea" data-grupo-tarea="documentacion" data-panel-defecto="manual" aria-expanded="false">
+        <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>Documentación y descargas</span>
+      </button>
+    </div>
+
+    <!-- Fila 3: Migas de pan en línea y Subpestañas de la Sección Activa -->
+    <div class="barra-migas-subnavegacion">
+      <div class="migas-pan" aria-label="Ubicación actual">
+        <a href="#panel-inicio" class="miga-raiz" onclick="event.preventDefault(); if(window.activarPanel) window.activarPanel('inicio');">Inicio</a>
+        <span class="miga-separador" aria-hidden="true">›</span>
+        <span class="miga-item" id="miga-grupo-actual">Explorar mapa</span>
+        <span class="miga-separador" aria-hidden="true">›</span>
+        <span class="miga-actual" id="miga-vista-actual" aria-current="page">Visor y catálogo</span>
       </div>
 
-      <!-- Fila 3: Migas de pan y Subnavegación Contextual -->
-      <div class="barra-migas-subnavegacion">
-        <nav class="migas-pan" aria-label="Ubicación actual">
-          <ol>
-            <li><a href="#panel-inicio" onclick="event.preventDefault(); document.querySelector('[data-panel=inicio]').click();">Inicio</a></li>
-            <li aria-hidden="true">›</li>
-            <li id="miga-grupo-actual">Explorar mapa</li>
-            <li aria-hidden="true">›</li>
-            <li id="miga-vista-actual" aria-current="page"><strong>Visor cartográfico y catálogo</strong></li>
-          </ol>
-        </nav>
-
-        <nav class="barra-pestanas-profundidad" id="lista-navegacion" aria-label="Vistas de la sección">
-          <button type="button" class="pestana-nodo activa" data-grupo="explorar" data-panel="inicio" aria-current="true">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
-            <span>Visor y catálogo</span>
-          </button>
-          <button type="button" class="pestana-nodo" data-grupo="consultar" data-panel="explorador-osm">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span>OpenStreetMap</span>
-          </button>
-          <button type="button" class="pestana-nodo" data-grupo="consultar" data-panel="biodiversidad-gbif">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-            <span>Biodiversidad (GBIF)</span>
-          </button>
-          <button type="button" class="pestana-nodo" data-grupo="consultar" data-panel="proyectos-umap">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            <span>Mapas comunitarios (uMap)</span>
-          </button>
-          <button type="button" class="pestana-nodo" data-grupo="analisis" data-panel="indicadores">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            <span>Indicadores y relatos (83 mapas)</span>
-          </button>
-          <button type="button" class="pestana-nodo" data-grupo="calidad" data-panel="calidad-ohsome">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Calidad de datos (ISO 19157)</span>
-          </button>
-          <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="diccionario">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-            <span>Diccionario de datos</span>
-          </button>
-          <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="metadatos-iso">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            <span>Metadatos (ISO 19115)</span>
-          </button>
-          <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="licencias">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>Licencias y descargas</span>
-          </button>
-          <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="manual">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            <span>Manual del sistema</span>
-          </button>
-        </nav>
-      </div>
+      <nav class="barra-pestanas-profundidad" id="lista-navegacion" aria-label="Vistas de la sección activa">
+        <button type="button" class="pestana-nodo activa" data-grupo="explorar" data-panel="inicio" aria-current="true">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
+          <span>Visor y catálogo</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="consultar" data-panel="explorador-osm" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Consultas Overpass (OSM)</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="consultar" data-panel="biodiversidad-gbif" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          <span>Biodiversidad (GBIF)</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="consultar" data-panel="proyectos-umap" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <span>Mapas comunitarios (uMap)</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="analisis" data-panel="indicadores" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>Indicadores y relatos (83 mapas)</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="calidad" data-panel="calidad-ohsome" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Calidad de datos (ISO 19157)</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="calidad" data-panel="metadatos-iso" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Metadatos (ISO 19115)</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="manual" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span>Manual del sistema</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="diccionario" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          <span>Diccionario de datos (134 capas)</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="licencias" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Licencias y descargas</span>
+        </button>
+      </nav>
     </div>
 
     <!-- Aviso de estado de servicios externos: oculto salvo cuando se detecta una falla o reintento real -->
@@ -145,44 +141,53 @@
   <!-- ============ CONTENIDO PRINCIPAL ============ -->
   <main class="contenido">
 
-    <!-- ---------- 01. VISOR Y ATLAS VGI (LEAFLET PRIMERO) ---------- -->
+    <!-- ---------- 01. VISOR Y ATLAS VGI (LEAFLET) ---------- -->
     <section class="panel activo" id="panel-inicio">
-      <!-- Franja contextual compacta para que el mapa aparezca de inmediato al abrir -->
-      <div class="franja-intro-visor-compacta">
-        <div class="franja-intro-principal">
-          <div class="franja-intro-textos">
-            <h2 class="titulo-visor-compacto">Visor cartográfico del Barrio Brasil y Comuna de Santiago</h2>
-            <p class="bajada-visor-compacto" id="badge-perfil-info">
-              Integra 124 coberturas públicas del Estado con 10 categorías de <abbr title="Información Geográfica Voluntaria: datos espaciales levantados colaborativamente por ciudadanos">Información Geográfica Voluntaria (VGI)</abbr> y normativa urbana del <abbr title="Plan Regulador Comunal">PRC</abbr>.
-            </p>
+      <header class="hero-introduccion-atlas">
+        <div class="insignia-institucional">
+          <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>INFRAESTRUCTURA DE DATOS ESPACIALES Y GESTIÓN TERRITORIAL</span>
+        </div>
+        <h1 class="titulo-hero">Atlas de Información Geográfica Voluntaria para la Gestión Territorial</h1>
+        <p class="subtitulo-hero" id="badge-perfil-info">
+          Caso de Estudio: Barrio Brasil y Comuna de Santiago (Santiago Centro, Chile)
+        </p>
+
+        <div class="grilla-resumen-introduccion">
+          <div class="caja-tarjeta-hero">
+            <span class="icono-hero">
+              <svg class="icono-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+            </span>
+            <h3>Propósito del Atlas</h3>
+            <p>Infraestructura pública de datos espaciales que integra y contrasta la <abbr title="Información Geográfica Voluntaria: datos espaciales levantados colaborativamente por ciudadanos">Información Geográfica Voluntaria (VGI)</abbr> con los catastros oficiales del Estado de Chile.</p>
           </div>
-          <div class="franja-intro-acciones">
-            <a href="#consola-capas-gis" class="accion secundaria btn-ir-catalogo">Explorar catálogo (134 capas)</a>
-            <button type="button" class="accion primaria-cta" id="btn-descargar-bd-portada" onclick="document.getElementById('btn-descargar-bd-mapa').click();">
+          <div class="caja-tarjeta-hero">
+            <span class="icono-hero">
+              <svg class="icono-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <h3>Ámbito Territorial</h3>
+            <p>Comuna de Santiago (27 barrios y 1.711 manzanas censales) con foco analítico en el Barrio Brasil (223,75 ha) y el entorno del Campus UAH (136,10 ha).</p>
+          </div>
+          <div class="caja-tarjeta-hero">
+            <span class="icono-hero">
+              <svg class="icono-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </span>
+            <h3>Calidad Verificada (95,4 %)</h3>
+            <p><strong>Calidad muy alta:</strong> 9 de cada 10 capas cumplen el estándar completo bajo las normas ISO 19157 e ISO 19115 (91 capas A+ y 43 A de 134 coberturas).</p>
+          </div>
+          <div class="caja-tarjeta-hero">
+            <span class="icono-hero">
+              <svg class="icono-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </span>
+            <h3>Acceso y Descarga Directa</h3>
+            <p style="margin-bottom:10px;">Consulta interactiva de las 134 capas, certificados del <abbr title="Plan Regulador Comunal">PRC</abbr> y descarga de la geodatabase completa.</p>
+            <button type="button" class="accion primaria-cta" id="btn-descargar-bd-portada" onclick="document.getElementById('btn-descargar-bd-mapa').click();" style="width:100%;">
               <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               <span>Descargar base de datos (.zip)</span>
             </button>
           </div>
         </div>
-
-        <details class="contexto-plegable-portada">
-          <summary>Acerca del proyecto, ámbito territorial y estándares de calidad</summary>
-          <div class="grilla-resumen-introduccion">
-            <div class="caja-tarjeta-hero">
-              <h3>Propósito del Atlas</h3>
-              <p>Infraestructura pública de datos espaciales que integra y contrasta el mapeo ciudadano colaborativo (OpenStreetMap y GBIF) con los catastros oficiales del Estado de Chile para apoyar diagnósticos barriales y planificación urbana.</p>
-            </div>
-            <div class="caja-tarjeta-hero">
-              <h3>Ámbito territorial</h3>
-              <p>Comuna de Santiago (27 barrios y 1.711 manzanas censales) con foco en el Barrio Brasil (223,75 ha) y el entorno del Campus Universidad Alberto Hurtado (136,10 ha).</p>
-            </div>
-            <div class="caja-tarjeta-hero">
-              <h3>Calidad verificada</h3>
-              <p><strong>Calidad muy alta (95,4 %):</strong> 9 de cada 10 capas cumplen el estándar completo bajo las normas ISO 19157 (calidad) e ISO 19115 (metadatos IDE Chile), con 91 capas en nivel óptimo (A+) y 43 en nivel alto (A).</p>
-            </div>
-          </div>
-        </details>
-      </div>
+      </header>
 
       <!-- Barra de herramientas del mapa -->
       <div class="barra-herramientas-mapa">
@@ -1623,7 +1628,7 @@
               Archivo: <code>docs/geodatabase_completa_atlas_vgi.zip</code> · Peso: <strong>542,35 MB comprimido</strong> (<strong>~3,33 GB</strong> de datos vectoriales y tabulares descomprimidos; incluye las <strong>134 capas del visor</strong> y <strong>257 archivos totales</strong>).
             </p>
           </div>
-          <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261102_v14" download="geodatabase_completa_atlas_vgi.zip" class="accion btn-reintentar-descarga-zip" style="text-decoration:none; white-space:nowrap;">
+          <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261102_v16" download="geodatabase_completa_atlas_vgi.zip" class="accion btn-reintentar-descarga-zip" style="text-decoration:none; white-space:nowrap;">
             ⬇️ Reintentar Descarga (.zip)
           </a>
         </div>
@@ -1729,26 +1734,26 @@
 <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261102_v15"></script>
-<script src="js/modulos/db_client.js?v=20261102_v15"></script>
-<script src="js/modulos/geodesia.js?v=20261102_v15"></script>
-<script src="js/modulos/mapa.js?v=20261102_v15"></script>
-<script src="js/modulos/importador_capas.js?v=20261102_v15"></script>
-<script src="js/modulos/ide_chile.js?v=20261102_v15"></script>
-<script src="js/modulos/evaluador_normativo.js?v=20261102_v15"></script>
-<script src="js/modulos/osm.js?v=20261102_v15"></script>
-<script src="js/modulos/ohsome.js?v=20261102_v15"></script>
-<script src="js/modulos/gbif.js?v=20261102_v15"></script>
-<script src="js/modulos/umap.js?v=20261102_v15"></script>
-<script src="js/modulos/metadatos.js?v=20261102_v15"></script>
-<script src="js/modulos/licencias.js?v=20261102_v15"></script>
-<script src="js/modulos/manual.js?v=20261102_v15"></script>
-<script src="js/modulos/indicadores_analisis.js?v=20261102_v15"></script>
-<script src="js/modulos/taginfo.js?v=20261102_v15"></script>
-<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261102_v15"></script>
-<script src="js/modulos/calidad_analyst.js?v=20261102_v15"></script>
-<script src="js/modulos/diccionario.js?v=20261102_v15"></script>
-<script src="js/modulos/manifold_canvas.js?v=20261102_v15"></script>
-<script src="js/app.js?v=20261102_v15"></script>
+<script src="js/config.js?v=20261102_v16"></script>
+<script src="js/modulos/db_client.js?v=20261102_v16"></script>
+<script src="js/modulos/geodesia.js?v=20261102_v16"></script>
+<script src="js/modulos/mapa.js?v=20261102_v16"></script>
+<script src="js/modulos/importador_capas.js?v=20261102_v16"></script>
+<script src="js/modulos/ide_chile.js?v=20261102_v16"></script>
+<script src="js/modulos/evaluador_normativo.js?v=20261102_v16"></script>
+<script src="js/modulos/osm.js?v=20261102_v16"></script>
+<script src="js/modulos/ohsome.js?v=20261102_v16"></script>
+<script src="js/modulos/gbif.js?v=20261102_v16"></script>
+<script src="js/modulos/umap.js?v=20261102_v16"></script>
+<script src="js/modulos/metadatos.js?v=20261102_v16"></script>
+<script src="js/modulos/licencias.js?v=20261102_v16"></script>
+<script src="js/modulos/manual.js?v=20261102_v16"></script>
+<script src="js/modulos/indicadores_analisis.js?v=20261102_v16"></script>
+<script src="js/modulos/taginfo.js?v=20261102_v16"></script>
+<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261102_v16"></script>
+<script src="js/modulos/calidad_analyst.js?v=20261102_v16"></script>
+<script src="js/modulos/diccionario.js?v=20261102_v16"></script>
+<script src="js/modulos/manifold_canvas.js?v=20261102_v16"></script>
+<script src="js/app.js?v=20261102_v16"></script>
 </body>
 </html>
