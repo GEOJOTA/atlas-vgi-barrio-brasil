@@ -68,97 +68,132 @@ const ModuloLicencias = (() => {
   ];
 
   function render() {
-    const bloqueAtlas = `
-      <div class="bloque" style="border-left:4px solid var(--musgo); background:var(--papel-alto); padding:16px; margin-bottom:20px;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
-          <div>
-            <span class="marcador">07 / LICENCIAMIENTO</span>
-            <h3 style="margin:4px 0 8px 0;">${LICENCIA_ATLAS.titulo}</h3>
+    const bloqueDescargas = `
+      <div class="bloque" style="border-left:4px solid var(--ocre); margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:14px;">
+          <div style="flex:1; min-width:280px;">
+            <h3 style="margin:0 0 6px 0; color:var(--musgo);">Descarga de la base de datos completa y catálogos</h3>
+            <p class="descripcion" style="margin:0;">
+              El paquete consolidado incluye las <strong>134 capas del visor</strong> (10 categorías ciudadanas + 124 capas oficiales del Estado), los libros maestros en Excel, las matrices de calidad y los esquemas PostGIS (<strong>257 archivos · 542,35 MB comprimido / ~3,33 GB descomprimido</strong>).
+            </p>
           </div>
-          <button type="button" class="accion" onclick="window.navegarAManual('doc-gobernanza')" style="font-size:0.82rem; padding:6px 14px;">
-            📖 Ver Marco Jurídico en el Manual ↗
+          <div>
+            <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261026_v13" download="geodatabase_completa_atlas_vgi.zip" class="accion primaria-cta">
+              Descargar base de datos completa (.zip · 542 MB)
+            </a>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem;">
+            <thead>
+              <tr>
+                <th>Archivo / Catálogo</th>
+                <th>Contenido principal</th>
+                <th>Formato y peso aprox.</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Taxonomía y diccionario OSM Chile</strong><br><code>docs/categorias_tematicas_osm.xlsx</code></td>
+                <td>4 hojas: 10 categorías maestras (CAT-01 a CAT-10), 140 descriptores, esquema de 23 atributos y 125 referencias APA 7ª ed.</td>
+                <td>Excel (<code>.xlsx</code>) · ~85 KB</td>
+                <td><a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:5px 10px;">Descargar Excel</a></td>
+              </tr>
+              <tr>
+                <td><strong>Perfil de metadatos y calidad (134 capas)</strong><br><code>docs/perfil_metadatos_vgi.xlsx</code></td>
+                <td>Matriz de evaluación multicriterio (WLC v2.0, IGV medio 95,4 %, 91 capas A+ y 43 A) y mapeo a ISO 19115 / IDE Chile.</td>
+                <td>Excel (<code>.xlsx</code>) · ~65 KB</td>
+                <td><a href="docs/perfil_metadatos_vgi.xlsx" download="perfil_metadatos_vgi.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:5px 10px;">Descargar Excel</a></td>
+              </tr>
+              <tr>
+                <td><strong>Catálogo sistemático de fuentes</strong><br><code>docs/catalogo_fuentes_vgi.xlsx</code></td>
+                <td>Inventario de fuentes colaborativas y ministeriales con escala, cobertura, licencia y aplicación en el Barrio Brasil.</td>
+                <td>Excel (<code>.xlsx</code>) · ~45 KB</td>
+                <td><a href="docs/catalogo_fuentes_vgi.xlsx" download="catalogo_fuentes_vgi.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:5px 10px;">Descargar Excel</a></td>
+              </tr>
+              <tr>
+                <td><strong>Ranking consolidado de calidad (CSV)</strong><br><code>docs/wlc_metacalidad_ranking.csv</code></td>
+                <td>Tabla plana con las 134 capas, puntajes cuantitativos, cualitativos, índice IGV y clasificación de calidad.</td>
+                <td>CSV (<code>.csv</code>) · ~28 KB</td>
+                <td><a href="docs/wlc_metacalidad_ranking.csv" download="wlc_metacalidad_ranking.csv" class="accion secundaria" style="font-size:0.8rem; padding:5px 10px;">Descargar CSV</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    const bloqueAtlas = `
+      <div class="bloque" style="margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+          <div>
+            <h3 style="margin:0;">${LICENCIA_ATLAS.titulo}</h3>
+            <p class="descripcion" style="margin:4px 0 0 0;">
+              Licencias de reciprocidad comunitaria aplicadas a la documentación, las bases de datos y el código fuente (Ley N° 17.336 y Ley N° 20.285).
+            </p>
+          </div>
+          <button type="button" class="accion secundaria" onclick="window.navegarAManual('cap-uso-01')" style="font-size:0.82rem; padding:6px 12px;">
+            Ver en el manual →
           </button>
         </div>
-        <p style="font-size:0.9rem; line-height:1.5; color:var(--tinta); margin-bottom:12px;">
-          ${LICENCIA_ATLAS.justificacion}
-        </p>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px; margin-top:12px;">
-          ${LICENCIA_ATLAS.pilares.map(p => `
-            <div style="background:var(--papel); border:1px solid var(--linea); padding:12px; border-radius:2px;">
-              <strong style="font-size:0.88rem; color:var(--musgo-oscuro);">${p.ambito}</strong>
-              <div style="font-family:'IBM Plex Mono', monospace; font-size:0.82rem; font-weight:bold; margin:6px 0; color:var(--tinta);">
-                ${p.licencia}
-              </div>
-              <p style="font-size:0.82rem; color:var(--tinta-suave); margin-bottom:8px;">${p.implicancia}</p>
-              <a href="${p.url}" target="_blank" rel="noopener" style="font-size:0.78rem; text-decoration:none;">Más información legal ↗</a>
-            </div>
-          `).join('')}
+
+        <div style="overflow-x:auto;">
+          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem;">
+            <thead>
+              <tr>
+                <th>Componente del proyecto</th>
+                <th>Licencia aplicada</th>
+                <th>¿Qué permite y qué exige?</th>
+                <th>Texto legal</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${LICENCIA_ATLAS.pilares.map(p => `
+                <tr>
+                  <td><strong>${p.ambito}</strong></td>
+                  <td><code>${p.licencia}</code></td>
+                  <td>${p.implicancia}</td>
+                  <td><a href="${p.url}" target="_blank" rel="noopener" style="white-space:nowrap;">Ver licencia ↗</a></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
         </div>
       </div>
     `;
 
     const bloquesFuentes = `
       <div class="bloque">
-        <h3>Licenciamiento de las Fuentes Proveedoras de Datos</h3>
-        <p class="descripcion">Términos de reutilización, restricciones legales y condiciones de atribución de cada servicio integrado:</p>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-top:10px;">
-          ${FUENTES.map(f => `
-            <div style="background:var(--papel-alto); border:1px solid var(--linea); padding:12px;">
-              <h4 style="margin:0 0 6px 0; font-size:0.95rem;">${f.nombre}</h4>
-              <p style="font-size:0.82rem; margin:0 0 6px 0;"><strong>Licencia:</strong> <code>${f.licencia}</code></p>
-              <p style="font-size:0.82rem; color:var(--tinta-suave); margin:0 0 8px 0;">${f.implicancia}</p>
-              <p style="margin:0;"><a href="${f.url}" target="_blank" rel="noopener" style="font-size:0.78rem;">${f.url} ↗</a></p>
-            </div>
-          `).join('')}
+        <h3 style="margin:0 0 6px 0;">Comparativa de licencias por fuente de datos</h3>
+        <p class="descripcion" style="margin:0 0 10px 0;">Condiciones de uso, atribución y redistribución de cada organismo o plataforma integrada:</p>
+        <div style="overflow-x:auto;">
+          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem;">
+            <thead>
+              <tr>
+                <th>Fuente u organismo</th>
+                <th>Licencia</th>
+                <th>Condiciones de uso y atribución</th>
+                <th>Enlace oficial</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${FUENTES.map(f => `
+                <tr>
+                  <td><strong>${f.nombre}</strong></td>
+                  <td><code>${f.licencia}</code></td>
+                  <td>${f.implicancia}</td>
+                  <td><a href="${f.url}" target="_blank" rel="noopener" style="white-space:nowrap;">Sitio web ↗</a></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
         </div>
       </div>
     `;
 
-    const bloqueDescargas = `
-      <div class="bloque" style="background:var(--papel-alto); border:1px solid var(--linea); padding:16px; margin-top:20px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
-          <h3 style="margin:0;">📦 Base de Datos Integral y Catálogos Metodológicos</h3>
-          <span class="doc-pequeno" style="font-family:'IBM Plex Mono', monospace;">Sincronizados en docs/ y src/docs/</span>
-        </div>
-        <p class="descripcion">Descarga directa de la base de datos geográfica unificada y de las hojas de cálculo oficiales elaboradas para el Atlas de Información Geográfica Voluntaria:</p>
-        
-        <!-- Tarjeta Maestra: Base de Datos Completa ZIP -->
-        <div style="padding:16px; background:rgba(16, 185, 129, 0.08); border:1px solid rgba(16, 185, 129, 0.4); border-radius:4px; margin-bottom:14px;">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
-            <div style="flex:1; min-width:280px;">
-              <span class="marcador" style="color:var(--esmeralda); font-weight:800; font-size:0.72rem;">PAQUETE CONSOLIDADO OFICIAL</span>
-              <h4 style="margin:4px 0 6px 0; font-size:1.05rem; color:#ffffff;">📦 Geodatabase Completa del Atlas VGI (Carpeta Comprimida .zip — 542,35 MB en red / ~3,33 GB descomprimido · 257 archivos)</h4>
-              <p style="font-size:0.84rem; color:var(--tinta-suave); margin:0 0 8px 0; line-height:1.45;">
-                Acceso total e integrado a los datos del proyecto: 134 capas del visor (10 macrocategorías VGI + 124 capas oficiales del Estado), extractos regionales de Geofabrik RM, capas cartográficas complementarias de <code>src/data/</code> y <code>data/</code>, los 3 libros maestros Excel (<code>docs/categorias_tematicas_osm.xlsx</code>, <code>docs/catalogo_fuentes_vgi.xlsx</code>, <code>docs/perfil_metadatos_vgi.xlsx</code>), datasets consolidados (<code>data/bip_inversiones_santiago.csv</code>, <code>data/resumen_catastro_vgi.csv</code>, <code>docs/wlc_metacalidad_ranking.csv</code>, <code>docs/correlacion_dimensiones_calidad.csv</code>) y metadatos ISO 19115/19139 (<code>docs/matriz_metacalidad.json</code>, <code>docs/wlc_metacalidad_resultado.json</code>, <code>docs/ANALISIS_METACALIDAD.md</code>).
-              </p>
-            </div>
-            <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261026_v13" download="geodatabase_completa_atlas_vgi.zip" class="accion btn-descarga-coleccion" style="text-decoration:none; padding:10px 18px; font-size:0.86rem;">
-              ⬇️ Descargar Base de Datos Completa (.zip)
-            </a>
-          </div>
-        </div>
-
-        <div style="display:flex; flex-direction:column; gap:12px; margin-top:12px;">
-          <div style="padding:12px; background:var(--papel); border:1px solid var(--linea); border-radius:2px;">
-            <strong>1. Catálogo Sistemático de Fuentes VGI:</strong><br>
-            <span class="descripcion">Inventario de fuentes colaborativas y oficiales (OSM, ohsome, GBIF, UMap, iNaturalist, IDE Chile) con cobertura, escala, licencia y aplicación en Barrio Brasil / UAH.</span><br>
-            <a href="docs/catalogo_fuentes_vgi.xlsx" download="catalogo_fuentes_vgi.xlsx" class="accion secundaria" style="display:inline-block; margin-top:8px; font-size:0.82rem; text-decoration:none; padding:4px 12px;">⬇️ Descargar catalogo_fuentes_vgi.xlsx</a>
-          </div>
-          <div style="padding:12px; background:var(--papel); border:1px solid var(--linea); border-radius:2px;">
-            <strong>2. Perfil de Metadatos VGI (ISO 19115 / IDE Chile):</strong><br>
-            <span class="descripcion">Elementos núcleo, jerarquía de atributos, tipos de datos y mapeo al estándar oficial SNIT / IDE Chile e ISO 19139 XML.</span><br>
-            <a href="docs/perfil_metadatos_vgi.xlsx" download="perfil_metadatos_vgi.xlsx" class="accion secundaria" style="display:inline-block; margin-top:8px; font-size:0.82rem; text-decoration:none; padding:4px 12px;">⬇️ Descargar perfil_metadatos_vgi.xlsx</a>
-          </div>
-          <div style="padding:12px; background:var(--papel); border:1px solid var(--linea); border-radius:2px;">
-            <strong>3. Taxonomía de Categorías Temáticas OSM y Bibliografía APA (4 Hojas):</strong><br>
-            <span class="descripcion">Libro maestro que incluye: Hoja 1 (Categorías Maestras CAT-01 a CAT-10), Hoja 2 (Catálogo de Etiquetas Chile con especificación de atributos y geometrías recomendadas), Hoja 3 (Diccionario de Atributos VGI con cálculo métrico EPSG:32719) y Hoja 4 (Aparato Bibliográfico de 125 fuentes en norma APA 7ª ed.).</span><br>
-            <a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion" style="display:inline-block; margin-top:8px; font-size:0.82rem; text-decoration:none; padding:4px 12px;">📊 Descargar categorias_tematicas_osm.xlsx (Maestro)</a>
-          </div>
-        </div>
-      </div>
-    `;
-
-    return bloqueAtlas + bloquesFuentes + bloqueDescargas;
+    return bloqueDescargas + bloqueAtlas + bloquesFuentes;
   }
 
   return { render, FUENTES, LICENCIA_ATLAS };

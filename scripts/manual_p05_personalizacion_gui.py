@@ -163,49 +163,49 @@ flowchart LR
     IN_CSS --> PROC_CSS --> OUT_CSS
 ```
 
-El Atlas VGI implementa un sistema de diseño institucional sobrio, estructurado en CSS3 nativo puro en `src/css/estilos.css`, diseñado para garantizar legibilidad analítica y cumplir formalmente con el estándar internacional de accesibilidad **WCAG 2.1 (Nivel AA en el 100 % de los componentes y acentos cromáticos [4,58:1 a 8,87:1], y Nivel AAA en todo el contraste tipográfico de lectura [9,43:1 a 19,00:1])**.
+El Atlas VGI implementa un sistema de diseño institucional claro y sobrio por defecto, estructurado en CSS3 nativo puro en `src/css/estilos.css` (con modo oscuro opcional activable mediante `html[data-tema="oscuro"]`), diseñado para garantizar legibilidad analítica, eliminar distracciones visuales (sin fondos de partículas ni brillos neón) y cumplir formalmente con el estándar internacional de accesibilidad **WCAG 2.1 (Nivel AA en el 100 % de los componentes y acentos cromáticos [4,58:1 a 8,87:1], y Nivel AAA en todo el contraste tipográfico de lectura [8,60:1 a 19,00:1])**.
 
 ### 29.1. Diccionario Completo de Tokens de Diseño en `:root`
-Todas las variables visuales están centralizadas en el bloque `:root` de `src/css/estilos.css`:
+Todas las variables visuales están centralizadas en el bloque `:root` de `src/css/estilos.css` (tema claro cálido institucional predeterminado) y su contraparte `html[data-tema="oscuro"]`:
 
 ```css
 :root {
   /* ==========================================================================
-     PALETA CROMÁTICA INSTITUCIONAL Y SEMÁNTICA
+     PALETA CROMÁTICA INSTITUCIONAL CLARA (POR DEFECTO)
      ========================================================================== */
-  --musgo: #06b6d4;           /* Cian táctico para acentos primarios, foco y estados activos */
-  --agua: #38bdf8;            /* Azul cielo brillante para enlaces, pestañas e indicadores */
-  --esmeralda: #10b981;       /* Verde esmeralda para descargas, confirmaciones y 100% OK */
-  --ocre: #f59e0b;            /* Ámbar luminoso para advertencias, pendientes y alertas */
-  --terracota: #f43f5e;       /* Rojo coral intenso para errores críticos y alertas de cierre */
+  --musgo: #1e3a5f;           /* Azul profundo institucional principal */
+  --agua: #1d4ed8;            /* Azul cobalto institucional para enlaces y estados activos */
+  --esmeralda: #15803d;       /* Verde bosque institucional para confirmaciones */
+  --ocre: #b45309;            /* Ocre cálido institucional (acento primario) */
+  --terracota: #b91c1c;       /* Terracota sobrio para alertas y cierres */
 
   /* ==========================================================================
-     SUPERFICIES DE MODO OSCURO PROFUNDO (DARK THEME PROFESIONAL)
+     SUPERFICIES DE TEMA CLARO CÁLIDO INSTITUCIONAL
      ========================================================================== */
-  --fondo-app: #0c1527;       /* Fondo base de la aplicación (azul marino profundo, L = 0.0076) */
-  --papel: #132039;           /* Superficie de paneles laterales y vistas principales (L = 0.0147) */
-  --papel-alto: #1a2b4b;      /* Superficie para contenedores elevados y cabeceras (L = 0.0246) */
-  --papel-tarjeta: #223861;   /* Superficie para tarjetas interactivas y fichas (L = 0.0403) */
-  --papel-rehundido: #09101f; /* Superficie para consolas de código y bloques de datos (L = 0.0053) */
-  --linea: #334e7b;           /* Bordes estructurales entre paneles y divisores */
-  --linea-fuerte: #4b6cb7;    /* Bordes destacados para tarjetas activas y cabeceras */
+  --fondo-app: #f7f5f0;       /* Fondo base blanco roto / papel cálido */
+  --papel: #ffffff;           /* Superficie blanca limpia para paneles y contenedores */
+  --papel-alto: #f1efe9;      /* Superficie cálida suave para cabeceras y barras */
+  --papel-tarjeta: #ffffff;   /* Superficie para tarjetas y tablas */
+  --papel-rehundido: #f3f1eb; /* Superficie para bloques de código y cajas de filtro */
+  --linea: #d6d3cb;           /* Bordes finos sobrios (1px solid) */
+  --linea-fuerte: #94a3b8;    /* Bordes destacados para tarjetas activas y cabeceras */
 
   /* ==========================================================================
-     TIPOGRAFÍA Y CONTRASTE DE LECTURA (CERTIFICADO WCAG 2.1 NIVEL AAA: 9.43:1 A 19.00:1)
+     TIPOGRAFÍA Y CONTRASTE DE LECTURA (CERTIFICADO WCAG 2.1 NIVEL AAA)
      ========================================================================== */
-  --tinta: #ffffff;           /* Texto principal (blanco puro, L = 1.0000; 11.63:1 a 19.00:1 AAA) */
-  --tinta-suave: #f8fafc;     /* Texto secundario (blanco hielo, L = 0.9560; 11.14:1 a 18.20:1 AAA) */
-  --tinta-tenue: #e2e8f0;     /* Texto auxiliar y metadatos (plata claro, L = 0.8012; 9.43:1 a 15.40:1 AAA) */
+  --tinta: #0f172a;           /* Texto principal (pizarra profunda, > 15.5:1 AAA) */
+  --tinta-suave: #1e293b;     /* Texto secundario de lectura (> 12.6:1 AAA) */
+  --tinta-tenue: #334155;     /* Texto auxiliar y metadatos (> 8.6:1 AAA) */
 
   /* ==========================================================================
-     FAMILIAS TIPOGRÁFICAS Y DIMENSIONES ESTRUCTURALES
+     FAMILIAS TIPOGRÁFICAS CON CARÁCTER Y DIMENSIONES ESTRUCTURALES
      ========================================================================== */
-  --fuente-titulo: 'Fraunces', Georgia, serif;
-  --fuente-cuerpo: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --fuente-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --radio: 10px;
+  --fuente-titulo: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --fuente-cuerpo: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --fuente-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace; /* Exclusiva para código y rutas */
+  --radio: 8px;
   --radio-sm: 6px;
-  --sombra-panel: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --sombra-panel: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
 ```
 

@@ -758,39 +758,87 @@ git push origin main</code></pre>
     ];
   }
 
+  let capituloActivoId = 'cap-uso-01';
+  let verTodosCapitulos = false;
+  let textoBusquedaManual = '';
+
   /**
-   * Construye el HTML completo del Manual de Uso y Manual de Actualización
+   * Construye el HTML paginado por capítulo con índice lateral fijo y buscador visible
    */
   function construirHTMLManual() {
     const capitulos = obtenerCapitulosManual();
-    const capsFiltrados = modoManualActivo === 'todos'
+    const capsPorModo = modoManualActivo === 'todos'
       ? capitulos
       : capitulos.filter(c => c.parte === modoManualActivo);
 
-    const htmlIndice = capsFiltrados.map(c => {
-      const badgeColor = c.parte === 'actualizacion'
-        ? 'background:rgba(245,158,11,0.18); color:#fbbf24; border:1px solid rgba(245,158,11,0.4);'
-        : 'background:rgba(56,189,248,0.18); color:#38bdf8; border:1px solid rgba(56,189,248,0.4);';
+    const q = textoBusquedaManual.trim().toLowerCase();
+    const capsFiltrados = q
+      ? capsPorModo.filter(c =>
+          c.titulo.toLowerCase().includes(q) ||
+          c.subtitulo.toLowerCase().includes(q) ||
+          c.html.toLowerCase().includes(q) ||
+          c.numero.toLowerCase().includes(q)
+        )
+      : capsPorModo;
+
+    if (capsFiltrados.length > 0 && !capsFiltrados.some(c => c.id === capituloActivoId)) {
+      capituloActivoId = capsFiltrados[0].id;
+    }
+
+    const idxActual = Math.max(0, capsFiltrados.findIndex(c => c.id === capituloActivoId));
+    const capAnterior = idxActual > 0 ? capsFiltrados[idxActual - 1] : null;
+    const capSiguiente = idxActual < capsFiltrados.length - 1 ? capsFiltrados[idxActual + 1] : null;
+
+    const capsAMostrar = (verTodosCapitulos || q.length > 0)
+      ? capsFiltrados
+      : (capsFiltrados[idxActual] ? [capsFiltrados[idxActual]] : []);
+
+    const htmlIndiceLateral = capsPorModo.map((c, idx) => {
+      const activo = (!verTodosCapitulos && !q && c.id === capituloActivoId);
       return `
-        <button type="button" class="accion secundaria" onclick="ModuloManual.irACapitulo('${c.id}')" style="text-align:left; display:flex; align-items:center; gap:8px; padding:9px 12px; font-size:0.83rem;">
-          <span style="padding:2px 6px; border-radius:5px; font-size:0.7rem; font-weight:800; ${badgeColor}">${c.numero}</span>
-          <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${c.icono} ${c.titulo}</span>
-        </button>
+        <li>
+          <button type="button" class="btn-ancla-indice ${activo ? 'activo' : ''}" onclick="ModuloManual.irACapitulo('${c.id}')">
+            <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${idx + 1}. ${c.titulo}</span>
+            <span style="font-size:0.72rem; opacity:0.75; white-space:nowrap;">${c.numero.replace(' · ', '-')}</span>
+          </button>
+        </li>
       `;
     }).join('');
 
-    const htmlCapitulos = capsFiltrados.map(c => {
-      const bordeColor = c.parte === 'actualizacion' ? '#f59e0b' : '#38bdf8';
+    const controlesPaginacionCap = `
+      <div class="barra-paginacion-institucional">
+        <div style="font-size:0.86rem; color:var(--tinta-suave);">
+          ${q
+            ? `Resultados de búsqueda para "<strong>${textoBusquedaManual}</strong>": <strong>${capsFiltrados.length}</strong> capítulo(s)`
+            : `Capítulo <strong>${capsFiltrados.length ? idxActual + 1 : 0}</strong> de <strong>${capsFiltrados.length}</strong>`
+          }
+        </div>
+        <div class="controles-pagina-botones">
+          <button type="button" class="btn-pagina-nav" onclick="ModuloManual.irACapitulo('${capAnterior ? capAnterior.id : ''}')" ${!capAnterior || verTodosCapitulos || q ? 'disabled' : ''}>
+            ← Capítulo anterior
+          </button>
+          <button type="button" class="btn-pagina-nav" onclick="ModuloManual.irACapitulo('${capSiguiente ? capSiguiente.id : ''}')" ${!capSiguiente || verTodosCapitulos || q ? 'disabled' : ''}>
+            Capítulo siguiente →
+          </button>
+          <button type="button" class="btn-pagina-nav ${verTodosCapitulos ? 'activa' : ''}" onclick="ModuloManual.alternarVerTodosCapitulos()">
+            ${verTodosCapitulos ? 'Ver por capítulo' : 'Ver todos los capítulos'}
+          </button>
+        </div>
+      </div>
+    `;
+
+    const htmlCapitulos = capsAMostrar.map(c => {
+      const bordeColor = c.parte === 'actualizacion' ? 'var(--ocre)' : 'var(--musgo)';
       const etiquetaParte = c.parte === 'actualizacion'
-        ? '🛠️ PARTE II · MANUAL DE ACTUALIZACIÓN Y MANTENCIÓN TÉCNICA'
-        : '📘 PARTE I · MANUAL DE USO DEL ATLAS';
+        ? 'Parte II · Manual de actualización y mantención técnica'
+        : 'Parte I · Manual de uso del Atlas';
       return `
-        <article class="tarjeta-manual-capitulo" id="${c.id}" style="background:rgba(15,23,42,0.45); border:1px solid var(--linea-tarjeta); border-top:3px solid ${bordeColor}; border-radius:12px; padding:22px; margin-bottom:20px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-            <span style="font-size:0.75rem; font-weight:800; letter-spacing:0.04em; color:${bordeColor};">${etiquetaParte} — ${c.numero}</span>
+        <article class="tarjeta-manual-capitulo bloque" id="${c.id}" style="border-top:3px solid ${bordeColor}; padding:22px; margin-bottom:18px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+            <span style="font-size:0.78rem; font-weight:700; color:${bordeColor};">${etiquetaParte} · ${c.numero}</span>
           </div>
-          <h3 style="margin:0 0 6px 0; font-size:1.18rem; color:var(--tinta);">${c.icono} ${c.titulo}</h3>
-          <p style="margin:0 0 14px 0; font-size:0.88rem; color:var(--tinta-tenue); border-bottom:1px solid var(--linea); padding-bottom:10px;">${c.subtitulo}</p>
+          <h3 style="margin:0 0 6px 0; font-size:1.25rem; color:var(--tinta);">${c.titulo}</h3>
+          <p style="margin:0 0 14px 0; font-size:0.9rem; color:var(--tinta-suave); border-bottom:1px solid var(--linea); padding-bottom:10px;">${c.subtitulo}</p>
           <div class="cuerpo-capitulo-manual">
             ${c.html}
           </div>
@@ -799,37 +847,52 @@ git push origin main</code></pre>
     }).join('');
 
     return `
-      <!-- Barra superior de selección entre Manual de Uso y Manual de Actualización -->
-      <div style="background:rgba(15,23,42,0.75); border:1px solid var(--linea-tarjeta); border-radius:12px; padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:14px;">
+      <!-- Barra superior de búsqueda y filtro por parte -->
+      <div class="bloque" style="padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:12px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="accion ${modoManualActivo === 'todos' ? '' : 'secundaria'}" onclick="ModuloManual.cambiarModoManual('todos')" style="font-size:0.85rem; padding:8px 14px;">
-              📚 Ambos Manuales
+            <button type="button" class="accion ${modoManualActivo === 'todos' ? '' : 'secundaria'}" onclick="ModuloManual.cambiarModoManual('todos')" style="font-size:0.85rem; padding:7px 14px;">
+              Ambos manuales (${capitulos.length} capítulos)
             </button>
-            <button type="button" class="accion ${modoManualActivo === 'uso' ? '' : 'secundaria'}" onclick="ModuloManual.cambiarModoManual('uso')" style="font-size:0.85rem; padding:8px 14px;">
-              📘 Parte I: Manual de Uso
+            <button type="button" class="accion ${modoManualActivo === 'uso' ? '' : 'secundaria'}" onclick="ModuloManual.cambiarModoManual('uso')" style="font-size:0.85rem; padding:7px 14px;">
+              Parte I: Manual de uso
             </button>
-            <button type="button" class="accion ${modoManualActivo === 'actualizacion' ? '' : 'secundaria'}" onclick="ModuloManual.cambiarModoManual('actualizacion')" style="font-size:0.85rem; padding:8px 14px;">
-              🛠️ Parte II: Manual de Actualización Técnica
+            <button type="button" class="accion ${modoManualActivo === 'actualizacion' ? '' : 'secundaria'}" onclick="ModuloManual.cambiarModoManual('actualizacion')" style="font-size:0.85rem; padding:7px 14px;">
+              Parte II: Manual de actualización
             </button>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-            <input type="search" id="buscador-general-manual" placeholder="🔍 Filtrar documentación..." oninput="ModuloManual.filtrarManual(this.value)" style="padding:7px 12px; border-radius:8px; border:1px solid var(--linea); background:rgba(9,13,22,0.85); color:var(--tinta); min-width:210px;">
-            <a href="docs/MANUAL_USO.md" download="MANUAL_USO_ATLAS_VGI.md" class="accion secundaria" style="text-decoration:none; font-size:0.8rem; padding:7px 12px;">📥 Uso (.md)</a>
-            <a href="docs/MANUAL_ACTUALIZACION_ATLAS.md" download="MANUAL_ACTUALIZACION_ATLAS_VGI.md" class="accion secundaria" style="text-decoration:none; font-size:0.8rem; padding:7px 12px; border-color:#f59e0b; color:#fbbf24;">🛠️ Actualización (.md)</a>
-            <a href="docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md" download="BIBLIOGRAFIA_SEMINARIO_Y_ATLAS_APA7.md" class="accion secundaria" style="text-decoration:none; font-size:0.8rem; padding:7px 12px;">📚 Bibliografía APA (.md)</a>
+            <a href="docs/MANUAL_ACTUALIZACION_ATLAS.md" download="MANUAL_ACTUALIZACION_ATLAS_VGI.md" class="accion primaria-cta" style="font-size:0.82rem; padding:7px 14px;">
+              Descargar manual completo (.md)
+            </a>
+            <a href="docs/MANUAL_USO.md" download="MANUAL_USO_ATLAS_VGI.md" class="accion secundaria" style="font-size:0.82rem; padding:7px 12px;">
+              Manual de uso (.md)
+            </a>
+            <a href="docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md" download="BIBLIOGRAFIA_SEMINARIO_Y_ATLAS_APA7.md" class="accion secundaria" style="font-size:0.82rem; padding:7px 12px;">
+              Bibliografía APA (.md)
+            </a>
           </div>
         </div>
-
-        <!-- Índice rápido de capítulos -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:8px;">
-          ${htmlIndice}
+        <div>
+          <input type="search" id="buscador-general-manual" value="${textoBusquedaManual.replace(/"/g, '&quot;')}" placeholder="Buscar en el manual por tema, comando, módulo o estándar (ej: PostGIS, ISO 19157, PRC, nueva capa)..." oninput="ModuloManual.filtrarManual(this.value)" style="width:100%; padding:10px 14px; border-radius:6px; border:1px solid var(--linea-fuerte); background:var(--papel); color:var(--tinta); font-size:0.92rem;">
         </div>
       </div>
 
-      <!-- Contenedor de capítulos -->
-      <div id="lista-capitulos-manual">
-        ${htmlCapitulos}
+      <div class="layout-modulo-dividido">
+        <aside class="indice-lateral-modulo" aria-label="Índice de capítulos del manual">
+          <h4>Índice de capítulos</h4>
+          <ul class="lista-anclas-indice">
+            ${htmlIndiceLateral}
+          </ul>
+        </aside>
+
+        <div class="contenido-paginado-modulo">
+          ${controlesPaginacionCap}
+          <div id="lista-capitulos-manual">
+            ${htmlCapitulos || '<div class="bloque"><p class="descripcion">No se encontraron capítulos que coincidan con la búsqueda.</p></div>'}
+          </div>
+          ${controlesPaginacionCap}
+        </div>
       </div>
     `;
   }
@@ -858,16 +921,30 @@ git push origin main</code></pre>
    */
   function cambiarModoManual(modo) {
     modoManualActivo = modo || 'todos';
+    const caps = obtenerCapitulosManual().filter(c => modoManualActivo === 'todos' || c.parte === modoManualActivo);
+    if (caps.length > 0) capituloActivoId = caps[0].id;
+    renderizarManual();
+  }
+
+  function alternarVerTodosCapitulos() {
+    verTodosCapitulos = !verTodosCapitulos;
     renderizarManual();
   }
 
   /**
-   * Desplaza suavemente la vista hacia un capítulo específico del manual
+   * Muestra el capítulo seleccionado y desplaza suavemente al inicio del módulo
    */
   function irACapitulo(idCapitulo) {
-    const el = document.getElementById(idCapitulo);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!idCapitulo) return;
+    capituloActivoId = idCapitulo;
+    textoBusquedaManual = '';
+    if (!verTodosCapitulos) {
+      renderizarManual();
+      const panel = document.getElementById('panel-manual');
+      if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      const el = document.getElementById(idCapitulo);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
@@ -904,19 +981,17 @@ git push origin main</code></pre>
   }
 
   /**
-   * Filtra los capítulos del manual por texto libre
+   * Filtra los capítulos del manual por texto libre manteniendo el foco del input
    */
   function filtrarManual(termino) {
-    const q = String(termino || '').trim().toLowerCase();
-    const articulos = document.querySelectorAll('.tarjeta-manual-capitulo');
-    articulos.forEach(art => {
-      if (!q) {
-        art.style.display = '';
-      } else {
-        const texto = (art.textContent || '').toLowerCase();
-        art.style.display = texto.includes(q) ? '' : 'none';
-      }
-    });
+    textoBusquedaManual = String(termino || '');
+    renderizarManual();
+    const input = document.getElementById('buscador-general-manual');
+    if (input) {
+      input.focus();
+      const len = input.value.length;
+      input.setSelectionRange(len, len);
+    }
   }
 
   /**
@@ -939,6 +1014,7 @@ git push origin main</code></pre>
     render,
     renderizarManual,
     cambiarModoManual,
+    alternarVerTodosCapitulos,
     irACapitulo,
     irAPanel,
     filtrarManual,

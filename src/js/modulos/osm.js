@@ -247,13 +247,22 @@ const ModuloOSM = (() => {
           return elementos;
         }
         ultimoError = new Error(`Servidor ${endpoint} respondió con status ${respuesta.status}`);
+        if (typeof window.notificarEstadoServicio === 'function') {
+          window.notificarEstadoServicio('Overpass está saturado, reintentamos en el siguiente servidor espejo disponible…', 'aviso');
+        }
       } catch (err) {
         console.warn(`[Overpass] Fallo o timeout en ${endpoint}:`, err.message);
         ultimoError = err;
+        if (typeof window.notificarEstadoServicio === 'function') {
+          window.notificarEstadoServicio('Overpass está saturado o demora en responder, cambiando automáticamente al servidor de respaldo…', 'aviso');
+        }
       }
     }
 
-    throw new Error(`No se pudo conectar a Overpass tras intentar en ${endpoints.length} servidores espejo. Detalle: ${ultimoError?.message || 'Error de red o timeout'}`);
+    if (typeof window.notificarEstadoServicio === 'function') {
+      window.notificarEstadoServicio('Los servidores en vivo de OpenStreetMap están temporalmente ocupados. Se muestra el catálogo local verificado.', 'error');
+    }
+    throw new Error(`Overpass está saturado tras intentar en ${endpoints.length} servidores espejo. Intenta nuevamente en unos segundos o utiliza las capas locales del catálogo.`);
   }
 
   /**

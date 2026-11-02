@@ -1757,11 +1757,64 @@ const ModuloDiccionario = (() => {
     if (cont) cont.style.display = 'none';
   }
 
-  function render(filtroTexto = '', filtroGrupo = 'todos') {
-    const texto = filtroTexto.toLowerCase().trim();
+  let estadoPaginacion = {
+    paginaActual: 1,
+    tamanoPagina: 15,
+    verTodos: false,
+    seccionActiva: 'descriptores', // 'descriptores' | 'esquema' | 'categorias'
+    ordenCampo: 'categoria',
+    ordenAsc: true,
+    ultimoTexto: '',
+    ultimoGrupo: 'todos'
+  };
 
-    const mostrarAtributos = (filtroGrupo === 'todos' || filtroGrupo === 'esquema');
-    const mostrarEtiquetas = (filtroGrupo !== 'esquema');
+  function cambiarPagina(nuevaPagina) {
+    estadoPaginacion.paginaActual = Math.max(1, nuevaPagina);
+    refrescarContenedorDOM();
+  }
+
+  function alternarVerTodos() {
+    estadoPaginacion.verTodos = !estadoPaginacion.verTodos;
+    estadoPaginacion.paginaActual = 1;
+    refrescarContenedorDOM();
+  }
+
+  function cambiarSeccionDiccionario(seccion) {
+    estadoPaginacion.seccionActiva = seccion;
+    estadoPaginacion.paginaActual = 1;
+    refrescarContenedorDOM();
+  }
+
+  function ordenarPor(campo) {
+    if (estadoPaginacion.ordenCampo === campo) {
+      estadoPaginacion.ordenAsc = !estadoPaginacion.ordenAsc;
+    } else {
+      estadoPaginacion.ordenCampo = campo;
+      estadoPaginacion.ordenAsc = true;
+    }
+    refrescarContenedorDOM();
+  }
+
+  function refrescarContenedorDOM() {
+    const cnt = document.getElementById('contenido-diccionario');
+    if (cnt) {
+      cnt.innerHTML = render(estadoPaginacion.ultimoTexto, estadoPaginacion.ultimoGrupo, true);
+    }
+  }
+
+  function render(filtroTexto = '', filtroGrupo = 'todos', mantenerPagina = false) {
+    if (!mantenerPagina && (filtroTexto !== estadoPaginacion.ultimoTexto || filtroGrupo !== estadoPaginacion.ultimoGrupo)) {
+      estadoPaginacion.paginaActual = 1;
+      if (filtroGrupo === 'esquema') {
+        estadoPaginacion.seccionActiva = 'esquema';
+      } else if (estadoPaginacion.seccionActiva === 'esquema' && filtroGrupo !== 'esquema') {
+        estadoPaginacion.seccionActiva = 'descriptores';
+      }
+    }
+    estadoPaginacion.ultimoTexto = filtroTexto;
+    estadoPaginacion.ultimoGrupo = filtroGrupo;
+
+    const texto = filtroTexto.toLowerCase().trim();
 
     const atributosFiltrados = ATRIBUTOS_NORMALIZADOS.filter(a =>
       !texto || a.campo.toLowerCase().includes(texto) || a.nombre.toLowerCase().includes(texto) || a.definicion.toLowerCase().includes(texto) || a.equivalenciaIDE.toLowerCase().includes(texto)
@@ -1779,34 +1832,57 @@ const ModuloDiccionario = (() => {
       return coincideTexto && coincideGrupo;
     });
 
+    // Ordenamiento de la tabla de descriptores
+    const campoOrd = estadoPaginacion.ordenCampo || 'categoria';
+    const dir = estadoPaginacion.ordenAsc ? 1 : -1;
+    etiquetasFiltradas.sort((a, b) => {
+      const valA = String(a[campoOrd] || '').toLowerCase();
+      const valB = String(b[campoOrd] || '').toLowerCase();
+      return valA.localeCompare(valB, 'es') * dir;
+    });
+
     const totalOficiales = ETIQUETAS_TERRITORIALES_OSM.filter(e => !e.ideChile.startsWith('Sin capa homóloga')).length;
     const totalBrechas = ETIQUETAS_TERRITORIALES_OSM.filter(e => e.ideChile.startsWith('Sin capa homóloga')).length;
 
-    // 1. Tarjetas Superiores Sobrias e Interactivas de las 10 Macro-Categorías
+    // Paginación de descriptores
+    const totalItems = etiquetasFiltradas.length;
+    const tamano = estadoPaginacion.verTodos ? Math.max(1, totalItems) : estadoPaginacion.tamanoPagina;
+    const totalPaginas = Math.max(1, Math.ceil(totalItems / tamano));
+    if (estadoPaginacion.paginaActual > totalPaginas) {
+      estadoPaginacion.paginaActual = totalPaginas;
+    }
+    const inicioIdx = (estadoPaginacion.paginaActual - 1) * tamano;
+    const finIdx = Math.min(inicioIdx + tamano, totalItems);
+    const etiquetasPagina = etiquetasFiltradas.slice(inicioIdx, finIdx);
+
+    // 1. Tarjetas de las 10 Macro-Categorías
     const tarjetasCategoriasHTML = `
-      <div class="dicc-tarjetas-seccion">
-        <div class="dicc-tarjetas-header">
-          <span class="marcador">[ESTÁNDAR // ISO 19110]</span>
-          <h3 style="display:inline; margin-left:6px;">Taxonomía Territorial: 10 Macro-Categorías VGI para Chile</h3>
-          <p class="descripcion" style="margin-top:4px;">
-            Seleccione <strong>[🔍 Filtrar]</strong> para aislar los descriptores de esa categoría en la tabla, o pulse <strong>[📖 Manual ↗]</strong> para abrir su ficha detallada en el <strong>Manual de Uso del Atlas</strong>:
-          </p>
+      <div class="bloque" id="dicc-sec-categorias">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+          <div>
+            <h3 style="margin:0;">Diez categorías temáticas del Atlas (norma ISO 19110)</h3>
+            <p class="descripcion" style="margin:4px 0 0 0;">
+              Selecciona <strong>Filtrar</strong> para ver los descriptores de esa categoría, o <strong>Ver en manual</strong> para consultar su ficha metodológica.
+            </p>
+          </div>
+          <a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion primaria-cta" style="font-size:0.84rem;">
+            Descargar catálogo en Excel (.xlsx)
+          </a>
         </div>
         <div class="dicc-grid-tarjetas">
           ${CATEGORIAS_MAESTRAS.map(cat => `
             <div class="dicc-tarjeta-cat" data-codigo="${cat.codigo}">
               <div class="dicc-tarjeta-top">
                 <span class="dicc-cat-badge">${cat.codigo}</span>
-                <span class="dicc-cat-icono">${cat.icono}</span>
               </div>
               <h4 class="dicc-cat-titulo">${cat.nombre}</h4>
               <p class="dicc-cat-resumen">${cat.resumen}</p>
               <div class="dicc-tarjeta-acciones">
-                <button type="button" class="dicc-btn-filtrar" onclick="ModuloDiccionario.filtrarPorCodigo('${cat.codigo}')" title="Filtrar descriptores de ${cat.codigo}">
-                  🔍 Filtrar
+                <button type="button" class="dicc-btn-filtrar" onclick="ModuloDiccionario.cambiarSeccionDiccionario('descriptores'); ModuloDiccionario.filtrarPorCodigo('${cat.codigo}')">
+                  Filtrar descriptores
                 </button>
-                <button type="button" class="dicc-btn-manual" onclick="ModuloDiccionario.irACategoriaManual('${cat.codigo}')" title="Ver guía metodológica y ejemplos en el Manual">
-                  📖 Manual ↗
+                <button type="button" class="dicc-btn-manual" onclick="ModuloDiccionario.irACategoriaManual('${cat.codigo}')">
+                  Ver en manual →
                 </button>
               </div>
             </div>
@@ -1816,159 +1892,201 @@ const ModuloDiccionario = (() => {
     `;
 
     // 2. Tabla de Atributos Normalizados
-    const htmlAtributos = atributosFiltrados.map(a => {
-      let enlaceDoc = '';
-      if (a.campo === 'categoria') {
-        enlaceDoc = `<button type="button" class="dicc-tag-cat-link" onclick="window.navegarAManual('doc-categorias')" style="margin-left:4px; font-size:0.75rem;">Ver 10 Cats ↗</button>`;
-      } else if (a.campo === 'superficie_m2' || a.campo === 'superficie_ha') {
-        enlaceDoc = `<button type="button" class="dicc-tag-cat-link" onclick="window.navegarAManual('doc-geodesia')" style="margin-left:4px; font-size:0.75rem;">Geodesia ↗</button>`;
-      } else if (a.campo === 'licencia') {
-        enlaceDoc = `<button type="button" class="dicc-tag-cat-link" onclick="window.navegarAManual('doc-gobernanza')" style="margin-left:4px; font-size:0.75rem;">Licencias ↗</button>`;
-      }
+    const htmlAtributos = atributosFiltrados.map(a => `
+      <tr style="border-bottom:1px solid var(--linea);">
+        <td><strong style="color:var(--musgo); font-family:var(--fuente-datos);">${a.campo}</strong></td>
+        <td><strong>${a.nombre}</strong><br><small style="color:var(--tinta-suave); font-family:var(--fuente-datos);">${a.tipo}</small></td>
+        <td style="font-size:0.86rem;">${a.definicion}<br><span class="descripcion" style="font-style:italic;">Ejemplo: ${a.ejemplo}</span></td>
+        <td style="font-size:0.82rem; font-family:var(--fuente-datos);"><code>${a.equivalenciaIDE}</code></td>
+        <td style="font-size:0.84rem;">${a.importancia}</td>
+      </tr>
+    `).join('');
 
-      return `
-        <tr style="border-bottom:1px solid var(--linea);">
-          <td><strong style="color:var(--musgo); font-family:var(--fuente-datos);">${a.campo}</strong>${enlaceDoc}</td>
-          <td><strong>${a.nombre}</strong><br><small style="color:var(--tinta-suave); font-family:var(--fuente-datos);">${a.tipo}</small></td>
-          <td style="font-size:0.85rem;">${a.definicion}<br><span class="descripcion" style="font-style:italic;">Ejemplo: ${a.ejemplo}</span></td>
-          <td style="font-size:0.82rem; background:var(--papel-alto); font-family:var(--fuente-datos);"><code>${a.equivalenciaIDE}</code></td>
-          <td style="font-size:0.82rem;">${a.importancia}</td>
-        </tr>
-      `;
-    }).join('');
+    const bloqueAtributosHTML = `
+      <div class="bloque" id="dicc-sec-esquema">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+          <h3 style="margin:0;">Esquema normalizado de atributos (23 campos · ISO 19110 / IDE Chile)</h3>
+        </div>
+        <p class="descripcion">Cada capa descargada o consultada en el Atlas incluye esta estructura estandarizada de atributos compatible con IDE Chile y software SIG (QGIS / PostGIS):</p>
+        <div style="overflow-x:auto;">
+          <table class="tabla-datos" style="margin-top:10px; font-size:0.88rem;">
+            <thead>
+              <tr>
+                <th>Código de campo</th>
+                <th>Nombre del atributo</th>
+                <th>Definición y ejemplo</th>
+                <th>Equivalencia IDE Chile / ISO 19115</th>
+                <th>Utilidad práctica</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${htmlAtributos.length > 0 ? htmlAtributos : '<tr><td colspan="5" style="text-align:center; padding:12px; color:var(--tinta-suave);">No hay atributos que coincidan con la búsqueda.</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
 
-    // 3. Tabla de Etiquetas Territoriales con Enlaces al Manual y Taginfo
-    const htmlEtiquetas = etiquetasFiltradas.map(e => {
+    // 3. Tabla Paginada y Ordenable de Descriptores
+    const iconoOrden = (campo) => {
+      if (estadoPaginacion.ordenCampo !== campo) return '↕';
+      return estadoPaginacion.ordenAsc ? '↑' : '↓';
+    };
+
+    const htmlEtiquetas = etiquetasPagina.map(e => {
       const esBrecha = e.ideChile.startsWith('Sin capa homóloga');
       const badgeHomologia = esBrecha
-        ? `<span style="display:inline-block; margin-top:3px; background:#4a231c; color:#eedec4; font-family:var(--fuente-datos); font-size:0.68rem; padding:2px 6px; border:1px solid #7c261e; letter-spacing:0.02em;">[BRECHA VGI] ${e.ideChile}</span>`
-        : `<span style="display:inline-block; margin-top:3px; background:#1e3527; color:#d8eedb; font-family:var(--fuente-datos); font-size:0.68rem; padding:2px 6px; border:1px solid #385d49; letter-spacing:0.02em;">[OFICIAL IDE] ${e.ideChile}</span>`;
+        ? `<span style="display:inline-block; margin-top:3px; background:var(--ocre-claro); color:var(--ocre); font-size:0.74rem; font-weight:600; padding:2px 8px; border-radius:4px; border:1px solid var(--ocre);">Aporte ciudadano (VGI): ${e.ideChile}</span>`
+        : `<span style="display:inline-block; margin-top:3px; background:var(--esmeralda-claro); color:var(--esmeralda); font-size:0.74rem; font-weight:600; padding:2px 8px; border-radius:4px; border:1px solid var(--esmeralda);">Cobertura oficial: ${e.ideChile}</span>`;
 
       return `
         <tr style="border-bottom:1px solid var(--linea);">
           <td>
-            <code style="font-weight:600; color:var(--musgo); font-size:0.88rem;">${e.tag}</code>
+            <code style="font-weight:600; color:var(--musgo); font-size:0.86rem;">${e.tag}</code>
             <div style="margin-top:4px;">
               ${e.tag.startsWith('dwc:')
-                ? `<a href="https://dwc.tdwg.org/terms/#${e.tag.replace('dwc:', '')}" target="_blank" rel="noopener" class="btn-taginfo-inspector" style="font-family:var(--fuente-datos); font-size:0.68rem; padding:1px 5px; background:var(--papel); border:1px solid var(--musgo); color:var(--musgo); text-decoration:none; display:inline-block;">🌿 GBIF Darwin Core ↗</a>`
-                : `<button type="button" class="btn-taginfo-inspector" onclick="ModuloDiccionario.inspeccionarTaginfo('${e.tag}')" style="font-family:var(--fuente-datos); font-size:0.68rem; padding:1px 5px; background:var(--papel); border:1px solid var(--musgo); color:var(--musgo); cursor:pointer; display:inline-block;">⚡ Taginfo API</button>`
+                ? `<a href="https://dwc.tdwg.org/terms/#${e.tag.replace('dwc:', '')}" target="_blank" rel="noopener" style="font-size:0.74rem;">Estándar Darwin Core ↗</a>`
+                : `<button type="button" class="btn-taginfo-inspector" onclick="ModuloDiccionario.inspeccionarTaginfo('${e.tag}')" style="font-size:0.72rem; padding:2px 7px; background:var(--papel-alto); border:1px solid var(--linea-fuerte); border-radius:4px; color:var(--musgo); cursor:pointer;">Ver uso en Taginfo</button>`
               }
             </div>
           </td>
-          <td><strong>${e.significado}</strong></td>
           <td>
-            <button type="button" class="dicc-tag-cat-link" onclick="ModuloDiccionario.irACategoriaManual('${e.categoria}')" title="Ver ficha metodológica de ${e.categoria} en el Manual de Uso">
+            <strong>${e.significado}</strong>
+            ${e.aplicacionUAH ? `<div style="font-size:0.8rem; color:var(--tinta-suave); margin-top:2px;">Ejemplo local: ${e.aplicacionUAH}</div>` : ''}
+          </td>
+          <td>
+            <button type="button" class="dicc-tag-cat-link" onclick="ModuloDiccionario.irACategoriaManual('${e.categoria}')" title="Ver ficha en el Manual de uso">
               ${e.categoria} ↗
             </button>
           </td>
-          <td style="font-size:0.82rem;">
-            <strong>${e.institucion || 'Comunidad OSM'}</strong><br>
+          <td style="font-size:0.84rem;">
+            <strong>${e.institucion || 'Comunidad OpenStreetMap'}</strong><br>
             ${badgeHomologia}
           </td>
         </tr>
       `;
     }).join('');
 
-    let bloqueAtributosHTML = '';
-    if (mostrarAtributos) {
-      bloqueAtributosHTML = `
-        <div class="bloque">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
-            <div>
-              <span style="font-family:var(--fuente-datos); font-size:0.72rem; color:var(--musgo); text-transform:uppercase;">[CATÁLOGO DE OBJETOS // 23 ATRIBUTOS NORMALIZADOS]</span>
-              <h3 style="margin:2px 0 0 0;">1. Esquema de Datos VGI y Ambiental Normalizado (Atributos IDE Chile / ISO 19110 / SUBDERE)</h3>
-            </div>
-          </div>
-          <p class="descripcion">Cada entidad descargada, auditada o proyectada en el Atlas adopta esta estructura tabular estandarizada de 23 atributos conformes a <strong>ISO 19110 (Metodología para la catalogación de fenómenos geográficos)</strong>, el <strong>Perfil Nacional de Metadatos de Chile (IDE Chile / SNIT)</strong>, variables de gestión de residuos de <strong>SUBDERE</strong>, geometrías vectoriales OGC y métricas de área en m² (EPSG:32719):</p>
-          <div style="overflow-x:auto;">
-            <table class="tabla-datos" style="margin-top:10px; font-size:0.88rem;">
-              <thead>
-                <tr style="background:var(--papel-alto);">
-                  <th>Campo</th>
-                  <th>Nombre Atributo</th>
-                  <th>Definición y Dominio</th>
-                  <th>Equivalencia IDE Chile / ISO 19115</th>
-                  <th>Relevancia para la Gestión</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${htmlAtributos.length > 0 ? htmlAtributos : '<tr><td colspan="5" style="text-align:center; padding:12px; color:var(--tinta-suave);">No hay atributos que coincidan con la búsqueda.</td></tr>'}
-              </tbody>
-            </table>
-          </div>
+    const controlesPaginacionHTML = `
+      <div class="barra-paginacion-institucional">
+        <div style="font-size:0.86rem; color:var(--tinta-suave);">
+          Mostrando <strong>${totalItems === 0 ? 0 : inicioIdx + 1}–${finIdx}</strong> de <strong>${totalItems}</strong> descriptores
+          (<strong>${totalOficiales}</strong> con homólogo en IDE Chile · <strong>${totalBrechas}</strong> brechas cubiertas por mapeo ciudadano)
         </div>
-      `;
-    }
-
-    let bloqueEtiquetasHTML = '';
-    if (mostrarEtiquetas) {
-      bloqueEtiquetasHTML = `
-        <div class="bloque" style="margin-top:20px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
-            <div>
-              <span style="font-family:var(--fuente-datos); font-size:0.72rem; color:var(--musgo); text-transform:uppercase;">[CATÁLOGO TERRITORIAL CHILE // ${ETIQUETAS_TERRITORIALES_OSM.length} DESCRIPTORES]</span>
-              <h3 style="margin:2px 0 0 0;">2. Glosario de Etiquetas OSM: Capas Oficiales IDE (${totalOficiales}) vs Brechas VGI (${totalBrechas})</h3>
-            </div>
-            <a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion secundaria" style="font-size:0.82rem; text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:5px 12px;">
-              📊 Descargar Catálogo Excel (.xlsx con 4 Hojas y 104 Citas APA)
-            </a>
-          </div>
-
-          <!-- Drawer / Modal para Taginfo API dentro del Diccionario -->
-          <div id="visor-taginfo-diccionario" style="display:none; margin-bottom:14px; position:relative;">
-            <button type="button" onclick="ModuloDiccionario.cerrarVisorTaginfo()" style="position:absolute; top:6px; right:8px; z-index:10; background:none; border:1px solid var(--linea); font-family:var(--fuente-datos); font-size:0.75rem; cursor:pointer; padding:2px 6px;">✕ Cerrar</button>
-            <div id="visor-taginfo-diccionario-contenido"></div>
-          </div>
-
-          <p class="descripcion">
-            <strong>Hallazgo metodológico para la gestión territorial:</strong> El análisis comparativo revela que <strong>${totalBrechas} de las ${ETIQUETAS_TERRITORIALES_OSM.length} etiquetas prioritarias</strong> corresponden a microelementos barriales (accesibilidad universal, quioscos, comercio de proximidad, mobiliario urbano y arbolado por género) que carecen de cobertura en la información estatal abierta vigente. La VGI opera como una infraestructura complementaria insustituible para el diagnóstico comunal.
-          </p>
-          <div style="overflow-x:auto;">
-            <table class="tabla-datos" style="margin-top:10px; font-size:0.86rem;">
-              <thead>
-                <tr style="background:var(--papel-alto);">
-                  <th>Etiqueta OSM (Tag)</th>
-                  <th>Denominación Común en Chile</th>
-                  <th>Categoría Atlas</th>
-                  <th>Institución Contraparte / Homología IDE Chile</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${htmlEtiquetas.length > 0 ? htmlEtiquetas : '<tr><td colspan="4" style="text-align:center; padding:12px; color:var(--tinta-suave);">No hay etiquetas que coincidan con el filtro seleccionado.</td></tr>'}
-              </tbody>
-            </table>
-          </div>
+        <div class="controles-pagina-botones">
+          <button type="button" class="btn-pagina-nav" onclick="ModuloDiccionario.cambiarPagina(${estadoPaginacion.paginaActual - 1})" ${estadoPaginacion.paginaActual <= 1 || estadoPaginacion.verTodos ? 'disabled' : ''}>
+            « Anterior
+          </button>
+          <span style="font-size:0.84rem; font-weight:600; padding:0 8px; color:var(--tinta);">
+            Página ${estadoPaginacion.paginaActual} de ${totalPaginas}
+          </span>
+          <button type="button" class="btn-pagina-nav" onclick="ModuloDiccionario.cambiarPagina(${estadoPaginacion.paginaActual + 1})" ${estadoPaginacion.paginaActual >= totalPaginas || estadoPaginacion.verTodos ? 'disabled' : ''}>
+            Siguiente »
+          </button>
+          <button type="button" class="btn-pagina-nav ${estadoPaginacion.verTodos ? 'activa' : ''}" onclick="ModuloDiccionario.alternarVerTodos()">
+            ${estadoPaginacion.verTodos ? 'Paginar de 15 en 15' : 'Ver todos'}
+          </button>
         </div>
-      `;
+      </div>
+    `;
+
+    const bloqueDescriptoresHTML = `
+      <div class="bloque" id="dicc-sec-descriptores">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+          <div>
+            <h3 style="margin:0;">Catálogo comparativo de descriptores y capas (${ETIQUETAS_TERRITORIALES_OSM.length} registros)</h3>
+            <p class="descripcion" style="margin:4px 0 0 0;">
+              Haz clic en los encabezados de la tabla para ordenar por código, nombre, categoría o institución.
+            </p>
+          </div>
+          <a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion primaria-cta" style="font-size:0.84rem;">
+            Descargar catálogo Excel (.xlsx)
+          </a>
+        </div>
+
+        <div id="visor-taginfo-diccionario" style="display:none; margin-bottom:14px; position:relative;">
+          <button type="button" onclick="ModuloDiccionario.cerrarVisorTaginfo()" style="position:absolute; top:6px; right:8px; z-index:10; background:var(--papel); border:1px solid var(--linea); font-size:0.78rem; cursor:pointer; padding:2px 8px; border-radius:4px;">✕ Cerrar</button>
+          <div id="visor-taginfo-diccionario-contenido"></div>
+        </div>
+
+        ${controlesPaginacionHTML}
+
+        <div style="overflow-x:auto;">
+          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem;">
+            <thead>
+              <tr>
+                <th style="cursor:pointer;" onclick="ModuloDiccionario.ordenarPor('tag')">Código / Etiqueta ${iconoOrden('tag')}</th>
+                <th style="cursor:pointer;" onclick="ModuloDiccionario.ordenarPor('significado')">Nombre y aplicación local ${iconoOrden('significado')}</th>
+                <th style="cursor:pointer;" onclick="ModuloDiccionario.ordenarPor('categoria')">Categoría ${iconoOrden('categoria')}</th>
+                <th style="cursor:pointer;" onclick="ModuloDiccionario.ordenarPor('institucion')">Institución y homología en IDE Chile ${iconoOrden('institucion')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${htmlEtiquetas.length > 0 ? htmlEtiquetas : '<tr><td colspan="4" style="text-align:center; padding:16px; color:var(--tinta-suave);">No se encontraron descriptores con ese criterio de búsqueda.</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+
+        ${controlesPaginacionHTML}
+      </div>
+    `;
+
+    // Contenido activo según la vista seleccionada en el índice lateral
+    let contenidoPrincipalHTML = '';
+    if (estadoPaginacion.seccionActiva === 'categorias') {
+      contenidoPrincipalHTML = tarjetasCategoriasHTML;
+    } else if (estadoPaginacion.seccionActiva === 'esquema') {
+      contenidoPrincipalHTML = bloqueAtributosHTML;
+    } else {
+      contenidoPrincipalHTML = bloqueDescriptoresHTML;
     }
 
     return `
-      ${tarjetasCategoriasHTML}
+      <div class="layout-modulo-dividido">
+        <aside class="indice-lateral-modulo" aria-label="Índice del diccionario de datos">
+          <h4>Secciones del diccionario</h4>
+          <ul class="lista-anclas-indice">
+            <li>
+              <button type="button" class="btn-ancla-indice ${estadoPaginacion.seccionActiva === 'descriptores' ? 'activo' : ''}" onclick="ModuloDiccionario.cambiarSeccionDiccionario('descriptores')">
+                <span>1. Catálogo de descriptores</span>
+                <span>(${totalItems})</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="btn-ancla-indice ${estadoPaginacion.seccionActiva === 'esquema' ? 'activo' : ''}" onclick="ModuloDiccionario.cambiarSeccionDiccionario('esquema')">
+                <span>2. Esquema de atributos</span>
+                <span>(${ATRIBUTOS_NORMALIZADOS.length})</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="btn-ancla-indice ${estadoPaginacion.seccionActiva === 'categorias' ? 'activo' : ''}" onclick="ModuloDiccionario.cambiarSeccionDiccionario('categorias')">
+                <span>3. Las 10 categorías</span>
+                <span>(10)</span>
+              </button>
+            </li>
+          </ul>
 
-      <div class="caja-guia-referencia" style="margin-top:16px;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
-          <div>
-            <h4>📖 Marco Metodológico de Catalogación Geográfica (ISO 19110 / SNIT Chile / APA 7ª ed.)</h4>
-            <p style="margin-bottom:8px;">
-              Para que los datos de Información Geográfica Voluntaria (VGI) sean aptos para revisión por personas no técnicas y comités académicos, deben regirse por el estándar <strong>ISO 19110 (Metodología para la catalogación de fenómenos geográficos)</strong> y el <strong>Catálogo de Objetos Geográficos de Chile v3.0 (IDE Chile / SNIT)</strong>. Esto garantiza que cada etiqueta abierta tenga un significado inequívoco, medible y contrastable con la cartografía municipal y fiscal.
-            </p>
-          </div>
-          <div>
-            <a href="docs/categorias_tematicas_osm.xlsx" download class="accion" style="font-size:0.82rem; text-decoration:none; padding:6px 14px; white-space:nowrap; display:inline-flex; align-items:center; gap:6px;">
-              📥 Descargar categorias_tematicas_osm.xlsx
-            </a>
-          </div>
+          <h4 style="margin-top:16px;">Filtro rápido por categoría</h4>
+          <ul class="lista-anclas-indice">
+            <li>
+              <button type="button" class="btn-ancla-indice ${!texto ? 'activo' : ''}" onclick="ModuloDiccionario.cambiarSeccionDiccionario('descriptores'); ModuloDiccionario.filtrarPorCodigo('')">
+                <span>Ver todas las categorías</span>
+              </button>
+            </li>
+            ${CATEGORIAS_MAESTRAS.map(cat => `
+              <li>
+                <button type="button" class="btn-ancla-indice ${texto === cat.codigo.toLowerCase() ? 'activo' : ''}" onclick="ModuloDiccionario.cambiarSeccionDiccionario('descriptores'); ModuloDiccionario.filtrarPorCodigo('${cat.codigo}')">
+                  <span>${cat.codigo}: ${cat.nombre.split(' ')[0]}</span>
+                </button>
+              </li>
+            `).join('')}
+          </ul>
+        </aside>
+
+        <div class="contenido-paginado-modulo">
+          ${contenidoPrincipalHTML}
         </div>
-        <ul style="margin-top:6px; font-size:0.85rem; line-height:1.45;">
-          <li><strong>IDE Chile / SNIT (2020):</strong> <em>Catálogo de Objetos Geográficos de Chile v3.0: Estándar para la captura y clasificación de información geoespacial.</em> Ministerio de Bienes Nacionales. https://www.ide.cl</li>
-          <li><strong>OpenStreetMap Wiki Chile (2024):</strong> <em>WikiProject Chile: Guía, directrices y convenciones comunitarias de mapeo para Chile.</em> https://wiki.openstreetmap.org/wiki/ES:Chile</li>
-          <li><strong>Geofabrik & HeiGIT (2026):</strong> <em>Taginfo Chile: Regional OpenStreetMap Tag Usage and Statistics.</em> https://taginfo.geofabrik.de/south-america:chile</li>
-          <li><strong>ISO/TC 211 (2016):</strong> <em>ISO 19110:2016: Geographic information — Methodology for feature cataloguing.</em> International Organization for Standardization.</li>
-        </ul>
       </div>
-
-      ${bloqueAtributosHTML}
-      ${bloqueEtiquetasHTML}
     `;
   }
 
@@ -1980,6 +2098,10 @@ const ModuloDiccionario = (() => {
     filtrarPorCodigo,
     inspeccionarTaginfo,
     cerrarVisorTaginfo,
+    cambiarPagina,
+    alternarVerTodos,
+    cambiarSeccionDiccionario,
+    ordenarPor,
     render
   };
 })();

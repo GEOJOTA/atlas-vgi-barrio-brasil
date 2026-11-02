@@ -1030,17 +1030,97 @@ function inicializarAplicacion() {
   autocargarMetadatos();
 }
 
-/* ---------------------- NAVEGACIÓN ---------------------- */
+/* ---------------------- NAVEGACIÓN POR TAREA, MIGAS DE PAN, TEMA Y GLOSARIO ---------------------- */
+
+const METADATOS_PANELES_NAVEGACION = {
+  'inicio':             { grupo: 'explorar',      grupoNombre: 'Explorar mapa',              vistaNombre: 'Visor cartográfico' },
+  'explorador-osm':     { grupo: 'consultar',     grupoNombre: 'Consultar datos',            vistaNombre: 'OpenStreetMap (Overpass)' },
+  'biodiversidad-gbif': { grupo: 'consultar',     grupoNombre: 'Consultar datos',            vistaNombre: 'Biodiversidad (GBIF)' },
+  'proyectos-umap':     { grupo: 'consultar',     grupoNombre: 'Consultar datos',            vistaNombre: 'Mapas comunitarios (uMap)' },
+  'indicadores':        { grupo: 'analisis',      grupoNombre: 'Análisis y relatos',         vistaNombre: 'Indicadores y relatos (83 mapas)' },
+  'calidad-ohsome':     { grupo: 'calidad',       grupoNombre: 'Evaluar calidad',            vistaNombre: 'Calidad espacial (ISO 19157)' },
+  'metadatos-iso':      { grupo: 'calidad',       grupoNombre: 'Evaluar calidad',            vistaNombre: 'Metadatos (ISO 19115)' },
+  'diccionario':        { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Diccionario de datos (134 capas)' },
+  'manual':             { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Manual de uso' },
+  'licencias':          { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Licencias y descargas' }
+};
 
 function configurarNavegacion() {
+  // Inicializar tema claro institucional por defecto (modo oscuro como opción secundaria)
+  const temaGuardado = localStorage.getItem('nodo-vgi:tema') || 'claro';
+  const aplicarTema = (tema) => {
+    if (tema === 'oscuro') {
+      document.documentElement.setAttribute('data-tema', 'oscuro');
+    } else {
+      document.documentElement.removeAttribute('data-tema');
+    }
+    const txtToggle = document.getElementById('texto-toggle-tema');
+    const btnToggle = document.getElementById('btn-toggle-tema');
+    if (txtToggle) {
+      txtToggle.textContent = tema === 'oscuro' ? 'Modo claro' : 'Modo oscuro';
+    }
+    if (btnToggle) {
+      btnToggle.setAttribute('aria-pressed', tema === 'oscuro' ? 'true' : 'false');
+    }
+  };
+  aplicarTema(temaGuardado);
+
+  document.getElementById('btn-toggle-tema')?.addEventListener('click', () => {
+    const actual = document.documentElement.getAttribute('data-tema') === 'oscuro' ? 'oscuro' : 'claro';
+    const nuevo = actual === 'oscuro' ? 'claro' : 'oscuro';
+    localStorage.setItem('nodo-vgi:tema', nuevo);
+    aplicarTema(nuevo);
+  });
+
+  // Modal de Glosario de Siglas
+  const modalGlosario = document.getElementById('modal-glosario-siglas');
+  const abrirGlosario = () => {
+    if (modalGlosario) {
+      modalGlosario.style.display = 'flex';
+      modalGlosario.setAttribute('aria-hidden', 'false');
+    }
+  };
+  const cerrarGlosario = () => {
+    if (modalGlosario) {
+      modalGlosario.style.display = 'none';
+      modalGlosario.setAttribute('aria-hidden', 'true');
+    }
+  };
+  document.getElementById('btn-abrir-glosario-rapido')?.addEventListener('click', abrirGlosario);
+  document.getElementById('btn-cerrar-glosario-siglas')?.addEventListener('click', cerrarGlosario);
+  document.getElementById('btn-cerrar-glosario-pie')?.addEventListener('click', cerrarGlosario);
+  modalGlosario?.addEventListener('click', (e) => {
+    if (e.target === modalGlosario) cerrarGlosario();
+  });
+
   const activarPanel = (panelId) => {
     if (!panelId) return;
-    const botonesNav = Array.from(new Set(document.querySelectorAll('#lista-navegacion button, .barra-pestanas-profundidad button, button[data-panel]')));
+    const infoNav = METADATOS_PANELES_NAVEGACION[panelId] || {
+      grupo: 'explorar',
+      grupoNombre: 'Explorar mapa',
+      vistaNombre: panelId
+    };
+
+    // Actualizar botones de subpestañas
+    const botonesNav = Array.from(new Set(document.querySelectorAll('#lista-navegacion button, .barra-pestanas-profundidad button')));
     botonesNav.forEach(b => {
       const coincide = b.dataset.panel === panelId;
       b.setAttribute('aria-current', coincide ? 'true' : 'false');
       b.classList.toggle('activa', coincide);
     });
+
+    // Actualizar los 5 botones de grupo por tarea
+    document.querySelectorAll('.btn-grupo-tarea').forEach(btnGrupo => {
+      const coincideGrupo = btnGrupo.dataset.grupoTarea === infoNav.grupo;
+      btnGrupo.classList.toggle('activo', coincideGrupo);
+      btnGrupo.setAttribute('aria-expanded', coincideGrupo ? 'true' : 'false');
+    });
+
+    // Actualizar migas de pan
+    const migaGrupo = document.getElementById('miga-grupo-actual');
+    const migaVista = document.getElementById('miga-vista-actual');
+    if (migaGrupo) migaGrupo.textContent = infoNav.grupoNombre;
+    if (migaVista) migaVista.textContent = infoNav.vistaNombre;
 
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('activo'));
     const panelDestino = document.getElementById('panel-' + panelId);
@@ -1074,7 +1154,6 @@ function configurarNavegacion() {
   window.navegarAModulo = function(moduloId) {
     if (!moduloId) return;
     const mapaModulos = {
-      // Nueva numeración oficial 01 al 10
       '01': 'inicio',
       '1': 'inicio',
       'inicio': 'inicio',
@@ -1116,13 +1195,21 @@ function configurarNavegacion() {
       '10': 'licencias',
       'licencias': 'licencias',
 
-      // Alias retroactivos
       '00': 'inicio'
     };
     const panelId = mapaModulos[moduloId] || moduloId;
     activarPanel(panelId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Clic en los 5 botones principales por tarea
+  document.querySelectorAll('.btn-grupo-tarea').forEach(btnGrupo => {
+    btnGrupo.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const panelDef = btnGrupo.dataset.panelDefecto || 'inicio';
+      activarPanel(panelDef);
+    });
+  });
 
   const botonesNav = Array.from(new Set(document.querySelectorAll('#lista-navegacion button, .barra-pestanas-profundidad button')));
   botonesNav.forEach(boton => {
@@ -1132,8 +1219,28 @@ function configurarNavegacion() {
     });
   });
 
-  // Delegación global infalible para clicks en spans, badges o botones dinámicos
+  // Delegación global para botones con data-panel y sugerencias del estado vacío del mapa
   document.addEventListener('click', (e) => {
+    const btnSugVacio = e.target.closest('.btn-sugerencia-vacio');
+    if (btnSugVacio) {
+      e.preventDefault();
+      e.stopPropagation();
+      const catVgi = btnSugVacio.dataset.activarVgi;
+      const idOficial = btnSugVacio.dataset.activarOficial;
+      if (catVgi) {
+        const btnCat = document.getElementById(`btn-cat-${catVgi}`);
+        if (btnCat) btnCat.click();
+      } else if (idOficial) {
+        const btnOf = document.getElementById(`btn-oficial-${idOficial}`);
+        if (btnOf) {
+          btnOf.click();
+        } else {
+          alternarCapaOficialIDE(idOficial, null);
+        }
+      }
+      return;
+    }
+
     const btn = e.target.closest('#lista-navegacion button, .barra-pestanas-profundidad button, button[data-panel]');
     if (btn && btn.dataset.panel) {
       activarPanel(btn.dataset.panel);
@@ -1269,9 +1376,76 @@ function precargarCamposDesdeConfig() {
 }
 
 function pintarEstadoConexion() {
+  // No mostrar un indicador verde estático falso; la franja solo aparece ante incidencias reales o reintentos.
+  const franja = document.getElementById('franja-estado-servicios');
   const elemento = document.getElementById('estado-conexion');
-  elemento.innerHTML = `🟢 APIs en vivo: Overpass (OSM), ohsome (HeiGIT) y GBIF conectadas.`;
+  if (franja) franja.style.display = 'none';
+  if (elemento) elemento.textContent = '';
 }
+
+window.notificarEstadoServicio = function(mensaje, tipo = 'aviso', duracionMs = 9000) {
+  const franja = document.getElementById('franja-estado-servicios');
+  const elemento = document.getElementById('estado-conexion');
+  if (!franja || !elemento) return;
+  if (!mensaje) {
+    franja.style.display = 'none';
+    elemento.textContent = '';
+    return;
+  }
+  franja.style.display = 'block';
+  franja.style.background = tipo === 'error' ? 'var(--alerta-claro)' : 'var(--ocre-claro)';
+  franja.style.borderBottom = `1px solid ${tipo === 'error' ? 'var(--alerta)' : 'var(--ocre)'}`;
+  elemento.style.color = tipo === 'error' ? 'var(--alerta)' : 'var(--ocre)';
+  elemento.style.fontWeight = '600';
+  elemento.textContent = mensaje;
+  if (duracionMs > 0) {
+    clearTimeout(window._timerEstadoServicio);
+    window._timerEstadoServicio = setTimeout(() => {
+      franja.style.display = 'none';
+    }, duracionMs);
+  }
+};
+
+const PESOS_APROXIMADOS_CAPAS = {
+  educacion: '~180 KB',
+  servicios: '~420 KB',
+  transporte: '~310 KB',
+  movilidad_activa: '~290 KB',
+  espacio_publico: '~350 KB',
+  patrimonio: '~260 KB',
+  accesibilidad: '~390 KB',
+  biodiversidad: '~520 KB',
+  edificaciones: '~4,8 MB',
+  cobertura_suelo: '~1,4 MB',
+  censo2024_manzanas: '~14,2 MB',
+  ide_sii_catastro_predial: '~18,6 MB',
+  minvu_ipt_prc_santiago: '~2,1 MB',
+  minvu_patrimonio: '~1,6 MB',
+  semaforos_uoct_rm: '~1,2 MB'
+};
+
+window.mostrarProgresoCargaCapa = function(nombreCapa, idCapa, porcentaje = 35) {
+  const barra = document.getElementById('barra-progreso-carga-capa');
+  const txt = document.getElementById('texto-progreso-carga-capa');
+  const peso = document.getElementById('peso-progreso-carga-capa');
+  const relleno = document.getElementById('relleno-progreso-carga-capa');
+  if (!barra) return;
+  const pesoEst = PESOS_APROXIMADOS_CAPAS[idCapa] || '~650 KB';
+  barra.style.display = 'block';
+  if (txt) txt.textContent = `Cargando capa: ${nombreCapa}…`;
+  if (peso) peso.textContent = `Peso aprox.: ${pesoEst}`;
+  if (relleno) relleno.style.width = `${porcentaje}%`;
+};
+
+window.ocultarProgresoCargaCapa = function() {
+  const barra = document.getElementById('barra-progreso-carga-capa');
+  const relleno = document.getElementById('relleno-progreso-carga-capa');
+  if (relleno) relleno.style.width = '100%';
+  setTimeout(() => {
+    if (barra) barra.style.display = 'none';
+    if (relleno) relleno.style.width = '0%';
+  }, 280);
+};
 
 /* ---------------------- HELPERS DE BBOX ---------------------- */
 
@@ -1436,7 +1610,10 @@ async function alternarCapaCategoria(categoria) {
   // Activar y cargar datos
   if (btn) btn.classList.add('cargando');
   if (card) card.classList.add('cargando');
-  if (estadoTexto) estadoTexto.textContent = `Consultando ${categoria.nombre} en el área territorial seleccionada…`;
+  if (estadoTexto) estadoTexto.textContent = `Cargando capa "${categoria.nombre}" en el área seleccionada…`;
+  if (typeof window.mostrarProgresoCargaCapa === 'function') {
+    window.mostrarProgresoCargaCapa(categoria.nombre, categoria.id, 40);
+  }
 
   const bbox = leerBbox('osm') || window.NODO_CONFIG.area_por_defecto.bbox;
 
@@ -1459,9 +1636,12 @@ async function alternarCapaCategoria(categoria) {
         featsOSM = ModuloOSM.elementosAGeoJSON(resOSM.value, 'biodiversidad').features || [];
       } else {
         try {
+          if (typeof window.notificarEstadoServicio === 'function') {
+            window.notificarEstadoServicio('El servidor de OpenStreetMap (Overpass) está con alta demanda; cargando datos desde la copia local de respaldo.');
+          }
           const dbOSM = await ModuloOSM.consultarBaseDatosOSM(bbox, 'biodiversidad');
           featsOSM = dbOSM.features || [];
-          fuenteOSM = 'Geofabrik (Extracto RM)';
+          fuenteOSM = 'Geofabrik (Copia local RM)';
         } catch (_) {}
       }
 
@@ -1489,9 +1669,16 @@ async function alternarCapaCategoria(categoria) {
         fuenteUtilizada = 'OpenStreetMap (API Overpass)';
       } catch (errOverpass) {
         console.warn(`[Overpass en vivo no disponible para ${categoria.id}]:`, errOverpass.message);
+        if (typeof window.notificarEstadoServicio === 'function') {
+          window.notificarEstadoServicio(`El servidor en vivo de OpenStreetMap está saturado; se cargó "${categoria.nombre}" desde la base de respaldo local.`);
+        }
         geojson = await ModuloOSM.consultarBaseDatosOSM(bbox, categoria.id);
-        fuenteUtilizada = 'Geofabrik (Extracto RM)';
+        fuenteUtilizada = 'Geofabrik (Copia local RM)';
       }
+    }
+
+    if (typeof window.mostrarProgresoCargaCapa === 'function') {
+      window.mostrarProgresoCargaCapa(categoria.nombre, categoria.id, 85);
     }
 
     const cantidad = (geojson && geojson.features) ? geojson.features.length : 0;
@@ -1519,7 +1706,10 @@ async function alternarCapaCategoria(categoria) {
       card.classList.add('activo');
     }
     if (textoSwitch) textoSwitch.textContent = 'En Mapa';
-    if (estadoTexto) estadoTexto.textContent = `Capa "${categoria.nombre}" cargada (${cantidad} elementos en el Bbox, fuente: ${fuenteUtilizada}).`;
+    if (estadoTexto) estadoTexto.textContent = `Capa "${categoria.nombre}" cargada (${cantidad} registros en el área, fuente: ${fuenteUtilizada}).`;
+    if (typeof window.ocultarProgresoCargaCapa === 'function') {
+      window.ocultarProgresoCargaCapa();
+    }
     actualizarTelemetriaCapasActivas();
 
     ultimaConsultaRealizada = {
@@ -1537,9 +1727,14 @@ async function alternarCapaCategoria(categoria) {
     });
   } catch (error) {
     console.error(`[Error general al consultar ${categoria.id}]:`, error);
-    btn.classList.remove('cargando');
+    if (btn) btn.classList.remove('cargando');
     if (card) card.classList.remove('cargando');
-    estadoTexto.innerHTML = `<span style="color:var(--alerta);">Error al consultar ${categoria.nombre}: ${error.message}</span>`;
+    if (typeof window.ocultarProgresoCargaCapa === 'function') {
+      window.ocultarProgresoCargaCapa();
+    }
+    if (estadoTexto) {
+      estadoTexto.innerHTML = `<span style="color:var(--alerta);">No se pudo cargar "${categoria.nombre}". Verifica tu conexión o intenta nuevamente en unos segundos (${error.message}).</span>`;
+    }
   }
 }
 
@@ -2012,50 +2207,104 @@ function manejarCambioPerfilUsuario(e) {
   const badgeInfo = document.getElementById('badge-perfil-info');
 
   const descripciones = {
-    todos: 'Herramientas adaptadas para gestión territorial integral. Acceso general a todas las funciones.',
-    institucion: '🏛 Perfil Institucional / Municipal / IDE Chile: Prioriza metadatos normalizados (ISO 19115/19139), catastro de equipamiento crítico, licencias abiertas y control de calidad espacial.',
-    comunidad: '🗫 Perfil Comunitario / Vecinal: Facilita consultas rápidas en 1 clic para plazas, patrimonio, ciclovías, comercios locales y mapeo barrial colaborativo en UMap.',
-    voluntario: '⌖ Perfil Mapeador / Voluntario OSM: Herramientas analíticas avanzadas, métricas geométricas ohsome v1 (longitud/área/densidad), editor Overpass QL y taxonomía.',
-    ong: '🔬 Perfil ONGs / Territoriales: Proporciona cálculo de densidades territoriales rigurosas mediante reproyección EPSG:32719, calidad ISO 19157 con ohsome v1/v2, exportación GeoJSON para QGIS, articulación comunitaria y fuentes bibliográficas.'
+    todos: 'Vista completa con todas las secciones de exploración, consulta, calidad y descargas.',
+    comunidad: 'Vista adaptada para vecinos y organizaciones barriales: destaca el mapa, servicios locales, áreas verdes y mapas participativos.',
+    institucion: 'Vista para gestión municipal e institucional: prioriza normativa urbana (PRC), catastro oficial, metadatos ISO 19115 y calidad.',
+    voluntario: 'Vista para mapeadores de OpenStreetMap: destaca consultas Overpass QL, validación de etiquetas y evolución histórica.',
+    ong: 'Vista para investigación y academia: prioriza indicadores espaciales (KDE y LISA), Censo 2024, calidad ISO 19157 y descargas.'
   };
 
   if (badgeInfo) {
     badgeInfo.textContent = descripciones[perfil] || descripciones.todos;
   }
 
-  // Paneles prioritarios según perfil
+  // Paneles y grupos prioritarios según el perfil elegido
   const panelesPrioritarios = {
-    institucion: ['metadatos-iso', 'calidad-ohsome', 'diccionario', 'licencias'],
-    comunidad: ['inicio', 'explorador-osm', 'proyectos-umap', 'diccionario'],
-    voluntario: ['explorador-osm', 'calidad-ohsome', 'diccionario', 'manual'],
-    ong: ['inicio', 'calidad-ohsome', 'biodiversidad-gbif', 'metadatos-iso', 'manual'],
+    comunidad: ['inicio', 'explorador-osm', 'biodiversidad-gbif', 'proyectos-umap', 'indicadores'],
+    institucion: ['inicio', 'indicadores', 'calidad-ohsome', 'metadatos-iso', 'diccionario', 'licencias'],
+    voluntario: ['inicio', 'explorador-osm', 'calidad-ohsome', 'diccionario', 'manual'],
+    ong: ['inicio', 'indicadores', 'calidad-ohsome', 'biodiversidad-gbif', 'metadatos-iso', 'licencias'],
+    todos: []
+  };
+
+  const gruposPrioritarios = {
+    comunidad: ['explorar', 'consultar', 'analisis'],
+    institucion: ['explorar', 'analisis', 'calidad', 'documentacion'],
+    voluntario: ['explorar', 'consultar', 'calidad'],
+    ong: ['explorar', 'analisis', 'calidad', 'documentacion'],
     todos: []
   };
 
   const recomendados = panelesPrioritarios[perfil] || [];
+  const gruposRec = gruposPrioritarios[perfil] || [];
 
-  // Actualizar botones de navegación en la barra lateral
+  // Adaptar la barra de navegación y subpestañas al perfil elegido
   document.querySelectorAll('#lista-navegacion button').forEach(btn => {
     const idPanel = btn.dataset.panel;
-    const yaExisteBadge = btn.querySelector('.badge-recomendado');
-    if (yaExisteBadge) yaExisteBadge.remove();
-
-    if (recomendados.includes(idPanel)) {
-      btn.style.borderLeft = '3px solid var(--ocre)';
-      const span = document.createElement('span');
-      span.className = 'badge-recomendado';
-      span.style.fontSize = '0.65rem';
-      span.style.marginLeft = '6px';
-      span.style.color = 'var(--ocre)';
-      span.style.fontWeight = 'bold';
-      span.textContent = '★';
-      btn.appendChild(span);
-    } else {
-      btn.style.borderLeft = '';
+    btn.classList.remove('pestana-destacada-perfil', 'pestana-secundaria-perfil');
+    if (perfil !== 'todos') {
+      if (recomendados.includes(idPanel)) {
+        btn.classList.add('pestana-destacada-perfil');
+      } else {
+        btn.classList.add('pestana-secundaria-perfil');
+      }
     }
   });
 
-  // Ajustar o destacar botones de sugerencias ciudadanas
+  document.querySelectorAll('.btn-grupo-tarea').forEach(btnGrupo => {
+    const grp = btnGrupo.dataset.grupoTarea;
+    btnGrupo.classList.remove('grupo-destacado-perfil');
+    if (perfil !== 'todos' && gruposRec.includes(grp)) {
+      btnGrupo.classList.add('grupo-destacado-perfil');
+    }
+  });
+
+  // Actualizar las capas sugeridas en el estado vacío del mapa según el perfil
+  const sugerenciasVacioPorPerfil = {
+    todos: [
+      { etiqueta: '+ Áreas verdes y plazas', vgi: 'espacio_publico' },
+      { etiqueta: '+ Educación y Campus UAH', vgi: 'educacion' },
+      { etiqueta: '+ Patrimonio e inmuebles históricos', vgi: 'patrimonio' },
+      { etiqueta: '+ Plan Regulador Comunal (PRC)', oficial: 'minvu_ipt_prc_santiago' }
+    ],
+    comunidad: [
+      { etiqueta: '+ Plazas y áreas verdes barriales', vgi: 'espacio_publico' },
+      { etiqueta: '+ Comercio, farmacias y servicios', vgi: 'servicios' },
+      { etiqueta: '+ Ciclovías y movilidad activa', vgi: 'movilidad_activa' },
+      { etiqueta: '+ Patrimonio y cultura local', vgi: 'patrimonio' }
+    ],
+    institucion: [
+      { etiqueta: '+ Plan Regulador Comunal (PRC)', oficial: 'minvu_ipt_prc_santiago' },
+      { etiqueta: '+ Manzanas Censo INE 2024', oficial: 'censo2024_manzanas' },
+      { etiqueta: '+ Patrimonio MINVU / CMN', oficial: 'minvu_patrimonio' },
+      { etiqueta: '+ Accesibilidad universal y cruces', vgi: 'accesibilidad' }
+    ],
+    voluntario: [
+      { etiqueta: '+ Edificaciones y huella urbana', vgi: 'edificaciones' },
+      { etiqueta: '+ Accesibilidad y cruces peatonales', vgi: 'accesibilidad' },
+      { etiqueta: '+ Ciclovías y estacionamientos', vgi: 'movilidad_activa' },
+      { etiqueta: '+ Arbolado y biodiversidad', vgi: 'biodiversidad' }
+    ],
+    ong: [
+      { etiqueta: '+ Manzanas Censo INE 2024', oficial: 'censo2024_manzanas' },
+      { etiqueta: '+ Áreas verdes y espacio público', vgi: 'espacio_publico' },
+      { etiqueta: '+ Educación y Campus UAH', vgi: 'educacion' },
+      { etiqueta: '+ Transporte público (Red / Metro)', vgi: 'transporte' }
+    ]
+  };
+
+  const contSugVacio = document.getElementById('contenedor-sugerencias-vacio-mapa');
+  if (contSugVacio) {
+    const listaSug = sugerenciasVacioPorPerfil[perfil] || sugerenciasVacioPorPerfil.todos;
+    contSugVacio.innerHTML = listaSug.map(item => {
+      if (item.vgi) {
+        return `<button type="button" class="btn-sugerencia-vacio" data-activar-vgi="${item.vgi}">${item.etiqueta}</button>`;
+      }
+      return `<button type="button" class="btn-sugerencia-vacio" data-activar-oficial="${item.oficial}">${item.etiqueta}</button>`;
+    }).join('');
+  }
+
+  // Ajustar o destacar botones de sugerencias ciudadanas en el explorador OSM
   const perfilesSugerencias = {
     institucion: ['amenity=university', 'highway=bus_stop', 'kerb=lowered', 'building=yes', 'CAT-01', 'CAT-03', 'CAT-07', 'CAT-09'],
     comunidad: ['shop=*', 'leisure=park', 'historic=*', 'highway=cycleway', 'CAT-02', 'CAT-04', 'CAT-05', 'CAT-06'],
@@ -2603,6 +2852,11 @@ function actualizarTelemetriaCapasActivas() {
 
   const totalActivas = activasVGI.length + activasOficiales.length + importadasActivas.length;
 
+  const estadoVacioMapa = document.getElementById('estado-vacio-mapa');
+  if (estadoVacioMapa) {
+    estadoVacioMapa.style.display = totalActivas === 0 ? 'block' : 'none';
+  }
+
   if (kpiActivas) kpiActivas.textContent = totalActivas;
   if (badgeTabActivas) badgeTabActivas.textContent = totalActivas;
   if (elStatCapas) elStatCapas.textContent = totalActivas;
@@ -2631,8 +2885,8 @@ function actualizarTelemetriaCapasActivas() {
 
     if (contenedorResumen) {
       contenedorResumen.innerHTML = `
-        <div style="grid-column:1/-1; padding:24px; text-align:center; color:#94a3b8; font-size:0.88rem; background:rgba(15,23,42,0.5); border:1px dashed rgba(255,255,255,0.15); border-radius:8px;">
-          No hay capas activas superpuestas en el visor actualmente. Activa capas desde "Capas Oficiales del Estado" o "Capas Colaborativas VGI".
+        <div style="grid-column:1/-1; padding:24px; text-align:center; color:var(--tinta-suave); font-size:0.88rem; background:var(--papel-alto); border:1px dashed var(--linea-fuerte); border-radius:8px;">
+          No hay capas activas superpuestas en el visor actualmente. Activa una capa desde "Capas Oficiales del Estado" o "Capas Colaborativas VGI".
         </div>
       `;
     }
@@ -3365,11 +3619,20 @@ async function alternarCapaOficialIDE(idCapa, btn) {
   // Activar y cargar datos
   if (btn) btn.classList.add('cargando');
   if (card) card.classList.add('cargando');
-  if (estadoTexto) estadoTexto.textContent = `Cargando conjunto cartográfico oficial íntegro de la Región Metropolitana…`;
+  const defPrevia = window.ModuloIDEChile ? window.ModuloIDEChile.obtenerDefinicion(idCapa) : null;
+  const nombrePrevio = defPrevia ? defPrevia.nombre : idCapa;
+  if (estadoTexto) estadoTexto.textContent = `Cargando capa oficial "${nombrePrevio}" bajo demanda…`;
+  if (typeof window.mostrarProgresoCargaCapa === 'function') {
+    window.mostrarProgresoCargaCapa(nombrePrevio, idCapa, 45);
+  }
 
   try {
     const res = await ModuloIDEChile.consultarCapaOficial(idCapa, null);
     const def = res.def;
+
+    if (typeof window.mostrarProgresoCargaCapa === 'function') {
+      window.mostrarProgresoCargaCapa(def.nombre, idCapa, 85);
+    }
 
     if (window.ModuloMapa) {
       ModuloMapa.cargarCapaGeoJSON(idCapa, res.geojson, {
@@ -3392,21 +3655,27 @@ async function alternarCapaOficialIDE(idCapa, btn) {
     }
     if (textoSwitch) textoSwitch.textContent = 'En Mapa';
     if (badgeConteo) badgeConteo.textContent = `${res.cantidad} ent.`;
+    if (typeof window.ocultarProgresoCargaCapa === 'function') {
+      window.ocultarProgresoCargaCapa();
+    }
 
     if (estadoTexto) {
       estadoTexto.innerHTML = `
-        <span style="color:#06b6d4; font-weight:700;">[OFICIAL ESTADO DE CHILE]:</span> 
-        Capa <strong>${def.nombre}</strong> cargada (${res.cantidad} entidades). 
+        <span style="color:var(--musgo); font-weight:700;">[Capa oficial activa]:</span> 
+        <strong>${def.nombre}</strong> (${res.cantidad.toLocaleString('es-CL')} registros). 
         <em>${res.fuenteUsada}</em>. 
-        <span style="color:var(--tinta-suave); display:block; font-size:0.75rem; margin-top:2px;">${def.declaracion}</span>
+        <span style="color:var(--tinta-suave); display:block; font-size:0.78rem; margin-top:2px;">${def.declaracion}</span>
       `;
     }
     actualizarTelemetriaCapasActivas();
   } catch (err) {
     if (btn) btn.classList.remove('cargando');
     if (card) card.classList.remove('cargando');
+    if (typeof window.ocultarProgresoCargaCapa === 'function') {
+      window.ocultarProgresoCargaCapa();
+    }
     console.error(`Error al cargar capa oficial ${idCapa}:`, err);
-    if (estadoTexto) estadoTexto.textContent = `Error al consultar servicio oficial: ${err.message}`;
+    if (estadoTexto) estadoTexto.textContent = `No se pudo cargar la capa "${nombrePrevio}". Revisa tu conexión o inténtalo nuevamente (${err.message}).`;
   }
 }
 
