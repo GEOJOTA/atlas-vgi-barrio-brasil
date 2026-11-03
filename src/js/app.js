@@ -1200,28 +1200,8 @@ function configurarNavegacion() {
     });
   });
 
-  // Delegación global para botones con data-panel y sugerencias del estado vacío del mapa
+  // Delegación global para botones con data-panel
   document.addEventListener('click', (e) => {
-    const btnSugVacio = e.target.closest('.btn-sugerencia-vacio');
-    if (btnSugVacio) {
-      e.preventDefault();
-      e.stopPropagation();
-      const catVgi = btnSugVacio.dataset.activarVgi;
-      const idOficial = btnSugVacio.dataset.activarOficial;
-      if (catVgi) {
-        const btnCat = document.getElementById(`btn-cat-${catVgi}`);
-        if (btnCat) btnCat.click();
-      } else if (idOficial) {
-        const btnOf = document.getElementById(`btn-oficial-${idOficial}`);
-        if (btnOf) {
-          btnOf.click();
-        } else {
-          alternarCapaOficialIDE(idOficial, null);
-        }
-      }
-      return;
-    }
-
     const btn = e.target.closest('#lista-navegacion button, .barra-pestanas-profundidad button, button[data-panel]');
     if (btn && btn.dataset.panel) {
       activarPanel(btn.dataset.panel);
@@ -2240,51 +2220,6 @@ function manejarCambioPerfilUsuario(e) {
     }
   });
 
-  // Actualizar las capas sugeridas en el estado vacío del mapa según el perfil
-  const sugerenciasVacioPorPerfil = {
-    todos: [
-      { etiqueta: '+ Áreas verdes y plazas', vgi: 'espacio_publico' },
-      { etiqueta: '+ Educación y Campus UAH', vgi: 'educacion' },
-      { etiqueta: '+ Patrimonio e inmuebles históricos', vgi: 'patrimonio' },
-      { etiqueta: '+ Plan Regulador Comunal (PRC)', oficial: 'minvu_ipt_prc_santiago' }
-    ],
-    comunidad: [
-      { etiqueta: '+ Plazas y áreas verdes barriales', vgi: 'espacio_publico' },
-      { etiqueta: '+ Comercio, farmacias y servicios', vgi: 'servicios' },
-      { etiqueta: '+ Ciclovías y movilidad activa', vgi: 'movilidad_activa' },
-      { etiqueta: '+ Patrimonio y cultura local', vgi: 'patrimonio' }
-    ],
-    institucion: [
-      { etiqueta: '+ Plan Regulador Comunal (PRC)', oficial: 'minvu_ipt_prc_santiago' },
-      { etiqueta: '+ Manzanas Censo INE 2024', oficial: 'censo2024_manzanas' },
-      { etiqueta: '+ Patrimonio MINVU / CMN', oficial: 'minvu_patrimonio' },
-      { etiqueta: '+ Accesibilidad universal y cruces', vgi: 'accesibilidad' }
-    ],
-    voluntario: [
-      { etiqueta: '+ Edificaciones y huella urbana', vgi: 'edificaciones' },
-      { etiqueta: '+ Accesibilidad y cruces peatonales', vgi: 'accesibilidad' },
-      { etiqueta: '+ Ciclovías y estacionamientos', vgi: 'movilidad_activa' },
-      { etiqueta: '+ Arbolado y biodiversidad', vgi: 'biodiversidad' }
-    ],
-    ong: [
-      { etiqueta: '+ Manzanas Censo INE 2024', oficial: 'censo2024_manzanas' },
-      { etiqueta: '+ Áreas verdes y espacio público', vgi: 'espacio_publico' },
-      { etiqueta: '+ Educación y Campus UAH', vgi: 'educacion' },
-      { etiqueta: '+ Transporte público (Red / Metro)', vgi: 'transporte' }
-    ]
-  };
-
-  const contSugVacio = document.getElementById('contenedor-sugerencias-vacio-mapa');
-  if (contSugVacio) {
-    const listaSug = sugerenciasVacioPorPerfil[perfil] || sugerenciasVacioPorPerfil.todos;
-    contSugVacio.innerHTML = listaSug.map(item => {
-      if (item.vgi) {
-        return `<button type="button" class="btn-sugerencia-vacio" data-activar-vgi="${item.vgi}">${item.etiqueta}</button>`;
-      }
-      return `<button type="button" class="btn-sugerencia-vacio" data-activar-oficial="${item.oficial}">${item.etiqueta}</button>`;
-    }).join('');
-  }
-
   // Ajustar o destacar botones de sugerencias ciudadanas en el explorador OSM
   const perfilesSugerencias = {
     institucion: ['amenity=university', 'highway=bus_stop', 'kerb=lowered', 'building=yes', 'CAT-01', 'CAT-03', 'CAT-07', 'CAT-09'],
@@ -2832,11 +2767,6 @@ function actualizarTelemetriaCapasActivas() {
   }
 
   const totalActivas = activasVGI.length + activasOficiales.length + importadasActivas.length;
-
-  const estadoVacioMapa = document.getElementById('estado-vacio-mapa');
-  if (estadoVacioMapa) {
-    estadoVacioMapa.style.display = totalActivas === 0 ? 'block' : 'none';
-  }
 
   if (kpiActivas) kpiActivas.textContent = totalActivas;
   if (badgeTabActivas) badgeTabActivas.textContent = totalActivas;

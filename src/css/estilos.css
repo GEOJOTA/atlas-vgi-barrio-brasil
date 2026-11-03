@@ -66,8 +66,35 @@
   --glass-filter: blur(20px);
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
+}
+
+body, p, h1, h2, h3, h4, h5, h6, li, td, th, span, div, a {
+  overflow-wrap: break-word;
+}
+
+.caja-tarjeta-hero,
+.caja-cuadrado,
+.caja-tarjeta-normativa,
+.caja-guia-referencia,
+.tarjeta-capa-gis,
+.caja-metacalidad-kpi,
+.franja-intro-visor-compacta,
+.tarjeta-categoria,
+.tarjeta-metadato-iso,
+.tarjeta-indicador-item,
+.ficha-cin-vgi,
+.tarjeta-descarga-item,
+.doc-tarjeta-audiencia,
+.doc-modulo-card,
+.doc-tarjeta-geodesica,
+.tarjeta-capa-dimension,
+.tarjeta-carpeta-bd,
+.bloque {
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 html, body {
@@ -101,10 +128,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
 }
 
-h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.25; }
-h2 { font-size: 2.0rem; font-weight: 800; line-height: 1.3; }
-h3 { font-size: 1.5rem; font-weight: 800; line-height: 1.35; }
-h4 { font-size: 1.22rem; font-weight: 700; line-height: 1.4; }
+h1 { font-size: clamp(1.4rem, 4vw, 2.5rem); font-weight: 900; line-height: 1.25; }
+h2 { font-size: clamp(1.25rem, 3.2vw, 2.0rem); font-weight: 800; line-height: 1.3; }
+h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 800; line-height: 1.35; }
+h4 { font-size: clamp(0.98rem, 2vw, 1.22rem); font-weight: 700; line-height: 1.4; }
 
 a {
   color: var(--musgo);
@@ -177,7 +204,7 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 
 .grilla-resumen-introduccion {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
   gap: 18px;
   margin-top: 20px;
 }
@@ -190,6 +217,9 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   transition: all 0.25s ease;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 12px rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(10px);
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .caja-tarjeta-hero:hover {
@@ -235,36 +265,6 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   z-index: 1000;
 }
 
-/* ==========================================================================
-   RECTÁNGULOS BLANCOS DINÁMICOS QUE LLENAN TODO EL ESPACIO VACÍO LATERAL
-   ========================================================================== */
-
-.panel-acento-dinamico {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: calc((100% - 1560px) / 2);
-  background: #ffffff;
-  border: none;
-  pointer-events: none;
-  z-index: 1;
-  transition: opacity 0.2s ease;
-}
-
-.panel-acento-izq {
-  left: 0;
-}
-
-.panel-acento-der {
-  right: 0;
-}
-
-/* Ocultar automáticamente si la pantalla es menor o igual al ancho del contenido (1560px) */
-@media (max-width: 1560px) {
-  .panel-acento-dinamico {
-    display: none !important;
-  }
-}
 
 .barra-pestanas-profundidad {
   display: flex;
@@ -1130,7 +1130,7 @@ button.accion.secundaria:hover {
 
 .grilla-2col-normativa {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 16px;
 }
 
@@ -1853,7 +1853,7 @@ table.tabla-datos tr:hover td {
 /* --- SECCIÓN 01: TARJETAS DE AUDIENCIA / PERFILES --- */
 .doc-grid-audiencias {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 24px;
 }
 
@@ -2045,7 +2045,7 @@ table.tabla-datos tr:hover td {
 /* --- SECCIÓN 02: GUÍA DE LOS 9 MÓDULOS --- */
 .doc-modulos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 22px;
 }
 
@@ -2510,7 +2510,7 @@ table.tabla-datos tr:hover td {
 /* --- SECCIÓN 04: GEODESIA CONFORME EPSG:32719 --- */
 .doc-grid-geodesico {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 24px;
 }
 
@@ -3433,7 +3433,7 @@ table.tabla-datos tr:hover td {
 /* Grillas de Capas */
 .grilla-capas-vgi, .grilla-capas-activas {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
   gap: 14px;
 }
 
@@ -4080,7 +4080,7 @@ table.tabla-datos tr:hover td {
 /* Grilla de Tarjetas de Capas de la Dimensión */
 .grilla-capas-dimension {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
   gap: 16px;
 }
 
@@ -5418,7 +5418,7 @@ table.tabla-datos tr:hover td {
 
 .modal-bd-grid-carpetas {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 12px;
 }
 
@@ -6540,73 +6540,6 @@ a.accion.primaria-cta:hover {
   transition: width 0.25s ease;
 }
 
-/* Estado vacío útil sobre el mapa cuando no hay capas activas */
-.tarjeta-estado-vacio-mapa {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  z-index: 950;
-  max-width: 430px;
-  background: rgba(15, 23, 42, 0.94);
-  border: 1.5px solid rgba(56, 189, 248, 0.45);
-  border-left: 4px solid var(--musgo);
-  border-radius: 12px;
-  padding: 14px 16px;
-  box-shadow: var(--sombra-lg);
-  backdrop-filter: blur(12px);
-}
-
-.estado-vacio-icono {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: var(--musgo-claro);
-  color: var(--musgo);
-  margin-bottom: 6px;
-}
-
-.estado-vacio-titulo {
-  margin: 0 0 4px 0;
-  font-size: 1.02rem;
-  font-weight: 800;
-  color: #ffffff;
-}
-
-.estado-vacio-desc {
-  margin: 0 0 10px 0;
-  font-size: 0.85rem;
-  color: var(--tinta-suave);
-  line-height: 1.45;
-}
-
-.sugerencias-vacio-mapa {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.btn-sugerencia-vacio {
-  padding: 5px 10px;
-  background: rgba(26, 43, 75, 0.9);
-  border: 1px solid rgba(56, 189, 248, 0.45);
-  border-radius: 6px;
-  color: var(--agua);
-  font-family: var(--fuente-lectura);
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.btn-sugerencia-vacio:hover {
-  background: var(--musgo);
-  border-color: var(--musgo);
-  color: #09101f;
-}
-
 /* Caja de KPI de calidad explicada en lenguaje ciudadano */
 .caja-metacalidad-kpi {
   background: rgba(19, 32, 57, 0.92);
@@ -6764,4 +6697,316 @@ abbr[title] {
   background: var(--musgo);
   border-color: var(--musgo);
   color: #09101f;
+}
+
+/* ==========================================================================
+   SISTEMA INTEGRAL DE ESCALABILIDAD RESPONSIVA Y MULTI-DISPOSITIVO (PRO)
+   Optimizado para Móviles (320px–480px), Tablets (768px–1024px) y Pantallas Grandes
+   ========================================================================== */
+
+/* Ajustes globales para tablas y preformateados */
+.contenedor-tabla-responsiva,
+.tabla-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 14px 0;
+  border-radius: 8px;
+}
+
+table.tabla-datos {
+  max-width: 100%;
+}
+
+.bloque-codigo-ql, pre.codigo-xml, .doc-terminal-code {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Tablet y Pantallas Medianas (<= 1024px) */
+@media (max-width: 1024px) {
+  .barra-grupos-tarea {
+    padding: 8px 16px;
+    gap: 8px;
+  }
+  .btn-grupo-tarea {
+    padding: 8px 14px;
+    font-size: 0.86rem;
+  }
+}
+
+/* Tablet y Móvil (<= 992px) */
+@media (max-width: 992px) {
+  .barra-grupos-tarea {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .barra-grupos-tarea::-webkit-scrollbar {
+    display: none;
+  }
+  .btn-grupo-tarea {
+    flex: 0 0 auto;
+    padding: 7px 13px;
+    font-size: 0.83rem;
+  }
+  .barra-migas-subnavegacion {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .migas-pan {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    font-size: 0.78rem;
+    padding: 4px 10px;
+    box-sizing: border-box;
+  }
+  .migas-pan::-webkit-scrollbar {
+    display: none;
+  }
+  .barra-migas-subnavegacion .barra-pestanas-profundidad {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 2px 0;
+    gap: 6px;
+  }
+  .barra-migas-subnavegacion .barra-pestanas-profundidad::-webkit-scrollbar {
+    display: none;
+  }
+  .pestana-nodo {
+    flex: 0 0 auto;
+    padding: 6px 12px;
+    font-size: 0.80rem;
+    white-space: nowrap;
+  }
+}
+
+/* Tablets en Vertical y Smartphones (<= 768px) */
+@media (max-width: 768px) {
+  .cabecera-interior {
+    padding: 10px 14px 8px 14px;
+  }
+  .cabecera-fila-marca {
+    gap: 10px;
+  }
+  .marca {
+    min-width: 0;
+    width: 100%;
+  }
+  .marca-header {
+    gap: 10px;
+  }
+  .marca-logo {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    padding: 4px;
+  }
+  .marca h1,
+  .marca-texto h1 {
+    font-size: 1.15rem;
+    line-height: 1.25;
+  }
+  .marca p,
+  .marca-texto p {
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+  .cabecera-acciones-utilidad {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .control-perfil-cabecera {
+    flex: 1;
+    min-width: 0;
+    padding: 4px 8px;
+  }
+  .control-perfil-cabecera select {
+    width: 100%;
+    min-width: 0;
+    font-size: 0.78rem;
+    padding: 4px 6px;
+  }
+  .btn-utilidad-cabecera {
+    font-size: 0.78rem;
+    padding: 5px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .panel {
+    padding: 16px 12px 36px 12px;
+  }
+  .hero-introduccion-atlas {
+    padding: 18px 14px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+  }
+  .titulo-hero {
+    font-size: clamp(1.3rem, 4.2vw, 1.85rem);
+    line-height: 1.25;
+  }
+  .subtitulo-hero {
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .insignia-institucional {
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    letter-spacing: 0.03em;
+  }
+  .grilla-resumen-introduccion {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .caja-tarjeta-hero {
+    padding: 14px;
+    border-radius: 10px;
+  }
+  .caja-tarjeta-hero h3 {
+    font-size: 1.05rem;
+  }
+  .caja-tarjeta-hero p {
+    font-size: 0.86rem;
+  }
+  .bloque {
+    padding: 16px 14px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+  }
+  .caja-cuadrado,
+  .caja-guia-referencia,
+  .caja-tarjeta-normativa {
+    padding: 14px 14px;
+    border-radius: 10px;
+  }
+  .franja-intro-visor-compacta {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+  .titulo-visor-compacto {
+    font-size: 1.15rem;
+  }
+  .bajada-visor-compacta {
+    font-size: 0.84rem;
+  }
+  .caja-metacalidad-kpi {
+    padding: 14px 14px;
+    border-radius: 10px;
+  }
+  #mapa-atlas {
+    height: clamp(360px, 55vh, 480px);
+    border-radius: 10px;
+  }
+  .panel-profundidad-derecha {
+    height: auto;
+    max-height: 520px;
+    padding: 14px;
+    border-radius: 10px;
+  }
+  .barra-herramientas-mapa {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .grupo-control-territorio {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .grupo-control-territorio select,
+  .barra-herramientas-mapa select,
+  .barra-herramientas-mapa input[type="text"] {
+    width: 100%;
+    font-size: 0.88rem;
+    padding: 8px 12px;
+  }
+  .barra-herramientas-mapa button.accion {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.88rem;
+    padding: 8px 14px;
+  }
+  .barra-paginacion-institucional {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 8px;
+  }
+  .controles-pagina-botones {
+    justify-content: center;
+  }
+  .indice-lateral-modulo {
+    position: static;
+    top: auto;
+    max-height: 250px;
+    margin-bottom: 16px;
+    padding: 12px;
+  }
+  table.tabla-datos {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    font-size: 0.84rem;
+  }
+  table.tabla-datos th,
+  table.tabla-datos td {
+    padding: 10px 12px;
+  }
+}
+
+/* Teléfonos Móviles Pequeños (<= 480px) */
+@media (max-width: 480px) {
+  .btn-grupo-tarea {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+    gap: 5px;
+  }
+  .btn-grupo-tarea svg {
+    width: 14px;
+    height: 14px;
+  }
+  .pestana-nodo {
+    padding: 5px 9px;
+    font-size: 0.74rem;
+  }
+  .cabecera-interior {
+    padding: 8px 10px 6px 10px;
+  }
+  .panel {
+    padding: 12px 8px 28px 8px;
+  }
+  .hero-introduccion-atlas {
+    padding: 14px 10px;
+  }
+  .bloque {
+    padding: 14px 10px;
+  }
+  .caja-tarjeta-hero,
+  .caja-cuadrado,
+  .caja-metacalidad-kpi {
+    padding: 12px 10px;
+  }
+  .tarjeta-capa-gis {
+    padding: 12px 14px;
+  }
 }
