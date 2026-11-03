@@ -574,30 +574,26 @@ Para clasificar de forma inequívoca el tejido urbano de Barrio Brasil, el Atlas
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Diccionario de Etiquetas OSM (amenity, highway, leisure, building,       │
-│   landuse)                                                                 │
-│ • Estándar Darwin Core (taxonRank, scientificName)                         │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO DE CLASIFICACIÓN TAXONÓMICA                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Clasificación y Filtrado Semántico de Atributos                          │
-│ • Segregación Topológica (Puntos, Líneas y Polígonos)                      │
-│ • Asignación de Código Taxonómico (CAT-01 a CAT-10)                        │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 10 Capas Vectoriales VGI Barriales (src/data/cat01..cat10)               │
-│ • Libro Maestro categorias_tematicas_osm.xlsx (11 Hojas)                   │
-│ • Simbología Vectorial SVG Diferenciada en el Visor                        │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_CAT["1. INPUT"]
+        OSM_TAGS["Diccionario de Etiquetas OSM (amenity, highway, leisure, building, landuse)"]
+        DWC_TERMS["Estándar Darwin Core (taxonRank, scientificName)"]
+    end
+
+    subgraph PROC_CAT["2. FLUJO DE PROCESAMIENTO DE CLASIFICACIÓN TAXONÓMICA"]
+        PARSE_TAG["Clasificación y Filtrado Semántico de Atributos"]
+        GEOM_SORT["Segregación Topológica (Puntos, Líneas y Polígonos)"]
+        HOMOLOG_ID["Asignación de Código Taxonómico (CAT-01 a CAT-10)"]
+    end
+
+    subgraph OUT_CAT["3. OUTPUT"]
+        TEN_LAYERS["10 Capas Vectoriales VGI Barriales (src/data/cat01..cat10)"]
+        EXCEL_CAT["Libro Maestro categorias_tematicas_osm.xlsx (11 Hojas)"]
+        LEGEND_SVG["Simbología Vectorial SVG Diferenciada en el Visor"]
+    end
+
+    IN_CAT --> PROC_CAT --> OUT_CAT
 ```
 
 A continuación se detalla la especificación técnica de cada categoría:
@@ -658,35 +654,42 @@ A continuación se detalla la especificación técnica de cada categoría:
 
 La recolección masiva de entidades colaborativas de OpenStreetMap se ejecuta mediante el motor de consulta Overpass QL (*Overpass Query Language*), programado en el script `scripts/descargar_todas_las_categorias_osm.py`.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. Fuentes Primarias de Datos                                              │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • OpenStreetMap (Overpass QL)                                              │
-│ • ohsome API v2 (HeiGIT)                                                   │
-│ • GBIF Darwin Core                                                         │
-│ • IDE Chile WFS / WMS                                                      │
-│ • Geofabrik RM (Shapefile / PBF)                                           │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. Flujo de procesamiento Python                                           │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • descargar_todas_las_categorias_osm.py                                    │
-│ • Reproyección GeoPandas (SIRGAS -> WGS84)                                 │
-│ • enriquecer_base_datos_metadatos.py (14 Atributos)                        │
-│ • modelo_indice_lineal_wlc.py (ISO 19157)                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. Salidas y Almacenamiento en Git y Web                                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 134 Capas GeoJSON en src/data/ y data/ (124 Oficiales + 10 VGI)          │
-│ • data/geodatabase_osm_rm_geofabrik.gpkg (OGC SQLite)                      │
-│ • 3 Libros Excel OpenXML en docs/ y src/docs/                              │
-│ • PostgreSQL 17 / PostGIS 3.3 (scripts/db/01_schema_postgis.sql)           │
-│ • docs/geodatabase_completa_atlas_vgi.zip (542,35 MB)                      │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph FUENTES["1. Fuentes Primarias de Datos"]
+        OSM["OpenStreetMap (Overpass QL)"]
+        OHS["ohsome API v2 (HeiGIT)"]
+        GBIF["GBIF Darwin Core"]
+        IDE["IDE Chile WFS / WMS"]
+        GEO["Geofabrik RM (Shapefile / PBF)"]
+    end
+
+    subgraph PIPELINE["2. Flujo de procesamiento Python"]
+        EXT["descargar_todas_las_categorias_osm.py"]
+        REP["Reproyección GeoPandas (SIRGAS a WGS84)"]
+        ENR["enriquecer_base_datos_metadatos.py (14 Atributos)"]
+        WLC["modelo_indice_lineal_wlc.py (ISO 19157)"]
+    end
+
+    subgraph DESTINOS["3. Salidas y Almacenamiento en Git y Web"]
+        GEOJSON["134 Capas GeoJSON en src/data/ y data/ (124 Oficiales + 10 VGI)"]
+        GPKG["data/geodatabase_osm_rm_geofabrik.gpkg (OGC SQLite)"]
+        XLSX["3 Libros Excel OpenXML en docs/ y src/docs/"]
+        POSTGIS["PostgreSQL 17 / PostGIS 3.3 (scripts/db/01_schema_postgis.sql)"]
+        ZIP["docs/geodatabase_completa_atlas_vgi.zip (542,35 MB)"]
+    end
+
+    OSM --> EXT --> ENR
+    OHS --> EXT
+    GBIF --> EXT
+    IDE --> REP --> ENR
+    GEO --> REP --> ENR
+    ENR --> WLC
+    WLC --> GEOJSON
+    WLC --> GPKG
+    WLC --> XLSX
+    GEOJSON --> POSTGIS
+    GEOJSON --> ZIP
 ```
 
 ### 7.1. Arquitectura de las consultas Overpass QL
@@ -834,62 +837,63 @@ SERVIDORES_OVERPASS_ESPEJO = [
 
 Si un servidor rechaza la petición, el script espera 2 segundos, conmuta automáticamente al siguiente y, en caso de fallo generalizado, recurre a la copia estática cacheada en `data/cache_consultas/`.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ SECUENCIA OPERATIVA DE EJECUCIÓN                                           │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 1. Extractor -> S1: POST Consulta Overpass QL (timeout: 35s)             │
-│ • [Respuesta HTTP 200 OK]                                                  │
-│ • 2. S1 -> Extractor: Payload JSON OSM (nodes, ways, relations)            │
-│ • [Error HTTP 429 / 504 Timeout]                                           │
-│ • 3. Extractor -> S2: POST Consulta Overpass QL                            │
-│ • [Respuesta HTTP 200 OK]                                                  │
-│ • 4. S2 -> Extractor: Payload JSON OSM                                     │
-│ • [Fallo en Nodo 2]                                                        │
-│ • 5. Extractor -> S3: POST Consulta Overpass QL                            │
-│ • [Respuesta HTTP 200 OK]                                                  │
-│ • 6. S3 -> Extractor: Payload JSON OSM                                     │
-│ • [Contingencia Total de Red Externa]                                      │
-│ • 7. Extractor -> Cache: Lectura de GeoJSON Homologado Local               │
-│ • 8. Cache -> Extractor: Entrega inmediata con 0 % pérdida de servicio     │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Extractor as Script Python / Módulo 02 Web
+    participant S1 as Nodo 1: overpass-api.de
+    participant S2 as Nodo 2: lz4.overpass-api.de
+    participant S3 as Nodo 3: overpass.kumi.systems
+    participant Cache as Respaldo Local (src/data/*.geojson)
+
+    Extractor->>S1: POST Consulta Overpass QL (timeout: 35s)
+    alt Respuesta HTTP 200 OK
+        S1-->>Extractor: Payload JSON OSM (nodes, ways, relations)
+    else Error HTTP 429 / 504 Timeout
+        S1--xExtractor: Rechazo por cuota de concurrencia
+        Note over Extractor,S2: Conmutación Round-Robin (Espera 2s)
+        Extractor->>S2: POST Consulta Overpass QL
+        alt Respuesta HTTP 200 OK
+            S2-->>Extractor: Payload JSON OSM
+        else Fallo en Nodo 2
+            S2--xExtractor: Timeout
+            Extractor->>S3: POST Consulta Overpass QL
+            alt Respuesta HTTP 200 OK
+                S3-->>Extractor: Payload JSON OSM
+            else Contingencia Total de Red Externa
+                Extractor->>Cache: Lectura de GeoJSON Homologado Local
+                Cache-->>Extractor: Entrega inmediata con 0 % pérdida de servicio
+            end
+        end
+    end
 ```
 
 ---
 
 ## 8. Auditoría histórica y análisis espacio-temporal con ohsome API v1/v2 (HeiGIT)
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA: CONSULTA HISTÓRICA Y GEOMÉTRICA                                │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • caja delimitadora / Polígono WGS84 -> Reproyección Métrica EPSG:32719    │
-│   (geodesia.js)                                                            │
-│ • Endpoints HeiGIT (/elements/count, /length, /area, /users/count,         │
-│   /contributions/count)                                                    │
-│ • OSM API v0.6 Changesets (/api/0,6/changesets)                            │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO (MÓDULO 06: ohsome.js + calidad_analyst.js)      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Petición HTTP POST con bpolys/bboxes y Filtro Semántico OSM              │
-│ • Cálculo de Superficie Gauss/Shoelace (km² y ha) y Densidad (elem/km² y   │
-│   elem/10,000 m²)                                                          │
-│ • Cálculo de Intensidad Comunitaria (edit/user) y Tasa Interanual (Δ%)     │
-│ • Evaluación Heurística de Changesets (OSMCha)                             │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA: INDICADORES EN LA PLATAFORMA WEB                                │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Índice de Saturación y Maduración Territorial (Herfort et al., 2023 /    │
-│   ISO 19157)                                                               │
-│ • Score de Madurez Territorial (/100), Estado de Saturación Física y       │
-│   Tendencia                                                                │
-│ • Integración con Evaluador Universal de Calidad Espacial e Índice IGV     │
-│   (Submódulo A)                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_OH["1. INPUT: CONSULTA HISTÓRICA Y GEOMÉTRICA"]
+        POLY_BBOX["caja delimitadora / Polígono WGS84 a Reproyección Métrica EPSG:32719 (geodesia.js)"]
+        OH_ENDPOINTS["Endpoints HeiGIT (/elements/count, /length, /area, /users/count, /contributions/count)"]
+        OSMCHA_API["OSM API v0.6 Changesets (/api/0,6/changesets)"]
+    end
+
+    subgraph PROC_OH["2. FLUJO DE PROCESAMIENTO (MÓDULO 06: ohsome.js + calidad_analyst.js)"]
+        REQ_OH["Petición HTTP POST con bpolys/bboxes y Filtro Semántico OSM"]
+        GEOM_METRIC["Cálculo de Superficie Gauss/Shoelace (km² y ha) y Densidad (elem/km² y elem/10,000 m²)"]
+        OQT_MODEL["Cálculo de Intensidad Comunitaria (edit/user) y Tasa Interanual (Δ%)"]
+        HEUR_CHA["Evaluación Heurística de Changesets (OSMCha)"]
+    end
+
+    subgraph OUT_OH["3. OUTPUT: INDICADORES EN LA PLATAFORMA WEB"]
+        SAT_INDEX["Índice de Saturación y Maduración Territorial (Herfort et al., 2023 / ISO 19157)"]
+        SCORE_MAD["Score de Madurez Territorial (/100), Estado de Saturación Física y Tendencia"]
+        IGV_LINK["Integración con Evaluador Universal de Calidad Espacial e Índice IGV (Submódulo A)"]
+    end
+
+    IN_OH --> PROC_OH --> OUT_OH
 ```
 
 En plena coherencia con el Módulo 06 (`Evaluación de Calidad Geoespacial e Índice Global de Calidad`) de la plataforma web, la evaluación de calidad articula tres submódulos complementarios (`src/js/modulos/evaluador_calidad_cuantitativa.js`, `src/js/modulos/ohsome.js` y `src/js/modulos/calidad_analyst.js`) que combinan la auditoría geométrica-documental directa con el análisis histórico de la base de datos de OpenStreetMap (OSHDB) provisto por el *Heidelberg Institute for Geoinformation Technology* (HeiGIT) de la Universidad de Heidelberg.
@@ -935,31 +939,27 @@ En `src/js/modulos/calidad_analyst.js` (función `calcularIndicadoresOQT`), el �
 
 ## 9. Integración de biodiversidad y ciencia ciudadana con GBIF y Darwin Core
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Endpoint GBIF Occurrence API (v1/occurrence/search)                      │
-│ • Polígono WKT (POLY) de Barrio Brasil                                     │
-│ • Filtros: hasCoordinate=true, basisOfRecord=HUMAN_OBSERVATION             │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Consulta Asíncrona con Filtros Geodésicos WKT                            │
-│ • Mapeo de Campos Darwin Core (scientificName, kingdom, eventDate)         │
-│ • Validación de Incertidumbre Espacial coordinateUncertaintyInMeters <=    │
-│   50m                                                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Capa Vectorial de Ocurrencias Biológicas                                 │
-│ • Fichas de Biodiversidad con Fotografía y Taxonomía                       │
-│ • Consolidado Tabular de Especies Registradas                              │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_GB["1. INPUT"]
+        DWC_EP["Endpoint GBIF Occurrence API (v1/occurrence/search)"]
+        WKT_BB["Polígono WKT (POLY) de Barrio Brasil"]
+        OCC_CRITERIA["Filtros: hasCoordinate=true, basisOfRecord=HUMAN_OBSERVATION"]
+    end
+
+    subgraph PROC_GB["2. FLUJO DE PROCESAMIENTO"]
+        GET_GB["Consulta Asíncrona con Filtros Geodésicos WKT"]
+        DWC_MAP["Mapeo de Campos Darwin Core (scientificName, kingdom, eventDate)"]
+        GEO_VAL["Validación de Incertidumbre Espacial coordinateUncertaintyInMeters ≤ 50 m"]
+    end
+
+    subgraph OUT_GB["3. OUTPUT"]
+        GEOJSON_GB["Capa Vectorial de Ocurrencias Biológicas"]
+        POPUP_GB["Fichas de Biodiversidad con Fotografía y Taxonomía"]
+        TAB_GBIF["Consolidado Tabular de Especies Registradas"]
+    end
+
+    IN_GB --> PROC_GB --> OUT_GB
 ```
 
 El Módulo 03 (`src/js/modulos/gbif.js`) consume directamente la API del Global Biodiversity Information Facility (GBIF), incorporando observaciones biológicas georreferenciadas provenientes de museos, herbarios y registros comunitarios de iNaturalist.
@@ -984,29 +984,26 @@ https://api.gbif.org/v1/occurrence/search?geometry=POLYGON((-70.6720 -33.4505,-7
 
 ## 10. Integración de cartografía externa con uMap e iframes aislados
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • URLs de Proyectos Colaborativos uMap (OSM Francia)                       │
-│ • Copias Vectoriales de Respaldo (data/umap/*.geojson)                     │
-│ • Directivas de Seguridad Content-Security-Policy                          │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Encapsulamiento en iframe (sandbox='allow-scripts allow-same-origin')    │
-│ • Detección de Disponibilidad y Cabeceras CORS                             │
-│ • Conmutación Automática a GeoJSON Local en Caso de Caída                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Visor Participativo Embebido en la Plataforma                            │
-│ • Aislamiento Preciso del DOM Principal                                    │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_UMAP["1. INPUT"]
+        UMAP_PROJ["URLs de Proyectos Colaborativos uMap (OSM Francia)"]
+        LOCAL_BKP["Copias Vectoriales de Respaldo (data/umap/*.geojson)"]
+        CSP_RULES["Directivas de Seguridad Content-Security-Policy"]
+    end
+
+    subgraph PROC_UMAP["2. FLUJO DE PROCESAMIENTO"]
+        SANDBOX_IFR["Encapsulamiento en iframe (sandbox='allow-scripts allow-same-origin')"]
+        CORS_CHECK["Detección de Disponibilidad y Cabeceras CORS"]
+        FALLBACK_SW["Conmutación Automática a GeoJSON Local en Caso de Caída"]
+    end
+
+    subgraph OUT_UMAP["3. OUTPUT"]
+        VIEW_UMAP["Visor Participativo Embebido en la Plataforma"]
+        SAFE_DOM["Aislamiento Preciso del DOM Principal"]
+    end
+
+    IN_UMAP --> PROC_UMAP --> OUT_UMAP
 ```
 
 El Módulo de Cartografía Participativa (`src/js/modulos/umap.js`) permite embeber mapas colaborativos construidos por colectivos vecinales en la plataforma abierta uMap (OpenStreetMap Francia).
@@ -1032,28 +1029,25 @@ Cuando un mapa uMap aloja datos vectoriales en servidores remotos que bloquean l
 
 ## 11. Extractos masivos regionales de Geofabrik RM y generación de GeoPackage OGC
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Extracto Regional Geofabrik (.osm.pbf / .shp.zip)                        │
-│ • Máscara Territorial de Barrio Brasil / Santiago                          │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Osmium / GDAL ogr2ogr Filtro Espacial                                    │
-│ • Separación por Capas (points, lines, polygons)                           │
-│ • Inyección de 14 Columnas Estandarizadas ISO                              │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA EN GIT Y WEB                                                     │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • data/geodatabase_osm_rm_geofabrik.gpkg (OGC SQLite)                      │
-│ • data/capa_osm_rm_cat01_educacion.geojson a cat10_cobertura_suelo.geojson │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_GEO["1. INPUT"]
+        PBF_FILE["Extracto Regional Geofabrik (.osm.pbf / .shp.zip)"]
+        BBOX_CLIP["Máscara Territorial de Barrio Brasil / Santiago"]
+    end
+
+    subgraph PROC_GEO["2. FLUJO DE PROCESAMIENTO"]
+        OSM_CONV["Osmium / GDAL ogr2ogr Filtro Espacial"]
+        LAYER_SPLIT["Separación por Capas (points, lines, polygons)"]
+        ATTR_STD["Inyección de 14 Columnas Estandarizadas ISO"]
+    end
+
+    subgraph OUT_GEO["3. OUTPUT EN GIT Y WEB"]
+        GPKG_OGC["data/geodatabase_osm_rm_geofabrik.gpkg (OGC SQLite)"]
+        GEOJSON_SPLIT["data/capa_osm_rm_cat01_educacion.geojson a cat10_cobertura_suelo.geojson"]
+    end
+
+    IN_GEO --> PROC_GEO --> OUT_GEO
 ```
 
 Para satisfacer las demandas de investigadores que requieren estudiar la conectividad metropolitana entre Barrio Brasil y el resto de los 52 municipios de la Región Metropolitana, el Atlas incorpora extractos regionales masivos provistos por Geofabrik GmbH.
@@ -1079,33 +1073,30 @@ El archivo resultante (`data/geodatabase_osm_rm_geofabrik.gpkg`) cuenta con índ
 
 ## 12. Ingesta, normalización y homologación de las 124 Capas oficiales del Estado de Chile
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA: FUENTES ESTATALES                                              │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • INE Censo 2024 (Manzanas, Zonas, Límites)                                │
-│ • MINVU GeoIDE (PRC, PRMS, ZCH, CCU 1993-2024)                             │
-│ • SUBDERE RSD 2024 (14 Capas Residuos RM)                                  │
-│ • MuniSTGO Aseo 2026 / UOCT Semáforos / SII Predial                        │
-│ • MDSF / BIDAT (RSH, IGVUST, Inversiones BIP)                              │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO GEODÉSICO Y TABULAR                              │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Homologación Geodésica a WGS84 (EPSG:4326)                               │
-│ • Recorte Espacial y Depuración Topológica OGC                             │
-│ • Inyección del Esquema Maestro de 14 Atributos ISO                        │
-│ • Asignación de Cita APA 7ª Ed. y Puntaje WLC v2.0                         │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA: CATÁLOGO OFICIAL                                                │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 124 Capas Oficiales Homologadas (src/data/*.geojson)                     │
-│ • Catálogo Maestro catalogo_fuentes_vgi.xlsx (134 Filas)                   │
-│ • Sincronización en Visor Web (Módulo 01) y guiones visuales (Módulo 05)   │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_IDE["1. INPUT: FUENTES ESTATALES"]
+        INE_SRC["INE Censo 2024 (Manzanas, Zonas, Límites)"]
+        MINVU_SRC["MINVU GeoIDE (PRC, PRMS, ZCH, CCU 1993-2024)"]
+        SUB_SRC["SUBDERE RSD 2024 (14 Capas Residuos RM)"]
+        MUNI_SRC["MuniSTGO Aseo 2026 / UOCT Semáforos / SII Predial"]
+        MDSF_SRC["MDSF / BIDAT (RSH, IGVUST, Inversiones BIP)"]
+    end
+
+    subgraph PROC_IDE["2. FLUJO DE PROCESAMIENTO GEODÉSICO Y TABULAR"]
+        CRS_TRANS["Homologación Geodésica a WGS84 (EPSG:4326)"]
+        CLIP_BBOX["Recorte Espacial y Depuración Topológica OGC"]
+        SCHEMA_14["Inyección del Esquema Maestro de 14 Atributos ISO"]
+        APA_CITE["Asignación de Cita APA 7ª Ed. y Puntaje WLC v2.0"]
+    end
+
+    subgraph OUT_IDE["3. OUTPUT: CATÁLOGO OFICIAL"]
+        IDE_122["124 Capas Oficiales Homologadas (src/data/*.geojson)"]
+        XLSX_132["Catálogo Maestro catalogo_fuentes_vgi.xlsx (134 Filas)"]
+        WEB_MOD01["Sincronización en Visor Web (Módulo 01) y guiones visuales (Módulo 05)"]
+    end
+
+    IN_IDE --> PROC_IDE --> OUT_IDE
 ```
 
 El Atlas VGI integra exactamente 124 capas cartográficas oficiales del Estado de Chile, auditadas, homologadas a WGS84 (EPSG:4326) e inyectadas con metadatos completos y citas bibliográficas bajo norma APA 7ª edición.
@@ -1294,29 +1285,26 @@ A continuación se expone la tabla maestra con el inventario universal de las 13
 
 ## 14. El esquema maestro obligatorio de 14 Atributos ISO por entidad geográfica
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Capas Vectoriales GeoJSON Crudas (VGI y Oficiales)                       │
-│ • Diccionario Maestro de Metadatos y Linaje                                │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • scripts/enriquecer_base_datos_metadatos.py                               │
-│ • Inyección Algorítmica de 14 Claves Obligatorias                          │
-│ • Homologación de Tipos de Datos (String, Float, ISO-Date)                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 134 Capas GeoJSON 100 % Homogéneas                                       │
-│ • Conformidad Total con Perfil IDE Chile / SNIT                            │
-│ • Exportabilidad Directa hacia QGIS y ArcGIS                               │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_ISO["1. INPUT"]
+        RAW_VEC["Capas Vectoriales GeoJSON Crudas (VGI y Oficiales)"]
+        METADATA_DICT["Diccionario Maestro de Metadatos y Linaje"]
+    end
+
+    subgraph PROC_ISO["2. FLUJO DE PROCESAMIENTO"]
+        SCRIPT_ENR["scripts/enriquecer_base_datos_metadatos.py"]
+        INJECT_PROP["Inyección Algorítmica de 14 Claves Obligatorias"]
+        CAST_TYPES["Homologación de Tipos de Datos (String, Float, ISO-Date)"]
+    end
+
+    subgraph OUT_ISO["3. OUTPUT"]
+        STD_GEOJSON["134 Capas GeoJSON 100 % Homogéneas"]
+        ISO_CONFORM["Conformidad Total con Perfil IDE Chile / SNIT"]
+        EXPORT_READY["Exportabilidad Directa hacia QGIS y ArcGIS"]
+    end
+
+    IN_ISO --> PROC_ISO --> OUT_ISO
 ```
 
 Para garantizar que el Inspector Normativo, el Evaluador de Calidad ISO 19157 y las funciones de exportación tabular operen de manera homogénea sobre cualquier capa (sea comunitaria u oficial), todo archivo GeoJSON en el Atlas debe contener en su objeto `properties` los siguientes 14 atributos maestros normalizados:
@@ -1501,32 +1489,27 @@ w_m = [0,30, 0,25, 0,20, 0,15, 0,10],   ∑(j=1..5) w_mj = 1.00
 
 ### 15.2. Desglose algorítmico y fórmulas de las 10 Dimensiones de calidad
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 134 Archivos GeoJSON (data/*.geojson y src/data/*.geojson)               │
-│ • docs/perfil_metadatos_vgi.xlsx & docs/catalogo_fuentes_vgi.xlsx          │
-│ • Envolvente Geodésica Oficial RM / Barrio Brasil                          │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO DE AUDITORÍA DINÁMICA WLC v2.0                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Evaluador Cuantitativo (50 %): ST_IsValid, Completitud, caja             │
-│   delimitadora, 14 Campos, Slivers                                         │
-│ • Evaluador Cualitativo (50 %): 10 Elementos ISO 19115, Linaje APA, XSD,   │
-│   Escala, HTTP 200                                                         │
-│ • Combinación Lineal Ponderada (IGV = 0,50*P1 + 0,50*P2)                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • docs/wlc_metacalidad_ranking.csv & docs/wlc_metacalidad_resultado.json   │
-│ • docs/matriz_metacalidad.json (Grado A+ >= 95 %, Grado A >= 90 %)         │
-│ • docs/ANALISIS_METACALIDAD.md (sincronizados en src/docs/)                │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_WLC["1. INPUT"]
+        GEO_132["134 Archivos GeoJSON (data/*.geojson y src/data/*.geojson)"]
+        META_XLSX["docs/perfil_metadatos_vgi.xlsx & docs/catalogo_fuentes_vgi.xlsx"]
+        BBOX_RM["Envolvente Geodésica Oficial RM / Barrio Brasil"]
+    end
+
+    subgraph PROC_WLC["2. FLUJO DE PROCESAMIENTO DE AUDITORÍA DINÁMICA WLC v2.0"]
+        PILAR_1["Evaluador Cuantitativo (50 %): ST_IsValid, Completitud, caja delimitadora, 14 Campos, Slivers"]
+        PILAR_2["Evaluador Cualitativo (50 %): 10 Elementos ISO 19115, Linaje APA, XSD, Escala, HTTP 200"]
+        COMB_LIN["Combinación Lineal Ponderada (IGV = 0,50*P1 + 0,50*P2)"]
+    end
+
+    subgraph OUT_WLC["3. OUTPUT"]
+        RANK_CSV["docs/wlc_metacalidad_ranking.csv & docs/wlc_metacalidad_resultado.json"]
+        CERT_GRADE["docs/matriz_metacalidad.json (Grado A+ ≥ 95 %, Grado A ≥ 90 %)"]
+        DOC_REP["docs/ANALISIS_METACALIDAD.md (sincronizados en src/docs/)"]
+    end
+
+    IN_WLC --> PROC_WLC --> OUT_WLC
 ```
 
 #### Dimensión 1: Consistencia topológica OGC (`C_topo` — Peso 30 % en pilar 1)
@@ -1652,30 +1635,25 @@ De acuerdo al puntaje global obtenido en el modelo WLC v2.0, las capas se certif
 
 ## 16. Correlaciones estadísticas, sensibilidad y ranking de metacalidad
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • docs/matriz_metacalidad.json (134 Capas x 10 Dimensiones WLC v2.0)       │
-│ • Vectores de Ponderación (w_c y w_m)                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO ESTADÍSTICO                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Cálculo de Matriz de Correlación de Pearson (r_xy)                       │
-│ • Prueba de Independencia Topología vs. Completitud (r = +0,038)           │
-│ • Análisis de Sensibilidad y Ordenamiento de Ranking                       │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • docs/correlacion_dimensiones_calidad.csv &                               │
-│   docs/correlacion_dimensiones_calidad.png                                 │
-│ • docs/wlc_metacalidad_resultado.json & wlc_metacalidad_ranking.csv (IGV:  │
-│   95,4 % Grado A+)                                                         │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_CORR["1. INPUT"]
+        MAT_134["docs/matriz_metacalidad.json (134 Capas x 10 Dimensiones WLC v2.0)"]
+        WEIGHTS["Vectores de Ponderación (w_c y w_m)"]
+    end
+
+    subgraph PROC_CORR["2. FLUJO DE PROCESAMIENTO ESTADÍSTICO"]
+        PEARSON["Cálculo de Matriz de Correlación de Pearson (r_xy)"]
+        ORTHO_TEST["Prueba de Independencia Topología vs. Completitud (r = +0,038)"]
+        SENS_SIM["Análisis de Sensibilidad y Ordenamiento de Ranking"]
+    end
+
+    subgraph OUT_CORR["3. OUTPUT"]
+        CSV_CORR["docs/correlacion_dimensiones_calidad.csv & docs/correlacion_dimensiones_calidad.png"]
+        DICT_IGV["docs/wlc_metacalidad_resultado.json & wlc_metacalidad_ranking.csv (IGV: 95,4 % Grado A+)"]
+    end
+
+    IN_CORR --> PROC_CORR --> OUT_CORR
 ```
 
 ### 16.1. Matriz de correlación lineal de pearson (`r`)
@@ -1701,22 +1679,23 @@ r_xy = ∑(i=1..n) [ (x_i - x̄) × (y_i - ȳ) ] / [ √(∑(i=1..n) (x_i - x̄)
 
 ## 17. Perfil de metadatos espaciales ISO 19115-1:2014 E implementación XML ISO 19139:2007
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ SECUENCIA OPERATIVA DE EJECUCIÓN                                           │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 1. Investigador -> Mod08: Selecciona capa de las 134 disponibles         │
-│ • 2. Mod08 -> Cat: Consulta metadatos, linaje, EPSG:4326 y caja            │
-│   delimitadora                                                             │
-│ • 3. Cat -> Mod08: Objeto de metadatos normalizado                         │
-│ • 4. Mod08 -> Builder: Ensambla 7 paquetes normativos ISO 19115-1:2014     │
-│ • 5. Builder -> Mod08: Vista previa estructurada en interfaz               │
-│ • 6. Investigador -> Mod08: Solicita exportación oficial (XML ISO 19139 /  │
-│   JSON)                                                                    │
-│ • 7. Mod08 -> Builder: Serializa árbol gmd:MD_Metadata con namespaces OGC  │
-│ • 8. Builder -> Descarga: Genera archivo validable para GeoNetwork / IDE   │
-│   Chile                                                                    │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Investigador as Usuario / Gestor IDE
+    participant Mod08 as Módulo 08 (metadatos.js)
+    participant Cat as Registro de 134 Capas (app.js)
+    participant Builder as Motor Serializador ISO 19139
+    participant Descarga as Descarga Cliente (Blob XML/JSON)
+
+    Investigador->>Mod08: Selecciona capa de las 134 disponibles
+    Mod08->>Cat: Consulta metadatos, linaje, EPSG:4326 y caja delimitadora
+    Cat-->>Mod08: Objeto de metadatos normalizado
+    Mod08->>Builder: Ensambla 7 paquetes normativos ISO 19115-1:2014
+    Builder-->>Mod08: Vista previa estructurada en interfaz
+    Investigador->>Mod08: Solicita exportación oficial (XML ISO 19139 / JSON)
+    Mod08->>Builder: Serializa árbol gmd:MD_Metadata con namespaces OGC
+    Builder->>Descarga: Genera archivo validable para GeoNetwork / IDE Chile
 ```
 
 Para permitir que los datos del Atlas VGI sean interoperables con servidores de catálogo GeoNetwork institucionales y con la Infraestructura de Datos Geoespaciales de Chile (SNIT / IDE Chile), se definió un perfil preciso de metadatos organizado en 7 paquetes normativos:
@@ -1852,34 +1831,27 @@ A continuación se reproduce el fragmento XML validable que genera el Módulo 08
 
 ## 18. Catálogos maestros OpenXML (.XLSX) y archivos consolidados CSV
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 134 Capas Vectoriales Auditadas (data/*.geojson)                         │
-│ • Resultados del Modelo WLC v2.0 (docs/wlc_metacalidad_resultado.json)     │
-│ • 140 Descriptores del Diccionario Territorial                             │
-│   (src/js/modulos/diccionario.js)                                          │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO DE COMPILACIÓN OPENXML Y CSV                     │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • scripts/generar_entregables_excel.py (openpyxl)                          │
-│ • Formateo Institucional de Hojas, Cabeceras y Fórmulas                    │
-│ • Serialización Tabular UTF-8 con BOM para Excel/R/Python                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 3 Libros Maestros .xlsx (docs/categorias_tematicas_osm.xlsx,             │
-│   docs/catalogo_fuentes_vgi.xlsx, docs/perfil_metadatos_vgi.xlsx)          │
-│ • 4 Consolidados .csv (docs/wlc_metacalidad_ranking.csv,                   │
-│   docs/correlacion_dimensiones_calidad.csv, data/resumen_catastro_vgi.csv, │
-│   data/bip_inversiones_santiago.csv)                                       │
-│ • Sincronización Espejo en docs/, src/docs/, data/ y src/data/             │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_CATS["1. INPUT"]
+        CAPAS_132["134 Capas Vectoriales Auditadas (data/*.geojson)"]
+        WLC_RES["Resultados del Modelo WLC v2.0 (docs/wlc_metacalidad_resultado.json)"]
+        GLOS_140["140 Descriptores del Diccionario Territorial (src/js/modulos/diccionario.js)"]
+    end
+
+    subgraph PROC_CATS["2. FLUJO DE PROCESAMIENTO DE COMPILACIÓN OPENXML Y CSV"]
+        SCRIPT_XLS["scripts/generar_entregables_excel.py (openpyxl)"]
+        STYLE_XLS["Formateo Institucional de Hojas, Cabeceras y Fórmulas"]
+        EXPORT_CSV["Serialización Tabular UTF-8 con BOM para Excel/R/Python"]
+    end
+
+    subgraph OUT_CATS["3. OUTPUT"]
+        THREE_XLSX["3 Libros Maestros .xlsx (docs/categorias_tematicas_osm.xlsx, docs/catalogo_fuentes_vgi.xlsx, docs/perfil_metadatos_vgi.xlsx)"]
+        FOUR_CSV["4 Consolidados .csv (docs/wlc_metacalidad_ranking.csv, docs/correlacion_dimensiones_calidad.csv, data/resumen_catastro_vgi.csv, data/bip_inversiones_santiago.csv)"]
+        SYNC_DOCS["Sincronización Espejo en docs/, src/docs/, data/ y src/data/"]
+    end
+
+    IN_CATS --> PROC_CATS --> OUT_CATS
 ```
 
 El Atlas desacopla de forma absoluta las bases de datos espaciales de los catálogos de metadatos tabulares, permitiendo a investigadores de cualquier disciplina inspeccionar el sistema en software ofimático estándar:
@@ -1899,31 +1871,26 @@ El Atlas desacopla de forma absoluta las bases de datos espaciales de los catál
 
 ## 19. Diccionario territorial interactivo: Los 140 Descriptores normativos y etiquetas OSM
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Cuerpos Legales (LGUC, OGUC, PRC Santiago, Ley 17.288, Ley 20.920)       │
-│ • Especificación Global Map entidades espaciales (OpenStreetMap Wiki)      │
-│ • Estándar Internacional de Catalogación de Fenómenos ISO 19110            │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO DE HOMOLOGACIÓN SEMÁNTICA                        │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Correspondencia Biunívoca Concepto Urbano <-> Etiqueta key=value         │
-│ • Redacción de Definición Operativa y Marco Regulatorio                    │
-│ • Enlace con Identificadores de las 134 Capas del Atlas                    │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Buscador Instantáneo del Diccionario Territorial                         │
-│   (src/js/modulos/diccionario.js)                                          │
-│ • Exportación Dinámica JSON/CSV y Respaldo en                              │
-│   docs/catalogo_fuentes_vgi.xlsx                                           │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_DICT["1. INPUT"]
+        NORMA_CL["Cuerpos Legales (LGUC, OGUC, PRC Santiago, Ley 17.288, Ley 20.920)"]
+        OSM_WIKI["Especificación Global Map entidades espaciales (OpenStreetMap Wiki)"]
+        ISO_19110["Estándar Internacional de Catalogación de Fenómenos ISO 19110"]
+    end
+
+    subgraph PROC_DICT["2. FLUJO DE PROCESAMIENTO DE HOMOLOGACIÓN SEMÁNTICA"]
+        CROSS_REF["Correspondencia Biunívoca Concepto Urbano ↔ Etiqueta key=value"]
+        DEF_TECH["Redacción de Definición Operativa y Marco Regulatorio"]
+        LAYER_MAP["Enlace con Identificadores de las 134 Capas del Atlas"]
+    end
+
+    subgraph OUT_DICT["3. OUTPUT"]
+        MOD_DICT["Buscador Instantáneo del Diccionario Territorial (src/js/modulos/diccionario.js)"]
+        XLSX_DICT["Exportación Dinámica JSON/CSV y Respaldo en docs/catalogo_fuentes_vgi.xlsx"]
+    end
+
+    IN_DICT --> PROC_DICT --> OUT_DICT
 ```
 
 El Módulo del Diccionario Territorial (`src/js/modulos/diccionario.js`) articula un repositorio conceptual de 140 descriptores territoriales que homologan la jerga legal de la Ordenanza General de Urbanismo y Construcciones (OGUC) y el Plan Regulador Comunal (PRC) con las etiquetas colaborativas de OpenStreetMap.
@@ -1981,29 +1948,26 @@ El Atlas de Información Geográfica Voluntaria adopta una filosofía de ingenie
 
 ### 20.1. El patrón revealing module pattern (IIFE)
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • src/index.html (DOM Semántico + 10 Secciones)                            │
-│ • config/config.json (caja delimitadora, Endpoints, Metadatos)             │
-│ • Selector de Perfil Territorial (#sel-perfil-usuario)                     │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO DE ORQUESTACIÓN CLIENT-SIDE                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Orquestador Central (src/js/app.js)                                      │
-│ • Encapsulamiento Modular IIFE (Sin Contaminación Global)                  │
-│ • Enrutador Reactivo de Pestañas y Estado por Rol                          │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Aplicación Web sin compilación previa de Carga Instantánea               │
-│ • Aislamiento de Estado entre los 10 Módulos                               │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_SPA["1. INPUT"]
+        HTML_DOM["src/index.html (DOM Semántico + 10 Secciones)"]
+        CONFIG_JSON["config/config.json (caja delimitadora, Endpoints, Metadatos)"]
+        ROLE_SEL["Selector de Perfil Territorial (#sel-perfil-usuario)"]
+    end
+
+    subgraph PROC_SPA["2. FLUJO DE PROCESAMIENTO DE ORQUESTACIÓN CLIENT-SIDE"]
+        BUS_APP["Orquestador Central (src/js/app.js)"]
+        IIFE_ENCAP["Encapsulamiento Modular IIFE (Sin Contaminación Global)"]
+        HASH_ROUT["Enrutador Reactivo de Pestañas y Estado por Rol"]
+    end
+
+    subgraph OUT_SPA["3. OUTPUT"]
+        SPA_READY["Aplicación Web sin compilación previa de Carga Instantánea"]
+        MEM_ISOL["Aislamiento de Estado entre los 10 Módulos"]
+    end
+
+    IN_SPA --> PROC_SPA --> OUT_SPA
 ```
 
 Para evitar la contaminación del objeto global (`window`) y garantizar el encapsulamiento preciso de variables de estado privadas, cada módulo funcional se construye mediante una expresión de función inmediatamente invocada (*Immediately Invoked Function Expression* - IIFE):
@@ -2057,29 +2021,26 @@ window.ModuloEjemploVGI = ModuloEjemploVGI;
 
 ## 21. Motor cartográfico: Leaflet 1.9.4, Renderizado y simbología dinámica
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 134 Capas GeoJSON Homologadas (EPSG:4326)                                │
-│ • Mosaicos Base XYZ (OSM, Carto Positron/Dark, Esri)                       │
-│ • Diccionario de Estilos y Paletas Temáticas                               │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO DE RENDERIZADO CARTOGRÁFICO                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Proyección en Lienzo Web Mercator (EPSG:3857) y Cálculos UTM 19S         │
-│ • Generación Dinámica de Marcadores Vectoriales L.divIcon                  │
-│ • Vinculación de Popups Interactivos con los 14 Atributos ISO              │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Visor Multinivel Fluido en Escritorio, Tablet y Móvil                    │
-│ • Controles Flotantes de Capas, Escala y Coordenadas                       │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_LEAF["1. INPUT"]
+        CAPAS_132["134 Capas GeoJSON Homologadas (EPSG:4326)"]
+        TILES_XYZ["Mosaicos Base XYZ (OSM, Carto Positron/Dark, Esri)"]
+        STYLE_DEF["Diccionario de Estilos y Paletas Temáticas"]
+    end
+
+    subgraph PROC_LEAF["2. FLUJO DE PROCESAMIENTO DE RENDERIZADO CARTOGRÁFICO"]
+        PROJ_3857["Proyección en Lienzo Web Mercator (EPSG:3857) y Cálculos UTM 19S"]
+        SVG_ICON["Generación Dinámica de Marcadores Vectoriales L.divIcon"]
+        BIND_POP["Vinculación de Popups Interactivos con los 14 Atributos ISO"]
+    end
+
+    subgraph OUT_LEAF["3. OUTPUT"]
+        MAP_CANVAS["Visor Multinivel Fluido en Escritorio, Tablet y Móvil"]
+        HUD_CTRL["Controles Flotantes de Capas, Escala y Coordenadas"]
+    end
+
+    IN_LEAF --> PROC_LEAF --> OUT_LEAF
 ```
 
 El núcleo de visualización espacial se basa en Leaflet versión 1.9.4, una biblioteca ultraligera (~42 KB comprimida) que ofrece la mejor relación entre velocidad de renderizado, compatibilidad móvil y soporte de estándares web.
@@ -2156,23 +2117,25 @@ function crearMarcadorVectorial(iconoSVG, colorHex, animado = false) {
 
 Una de las innovaciones tecnológicas más destacadas del Atlas es el Inspector Normativo Territorial. Esta herramienta permite al usuario hacer clic en cualquier punto del mapa y recibir de forma instantánea el Certificado de Informaciones Normativas VGI (CIN-VGI), calculando en el lado del cliente (*client-side*) la intersección geométrica con las 192 zonas urbanísticas del Plan Regulador Comunal (PRC) de Santiago.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ SECUENCIA OPERATIVA DE EJECUCIÓN                                           │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 1. Usuario -> Mapa: Clic en coordenadas [lat, lon]                       │
-│ • 2. Mapa -> Inspector: Evento click(e.latlng)                             │
-│ • 3. Inspector -> Inspector: Iniciar Algoritmo Ray-Casting                 │
-│ • [Para cada polígono de zonificación PRC]                                 │
-│ • 4. Inspector -> Poligonos: Evaluar Jordan Curve Theorem                  │
-│   (puntoEnPoligono)                                                        │
-│ • 5. Poligonos -> Inspector: Intersección (true / false)                   │
-│ • 6. Inspector -> Inspector: Extraer normativa de zona (ZCH, alturas,      │
-│   constructibilidad, usos)                                                 │
-│ • 7. Inspector -> UI: Renderizar Ficha Técnica Oficial CIN-VGI             │
-│ • 8. UI -> Usuario: Desplegar ficha interactiva con botones Imprimir y     │
-│   Copiar JSON                                                              │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Usuario as Actor Territorial
+    participant Mapa as Leaflet 1.9.4 (#map)
+    participant Inspector as ModuloEvaluadorNormativo
+    participant Poligonos as Capas PRC Santiago (Client-side)
+    participant UI as Popup Modal CIN-VGI
+
+    Usuario->>Mapa: Clic en coordenadas [lat, lon]
+    Mapa->>Inspector: Evento click(e.latlng)
+    Inspector->>Inspector: Iniciar Algoritmo Ray-Casting
+    loop Para cada polígono de zonificación PRC
+        Inspector->>Poligonos: Evaluar Jordan Curve Theorem (puntoEnPoligono)
+        Poligonos-->>Inspector: Intersección (true / false)
+    end
+    Inspector->>Inspector: Extraer normativa de zona (ZCH, alturas, constructibilidad, usos)
+    Inspector->>UI: Renderizar Ficha Técnica Oficial CIN-VGI
+    UI-->>Usuario: Desplegar ficha interactiva con botones Imprimir y Copiar JSON
 ```
 
 ### 22.1. El algoritmo ray-casting (point-in-polygon)
@@ -2345,30 +2308,27 @@ El Inspector Normativo implementa la consulta espacial articulando simultáneame
 
 El Atlas implementa en el Módulo 05 (`src/js/modulos/indicadores_analisis.js`) un sistema de divulgación y síntesis territorial guiada denominado guiones visuales. Cada guion visual constituye un documento analítico interactivo que articula secciones metodológicas intercaladas con gráficos estadísticos dinámicos, diagramas vectoriales de arquitectura SVG y el catálogo completo de 83 cartografías temáticas (`2200 × 1423 px` y `3264 × 2112 px`), además de permitir la activación directa de sus capas vectoriales asociadas en el visor interactivo.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 83 Cartografías Temáticas (img/cartografias/*.jpg)                       │
-│ • 4 Portadas Vectoriales SVG (img/storyboards/*.svg)                       │
-│ • 134 Capas GeoJSON + Estadísticas Censo 2024 / SUBDERE / MuniSTGO         │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO DE SÍNTESIS Y NARRATIVA ESPACIAL                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Ensamblaje de Secciones Analíticas Intercaladas                          │
-│ • Renderizado de Diagramas de Flujo SVG Dimensionados (680x230)            │
-│ • Generación de Gráficos Estadísticos Comparativos Inline                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Lámina Modal de Lectura Continua Multi-Dispositivo                       │
-│ • Ampliación en Lightbox (Cartografías, Diagramas SVG y Gráficos)          │
-│ • Activación Simultánea de Capas en el Visor Cartográfico                  │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_SB["1. INPUT"]
+        CARTO_83["83 Cartografías Temáticas (img/cartografias/*.jpg)"]
+        PORTADAS_4["4 Portadas Vectoriales SVG (img/storyboards/*.svg)"]
+        DATA_134["134 Capas GeoJSON + Estadísticas Censo 2024 / SUBDERE / MuniSTGO"]
+    end
+
+    subgraph PROC_SB["2. FLUJO DE PROCESAMIENTO DE SÍNTESIS Y NARRATIVA ESPACIAL"]
+        INTER_SEC["Ensamblaje de Secciones Analíticas Intercaladas"]
+        SVG_DIAG["Renderizado de Diagramas de Flujo SVG Dimensionados (680x230)"]
+        INLINE_CH["Generación de Gráficos Estadísticos Comparativos Inline"]
+    end
+
+    subgraph OUT_SB["3. OUTPUT"]
+        MODAL_SB["Lámina Modal de Lectura Continua Multi-Dispositivo"]
+        LIGHTBOX_HD["Ampliación en Lightbox (Cartografías, Diagramas SVG y Gráficos)"]
+        MAP_TRIGGER["Activación Simultánea de Capas en el Visor Cartográfico"]
+    end
+
+    IN_SB --> PROC_SB --> OUT_SB
 ```
 
 ```text
@@ -2406,33 +2366,30 @@ El Atlas implementa en el Módulo 05 (`src/js/modulos/indicadores_analisis.js`) 
 
 ## 24. Visor lightbox pop-up HD multi-dispositivo y galería multimedia
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ SECUENCIA OPERATIVA DE EJECUCIÓN                                           │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • [Clic en Cartografía Temática JPG (2200x1423 / 3264x2112)]               │
-│ • 1. Usuario -> Lamina: Clic en tarjeta o miniatura cartográfica           │
-│ • 2. Lamina -> Lightbox: abrirLightboxCartografia(src, titulo, subtitulo,  │
-│   rutaAlternativa)                                                         │
-│ • 3. Lightbox -> Canvas: Inyecta imagen HD con respaldo automático (img/ y │
-│   src/img/)                                                                │
-│ • [Clic en Diagrama de Flujo SVG]                                          │
-│ • 4. Usuario -> Lamina: Clic en contenedor .storyboard-diagrama-box        │
-│ • 5. Lamina -> Lightbox: abrirLightboxDiagrama(idStoryboard, idxSeccion)   │
-│ • 6. Lightbox -> Canvas: Inyecta gráfico SVG (viewBox 680x230, min 680px / │
-│   88vw)                                                                    │
-│ • [Clic en Gráfico Estadístico Inline]                                     │
-│ • 7. Usuario -> Lamina: Clic en bloque .storyboard-inline-chart            │
-│ • 8. Lamina -> Lightbox: abrirLightboxGraficoInline(idStoryboard,          │
-│   idxSeccion)                                                              │
-│ • 9. Lightbox -> Canvas: Renderiza barras comparativas ampliadas de alto   │
-│   contraste                                                                │
-│ • 10. Canvas -> Usuario: Visualización en pantalla completa (100dvh)       │
-│ • 11. Usuario -> Canvas: Rueda de ratón / Pinch-to-Zoom (2 dedos) / Paneo  │
-│   táctil (1 dedo)                                                          │
-│ • 12. Canvas -> Lightbox: Actualiza matriz CSS translate3d(x, y, 0)        │
-│   scale(z) en tiempo real (0,5x a 4,5x)                                    │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Usuario as Usuario (Escritorio / Móvil / Tablet)
+    participant Lamina as Lámina Modal de Guion Visual
+    participant Lightbox as Motor Lightbox HD (indicadores_analisis.js)
+    participant Canvas as Contenedor #lightbox-canvas
+
+    alt Clic en Cartografía Temática JPG (2200x1423 / 3264x2112)
+        Usuario->>Lamina: Clic en tarjeta o miniatura cartográfica
+        Lamina->>Lightbox: abrirLightboxCartografia(src, titulo, subtitulo, rutaAlternativa)
+        Lightbox->>Canvas: Inyecta imagen HD con respaldo automático (img/ y src/img/)
+    else Clic en Diagrama de Flujo SVG
+        Usuario->>Lamina: Clic en contenedor .storyboard-diagrama-box
+        Lamina->>Lightbox: abrirLightboxDiagrama(idStoryboard, idxSeccion)
+        Lightbox->>Canvas: Inyecta gráfico SVG (viewBox 680x230, min 680px / 88vw)
+    else Clic en Gráfico Estadístico Inline
+        Usuario->>Lamina: Clic en bloque .storyboard-inline-chart
+        Lamina->>Lightbox: abrirLightboxGraficoInline(idStoryboard, idxSeccion)
+        Lightbox->>Canvas: Renderiza barras comparativas ampliadas de alto contraste
+    end
+    Canvas-->>Usuario: Visualización en pantalla completa (100dvh)
+    Usuario->>Canvas: Rueda de ratón / Pinch-to-Zoom (2 dedos) / Paneo táctil (1 dedo)
+    Canvas->>Lightbox: Actualiza matriz CSS translate3d(x, y, 0) scale(z) en tiempo real (0,5x a 4,5x)
 ```
 
 Para inspeccionar las 83 láminas cartográficas de alta definición (`2200 × 1423 px` y `3264 × 2112 px`), los diagramas vectoriales SVG y los gráficos estadísticos sin pérdida de nitidez en cualquier pantalla (ordenadores de escritorio, tablets y teléfonos móviles), el sistema incorpora un motor modal interactivo con soporte dual de ratón y eventos táctiles (`touchstart`, `touchmove`, `touchend`):
@@ -2551,31 +2508,28 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 01: Visor y Atlas VGI (`data-panel="inicio"` — `src/js/app.js`, `src/js/modulos/mapa.js`, `src/js/modulos/ide_chile.js`, `src/js/modulos/evaluador_normativo.js`)
 * Propósito Operativo: Núcleo espacial interactivo; renderiza las 134 capas cartográficas (124 oficiales + 10 VGI); búsqueda en vivo; telemetría dinámica del Índice de Calidad VGI (ICV); Inspector Normativo del PRC de Santiago (Certificado CIN-VGI y 10 hitos históricos 1990–2024); dibujo de caja delimitadora con cálculo métrico en `EPSG:32719`.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 134 Capas GeoJSON (data/*.geojson)                                       │
-│ • Mosaicos Base (OSM, Carto, Esri)                                         │
-│ • Clic del Usuario en el Mapa                                              │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Carga Asíncrona (Fetch API + IIFE)                                       │
-│ • Aplicación de Estilos CSS & L.divIcon                                    │
-│ • Algoritmo Ray-Casting (Inspector PRC)                                    │
-│ • Cálculo Geodésico EPSG:32719 de Áreas e ICV Dinámico                     │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Lienzo Cartográfico Leaflet 1.9.4                                        │
-│ • Popups con Atributos Normalizados ISO                                    │
-│ • Certificado de Informaciones Normativas (CIN-VGI)                        │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M1["1. INPUT"]
+        GEOJSON["134 Capas GeoJSON (data/*.geojson)"]
+        TILES["Mosaicos Base (OSM, Carto, Esri)"]
+        CLIC["Clic del Usuario en el Mapa"]
+    end
+
+    subgraph PROC_M1["2. FLUJO DE PROCESAMIENTO"]
+        LOAD["Carga Asíncrona (Fetch API + IIFE)"]
+        STYLE["Aplicación de Estilos CSS & L.divIcon"]
+        RAY["Algoritmo Ray-Casting (Inspector PRC)"]
+        MEASURE["Cálculo Geodésico EPSG:32719 de Áreas e ICV Dinámico"]
+    end
+
+    subgraph OUT_M1["3. OUTPUT"]
+        MAP_VIEW["Lienzo Cartográfico Leaflet 1.9.4"]
+        POPUPS["Popups con Atributos Normalizados ISO"]
+        CIN["Certificado de Informaciones Normativas (CIN-VGI)"]
+    end
+
+    IN_M1 --> PROC_M1 --> OUT_M1
 ```
 
 ---
@@ -2583,30 +2537,27 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 02: Consultas Overpass (`data-panel="explorador-osm"` — `src/js/modulos/osm.js` y `src/js/modulos/taginfo.js`)
 * Propósito Operativo: Interfaz de extracción en tiempo real hacia OpenStreetMap con lenguaje Overpass QL; consultas rápidas en 1 clic para las 10 macrocategorías VGI; validación semántica Taginfo API v4 y exportación GeoJSON/CSV.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • caja delimitadora Seleccionado (Barrio Brasil / Personalizado)           │
-│ • Filtro Temático Overpass QL / Presets 1-Clic                             │
-│ • Endpoints Espejo Overpass API                                            │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Algoritmo rotación con conmutación por falla (Multi-Servidor)            │
-│ • Recepción de JSON OSM crudo (nodes/ways/relations)                       │
-│ • Reconstrucción Topológica a GeoJSON en Navegador                         │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Renderizado de Capa Temporal en el Visor                                 │
-│ • Descarga Directa de Archivo GeoJSON / CSV                                │
-│ • Conteo de Nodos, Vías, Relaciones y Etiquetas                            │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M2["1. INPUT"]
+        BBOX_SEL["caja delimitadora Seleccionado (Barrio Brasil / Personalizado)"]
+        QUERY_QL["Filtro Temático Overpass QL / Presets 1-Clic"]
+        ENDPOINTS["Endpoints Espejo Overpass API"]
+    end
+
+    subgraph PROC_M2["2. FLUJO DE PROCESAMIENTO"]
+        FAILOVER["Algoritmo rotación con conmutación por falla (Multi-Servidor)"]
+        OSM_JSON["Recepción de JSON OSM crudo (nodes/ways/relations)"]
+        OSMTOGEO["Reconstrucción Topológica a GeoJSON en Navegador"]
+    end
+
+    subgraph OUT_M2["3. OUTPUT"]
+        CAPA_VIVA["Renderizado de Capa Temporal en el Visor"]
+        GEOJSON_DL["Descarga Directa de Archivo GeoJSON / CSV"]
+        STATS_QL["Conteo de Nodos, Vías, Relaciones y Etiquetas"]
+    end
+
+    IN_M2 --> PROC_M2 --> OUT_M2
 ```
 
 ---
@@ -2614,30 +2565,27 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 03: Biodiversidad GBIF (`data-panel="biodiversidad-gbif"` — `src/js/modulos/gbif.js`)
 * Propósito Operativo: Consulta de ocurrencias biológicas georreferenciadas bajo estándar Darwin Core (GBIF REST API v1); cruce con ciencia ciudadana (iNaturalist, eBird) y filtro espacial por caja delimitadora.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • GBIF Occurrence API (api.gbif.org/v1)                                    │
-│ • Filtro Geométrico caja delimitadora de Barrio Brasil                     │
-│ • Filtros Taxonómicos (Plantae, Animalia, Fungi)                           │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Normalización Darwin Core (DwC)                                          │
-│ • Validación de Coordenadas y Taxonomía                                    │
-│ • Agrupamiento por Especie y Reino Biológico                               │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Capa Cartográfica de Especies Urbanas en el Visor                        │
-│ • Tabla y Fichas Taxonómicas con Licencias CC                              │
-│ • Exportación GeoJSON de Biodiversidad                                     │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M3["1. INPUT"]
+        GBIF_API["GBIF Occurrence API (api.gbif.org/v1)"]
+        WKT_POLY["Filtro Geométrico caja delimitadora de Barrio Brasil"]
+        TAXON_FILTER["Filtros Taxonómicos (Plantae, Animalia, Fungi)"]
+    end
+
+    subgraph PROC_M3["2. FLUJO DE PROCESAMIENTO"]
+        DWC_PARSE["Normalización Darwin Core (DwC)"]
+        UNCERT_FLT["Validación de Coordenadas y Taxonomía"]
+        CLUSTER_GEO["Agrupamiento por Especie y Reino Biológico"]
+    end
+
+    subgraph OUT_M3["3. OUTPUT"]
+        LAYER_GBIF["Capa Cartográfica de Especies Urbanas en el Visor"]
+        TAXON_CARD["Tabla y Fichas Taxonómicas con Licencias CC"]
+        CSV_GBIF["Exportación GeoJSON de Biodiversidad"]
+    end
+
+    IN_M3 --> PROC_M3 --> OUT_M3
 ```
 
 ---
@@ -2645,28 +2593,25 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 04: Cartografía uMap (`data-panel="proyectos-umap"` — `src/js/modulos/umap.js` y `src/js/modulos/importador_capas.js`)
 * Propósito Operativo: Integración de proyectos colaborativos uMap mediante iframes aislados y motor universal de importación local de archivos geográficos del usuario (`GeoJSON`, `KML`, `GPX` y `Shapefile .zip`).
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • URL de Mapas uMap Comunitarios                                           │
-│ • Archivos Locales del Usuario (.geojson, .kml, .gpx, .zip)                │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Aislamiento Sandbox de iframe uMap                                       │
-│ • Conversión en Memoria a GeoJSON (toGeoJSON / JSZip)                      │
-│ • Inyección de Capa Personalizada en el Visor Leaflet                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Lienzo Interactivo de Mapeo Ciudadano                                    │
-│ • Visualización de Capas Propias junto al Catálogo Oficial                 │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M4["1. INPUT"]
+        UMAP_URL["URL de Mapas uMap Comunitarios"]
+        LOCAL_FILE["Archivos Locales del Usuario (.geojson, .kml, .gpx, .zip)"]
+    end
+
+    subgraph PROC_M4["2. FLUJO DE PROCESAMIENTO"]
+        SANDBOX["Aislamiento Sandbox de iframe uMap"]
+        PARSER_LOC["Conversión en Memoria a GeoJSON (toGeoJSON / JSZip)"]
+        SYNC_MAP["Inyección de Capa Personalizada en el Visor Leaflet"]
+    end
+
+    subgraph OUT_M4["3. OUTPUT"]
+        PANEL_UMAP["Lienzo Interactivo de Mapeo Ciudadano"]
+        USER_LAYER["Visualización de Capas Propias junto al Catálogo Oficial"]
+    end
+
+    IN_M4 --> PROC_M4 --> OUT_M4
 ```
 
 ---
@@ -2674,29 +2619,26 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 05: Indicadores & guiones visuales (`data-panel="indicadores"` — `src/js/modulos/indicadores_analisis.js`)
 * Propósito Operativo: Articulación de las 134 coberturas del Atlas en 5 Dimensiones Analíticas (Sociodemográfica, Socioeconómica, Socioambiental, Sociosanitaria y Sociourbana/Habitabilidad) y 4 guiones visuales de Resultados Territoriales con 83 cartografías temáticas, gráficos comparativos, diagramas vectoriales SVG y visor Lightbox multi-dispositivo.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 5 Dimensiones Analíticas (134 Capas Asociadas)                           │
-│ • 4 guiones visuales Temáticos (KDE, LISA, Censo 2024, Socioambiental)     │
-│ • 83 Cartografías (2200x1423 / 3264x2112 px) + Diagramas SVG + Gráficos    │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Despliegue de Acordeones con Conmutación Directa al Visor                │
-│ • Renderizado de Lámina Analítica con Secciones Intercaladas               │
-│ • Motor Lightbox con Zoom Rueda y Pinch-to-Zoom Táctil                     │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Activación de Capas de la Dimensión o Historia en el Mapa                │
-│ • Visualización a Pantalla Completa en Todos los Dispositivos              │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M5["1. INPUT"]
+        DIM_5["5 Dimensiones Analíticas (134 Capas Asociadas)"]
+        STORY_ID["4 guiones visuales Temáticos (KDE, LISA, Censo 2024, Socioambiental)"]
+        CARTO_SET["83 Cartografías (2200x1423 / 3264x2112 px) + Diagramas SVG + Gráficos"]
+    end
+
+    subgraph PROC_M5["2. FLUJO DE PROCESAMIENTO"]
+        ACORD_DIM["Despliegue de Acordeones con Conmutación Directa al Visor"]
+        MODAL_RENDER["Renderizado de Lámina Analítica con Secciones Intercaladas"]
+        ZOOM_TOUCH["Motor Lightbox con Zoom Rueda y Pinch-to-Zoom Táctil"]
+    end
+
+    subgraph OUT_M5["3. OUTPUT"]
+        SCENE_VIEW["Activación de Capas de la Dimensión o Historia en el Mapa"]
+        LIGHTBOX["Visualización a Pantalla Completa en Todos los Dispositivos"]
+    end
+
+    IN_M5 --> PROC_M5 --> OUT_M5
 ```
 
 ---
@@ -2704,31 +2646,27 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 06: Calidad & ICV (`data-panel="calidad-ohsome"` — `src/js/modulos/evaluador_calidad_cuantitativa.js`, `src/js/modulos/ohsome.js`, `src/js/modulos/calidad_analyst.js`)
 * Propósito Operativo: Evaluación multidimensional de calidad geoespacial articulada en tres submódulos: Submódulo A (Evaluador Universal de Calidad Espacial, Topología e Índice Índice Global de Calidad VGI (IGV, promedio multicriterio ISO 19157 de las 134 capas; véase el glosario) bajo ISO 19157 e ISO 19115 para las 134 capas o GeoJSON externos), Submódulo B (Serie Histórica OSHDB/ohsome API v1/v2 con sensibilidad geométrica `/count`, `/length`, `/area`, reproyección métrica `EPSG:32719` e Índice de Saturación y Maduración Territorial (Herfort et al., 2023 / ISO 19157)) y Submódulo C (Control de Cambios y Validación de Ediciones Recientes con OSMCha / OSM API v0.6).
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 134 Capas del Catálogo o GeoJSON Externo                                 │
-│ • ohsome API v1/v2 (/elements/count, /length, /area, /users)               │
-│ • OSM API v0.6 Changesets (/api/0,6/changesets)                            │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Submódulo A: Motor WLC v2.0 (50 % Cuantitativo + 50 % Cualitativo)       │
-│ • Submódulo B: Reproyección EPSG:32719 e Índice de Saturación y Maduración │
-│   Territorial                                                              │
-│ • Submódulo C: Evaluación Heurística de Changesets OSMCha                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Índice Global IGV (%), Plan de Subsanación y Reporte ISO 19157           │
-│ • Score de Madurez (/100), Densidad (elem/km²) e Intensidad (edit/user)    │
-│ • Tabla de Auditoría de Ediciones Recientes con Enlaces a OSMCha           │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M6["1. INPUT"]
+        CAPA_AUD["134 Capas del Catálogo o GeoJSON Externo"]
+        OHSOME_URL["ohsome API v1/v2 (/elements/count, /length, /area, /users)"]
+        OSMCHA_XML["OSM API v0.6 Changesets (/api/0,6/changesets)"]
+    end
+
+    subgraph PROC_M6["2. FLUJO DE PROCESAMIENTO"]
+        WLC_ENGINE["Submódulo A: Motor WLC v2.0 (50 % Cuantitativo + 50 % Cualitativo)"]
+        OQT_SAT["Submódulo B: Reproyección EPSG:32719 e Índice de Saturación y Maduración Territorial"]
+        CHA_HEUR["Submódulo C: Evaluación Heurística de Changesets OSMCha"]
+    end
+
+    subgraph OUT_M6["3. OUTPUT"]
+        DICT_IGV["Índice Global IGV (%), Plan de Subsanación y Reporte ISO 19157"]
+        SCORE_MAD["Score de Madurez (/100), Densidad (elem/km²) e Intensidad (edit/user)"]
+        TABLE_CHA["Tabla de Auditoría de Ediciones Recientes con Enlaces a OSMCha"]
+    end
+
+    IN_M6 --> PROC_M6 --> OUT_M6
 ```
 
 ---
@@ -2736,28 +2674,25 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 07: Manual de USO y actualización (`data-panel="manual"` — `src/js/modulos/manual.js`)
 * Propósito Operativo: Documentación interactiva dividida en Parte I: Manual de Uso del Atlas (fundamentación, operación del visor, ICV dinámico, Inspector Normativo e inventario filtrable de las 134 coberturas) y Parte II: Manual de Actualización y Mantención Técnica (catálogo estandarizado multi-lenguaje, flujos de procesamiento de flujo, protocolo de 6 etapas, validación pre-despliegue y régimen jurídico).
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Parte I: Capítulos de Uso (USO · 01 a USO · 04)                          │
-│ • Parte II: Capítulos de Actualización (ACT · 01 a ACT · 05)               │
-│ • Inventario Dinámico de las 134 Capas (NODO_CONFIG + IDE)                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Conmutador de Vista (Ambos / Uso / Actualización)                        │
-│ • Filtrado Instantáneo de Documentación y Tabla de Capas                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Visor Técnico Integrado con Navegación Directa a Módulos                 │
-│ • Descarga de Manuales (.md) y Bibliografía APA 7ª Ed.                     │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M7["1. INPUT"]
+        CAP_USO["Parte I: Capítulos de Uso (USO · 01 a USO · 04)"]
+        CAP_ACT["Parte II: Capítulos de Actualización (ACT · 01 a ACT · 05)"]
+        INV_132["Inventario Dinámico de las 134 Capas (NODO_CONFIG + IDE)"]
+    end
+
+    subgraph PROC_M7["2. FLUJO DE PROCESAMIENTO"]
+        FILTER_MODO["Conmutador de Vista (Ambos / Uso / Actualización)"]
+        SEARCH_DOC["Filtrado Instantáneo de Documentación y Tabla de Capas"]
+    end
+
+    subgraph OUT_M7["3. OUTPUT"]
+        DOC_VIEW["Visor Técnico Integrado con Navegación Directa a Módulos"]
+        MD_DL["Descarga de Manuales (.md) y Bibliografía APA 7ª Ed."]
+    end
+
+    IN_M7 --> PROC_M7 --> OUT_M7
 ```
 
 ---
@@ -2765,27 +2700,24 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 08: Metadatos ISO 19115 (`data-panel="metadatos-iso"` — `src/js/modulos/metadatos.js`)
 * Propósito Operativo: Generador, editor y exportador de fichas de metadatos estandarizadas en formatos JSON y XML (`ISO 19139:2007`) conforme al Perfil Nacional de Metadatos de IDE Chile / SNIT.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Selección de Cobertura o Formulario ISO 19115                            │
-│ • Identificación, caja delimitadora, CRS (EPSG:4326/5361/32719) y Linaje   │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Serialización XML ISO 19139 (gmd:MD_Metadata)                            │
-│ • Estructuración de Ficha JSON Estándar                                    │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Vista Previa de Metadatos en Pantalla                                    │
-│ • Descarga de Archivo .xml (GeoNetwork) y .json                            │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M8["1. INPUT"]
+        ID_CAPA["Selección de Cobertura o Formulario ISO 19115"]
+        REGISTRO_JSON["Identificación, caja delimitadora, CRS (EPSG:4326/5361/32719) y Linaje"]
+    end
+
+    subgraph PROC_M8["2. FLUJO DE PROCESAMIENTO"]
+        BUILD_XML["Serialización XML ISO 19139 (gmd:MD_Metadata)"]
+        BUILD_JSON["Estructuración de Ficha JSON Estándar"]
+    end
+
+    subgraph OUT_M8["3. OUTPUT"]
+        VIEWER_META["Vista Previa de Metadatos en Pantalla"]
+        XML_FILE["Descarga de Archivo .xml (GeoNetwork) y .json"]
+    end
+
+    IN_M8 --> PROC_M8 --> OUT_M8
 ```
 
 ---
@@ -2793,27 +2725,24 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 09: Diccionario (134 Capas) (`data-panel="diccionario"` — `src/js/modulos/diccionario.js`)
 * Propósito Operativo: Catálogo de Objetos y Atributos Geográficos conforme a la norma ISO 19110:2016, integrando los 140 descriptores técnicos que documentan las 134 coberturas operativas y las reglas de homologación semántica entre la normativa chilena (OGUC/PRC/IDE Chile) y OpenStreetMap.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Catálogo de 140 Descriptores Técnicos (ISO 19110)                        │
-│ • Búsqueda por Código, Institución, Etiqueta OSM o Atributo                │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Filtrado Instantáneo por Origen (Todos / VGI / IDE / Brechas)            │
-│ • Despliegue de Tablas de Columnas, Tipos de Datos y Dominio               │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Fichas Técnicas de Especificación de Atributos                           │
-│ • Descarga del Catálogo Completo (.xlsx / .json)                           │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M9["1. INPUT"]
+        GLOSARIO_JSON["Catálogo de 140 Descriptores Técnicos (ISO 19110)"]
+        SEARCH_KEY["Búsqueda por Código, Institución, Etiqueta OSM o Atributo"]
+    end
+
+    subgraph PROC_M9["2. FLUJO DE PROCESAMIENTO"]
+        INDEX_TEXT["Filtrado Instantáneo por Origen (Todos / VGI / IDE / Brechas)"]
+        HOMOLOGA["Despliegue de Tablas de Columnas, Tipos de Datos y Dominio"]
+    end
+
+    subgraph OUT_M9["3. OUTPUT"]
+        CARD_DESCRIP["Fichas Técnicas de Especificación de Atributos"]
+        XLSX_DL["Descarga del Catálogo Completo (.xlsx / .json)"]
+    end
+
+    IN_M9 --> PROC_M9 --> OUT_M9
 ```
 
 ---
@@ -2821,27 +2750,24 @@ La barra de navegación superior (`#lista-navegacion` en `src/index.html`) organ
 ### Módulo 10: Licencias & catálogos (`data-panel="licencias"` — `src/js/modulos/licencias.js`)
 * Propósito Operativo: Marco jurídico de datos abiertos (ODbL 1.0, CC BY-SA 4.0, AGPLv3, Ley N° 20.285 y Ley N° 19.628) y centro de descarga directa de la Geodatabase Completa (`docs/geodatabase_completa_atlas_vgi.zip` y `src/docs/geodatabase_completa_atlas_vgi.zip`, 542,35 MB), las capas regionales de Geofabrik (`data/capa_osm_rm_completo_vgi.geojson` y `data/geodatabase_osm_rm_geofabrik.gpkg`) y los 3 catálogos maestros OpenXML (`docs/categorias_tematicas_osm.xlsx`, `docs/catalogo_fuentes_vgi.xlsx` y `docs/perfil_metadatos_vgi.xlsx`).
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 3 Libros Maestros OpenXML (.xlsx) en docs/ y 4 Consolidados CSV          │
-│ • Paquete Maestro docs/geodatabase_completa_atlas_vgi.zip (542,35 MB)      │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Sistematización de Condiciones Legales y Atribución                      │
-│ • Entrega de Enlaces Directos Sincronizados en docs/ y src/docs/           │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Cuadro de Gobernanza Jurídica y Fuentes                                  │
-│ • Descarga Inmediata de Geodatabase ZIP, Extractos RM y Catálogos XLSX     │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_M10["1. INPUT"]
+        CAT_XLSX["3 Libros Maestros OpenXML (.xlsx) en docs/ y 4 Consolidados CSV"]
+        ZIP_MASTER["Paquete Maestro docs/geodatabase_completa_atlas_vgi.zip (542,35 MB)"]
+    end
+
+    subgraph PROC_M10["2. FLUJO DE PROCESAMIENTO"]
+        LIC_MATRIX["Sistematización de Condiciones Legales y Atribución"]
+        DIRECT_DL["Entrega de Enlaces Directos Sincronizados en docs/ y src/docs/"]
+    end
+
+    subgraph OUT_M10["3. OUTPUT"]
+        TAB_LEGAL["Cuadro de Gobernanza Jurídica y Fuentes"]
+        DOWNLOADS["Descarga Inmediata de Geodatabase ZIP, Extractos RM y Catálogos XLSX"]
+    end
+
+    IN_M10 --> PROC_M10 --> OUT_M10
 ```
 
 ---
@@ -2922,29 +2848,26 @@ Netlify actúa como la red de distribución perimetral (*Edge CDN*) y motor de a
 
 ### 28.1. Anatomía línea por línea de `netlify.toml`
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Push a Rama Principal (origin/main)                                      │
-│ • Objetos Binarios Git LFS (*.zip, *.xlsx, *.gpkg)                         │
-│ • Directivas Perimetrales (netlify.toml)                                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO DE DESPLIEGUE Y EDGE CDN                         │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Expansión Binaria Git LFS (GIT_LFS_SKIP_SMUDGE=0)                        │
-│ • Publicación de Directorio Raíz (publish = 'src')                         │
-│ • Inyección de Cabeceras CORS (*), MIME geo+json y SWR Cache               │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Geoportal en Producción (atlasvgiuah.netlify.app)                        │
-│ • Descargas Reanudables (Accept-Ranges: bytes)                             │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_NET["1. INPUT"]
+        GIT_PUSH["Push a Rama Principal (origin/main)"]
+        LFS_OBJS["Objetos Binarios Git LFS (*.zip, *.xlsx, *.gpkg)"]
+        TOML_CFG["Directivas Perimetrales (netlify.toml)"]
+    end
+
+    subgraph PROC_NET["2. FLUJO DE PROCESAMIENTO DE DESPLIEGUE Y EDGE CDN"]
+        SMUDGE_0["Expansión Binaria Git LFS (GIT_LFS_SKIP_SMUDGE=0)"]
+        PUB_SRC["Publicación de Directorio Raíz (publish = 'src')"]
+        HDR_INJ["Inyección de Cabeceras CORS (*), MIME geo+json y SWR Cache"]
+    end
+
+    subgraph OUT_NET["3. OUTPUT"]
+        PROD_URL["Geoportal en Producción (atlasvgiuah.netlify.app)"]
+        RESUME_DL["Descargas Reanudables (Accept-Ranges: bytes)"]
+    end
+
+    IN_NET --> PROC_NET --> OUT_NET
 ```
 
 El archivo se encuentra calibrado para servir volúmenes masivos de datos vectoriales y garantizar que los archivos de Git LFS se expandan como binarios reales:
@@ -3031,30 +2954,26 @@ El archivo se encuentra calibrado para servir volúmenes masivos de datos vector
 
 ## 29. Guía completa de estilos CSS, variables semánticas `:root`, temas y accesibilidad
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. ENTRADA                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Tokens de Diseño en :root (Colores, Tipografía, Radios)                  │
-│ • Breakpoints Responsivos (@media max-width: 768px)                        │
-│ • Marcadores Vectoriales Dinámicos L.divIcon                               │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. FLUJO DE PROCESAMIENTO DE ESTILIZACIÓN Y LAYOUT                         │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Herencia Semántica en Paneles, Tarjetas y Modales                        │
-│ • Maquetación Fluida CSS Grid / Flexbox + 100dvh                           │
-│ • Animaciones @keyframes (Pulso de Radar y Transiciones)                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. SALIDA                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Interfaz con Conformidad WCAG 2.1 (Nivel AA General / Nivel AAA          │
-│   Tipográfico)                                                             │
-│ • Visualización Adaptativa en Escritorio, Tablet y Móvil                   │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_CSS["1. INPUT"]
+        ROOT_VARS["Tokens de Diseño en :root (Colores, Tipografía, Radios)"]
+        MEDIA_Q["Breakpoints Responsivos (@media max-width: 768px)"]
+        SVG_PINS["Marcadores Vectoriales Dinámicos L.divIcon"]
+    end
+
+    subgraph PROC_CSS["2. FLUJO DE PROCESAMIENTO DE ESTILIZACIÓN Y LAYOUT"]
+        CASCADE["Herencia Semántica en Paneles, Tarjetas y Modales"]
+        FLEX_GRID["Maquetación Fluida CSS Grid / Flexbox + 100dvh"]
+        ANIM_KEY["Animaciones @keyframes (Pulso de Radar y Transiciones)"]
+    end
+
+    subgraph OUT_CSS["3. OUTPUT"]
+        WCAG_UI["Interfaz con Conformidad WCAG 2.1 (Nivel AA General / Nivel AAA Tipográfico)"]
+        MULTI_DEV["Visualización Adaptativa en Escritorio, Tablet y Móvil"]
+    end
+
+    IN_CSS --> PROC_CSS --> OUT_CSS
 ```
 
 El Atlas VGI implementa un sistema de diseño institucional claro y sobrio por defecto, estructurado en CSS3 nativo puro en `src/css/estilos.css` (con modo oscuro opcional activable mediante `html[data-tema="oscuro"]`), diseñado para garantizar legibilidad analítica, eliminar distracciones visuales (sin fondos de partículas ni brillos neón) y cumplir formalmente con el estándar internacional de accesibilidad WCAG 2.1 (Nivel AA en el 100 % de los componentes y acentos cromáticos [4,58:1 a 8,87:1], y Nivel AAA en todo el contraste tipográfico de lectura [8,60:1 a 19,00:1]).
@@ -3274,14 +3193,22 @@ Esta capa backend proporciona capacidades de cómputo analítico geoespacial en 
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ Arquitectura Híbrida de Triple Redundancia                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 1. Supabase PostGIS RPC (PostgreSQL 17 / PostGIS 3.3)                    │
-│ • 2. Netlify Edge CDN (GeoJSON Estático WGS84)                             │
-│ • 3. Almacenamiento Local (IndexedDB / LocalStorage)                       │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    Cliente["Cliente Web / Leaflet 1.9.4"]
+    
+    subgraph FAILOVER["Arquitectura Híbrida de Triple Redundancia"]
+        P1["1. Supabase PostGIS RPC (PostgreSQL 17 / PostGIS 3.3)"]
+        P2["2. Netlify Edge CDN (GeoJSON Estático WGS84)"]
+        P3["3. Almacenamiento Local (IndexedDB / LocalStorage)"]
+    end
+
+    Cliente -->|"1. Petición BBOX / SQL"| P1
+    P1 -.->|"Latencia mayor a 1.200 ms o Error 503"| P2
+    P2 -.->|"Offline o Sin Conectividad"| P3
+    P1 ==>|"GeoJSON en Streaming"| Cliente
+    P2 ==>|"GeoJSON Estático"| Cliente
+    P3 ==>|"Datos Cacheados"| Cliente
 ```
 
 ### 31.1 Justificación técnica del motor PostGIS
@@ -3435,23 +3362,28 @@ CREATE TABLE IF NOT EXISTS public.auditoria_actualizaciones (
 
 ### 31.3 Funciones remotas PL/pgsql (remote procedure calls - RPC)
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ SECUENCIA OPERATIVA DE EJECUCIÓN                                           │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 1. Cliente -> API: POST /rest/v1/rpc/fn_obtener_capa_bbox (capa_id, caja │
-│   delimitadora)                                                            │
-│ • [Clúster PostGIS Activo (Latencia < 1200ms)]                             │
-│ • 2. API -> RPC: Invoca función con parámetros geodésicos                  │
-│ • 3. RPC -> GiST: Filtro indexado geom && ST_MakeEnvelope(...)             │
-│ • 4. GiST -> RPC: Subconjunto de registros espaciales                      │
-│ • 5. RPC -> RPC: Ensambla FeatureCollection con ST_AsGeoJSON(geom)         │
-│ • 6. RPC -> API: Objeto JSONB homologado                                   │
-│ • 7. API -> Cliente: HTTP 200 OK (GeoJSON en Streaming)                    │
-│ • [Latencia > 1200ms o Modo Estático]                                      │
-│ • 8. Cliente -> CDN: GET /data/{archivo}.geojson                           │
-│ • 9. CDN -> Cliente: HTTP 200 OK (GeoJSON Estático WGS84)                  │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Cliente as Visor Web / Script Analítico
+    participant API as PostgREST API (Supabase)
+    participant RPC as Función PL/pgSQL (fn_obtener_capa_bbox)
+    participant GiST as Índice Espacial R-Tree (GiST)
+    participant CDN as respaldo local: Netlify Edge CDN (src/data/)
+
+    Cliente->>API: POST /rest/v1/rpc/fn_obtener_capa_bbox (capa_id, caja delimitadora)
+    alt Clúster PostGIS Activo (Latencia menor a 1.200 ms)
+        API->>RPC: Invoca función con parámetros geodésicos
+        GiST-->>RPC: Subconjunto de registros espaciales
+        RPC->>GiST: Filtro indexado geom && ST_MakeEnvelope(...)
+        RPC->>RPC: Ensambla FeatureCollection con ST_AsGeoJSON(geom)
+        RPC-->>API: Objeto JSONB homologado
+        API-->>Cliente: HTTP 200 OK (GeoJSON en Streaming)
+    else Latencia mayor a 1.200 ms o Modo Estático
+        API--xCliente: Timeout / Conmutación automática
+        Cliente->>CDN: GET /data/{archivo}.geojson
+        CDN-->>Cliente: HTTP 200 OK (GeoJSON Estático WGS84)
+    end
 ```
 
 Para permitir que el cliente web (Leaflet) o los scripts Python interactúen con la base de datos de manera atómica y segura mediante la API REST de Supabase (*PostgREST*), se diseñaron e implementaron tres funciones almacenadas en lenguaje `PL/pgSQL`.
@@ -4370,19 +4302,24 @@ El mantenimiento continuo y la reproducibilidad del Atlas de Información Geogr�
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ FLUJO OPERATIVO PASO A PASO                                                │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Desarrollador / Investigador UAH                                         │
-│ • scripts/verificar_integridad_despliegue.py                               │
-│ • git commit & git lfs track                                               │
-│ • GitHub Repository (main)                                                 │
-│ • Netlify Build Hook                                                       │
-│ • Ingesta Binarios LFS (543 MB ZIP)                                        │
-│ • Netlify Global Edge CDN                                                  │
-│ • atlasvgiuah.netlify.app                                                  │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    DEV["Desarrollador / Investigador UAH"]
+    VAL["scripts/verificar_integridad_despliegue.py"]
+    GIT["git commit & git lfs track"]
+    HUB["GitHub Repository (main)"]
+    NET["Netlify Build Hook"]
+    LFS["Ingesta Binarios LFS (543 MB ZIP)"]
+    CDN["Netlify Global Edge CDN"]
+    PROD["atlasvgiuah.netlify.app"]
+
+    DEV -->|"1. Validación Local"| VAL
+    VAL -->|"2. 8/8 Tests PASS"| GIT
+    GIT -->|"3. git push origin main"| HUB
+    HUB -->|"4. Webhook Trigger"| NET
+    NET -->|"5. git lfs pull"| LFS
+    LFS -->|"6. Atomic Deploy"| CDN
+    CDN -->|"7. Live en Producción"| PROD
 ```
 
 ---
@@ -5969,27 +5906,24 @@ Fuentes oficiales del Estado de Chile, estándares internacionales ISO/OGC y esp
 
 ## 44. Tutorial 05: Incorporación de una nueva capa GeoJSON al catálogo
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. Entrada                                                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Archivo vectorial en EPSG:4326 y metadatos de origen                     │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. Flujo de integración                                                    │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 1. Copia en data/ y src/data/                                            │
-│ • 2. Inyección de 14 atributos ISO                                         │
-│ • 3. Evaluación WLC v2.0 y registro en catálogos                           │
-│ • 4. Registro en ide_chile.js e index.html                                 │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. Salida                                                                  │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 5. Verificación con scripts de control                                   │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph IN_NEW["1. Entrada"]
+        RAW_SHP["Archivo vectorial en EPSG:4326\ny metadatos de origen"]
+    end
+
+    subgraph PROC_NEW["2. Flujo de integración"]
+        STEP_1["1. Copia en data/ y src/data/"]
+        STEP_2["2. Inyección de 14 atributos ISO"]
+        STEP_3["3. Evaluación WLC v2.0 y registro en catálogos"]
+        STEP_4["4. Registro en ide_chile.js e index.html"]
+    end
+
+    subgraph OUT_NEW["3. Salida"]
+        VALID_QA["5. Verificación con scripts de control"]
+    end
+
+    IN_NEW --> PROC_NEW --> OUT_NEW
 ```
 
 * **Objetivo:** Integrar una cobertura vectorial nueva en el catálogo del Atlas manteniendo la paridad de archivos, los 14 atributos ISO y las métricas de calidad.

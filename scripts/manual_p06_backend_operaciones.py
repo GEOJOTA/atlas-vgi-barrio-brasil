@@ -36,7 +36,7 @@ flowchart TD
     end
 
     Cliente -->|"1. Petición BBOX / SQL"| P1
-    P1 -.->|"Latencia > 1200ms o Error 503"| P2
+    P1 -.->|"Latencia mayor a 1.200 ms o Error 503"| P2
     P2 -.->|"Offline o Sin Conectividad"| P3
     P1 ==>|"GeoJSON en Streaming"| Cliente
     P2 ==>|"GeoJSON Estático"| Cliente
@@ -204,14 +204,14 @@ sequenceDiagram
     participant CDN as Fallback: Netlify Edge CDN (src/data/)
 
     Cliente->>API: POST /rest/v1/rpc/fn_obtener_capa_bbox (capa_id, BBox)
-    alt Clúster PostGIS Activo (Latencia < 1200ms)
+    alt Clúster PostGIS Activo (Latencia menor a 1.200 ms)
         API->>RPC: Invoca función con parámetros geodésicos
-        RPC->>GiST: Filtro indexado geom && ST_MakeEnvelope(...)
         GiST-->>RPC: Subconjunto de registros espaciales
+        RPC->>GiST: Filtro indexado geom && ST_MakeEnvelope(...)
         RPC->>RPC: Ensambla FeatureCollection con ST_AsGeoJSON(geom)
         RPC-->>API: Objeto JSONB homologado
         API-->>Cliente: HTTP 200 OK (GeoJSON en Streaming)
-    else Latencia > 1200ms o Modo Estático
+    else Latencia mayor a 1.200 ms o Modo Estático
         API--xCliente: Timeout / Conmutación automática
         Cliente->>CDN: GET /data/{archivo}.geojson
         CDN-->>Cliente: HTTP 200 OK (GeoJSON Estático WGS84)

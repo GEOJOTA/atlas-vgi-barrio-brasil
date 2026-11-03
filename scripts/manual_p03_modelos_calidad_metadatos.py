@@ -116,7 +116,7 @@ flowchart LR
 
     subgraph OUT_WLC["3. OUTPUT"]
         RANK_CSV["docs/wlc_metacalidad_ranking.csv & docs/wlc_metacalidad_resultado.json"]
-        CERT_GRADE["docs/matriz_metacalidad.json (Grado A+ >= 95%, Grado A >= 90%)"]
+        CERT_GRADE["docs/matriz_metacalidad.json (Grado A+ ≥ 95 %, Grado A ≥ 90 %)"]
         DOC_REP["docs/ANALISIS_METACALIDAD.md (sincronizados en src/docs/)"]
     end
 
@@ -491,7 +491,7 @@ flowchart LR
     end
 
     subgraph PROC_DICT["2. PIPELINE DE HOMOLOGACIÓN SEMÁNTICA"]
-        CROSS_REF["Correspondencia Biunívoca Concepto Urbano <-> Etiqueta key=value"]
+        CROSS_REF["Correspondencia Biunívoca Concepto Urbano ↔ Etiqueta key=value"]
         DEF_TECH["Redacción de Definición Operativa y Marco Regulatorio"]
         LAYER_MAP["Enlace con Identificadores de las 134 Capas del Atlas"]
     end

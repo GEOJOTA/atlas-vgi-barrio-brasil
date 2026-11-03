@@ -121,7 +121,7 @@ flowchart LR
 
     subgraph PIPELINE["2. Pipeline de Procesamiento Python"]
         EXT["descargar_todas_las_categorias_osm.py"]
-        REP["Reproyección GeoPandas (SIRGAS -> WGS84)"]
+        REP["Reproyección GeoPandas (SIRGAS a WGS84)"]
         ENR["enriquecer_base_datos_metadatos.py (14 Atributos)"]
         WLC["modelo_indice_lineal_wlc.py (ISO 19157)"]
     end
@@ -330,7 +330,7 @@ sequenceDiagram
 ```mermaid
 flowchart LR
     subgraph IN_OH["1. INPUT: CONSULTA HISTÓRICA Y GEOMÉTRICA"]
-        POLY_BBOX["BBox / Polígono WGS84 -> Reproyección Métrica EPSG:32719 (geodesia.js)"]
+        POLY_BBOX["BBox / Polígono WGS84 a Reproyección Métrica EPSG:32719 (geodesia.js)"]
         OH_ENDPOINTS["Endpoints HeiGIT (/elements/count, /length, /area, /users/count, /contributions/count)"]
         OSMCHA_API["OSM API v0.6 Changesets (/api/0.6/changesets)"]
     end
@@ -405,7 +405,7 @@ flowchart LR
     subgraph PROC_GB["2. PIPELINE DE PROCESAMIENTO"]
         GET_GB["Consulta Asíncrona con Filtros Geodésicos WKT"]
         DWC_MAP["Mapeo de Campos Darwin Core (scientificName, kingdom, eventDate)"]
-        GEO_VAL["Validación de Incertidumbre Espacial coordinateUncertaintyInMeters <= 50m"]
+        GEO_VAL["Validación de Incertidumbre Espacial coordinateUncertaintyInMeters ≤ 50 m"]
     end
 
     subgraph OUT_GB["3. OUTPUT"]

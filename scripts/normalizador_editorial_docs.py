@@ -459,7 +459,7 @@ def normalizar_documento_markdown(texto: str, actualizar_toc_manual: bool = Fals
     resultado = "\n".join(lineas_procesadas)
 
     if actualizar_toc_manual:
-        resultado = convertir_mermaid_secundarios_manual(resultado)
+        # Conservar el 100 % de los diagramas como bloques ```mermaid interactivos vectoriales
         resultado = expandir_siglas_por_parte(resultado)
         resultado = reconstruir_indice_manual(resultado)
     else:
@@ -503,93 +503,10 @@ def _formatear_caja_ascii(secciones: list) -> str:
 
 def convertir_mermaid_secundarios_manual(texto: str) -> str:
     """
-    En MANUAL_ACTUALIZACION_ATLAS.md (~451 KB), GitHub limita a ~10 s el helloTimer simultáneo
-    de los iframes viewscreen.githubusercontent.com (eou.js). Conservar los 4 diagramas
-    arquitectónicos principales como bloques ```mermaid y transformar los 38 diagramas
-    modulares auxiliares (1. Entrada -> 2. Procesamiento -> 3. Salida) en diagramas de flujo
-    vectoriales Unicode (```text) garantiza que el 100 % de los diagramas cargue en < 2 s
-    sin disparar jamás 'Unable to render rich display'.
+    Conserva el 100 % de los diagramas como bloques ```mermaid interactivos vectoriales
+    en la documentación, asegurando renderizado visual nativo sin degradación a tablas ASCII.
     """
-    def _reemplazar_mermaid(m):
-        bloque_completo = m.group(0)
-        codigo = m.group(1).strip()
-
-        # Conservar los diagramas estratégicos y arquitectónicos clave del manual como bloques ```mermaid
-        if (
-            re.search(r'subgraph\s+(?:FASE1|OBJ[1-4])\b', codigo)
-            or 'IGV["Índice Global de Calidad VGI (IGV)"]' in codigo
-            or 'evaluador_normativo.js' in codigo
-            or codigo.startswith("erDiagram")
-        ):
-            return bloque_completo
-
-        lineas = [l.strip() for l in codigo.splitlines() if l.strip()]
-        if not lineas:
-            return bloque_completo
-
-        # Caso A: flowchart con subgraphs
-        if "subgraph " in codigo:
-            secciones = []
-            tit_actual = None
-            items_actuales = []
-            for l in lineas:
-                m_sub = re.match(r'^subgraph\s+[^\[\"]+(?:\["([^"]+)"\])?', l)
-                if m_sub:
-                    if tit_actual is not None and items_actuales:
-                        secciones.append((tit_actual, items_actuales))
-                    raw_t = (m_sub.group(1) or l.replace("subgraph", "").strip()).strip()
-                    raw_t = re.sub(r"^1\.\s*INPUT\b", "1. ENTRADA", raw_t, flags=re.I)
-                    raw_t = re.sub(r"^3\.\s*OUTPUT\b", "3. SALIDA", raw_t, flags=re.I)
-                    tit_actual = raw_t
-                    items_actuales = []
-                    continue
-                if l == "end":
-                    if tit_actual is not None and items_actuales:
-                        secciones.append((tit_actual, items_actuales))
-                    tit_actual = None
-                    items_actuales = []
-                    continue
-                m_node = re.findall(r'\["([^"]+)"\]', l)
-                if m_node and tit_actual is not None:
-                    for txt_n in m_node:
-                        if txt_n not in items_actuales:
-                            items_actuales.append(txt_n)
-            if secciones:
-                return _formatear_caja_ascii(secciones)
-
-        # Caso B: sequenceDiagram
-        if lineas[0].startswith("sequenceDiagram"):
-            pasos = []
-            num_paso = 1
-            for l in lineas[1:]:
-                if l.startswith(("autonumber", "actor ", "participant ")):
-                    continue
-                if l.startswith(("alt ", "else ", "loop ", "opt ")):
-                    etiqueta = l.split(" ", 1)[1] if " " in l else l
-                    pasos.append(f"[{etiqueta}]")
-                    continue
-                if l == "end":
-                    continue
-                m_msg = re.match(r"^([^-:]+?)\s*(?:-+>>|--+>>|-+\)|--+>)\s*([^:]+):\s*(.+)$", l)
-                if m_msg:
-                    orig, dest, msg = m_msg.group(1).strip(), m_msg.group(2).strip(), m_msg.group(3).strip()
-                    pasos.append(f"{num_paso}. {orig} -> {dest}: {msg}")
-                    num_paso += 1
-            if pasos:
-                return _formatear_caja_ascii([("SECUENCIA OPERATIVA DE EJECUCIÓN", pasos)])
-
-        # Caso C: flowchart lineal sin subgraphs
-        nodos = []
-        for l in lineas[1:]:
-            for txt_n in re.findall(r'\["([^"]+)"\]', l):
-                if txt_n not in nodos:
-                    nodos.append(txt_n)
-        if nodos:
-            return _formatear_caja_ascii([("FLUJO OPERATIVO PASO A PASO", nodos)])
-
-        return bloque_completo
-
-    return re.sub(r"```mermaid\n(.*?)```", _reemplazar_mermaid, texto, flags=re.S)
+    return texto
 
 
 SIGLAS_OBJETIVO = [
