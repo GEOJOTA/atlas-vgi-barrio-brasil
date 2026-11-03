@@ -1,704 +1,523 @@
 # -*- coding: utf-8 -*-
-PARTE_08 = r"""# PARTE VIII: GUÍA MAESTRA DE MODIFICACIÓN DETALLE A DETALLE (COOKBOOK OPERATIVO)
+PARTE_08 = r"""# PARTE VIII: GUÍA DE MODIFICACIÓN PASO A PASO (16 TUTORIALES OPERATIVOS)
 
 ---
 
-## 40. Tutorial 01: Modificación de la Paleta Cromática y Variables `:root` en CSS
-
-Toda la identidad visual del Atlas se gestiona de manera centralizada mediante variables personalizadas (*CSS Custom Properties*) declaradas en el pseudo-elemento `:root` del archivo `src/css/estilos.css`. Modificar un color en esta sección actualiza instantáneamente toda la aplicación (cabeceras, botones, bordes, modales y acentos).
-
-```text
-┌────────────────────────────────────────────────────────────────────────┐
-│             ESTRUCTURA DE VARIABLES DE COLOR EN SRC/CSS/ESTILOS.CSS    │
-├────────────────────────────────────────────────────────────────────────┤
-│ :root {                                                                │
-│   --musgo: #2d5a27;             /* Verde institucional primario UAH */ │
-│   --musgo-claro: #417d38;       /* Hover y estados activos */          │
-│   --musgo-oscuro: #1d3b19;      /* Cabeceras y sombras profundas */    │
-│   --fondo-claro: #f8fafc;       /* Fondo del visor en modo diurno */   │
-│   --fondo-oscuro: #0f172a;      /* Fondo de paneles en modo nocturno */│
-│   --texto-primario: #1e293b;    /* Tipografía principal legible */     │
-│   --borde-suave: #e2e8f0;       /* Separadores de módulos */           │
-│   --acento-alerta: #dc2626;     /* Zonas críticas y barreras PMR */    │
-│   --acento-patrimonio: #d97706; /* Inmuebles de Conservación Histórica */│
-│ }                                                                      │
-└────────────────────────────────────────────────────────────────────────┘
-```
-
-### 40.1. Procedimiento para Modificar el Color Primario Institucional
-1. Abra el archivo `src/css/estilos.css`.
-2. Localice el bloque `:root` al inicio del documento (líneas 1 a 25).
-3. Modifique el valor hexadecimal de `--musgo`. Por ejemplo, para adoptar un tono azul marino cívico:
-   ```css
-   :root {
-     --musgo: #1e3a8a;        /* Nuevo color primario: Azul Cívico */
-     --musgo-claro: #2563eb;  /* Tono para hover y resaltado */
-     --musgo-oscuro: #172554; /* Tono para barras de títulos */
-   }
-   ```
-4. Guarde el archivo y refresque el navegador (`Ctrl + F5` o `Cmd + Shift + R`).
-
-### 40.2. Creación de un Nuevo Tema Cromático (Ej: Modo Terracota Patrimonial)
-Para añadir un tema personalizado alternativo activable mediante JavaScript:
-```css
-/* src/css/estilos.css */
-body.tema-terracota {
-  --musgo: #9a3412;        /* Óxido / Terracota de adobe */
-  --musgo-claro: #c2410c;
-  --musgo-oscuro: #7c2d12;
-  --acento-patrimonio: #b45309;
-}
-```
-Para activar este tema dinámicamente desde la consola o un botón:
-```javascript
-document.body.classList.toggle("tema-terracota");
-```
+> [!NOTE]
+> Cada uno de los 16 tutoriales de esta parte sigue una estructura fija de cinco secciones: **Objetivo**, **Archivos**, **Pasos** (redactados en modo imperativo), **Verificación** y un recuadro homogéneo de **Qué hacer si falla**. Para las siglas empleadas —como Plan Regulador Comunal (PRC), combinación lineal ponderada (*Weighted Linear Combination*, WLC), Índice Global de Calidad VGI (IGV) y Web Content Accessibility Guidelines (WCAG)— véase el glosario del Capítulo 37.
 
 ---
 
-## 41. Tutorial 02: Personalización de Punteros y Cursores del Ratón
+## 40. Tutorial 01: modificación de la paleta cromática y variables `:root` en CSS
 
-El Atlas utiliza cursores de ratón diferenciados para proporcionar retroalimentación táctil al usuario según la herramienta activa:
+* **Objetivo:** Actualizar los colores principales y de superficie de la interfaz web mediante las variables semánticas declaradas en `:root`.
+* **Archivos:** `src/css/estilos.css` y `src/index.html`.
+* **Pasos:**
+  1. Abra el archivo `src/css/estilos.css` en un editor de código.
+  2. Localice el bloque `:root` al inicio del documento (líneas 12 a 65).
+  3. Modifique los valores hexadecimales de los acentos o superficies que desee ajustar:
+     ```css
+     :root {
+       --fondo-app: #0c1527;      /* Superficie base de la aplicación */
+       --papel: #132039;          /* Contenedor de paneles y vistas */
+       --papel-alto: #1a2b4b;     /* Cabeceras y barras secundarias */
+       --papel-tarjeta: #223861;  /* Tarjetas y fichas informativas */
+       --tinta: #ffffff;          /* Texto principal de lectura */
+       --tinta-suave: #f8fafc;    /* Subtítulos y descripciones */
+       --musgo: #06b6d4;          /* Acento primario e indicadores activos */
+       --agua: #38bdf8;           /* Enlaces y controles interactivos */
+       --esmeralda: #10b981;      /* Estado operativo y descargas */
+       --ocre: #f59e0b;           /* Avisos preventivos */
+     }
+     ```
+  4. Actualice el parámetro de versión (`?v=...`) en la etiqueta `<link rel="stylesheet" href="css/estilos.css?v=...">` dentro de `src/index.html` para invalidar la caché del navegador.
+  5. Guarde ambos archivos.
+* **Verificación:** Recargue el navegador con `Cmd + Shift + R` (macOS) o `Ctrl + F5` (Windows/Linux) y compruebe que la barra superior, los botones activos y las tarjetas reflejen los nuevos colores.
 
-### 41.1. Modificación del Cursor General del Lienzo del Mapa
-Por defecto, Leaflet aplica el cursor `grab` (mano abierta) sobre el contenedor `#map`. Para cambiarlo a un cursor de agrimensura (*crosshair*) o puntero estándar:
-
-1. Abra `src/css/estilos.css` y localice la regla para el contenedor del mapa:
-   ```css
-   /* Cursor por defecto en modo navegación */
-   .leaflet-container {
-     cursor: default !important;
-   }
-
-   /* Cursor cuando el usuario arrastra el lienzo */
-   .leaflet-container.leaflet-drag-target {
-     cursor: grabbing !important;
-   }
-   ```
-
-### 41.2. Cursor de Precisión para el Inspector Normativo PRC (Crosshair)
-Cuando el usuario activa el modo de inspección urbanística en `src/js/modulos/evaluador_normativo.js`, se inyecta una clase especial al contenedor para indicar que cualquier clic emitirá un certificado:
-
-```javascript
-// Activar modo inspección
-function activarModoInspector() {
-  const contenedorMapa = document.getElementById("map");
-  contenedorMapa.classList.add("cursor-inspeccion-activa");
-  mostrarToast("Modo Inspector Normativo activado: Haga clic en cualquier predio.", "info");
-}
-
-// Desactivar modo inspección
-function desactivarModoInspector() {
-  const contenedorMapa = document.getElementById("map");
-  contenedorMapa.classList.remove("cursor-inspeccion-activa");
-}
-```
-Y en `src/css/estilos.css`:
-```css
-/* Cursor de retícula de alta precisión con punto central */
-.cursor-inspeccion-activa .leaflet-container {
-  cursor: crosshair !important;
-}
-```
-
-### 41.3. Cursor SVG Personalizado con Ícono de Brújula o Lupa
-Si desea utilizar un gráfico SVG propio como puntero del ratón:
-```css
-.cursor-lupa-vgi {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%232d5a27" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') 11 11, crosshair !important;
-}
-```
+> [!WARNING]
+> **Qué hacer si falla:** Si la interfaz continúa mostrando los colores anteriores, abra las herramientas de desarrollo del navegador (`F12` > pestaña *Red* / *Network*), marque la casilla *Deshabilitar caché* (*Disable cache*) y vuelva a recargar la página. Verifique además que cada declaración CSS termine con punto y coma (`;`).
 
 ---
 
-## 42. Tutorial 03: Creación y Modificación de Marcadores SVG (`L.divIcon`)
+## 41. Tutorial 02: personalización de punteros y cursores del ratón
 
-Los marcadores puntuales tradicionales basados en archivos `.png` sufren de pixelación en pantallas de alta densidad (Retina / 4K). El Atlas resuelve esto generando marcadores vectoriales puros mediante `L.divIcon`.
+* **Objetivo:** Configurar el estilo del cursor sobre el lienzo del mapa tanto en modo de exploración normal como durante la consulta del inspector normativo del Plan Regulador Comunal (PRC).
+* **Archivos:** `src/css/estilos.css` y `src/js/modulos/evaluador_normativo.js`.
+* **Pasos:**
+  1. Abra `src/css/estilos.css` y localice las reglas asociadas a `.leaflet-container`.
+  2. Defina el cursor para el estado de reposo y el de arrastre del mapa:
+     ```css
+     .leaflet-container {
+       cursor: grab !important;
+     }
+     .leaflet-container.leaflet-drag-target {
+       cursor: grabbing !important;
+     }
+     ```
+  3. Añada la regla de retícula (`crosshair`) para el modo de inspección normativa:
+     ```css
+     .cursor-inspeccion-activa .leaflet-container,
+     #mapa-atlas.modo-inspector {
+       cursor: crosshair !important;
+     }
+     ```
+  4. Abra `src/js/modulos/evaluador_normativo.js` (o el manejador en `src/js/app.js`) y asegúrese de alternar la clase sobre `#mapa-atlas` al activar o desactivar el inspector:
+     ```javascript
+     function alternarCursorInspector(activo) {
+       const lienzo = document.getElementById("mapa-atlas");
+       if (lienzo) {
+         lienzo.classList.toggle("modo-inspector", Boolean(activo));
+       }
+     }
+     ```
+  5. Guarde los cambios y recargue la vista del visor cartográfico.
+* **Verificación:** Pase el puntero sobre el mapa en modo normal (debe mostrarse la mano abierta) y luego pulse el botón *Inspector normativo (PRC)* (el puntero debe cambiar a una cruz de precisión).
 
-### 42.1. Anatomía de un Marcador SVG en el Atlas
-La función generadora de marcadores reside en `src/js/modulos/mapa.js`. Acepta un ícono SVG incrustado y un color temático:
-
-```javascript
-function crearMarcadorIcono(tipoEquipamiento) {
-  let iconoSVG = "";
-  let colorFondo = "#2d5a27";
-
-  switch (tipoEquipamiento) {
-    case "arbol_patrimonial":
-      colorFondo = "#15803d"; // Verde bosque
-      iconoSVG = `<svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M12 2L4 12h4v8h8v-8h4L12 2z"/></svg>`;
-      break;
-
-    case "patrimonio_ich":
-      colorFondo = "#b45309"; // Ocre dorado
-      iconoSVG = `<svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M12 3L2 12h3v8h14v-8h3L12 3z"/></svg>`;
-      break;
-
-    case "salud_cesfam":
-      colorFondo = "#dc2626"; // Rojo alerta
-      iconoSVG = `<svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M19 105h-5.5V5h-3v5.5H5v3h5.5V19h3v-5.5H19v-3z"/></svg>`;
-      break;
-
-    default:
-      colorFondo = "#475569"; // Gris neutro
-      iconoSVG = `<svg viewBox="0 0 24 24" width="18" height="18" fill="white"><circle cx="12" cy="12" r="6"/></svg>`;
-  }
-
-  const htmlMarcador = `
-    <div class="pin-marcador-svg" style="background-color: ${colorFondo};">
-      ${iconoSVG}
-    </div>
-  `;
-
-  return L.divIcon({
-    className: "contenedor-pin-vgi",
-    html: htmlMarcador,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -28]
-  });
-}
-```
-
-### 42.2. Efecto de Pulso de Radar (@keyframes) para Puntos de Emergencia
-Para añadir un halo animado que pulse continuamente en el mapa:
-```css
-/* src/css/estilos.css */
-.pin-marcador-svg.con-radar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 2px solid currentColor;
-  animation: radar-vgi 2s infinite ease-out;
-}
-
-@keyframes radar-vgi {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(2.5); opacity: 0; }
-}
-```
+> [!WARNING]
+> **Qué hacer si falla:** Si Leaflet sobrescribe el cursor con sus estilos en línea, confirme que el selector CSS incluya `#mapa-atlas.leaflet-container` con la directiva `!important` y que ningún elemento superpuesto tenga `pointer-events: all` cubriendo el lienzo.
 
 ---
 
-## 43. Tutorial 04: Incorporación de Nuevos Mapas Base (TileLayers)
+## 42. Tutorial 03: creación y modificación de marcadores vectoriales SVG (`L.divIcon`)
 
-Si desea agregar un nuevo proveedor de mapas base (como ortofotos satelitales o topografía de montaña):
+* **Objetivo:** Crear o modificar íconos vectoriales SVG escalables para representar entidades puntuales sobre el visor Leaflet sin pérdida de nitidez en pantallas de alta densidad.
+* **Archivos:** `src/js/modulos/mapa.js` y `src/css/estilos.css`.
+* **Pasos:**
+  1. Abra `src/js/modulos/mapa.js` y ubique la función constructora de íconos vectoriales (`crearIconoCategoria` o `L.divIcon`).
+  2. Agregue o edite la rama correspondiente a la categoría deseada utilizando trazos SVG de línea uniforme (`stroke-width="1.8"`):
+     ```javascript
+     function crearMarcadorVectorial(colorHex, svgInterno) {
+       const htmlPin = `
+         <div class="pin-marcador-svg" style="background-color: ${colorHex};">
+           ${svgInterno}
+         </div>
+       `;
+       return L.divIcon({
+         className: "contenedor-pin-vgi",
+         html: htmlPin,
+         iconSize: [30, 30],
+         iconAnchor: [15, 15],
+         popupAnchor: [0, -16]
+       });
+     }
+     ```
+  3. Abra `src/css/estilos.css` y verifique que la clase `.pin-marcador-svg` centre el vector y elimine el borde por defecto de Leaflet:
+     ```css
+     .contenedor-pin-vgi {
+       background: transparent !important;
+       border: none !important;
+     }
+     .pin-marcador-svg {
+       width: 30px;
+       height: 30px;
+       border-radius: 50%;
+       border: 2px solid #ffffff;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+     }
+     ```
+  4. Guarde ambos archivos.
+* **Verificación:** Active una categoría puntual en el visor (por ejemplo, *Educación* o *Salud*) y compruebe que los marcadores se dibujen centrados sobre las coordenadas reales al acercar y alejar el zoom.
 
-### 43.1. Añadir el Mosaico en `src/js/app.js`
-Localice el objeto `mapasBase` y agregue la nueva fuente conforme al estándar XYZ:
-```javascript
-// Agregar capa de Satélite de ESRI ArcGIS Online
-mapasBase["esri_satelite"] = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  {
-    maxZoom: 19,
-    attribution: "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
-  }
-);
-
-// Agregar capa Topográfica de OpenTopoMap
-mapasBase["opentopomap"] = L.tileLayer(
-  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-  {
-    maxZoom: 17,
-    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
-  }
-);
-```
-
-### 43.2. Añadir el Selector en el Menú de la Interfaz (`src/index.html`)
-En la sección de selección de mapa base en la barra lateral:
-```html
-<label class="opcion-mapa-base">
-  <input type="radio" name="mapa_base" value="esri_satelite" onchange="conmutarMapaBase('esri_satelite')">
-  <span>🛰️ Ortofoto Satelital (ESRI)</span>
-</label>
-<label class="opcion-mapa-base">
-  <input type="radio" name="mapa_base" value="opentopomap" onchange="conmutarMapaBase('opentopomap')">
-  <span>⛰️ Topografía (OpenTopoMap)</span>
-</label>
-```
+> [!WARNING]
+> **Qué hacer si falla:** Si el marcador parece desplazarse respecto a su posición al cambiar el nivel de zoom, revise que `iconAnchor` sea exactamente la mitad de `iconSize` (por ejemplo, `[15, 15]` para un tamaño de `[30, 30]`).
 
 ---
 
-## 44. Tutorial 05: Incorporación de una Nueva Capa GeoJSON al Atlas
+## 43. Tutorial 04: incorporación de nuevos mapas base (`L.tileLayer`)
+
+* **Objetivo:** Agregar un nuevo proveedor de teselas cartográficas (como imagen satelital o mapa topográfico) al selector de mapas base del visor.
+* **Archivos:** `src/js/modulos/mapa.js` y `src/index.html`.
+* **Pasos:**
+  1. Abra `src/js/modulos/mapa.js` y localice el diccionario de capas base (`capasBase` o `proveedoresTeselas`).
+  2. Registre la nueva fuente especificando la plantilla URL XYZ, el zoom máximo y la atribución legal:
+     ```javascript
+     capasBase["opentopomap"] = L.tileLayer(
+       "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+       {
+         maxZoom: 17,
+         attribution: "Datos: &copy; OpenStreetMap contributors, SRTM | Estilo: &copy; OpenTopoMap (CC-BY-SA)"
+       }
+     );
+     ```
+  3. Si el visor incluye un selector desplegable o control de capas en `src/index.html`, agregue la opción correspondiente con el valor `"opentopomap"`.
+  4. Guarde los archivos y recargue el visor.
+* **Verificación:** Seleccione el nuevo mapa base en el control de capas del visor y confirme que las teselas se descarguen con código HTTP `200 OK` en la pestaña *Red* del navegador.
+
+> [!WARNING]
+> **Qué hacer si falla:** Si las teselas aparecen en gris al acercar mucho el mapa, reduzca el parámetro `maxNativeZoom` al nivel máximo real soportado por el servidor externo (por ejemplo, `maxNativeZoom: 17, maxZoom: 19`) para que Leaflet escale las imágenes sin solicitar niveles inexistentes.
+
+---
+
+## 44. Tutorial 05: incorporación de una nueva capa GeoJSON al catálogo
 
 ```mermaid
 flowchart LR
-    subgraph IN_NEW["1. INPUT"]
-        RAW_SHP["Capa Nueva (Shapefile / GeoPackage / GeoJSON)"]
-        META_DOC["Ficha de Procedencia, Licencia y Cita APA 7ª Ed."]
+    subgraph IN_NEW["1. Entrada"]
+        RAW_SHP["Archivo vectorial en EPSG:4326\ny metadatos de origen"]
     end
 
-    subgraph PROC_NEW["2. PIPELINE DE INTEGRACIÓN EN 6 ETAPAS"]
-        STEP_1["1. Reproyección a WGS84 (EPSG:4326) y Guardado en data/ y src/data/"]
-        STEP_2["2. Inyección de 14 Atributos ISO (enriquecer_base_datos_metadatos.py)"]
-        STEP_3["3. Evaluación de Calidad WLC v2.0 y Registro en Catálogos .xlsx/.csv"]
-        STEP_4["4. Registro en CAPAS_IDE_CHILE / CONFIG_CAPAS y Dimensiones"]
+    subgraph PROC_NEW["2. Flujo de integración"]
+        STEP_1["1. Copia en data/ y src/data/"]
+        STEP_2["2. Inyección de 14 atributos ISO"]
+        STEP_3["3. Evaluación WLC v2.0 y registro en catálogos"]
+        STEP_4["4. Registro en ide_chile.js e index.html"]
     end
 
-    subgraph OUT_NEW["3. OUTPUT"]
-        VALID_QA["5. Verificación 8/8 Tests (verificar_integridad_despliegue.py)"]
-        DEPLOY_LIVE["6. Sincronización en Visor Web, Descargas y Producción Netlify"]
+    subgraph OUT_NEW["3. Salida"]
+        VALID_QA["5. Verificación con scripts de control"]
     end
 
     IN_NEW --> PROC_NEW --> OUT_NEW
 ```
 
-Para incorporar una cobertura vectorial completamente nueva (por ejemplo, `capa_huertos_comunitarios.geojson`):
+* **Objetivo:** Integrar una cobertura vectorial nueva en el catálogo del Atlas manteniendo la paridad de archivos, los 14 atributos ISO y las métricas de calidad.
+* **Archivos:** `data/<nueva_capa>.geojson`, `src/data/<nueva_capa>.geojson`, `src/js/modulos/ide_chile.js`, `src/index.html` y `scripts/enriquecer_base_datos_metadatos.py`.
+* **Pasos:**
+  1. Exporte la capa en formato GeoJSON con sistema de referencia **WGS84 (EPSG:4326)** y cópiela tanto en `data/` como en `src/data/`.
+  2. Ejecute el script de normalización de atributos para inyectar las 14 columnas obligatorias del esquema ISO:
+     ```bash
+     python3 scripts/enriquecer_base_datos_metadatos.py
+     ```
+  3. Abra `src/js/modulos/ide_chile.js` y añada el descriptor de la capa dentro del diccionario `CAPAS_OFICIALES`, indicando `nombre`, `archivo`, `color`, `fuente` y `anio`.
+  4. Abra `src/index.html` y agregue el botón de activación (`.chip-oficial[data-capa="id_nueva_capa"]`) en el acordeón temático correspondiente.
+  5. Ejecute los scripts de actualización de catálogos y evaluación de calidad:
+     ```bash
+     python3 scripts/analisis_metacalidad.py
+     python3 scripts/generar_entregables_excel.py
+     ```
+* **Verificación:** Ejecute `python3 scripts/verificar_conteo_capas.py` y `python3 scripts/verificar_integridad_despliegue.py`, y active la capa en el visor para confirmar que sus entidades se dibujen sobre el mapa.
 
-### Paso 1: Almacenar el Archivo Vectorial
-Guarde el archivo GeoJSON proyectado en **WGS84 (EPSG:4326)** en la ruta:
-`data/capa_huertos_comunitarios.geojson` y en `src/data/capa_huertos_comunitarios.geojson`.
-
-### Paso 2: Inyectar el Esquema Maestro de 14 Atributos
-Ejecute el script de enriquecimiento para estandarizar las claves:
-```bash
-python3 scripts/enriquecer_base_datos_metadatos.py
-```
-
-### Paso 3: Registrar la Capa en `docs/catalogo_fuentes_vgi.xlsx`
-Abra el libro de cálculo o ejecute `python3 scripts/generar_entregables_excel.py` para asegurar que figure en las capas catalogadas con su respectiva licencia y linaje en `docs/catalogo_fuentes_vgi.xlsx` y `src/docs/catalogo_fuentes_vgi.xlsx`.
-
-### Paso 4: Añadir la Casilla Checkbox en `src/index.html` o en `src/js/modulos/ide_chile.js`
-Dentro del acordeón temático correspondiente:
-```html
-<div class="item-capa-control">
-  <label class="switch-capa">
-    <input type="checkbox" id="chk-huertos-comunitarios" onchange="alternarCapaVectorial('huertos_comunitarios', this.checked)">
-    <span class="deslizador"></span>
-  </label>
-  <span class="etiqueta-capa">🌱 Huertos Comunitarios</span>
-  <span class="conteo-badge" id="badge-huertos">--</span>
-</div>
-```
-
-### Paso 5: Definir la Simbología y Carga en `src/js/modulos/mapa.js`
-```javascript
-capasConfiguradas["huertos_comunitarios"] = {
-  url: "data/capa_huertos_comunitarios.geojson",
-  estilo: {
-    color: "#16a34a",
-    fillColor: "#4ade80",
-    fillOpacity: 0.6,
-    weight: 2
-  },
-  onEachFeature: function(feature, layer) {
-    const p = feature.properties || {};
-    layer.bindPopup(`
-      <div class="popup-vgi">
-        <h4>🌱 ${p.nombre_objeto || "Huerto Comunitario"}</h4>
-        <p><strong>Tipo:</strong> ${p.subcategoria || "Comunitario"}</p>
-        <p><strong>Responsable:</strong> ${p.responsable_ingesta || "Vecinos Organizados"}</p>
-      </div>
-    `);
-  }
-};
-```
+> [!WARNING]
+> **Qué hacer si falla:** Si las geometrías no aparecen sobre Santiago sino cerca de la coordenada `(0, 0)`, el archivo original estaba proyectado en coordenadas métricas UTM (EPSG:32719) en lugar de grados geográficos (EPSG:4326). Reproyecte el archivo a EPSG:4326 en QGIS antes de guardarlo en `data/` y `src/data/`.
 
 ---
 
-## 45. Tutorial 06: Creación de Nuevas Consultas Overpass QL en el Módulo 02
+## 45. Tutorial 06: creación de nuevas consultas Overpass QL en el módulo de consultas
 
-El Módulo 02 permite a los investigadores ejecutar consultas personalizadas contra OpenStreetMap. Para incorporar una nueva plantilla predefinida:
+* **Objetivo:** Incorporar una plantilla de consulta predefinida en lenguaje Overpass QL para extraer objetos de OpenStreetMap dentro de la caja delimitadora activa.
+* **Archivos:** `src/js/modulos/osm.js` y `src/index.html`.
+* **Pasos:**
+  1. Abra `src/js/modulos/osm.js` y localice el diccionario de consultas o presets temáticos.
+  2. Añada una nueva entrada definiendo las etiquetas `key=value` de OpenStreetMap (por ejemplo, grifos contra incendios `emergency=fire_hydrant`):
+     ```javascript
+     PRESETS_OVERPASS["grifos_incendio"] = {
+       nombre: "Grifos contra incendios",
+       filtro: 'node["emergency"="fire_hydrant"]',
+       color: "#f43f5e"
+     };
+     ```
+  3. Abra `src/index.html`, localice la sección de sugerencias de consulta en `#panel-explorador-osm` y agregue un botón con los atributos `data-clave="emergency"` y `data-valor="fire_hydrant"`.
+  4. Guarde ambos archivos.
+* **Verificación:** Abra la sección *Consultar datos > Consultas Overpass (OSM)*, pulse el nuevo botón de consulta y verifique que las entidades recuperadas se listen en la tabla inferior y se dibujen en el visor.
 
-1. Abra `src/js/modulos/osm.js`.
-2. Localice el diccionario `PLANTILLAS_OVERPASS`.
-3. Añada la nueva consulta formateada en Overpass QL:
-   ```javascript
-   PLANTILLAS_OVERPASS["grifos_incendio"] = {
-     nombre: "🚒 Grifos contra Incendios (Emergency Hydrants)",
-     ql: `[out:json][timeout:60];
-   (
-     node["emergency"="fire_hydrant"]({{bbox}});
-   );
-   out body;
-   >;
-   out skel qt;`
-   };
-   ```
-4. Agregue el botón de acceso directo en el panel de `src/index.html`:
-   ```html
-   <button class="boton-plantilla-ql" onclick="cargarPlantillaOverpass('grifos_incendio')">
-     🚒 Grifos contra Incendios
-   </button>
-   ```
+> [!WARNING]
+> **Qué hacer si falla:** Si el servidor principal de Overpass devuelve un error `429 Too Many Requests` o `504 Gateway Timeout`, el cliente de `src/js/modulos/osm.js` activará automáticamente la conmutación por falla hacia el siguiente servidor espejo y mostrará un aviso en la franja superior. Si persiste, reduzca el tamaño de la caja delimitadora o el valor de `[timeout:25]`.
 
 ---
 
-## 46. Tutorial 07: Diseño y Publicación de un Nuevo Storyboard Cartográfico
+## 46. Tutorial 07: diseño y publicación de un nuevo guion visual (*storyboard*)
 
-Para crear un nuevo Storyboard temático (por ejemplo, **Rutas del Pan y Panaderías Tradicionales de Barrio Brasil**):
-
-### Paso 1: Configurar el Objeto en `src/js/modulos/indicadores_analisis.js`
-```javascript
-STORYBOARDS.push({
-  id: "storyboard-panaderias",
-  titulo: "Rutas del Pan y Panaderías Centenarias",
-  narrativa: "Recorrido por las panaderías tradicionales con hornos de leña y amasanderías de barrio que han resistido por más de 80 años en Barrio Brasil.",
-  centro: [-33.4415, -70.6650],
-  zoom: 17,
-  capas: ["servicios", "movilidad_activa"],
-  archivosGeoJSON: ["data/capa_servicios.geojson", "data/capa_movilidad_activa.geojson"],
-  filtroAtributos: (props) => props.subcategoria === "bakery" || props.shop === "bakery"
-});
-```
-
-### Paso 2: Crear la Tarjeta en `src/index.html`
-```html
-<article class="tarjeta-storyboard" onclick="abrirStoryboard('storyboard-panaderias')">
-  <div class="storyboard-miniatura" style="background-image: url('img/storyboards/portada_kde.svg');"></div>
-  <div class="storyboard-info">
-    <h4>05. Rutas del Pan Tradicional</h4>
-    <p>Amasanderías centenarias y resistencia comercial de barrio.</p>
-  </div>
-</article>
-```
-
----
-
-## 47. Tutorial 08: Modificación de Ponderadores del Modelo WLC ISO 19157
-
-Si un investigador desea ajustar los pesos relativos del modelo de calidad en `scripts/modelo_indice_lineal_wlc.py`:
-
-```python
-# Modificación en scripts/modelo_indice_lineal_wlc.py
-# Ponderación por defecto: 50% cuantitativo / 50% cualitativo
-PESO_CUANTITATIVO = 0.60  # Incrementa peso de exactitud posicional y completitud
-PESO_CUALITATIVO   = 0.40  # Reduce peso de linaje y reputación
-
-def calcular_indice_global_vgi(p_cuant, p_cual):
-    # Calcula el IGV normalizado en [0.0, 1.0]
-    return round((PESO_CUANTITATIVO * p_cuant) + (PESO_CUALITATIVO * p_cual), 4)
-```
-Tras modificar los coeficientes, regenere los reportes y catálogos ejecutando:
-```bash
-python3 scripts/modelo_indice_lineal_wlc.py
-python3 scripts/generar_entregables_excel.py
-```
-
----
-
-## 48. Tutorial 09: Actualización de la Zonificación del PRC de Santiago
-
-Si la Municipalidad de Santiago publica una enmienda o actualización a la Ordenanza del Plan Regulador Comunal:
-
-1. Actualice el archivo GeoJSON vectorial en `data/ide_minvu_ipt_prc_santiago.geojson` y su réplica en `src/data/ide_minvu_ipt_prc_santiago.geojson`.
-2. Abra `src/js/modulos/evaluador_normativo.js`.
-3. Actualice la tabla de correspondencia normativa `DICCIONARIO_ZONAS_PRC`:
-   ```javascript
-   const DICCIONARIO_ZONAS_PRC = {
-     "ZCH-1": {
-       nombre: "Zona de Conservación Histórica 1 - Barrio Brasil",
-       alturaMaxMetros: 14.0,
-       coefConstructibilidad: 2.4,
-       coefOcupacionSuelo: 0.70,
-       usosPermitidos: "Vivienda, comercio escala barrial, talleres artesanales, equipamiento comunitario.",
-       usosProhibidos: "Discotecas, plantas industriales molestas o insalubres, bodegaje mayor."
+* **Objetivo:** Agregar un nuevo relato cartográfico con tarjetas de indicadores y mapas temáticos en el Módulo 05 (*Análisis y relatos*).
+* **Archivos:** `src/js/modulos/indicadores_analisis.js`.
+* **Pasos:**
+  1. Guarde las láminas cartográficas o diagramas SVG del nuevo relato en la carpeta `src/img/cartografias/` (o `src/docs/`).
+  2. Abra `src/js/modulos/indicadores_analisis.js` y localice el arreglo de relatos territoriales (`STORYBOARDS_DATA`).
+  3. Inserte un nuevo objeto con su identificador, título, resumen, métricas destacadas (`kpis`), párrafos analíticos y lista de capas vinculadas:
+     ```javascript
+     {
+       id: "sb-comercio-barrial",
+       dimension: "Dimensión 02 · Equipamiento y servicios",
+       territorio: "Barrio Brasil (223,75 ha)",
+       titulo: "Comercio tradicional y abastecimiento de proximidad",
+       bajada: "Distribución espacial de almacenes, panaderías y ferias libres respecto a la densidad habitacional.",
+       capasRelacionadas: ["servicios", "censo2024_manzanas"],
+       kpis: [
+         { valor: "412", etiqueta: "Locales de barrio", sub: "Catastro OSM + Patentes" }
+       ]
      }
-   };
-   ```
+     ```
+  4. Guarde el archivo y recargue la plataforma.
+* **Verificación:** Navegue a *Análisis y relatos > Indicadores y relatos*, haga clic sobre la nueva tarjeta y verifique que se abra la lámina de lectura con sus indicadores y el botón para cargar las capas asociadas en el visor.
+
+> [!WARNING]
+> **Qué hacer si falla:** Si alguna imagen del relato muestra el ícono de recurso roto, compruebe que la ruta relativa comience sin barra diagonal inicial (por ejemplo, `img/...` o `docs/...` relativas a `src/`) y respete exactamente las mayúsculas y minúsculas del nombre de archivo (Linux en Netlify distingue mayúsculas de minúsculas).
 
 ---
 
-## 49. Tutorial 10: Configuración Perimetral Avanzada en `netlify.toml`
+## 47. Tutorial 08: ajuste de ponderadores del modelo de calidad WLC (ISO 19157)
 
-Para incorporar nuevas políticas de seguridad en la red de distribución perimetral (*Edge CDN*):
+* **Objetivo:** Modificar los pesos de las dimensiones del modelo de combinación lineal ponderada (WLC) y recalcular el ranking de calidad de las 134 capas.
+* **Archivos:** `scripts/analisis_metacalidad.py` y `src/js/modulos/evaluador_calidad_cuantitativa.js`.
+* **Pasos:**
+  1. Abra `scripts/analisis_metacalidad.py` y localice la definición de pesos de los componentes cuantitativos y cualitativos.
+  2. Ajuste los ponderadores asegurándose de que la suma total sea exactamente igual a `1,00` (`100 %`):
+     ```python
+     # Suma de ponderadores = 1.00
+     PESO_PILAR_CUANTITATIVO = 0.50
+     PESO_PILAR_CUALITATIVO  = 0.50
+     ```
+  3. Actualice los mismos coeficientes en `src/js/modulos/evaluador_calidad_cuantitativa.js` para mantener la paridad entre el cálculo en servidor y el evaluador del navegador.
+  4. Ejecute el script de recálculo desde la terminal:
+     ```bash
+     python3 scripts/analisis_metacalidad.py
+     ```
+  5. Sincronice los archivos generados (`docs/wlc_metacalidad_resultado.json`, `docs/wlc_metacalidad_ranking.csv` y `docs/ANALISIS_METACALIDAD.md`) con `src/docs/`.
+* **Verificación:** Revise la salida en terminal de `scripts/analisis_metacalidad.py` y confirme que los archivos JSON y CSV en `docs/` y `src/docs/` tengan la nueva marca temporal y que el promedio coincida con lo mostrado en la vista *Evaluar calidad*.
 
-### 49.1. Política de Seguridad de Contenidos (Content-Security-Policy - CSP)
-Edite el archivo `netlify.toml` en la raíz del repositorio:
-```toml
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://overpass-api.de https://overpass.kumi.systems https://api.ohsome.org https://api.gbif.org https://*.supabase.co;"
-    X-Frame-Options = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-```
-
----
-
-## 50. Tutorial 11: Incorporación de Nuevas Reglas de Validación en Pre-Despliegue
-
-Para garantizar que futuras adiciones al Atlas cumplan con los estándares de calidad del proyecto, los desarrolladores pueden incorporar nuevas pruebas automatizadas en `scripts/verificar_integridad_despliegue.py`:
-
-```python
-# Adición de prueba en scripts/verificar_integridad_despliegue.py
-def prueba_09_verificar_peso_maximo_capas():
-    # Valida que ninguna capa GeoJSON barrial exceda los 15 MB para evitar bloqueos en navegadores moviles
-    print("[*] TEST 9: Verificando que ninguna capa GeoJSON barrial exceda los 15 MB...")
-    ruta_capas = os.path.join(BASE_DIR, "data")
-    limite_bytes = 15 * 1024 * 1024  # 15 Megabytes
-    
-    for archivo in os.listdir(ruta_capas):
-        if archivo.endswith(".geojson"):
-            ruta_completa = os.path.join(ruta_capas, archivo)
-            tamano = os.path.getsize(ruta_completa)
-            if tamano > limite_bytes:
-                print(f"    [FAIL] Capa {archivo} excede el límite móvil ({tamano / (1024**2):.2f} MB > 15 MB).")
-                print("           Aplique simplificación topológica (ST_SimplifyPreserveTopology) antes de desplegar.")
-                return False
-    print("    ✓ Todas las capas GeoJSON cumplen con el límite de peso para clientes móviles.")
-    return True
-```
-Para registrar la prueba, incorpórela en la lista `pruebas` de la función `main()`:
-```python
-pruebas = [
-    prueba_01_sintaxis_geojson,
-    prueba_02_coordenadas_wgs84,
-    prueba_03_esquema_atributos,
-    prueba_04_rango_wlc,
-    prueba_05_coherencia_excel,
-    prueba_06_sintaxis_python,
-    prueba_07_red_y_recursos,
-    prueba_08_sanitizacion_institucional,
-    prueba_09_verificar_peso_maximo_capas  # Nueva prueba registrada
-]
-```
+> [!WARNING]
+> **Qué hacer si falla:** Si la suma de los pesos difiere de `1,00`, el índice resultante excederá la escala de `0` a `100 %` y hará fallar la prueba de rango en `scripts/verificar_integridad_despliegue.py`. Verifique con `assert abs(sum(pesos) - 1.0) < 1e-6` antes de guardar.
 
 ---
 
-## 51. Tutorial 12: Sistema de Notificaciones Táctiles (Toast Notifications)
+## 48. Tutorial 09: actualización de la zonificación del Plan Regulador Comunal (PRC) de Santiago
 
-El Atlas cuenta con un sistema reactivo de notificaciones visuales flotantes (*Toasts*) que informa al usuario sobre el estado de las descargas, alertas de conectividad o resultados del Inspector Normativo sin interrumpir la navegación cartográfica.
+* **Objetivo:** Actualizar los polígonos de zonificación o los parámetros urbanísticos (usos permitidos, usos prohibidos, alturas y coeficientes) que consulta el inspector normativo.
+* **Archivos:** `data/ide_minvu_ipt_prc_santiago.geojson`, `src/data/ide_minvu_ipt_prc_santiago.geojson` y `src/js/modulos/evaluador_normativo.js`.
+* **Pasos:**
+  1. Si existen cambios geométricos en los polígonos de zonificación comunal, reemplace el archivo GeoJSON (en EPSG:4326) tanto en `data/` como en `src/data/`.
+  2. Abra `src/js/modulos/evaluador_normativo.js` y localice las reglas normativas por zona (`ZONAS_PRC_DETALLE` o diccionario de zonas).
+  3. Modifique los atributos de la zona modificada conforme a la Ordenanza Local vigente:
+     ```javascript
+     "ZCH-BB": {
+       nombre: "Zona de Conservación Histórica Barrio Brasil",
+       usosPermitidos: "Residencial; equipamiento de salud, educación, cultura y comercio barrial.",
+       usosProhibidos: "Actividades productivas molestas o peligrosas; bodegaje mayor.",
+       alturaMaxima: "Según perfil de edificación continua e Inmueble de Conservación Histórica (ICH)."
+     }
+     ```
+  4. Guarde el archivo y recargue la plataforma web.
+* **Verificación:** Active el botón *Inspector normativo (PRC)* en el visor, haga clic sobre un predio de la zona actualizada y descargue el Certificado de Informaciones Normativas VGI (CIN-VGI `.txt`) para verificar que contenga el nuevo texto.
 
-### 51.1. Implementación de la Función Controladora en `src/js/app.js`
-```javascript
-function mostrarToast(mensaje, tipo = "info", duracionMs = 4000) {
-  let contenedor = document.getElementById("contenedor-toasts");
-  if (!contenedor) {
-    contenedor = document.createElement("div");
-    contenedor.id = "contenedor-toasts";
-    contenedor.className = "pila-toasts-vgi";
-    document.body.appendChild(contenedor);
-  }
-
-  const toast = document.createElement("div");
-  toast.className = `toast-vgi toast-${tipo}`;
-  
-  const icono = tipo === "exito" ? "✓" : tipo === "error" ? "⚠" : "ℹ";
-  toast.innerHTML = `
-    <span class="toast-icono">${icono}</span>
-    <span class="toast-mensaje">${mensaje}</span>
-  `;
-
-  contenedor.appendChild(toast);
-
-  // Animación de entrada
-  setTimeout(() => toast.classList.add("visible"), 50);
-
-  // Animación de salida y remoción
-  setTimeout(() => {
-    toast.classList.remove("visible");
-    setTimeout(() => toast.remove(), 400);
-  }, duracionMs);
-}
-```
-
-### 51.2. Estilos Visuales en `src/css/estilos.css`
-```css
-.pila-toasts-vgi {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  pointer-events: none;
-}
-
-.toast-vgi {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 18px;
-  border-radius: 8px;
-  background: rgba(15, 23, 42, 0.95);
-  color: #ffffff;
-  font-size: 13px;
-  font-family: inherit;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: auto;
-}
-
-.toast-vgi.visible {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.toast-info  { border-left: 4px solid var(--musgo, #2d5a27); }
-.toast-exito { border-left: 4px solid #16a34a; }
-.toast-error { border-left: 4px solid #dc2626; }
-```
+> [!WARNING]
+> **Qué hacer si falla:** Si al hacer clic sobre un predio el inspector informa *"Sin información de zona PRC"*, compruebe que el atributo de código de zona en el archivo GeoJSON (`ZONA`, `COD_ZONA` o `NOM_ZONA`) coincida con la propiedad leída por `evaluador_normativo.js`.
 
 ---
 
-## 52. Tutorial 13: Integración de Geoservicios WMS/WFS Oficiales del Estado de Chile
+## 49. Tutorial 10: configuración de cabeceras y caché en `netlify.toml`
 
-Si se requiere conectar capas servidas dinámicamente por ministerios del Estado a través del estándar OGC Web Map Service (WMS) —por ejemplo, la red de estaciones hidrométricas de la Dirección General de Aguas (DGA) o la cartografía catastral de la Dirección de Vialidad (MOP)—:
+* **Objetivo:** Ajustar las cabeceras HTTP de control de caché, acceso entre orígenes (CORS) o redirecciones en el servidor perimetral de Netlify.
+* **Archivos:** `netlify.toml`.
+* **Pasos:**
+  1. Abra el archivo `netlify.toml` en la raíz del repositorio.
+  2. Localice los bloques `[[headers]]` o `[[redirects]]`.
+  3. Para modificar el tiempo de almacenamiento en caché de las capas GeoJSON o habilitar cabeceras específicas, edite la sección correspondiente:
+     ```toml
+     [[headers]]
+       for = "/data/*.geojson"
+       [headers.values]
+         Content-Type = "application/geo+json; charset=utf-8"
+         Access-Control-Allow-Origin = "*"
+         Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+     ```
+  4. Guarde el archivo `netlify.toml`.
+* **Verificación:** Ejecute `python3 -c "import tomllib; tomllib.load(open('netlify.toml', 'rb')); print('Sintaxis TOML correcta')"` en la terminal para validar que el archivo no contenga errores de formato antes de hacer `git commit`.
 
-### 52.1. Configuración de Capa WMS en Leaflet (`src/js/modulos/mapa.js`)
-```javascript
-function cargarCapaOficialWMS(urlServidorWMS, nombreCapaWMS, tituloVisible) {
-  const capaWMS = L.tileLayer.wms(urlServidorWMS, {
-    layers: nombreCapaWMS,
-    format: "image/png",
-    transparent: true,
-    version: "1.3.0",
-    crs: L.CRS.EPSG4326, // Homologación geodésica estricta
-    attribution: "Geoservicio Oficial IDE Chile &copy; Estado de Chile",
-    maxZoom: 19
-  });
-
-  // Registro en el gestor de capas activas
-  capasConfiguradas[nombreCapaWMS] = {
-    tipo: "wms",
-    instancia: capaWMS,
-    nombre: tituloVisible
-  };
-
-  return capaWMS;
-}
-
-// Ejemplo de conexión a la cartografía base de IDE Chile
-const capaIdeChileWMS = cargarCapaOficialWMS(
-  "https://www.geoportal.cl/geoserver/wms",
-  "ide_chile:limites_comunales_censales_2024",
-  "Límites Comunales Oficiales (Censo 2024)"
-);
-```
+> [!WARNING]
+> **Qué hacer si falla:** Un error de sintaxis en `netlify.toml` (como comillas sin cerrar o corchetes mal balanceados) detendrá por completo el despliegue en Netlify. Nunca modifique la variable `GIT_LFS_SKIP_SMUDGE = "0"`, ya que es indispensable para que Netlify expanda los archivos binarios reales de Git LFS.
 
 ---
 
-## 53. Tutorial 14: Exportación Dinámica de Datos en Formatos GeoJSON, CSV y KML
+## 50. Tutorial 11: incorporación de nuevas reglas en el verificador de integridad pre-despliegue
 
-Para empoderar a los investigadores locales, el visor permite exportar el subconjunto de datos filtrados en pantalla a diferentes formatos geográficos universales mediante generación dinámica de objetos binarios en el cliente (*Blobs*):
+* **Objetivo:** Añadir una comprobación automatizada en el script de auditoría pre-despliegue para detectar errores antes de subir cambios al repositorio remoto.
+* **Archivos:** `scripts/verificar_integridad_despliegue.py`.
+* **Pasos:**
+  1. Abra `scripts/verificar_integridad_despliegue.py` en su editor.
+  2. Defina una nueva función de verificación que compruebe la condición deseada y lance un error o incremente el contador de fallos si no se cumple:
+     ```python
+     def verificar_existencia_manuales():
+         rutas = [
+             "MANUAL_ACTUALIZACION_ATLAS.md",
+             "docs/MANUAL_ACTUALIZACION_ATLAS.md",
+             "src/docs/MANUAL_ACTUALIZACION_ATLAS.md"
+         ]
+         for r in rutas:
+             if not os.path.exists(r) or os.path.getsize(r) < 10000:
+                 raise RuntimeError(f"Archivo de manual faltante o incompleto: {r}")
+         print("✓ [VÁLIDO] Las tres copias del manual maestro existen y están sincronizadas.")
+     ```
+  3. Invoque la nueva función dentro del bloque principal de ejecución del script.
+  4. Guarde el archivo.
+* **Verificación:** Ejecute `python3 scripts/verificar_integridad_despliegue.py` en la terminal y compruebe que el script finalice con código de salida `0`.
 
-```javascript
-// src/js/modulos/importador_capas.js
-function descargarDatosEnCliente(contenidoTexto, nombreArchivo, tipoMime) {
-  const blob = new Blob([contenidoTexto], { type: tipoMime });
-  const urlTemporal = URL.createObjectURL(blob);
-  
-  const enlace = document.createElement("a");
-  enlace.href = urlTemporal;
-  enlace.download = nombreArchivo;
-  document.body.appendChild(enlace);
-  enlace.click();
-  document.body.removeChild(enlace);
-  
-  // Liberar memoria en el navegador
-  setTimeout(() => URL.revokeObjectURL(urlTemporal), 2000);
-  mostrarToast(`Archivo ${nombreArchivo} exportado exitosamente.`, "exito");
-}
-
-// 1. Exportar a GeoJSON
-function exportarCapaGeoJSON(coleccionFeatures, nombreCapa) {
-  const texto = JSON.stringify({
-    type: "FeatureCollection",
-    generadoPor: "Atlas VGI UAH - Nodo GeoAbierto",
-    fechaExportacion: new Date().toISOString(),
-    features: coleccionFeatures
-  }, null, 2);
-  descargarDatosEnCliente(texto, `${nombreCapa}_vgi_uah.geojson`, "application/geo+json");
-}
-
-// 2. Exportar a CSV tabular (UTF-8 con BOM para apertura nativa en Microsoft Excel)
-function exportarCapaCSV(coleccionFeatures, nombreCapa) {
-  if (!coleccionFeatures.length) return;
-  const encabezados = Object.keys(coleccionFeatures[0].properties || {});
-  let csv = "\uFEFF" + ["id", "longitud", "latitud", ...encabezados].join(";") + "\n";
-
-  for (const f of coleccionFeatures) {
-    const coords = f.geometry && f.geometry.type === "Point" ? f.geometry.coordinates : [0, 0];
-    const fila = [
-      f.id || "",
-      coords[0],
-      coords[1],
-      ...encabezados.map(h => `"${String(f.properties[h] || '').replace(/"/g, '""')}"`)
-    ];
-    csv += fila.join(";") + "\n";
-  }
-  descargarDatosEnCliente(csv, `${nombreCapa}_vgi_uah.csv`, "text/csv;charset=utf-8");
-}
-```
+> [!WARNING]
+> **Qué hacer si falla:** Si el script finaliza con un código distinto de `0`, lea la línea marcada con `[ERROR]` o `[FALLO]` en la salida de terminal y corrija el archivo señalado antes de ejecutar `git push`.
 
 ---
 
-## 54. Tutorial 15: Protocolo de Auditoría de Accesibilidad Web (WCAG 2.1 AA General / AAA Tipográfico)
+## 51. Tutorial 12: configuración de avisos de estado de servicios externos
 
-En el marco del diseño universal de la plataforma web, la hoja de estilos maestra (`src/css/estilos.css`) fue auditada algorítmicamente conforme a las directrices **W3C Web Content Accessibility Guidelines (WCAG) 2.1** (Criterios de Conformidad 1.4.3 *Contraste Mínimo AA*, 1.4.6 *Contraste Mejorado AAA* y 1.4.11 *Contraste de Elementos No Textuales AA*). El dictamen certifica **conformidad integral WCAG 2.1 Nivel AA en el 100 % de los elementos interactivos y acentos cromáticos (`4,58:1` a `8,87:1`)** y **conformidad WCAG 2.1 Nivel AAA en la totalidad del texto de lectura (`9,43:1` a `19,00:1`)**.
+* **Objetivo:** Personalizar los mensajes de aviso que se muestran al usuario cuando un servicio externo (como Overpass API) presenta saturación o demora en responder.
+* **Archivos:** `src/js/app.js`, `src/js/modulos/osm.js` y `src/index.html`.
+* **Pasos:**
+  1. Abra `src/js/app.js` y localice la función global `window.notificarEstadoServicio(mensaje, nivel)`.
+  2. Ajuste la duración de visualización del aviso o los colores asociados a cada nivel (`"aviso"`, `"error"` o `"info"`):
+     ```javascript
+     window.notificarEstadoServicio = function(mensaje, nivel = "aviso") {
+       const franja = document.getElementById("franja-estado-servicios");
+       const texto = document.getElementById("estado-conexion");
+       if (!franja || !texto) return;
+       franja.style.display = "block";
+       texto.textContent = mensaje;
+     };
+     ```
+  3. Abra `src/js/modulos/osm.js` y edite el texto pasado a `window.notificarEstadoServicio(...)` dentro del bloque `catch` de la función `consultar()` para que indique qué ocurrió y qué acción realiza el sistema (por ejemplo: *"Overpass está saturado, reintentamos en el siguiente servidor espejo disponible…"*).
+  4. Guarde ambos archivos.
+* **Verificación:** Abra la consola del navegador (`F12`) y ejecute `window.notificarEstadoServicio("Prueba de aviso de conexión", "aviso")` para comprobar que la franja superior se despliegue con el mensaje y se oculte automáticamente tras unos segundos.
 
-### 54.1. Fórmula Matemática de Luminancia Relativa y Razón de Contraste
-La luminancia relativa (`L`) de cualquier color sRGB normalizado en `[0, 1]` se calcula mediante:
+> [!WARNING]
+> **Qué hacer si falla:** No deje la franja `#franja-estado-servicios` visible de forma permanente con un mensaje estático de conexión exitosa, ya que puede inducir a error si el usuario pierde conexión a internet posteriormente; mantenga `style="display:none;"` por defecto en `src/index.html`.
 
-```text
-L = 0.2126 × R + 0.7152 × G + 0.0722 × B
-```
+---
 
-Donde cada canal `C` se linealiza a partir de su componente `C_sRGB` según:
+## 52. Tutorial 13: integración de geoservicios WMS oficiales del Estado de Chile
 
-```text
-Si C_sRGB ≤ 0.03928  ⇒  C = C_sRGB / 12.92
-Si C_sRGB > 0.03928  ⇒  C = ((C_sRGB + 0.055) / 1.055)^2.4
-```
+* **Objetivo:** Conectar una capa cartográfica servida mediante el estándar Web Map Service (WMS) del Open Geospatial Consortium (OGC) desde un servidor ministerial o de IDE Chile.
+* **Archivos:** `src/js/modulos/ide_chile.js` y `src/js/modulos/mapa.js`.
+* **Pasos:**
+  1. Obtenga la URL base del servicio WMS y el nombre exacto de la capa (`layers`) consultando el documento `GetCapabilities` del organismo público.
+  2. Abra `src/js/modulos/ide_chile.js` y registre la entrada indicando `tipo: "wms"`, `urlWms` y `capaWms`:
+     ```javascript
+     "mop_red_vial_wms": {
+       nombre: "Red Vial Nacional (WMS MOP)",
+       tipo: "wms",
+       urlWms: "https://geoportal.mop.gob.cl/geoserver/wms",
+       capaWms: "vialidad:red_vial_nacional",
+       formato: "image/png",
+       transparente: true,
+       atribucion: "Ministerio de Obras Públicas (IDE MOP)"
+     }
+     ```
+  3. En `src/js/modulos/mapa.js`, utilice `L.tileLayer.wms(urlWms, { layers: capaWms, format: "image/png", transparent: true })` para instanciar la capa sobre el lienzo.
+  4. Guarde los archivos.
+* **Verificación:** Active la capa WMS en el visor y compruebe en la pestaña *Red* del navegador que las peticiones `GetMap` devuelvan imágenes PNG con fondo transparente alineadas con la cartografía base.
 
-La razón de contraste (`CR`) entre dos colores con luminancias `L₁` (más claro) y `L₂` (más oscuro) se determina por:
+> [!WARNING]
+> **Qué hacer si falla:** Si el servidor ministerial solo publica en HTTP sin cifrado SSL o bloquea peticiones desde otros dominios, el navegador bloqueará la carga por política de contenido mixto (*Mixed Content*). En ese caso, descargue la cobertura mediante una petición WFS (`outputFormat=application/json`) y almacénela localmente en `src/data/` para garantizar su disponibilidad.
 
-```text
-CR = (L₁ + 0.05) / (L₂ + 0.05)
-• Umbral WCAG 2.1 Nivel AA:  CR ≥ 4.50 : 1 (texto normal) | CR ≥ 3.00 : 1 (texto grande ≥ 18pt / 14pt bold y componentes UI)
-• Umbral WCAG 2.1 Nivel AAA: CR ≥ 7.00 : 1 (texto normal) | CR ≥ 4.50 : 1 (texto grande ≥ 18pt / 14pt bold)
-```
+---
 
-### 54.2. Matriz de Auditoría Formal sobre los Tokens de `src/css/estilos.css`
+## 53. Tutorial 14: exportación dinámica de datos en formatos GeoJSON y CSV
 
-| Par de Tokens Auditados (`Fondo` vs. `Primer Plano`) | Códigos Hexadecimales | Luminancias (`L₂` / `L₁`) | Razón de Contraste (`CR`) | Certificación WCAG 2.1 |
+* **Objetivo:** Modificar o ampliar las funciones de exportación en el navegador para descargar el subconjunto de entidades espaciales activas en formatos GeoJSON (RFC 7946) o CSV (UTF-8 con marca de orden de bytes BOM para apertura directa en hojas de cálculo).
+* **Archivos:** `src/js/app.js`.
+* **Pasos:**
+  1. Abra `src/js/app.js` y localice las funciones de exportación del panel de consultas (`exportarGeoJSONActual` o `descargarArchivoTexto`).
+  2. Verifique que la generación del archivo GeoJSON incluya la colección de entidades espaciales y los metadatos básicos de procedencia:
+     ```javascript
+     function exportarColeccionGeoJSON(features, nombreArchivo) {
+       const coleccion = {
+         type: "FeatureCollection",
+         features: features || []
+       };
+       const blob = new Blob([JSON.stringify(coleccion, null, 2)], {
+         type: "application/geo+json;charset=utf-8"
+       });
+       const url = URL.createObjectURL(blob);
+       const enlace = document.createElement("a");
+       enlace.href = url;
+       enlace.download = nombreArchivo.endsWith(".geojson") ? nombreArchivo : `${nombreArchivo}.geojson`;
+       document.body.appendChild(enlace);
+       enlace.click();
+       document.body.removeChild(enlace);
+       URL.revokeObjectURL(url);
+     }
+     ```
+  3. Para exportaciones tabulares en CSV, anteponga el carácter `"\uFEFF"` al texto generado para que Microsoft Excel y LibreOffice Calc reconozcan automáticamente las tildes y la letra `ñ`.
+  4. Guarde los cambios en `src/js/app.js`.
+* **Verificación:** Ejecute una consulta en el visor o en el explorador de OpenStreetMap, pulse el botón *Exportar GeoJSON* y abra el archivo descargado en QGIS para comprobar su geometría y tabla de atributos.
+
+> [!WARNING]
+> **Qué hacer si falla:** Si el botón de exportación genera un archivo vacío (`"features": []`), asegúrese de haber ejecutado primero una consulta o de tener al menos una capa activa en memoria antes de invocar la descarga.
+
+---
+
+## 54. Tutorial 15: auditoría de contraste y accesibilidad web (WCAG 2.1 AA general / AAA en texto)
+
+* **Objetivo:** Auditar matemáticamente las razones de contraste entre los colores de fondo y de texto en `src/css/estilos.css` conforme a la norma W3C WCAG 2.1, verificando el nivel AA general en componentes interactivos (`CR >= 4,50:1`) y el nivel AAA en el texto de lectura (`CR >= 7,00:1`).
+* **Archivos:** `src/css/estilos.css`.
+* **Pasos:**
+  1. Extraiga los pares de códigos hexadecimales de superficie (`--fondo-app`, `--papel`, `--papel-alto`, `--papel-tarjeta`, `--papel-rehundido`) y de primer plano (`--tinta`, `--tinta-suave`, `--tinta-tenue`, `--musgo`, `--agua`, `--esmeralda`, `--ocre`) definidos en `:root` dentro de `src/css/estilos.css`.
+  2. Calcule la luminancia relativa $L = 0,2126 \cdot R + 0,7152 \cdot G + 0,0722 \cdot B$ y la razón de contraste $CR = (L_1 + 0,05) / (L_2 + 0,05)$ ejecutando en terminal el siguiente comando en Python:
+     ```bash
+     python3 -c '
+     def lum(h):
+         h = h.lstrip("#")
+         rgb = [int(h[i:i+2], 16)/255.0 for i in (0, 2, 4)]
+         lin = [c/12.92 if c <= 0.03928 else ((c+0.055)/1.055)**2.4 for c in rgb]
+         return 0.2126*lin[0] + 0.7152*lin[1] + 0.0722*lin[2]
+     def cr(h1, h2):
+         l1, l2 = sorted([lum(h1), lum(h2)], reverse=True)
+         return (l1 + 0.05) / (l2 + 0.05)
+     pares = [
+         ("--papel-rehundido vs --tinta", "#09101f", "#ffffff"),
+         ("--fondo-app vs --tinta", "#0c1527", "#ffffff"),
+         ("--papel vs --tinta", "#132039", "#ffffff"),
+         ("--papel vs --tinta-suave", "#132039", "#f8fafc"),
+         ("--papel-tarjeta vs --tinta-tenue", "#223861", "#e2e8f0"),
+         ("--papel-tarjeta vs --esmeralda", "#223861", "#10b981")
+     ]
+     for nombre, f, t in pares:
+         print(f"{nombre:34s} -> {cr(f, t):5.2f} : 1")
+     '
+     ```
+  3. Contraste los resultados obtenidos con la Tabla 54.1 de referencia del proyecto.
+
+### Tabla 54.1. Resultados de la auditoría de contraste sobre `src/css/estilos.css`
+
+| Par de variables auditadas (`fondo` vs. `primer plano`) | Códigos hexadecimales | Luminancias (`L₂` / `L₁`) | Razón de contraste (`CR`) | Nivel WCAG 2.1 alcanzado |
 | :--- | :---: | :---: | :---: | :---: |
-| `--papel-rehundido` vs. `--tinta` (Consolas y tablas de datos) | `#09101f` vs. `#ffffff` | `0,0053` / `1,0000` | **`19,00 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
-| `--fondo-app` vs. `--tinta` (Lienzo general y encabezados) | `#0c1527` vs. `#ffffff` | `0,0076` / `1,0000` | **`18,23 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
-| `--papel` vs. `--tinta` (Paneles laterales y vistas modulares) | `#132039` vs. `#ffffff` | `0,0147` / `1,0000` | **`16,24 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
-| `--papel` vs. `--tinta-suave` (Cuerpo de lectura principal) | `#132039` vs. `#f8fafc` | `0,0147` / `0,9560` | **`15,56 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
-| `--papel-alto` vs. `--tinta-suave` (Subpaneles y cabeceras) | `#1a2b4b` vs. `#f8fafc` | `0,0246` / `0,9560` | **`13,49 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
-| `--papel-tarjeta` vs. `--tinta` (Títulos en tarjetas GIS y KPI) | `#223861` vs. `#ffffff` | `0,0403` / `1,0000` | **`11,63 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
-| `--papel-tarjeta` vs. `--tinta-tenue` (Metadatos y glosas en tarjetas) | `#223861` vs. `#e2e8f0` | `0,0403` / `0,8012` | **`9,43 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
-| `--fondo-app` vs. `--ocre` (Indicadores de advertencia y semáforos) | `#0c1527` vs. `#f59e0b` | `0,0076` / `0,4410` | **`8,52 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
-| `--fondo-app` vs. `--agua` (Enlaces e indicadores interactivos) | `#0c1527` vs. `#38bdf8` | `0,0076` / `0,4326` | **`8,38 : 1`** | **Nivel AAA** (`≥ 7,0:1`) |
-| `--papel` vs. `--musgo` (Acentos cian en paneles laterales) | `#132039` vs. `#06b6d4` | `0,0147` / `0,3645` | **`6,41 : 1`** | **Nivel AA** (AAA texto grande) |
-| `--papel-tarjeta` vs. `--agua` (Enlaces y chips sobre tarjetas) | `#223861` vs. `#38bdf8` | `0,0403` / `0,4326` | **`5,35 : 1`** | **Nivel AA** (AAA texto grande) |
-| `--papel-tarjeta` vs. `--esmeralda` (Insignias de estado en tarjetas) | `#223861` vs. `#10b981` | `0,0403` / `0,3636` | **`4,58 : 1`** | **Nivel AA** (`≥ 4,5:1`) |
+| `--papel-rehundido` vs. `--tinta` (consolas y bloques de datos) | `#09101f` vs. `#ffffff` | `0,0053` / `1,0000` | `19,00 : 1` | Nivel AAA (`>= 7,0:1`) |
+| `--fondo-app` vs. `--tinta` (lienzo general y títulos) | `#0c1527` vs. `#ffffff` | `0,0076` / `1,0000` | `18,23 : 1` | Nivel AAA (`>= 7,0:1`) |
+| `--papel` vs. `--tinta` (paneles y vistas principales) | `#132039` vs. `#ffffff` | `0,0147` / `1,0000` | `16,24 : 1` | Nivel AAA (`>= 7,0:1`) |
+| `--papel` vs. `--tinta-suave` (cuerpo de lectura) | `#132039` vs. `#f8fafc` | `0,0147` / `0,9560` | `15,56 : 1` | Nivel AAA (`>= 7,0:1`) |
+| `--papel-alto` vs. `--tinta-suave` (subpaneles y barras) | `#1a2b4b` vs. `#f8fafc` | `0,0246` / `0,9560` | `13,49 : 1` | Nivel AAA (`>= 7,0:1`) |
+| `--papel-tarjeta` vs. `--tinta` (títulos en tarjetas) | `#223861` vs. `#ffffff` | `0,0403` / `1,0000` | `11,63 : 1` | Nivel AAA (`>= 7,0:1`) |
+| `--papel-tarjeta` vs. `--tinta-tenue` (metadatos y notas) | `#223861` vs. `#e2e8f0` | `0,0403` / `0,8012` | `9,43 : 1` | Nivel AAA (`>= 7,0:1`) |
+| `--fondo-app` vs. `--ocre` (avisos preventivos) | `#0c1527` vs. `#f59e0b` | `0,0076` / `0,4410` | `8,52 : 1` | Nivel AAA (`>= 7,0:1`) |
+| `--fondo-app` vs. `--agua` (enlaces sobre fondo base) | `#0c1527` vs. `#38bdf8` | `0,0076` / `0,4326` | `8,38 : 1` | Nivel AAA (`>= 7,0:1`) |
+| `--papel` vs. `--musgo` (acentos cian en paneles) | `#132039` vs. `#06b6d4` | `0,0147` / `0,3645` | `6,41 : 1` | Nivel AA (AAA en texto grande) |
+| `--papel-tarjeta` vs. `--agua` (enlaces sobre tarjetas) | `#223861` vs. `#38bdf8` | `0,0403` / `0,4326` | `5,35 : 1` | Nivel AA (AAA en texto grande) |
+| `--papel-tarjeta` vs. `--esmeralda` (insignias en tarjetas) | `#223861` vs. `#10b981` | `0,0403` / `0,3636` | `4,58 : 1` | Nivel AA (`>= 4,5:1`) |
+
+* **Verificación:** Compruebe que ningún par empleado en texto de lectura tenga un valor inferior a `7,00 : 1` (nivel AAA) y que ningún indicador o botón tenga un valor inferior a `4,50 : 1` (nivel AA).
+
+> [!WARNING]
+> **Qué hacer si falla:** Si al introducir un nuevo color en `:root` la razón de contraste cae por debajo de `4,50 : 1` sobre `--papel-tarjeta`, aumente la luminosidad del color de texto (acercándolo a `#f8fafc`) o reduzca la luminosidad del fondo antes de publicar.
 
 ---
 
-## 55. Tutorial 16: Pipeline de Reempaquetado y Despliegue en Producción
+## 55. Tutorial 16: reempaquetado de la base de datos y despliegue en producción
 
-Cada vez que se añadan, editen o depuren capas vectoriales, es imperativo regenerar el archivo comprimido masivo y auditar la integridad total del sistema antes de enviar a producción:
+* **Objetivo:** Regenerar la documentación maestra, verificar la integridad de las 134 capas y publicar los cambios en los repositorios de producción (`origin/main` en Netlify y `espejo/main` en GitHub Pages).
+* **Archivos:** `scripts/construir_manual_actualizacion_maestro.py`, `scripts/verificar_conteo_capas.py`, `scripts/verificar_integridad_despliegue.py` y árbol Git.
+* **Pasos:**
+  1. Reconstruya el manual de actualización sincronizando las copias en la raíz, `docs/` y `src/docs/`:
+     ```bash
+     python3 scripts/construir_manual_actualizacion_maestro.py
+     ```
+  2. Si modificó capas vectoriales o tablas maestras y necesita actualizar el paquete descargable ZIP (542,35 MB), ejecute únicamente en ese caso:
+     ```bash
+     python3 scripts/empaquetar_base_datos_completa.py
+     ```
+  3. Ejecute las pruebas de conteo de capas e integridad pre-despliegue:
+     ```bash
+     python3 scripts/verificar_conteo_capas.py
+     python3 scripts/verificar_integridad_despliegue.py
+     ```
+  4. Revise con `git status -s` los archivos modificados, registre el commit y súbalo a producción:
+     ```bash
+     git add .
+     git commit -m "docs: actualizar documentacion y sincronizar plataforma"
+     git push origin main
+     ```
+* **Verificación:** Compruebe en la consola que `git push origin main` finalice sin errores y verifique la actualización en vivo en `https://atlasvgiuah.netlify.app/`.
 
-```bash
-# 1. Regenerar el paquete masivo unificado en docs/ y src/docs/ (542,35 MB / 257 archivos)
-python3 scripts/empaquetar_base_datos_completa.py
-
-# 2. Ejecutar la suite automatizada de 8 pruebas de integridad pre-despliegue
-python3 scripts/verificar_integridad_despliegue.py
-
-# 3. Confirmar que Git LFS rastree adecuadamente los binarios (docs/geodatabase_completa_atlas_vgi.zip)
-git lfs status
-
-# 4. Commit semántico y publicación a producción
-git add .
-git commit -m "data(capas): actualizar coberturas vectoriales y paquete unificado"
-git push origin main
-```
-Netlify compilará y desplegará la nueva versión automáticamente en su red perimetral en menos de 90 segundos.
+> [!IMPORTANT]
+> **Qué hacer si falla:** Si `git push` demora varios minutos, verifique con `git status` si modificó innecesariamente el archivo binario `docs/geodatabase_completa_atlas_vgi.zip` (542,35 MB en Git LFS). Si solo realizó cambios de código o documentación, restaure el binario con `git checkout -- docs/geodatabase_completa_atlas_vgi.zip src/docs/geodatabase_completa_atlas_vgi.zip` para que el envío a producción concluya en pocos segundos.
 
 ---
 """

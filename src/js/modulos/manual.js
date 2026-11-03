@@ -104,31 +104,41 @@ const ModuloManual = (() => {
         id: 'cap-uso-01',
         parte: 'uso',
         numero: 'USO · 01',
-        icono: '🧭',
-        titulo: 'Fundamentación y Propósito General del Sistema',
-        subtitulo: 'Articulación de las 134 coberturas geográficas, 140 descriptores normativos (ISO 19110) y 10 módulos funcionales.',
+        icono: '',
+        titulo: 'Fundamentación, objetivos y cifras clave del sistema',
+        subtitulo: 'Objetivo general, objetivos específicos y tabla de cifras clave del Atlas VGI.',
         html: `
-          <p style="font-size:0.94rem; line-height:1.7; color:var(--tinta-suave);">
-            El <strong>Atlas de Información Geográfica Voluntaria para la Gestión Territorial</strong> constituye una infraestructura de datos espaciales orientada a integrar, evaluar y contrastar la cartografía oficial del Estado de Chile con la información geográfica voluntaria (<em>Volunteered Geographic Information</em>, VGI; Goodchild, 2007; Haklay, 2010) para el análisis territorial de la <strong>Comuna de Santiago</strong> y el <strong>Barrio Brasil</strong>.
-          </p>
+          <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:16px; margin-bottom:16px;">
+            <h4 style="margin:0 0 8px 0; color:#38bdf8;">Objetivo general</h4>
+            <p style="font-size:0.94rem; line-height:1.7; color:var(--tinta-suave); margin:0 0 14px 0;">
+              Desarrollar un atlas de información geográfica voluntaria (VGI) reproducible, interoperable y centrado en el usuario, que integre geodatos abiertos, cartografía participativa y herramientas analíticas para subsanar vacíos de información territorial y apoyar la gestión local y la investigación en el Barrio Brasil y la comuna de Santiago.
+            </p>
+            <h4 style="margin:0 0 8px 0; color:#34d399;">Objetivos específicos</h4>
+            <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.9rem; line-height:1.65;">
+              <li><strong>OE 1.</strong> Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales.</li>
+              <li><strong>OE 2.</strong> Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos.</li>
+              <li><strong>OE 3.</strong> Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.</li>
+              <li><strong>OE 4.</strong> Evaluar la usabilidad y la pertinencia de la plataforma con distintos perfiles de actores territoriales y asegurar su transferibilidad técnica, metodológica y documental.</li>
+            </ul>
+          </div>
 
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:14px; margin:16px 0;">
             <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:14px;">
-              <div style="font-size:1.35rem; font-weight:800; color:#38bdf8;">134 Capas Operativas</div>
+              <div style="font-size:1.35rem; font-weight:800; color:#38bdf8;">134 capas operativas</div>
               <div style="font-size:0.85rem; color:var(--tinta-suave); margin-top:4px;">
-                <strong>124 coberturas oficiales</strong> (MINVU, INE Censo 2024, MTT/UOCT, MDSF RSH, SUBDERE Residuos 2024, Municipalidad de Santiago, CMN, MMA, SII) y <strong>10 categorías VGI</strong> (OpenStreetMap y GBIF).
+                124 coberturas oficiales del Estado de Chile y 10 macrocategorías de información geográfica voluntaria (OpenStreetMap y GBIF).
               </div>
             </div>
             <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3); border-radius:10px; padding:14px;">
-              <div style="font-size:1.35rem; font-weight:800; color:#fbbf24;">140 Descriptores Normativos</div>
+              <div style="font-size:1.35rem; font-weight:800; color:#fbbf24;">IGV: 95,4 % | IGMC: 96,55 %</div>
               <div style="font-size:0.85rem; color:var(--tinta-suave); margin-top:4px;">
-                Homologación conceptual y semántica de atributos en el <strong>Módulo 09</strong> conforme a la norma ISO 19110:2016 y los catálogos de la Infraestructura de Datos Geoespaciales de Chile.
+                <strong>IGV (95,4 %):</strong> promedio multicriterio de calidad espacial ISO 19157 de las 134 capas (91 A+ y 43 A). <strong>IGMC (96,55 %):</strong> cumplimiento de campos obligatorios de metadatos ISO 19115 en el Módulo 08.
               </div>
             </div>
             <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:10px; padding:14px;">
-              <div style="font-size:1.35rem; font-weight:800; color:#34d399;">5 Dimensiones y 4 Storyboards (83 Mapas)</div>
+              <div style="font-size:1.35rem; font-weight:800; color:#34d399;">5 dimensiones y 4 guiones visuales</div>
               <div style="font-size:0.85rem; color:var(--tinta-suave); margin-top:4px;">
-                Estructuración multidimensional y 4 storyboards temáticos con 83 cartografías sobre densidad KDE, clusters LISA, habitabilidad censal y metabolismo urbano.
+                83 cartografías temáticas sobre estimación de densidad por núcleo (KDE), indicadores locales de asociación espacial (LISA), habitabilidad censal y metabolismo urbano.
               </div>
             </div>
           </div>

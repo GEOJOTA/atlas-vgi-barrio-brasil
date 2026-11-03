@@ -140,7 +140,10 @@ INDICE_GENERAL = r"""# ATLAS DE INFORMACIÓN GEOGRÁFICA VOLUNTARIA (VGI) PARA L
 ---
 """
 
+from normalizador_editorial_docs import normalizar_documento_markdown
+
 contenido_final = INDICE_GENERAL.strip() + "\n\n---\n\n" + "\n\n---\n\n".join(partes) + "\n"
+contenido_final = normalizar_documento_markdown(contenido_final, actualizar_toc_manual=True)
 
 # 3. Auditoría estricta de palabras prohibidas (Zero-Leak y coherencia conceptual)
 forbidden_matches = 0

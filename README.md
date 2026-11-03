@@ -1,62 +1,71 @@
-# Atlas de Información Geográfica Voluntaria para la Gestión Territorial
+# Atlas de información geográfica voluntaria para la gestión territorial
 
 [![Estado de Producción](https://img.shields.io/badge/Estado-En_Producci%C3%B3n-10b981?style=for-the-badge)](https://atlasvgiuah.netlify.app)
 [![Coberturas Espaciales](https://img.shields.io/badge/Capas_Operativas-134_(124_Oficiales_+_10_VGI)-0284c7?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
-[![Storyboards Territoriales](https://img.shields.io/badge/Storyboards-4_Ejes_(83_Cartograf%C3%ADas)-9333ea?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
+[![guiones visuales Territoriales](https://img.shields.io/badge/Storyboards-4_Ejes_(83_Cartograf%C3%ADas)-9333ea?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
 [![Estándares ISO/OGC](https://img.shields.io/badge/Normas-ISO_19110_%7C_19115_%7C_19139_%7C_19157-d97706?style=for-the-badge)](#5-documentación-técnica-del-proyecto)
 [![Licencia de Datos](https://img.shields.io/badge/Licencias-ODbL_1.0_%7C_CC_BY--SA_4.0_%7C_AGPLv3-dc2626?style=for-the-badge)](#6-licenciamiento-y-gobernanza-de-datos-abiertos)
 
-Infraestructura de datos espaciales web estática y autónoma orientada a integrar, evaluar y contrastar la cartografía oficial del Estado de Chile con la Información Geográfica Voluntaria (*Volunteered Geographic Information*, VGI; Goodchild, 2007; Haklay, 2010), aplicada al análisis multiescalar del **Barrio Brasil**, el entorno del **Campus Universidad Alberto Hurtado**, la **Comuna de Santiago** y la **Región Metropolitana de Santiago**.
+Plataforma web abierta que reúne mapas oficiales del Estado de Chile e información geográfica voluntaria (*Volunteered Geographic Information*, VGI; Goodchild, 2007; Haklay, 2010) para el análisis multiescalar del barrio Brasil, el entorno del Campus Universidad Alberto Hurtado, la comuna de Santiago y la Región Metropolitana de Santiago.
 
-* **Plataforma Web en Producción (CDN Primario):** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
-* **Repositorio Espejo (GitHub Pages):** [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* **Geodatabase Consolidada Descargable (`.zip`):** `docs/geodatabase_completa_atlas_vgi.zip` (`542,35 MB` comprimidos / `~3,33 GB` descomprimidos; `257` archivos distribuidos en `7` subcarpetas temáticas).
+* Plataforma web en producción (CDN primario): [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
+* Repositorio espejo (GitHub Pages): [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
+* Geodatabase consolidada descargable (`.zip`): `docs/geodatabase_completa_atlas_vgi.zip` (`542,35 MB` comprimidos / `3,33 GB` descomprimidos; `257` archivos distribuidos en `7` subcarpetas temáticas).
 
 ---
 
-## 1. Propósito General y Métricas Estructurales
+## 1. Objetivos y tabla de cifras clave del proyecto
 
-El sistema articula **134 coberturas geográficas operativas** (**124 capas oficiales** provenientes de IDE Chile, MINVU, INE Censo 2024, MTT/UOCT, MDSF RSH, SUBDERE Residuos 2024, Ilustre Municipalidad de Santiago, CMN, MMA y SII, junto con **10 macrocategorías colaborativas VGI** extraídas de OpenStreetMap y GBIF) en una aplicación de página única (*Single-Page Application*, SPA) construida sin dependencias de compilación externa.
+### 1.1. Objetivo general
+Desarrollar un atlas de información geográfica voluntaria (VGI) reproducible, interoperable y centrado en el usuario, que integre geodatos abiertos, cartografía participativa y herramientas analíticas para subsanar vacíos de información territorial y apoyar la gestión local y la investigación en el Barrio Brasil y la comuna de Santiago.
 
-| Componente Estructural del Sistema | Métrica / Especificación | Módulos y Rutas Asociadas |
+### 1.2. Objetivos específicos
+* **OE 1.** Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales.
+* **OE 2.** Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos.
+* **OE 3.** Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.
+* **OE 4.** Evaluar la usabilidad y la pertinencia de la plataforma con distintos perfiles de actores territoriales y asegurar su transferibilidad técnica, metodológica y documental.
+
+### 1.3. Tabla 1.1: Cifras clave del proyecto (referencia única)
+
+| Componente del sistema | Cifra o especificación | Definición y rutas asociadas |
 | :--- | :--- | :--- |
-| **Coberturas Geográficas Operativas** | **134 capas** (`124` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) | `src/js/modulos/ide_chile.js`, `src/js/config.js`, `data/*.geojson`, `src/data/*.geojson` |
-| **Descriptores Técnicos de Atributos** | **140 descriptores** bajo norma ISO 19110:2016 (`86` brechas VGI sin homólogo estatal) | Módulo `09` (`src/js/modulos/diccionario.js`), `docs/categorias_tematicas_osm.xlsx` |
-| **Dimensiones Analíticas y Storyboards** | **5 Dimensiones** y **4 Storyboards Territoriales** con **83 cartografías temáticas** | Módulo `05` (`src/js/modulos/indicadores_analisis.js`), `src/img/cartografias/` |
-| **Evaluación de Calidad Espacial** | Modelo multicriterio **WLC v2.0** (ISO 19157/19115) + **Índice de Saturación y Maduración Territorial** (ohsome API v1/v2) + **OSMCha** | Módulo `06` (`src/js/modulos/ohsome.js`, `calidad_analyst.js`, `evaluador_calidad_cuantitativa.js`) |
-| **Evaluación Normativa Urbana** | Inspector PRC/PRMS/OGUC + **Certificado CIN-VGI** + **10 Hitos Históricos PRC (1990–2024)** | Módulo `01` (`src/js/modulos/evaluador_normativo.js`) |
-| **Motor Geodésico de Doble Proyección** | Renderizado web en `EPSG:4326` (WGS84) y cálculo métrico en `EPSG:32719` (UTM Huso 19 Sur / SIRGAS-Chile) | `src/js/modulos/geodesia.js` (Serie de Redfearn / Gauss-Shoelace / Haversine) |
-| **Persistencia y Respaldo Relacional** | Arquitectura de triple nivel: PostGIS / Supabase RPC (`Nivel 1`) → CDN Estático (`Nivel 2`) → Caché en Memoria (`Nivel 3`) | `scripts/db/01_schema_postgis.sql`, `scripts/db/02_seed_metadata.sql`, `src/js/modulos/db_client.js` |
+| Coberturas geográficas operativas | 134 capas (124 oficiales + 10 VGI `CAT-01` a `CAT-10`) | `src/js/modulos/ide_chile.js`, `src/js/config.js`, `data/*.geojson`, `src/data/*.geojson` |
+| Descriptores del diccionario de datos | 140 descriptores bajo ISO 19110:2016 (86 brechas VGI) | Módulo `09` (`src/js/modulos/diccionario.js`), `docs/categorias_tematicas_osm.xlsx` |
+| Dimensiones y guiones visuales | 5 dimensiones y 4 guiones visuales con 83 cartografías | Módulo `05` (`src/js/modulos/indicadores_analisis.js`), `src/img/cartografias/` |
+| Índice Global de Calidad VGI (IGV) | 95,4 % (91 capas A+ y 43 A de 134 capas) | Calidad espacial multicriterio WLC v2.0 (ISO 19157) en Módulo `06` y `docs/ANALISIS_METACALIDAD.md` |
+| Índice Global de Metacalidad Documental (IGMC) | 96,55 % | Cumplimiento de campos obligatorios de metadatos ISO 19115 / IDE Chile en Módulo `08` |
+| Accesibilidad web | WCAG 2.1 nivel AA general y nivel AAA en texto | Contraste de `4,58:1` a `8,87:1` en componentes (AA) y de `9,43:1` a `19,00:1` en lectura (AAA) |
+| Arquitectura de software | 21 módulos JS y 25 scripts Python | Aplicación en `src/js/` y automatización en `scripts/` |
 
 ---
 
-## 2. Pipelines de Arquitectura y Procesamiento de Datos
+## 2. Flujos de procesamiento de arquitectura y procesamiento de datos
 
-El proyecto organiza su flujo de ingeniería de datos y operación web en cuatro pipelines troncales bajo el modelo **`1. INPUT / ENTRADA` → `2. PIPELINE DE PROCESAMIENTO / MÓDULO` → `3. OUTPUT / RUTAS EN GIT Y PLATAFORMA WEB`**:
+El proyecto organiza su flujo de ingeniería de datos y operación web en cuatro flujos de procesamiento troncales bajo el modelo `1. INPUT / ENTRADA` → `2. PIPELINE DE PROCESAMIENTO / MÓDULO` → `3. OUTPUT / RUTAS EN GIT Y PLATAFORMA WEB`:
 
-### 2.1. Pipeline General de los Cuatro Subsistemas (Pipelines A, B, C y D)
+### 2.1. Flujo de procesamiento general de los cuatro subsistemas (flujos de procesamiento a, b, c y d)
 
 ```mermaid
 flowchart LR
     subgraph IN["1. INPUT / ENTRADA (Fuentes Primarias y Configuración)"]
-        I1["BBox Territorial + Etiquetas OSM<br/>src/js/config.js & config/config.json"]
+        I1["caja delimitadora Territorial + Etiquetas OSM<br/>src/js/config.js & config/config.json"]
         I2["Capas IPT / PRC / Patrimonio / Riesgo<br/>data/ide_minvu_ipt_*.geojson"]
         I3["134 Capas GeoJSON + Series ohsome API<br/>data/*.geojson & api.ohsome.org/v1"]
         I4["Censo 2024 + RSH 2026 + BIP + SUBDERE<br/>data/ide_censo2024_manzanas.geojson"]
     end
 
-    subgraph PROC["2. PIPELINE DE PROCESAMIENTO (Motores JS ES6+ y Scripts Python 3)"]
-        P1["Pipeline A · Extracción y Normalización VGI<br/>src/js/modulos/osm.js & gbif.js<br/>scripts/descargar_todas_las_categorias_osm.py"]
-        P2["Pipeline B · Inspector Normativo PRC/OGUC<br/>src/js/modulos/evaluador_normativo.js<br/>Ray-Casting + Art. 2.1.24 / 2.1.17 OGUC"]
-        P3["Pipeline C · Motor de Calidad WLC v2.0 y ohsome<br/>src/js/modulos/ohsome.js & calidad_analyst.js<br/>scripts/analisis_metacalidad.py"]
-        P4["Pipeline D · Modelamiento KDE/LISA y Empaquetado<br/>src/js/modulos/indicadores_analisis.js<br/>scripts/empaquetar_base_datos_completa.py"]
+    subgraph PROC["2. FLUJO DE PROCESAMIENTO DE PROCESAMIENTO (Motores JS ES6+ y Scripts Python 3)"]
+        P1["flujo de procesamiento A · Extracción y Normalización VGI<br/>src/js/modulos/osm.js & gbif.js<br/>scripts/descargar_todas_las_categorias_osm.py"]
+        P2["flujo de procesamiento B · Inspector Normativo PRC/OGUC<br/>src/js/modulos/evaluador_normativo.js<br/>Ray-Casting + Art. 2.1.24 / 2.1.17 OGUC"]
+        P3["flujo de procesamiento C · Motor de Calidad WLC v2.0 y ohsome<br/>src/js/modulos/ohsome.js & calidad_analyst.js<br/>scripts/analisis_metacalidad.py"]
+        P4["flujo de procesamiento D · Modelamiento KDE/LISA y Empaquetado<br/>src/js/modulos/indicadores_analisis.js<br/>scripts/empaquetar_base_datos_completa.py"]
     end
 
     subgraph OUT["3. OUTPUT / ENTREGABLES VERIFICABLES (Rutas en Git y Web)"]
         O1["data/capa_*.geojson (10 barriales + 10 RM)<br/>data/atlas_vgi_barrio_brasil_uah_completo.geojson<br/>docs/categorias_tematicas_osm.xlsx"]
         O2["Certificado CIN-VGI Interactivo (.txt / .html)<br/>10 Hitos PRC (1990-2024) en Módulo 01<br/>docs/catalogo_fuentes_vgi.xlsx"]
         O3["docs/ANALISIS_METACALIDAD.md<br/>docs/wlc_metacalidad_ranking.csv & .json<br/>docs/matriz_metacalidad.json & perfil_metadatos_vgi.xlsx"]
-        O4["4 Storyboards (83 Mapas) en Módulo 05<br/>data/matriz_sintesis_barrio_brasil_manzanas.geojson<br/>docs/geodatabase_completa_atlas_vgi.zip (542,35 MB)"]
+        O4["4 guiones visuales (83 Mapas) en Módulo 05<br/>data/matriz_sintesis_barrio_brasil_manzanas.geojson<br/>docs/geodatabase_completa_atlas_vgi.zip (542,35 MB)"]
     end
 
     I1 --> P1 --> O1
@@ -65,14 +74,14 @@ flowchart LR
     I4 --> P4 --> O4
 ```
 
-### 2.2. Pipeline de Articulación de los 10 Módulos de la Plataforma Web (`src/index.html`)
+### 2.2. Flujo de procesamiento de articulación de los 10 Módulos de la plataforma web (`src/index.html`)
 
 ```mermaid
 flowchart TD
     subgraph NUCLEO["Núcleo de Configuración y Motor Geodésico"]
-        CFG["src/js/config.js + config/config.json<br/>(window.NODO_CONFIG: BBox y CAT-01 a CAT-10)"]
+        CFG["src/js/config.js + config/config.json<br/>(window.NODO_CONFIG: caja delimitadora y CAT-01 a CAT-10)"]
         GEO["src/js/modulos/geodesia.js<br/>(EPSG:4326 ↔ EPSG:32719 UTM 19S)"]
-        DB["src/js/modulos/db_client.js<br/>(Failover: PostGIS RPC → CDN → Caché Local)"]
+        DB["src/js/modulos/db_client.js<br/>(Conmutación por falla: PostGIS RPC → CDN → Caché Local)"]
     end
 
     subgraph VISOR["Módulo 01: Visor Territorial y Subpaneles"]
@@ -88,7 +97,7 @@ flowchart TD
     end
 
     subgraph ANALISIS["Módulos 05 y 06: Síntesis Territorial y Auditoría de Calidad"]
-        M05["05. Indicadores & 4 Storyboards (83 Mapas)<br/>src/js/modulos/indicadores_analisis.js"]
+        M05["05. Indicadores & 4 guiones visuales (83 Mapas)<br/>src/js/modulos/indicadores_analisis.js"]
         M06["06. Calidad & ICV (WLC v2.0 / ohsome / OSMCha)<br/>src/js/modulos/ohsome.js & calidad_analyst.js"]
     end
 
@@ -110,26 +119,26 @@ flowchart TD
 
 ---
 
-## 3. Estructura de los 10 Módulos de la Plataforma Web
+## 3. Estructura de los 10 Módulos de la plataforma web
 
 | N° | Pestaña en la Interfaz (`src/index.html`) | ID del Panel DOM | Controladores JavaScript (`src/js/`) | Función Principal y Salidas Verificables |
 | :---: | :--- | :--- | :--- | :--- |
-| **`01`** | **Visor para la gestión territorial** | `#panel-inicio` | `app.js`, `modulos/mapa.js`, `modulos/ide_chile.js`, `modulos/evaluador_normativo.js`, `modulos/geodesia.js` | Superposición interactiva de las **134 capas** (`124` oficiales + `10` VGI), cálculo del **ICV Dinámico**, dibujo de BBox con área en `EPSG:32719` y emisión del **Certificado CIN-VGI** (con los 10 hitos históricos del PRC 1990–2024). |
-| **`02`** | **Consultas Overpass (OSM)** | `#panel-explorador-osm` | `modulos/osm.js`, `modulos/taginfo.js` | Consultas en vivo mediante Overpass QL con failover entre 3 servidores, reconstrucción topológica de nodos/vías, normalización al esquema de 14 atributos y auditoría semántica Taginfo API v4. |
-| **`03`** | **Biodiversidad GBIF** | `#panel-biodiversidad-gbif` | `modulos/gbif.js` | Consulta a GBIF API v1 bajo estándar **Darwin Core (DwC)** para registros de flora, arbolado y fauna urbana georreferenciada (`data/capa_biodiversidad.geojson`). |
-| **`04`** | **Cartografía uMap** | `#panel-proyectos-umap` | `modulos/umap.js`, `modulos/importador_capas.js` | Integración de proyectos comunitarios uMap e importador local *client-side* para archivos `.geojson`, `.kml`, `.kmz`, `.gpx` y `.csv`. |
-| **`05`** | **Indicadores & Storyboards** | `#panel-indicadores` | `modulos/indicadores_analisis.js` | Sistematización de las 134 capas en **5 Dimensiones Analíticas** y **4 Storyboards Territoriales** con **83 cartografías temáticas** (`01`: 14 mapas KDE; `02`: 11 mapas LISA; `03`: 34 mapas Censo 2024/RSH; `04`: 24 mapas Socioambiente/Movilidad/Residuos). |
-| **`06`** | **Calidad & ICV** | `#panel-calidad-ohsome` | `modulos/ohsome.js`, `modulos/calidad_analyst.js`, `modulos/evaluador_calidad_cuantitativa.js` | **Submódulo A**: Evaluador Universal WLC v2.0 (ISO 19157/19115). **Submódulo B**: Series históricas ohsome API v1/v2 con **Índice de Saturación y Maduración Territorial (Herfort et al., 2023 / ISO 19157)**. **Submódulo C**: Auditoría de changesets con OSMCha. |
-| **`07`** | **Manual de Uso** | `#panel-manual` | `modulos/manual.js` | Documentación interactiva integrada: **Parte I (Manual de Uso)** con inventario filtrable de las 134 capas, y **Parte II (Manual de Actualización Técnica)** con catálogo multi-lenguaje y pipelines de datos. |
-| **`08`** | **Metadatos ISO 19115** | `#panel-metadatos-iso` | `modulos/metadatos.js` | Generador de fichas de metadatos conformes al Perfil Nacional de IDE Chile (ISO 19115:2003 / ISO 19115-1:2014) con exportación directa en **JSON** y **XML (ISO 19139:2007)**. |
-| **`09`** | **Diccionario (134 Capas)** | `#panel-diccionario` | `modulos/diccionario.js` | Catálogo de Objetos Geográficos (**ISO 19110:2016**) con **140 descriptores normativos**, homologación con IDE Chile e identificación de **86 brechas temáticas cubiertas por VGI**. |
-| **`10`** | **Licencias & Catálogos (.xlsx)** | `#panel-licencias` | `modulos/licencias.js` | Marco jurídico de datos abiertos y descarga directa de `docs/geodatabase_completa_atlas_vgi.zip` y de los 3 libros maestros `.xlsx`. |
+| `01` | Visor para la gestión territorial | `#panel-inicio` | `app.js`, `modulos/mapa.js`, `modulos/ide_chile.js`, `modulos/evaluador_normativo.js`, `modulos/geodesia.js` | Superposición interactiva de las 134 capas (`124` oficiales + `10` VGI), cálculo del ICV Dinámico, dibujo de caja delimitadora con área en `EPSG:32719` y emisión del Certificado CIN-VGI (con los 10 hitos históricos del PRC 1990–2024). |
+| `02` | Consultas Overpass (OSM) | `#panel-explorador-osm` | `modulos/osm.js`, `modulos/taginfo.js` | Consultas en vivo mediante Overpass QL con conmutación por falla entre 3 servidores, reconstrucción topológica de nodos/vías, normalización al esquema de 14 atributos y auditoría semántica Taginfo API v4. |
+| `03` | Biodiversidad GBIF | `#panel-biodiversidad-gbif` | `modulos/gbif.js` | Consulta a GBIF API v1 bajo estándar Darwin Core (DwC) para registros de flora, arbolado y fauna urbana georreferenciada (`data/capa_biodiversidad.geojson`). |
+| `04` | Cartografía uMap | `#panel-proyectos-umap` | `modulos/umap.js`, `modulos/importador_capas.js` | Integración de proyectos comunitarios uMap e importador local *client-side* para archivos `.geojson`, `.kml`, `.kmz`, `.gpx` y `.csv`. |
+| `05` | Indicadores & guiones visuales | `#panel-indicadores` | `modulos/indicadores_analisis.js` | Sistematización de las 134 capas en 5 Dimensiones Analíticas y 4 guiones visuales Territoriales con 83 cartografías temáticas (`01`: 14 mapas KDE; `02`: 11 mapas LISA; `03`: 34 mapas Censo 2024/RSH; `04`: 24 mapas Socioambiente/Movilidad/Residuos). |
+| `06` | Calidad & ICV | `#panel-calidad-ohsome` | `modulos/ohsome.js`, `modulos/calidad_analyst.js`, `modulos/evaluador_calidad_cuantitativa.js` | Submódulo A: Evaluador Universal WLC v2.0 (ISO 19157/19115). Submódulo B: Series históricas ohsome API v1/v2 con Índice de Saturación y Maduración Territorial (Herfort et al., 2023 / ISO 19157). Submódulo C: Auditoría de changesets con OSMCha. |
+| `07` | Manual de Uso | `#panel-manual` | `modulos/manual.js` | Documentación interactiva integrada: Parte I (Manual de Uso) con inventario filtrable de las 134 capas, y Parte II (Manual de Actualización Técnica) con catálogo multi-lenguaje y flujos de procesamiento de datos. |
+| `08` | Metadatos ISO 19115 | `#panel-metadatos-iso` | `modulos/metadatos.js` | Generador de fichas de metadatos conformes al Perfil Nacional de IDE Chile (ISO 19115:2003 / ISO 19115-1:2014) con exportación directa en JSON y XML (ISO 19139:2007). |
+| `09` | Diccionario (134 Capas) | `#panel-diccionario` | `modulos/diccionario.js` | Catálogo de Objetos Geográficos (ISO 19110:2016) con 140 descriptores normativos, homologación con IDE Chile e identificación de 86 brechas temáticas cubiertas por VGI. |
+| `10` | Licencias & Catálogos (.xlsx) | `#panel-licencias` | `modulos/licencias.js` | Marco jurídico de datos abiertos y descarga directa de `docs/geodatabase_completa_atlas_vgi.zip` y de los 3 libros maestros `.xlsx`. |
 
 ---
 
-## 4. Estructura del Repositorio y Entregables Verificables en Git
+## 4. Estructura del repositorio y entregables verificables en Git
 
-El repositorio mantiene **paridad simétrica** entre los directorios de raíz (`data/` y `docs/`) y los directorios publicados por el servidor web (`src/data/` y `src/docs/`), garantizando rutas idénticas tanto en ejecución local como en despliegues sobre Netlify y GitHub Pages.
+El repositorio mantiene paridad simétrica entre los directorios de raíz (`data/` y `docs/`) y los directorios publicados por el servidor web (`src/data/` y `src/docs/`), garantizando rutas idénticas tanto en ejecución local como en despliegues sobre Netlify y GitHub Pages.
 
 ```text
 nodo-geoabierto/
@@ -145,13 +154,13 @@ nodo-geoabierto/
 │   └── docs/                                 # Espejo exacto de docs/ para descarga directa desde el navegador
 ├── data/                                     # Repositorio maestro de capas GeoJSON (.geojson), GPKG (.gpkg) y CSV
 ├── docs/                                     # Documentación técnica (.md), reportes WLC (.csv/.json), libros (.xlsx) y .zip
-├── config/config.json                        # Parámetros JSON de BBox, comunas RM y 10 categorías VGI
+├── config/config.json                        # Parámetros JSON de caja delimitadora, comunas RM y 10 categorías VGI
 ├── scripts/                                  # 25 scripts Python 3 de ETL, calidad WLC, auditoría y empaquetado
 │   └── db/                                   # Esquemas SQL PostGIS (01_schema_postgis.sql, 02_seed_metadata.sql)
 └── netlify.toml                              # Configuración CDN, cabeceras CORS/Cache y redirecciones HTTP
 ```
 
-### Catálogo de Entregables Verificables (`docs/` y `src/docs/`)
+### Catálogo de entregables verificables (`docs/` y `src/docs/`)
 
 | Archivo / Entregable en Git y Web | Formato | Descripción y Contenido |
 | :--- | :---: | :--- |
@@ -164,23 +173,23 @@ nodo-geoabierto/
 
 ---
 
-## 5. Documentación Técnica del Proyecto
+## 5. Documentación técnica del proyecto
 
 Toda la documentación se encuentra sincronizada en la raíz del proyecto, en `docs/` y en `src/docs/`:
 
-1. **[`MANUAL_USO.md`](MANUAL_USO.md)** (`docs/MANUAL_USO.md` / `src/docs/MANUAL_USO.md`): Manual operativo de los 10 módulos de la plataforma web, flujos de trabajo con diagramas pipeline, uso del Inspector Normativo PRC/OGUC, los 4 Storyboards (83 cartografías) y los 3 submódulos de Calidad Espacial.
-2. **[`MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md)** (`docs/MANUAL_ACTUALIZACION_ATLAS.md` / `src/docs/MANUAL_ACTUALIZACION_ATLAS.md`): Manual de ingeniería de software, arquitectura, catálogo estandarizado multi-lenguaje, pipelines de datos y guía paso a paso para adaptar el Atlas a cualquier territorio.
-3. **[`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md)** y **[`PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md`](PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md)**: Especificación de la arquitectura cliente-servidor, motor geodésico `EPSG:4326` ↔ `EPSG:32719`, protocolo de 8 bancos de pruebas pre-despliegue y despliegue continuo en Netlify y GitHub Pages.
-4. **[`docs/ANALISIS_METACALIDAD.md`](docs/ANALISIS_METACALIDAD.md)**: Reporte técnico del modelo de Combinación Lineal Ponderada (WLC) bajo las normas ISO 19115:2014 e ISO 19157:2013 sobre el repositorio cartográfico.
-5. **[`docs/GUIA_BASE_DATOS_SUPABASE.md`](docs/GUIA_BASE_DATOS_SUPABASE.md)**: Guía de despliegue y operación del backend relacional PostgreSQL 17 / PostGIS 3.3 en Supabase y automatización Keep-Alive mediante GitHub Actions.
-6. **[`docs/TRAZABILIDAD_ACADEMICA.md`](docs/TRAZABILIDAD_ACADEMICA.md)**: Síntesis metodológica, marco conceptual VGI, homologación taxonómica y gobernanza territorial.
-7. **[`docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`](docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md)**: Compendio de **125 referencias bibliográficas y normativas** en formato APA 7ª edición que respaldan los módulos, indicadores y storyboards del sistema.
+1. [`MANUAL_USO.md`](MANUAL_USO.md) (`docs/MANUAL_USO.md` / `src/docs/MANUAL_USO.md`): Manual operativo de los 10 módulos de la plataforma web, flujos de trabajo con diagramas flujo de procesamiento, uso del Inspector Normativo Plan Regulador Comunal (PRC, véase el glosario)/Ordenanza General de Urbanismo y Construcciones (OGUC, véase el glosario), los 4 guiones visuales (83 cartografías) y los 3 submódulos de Calidad Espacial.
+2. [`MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md) (`docs/MANUAL_ACTUALIZACION_ATLAS.md` / `src/docs/MANUAL_ACTUALIZACION_ATLAS.md`): Manual de ingeniería de software, arquitectura, catálogo estandarizado multi-lenguaje, flujos de procesamiento de datos y guía paso a paso para adaptar el Atlas a cualquier territorio.
+3. [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) y [`PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md`](PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md): Especificación de la arquitectura cliente-servidor, motor geodésico `EPSG:4326` ↔ `EPSG:32719`, protocolo de 8 bancos de pruebas pre-despliegue y despliegue continuo en Netlify y GitHub Pages.
+4. [`docs/ANALISIS_METACALIDAD.md`](docs/ANALISIS_METACALIDAD.md): Reporte técnico del modelo de Combinación Lineal Ponderada (WLC) bajo las normas ISO 19115:2014 e ISO 19157:2013 sobre el repositorio cartográfico.
+5. [`docs/GUIA_BASE_DATOS_SUPABASE.md`](docs/GUIA_BASE_DATOS_SUPABASE.md): Guía de despliegue y operación del backend relacional PostgreSQL 17 / PostGIS 3.3 en Supabase y automatización Keep-Alive mediante GitHub Actions.
+6. [`docs/TRAZABILIDAD_ACADEMICA.md`](docs/TRAZABILIDAD_ACADEMICA.md): Síntesis metodológica, marco conceptual VGI, homologación taxonómica y gobernanza territorial.
+7. [`docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`](docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md): Compendio de 125 referencias bibliográficas y normativas en formato APA 7ª edición que respaldan los módulos, indicadores y guiones visuales del sistema.
 
 ---
 
-## 6. Ejecución Local, Verificación y Licenciamiento
+## 6. Ejecución local, verificación y licenciamiento
 
-### Ejecución Local y Suite de Auditoría Automatizada
+### Ejecución local y suite de auditoría automatizada
 
 ```bash
 # 1. Levantar servidor HTTP local apuntando al directorio de publicación web (src/)
@@ -196,9 +205,9 @@ python3 scripts/verificar_integridad_despliegue.py
 python3 scripts/analisis_metacalidad.py
 ```
 
-### Licenciamiento y Gobernanza de Datos Abiertos
+### Licenciamiento y gobernanza de datos abiertos
 
-* **Datos Colaborativos de OpenStreetMap:** [Open Database License (ODbL 1.0)](https://opendatacommons.org/licenses/odbl/1-0/) — © Colaboradores de OpenStreetMap.
-* **Registros de Biodiversidad (GBIF) y Cartografías Derivadas:** [Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/deed.es).
-* **Coberturas Oficiales del Estado de Chile:** Acceso público y reutilización regidos por la **Ley N° 20.285 sobre Acceso a la Información Pública** y resguardo de microdatos conforme a la **Ley N° 19.628 sobre Protección de la Vida Privada**.
-* **Código Fuente del Software:** [GNU Affero General Public License v3.0 (AGPLv3)](https://www.gnu.org/licenses/agpl-3.0.html).
+* Datos Colaborativos de OpenStreetMap: [Open Database License (ODbL 1.0)](https://opendatacommons.org/licenses/odbl/1-0/) — © Colaboradores de OpenStreetMap.
+* Registros de Biodiversidad (GBIF) y Cartografías Derivadas: [Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/deed.es).
+* Coberturas Oficiales del Estado de Chile: Acceso público y reutilización regidos por la Ley N° 20.285 sobre Acceso a la Información Pública y resguardo de microdatos conforme a la Ley N° 19.628 sobre Protección de la Vida Privada.
+* Código Fuente del Software: [GNU Affero General Public License v3.0 (AGPLv3)](https://www.gnu.org/licenses/agpl-3.0.html).

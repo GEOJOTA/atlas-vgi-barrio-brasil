@@ -1,22 +1,22 @@
-# Guía de Base de Datos Espacial PostgreSQL / PostGIS en Supabase y Resiliencia Híbrida — Atlas VGI
+# Guía de base de datos espacial PostgreSQL / PostGIS en Supabase y resiliencia híbrida — Atlas VGI
 
-* **Plataforma Web en Producción:** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
-* **Archivos de Esquema y Cliente:** [`scripts/db/01_schema_postgis.sql`](scripts/db/01_schema_postgis.sql) · [`scripts/db/02_seed_metadata.sql`](scripts/db/02_seed_metadata.sql) · [`src/js/modulos/db_client.js`](src/js/modulos/db_client.js) · [`.github/workflows/supabase_keepalive.yml`](.github/workflows/supabase_keepalive.yml).
-* **Cobertura Gestionada:** **134 Capas Operativas** (`124` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) · **140 Descriptores ISO 19110:2016** · **Metadatos ISO 19115 / ISO 19157**.
-
----
-
-## 1. Propósito de la Arquitectura Relacional Híbrida (PostGIS + CDN Estático)
-
-El **Atlas de Información Geográfica Voluntaria (VGI)** implementa un modelo de persistencia espacial híbrida que combina la capacidad analítica de **PostgreSQL 17 con la extensión espacial PostGIS 3.3 (alojada en Supabase)** con la velocidad y disponibilidad perpetua de un **repositorio estático de archivos GeoJSON en CDN (`src/data/*.geojson` ↔ `data/*.geojson`)**.
-
-Esta arquitectura asegura que la plataforma opere con **cero tiempo de inactividad**: si el cliente dispone de conexión al motor PostGIS, puede ejecutar recortes por *Bounding Box* e intersecciones espaciales mediante funciones **RPC (Remote Procedure Calls)**; si la instancia remota no se encuentra configurada o experimenta latencia, el módulo [`src/js/modulos/db_client.js`](src/js/modulos/db_client.js) conmuta de manera transparente hacia las **134 capas locales** y la caché en memoria RAM.
+* Plataforma Web en Producción: [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
+* Archivos de Esquema y Cliente: [`scripts/db/01_schema_postgis.sql`](scripts/db/01_schema_postgis.sql) · [`scripts/db/02_seed_metadata.sql`](scripts/db/02_seed_metadata.sql) · [`src/js/modulos/db_client.js`](src/js/modulos/db_client.js) · [`.github/workflows/supabase_keepalive.yml`](.github/workflows/supabase_keepalive.yml).
+* Cobertura Gestionada: 134 Capas Operativas (`124` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) · 140 Descriptores ISO 19110:2016 · Metadatos ISO 19115 / ISO 19157.
 
 ---
 
-## 2. Pipelines de Base de Datos Espacial y Failover (`INPUT` → `PROCESAMIENTO` → `OUTPUT`)
+## 1. Propósito de la arquitectura relacional híbrida (PostGIS + CDN estático)
 
-### 2.1. Pipeline de Inicialización del Esquema PostGIS y Carga Semilla
+El Atlas de Información Geográfica Voluntaria (VGI) implementa un modelo de persistencia espacial híbrida que combina la capacidad analítica de PostgreSQL 17 con la extensión espacial PostGIS 3.3 (alojada en Supabase) con la velocidad y disponibilidad perpetua de un repositorio estático de archivos GeoJSON en CDN (`src/data/*.geojson` ↔ `data/*.geojson`).
+
+Esta arquitectura asegura que la plataforma opere con cero tiempo de inactividad: si el cliente dispone de conexión al motor PostGIS, puede ejecutar recortes por *caja delimitadora* e intersecciones espaciales mediante funciones RPC (Remote Procedure Calls); si la instancia remota no se encuentra configurada o experimenta latencia, el módulo [`src/js/modulos/db_client.js`](src/js/modulos/db_client.js) conmuta de manera transparente hacia las 134 capas locales y la caché en memoria RAM.
+
+---
+
+## 2. Flujos de procesamiento de base de datos espacial y conmutación por falla (`INPUT` → `PROCESAMIENTO` → `OUTPUT`)
+
+### 2.1. Flujo de procesamiento de inicialización del esquema PostGIS y carga semilla
 
 ```mermaid
 flowchart LR
@@ -41,16 +41,16 @@ flowchart LR
     P3 --> O2
 ```
 
-### 2.2. Pipeline de Resolución de Consultas con Triple Failover (`src/js/modulos/db_client.js`)
+### 2.2. Flujo de procesamiento de resolución de consultas con triple conmutación por falla (`src/js/modulos/db_client.js`)
 
 ```mermaid
 flowchart TD
-    REQ["1. INPUT: Solicitud de Capa o Consulta por BBox<br/>desde Módulos 01, 02, 05, 06 u 08"] --> N1{"¿Nivel 1 Disponible?<br/>Supabase PostGIS RPC / Storage"}
+    REQ["1. INPUT: Solicitud de Capa o Consulta por caja delimitadora<br/>desde Módulos 01, 02, 05, 06 u 08"] --> N1{"¿Nivel 1 Disponible?<br/>Supabase PostGIS RPC / Storage"}
 
-    N1 -- "Sí (HTTP 200)" --> RPC["2A. PROCESAMIENTO POSTGIS<br/>ST_Intersects(geom, ST_MakeEnvelope(bbox, 4326))<br/>Serialización ST_AsGeoJSON()"]
+    N1 -- "Sí (HTTP 200)" --> RPC["2A. PROCESAMIENTO POSTGIS<br/>ST_Intersects(geom, ST_MakeEnvelope(caja delimitadora, 4326))<br/>Serialización ST_AsGeoJSON()"]
     N1 -- "No / Sin Credenciales / Timeout" --> N2{"¿Nivel 2 Disponible?<br/>CDN Estático (src/data/*.geojson)"}
 
-    N2 -- "Sí (Fetch Local)" --> CDN["2B. PROCESAMIENTO CLIENT-SIDE<br/>Lectura de src/data/*.geojson (data/*.geojson)<br/>Filtro BBox y Reproyección EPSG:32719 en geodesia.js"]
+    N2 -- "Sí (Fetch Local)" --> CDN["2B. PROCESAMIENTO CLIENT-SIDE<br/>Lectura de src/data/*.geojson (data/*.geojson)<br/>Filtro caja delimitadora y Reproyección EPSG:32719 en geodesia.js"]
     N2 -- "Ya Cargada en Sesión" --> RAM["2C. NIVEL 3: CACHÉ EN MEMORIA RAM<br/>Retorno inmediato desde capasOficialesCargadas"]
 
     RPC & CDN & RAM --> OUT["3. OUTPUT: FeatureCollection GeoJSON Normalizado<br/>Renderizado en Visor Leaflet + Telemetría ICV Dinámico"]
@@ -58,34 +58,34 @@ flowchart TD
 
 ---
 
-## 3. Estructura del Esquema Relacional Espacial (`scripts/db/01_schema_postgis.sql`)
+## 3. Estructura del esquema relacional espacial (`scripts/db/01_schema_postgis.sql`)
 
 | Tabla / Objeto en PostgreSQL | Tipo de Objeto | Columnas Clave y Geometría PostGIS | Índices y Restricciones |
 | :--- | :---: | :--- | :--- |
-| **`public.catalogo_capas`** | Tabla Maestro | `id` (`TEXT PK`), `codigo_bbdd`, `nombre`, `institucion`, `origen` (`'VGI'` \| `'OFICIAL'`), `tipo_geometria`, `archivo_local`, `srid_nativo` (`4326`), `licencia`, `metadatos_iso19115` (`JSONB`). | `PRIMARY KEY (id)`, Índice `GIN` sobre `metadatos_iso19115`, RLS lectura pública (`SELECT TO anon`). |
-| **`public.entidades_vgi`** | Tabla Espacial | `uid` (`UUID PK`), `id_capa` (`FK`), `osm_id`, `categoria_vgi` (`CAT-01` a `CAT-10`), `nombre`, `subtipo`, `atributos` (`JSONB`), `geom` (`GEOMETRY(Geometry, 4326)`), `geom_utm19s` (`GEOMETRY(Geometry, 32719)`). | Índice espacial `GiST` sobre `geom` y `geom_utm19s`, Índice `GIN` sobre `atributos`. |
-| **`public.metricas_calidad_iso19157`** | Tabla de Auditoría | `id_capa` (`FK`), `c1_linaje`, `c2_completitud`, `c3_consistencia`, `c4_exactitud`, `c5_actualidad`, `icv_wlc_total`, `fase_madurez_ohsome`, `fecha_calculo`. | `FOREIGN KEY (id_capa) REFERENCES catalogo_capas(id)`, verificaciones de rango `[0, 100]`. |
-| **`public.obtener_entidades_en_bbox`** | Función RPC (`PL/pgSQL`) | Parámetros: `p_id_capa TEXT, p_min_lon FLOAT, p_min_lat FLOAT, p_max_lon FLOAT, p_max_lat FLOAT`. Retorna `JSONB` (`FeatureCollection` RFC 7946). | Usa `ST_Intersects` con índice `GiST` y calcula área `ST_Area(geom_utm19s)` en `m²`. |
+| `public.catalogo_capas` | Tabla Maestro | `id` (`TEXT PK`), `codigo_bbdd`, `nombre`, `institucion`, `origen` (`'VGI'` \| `'OFICIAL'`), `tipo_geometria`, `archivo_local`, `srid_nativo` (`4326`), `licencia`, `metadatos_iso19115` (`JSONB`). | `PRIMARY KEY (id)`, Índice `GIN` sobre `metadatos_iso19115`, RLS lectura pública (`SELECT TO anon`). |
+| `public.entidades_vgi` | Tabla Espacial | `uid` (`UUID PK`), `id_capa` (`FK`), `osm_id`, `categoria_vgi` (`CAT-01` a `CAT-10`), `nombre`, `subtipo`, `atributos` (`JSONB`), `geom` (`GEOMETRY(Geometry, 4326)`), `geom_utm19s` (`GEOMETRY(Geometry, 32719)`). | Índice espacial `GiST` sobre `geom` y `geom_utm19s`, Índice `GIN` sobre `atributos`. |
+| `public.metricas_calidad_iso19157` | Tabla de Auditoría | `id_capa` (`FK`), `c1_linaje`, `c2_completitud`, `c3_consistencia`, `c4_exactitud`, `c5_actualidad`, `icv_wlc_total`, `fase_madurez_ohsome`, `fecha_calculo`. | `FOREIGN KEY (id_capa) REFERENCES catalogo_capas(id)`, verificaciones de rango `[0, 100]`. |
+| `public.obtener_entidades_en_bbox` | Función RPC (`PL/pgSQL`) | Parámetros: `p_id_capa TEXT, p_min_lon FLOAT, p_min_lat FLOAT, p_max_lon FLOAT, p_max_lat FLOAT`. Retorna `JSONB` (`FeatureCollection` RFC 7946). | Usa `ST_Intersects` con índice `GiST` y calcula área `ST_Area(geom_utm19s)` en `m²`. |
 
 ---
 
-## 4. Procedimiento Paso a Paso de Configuración en Supabase
+## 4. Procedimiento paso a paso de configuración en Supabase
 
-### Paso 1 · Creación del Proyecto y Habilitación de PostGIS
+### Paso 1 · creación del proyecto y habilitación de PostGIS
 1. Ingrese a [https://supabase.com/dashboard](https://supabase.com/dashboard) y cree un proyecto nuevo (por ejemplo, `atlas-vgi-uah`, región `South America - São Paulo`).
-2. Abra la sección **SQL Editor** → **New Query**.
+2. Abra la sección SQL Editor → New Query.
 
-### Paso 2 · Ejecución de los Scripts DDL y Semilla de Metadatos
-1. Copie el contenido íntegro de [`scripts/db/01_schema_postgis.sql`](scripts/db/01_schema_postgis.sql), péguelo en el editor SQL y presione **Run**. Este script activa la extensión `postgis`, crea las tablas, configura los índices `GiST`/`GIN`, declara las funciones RPC y habilita las políticas de seguridad **Row Level Security (RLS)** de solo lectura para la clave pública `anon`.
-2. Abra una segunda consulta en el **SQL Editor**, copie el contenido de [`scripts/db/02_seed_metadata.sql`](scripts/db/02_seed_metadata.sql) y presione **Run** para poblar el catálogo inicial de coberturas y sus perfiles de metadatos ISO 19115 / ISO 19157.
+### Paso 2 · ejecución de los scripts DDL y semilla de metadatos
+1. Copie el contenido íntegro de [`scripts/db/01_schema_postgis.sql`](scripts/db/01_schema_postgis.sql), péguelo en el editor SQL y presione Run. Este script activa la extensión `postgis`, crea las tablas, configura los índices `GiST`/`GIN`, declara las funciones RPC y habilita las políticas de seguridad Row Level Security (RLS) de solo lectura para la clave pública `anon`.
+2. Abra una segunda consulta en el SQL Editor, copie el contenido de [`scripts/db/02_seed_metadata.sql`](scripts/db/02_seed_metadata.sql) y presione Run para poblar el catálogo inicial de coberturas y sus perfiles de metadatos ISO 19115 / ISO 19157.
 
-### Paso 3 · Configuración del Bucket en Supabase Storage (Opcional para Capas Masivas)
-1. En el menú lateral de Supabase, diríjase a **Storage** → **New Bucket**.
-2. Asigne el nombre exacto **`geodatos-atlas`** y active la casilla **Public bucket**.
+### Paso 3 · configuración del bucket en Supabase storage (opcional para capas masivas)
+1. En el menú lateral de Supabase, diríjase a Storage → New Bucket.
+2. Asigne el nombre exacto `geodatos-atlas` y active la casilla Public bucket.
 3. Esto permite alojar coberturas regionales de gran volumen (como los extractos metropolitanos de Geofabrik RM o el paquete `geodatabase_completa_atlas_vgi.zip`) descargables mediante URLs públicas firmadas por CDN.
 
-### Paso 4 · Vinculación de Credenciales Públicas en el Cliente Web (`src/js/config.js`)
-1. En el panel de Supabase, vaya a **Project Settings** → **API** y copie la **Project URL** y la clave pública **`anon` / `public`** (nunca exponga la clave `service_role` en archivos del cliente).
+### Paso 4 · vinculación de credenciales públicas en el cliente web (`src/js/config.js`)
+1. En el panel de Supabase, vaya a Project Settings → API y copie la Project URL y la clave pública `anon` / `public` (nunca exponga la clave `service_role` en archivos del cliente).
 2. En [`src/js/config.js`](src/js/config.js) y [`config/config.json`](config/config.json), actualice el bloque `supabase`:
    ```javascript
    supabase: {
@@ -99,7 +99,7 @@ flowchart TD
 
 ---
 
-## 5. Pipeline de Mantenimiento Continuo Keep-Alive (`.github/workflows/supabase_keepalive.yml`)
+## 5. Flujo de procesamiento de mantenimiento continuo keep-alive (`.github/workflows/supabase_keepalive.yml`)
 
 Las instancias gratuitas de Supabase entran en pausa tras 7 días sin actividad. Para garantizar la disponibilidad continua del backend PostGIS sin intervención manual, el repositorio incluye el flujo automatizado [`.github/workflows/supabase_keepalive.yml`](.github/workflows/supabase_keepalive.yml):
 
