@@ -30,7 +30,7 @@ flowchart TB
         F3["Repositorio Cartográfico Simétrico (Nivel 2)<br/>data/*.geojson ↔ src/data/*.geojson (134 Capas)<br/>docs/* ↔ src/docs/* (Libros .xlsx, .csv, .json, .zip)"]
     end
 
-    subgraph CAPA2["2. FLUJO DE PROCESAMIENTO DE PROCESAMIENTO: Núcleo Modular Client-Side (21 Scripts JS ES6+) y Suite ETL (25 Scripts Python 3)"]
+    subgraph CAPA2["2. FLUJO DE PROCESAMIENTO: Núcleo Modular Client-Side (21 Scripts JS ES6+) y Suite ETL (25 Scripts Python 3)"]
         N1["Núcleo de Configuración y Red<br/>src/js/config.js + config/config.json<br/>src/js/modulos/db_client.js & app.js"]
         N2["Motor Cartográfico, Geodésico y Normativo<br/>src/js/modulos/mapa.js (Leaflet 1.9.4)<br/>geodesia.js (EPSG:32719) & evaluador_normativo.js (PRC/OGUC)"]
         N3["Motores Analíticos y de Calidad ISO 19157<br/>src/js/modulos/indicadores_analisis.js (5 Dim / 4 guiones visuales)<br/>ohsome.js, calidad_analyst.js & evaluador_calidad_cuantitativa.js"]

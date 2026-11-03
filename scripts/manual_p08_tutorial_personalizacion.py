@@ -441,7 +441,7 @@ flowchart LR
 * **Archivos:** `src/css/estilos.css`.
 * **Pasos:**
   1. Extraiga los pares de códigos hexadecimales de superficie (`--fondo-app`, `--papel`, `--papel-alto`, `--papel-tarjeta`, `--papel-rehundido`) y de primer plano (`--tinta`, `--tinta-suave`, `--tinta-tenue`, `--musgo`, `--agua`, `--esmeralda`, `--ocre`) definidos en `:root` dentro de `src/css/estilos.css`.
-  2. Calcule la luminancia relativa $L = 0,2126 \cdot R + 0,7152 \cdot G + 0,0722 \cdot B$ y la razón de contraste $CR = (L_1 + 0,05) / (L_2 + 0,05)$ ejecutando en terminal el siguiente comando en Python:
+  2. Calcule la luminancia relativa `L = 0,2126 × R + 0,7152 × G + 0,0722 × B` y la razón de contraste `CR = (L₁ + 0,05) / (L₂ + 0,05)` ejecutando en terminal el siguiente comando en Python:
      ```bash
      python3 -c '
      def lum(h):

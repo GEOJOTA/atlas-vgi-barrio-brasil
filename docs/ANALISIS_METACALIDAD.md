@@ -112,7 +112,7 @@ flowchart LR
     subgraph IN["1. INPUT / ENTRADA (Catálogo y Capas GeoJSON)"]
         I1["134 Capas Operativas en data/*.geojson y src/data/*.geojson<br/>(124 Oficiales en ide_chile.js + 10 VGI en config.js)"]
     end
-    subgraph PROC["2. FLUJO DE PROCESAMIENTO DE PROCESAMIENTO (Scripts Python y Módulo 06 JS)"]
+    subgraph PROC["2. FLUJO DE PROCESAMIENTO (Scripts Python y Módulo 06 JS)"]
         P1["scripts/analisis_metacalidad.py &<br/>scripts/modelo_indice_lineal_wlc.py"]
         P2["src/js/modulos/evaluador_calidad_cuantitativa.js,<br/>ohsome.js & calidad_analyst.js"]
     end

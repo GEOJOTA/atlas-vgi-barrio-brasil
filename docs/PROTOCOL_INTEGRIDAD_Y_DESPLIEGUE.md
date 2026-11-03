@@ -23,7 +23,7 @@ flowchart LR
         E2["Modificación de Código Fuente o Documentación<br/>src/index.html, src/css/estilos.css, src/js/modulos/*.js,<br/>docs/*.md y src/docs/*.md"]
     end
 
-    subgraph PROC["2. FLUJO DE PROCESAMIENTO DE PROCESAMIENTO Y AUDITORÍA (Scripts Python 3 y JSC)"]
+    subgraph PROC["2. FLUJO DE PROCESAMIENTO Y AUDITORÍA (Scripts Python 3 y JSC)"]
         V1["Etapa 1 · Paridad de Conteo y Descriptores<br/>python3 scripts/verificar_conteo_capas.py<br/>(134 Capas: 124 Oficiales + 10 VGI | 140 ISO 19110)"]
         V2["Etapa 2 · Integridad Topológica y Espejo<br/>python3 scripts/verificar_integridad_despliegue.py<br/>(0 Punteros LFS | RFC 7946 | data/ == src/data/)"]
         V3["Etapa 3 · Recálculo WLC y Validación Sintáctica JS<br/>python3 scripts/analisis_metacalidad.py<br/>+ Validación de los 21 archivos JS + Cache-Busting (?v=...)"]

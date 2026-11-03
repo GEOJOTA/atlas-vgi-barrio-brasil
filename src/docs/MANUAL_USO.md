@@ -23,7 +23,7 @@ flowchart LR
         U3["Consultas Especializadas por Módulo<br/>Overpass QL (02) | GBIF (03) | guiones visuales (05)<br/>Calidad WLC/ohsome (06) | Metadatos/Diccionario (08-09)"]
     end
 
-    subgraph PROC["2. FLUJO DE PROCESAMIENTO DE PROCESAMIENTO (Motores Client-Side JS ES6+)"]
+    subgraph PROC["2. FLUJO DE PROCESAMIENTO (Motores Client-Side JS ES6+)"]
         P1["Motor Cartográfico y Geodésico<br/>src/js/modulos/mapa.js & geodesia.js<br/>Renderizado EPSG:4326 + Cálculo Métrico EPSG:32719"]
         P2["Telemetría ICV Dinámico e Inspector Normativo<br/>src/js/app.js & evaluador_normativo.js<br/>Ray-Casting Point-in-Polygon + Reglas OGUC"]
         P3["Motores Analíticos y de Calidad ISO 19157<br/>src/js/modulos/indicadores_analisis.js<br/>ohsome.js & calidad_analyst.js"]
@@ -158,10 +158,10 @@ flowchart TD
     end
 
     subgraph PROC["2. PROCESAMIENTO (src/js/modulos/indicadores_analisis.js)"]
-        S1["guion visual 01 · Densidad Kernel (KDE)<br/>14 Cartografías Temáticas<br/>Concentración de Equipamientos y Servicios"]
-        S2["guion visual 02 · Autocorrelación Espacial (LISA)<br/>11 Cartografías Temáticas<br/>Clusters I de Moran Bivariado (HH, LL, HL, LH)"]
-        S3["guion visual 03 · Habitabilidad y Censo 2024 / RSH<br/>34 Cartografías Temáticas<br/>Demografía, Vivienda, Vulnerabilidad e Inversión BIP"]
-        S4["guion visual 04 · Socioambiente, Movilidad y Residuos<br/>24 Cartografías Temáticas<br/>SUBDERE RSD, Aseo Municipal, Ruido MMA y Red Vial"]
+        S1["Guion visual 01 · Densidad Kernel (KDE)<br/>14 Cartografías Temáticas<br/>Concentración de Equipamientos y Servicios"]
+        S2["Guion visual 02 · Autocorrelación Espacial (LISA)<br/>11 Cartografías Temáticas<br/>Clusters I de Moran Bivariado (HH, LL, HL, LH)"]
+        S3["Guion visual 03 · Habitabilidad y Censo 2024 / RSH<br/>34 Cartografías Temáticas<br/>Demografía, Vivienda, Vulnerabilidad e Inversión BIP"]
+        S4["Guion visual 04 · Socioambiente, Movilidad y Residuos<br/>24 Cartografías Temáticas<br/>SUBDERE RSD, Aseo Municipal, Ruido MMA y Red Vial"]
     end
 
     subgraph OUT["3. OUTPUT / VISUALIZACIÓN Y DESCARGA"]

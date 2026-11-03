@@ -54,7 +54,7 @@ flowchart LR
         I4["Censo 2024 + RSH 2026 + BIP + SUBDERE<br/>data/ide_censo2024_manzanas.geojson"]
     end
 
-    subgraph PROC["2. FLUJO DE PROCESAMIENTO DE PROCESAMIENTO (Motores JS ES6+ y Scripts Python 3)"]
+    subgraph PROC["2. FLUJO DE PROCESAMIENTO (Motores JS ES6+ y Scripts Python 3)"]
         P1["flujo de procesamiento A · Extracción y Normalización VGI<br/>src/js/modulos/osm.js & gbif.js<br/>scripts/descargar_todas_las_categorias_osm.py"]
         P2["flujo de procesamiento B · Inspector Normativo PRC/OGUC<br/>src/js/modulos/evaluador_normativo.js<br/>Ray-Casting + Art. 2.1.24 / 2.1.17 OGUC"]
         P3["flujo de procesamiento C · Motor de Calidad WLC v2.0 y ohsome<br/>src/js/modulos/ohsome.js & calidad_analyst.js<br/>scripts/analisis_metacalidad.py"]

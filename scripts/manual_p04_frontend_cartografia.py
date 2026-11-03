@@ -319,10 +319,12 @@ A fin de brindar una evaluación rigurosa y cuantitativa del tejido urbano en la
 > **Alerta Metodológica de Cobertura en "🏗️ DINÁMICA EDIFICATORIA, PERMISOS DOM Y RECEPCIONES FINALES (CRF) INE:":**
 > Los resultados arrojados no representan el universo total del punto muestreado sino que están basados en los datos (recepción final [2011–2025] y permisos de edificación [2010–2025]) disponibles públicamente.
 
-### 1. Densidad Neta Real ($D_{\text{neta}}$, viv/ha — Art. 1.1.2 OGUC)
+### 1. Densidad neta real (`D_neta`, viv/ha — Art. 1.1.2 OGUC)
 * **Definición Normativa:** Según el Artículo 1.1.2 de la Ordenanza General de Urbanismo y Construcciones (OGUC), la densidad neta corresponde a la *"relación entre el número de habitantes, o de unidades habitacionales, y la superficie del terreno que ocupan, deduciendo las áreas de uso público"*. A diferencia de la densidad bruta (que incluye calles, pasajes y equipamientos comunales), la densidad neta evalúa exclusivamente la concentración vertical y horizontal dentro de los límites del lote predial.
 * **Formulación Matemática:**
-  $$D_{\text{neta}} = \frac{N_{\text{viviendas}}}{\text{Superficie Predial (m}^2) / 10.000} = \frac{N_{\text{viviendas}}}{\text{Superficie Predial (ha)}}$$
+  ```text
+  D_neta = N_viviendas / [ Superficie predial (m²) / 10.000 ] = N_viviendas / Superficie predial (ha)
+  ```
 * **Implementación Algorítmica:**
   Para cada polígono predial de conjunto habitacional registrado en el catastro de Recepción Final (`CRF_Santiago_Total.gpkg`), se toma el campo `N_VIVIENDA` y se divide por su superficie geodésica proyectada en UTM Huso 19S (`EPSG:32719`):
   ```python
@@ -331,11 +333,13 @@ A fin de brindar una evaluación rigurosa y cuantitativa del tejido urbano en la
   ```
   En la Comuna de Santiago, los conjuntos habitacionales analizados registran una media de **1.659,4 viv/ha**, con cúspides de densificación intensiva superiores a **9.500 viv/ha** en tipologías de edificación aislada en altura.
 
-### 2. Coeficiente de Ocupación de Suelo ($COS$ — Art. 1.1.2 OGUC)
+### 2. Coeficiente de ocupación de suelo (`COS` — Art. 1.1.2 OGUC)
 * **Definición Normativa:** Conforme al Artículo 1.1.2 de la OGUC, el Coeficiente de Ocupación de Suelo es el *"número que multiplicado por la superficie total del predio, descontadas de esta última las áreas declaradas de utilidad pública, fija el máximo de metros cuadrados que pueden edificarse en el primer piso"*.
 * **Formulación Matemática:**
-  $$COS = \frac{\text{Superficie Edificada en Planta (m}^2)}{\text{Superficie Total del Lote (m}^2)}$$
-  Donde $0.0 \le COS \le 1.0$.
+  ```text
+  COS = Superficie edificada en planta (m²) / Superficie total del lote (m²)
+  ```
+  Donde `0,0 <= COS <= 1,0`.
 * **Implementación Algorítmica (Intersección Predio-Huella OSM):**
   Dado que los registros tabulares del INE no contienen el desglose poligonal de la planta baja, el Atlas cruza espacialmente cada predio con la capa de **Huellas de Edificación (OSM)** (`edificaciones_poligonos.gpkg`, 20.260 huellas en Santiago) mediante indexación espacial jerárquica R-Tree:
   ```python
@@ -347,13 +351,15 @@ A fin de brindar una evaluación rigurosa y cuantitativa del tejido urbano en la
   ```
   La media observada en los conjuntos habitacionales recepcionados de Santiago es de **0,47** (ocupación promedio del 47% del lote en planta baja).
 
-### 3. Porcentaje de Patio y Suelo Libre ($\% SL$)
+### 3. Porcentaje de patio y suelo libre (`% SL`)
 * **Definición Técnica:** Representa la porción superficial del predio que permanece libre de edificaciones permanentes a nivel de terreno natural, destinada reglamentariamente a patios interiores, distanciamientos, áreas verdes privadas, permeabilidad de infiltración pluvial y circulaciones descubiertas.
 * **Formulación Matemática:**
-  $$\% SL = (1.0 - COS) \times 100\%$$
+  ```text
+  % SL = (1,0 - COS) × 100
+  ```
 * **Significancia Territorial:** En el marco de la mitigación de islas de calor urbanas y conservación ambiental, este indicador permite diagnosticar el grado de sellamiento del suelo predial. En los conjuntos recepcionados de Santiago, el suelo libre promedio alcanza el **53,5%**, variando ampliamente entre cités históricos de baja altura y torres con placa comercial.
 
-### 4. Cálculo de Frente y Fondo Predial (LGUC / OGUC vía OBB)
+### 4. Cálculo de frente y fondo predial (LGUC / OGUC vía OBB)
 * **Definición Normativa:**
   - **Frente Predial (Art. 1.1.2 OGUC):** Línea de deslinde que separa el predio del bien nacional de uso público que le otorga acceso oficial (calle, avenida, pasaje).
   - **Fondo Predial:** Profundidad media del predio medida perpendicularmente desde la línea oficial de frente hacia el contrafrente o deslinde posterior.
@@ -371,8 +377,8 @@ A fin de brindar una evaluación rigurosa y cuantitativa del tejido urbano en la
   ```
 * **Morfología Diagnóstica:**
   - En los conjuntos habitacionales recepcionados de Santiago, el frente predial medio es de **32,3 metros** y el fondo medio de **54,5 metros**, con una relación media de **1,85**.
-  - Ratios elevados ($\ge 2.5$) caracterizan los lotes históricos alargados del pericentro poniente (Cités y casonas coloniales de Barrio Brasil y Yungay).
-  - Ratios balanceados ($\approx 1.0 - 1.5$) reflejan procesos de consolidación predial o fusiones inmobiliarias para torres residenciales en altura.
+  - Razones elevadas (`>= 2,5`) caracterizan los lotes históricos alargados del pericentro poniente (cités y casonas coloniales de Barrio Brasil y Yungay).
+  - Razones equilibradas (`1,0 a 1,5`) reflejan procesos de consolidación predial o fusiones inmobiliarias para torres residenciales en altura.
 
 ### 5. Articulación de Escalas Territoriales en el Inspector Normativo
 El Inspector Normativo implementa la consulta espacial articulando simultáneamente dos filtros complementarios:
@@ -449,18 +455,18 @@ flowchart LR
 sequenceDiagram
     autonumber
     actor Usuario as Usuario (Escritorio / Móvil / Tablet)
-    participant Lamina as Lámina Modal Storyboard
+    participant Lamina as Lámina Modal de Guion Visual
     participant Lightbox as Motor Lightbox HD (indicadores_analisis.js)
     participant Canvas as Contenedor #lightbox-canvas
 
     alt Clic en Cartografía Temática JPG (2200x1423 / 3264x2112)
         Usuario->>Lamina: Clic en tarjeta o miniatura cartográfica
         Lamina->>Lightbox: abrirLightboxCartografia(src, titulo, subtitulo, rutaAlternativa)
-        Lightbox->>Canvas: Inyecta <img> con fallback automático (img/ <-> src/img/)
+        Lightbox->>Canvas: Inyecta imagen HD con respaldo automático (img/ y src/img/)
     else Clic en Diagrama de Flujo SVG
         Usuario->>Lamina: Clic en contenedor .storyboard-diagrama-box
         Lamina->>Lightbox: abrirLightboxDiagrama(idStoryboard, idxSeccion)
-        Lightbox->>Canvas: Inyecta <svg viewBox="0 0 680 230"> con dimensiones explícitas (min 680px / 88vw)
+        Lightbox->>Canvas: Inyecta gráfico SVG (viewBox 680x230, min 680px / 88vw)
     else Clic en Gráfico Estadístico Inline
         Usuario->>Lamina: Clic en bloque .storyboard-inline-chart
         Lamina->>Lightbox: abrirLightboxGraficoInline(idStoryboard, idxSeccion)
@@ -468,7 +474,7 @@ sequenceDiagram
     end
     Canvas-->>Usuario: Visualización en pantalla completa (100dvh)
     Usuario->>Canvas: Rueda de ratón / Pinch-to-Zoom (2 dedos) / Paneo táctil (1 dedo)
-    Canvas->>Lightbox: Actualiza matriz CSS translate3d(x, y, 0) scale(z) en tiempo real (0.5x a 4.5x)
+    Canvas->>Lightbox: Actualiza matriz CSS translate3d(x, y, 0) scale(z) en tiempo real (0,5x a 4,5x)
 ```
 
 Para inspeccionar las 83 láminas cartográficas de alta definición (`2200 × 1423 px` y `3264 × 2112 px`), los diagramas vectoriales SVG y los gráficos estadísticos sin pérdida de nitidez en cualquier pantalla (ordenadores de escritorio, tablets y teléfonos móviles), el sistema incorpora un motor modal interactivo con soporte dual de ratón y eventos táctiles (`touchstart`, `touchmove`, `touchend`):
