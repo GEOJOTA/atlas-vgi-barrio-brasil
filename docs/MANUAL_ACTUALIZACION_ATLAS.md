@@ -11,7 +11,7 @@
 * [2. Delimitación geodésica y cobertura territorial del área de estudio](#2-delimitación-geodésica-y-cobertura-territorial-del-área-de-estudio)
 * [3. Formulación estratégica: Objetivos del proyecto](#3-formulación-estratégica-objetivos-del-proyecto)
   * [3.1. Objetivo general](#31-objetivo-general)
-  * [3.2. Objetivos específicos](#32-objetivos-específicos)
+  * [3.2. Objetivos específicos y metas operativas](#32-objetivos-específicos-y-metas-operativas)
 * [4. Matriz de cumplimiento de los 10 Hitos del proyecto](#4-matriz-de-cumplimiento-de-los-10-hitos-del-proyecto)
 * [5. Los cuatro perfiles de actores territoriales (alineación con la plataforma web)](#5-los-cuatro-perfiles-de-actores-territoriales-alineación-con-la-plataforma-web)
   * [5.1. Perfil 1: Instituciones públicas (municipio / IDE) [`institucion`]](#51-perfil-1-instituciones-públicas-municipio--ide-institucion)
@@ -213,7 +213,7 @@ El proyecto se organiza en un objetivo general y cuatro objetivos específicos (
 
 ---
 
-### 3.2. Objetivos específicos
+### 3.2. Objetivos específicos y metas operativas
 
 * **OE 1.** Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales.
 * **OE 2.** Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos.
@@ -222,125 +222,117 @@ El proyecto se organiza en un objetivo general y cuatro objetivos específicos (
 
 ---
 
-#### Desglose operativo del objetivo específico 1 (OE 1)
-* Estado: 100 % completado (hitos 1, 2 y 3).
-* Definición: Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales.
-* Actividades realizadas:
-  - Revisión de cuatro plataformas de geodatos abiertos: OpenStreetMap, GBIF, ohsome e IDE Chile (servicios WFS y WMS).
-  - Definición de las 10 macrocategorías comunitarias VGI (CAT-01 a CAT-10) homologadas con etiquetas de OpenStreetMap y el estándar Darwin Core.
-  - Caracterización de los cuatro perfiles de actores territoriales bajo criterios de diseño centrado en el usuario.
+#### Objetivo específico 1 (OE 1): Caracterización y diseño centrado en el usuario
+* Estado operativo: 100 % completado (hitos 1, 2 y 3).
+* Definición formal:
+  > Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales.
+* Componentes ejecutados:
+  - Revisión de cuatro plataformas de geodatos abiertos: OpenStreetMap, GBIF, ohsome API v1/v2 y servicios WFS/WMS de IDE Chile.
+  - Estructuración de las 10 macrocategorías comunitarias VGI (CAT-01 a CAT-10) normalizadas bajo etiquetas OpenStreetMap y el estándar Darwin Core.
+  - Caracterización de los cuatro perfiles de actores territoriales mediante metodologías de diseño centrado en el usuario.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. Objetivo específico 1                                                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • OE 1: Caracterización y bases taxonómicas                                │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. Procedimientos                                                          │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 1. Revisión de cuatro plataformas (OSM, GBIF, ohsome, IDE Chile)         │
-│ • 2. Estructuración taxonómica 10 macrocategorías VGI                      │
-│ • 3. Diseño centrado en el usuario de 4 perfiles de actores                │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. Productos resultantes                                                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Catálogo de fuentes VGI y matriz de brechas                              │
-│ • Taxonomía de 10 macrocategorías (CAT-01 a CAT-10)                        │
-│ • Matriz de 4 perfiles para la plataforma web                              │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 4. Localización en Git y web                                               │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • docs/catalogo_fuentes_vgi.xlsx y src/docs/catalogo_fuentes_vgi.xlsx      │
-│ • docs/categorias_tematicas_osm.xlsx y                                     │
-│   src/docs/categorias_tematicas_osm.xlsx                                   │
-│ • docs/ARQUITECTURA.md, docs/TRAZABILIDAD_ACADEMICA.md y src/js/app.js     │
-│   (#sel-perfil-usuario)                                                    │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph OBJ1["1. Objetivo específico 1"]
+        O1["OE 1: Caracterización y diseño centrado en el usuario"]
+    end
+
+    subgraph PROC1["2. Procedimientos específicos"]
+        P1_1["1. Revisión de cuatro plataformas\n(OSM, GBIF, ohsome, IDE Chile)"]
+        P1_2["2. Estructuración taxonómica\n10 macrocategorías VGI"]
+        P1_3["3. Diseño centrado en el usuario\nde 4 perfiles de actores"]
+    end
+
+    subgraph PROD1["3. Productos resultantes"]
+        PR1_1["Catálogo de fuentes VGI\ny matriz de brechas"]
+        PR1_2["Taxonomía de 10 macrocategorías\n(CAT-01 a CAT-10)"]
+        PR1_3["Matriz de 4 perfiles\npara la plataforma web"]
+    end
+
+    subgraph LOC1["4. Localización oficial en Git y web"]
+        L1_1["docs/catalogo_fuentes_vgi.xlsx\ny src/docs/catalogo_fuentes_vgi.xlsx"]
+        L1_2["docs/categorias_tematicas_osm.xlsx\ny src/docs/categorias_tematicas_osm.xlsx"]
+        L1_3["docs/ARQUITECTURA.md, docs/TRAZABILIDAD.md\ny src/js/app.js (#sel-perfil-usuario)"]
+    end
+
+    O1 --> P1_1 --> PR1_1 --> L1_1
+    O1 --> P1_2 --> PR1_2 --> L1_2
+    O1 --> P1_3 --> PR1_3 --> L1_3
 ```
 
-* Entregables verificables:
+* Entregables acreditados y localización oficial:
 
-| Código | Entregable | Tipo | Ruta en el repositorio |
+| N° | Entregable acreditado | Tipo de producto | Fuente y localización oficial en el proyecto |
 |:---:|:---|:---:|:---|
-| E-01 | Documento de arquitectura, taxonomía VGI y perfiles de usuario. | Metodológico | `docs/ARQUITECTURA.md`, `docs/TRAZABILIDAD_ACADEMICA.md` y `docs/MANUAL_ACTUALIZACION_ATLAS.md` (`src/docs/`) |
-| E-02 | Catálogo de fuentes geoespaciales y matriz de brechas barriales. | Catálogo | `docs/catalogo_fuentes_vgi.xlsx` y `src/docs/catalogo_fuentes_vgi.xlsx` |
+| E-01 | Documento metodológico de arquitectura, taxonomía VGI y perfiles de usuario. | Metodológico | `docs/ARQUITECTURA.md`, `docs/TRAZABILIDAD.md` y `docs/MANUAL_ACTUALIZACION_ATLAS.md` (`src/docs/`) |
+| E-02 | Catálogo de fuentes geoespaciales y matriz de brechas barriales. | Catálogo de datos | `docs/catalogo_fuentes_vgi.xlsx` y `src/docs/catalogo_fuentes_vgi.xlsx` |
 
 ---
 
-#### Desglose operativo del objetivo específico 2 (OE 2)
-* Estado: 100 % completado (hitos 4, 5 y 6).
-* Definición: Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos.
-* Actividades realizadas:
-  - Descarga, normalización y geoprocesamiento de las coberturas vectoriales del catálogo (véase la Tabla 1.1 de cifras clave) en los sistemas de referencia EPSG:4326 y EPSG:32719.
-  - Estructuración de la base de datos espacial en PostgreSQL 17 + PostGIS 3.3 (Supabase) con índices espaciales GiST y atributos JSONB indexados con GIN.
-  - Aplicación del modelo de combinación lineal ponderada (WLC, *Weighted Linear Combination*, v2.0) bajo la norma ISO 19157:2013, que evalúa 5 dimensiones cuantitativas (media de 96,7 %) y 5 dimensiones cualitativas (media de 94,1 %). El resultado arroja un Índice Global de Calidad VGI (IGV, promedio de calidad de las 134 capas) de 95,4 % (91 capas en grado A+ y 43 en grado A), complementado por un Índice Global de Metacalidad Documental (IGMC, cumplimiento de campos ISO 19115 en el Módulo 08) de 96,55 %.
-  - Incorporación del esquema de 14 atributos normalizados ISO en cada entidad espacial del catálogo.
+#### Objetivo específico 2 (OE 2): Geodatabase multipropósito y calidad espacial
+* Estado operativo: 100 % completado (hitos 4, 5 y 6).
+* Definición formal:
+  > Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos.
+* Componentes ejecutados:
+  - Descarga, normalización y geoprocesamiento de las coberturas vectoriales del catálogo (véase la Tabla 1.1 de cifras clave: 134 capas, compuestas por 124 oficiales del Estado de Chile y 10 coberturas VGI comunitarias) en los sistemas de referencia EPSG:4326 y EPSG:32719.
+  - Estructuración de la base de datos espacial en clúster relacional PostgreSQL 17 + PostGIS 3.3 (Supabase Cloud) con más de 1.552.000 entidades indexadas mediante árboles GiST y claves JSONB con índices GIN.
+  - Formulación y ejecución del modelo de combinación lineal ponderada (WLC v2.0) bajo norma ISO 19157:2013, integrando 5 componentes cuantitativos (media de 96,7 %) y 5 componentes cualitativos (media de 94,1 %), certificando un Índice Global de Calidad VGI (IGV) de 95,4 % (91 capas en grado A+ y 43 en grado A sobre las 134 coberturas), complementado por un Índice Global de Metacalidad Documental (IGMC) de 96,55 %.
+  - Incorporación algorítmica del esquema maestro de 14 atributos normalizados ISO en la totalidad de capas vectoriales para descargas transparentes.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. Objetivo específico 2                                                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • OE 2: Geodatabase y calidad espacial                                     │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. Procedimientos                                                          │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 1. Extracción Python y descarga de geoportales públicos                  │
-│ • 2. Normalización del esquema de 14 columnas ISO                          │
-│ • 3. Evaluación WLC v2.0 (ISO 19157) y auditoría de conjuntos de cambios   │
-│ • 4. Carga espacial en PostgreSQL 17 / PostGIS 3.3                         │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. Productos resultantes                                                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 134 capas vectoriales GeoJSON (124 oficiales + 10 VGI)                   │
-│ • Capas con linaje, fuente y fechas ISO                                    │
-│ • Certificación de calidad ISO 19157 y matriz WLC (IGV 95,4 %)             │
-│ • Geodatabase relacional PostGIS con índices GiST y GIN                    │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 4. Localización en Git y web                                               │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • src/data/*.geojson, data/*.geojson y                                     │
-│   scripts/descargar_todas_las_categorias_osm.py                            │
-│ • scripts/enriquecer_base_datos_metadatos.py y                             │
-│   docs/perfil_metadatos_vgi.xlsx (src/docs/)                               │
-│ • docs/ANALISIS_METACALIDAD.md, docs/matriz_metacalidad.json y             │
-│   docs/wlc_metacalidad_resultado.json (src/docs/)                          │
-│ • scripts/db/01_schema_postgis.sql, 02_seed_metadata.sql y                 │
-│   docs/GUIA_BASE_DATOS_SUPABASE.md                                         │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph OBJ2["1. Objetivo específico 2"]
+        O2["OE 2: Geodatabase multipropósito y calidad espacial"]
+    end
+
+    subgraph PROC2["2. Procedimientos específicos"]
+        P2_1["1. Extracción Python y descarga\nde geoportales públicos"]
+        P2_2["2. Normalización del esquema\nde 14 columnas ISO"]
+        P2_3["3. Evaluación WLC v2.0 (ISO 19157)\ny auditoría de cambios"]
+        P2_4["4. Carga espacial en\nPostgreSQL 17 / PostGIS 3.3"]
+    end
+
+    subgraph PROD2["3. Productos resultantes"]
+        PR2_1["134 capas vectoriales GeoJSON\n(124 oficiales + 10 VGI)"]
+        PR2_2["Bases vectoriales con linaje,\nfuente y fechas ISO"]
+        PR2_3["Certificación de calidad ISO 19157\ny matriz WLC (IGV 95,4 %)"]
+        PR2_4["Geodatabase relacional PostGIS\ncon índices GiST y GIN"]
+    end
+
+    subgraph LOC2["4. Localización oficial en Git y web"]
+        L2_1["src/data/*.geojson, data/*.geojson\ny scripts/descargar_todas_las_categorias_osm.py"]
+        L2_2["scripts/enriquecer_base_datos_metadatos.py\ny docs/perfil_metadatos_vgi.xlsx (src/docs/)"]
+        L2_3["docs/ANALISIS_METACALIDAD.md, docs/matriz_metacalidad.json\ny docs/wlc_metacalidad_resultado.json (src/docs/)"]
+        L2_4["scripts/db/01_schema_postgis.sql, 02_seed_metadata.sql\ny docs/GUIA_BASE_DATOS_SUPABASE.md"]
+    end
+
+    O2 --> P2_1 --> PR2_1 --> L2_1
+    O2 --> P2_2 --> PR2_2 --> L2_2
+    O2 --> P2_3 --> PR2_3 --> L2_3
+    O2 --> P2_4 --> PR2_4 --> L2_4
 ```
 
-* Entregables verificables:
+* Entregables acreditados y localización oficial:
 
-| Código | Entregable | Tipo | Ruta en el repositorio |
+| N° | Entregable acreditado | Tipo de producto | Fuente y localización oficial en el proyecto |
 |:---:|:---|:---:|:---|
-| E-03 | Geodatabase vectorial en formato GeoJSON (EPSG:4326). | Geodatabase | `src/data/*.geojson` y `data/*.geojson` (véase la Tabla 1.1) |
-| E-04 | Esquema relacional PostgreSQL 17 + PostGIS 3.3 y funciones RPC. | Base de datos | `scripts/db/01_schema_postgis.sql`, `scripts/db/02_seed_metadata.sql` y `docs/GUIA_BASE_DATOS_SUPABASE.md` (`src/docs/`) |
+| E-03 | Geodatabase espacial de 134 coberturas vectoriales GeoJSON (EPSG:4326). | Geodatabase vectorial | `src/data/*.geojson` y `data/*.geojson` (véase la Tabla 1.1) |
+| E-04 | Base de datos espacial PostgreSQL 17 + PostGIS 3.3 desplegada en la nube con funciones RPC. | Base relacional espacial | `scripts/db/01_schema_postgis.sql`, `scripts/db/02_seed_metadata.sql` y `docs/GUIA_BASE_DATOS_SUPABASE.md` (`src/docs/`) |
 | E-05 | Reporte y matrices de calidad espacial ISO 19157:2013 (IGV 95,4 %). | Evaluación de calidad | `docs/ANALISIS_METACALIDAD.md`, `docs/matriz_metacalidad.json`, `docs/wlc_metacalidad_resultado.json`, `docs/wlc_metacalidad_ranking.csv` y `docs/correlacion_dimensiones_calidad.csv` (`src/docs/`) |
-| E-06 | Catálogo tabular en formato OpenXML (.xlsx) con esquema de 14 atributos ISO. | Catálogo tabular | `docs/categorias_tematicas_osm.xlsx` y `docs/perfil_metadatos_vgi.xlsx` (`src/docs/`) |
+| E-06 | Catálogo tabular en formato OpenXML (.xlsx) con esquema de 14 atributos normalizados ISO. | Catálogo tabular OGC | `docs/categorias_tematicas_osm.xlsx` y `docs/perfil_metadatos_vgi.xlsx` (`src/docs/`) |
 
 ---
 
-#### Desglose operativo del objetivo específico 3 (OE 3)
-* Estado: 100 % completado (hitos 7 y 8).
-* Definición: Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.
-* Actividades realizadas:
+#### Objetivo específico 3 (OE 3): Geoportal web accesible e interoperable
+* Estado operativo: 100 % completado (hitos 7 y 8).
+* Definición formal:
+  > Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.
+* Componentes ejecutados:
   - Construcción de la interfaz web con conformidad WCAG 2.1 (nivel AA general en componentes interactivos y nivel AAA en todo el texto de lectura) y navegación agrupada en 5 secciones por tarea.
   - Configuración del visor cartográfico (Leaflet 1.9.4) con árbol de capas por categoría, selector de mapas base, carga bajo demanda con indicador de peso y herramientas de medición geodésica.
-  - Implementación del inspector normativo del Plan Regulador Comunal (PRC) de Santiago y de la Ordenanza General de Urbanismo y Construcciones (OGUC), que ejecuta intersección punto en polígono en el navegador y genera el Certificado de Informaciones Normativas VGI (CIN-VGI).
-  - Conexión con los servicios en vivo de Overpass API (con conmutación por falla entre espejos), ohsome API v1/v2 y GBIF API v1.
-  - Implementación del generador de metadatos ISO 19115 / XML ISO 19139 (IGMC de 96,55 %) y publicación continua en Netlify (`https://atlasvgiuah.netlify.app/`).
+  - Implementación del inspector normativo del Plan Regulador Comunal (PRC) de Santiago y de la Ordenanza General de Urbanismo y Construcciones (OGUC), que ejecuta intersección punto en polígono en el navegador y emite el Certificado de Informaciones Normativas VGI (CIN-VGI).
+  - Conexión dinámica en tiempo real con los servicios de Overpass QL API (con conmutación por falla entre servidores espejo), ohsome API v1/v2 y GBIF Occurrence API v1.
+  - Implementación del generador de metadatos ISO 19115 / XML ISO 19139 conforme al Perfil Nacional de Metadatos de IDE Chile (IGMC de 96,55 %) y publicación continua en Netlify (`https://atlasvgiuah.netlify.app/`).
 
 ```mermaid
 flowchart LR
@@ -348,11 +340,11 @@ flowchart LR
         O3["OE 3: Geoportal web accesible e interoperable"]
     end
 
-    subgraph PROC3["2. Procedimientos"]
+    subgraph PROC3["2. Procedimientos específicos"]
         P3_1["1. Desarrollo de interfaz web\ncon accesibilidad WCAG 2.1 AA/AAA"]
         P3_2["2. Integración del visor Leaflet 1.9.4\ny marcadores vectoriales SVG"]
         P3_3["3. Intersección espacial punto en polígono\ny evaluación normativa PRC/OGUC"]
-        P3_4["4. Conexión con APIs externas\n(Overpass, ohsome, GBIF)"]
+        P3_4["4. Conexión con clientes API en vivo\n(Overpass QL, ohsome, GBIF)"]
         P3_5["5. Configuración de cabeceras y\ndespliegue continuo en Netlify"]
     end
 
@@ -364,7 +356,7 @@ flowchart LR
         PR3_5["Aplicación publicada en producción"]
     end
 
-    subgraph LOC3["4. Localización en Git y web"]
+    subgraph LOC3["4. Localización oficial en Git y web"]
         L3_1["src/index.html, src/css/estilos.css,\nsrc/js/config.js y src/js/app.js"]
         L3_2["src/js/modulos/mapa.js\ny src/js/modulos/ide_chile.js"]
         L3_3["src/js/modulos/evaluador_normativo.js,\nsrc/data/ide_minvu_ipt_prc_santiago.geojson y capa_ipt_prc_comunal.geojson"]
@@ -379,70 +371,68 @@ flowchart LR
     O3 --> P3_5 --> PR3_5 --> L3_5
 ```
 
-* Entregables verificables:
+* Entregables acreditados y localización oficial:
 
-| Código | Entregable | Tipo | Ruta en el repositorio |
+| N° | Entregable acreditado | Tipo de producto | Fuente y localización oficial en el proyecto |
 |:---:|:---|:---:|:---|
 | E-07 | Geoportal web interactivo en producción (Leaflet 1.9.4). | Plataforma web | `src/index.html`, `src/js/app.js` y `https://atlasvgiuah.netlify.app/` |
-| E-08 | Inspector normativo del PRC de Santiago y emisor del certificado CIN-VGI. | Módulo de análisis | `src/js/modulos/evaluador_normativo.js`, `src/data/ide_minvu_ipt_prc_santiago.geojson` y `src/data/capa_ipt_prc_comunal.geojson` |
-| E-09 | Generador de metadatos ISO 19115 / XML ISO 19139 (IGMC 96,55 %). | Módulo de metadatos | `src/js/modulos/metadatos.js` y `docs/perfil_metadatos_vgi.xlsx` (`src/docs/`) |
-| E-10 | Diccionario territorial interactivo paginado bajo norma ISO 19110. | Módulo documental | `src/js/modulos/diccionario.js` y `docs/DICCIONARIO_CATASTRO_RSD_SUBDERE_2024.md` |
+| E-08 | Inspector normativo territorial del PRC de Santiago y emisor del certificado CIN-VGI. | Módulo de análisis espacial | `src/js/modulos/evaluador_normativo.js`, `src/data/ide_minvu_ipt_prc_santiago.geojson` y `src/data/capa_ipt_prc_comunal.geojson` |
+| E-09 | Generador de metadatos estandarizados ISO 19115 / XML ISO 19139 (IGMC 96,55 %). | Módulo de metadatos | `src/js/modulos/metadatos.js` y `docs/perfil_metadatos_vgi.xlsx` (`src/docs/`) |
+| E-10 | Diccionario territorial interactivo paginado bajo norma ISO 19110 (140 descriptores). | Módulo documental | `src/js/modulos/diccionario.js` y `docs/DICCIONARIO_CATASTRO_RSD_SUBDERE_2024.md` |
 
 ---
 
-#### Desglose operativo del objetivo específico 4 (OE 4)
-* Estado: 100 % completado (hitos 9 y 10).
-* Definición: Evaluar la usabilidad y la pertinencia de la plataforma con distintos perfiles de actores territoriales y asegurar su transferibilidad técnica, metodológica y documental.
-* Actividades realizadas:
-  - Evaluación de usabilidad y pertinencia con representantes de los cuatro perfiles de actores territoriales, sistematizando los ajustes de navegación, lectura y descarga.
-  - Elaboración del Manual de uso (`MANUAL_USO.md`) y del presente Manual de actualización técnica (`MANUAL_ACTUALIZACION_ATLAS.md`), junto con un recetario operativo de 16 tutoriales paso a paso (véase la Parte VIII).
-  - Empaquetado de la base de datos descargable en `docs/geodatabase_completa_atlas_vgi.zip` y verificación automatizada mediante `scripts/verificar_integridad_despliegue.py`.
+#### Objetivo específico 4 (OE 4): Evaluación de usabilidad y transferibilidad
+* Estado operativo: 100 % completado (hitos 9 y 10).
+* Definición formal:
+  > Evaluar la usabilidad y la pertinencia de la plataforma con distintos perfiles de actores territoriales y asegurar su transferibilidad técnica, metodológica y documental.
+* Componentes ejecutados:
+  - Evaluación de usabilidad y pertinencia técnica con representantes de los cuatro perfiles de actores territoriales, sistematizando los ajustes de navegación, lectura y descarga de geodatos.
+  - Elaboración del Manual de uso (`MANUAL_USO.md`) y del Manual de actualización técnica (`MANUAL_ACTUALIZACION_ATLAS.md`), acompañados por un recetario operativo de 16 tutoriales paso a paso organizados bajo plantilla estándar (véase la Parte VIII).
+  - Empaquetado y versionamiento de la geodatabase completa en archivo comprimido `docs/geodatabase_completa_atlas_vgi.zip` (542,35 MB).
+  - Verificación automatizada de integridad pre-despliegue mediante el script `scripts/verificar_integridad_despliegue.py`.
 
-```text
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. Objetivo específico 4                                                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • OE 4: Usabilidad y transferibilidad                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. Procedimientos                                                          │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • 1. Evaluación de usabilidad con 4 perfiles de actores                    │
-│ • 2. Redacción del manual de uso orientado a tareas                        │
-│ • 3. Elaboración del manual de actualización y 16 tutoriales               │
-│ • 4. Empaquetado de la geodatabase y verificación de integridad            │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. Productos resultantes                                                   │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • Registro de evaluación con usuarios y mejoras de interfaz                │
-│ • Manual de usuario del geoportal por perfil territorial                   │
-│ • Manual de actualización técnica y transferencia metodológica             │
-│ • Archivo comprimido ZIP con la geodatabase completa                       │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                     ▼                                      │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 4. Localización en Git y web                                               │
-├────────────────────────────────────────────────────────────────────────────┤
-│ • docs/TRAZABILIDAD_ACADEMICA.md y src/docs/TRAZABILIDAD_ACADEMICA.md      │
-│ • MANUAL_USO.md, docs/MANUAL_USO.md y src/docs/MANUAL_USO.md (Módulo 07)   │
-│ • MANUAL_ACTUALIZACION_ATLAS.md, docs/MANUAL_ACTUALIZACION_ATLAS.md y      │
-│   src/docs/MANUAL_ACTUALIZACION_ATLAS.md                                   │
-│ • docs/geodatabase_completa_atlas_vgi.zip, src/docs/ y                     │
-│   scripts/empaquetar_base_datos_completa.py                                │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph OBJ4["1. Objetivo específico 4"]
+        O4["OE 4: Usabilidad y transferibilidad"]
+    end
+
+    subgraph PROC4["2. Procedimientos específicos"]
+        P4_1["1. Evaluación de usabilidad con\n4 perfiles de actores"]
+        P4_2["2. Redacción del manual de uso\norientado a tareas"]
+        P4_3["3. Elaboración del manual de\nactualización y 16 tutoriales"]
+        P4_4["4. Empaquetado de la geodatabase\ny verificación de integridad"]
+    end
+
+    subgraph PROD4["3. Productos resultantes"]
+        PR4_1["Registro de evaluación con usuarios\ny mejoras de interfaz"]
+        PR4_2["Manual de usuario del geoportal\npor perfil territorial"]
+        PR4_3["Manual de actualización técnica\ny transferencia metodológica"]
+        PR4_4["Archivo comprimido ZIP\ncon la geodatabase completa"]
+    end
+
+    subgraph LOC4["4. Localización oficial en Git y web"]
+        L4_1["docs/TRAZABILIDAD.md\ny src/docs/TRAZABILIDAD.md"]
+        L4_2["MANUAL_USO.md, docs/MANUAL_USO.md\ny src/docs/MANUAL_USO.md (Módulo 07)"]
+        L4_3["MANUAL_ACTUALIZACION_ATLAS.md, docs/MANUAL_ACTUALIZACION_ATLAS.md\ny src/docs/MANUAL_ACTUALIZACION_ATLAS.md"]
+        L4_4["docs/geodatabase_completa_atlas_vgi.zip, src/docs/\ny scripts/empaquetar_base_datos_completa.py"]
+    end
+
+    O4 --> P4_1 --> PR4_1 --> L4_1
+    O4 --> P4_2 --> PR4_2 --> L4_2
+    O4 --> P4_3 --> PR4_3 --> L4_3
+    O4 --> P4_4 --> PR4_4 --> L4_4
 ```
 
-* Entregables verificables:
+* Entregables acreditados y localización oficial:
 
-| Código | Entregable | Tipo | Ruta en el repositorio |
+| N° | Entregable acreditado | Tipo de producto | Fuente y localización oficial en el proyecto |
 |:---:|:---|:---:|:---|
-| E-11 | Sistematización de la evaluación con usuarios y trazabilidad de mejoras. | Evaluación | `docs/TRAZABILIDAD_ACADEMICA.md` y `src/docs/TRAZABILIDAD_ACADEMICA.md` |
-| E-12 | Manual de uso del Atlas VGI para los cuatro perfiles de usuario. | Manual de uso | `MANUAL_USO.md`, `docs/MANUAL_USO.md` y `src/docs/MANUAL_USO.md` |
-| E-13 | Manual de actualización técnica y transferibilidad metodológica. | Manual técnico | `MANUAL_ACTUALIZACION_ATLAS.md`, `docs/MANUAL_ACTUALIZACION_ATLAS.md` y `src/docs/MANUAL_ACTUALIZACION_ATLAS.md` |
-| E-14 | Paquete comprimido de distribución de la geodatabase en formato ZIP. | Paquete de datos | `docs/geodatabase_completa_atlas_vgi.zip`, `src/docs/geodatabase_completa_atlas_vgi.zip` y `PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md` |
+| E-11 | Sistematización de la evaluación con usuarios y matriz de trazabilidad de mejoras. | Evaluación | `docs/TRAZABILIDAD.md` y `src/docs/TRAZABILIDAD.md` |
+| E-12 | Manual de uso del Atlas VGI para los cuatro perfiles de usuario. | Manual de uso | `MANUAL_USO.md`, `docs/MANUAL_USO.md` y `src/docs/MANUAL_USO.md` (Módulo 07 web) |
+| E-13 | Manual de actualización técnica, protocolos de mantenimiento y transferibilidad metodológica. | Manual técnico | `MANUAL_ACTUALIZACION_ATLAS.md`, `docs/MANUAL_ACTUALIZACION_ATLAS.md` y `src/docs/MANUAL_ACTUALIZACION_ATLAS.md` |
+| E-14 | Paquete comprimido de distribución de la geodatabase completa en formato ZIP. | Paquete de datos | `docs/geodatabase_completa_atlas_vgi.zip`, `src/docs/geodatabase_completa_atlas_vgi.zip` y `PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md` |
 
 ---
 
@@ -474,16 +464,16 @@ flowchart TD
 ```
 
 | Hito | Descripción | OE asociado | Fase | Estado | Entregable y ruta en el repositorio |
-|:---:|:---|:---:|:---:|:---:|:---|
+|:---:|:---|:---:|:---|:---:|:---|
 | Hito 1 | Diagnóstico territorial y revisión de cuatro plataformas (OSM, GBIF, ohsome e IDE Chile). | OE 1 | Fase I | 100 % cerrado | `docs/ARQUITECTURA.md` y `docs/catalogo_fuentes_vgi.xlsx` (`src/docs/`) |
 | Hito 2 | Definición de 10 macrocategorías VGI y 4 perfiles de actores territoriales. | OE 1 | Fase I | 100 % cerrado | `docs/categorias_tematicas_osm.xlsx` (`src/docs/`) y `src/js/config.js` |
-| Hito 3 | Inventario de fuentes colaborativas y oficiales y matriz de brechas. | OE 1 | Fase I | 100 % cerrado | `docs/catalogo_fuentes_vgi.xlsx` y `docs/TRAZABILIDAD_ACADEMICA.md` (`src/docs/`) |
+| Hito 3 | Inventario de fuentes colaborativas y oficiales y matriz de brechas. | OE 1 | Fase I | 100 % cerrado | `docs/catalogo_fuentes_vgi.xlsx` y `docs/TRAZABILIDAD.md` (`src/docs/`) |
 | Hito 4 | Flujo de procesamiento para descarga y normalización de geodatos. | OE 2 | Fase II | 100 % cerrado | `scripts/descargar_todas_las_categorias_osm.py`, `data/*.geojson` y `src/data/*.geojson` |
 | Hito 5 | Evaluación de calidad ISO 19157 (WLC v2.0, IGV 95,4 %) e inyección de 14 atributos. | OE 2 | Fase II | 100 % cerrado | `docs/ANALISIS_METACALIDAD.md`, `docs/matriz_metacalidad.json`, `docs/wlc_metacalidad_resultado.json` y `docs/perfil_metadatos_vgi.xlsx` |
 | Hito 6 | Cruces espaciales barriales y síntesis en 5 dimensiones territoriales. | OE 2 | Fase II | 100 % cerrado | `data/matriz_sintesis_barrio_brasil_manzanas.geojson`, `data/resumen_catastro_vgi.csv` y `data/bip_inversiones_santiago.csv` |
 | Hito 7 | Desarrollo de la interfaz web, visor cartográfico y clientes de APIs. | OE 3 | Fase III | 100 % cerrado | `src/index.html`, `src/css/estilos.css`, `src/js/app.js` y `src/js/modulos/*.js` |
 | Hito 8 | Inspector normativo PRC, 4 guiones visuales (83 cartografías) y despliegue. | OE 3 | Fase III | 100 % cerrado | `src/js/modulos/evaluador_normativo.js`, `src/js/modulos/indicadores_analisis.js` y `netlify.toml` |
-| Hito 9 | Evaluación de la plataforma con usuarios y organizaciones del territorio. | OE 4 | Fase IV | 100 % cerrado | `docs/TRAZABILIDAD_ACADEMICA.md`, `MANUAL_USO.md` y `docs/MANUAL_USO.md` (`src/docs/`) |
+| Hito 9 | Evaluación de la plataforma con usuarios y organizaciones del territorio. | OE 4 | Fase IV | 100 % cerrado | `docs/TRAZABILIDAD.md`, `MANUAL_USO.md` y `docs/MANUAL_USO.md` (`src/docs/`) |
 | Hito 10 | Pruebas de integridad pre-despliegue, paquete ZIP y manual técnico. | OE 4 | Fase IV | 100 % cerrado | `scripts/verificar_integridad_despliegue.py`, `docs/geodatabase_completa_atlas_vgi.zip` y `MANUAL_ACTUALIZACION_ATLAS.md` |
 
 ---

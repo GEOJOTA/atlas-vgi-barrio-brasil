@@ -198,7 +198,7 @@ DOC_FILES = [
     ('MANUAL_USO.md', os.path.join(DOCS_DIR, 'MANUAL_USO.md')),
     ('ARQUITECTURA.md', os.path.join(DOCS_DIR, 'ARQUITECTURA.md')),
     ('BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md', os.path.join(DOCS_DIR, 'BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md')),
-    ('TRAZABILIDAD_ACADEMICA.md', os.path.join(DOCS_DIR, 'TRAZABILIDAD_ACADEMICA.md')),
+    ('TRAZABILIDAD.md', os.path.join(DOCS_DIR, 'TRAZABILIDAD.md') if os.path.exists(os.path.join(DOCS_DIR, 'TRAZABILIDAD.md')) else os.path.join(DOCS_DIR, 'TRAZABILIDAD_ACADEMICA.md')),
     ('GUIA_BASE_DATOS_SUPABASE.md', os.path.join(DOCS_DIR, 'GUIA_BASE_DATOS_SUPABASE.md')),
     ('matriz_metacalidad.json', os.path.join(DOCS_DIR, 'matriz_metacalidad.json')),
     ('wlc_metacalidad_resultado.json', os.path.join(DOCS_DIR, 'wlc_metacalidad_resultado.json')),

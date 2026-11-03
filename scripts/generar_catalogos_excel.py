@@ -2376,12 +2376,15 @@ def sincronizar_todos_los_catalogos():
             shutil.copyfile(origen, destino)
             print(f"[+] Catálogo sincronizado: {nombre} -> src/docs/")
     
-    # Sincronización de TRAZABILIDAD_ACADEMICA.md
-    origen_md = os.path.join(DOCS_DIR, "TRAZABILIDAD_ACADEMICA.md")
-    destino_md = os.path.join(SRC_DOCS_DIR, "TRAZABILIDAD_ACADEMICA.md")
+    # Sincronización de TRAZABILIDAD.md
+    origen_md = os.path.join(DOCS_DIR, "TRAZABILIDAD.md")
+    destino_md = os.path.join(SRC_DOCS_DIR, "TRAZABILIDAD.md")
+    if not os.path.exists(origen_md):
+        origen_md = os.path.join(DOCS_DIR, "TRAZABILIDAD_ACADEMICA.md")
+        destino_md = os.path.join(SRC_DOCS_DIR, "TRAZABILIDAD_ACADEMICA.md")
     if os.path.exists(origen_md):
         shutil.copyfile(origen_md, destino_md)
-        print(f"[+] Documento académico sincronizado: TRAZABILIDAD_ACADEMICA.md -> src/docs/")
+        print(f"[+] Documento académico sincronizado: {os.path.basename(origen_md)} -> src/docs/")
 
 if __name__ == "__main__":
     print("Iniciando generación de libros Excel para la práctica profesional...")

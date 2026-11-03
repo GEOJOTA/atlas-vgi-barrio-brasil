@@ -514,9 +514,9 @@ def convertir_mermaid_secundarios_manual(texto: str) -> str:
         bloque_completo = m.group(0)
         codigo = m.group(1).strip()
 
-        # Conservar los 4 diagramas arquitectónicos clave del manual como bloques ```mermaid
+        # Conservar los diagramas estratégicos y arquitectónicos clave del manual como bloques ```mermaid
         if (
-            'subgraph FASE1[' in codigo
+            re.search(r'subgraph\s+(?:FASE1|OBJ[1-4])\b', codigo)
             or 'IGV["Índice Global de Calidad VGI (IGV)"]' in codigo
             or 'evaluador_normativo.js' in codigo
             or codigo.startswith("erDiagram")
