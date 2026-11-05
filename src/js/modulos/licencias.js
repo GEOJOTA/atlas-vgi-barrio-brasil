@@ -69,7 +69,7 @@ const ModuloLicencias = (() => {
 
   function render() {
     const bloqueDescargas = `
-      <div class="bloque" style="border-left:4px solid var(--ocre); margin-bottom:20px;">
+      <div class="bloque" id="sec-lic-descargas-maestras" style="border-left:4px solid var(--ocre); margin-bottom:20px;">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:14px;">
           <div style="flex:1; min-width:280px;">
             <h3 style="margin:0 0 6px 0; color:var(--musgo);">Descarga de la base de datos completa y catálogos</h3>
@@ -126,7 +126,7 @@ const ModuloLicencias = (() => {
     `;
 
     const bloqueAtlas = `
-      <div class="bloque" style="margin-bottom:20px;">
+      <div class="bloque" id="sec-lic-marco-tripartito" style="margin-bottom:20px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
           <div>
             <h3 style="margin:0;">${LICENCIA_ATLAS.titulo}</h3>
@@ -165,7 +165,7 @@ const ModuloLicencias = (() => {
     `;
 
     const bloquesFuentes = `
-      <div class="bloque">
+      <div class="bloque" id="sec-lic-atribuciones-fuentes">
         <h3 style="margin:0 0 6px 0;">Comparativa de licencias por fuente de datos</h3>
         <p class="descripcion" style="margin:0 0 10px 0;">Condiciones de uso, atribución y redistribución de cada organismo o plataforma integrada:</p>
         <div class="contenedor-tabla-responsiva">

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261104_v28">
+  <link rel="stylesheet" href="css/estilos.css?v=20261105_v35">
 </head>
 <body>
 
@@ -148,7 +148,7 @@
 
     <!-- ---------- 01. VISOR Y ATLAS VGI (LEAFLET) ---------- -->
     <section class="panel activo" id="panel-inicio">
-      <header class="hero-introduccion-atlas">
+      <header class="hero-introduccion-atlas" id="sec-inicio-hero">
         <div class="insignia-institucional">
           <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           <span>INFRAESTRUCTURA DE DATOS ESPACIALES Y GESTIÓN TERRITORIAL</span>
@@ -275,7 +275,7 @@
 
 
         <!-- Columna Lateral Derecha: Panel de Control Contextual -->
-        <aside class="panel-profundidad-derecha">
+        <aside class="panel-profundidad-derecha" id="sec-inicio-inspector">
           <div style="border-bottom: 1px solid var(--linea); padding-bottom: 8px;">
             <h3 style="margin: 0 0 4px 0; font-size: 1.05rem; color: var(--musgo);">Panel de inspección</h3>
             <p style="margin: 0; font-size: 0.84rem; color: var(--tinta-suave);">Resumen de capas activas, catálogo rápido y consulta normativa.</p>
@@ -526,7 +526,7 @@
         </div>
       </div>
 
-      <div class="bloque">
+      <div class="bloque" id="sec-inicio-territorio">
         <h3>Ficha del Territorio de Estudio</h3>
         <p id="resumen-area-defecto">Cargando configuración territorial…</p>
       </div>
@@ -534,7 +534,7 @@
 
     <!-- ---------- 02. CONSULTAS PROPIAS Y EXPLORADOR OSM ---------- -->
     <section class="panel" id="panel-explorador-osm">
-      <header class="cabecera-modulo-limpia">
+      <header class="cabecera-modulo-limpia" id="sec-osm-cabecera">
         <h2>Consultas en OpenStreetMap</h2>
         <p class="descripcion">Busca y mapea equipamientos, comercios, redes peatonales y ciclovías registrados colaborativamente en el Barrio Brasil y la Región Metropolitana.</p>
         <details class="detalle-estandar-plegable">
@@ -544,7 +544,7 @@
       </header>
 
       <!-- Sugerencias Temáticas Ciudadanas (1 Clic) -->
-      <div class="bloque">
+      <div class="bloque" id="sec-osm-temas-rapidos">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
           <h3 style="margin:0; color:var(--musgo); font-size:1.2rem;">Consultas rápidas por tema (1 clic)</h3>
         </div>
@@ -566,7 +566,7 @@
       </div>
 
       <!-- Constructor Visual de Consultas -->
-      <div class="bloque">
+      <div class="bloque" id="sec-osm-constructor-overpass">
         <h3 style="margin-top:0;">Constructor de consultas personalizadas</h3>
         <p class="descripcion" style="margin-bottom:12px;">Define qué elementos deseas extraer dentro del recuadro de búsqueda actual.</p>
 
@@ -682,7 +682,7 @@
       </div>
 
       <!-- Área de consulta espacial -->
-      <div class="bloque" style="background:var(--papel-alto); border:1px solid var(--linea); border-radius:10px; padding:20px;">
+      <div class="bloque" id="sec-osm-geodatabase-rm" style="background:var(--papel-alto); border:1px solid var(--linea); border-radius:10px; padding:20px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
           <h3 style="margin:0; font-size:1.15rem; color:var(--musgo);">Consulta rápida sobre la base regional descargada (Región Metropolitana)</h3>
         </div>
@@ -748,7 +748,7 @@
 
     <!-- ---------- 03. GBIF & INATURALIST (BIODIVERSIDAD) ---------- -->
     <section class="panel" id="panel-biodiversidad-gbif">
-      <header class="cabecera-modulo-limpia">
+      <header class="cabecera-modulo-limpia" id="sec-gbif-cabecera">
         <h2>Biodiversidad urbana y ciencia ciudadana</h2>
         <p class="descripcion">Consulta observaciones georreferenciadas de flora, arbolado viario y avifauna urbana en el Barrio Brasil y la Comuna de Santiago (red global <abbr title="Infraestructura Mundial de Información en Biodiversidad">GBIF</abbr> e iNaturalist).</p>
         <details class="detalle-estandar-plegable">
@@ -757,7 +757,7 @@
         </details>
       </header>
 
-      <div class="bloque">
+      <div class="bloque" id="sec-gbif-busqueda">
         <h3>Búsqueda Espacial y Taxonómica</h3>
         <div class="fila-campos">
           <div class="campo" style="flex:2; min-width:260px;">
@@ -811,7 +811,7 @@
           </div>
         </div>
 
-        <div style="display:flex; gap:8px; margin:14px 0 6px 0; align-items:center; flex-wrap:wrap;">
+        <div style="display:flex; gap:8px; margin:14px 0 6px 0; align-items:center; flex-wrap:wrap;" id="sec-gbif-ambito">
           <span style="font-size:0.75rem; font-weight:700; color:var(--musgo); text-transform:uppercase; letter-spacing:0.04em;">Ámbito Espacial de Consulta:</span>
           <button type="button" class="btn-micro" id="btn-gbif-ambito-rm" title="Consultar en toda la Región Metropolitana" style="background:var(--papel-alto); border:1px solid var(--musgo); color:var(--musgo); font-weight:700; padding:4px 9px; border-radius:4px; font-size:0.75rem; cursor:pointer;">🌐 Región Metropolitana (Recomendado)</button>
           <button type="button" class="btn-micro" id="btn-gbif-ambito-brasil" title="Acotar a Barrio Brasil y Santiago Centro (1 km²)" style="background:var(--papel-alto); border:1px solid var(--linea); color:var(--tinta-suave); padding:4px 9px; border-radius:4px; font-size:0.75rem; cursor:pointer;">📍 Barrio Brasil (1 km²)</button>
@@ -827,7 +827,7 @@
         <button class="accion primaria-cta" id="btn-consultar-gbif">Buscar observaciones en GBIF</button>
         <button class="accion secundaria" id="btn-cargar-gbif-al-mapa">Enviar al visor cartográfico</button>
 
-        <div class="caja-guia-referencia">
+        <div class="caja-guia-referencia" id="sec-gbif-guia">
           <h4>Monitoreo de biodiversidad urbana y ciencia ciudadana (GBIF e iNaturalist)</h4>
           <p>
             La <strong>Infraestructura Mundial de Información en Biodiversidad (<abbr title="Global Biodiversity Information Facility">GBIF</abbr>)</strong> es la mayor red pública de datos sobre biodiversidad, integrando observaciones de plataformas ciudadanas como <strong>iNaturalist</strong> y <strong>eBird</strong> junto con colecciones del Museo Nacional de Historia Natural de Chile.
@@ -847,12 +847,12 @@
 
     <!-- ---------- 04. CARTOGRAFÍA COMUNITARIA UMAP ---------- -->
     <section class="panel" id="panel-proyectos-umap">
-      <header class="cabecera-modulo-limpia">
+      <header class="cabecera-modulo-limpia" id="sec-umap-cabecera">
         <h2>Mapas comunitarios y participativos (uMap)</h2>
         <p class="descripcion">Integra levantamientos colaborativos sobre patrimonio local, ciclovías, huertos urbanos y rutas de accesibilidad elaborados por organizaciones barriales.</p>
       </header>
 
-      <div class="bloque">
+      <div class="bloque" id="sec-umap-selector">
         <h3>Cargar un mapa colaborativo</h3>
         <div class="fila-campos">
           <div class="campo" style="flex:1.5; min-width:240px;">
@@ -874,7 +874,7 @@
         </div>
         <button class="accion primaria-cta" id="btn-cargar-umap">Cargar mapa comunitario</button>
 
-        <div class="caja-guia-referencia">
+        <div class="caja-guia-referencia" id="sec-umap-guia">
           <h4>Cartografía social y colaborativa con uMap</h4>
           <p>
             <strong>uMap</strong> es una herramienta libre basada en OpenStreetMap que permite a juntas de vecinos, estudiantes y municipios crear mapas interactivos propios y compartirlos abiertamente.
@@ -897,7 +897,7 @@
 <div class="modulo-indicadores-analisis-wrapper">
 
         <!-- Encabezado del Módulo -->
-        <header class="header-modulo-indicadores">
+        <header class="header-modulo-indicadores" id="sec-ind-cabecera">
           <h2 class="titulo-modulo-indicadores">Indicadores territoriales y relatos cartográficos</h2>
           <p class="bajada-modulo-indicadores">
             Organiza las <strong>133 coberturas del Atlas</strong> en <strong>5 dimensiones de análisis</strong> y <strong>4 relatos cartográficos (83 mapas)</strong> sobre densidad de servicios (<abbr title="Estimación de Densidad de Núcleo (Kernel Density Estimation)">KDE</abbr>), agrupaciones espaciales (<abbr title="Indicadores Locales de Asociación Espacial (autocorrelación de Moran)">LISA</abbr>), Censo 2024 y medio ambiente en Santiago y el Barrio Brasil.
@@ -907,7 +907,7 @@
         <!-- ===================================================================== -->
         <!-- GRILLA DE LAS 5 GRANDES DIMENSIONES ANALÍTICAS                         -->
         <!-- ===================================================================== -->
-        <section class="seccion-dimensiones-analisis" aria-label="Dimensiones de Análisis">
+        <section class="seccion-dimensiones-analisis" id="sec-ind-dimensiones" aria-label="Dimensiones de Análisis">
           <h3 class="subtitulo-centrado-seccion">Dimensiones de análisis y capas asociadas</h3>
           
           <div class="grilla-dimensiones-indicadores" id="grilla-tarjetas-dimensiones">
@@ -1212,7 +1212,7 @@
 
     <!-- ---------- 06. CALIDAD ESPACIAL, TOPOLOGÍA E ÍNDICE IGV ---------- -->
     <section class="panel" id="panel-calidad-ohsome">
-      <header class="cabecera-modulo-limpia">
+      <header class="cabecera-modulo-limpia" id="sec-calidad-cabecera">
         <h2>Evaluación de calidad de datos</h2>
         <p class="descripcion">
           Verifica la consistencia geométrica, la completitud de atributos, la evolución histórica del mapeo y la documentación de las capas espaciales (norma ISO 19157).
@@ -1224,7 +1224,7 @@
       </header>
 
       <!-- SUBMÓDULO A: EVALUADOR UNIVERSAL DE CALIDAD ESPACIAL, TOPOLOGÍA E ÍNDICE IGV -->
-      <div class="bloque" style="border-top: 4px solid var(--esmeralda);">
+      <div class="bloque" id="sec-calidad-evaluador" style="border-top: 4px solid var(--esmeralda);">
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--linea); padding-bottom:6px; margin-bottom:12px;">
           <h3 style="margin:0;">Evaluador de calidad de capas (<abbr title="Índice Global de Calidad Geográfica (ISO 19157)">IGV</abbr>)</h3>
         </div>
@@ -1297,7 +1297,7 @@
       </div>
 
       <!-- SUBMÓDULO B: OHSOME API & OQT -->
-      <div class="bloque">
+      <div class="bloque" id="sec-calidad-ohsome">
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--linea); padding-bottom:6px; margin-bottom:12px;">
           <h3 style="margin:0;">Evolución histórica del mapeo en OpenStreetMap (ohsome)</h3>
         </div>
@@ -1375,7 +1375,7 @@
       </div>
 
       <!-- SUBMÓDULO C: CONTROL DE CAMBIOS Y VALIDACIÓN CON OSMCHA -->
-      <div class="bloque" style="margin-top:16px;">
+      <div class="bloque" id="sec-calidad-osmcha" style="margin-top:16px;">
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--linea); padding-bottom:6px; margin-bottom:12px;">
           <h3 style="margin:0;">Revisión de ediciones recientes en el área (OSMCha)</h3>
         </div>
@@ -1409,7 +1409,7 @@
 
     <!-- ---------- 07. MANUAL DE USO Y ACTUALIZACIÓN TÉCNICA ---------- -->
     <section class="panel" id="panel-manual">
-      <header class="cabecera-modulo-limpia">
+      <header class="cabecera-modulo-limpia" id="sec-manual-cabecera">
         <h2>Manual de uso y actualización</h2>
         <p class="descripcion">Guía práctica por capítulos para utilizar el visor, interpretar los indicadores e incorporar nuevas capas a la plataforma.</p>
       </header>
@@ -1418,13 +1418,13 @@
 
     <!-- ---------- 08. METADATOS ISO 19115 / ISO 19139 ---------- -->
     <section class="panel" id="panel-metadatos-iso">
-      <header class="cabecera-modulo-limpia">
+      <header class="cabecera-modulo-limpia" id="sec-meta-cabecera">
         <h2>Catálogo y generador de metadatos</h2>
         <p class="descripcion">Consulta y exporta la ficha técnica, fuente, sistema de coordenadas y licencia de cada capa en formato JSON (ISO 19115) o XML (ISO 19139 / IDE Chile).</p>
       </header>
 
       <!-- Resumen de Calidad con Explicación en Lenguaje Ciudadano y Tooltip Técnico -->
-      <div class="caja-metacalidad-kpi">
+      <div class="caja-metacalidad-kpi" id="sec-meta-calidad-general">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 8px;">
           <h3 style="margin: 0; color: var(--esmeralda); font-size: 1.12rem;">
             Calidad general de la base de datos (133 capas)
@@ -1545,7 +1545,7 @@
           <div class="campo"><label for="md-contacto-correo">Correo electrónico</label><input type="email" id="md-contacto-correo" value="juanpablolescanovillegas@gmail.com"></div>
         </div>
 
-        <div class="caja-guia-referencia">
+        <div class="caja-guia-referencia" id="sec-meta-estandar">
           <h4>🏛️ Estándar de Metadatos Espaciales (ISO 19115 / ISO 19139 / IDE Chile)</h4>
           <p>
             Los metadatos son la documentación estandarizada que responde a las preguntas clave sobre cualquier dato geográfico: <em>¿quién lo produjo?, ¿cuándo?, ¿con qué método (linaje)?, ¿con qué licencia? y ¿en qué sistema de coordenadas?</em>.
@@ -1569,7 +1569,7 @@
 
     <!-- ---------- 09. DICCIONARIO TERRITORIAL (133 CAPAS) ---------- -->
     <section class="panel" id="panel-diccionario">
-      <header class="cabecera-modulo-limpia">
+      <header class="cabecera-modulo-limpia" id="sec-dicc-cabecera">
         <h2>Diccionario de datos y atributos (133 capas)</h2>
         <p class="descripcion">Consulta el significado de cada atributo, su equivalencia con los catálogos oficiales de IDE Chile y los 86 descriptores barriales aportados por el mapeo ciudadano (norma ISO 19110).</p>
       </header>
@@ -1596,7 +1596,7 @@
 
     <!-- ---------- 10. LICENCIAS Y CATÁLOGOS ---------- -->
     <section class="panel" id="panel-licencias">
-      <header class="cabecera-modulo-limpia">
+      <header class="cabecera-modulo-limpia" id="sec-lic-cabecera">
         <h2>Licencias abiertas y descarga de catálogos</h2>
         <p class="descripcion">Condiciones legales de uso y atribución (ODbL 1.0, Creative Commons y Ley N° 20.285 de Transparencia) junto con las tablas maestras en Excel y la base de datos completa.</p>
       </header>
@@ -1757,6 +1757,7 @@
 <script src="js/modulos/calidad_analyst.js?v=20261102_v16"></script>
 <script src="js/modulos/diccionario.js?v=20261104_v28"></script>
 <script src="js/modulos/manifold_canvas.js?v=20261102_v16"></script>
-<script src="js/app.js?v=20261104_v34"></script>
+<script src="js/modulos/leyenda_atajos.js?v=20261105_v35"></script>
+<script src="js/app.js?v=20261105_v35"></script>
 </body>
 </html>

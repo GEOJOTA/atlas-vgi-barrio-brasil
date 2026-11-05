@@ -1097,6 +1097,11 @@ function inicializarAplicacion() {
   // Inicialización de coherencia y metadatos con la categoría predeterminada
   sincronizarCoherenciaEntreModulos('educacion');
   autocargarMetadatos();
+
+  // Inicializar Leyenda Dinámica de Apartados y Atajos por Módulo
+  if (window.ModuloAtajosLeyenda) {
+    window.ModuloAtajosLeyenda.inicializar();
+  }
 }
 
 /* ---------------------- NAVEGACIÓN POR TAREA, MIGAS DE PAN, TEMA Y GLOSARIO ---------------------- */
@@ -1177,6 +1182,12 @@ function configurarNavegacion() {
     if (panelDestino) {
       panelDestino.classList.add('activo');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Sincronizar la Leyenda Dinámica de Apartados y Atajos
+      if (window.ModuloAtajosLeyenda) {
+        window.ModuloAtajosLeyenda.actualizar(panelId);
+      }
+
       if (panelId === 'inicio' && window.ModuloMapa) {
         window.ModuloMapa.invalidarTamano();
       }

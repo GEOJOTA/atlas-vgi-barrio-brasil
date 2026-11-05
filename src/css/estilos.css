@@ -7415,3 +7415,406 @@ table.tabla-datos,
     max-width: 96vw;
   }
 }
+
+
+/* ==========================================================================
+   LEYENDA DINÁMICA DE APARTADOS Y ATAJOS POR MÓDULO (TIPO GUÍA LATERAL)
+   ========================================================================== */
+
+.leyenda-atajos-flotante {
+  position: fixed;
+  top: 155px;
+  right: 16px;
+  z-index: 990;
+  width: 300px;
+  max-height: calc(100vh - 175px);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.leyenda-atajos-flotante * {
+  box-sizing: border-box;
+}
+
+/* Pestaña / Botón de Toggle Lateral */
+.btn-toggle-leyenda-atajos {
+  pointer-events: auto;
+  display: none;
+  background: rgba(13, 21, 39, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--ocre, #d4a017);
+  border: 1.5px solid var(--linea-fuerte, rgba(212, 160, 23, 0.4));
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  padding: 10px 10px;
+  cursor: pointer;
+  box-shadow: -4px 6px 18px rgba(0, 0, 0, 0.45);
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--fuente-interfaz, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.btn-toggle-leyenda-atajos:hover {
+  background: rgba(26, 38, 66, 0.98);
+  color: #fbbf24;
+}
+
+/* Caja Contenedora Principal */
+.caja-leyenda-atajos {
+  pointer-events: auto;
+  width: 300px;
+  max-height: calc(100vh - 175px);
+  background: rgba(11, 19, 36, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--linea-fuerte, rgba(212, 160, 23, 0.35));
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55), 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Estado Colapsado en Escritorio */
+.leyenda-atajos-flotante.colapsada {
+  transform: translateX(calc(100% - 44px));
+}
+
+.leyenda-atajos-flotante.colapsada .btn-toggle-leyenda-atajos {
+  display: inline-flex;
+}
+
+.leyenda-atajos-flotante.colapsada .caja-leyenda-atajos {
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* Cabecera de la Leyenda */
+.cabecera-leyenda-atajos {
+  padding: 12px 14px 10px 14px;
+  background: rgba(16, 27, 50, 0.9);
+  border-bottom: 1px solid var(--linea, rgba(255, 255, 255, 0.08));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-leyenda-modulo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.badge-modulo-leyenda {
+  font-family: var(--fuente-datos, 'IBM Plex Mono', monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ocre, #d4a017);
+}
+
+.titulo-modulo-leyenda {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--tinta, #f8fafc);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-cerrar-leyenda-atajos {
+  background: transparent;
+  border: none;
+  color: var(--tinta-suave, #94a3b8);
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+  line-height: 1;
+}
+
+.btn-cerrar-leyenda-atajos:hover {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* Franja Guía Informativa */
+.aviso-guia-leyenda {
+  padding: 7px 12px;
+  background: rgba(212, 160, 23, 0.08);
+  border-bottom: 1px solid rgba(212, 160, 23, 0.18);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.73rem;
+  color: var(--tinta-suave, #cbd5e1);
+  line-height: 1.35;
+}
+
+.icono-aviso-guia {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.texto-aviso-guia em {
+  font-style: normal;
+  color: var(--ocre, #d4a017);
+  font-weight: 700;
+}
+
+/* Lista Desplazable de Atajos */
+.lista-atajos-modulo {
+  padding: 8px;
+  overflow-y: auto;
+  max-height: calc(100vh - 350px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 160, 23, 0.3) transparent;
+}
+
+.lista-atajos-modulo::-webkit-scrollbar {
+  width: 5px;
+}
+
+.lista-atajos-modulo::-webkit-scrollbar-thumb {
+  background: rgba(212, 160, 23, 0.3);
+  border-radius: 4px;
+}
+
+/* Cada Ítem de Atajo */
+.item-atajo-modulo {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 7px 9px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 7px;
+  color: var(--tinta, #e2e8f0);
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+}
+
+.item-atajo-modulo:hover {
+  background: rgba(212, 160, 23, 0.12);
+  border-color: rgba(212, 160, 23, 0.4);
+  transform: translateX(-2px);
+}
+
+.item-atajo-modulo.activo {
+  background: rgba(212, 160, 23, 0.18);
+  border-color: var(--ocre, #d4a017);
+  box-shadow: 0 0 10px rgba(212, 160, 23, 0.25);
+}
+
+.indicador-orden-atajo {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--tinta-suave, #94a3b8);
+  font-family: var(--fuente-datos, 'IBM Plex Mono', monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: all 0.18s ease;
+}
+
+.item-atajo-modulo:hover .indicador-orden-atajo,
+.item-atajo-modulo.activo .indicador-orden-atajo {
+  background: var(--ocre, #d4a017);
+  color: #0b1324;
+}
+
+.cuerpo-atajo-modulo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fila-superior-atajo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.icono-apartado {
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+.titulo-apartado {
+  font-size: 0.79rem;
+  font-weight: 700;
+  color: var(--tinta, #f1f5f9);
+  line-height: 1.25;
+}
+
+.desc-apartado {
+  margin: 0;
+  font-size: 0.70rem;
+  color: var(--tinta-suave, #94a3b8);
+  line-height: 1.3;
+}
+
+/* Badges de Posición */
+.badge-indicador-abajo {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--ocre, #d4a017);
+  background: rgba(212, 160, 23, 0.16);
+  border: 1px solid rgba(212, 160, 23, 0.35);
+  border-radius: 3px;
+  padding: 1px 4px;
+  margin-left: auto;
+  letter-spacing: 0.02em;
+}
+
+.badge-indicador-vista {
+  font-size: 0.60rem;
+  font-weight: 600;
+  color: var(--esmeralda, #10b981);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 3px;
+  padding: 1px 4px;
+  margin-left: auto;
+}
+
+/* Pie de la Leyenda */
+.pie-leyenda-atajos {
+  padding: 8px 12px;
+  background: rgba(16, 27, 50, 0.9);
+  border-top: 1px solid var(--linea, rgba(255, 255, 255, 0.08));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+}
+
+.contador-apartados-leyenda {
+  color: var(--tinta-suave, #94a3b8);
+}
+
+.btn-volver-arriba-modulo {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--linea, rgba(255, 255, 255, 0.1));
+  color: var(--ocre, #d4a017);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-volver-arriba-modulo:hover {
+  background: rgba(212, 160, 23, 0.18);
+  border-color: var(--ocre, #d4a017);
+}
+
+/* Animación de Resaltado del Apartado Destino al hacer Clic */
+.seccion-resaltada-atajo {
+  outline: 2.5px solid var(--ocre, #d4a017) !important;
+  outline-offset: 4px !important;
+  border-radius: 8px !important;
+  animation: pulsoResaltadoApartado 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes pulsoResaltadoApartado {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 160, 23, 0.75);
+  }
+  30% {
+    box-shadow: 0 0 30px 4px rgba(212, 160, 23, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 160, 23, 0);
+    outline-color: transparent !important;
+  }
+}
+
+/* ==========================================================================
+   ADAPTACIÓN RESPONSIVA Y DISPOSITIVOS MÓVILES (< 1024px)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .leyenda-atajos-flotante {
+    top: auto;
+    bottom: 18px;
+    right: 18px;
+    width: auto;
+    max-height: none;
+    flex-direction: column-reverse;
+  }
+
+  /* Pestaña flotante tipo píldora inferior */
+  .btn-toggle-leyenda-atajos {
+    display: inline-flex !important;
+    border-radius: 30px !important;
+    border: 1.5px solid var(--ocre, #d4a017) !important;
+    padding: 9px 16px !important;
+    background: rgba(11, 19, 36, 0.98) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+    font-size: 0.84rem !important;
+  }
+
+  .caja-leyenda-atajos {
+    position: fixed;
+    bottom: 68px;
+    right: 14px;
+    width: calc(100vw - 28px);
+    max-width: 380px;
+    max-height: 70vh;
+    border-radius: 14px;
+    transform: translateY(0);
+  }
+
+  .leyenda-atajos-flotante.colapsada .caja-leyenda-atajos {
+    display: none;
+    opacity: 0;
+  }
+
+  .lista-atajos-modulo {
+    max-height: calc(70vh - 140px);
+  }
+}
+
+@media (max-width: 480px) {
+  .caja-leyenda-atajos {
+    right: 8px;
+    width: calc(100vw - 16px);
+    max-height: 75vh;
+  }
+
+  .lista-atajos-modulo {
+    max-height: calc(75vh - 140px);
+  }
+}
