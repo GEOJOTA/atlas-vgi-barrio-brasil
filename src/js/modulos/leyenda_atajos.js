@@ -1,419 +1,133 @@
 /*
   leyenda_atajos.js
   -----------------
-  Módulo de Navegación Lateral y Leyenda Dinámica de Apartados (Atajos) del Atlas VGI.
-  Proporciona una guía visual lateral en todos los módulos de la plataforma web,
-  permitiendo a usuarios que no realizan scroll identificar al instante las herramientas,
-  consultas y catálogos disponibles más abajo (Overpass API, catálogo de 123 capas,
-  auditorías, storyboards, etc.) y desplazarse suavemente con un solo clic.
+  Módulo de Navegación Lateral y Leyenda de Apartados (Atajos) del Atlas VGI.
+  Diseño sobrio, tipográfico, minimalista y sin iconos.
+  Permite al usuario identificar rápidamente los apartados y herramientas disponibles
+  más abajo en cada módulo y navegar con desplazamiento suave en un solo clic.
 
-  Características:
-  - 100% dinámico y reactivo a los 10 módulos del Atlas.
-  - Sincronización continua con activarPanel().
-  - Scrollspy activo para iluminar la sección visible en tiempo real.
-  - Resaltado visual momentáneo (.seccion-resaltada-atajo) del apartado de destino.
-  - Diseño responsivo adaptativo (panel lateral sticky en escritorio, drawer táctil en móviles).
-  - Plegable / minimizable para no interferir con el visor Leaflet ni con formularios.
+  Adaptado dinámicamente a todos los dispositivos (escritorio, tablets y móviles)
+  sin interferir con el visor Leaflet ni los controles interactivos.
 */
 
 const ModuloAtajosLeyenda = (() => {
   'use strict';
 
-  // Configuración exhaustiva de los 10 módulos de la plataforma web
+  // Configuración de apartados por módulo (sin iconos, títulos concisos)
   const CONFIG_MODULOS = {
     'inicio': {
       id: 'inicio',
-      nombre: 'Visor y Atlas VGI',
-      icono: '🗺️',
+      nombre: 'Visor cartográfico',
       badge: 'Módulo 01',
       apartados: [
-        {
-          id: 'sec-inicio-hero',
-          titulo: 'Propósito y Cobertura',
-          icono: '🏛️',
-          desc: 'Resumen territorial, métricas y calidad 95,4%',
-          abajo: false
-        },
-        {
-          id: 'mapa-atlas',
-          titulo: 'Visor Cartográfico Interactivo',
-          icono: '🗺️',
-          desc: 'Mapa Leaflet con capas comunitarias y oficiales',
-          abajo: false
-        },
-        {
-          id: 'sec-inicio-inspector',
-          titulo: 'Inspector de Entidades y Calidad ICV',
-          icono: '🔍',
-          desc: 'Atributos, capas activas, PRC y base PostGIS',
-          abajo: false
-        },
-        {
-          id: 'consola-capas-gis',
-          titulo: 'Catálogo de 123 Capas Oficiales del Estado',
-          icono: '📦',
-          desc: 'Coberturas IDE Chile, 10 categorías VGI y filtros',
-          abajo: true
-        },
-        {
-          id: 'seccion-importador-capas',
-          titulo: 'Importador de Capas Locales Drag & Drop',
-          icono: '📂',
-          desc: 'Carga archivos propios .kmz, .kml, .geojson, .csv',
-          abajo: true
-        },
-        {
-          id: 'sec-inicio-territorio',
-          titulo: 'Ficha del Territorio de Estudio',
-          icono: '📍',
-          desc: 'Parámetros territoriales de Santiago y Barrio Brasil',
-          abajo: true
-        }
+        { id: 'sec-inicio-hero', titulo: 'Propósito y resumen', abajo: false },
+        { id: 'mapa-atlas', titulo: 'Visor cartográfico', abajo: false },
+        { id: 'sec-inicio-inspector', titulo: 'Inspector de atributos y calidad', abajo: false },
+        { id: 'consola-capas-gis', titulo: 'Catálogo de 123 capas oficiales', abajo: true },
+        { id: 'seccion-importador-capas', titulo: 'Importador de capas locales', abajo: true },
+        { id: 'sec-inicio-territorio', titulo: 'Ficha territorial de estudio', abajo: true }
       ]
     },
     'explorador-osm': {
       id: 'explorador-osm',
       nombre: 'Consultas en OpenStreetMap',
-      icono: '🔍',
       badge: 'Módulo 02',
       apartados: [
-        {
-          id: 'sec-osm-cabecera',
-          titulo: 'Guía y Alcance Territorial',
-          icono: '💡',
-          desc: 'Estándar ISO 19110 y buenas prácticas de consulta',
-          abajo: false
-        },
-        {
-          id: 'sec-osm-temas-rapidos',
-          titulo: 'Consultas Rápidas por Tema (1 Clic)',
-          icono: '⚡',
-          desc: 'Farmacias, ciclovías, educación, salud y patrimonio',
-          abajo: false
-        },
-        {
-          id: 'sec-osm-constructor-overpass',
-          titulo: 'Constructor Overpass API en Vivo',
-          icono: '🛠️',
-          desc: 'Búsqueda personalizada, clave/valor y editor QL',
-          abajo: true
-        },
-        {
-          id: 'sec-osm-geodatabase-rm',
-          titulo: 'Geodatabase Regional RM (Geofabrik)',
-          icono: '📦',
-          desc: 'Extracto local de 921k entidades sin usar la API',
-          abajo: true
-        },
-        {
-          id: 'resultado-osm',
-          titulo: 'Resultados, Superficies y Exportación',
-          icono: '📊',
-          desc: 'Tabla de entidades, cálculo m² y GeoJSON/CSV',
-          abajo: true
-        }
+        { id: 'sec-osm-cabecera', titulo: 'Guía y alcance técnico', abajo: false },
+        { id: 'sec-osm-temas-rapidos', titulo: 'Consultas rápidas por tema', abajo: false },
+        { id: 'sec-osm-constructor-overpass', titulo: 'Constructor Overpass API en vivo', abajo: true },
+        { id: 'sec-osm-geodatabase-rm', titulo: 'Geodatabase regional RM', abajo: true },
+        { id: 'resultado-osm', titulo: 'Resultados y descargas', abajo: true }
       ]
     },
     'biodiversidad-gbif': {
       id: 'biodiversidad-gbif',
-      nombre: 'Biodiversidad Urbana y GBIF',
-      icono: '🌿',
+      nombre: 'Biodiversidad urbana (GBIF)',
       badge: 'Módulo 03',
       apartados: [
-        {
-          id: 'sec-gbif-cabecera',
-          titulo: 'Marco de Ciencia Ciudadana',
-          icono: '🌱',
-          desc: 'Integración GBIF e iNaturalist en el territorio',
-          abajo: false
-        },
-        {
-          id: 'sec-gbif-busqueda',
-          titulo: 'Búsqueda Taxonómica Inteligente',
-          icono: '🔍',
-          desc: 'Backbone oficial Nub y especies prioritarias de Chile',
-          abajo: false
-        },
-        {
-          id: 'sec-gbif-ambito',
-          titulo: 'Ámbito Espacial y Selectores Rápidos',
-          icono: '🗺️',
-          desc: 'Región Metropolitana, Barrio Brasil o Todo Chile',
-          abajo: true
-        },
-        {
-          id: 'sec-gbif-guia',
-          titulo: 'Metodología y Estándar Darwin Core',
-          icono: '📖',
-          desc: 'Protocolo de avistamientos y licencias abiertas',
-          abajo: true
-        },
-        {
-          id: 'resultado-gbif',
-          titulo: 'Registros Biológicos y Descargas',
-          icono: '📊',
-          desc: 'Observaciones verificadas, visor y GeoJSON',
-          abajo: true
-        }
+        { id: 'sec-gbif-cabecera', titulo: 'Marco de ciencia ciudadana', abajo: false },
+        { id: 'sec-gbif-busqueda', titulo: 'Búsqueda taxonómica inteligente', abajo: false },
+        { id: 'sec-gbif-ambito', titulo: 'Ámbito espacial de consulta', abajo: true },
+        { id: 'sec-gbif-guia', titulo: 'Metodología Darwin Core', abajo: true },
+        { id: 'resultado-gbif', titulo: 'Registros biológicos y descargas', abajo: true }
       ]
     },
     'proyectos-umap': {
       id: 'proyectos-umap',
-      nombre: 'Mapas Comunitarios (uMap)',
-      icono: '🗺️',
+      nombre: 'Mapas comunitarios (uMap)',
       badge: 'Módulo 04',
       apartados: [
-        {
-          id: 'sec-umap-cabecera',
-          titulo: 'Cartografía Social y Participativa',
-          icono: '🤝',
-          desc: 'Iniciativas y relatos territoriales colaborativos',
-          abajo: false
-        },
-        {
-          id: 'sec-umap-selector',
-          titulo: 'Catálogo de Mapas Colaborativos',
-          icono: '📋',
-          desc: 'Selecciona proyectos: Árboles, Ciclovías, Patrimonio',
-          abajo: false
-        },
-        {
-          id: 'sec-umap-guia',
-          titulo: 'Guía de Mapeo Ciudadano en uMap',
-          icono: '📖',
-          desc: 'Paso a paso para crear proyectos cartográficos libres',
-          abajo: true
-        },
-        {
-          id: 'resultado-umap',
-          titulo: 'Visor Embebido Interactivo',
-          icono: '🖥️',
-          desc: 'Exploración directa de mapas colaborativos en vivo',
-          abajo: true
-        }
+        { id: 'sec-umap-cabecera', titulo: 'Cartografía social y participativa', abajo: false },
+        { id: 'sec-umap-selector', titulo: 'Catálogo de mapas colaborativos', abajo: false },
+        { id: 'sec-umap-guia', titulo: 'Guía de mapeo ciudadano', abajo: true },
+        { id: 'resultado-umap', titulo: 'Visor embebido interactivo', abajo: true }
       ]
     },
     'indicadores': {
       id: 'indicadores',
-      nombre: 'Indicadores y Relatos Cartográficos',
-      icono: '📊',
+      nombre: 'Indicadores y relatos',
       badge: 'Módulo 05',
       apartados: [
-        {
-          id: 'sec-ind-cabecera',
-          titulo: 'Marco Analítico Multidimensional',
-          icono: '🎯',
-          desc: 'Integración estadística y espacial en Santiago',
-          abajo: false
-        },
-        {
-          id: 'sec-ind-dimensiones',
-          titulo: '5 Dimensiones de Análisis Territorial',
-          icono: '📐',
-          desc: 'Sociodemográfica, socioeconómica, ambiental, etc.',
-          abajo: false
-        },
-        {
-          id: 'contenedor-acordeon-capas',
-          titulo: 'Métricas e Indicadores por Dimensión',
-          icono: '📊',
-          desc: 'Censo 2024, EOD, áreas verdes y equipamiento',
-          abajo: true
-        },
-        {
-          id: 'seccion-storyboards',
-          titulo: '8 Storyboards Analíticos (83 Mapas)',
-          icono: '📚',
-          desc: 'Relatos cartográficos KDE, LISA, demografía y hábitat',
-          abajo: true
-        }
+        { id: 'sec-ind-cabecera', titulo: 'Marco analítico multidimensional', abajo: false },
+        { id: 'sec-ind-dimensiones', titulo: '5 dimensiones territoriales', abajo: false },
+        { id: 'contenedor-acordeon-capas', titulo: 'Métricas e indicadores por dimensión', abajo: true },
+        { id: 'seccion-storyboards', titulo: '8 relatos cartográficos (83 mapas)', abajo: true }
       ]
     },
     'calidad-ohsome': {
       id: 'calidad-ohsome',
-      nombre: 'Evaluación de Calidad (ISO 19157)',
-      icono: '🛡️',
+      nombre: 'Evaluación de calidad (ISO 19157)',
       badge: 'Módulo 06',
       apartados: [
-        {
-          id: 'sec-calidad-cabecera',
-          titulo: 'Marco de Calidad Cartográfica',
-          icono: '📋',
-          desc: 'Estándar ISO 19157 y dimensiones intrínsecas',
-          abajo: false
-        },
-        {
-          id: 'sec-calidad-evaluador',
-          titulo: 'Evaluador de Calidad de Capas (IGV)',
-          icono: '📈',
-          desc: 'Índice de Grado de Verificación (0 a 100) y WLC v2.0',
-          abajo: false
-        },
-        {
-          id: 'sec-calidad-ohsome',
-          titulo: 'Evolución Histórica (Ohsome API)',
-          icono: '⏳',
-          desc: 'Trayectoria temporal de mapeo 2008-2026 en el área',
-          abajo: true
-        },
-        {
-          id: 'sec-calidad-osmcha',
-          titulo: 'Auditoría de Ediciones (OSMCha)',
-          icono: '🔍',
-          desc: 'Monitoreo de changesets y validación comunitaria',
-          abajo: true
-        }
+        { id: 'sec-calidad-cabecera', titulo: 'Marco de calidad cartográfica', abajo: false },
+        { id: 'sec-calidad-evaluador', titulo: 'Evaluador de capas (IGV)', abajo: false },
+        { id: 'sec-calidad-ohsome', titulo: 'Evolución histórica (ohsome API)', abajo: true },
+        { id: 'sec-calidad-osmcha', titulo: 'Auditoría de cambios (OSMCha)', abajo: true }
       ]
     },
     'manual': {
       id: 'manual',
-      nombre: 'Manual Metodológico del Sistema',
-      icono: '📘',
+      nombre: 'Manual metodológico',
       badge: 'Módulo 07',
       apartados: [
-        {
-          id: 'sec-manual-cabecera',
-          titulo: 'Introducción y Arquitectura',
-          icono: '🏛️',
-          desc: 'Fundamentación del Atlas e infraestructura territorial',
-          abajo: false
-        },
-        {
-          id: 'buscador-general-manual',
-          titulo: 'Buscador y Filtro de Capítulos',
-          icono: '🔍',
-          desc: 'Búsqueda por palabra clave o procedimiento técnico',
-          abajo: false
-        },
-        {
-          id: 'lista-capitulos-manual',
-          titulo: 'Capítulos del Manual de Uso',
-          icono: '📖',
-          desc: 'Operación de módulos 01 al 10, ICV dinámico y PRC',
-          abajo: true
-        },
-        {
-          id: 'tbody-catalogo-manual',
-          titulo: 'Inventario Dinámico de 133 Capas',
-          icono: '📦',
-          desc: 'Tabla completa con fuentes, licencias y enlaces',
-          abajo: true
-        }
+        { id: 'sec-manual-cabecera', titulo: 'Introducción y arquitectura', abajo: false },
+        { id: 'buscador-general-manual', titulo: 'Buscador de capítulos', abajo: false },
+        { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true },
+        { id: 'tbody-catalogo-manual', titulo: 'Inventario de 133 capas', abajo: true }
       ]
     },
     'metadatos-iso': {
       id: 'metadatos-iso',
-      nombre: 'Catálogo y Metadatos (ISO 19115)',
-      icono: '📋',
+      nombre: 'Catálogo y metadatos (ISO 19115)',
       badge: 'Módulo 08',
       apartados: [
-        {
-          id: 'sec-meta-cabecera',
-          titulo: 'Marco de Metadatos Espaciales',
-          icono: '🏛️',
-          desc: 'Normas ISO 19115, ISO 19139 y perfil IDE Chile',
-          abajo: false
-        },
-        {
-          id: 'sec-meta-calidad-general',
-          titulo: 'Calidad General del Catálogo (133 Capas)',
-          icono: '📊',
-          desc: 'Puntajes consolidados y completitud de metadatos',
-          abajo: false
-        },
-        {
-          id: 'form-metadatos',
-          titulo: 'Formulario de Perfil de Metadatos',
-          icono: '📝',
-          desc: 'Identificación, extensión espacial, linaje y contacto',
-          abajo: true
-        },
-        {
-          id: 'sec-meta-estandar',
-          titulo: 'Especificaciones Técnicas IDE Chile',
-          icono: '🏛️',
-          desc: 'Requerimientos obligatorios y directrices SNIT',
-          abajo: true
-        },
-        {
-          id: 'resultado-metadatos',
-          titulo: 'Generador y Exportador XML / JSON',
-          icono: '📥',
-          desc: 'Descarga de ficha técnica formal estandarizada',
-          abajo: true
-        }
+        { id: 'sec-meta-cabecera', titulo: 'Marco de metadatos espaciales', abajo: false },
+        { id: 'sec-meta-calidad-general', titulo: 'Calidad general (133 capas)', abajo: false },
+        { id: 'form-metadatos', titulo: 'Formulario de perfil de metadatos', abajo: true },
+        { id: 'sec-meta-estandar', titulo: 'Especificaciones IDE Chile', abajo: true },
+        { id: 'resultado-metadatos', titulo: 'Generador y exportador XML/JSON', abajo: true }
       ]
     },
     'diccionario': {
       id: 'diccionario',
-      nombre: 'Diccionario de Datos y Catálogo',
-      icono: '📚',
+      nombre: 'Diccionario de datos',
       badge: 'Módulo 09',
       apartados: [
-        {
-          id: 'sec-dicc-cabecera',
-          titulo: 'Marco del Diccionario Territorial',
-          icono: '💡',
-          desc: 'Estructuración semántica y equivalencias ISO 19110',
-          abajo: false
-        },
-        {
-          id: 'dicc-sec-esquema',
-          titulo: 'Estándar Canónico de 17 Atributos',
-          icono: '📋',
-          desc: 'Esquema universal de interoperabilidad VGI',
-          abajo: false
-        },
-        {
-          id: 'contenedor-filtros-diccionario',
-          titulo: 'Buscador y Filtro de Capas',
-          icono: '🔍',
-          desc: 'Filtrado instantáneo por institución y temática',
-          abajo: true
-        },
-        {
-          id: 'contenido-diccionario',
-          titulo: 'Catálogo Detallado de 133 Capas',
-          icono: '📚',
-          desc: 'Definición de tablas, geometrías y atributos',
-          abajo: true
-        }
+        { id: 'sec-dicc-cabecera', titulo: 'Marco del diccionario territorial', abajo: false },
+        { id: 'dicc-sec-esquema', titulo: 'Esquema de 17 atributos canónicos', abajo: false },
+        { id: 'contenedor-filtros-diccionario', titulo: 'Buscador y filtro de capas', abajo: true },
+        { id: 'contenido-diccionario', titulo: 'Catálogo detallado de 133 capas', abajo: true }
       ]
     },
     'licencias': {
       id: 'licencias',
-      nombre: 'Licencias Abiertas y Descargas',
-      icono: '⚖️',
+      nombre: 'Licencias y descargas',
       badge: 'Módulo 10',
       apartados: [
-        {
-          id: 'sec-lic-cabecera',
-          titulo: 'Marco Jurídico de Licenciamiento',
-          icono: '⚖️',
-          desc: 'Copyleft y reciprocidad comunitaria (Ley 17.336)',
-          abajo: false
-        },
-        {
-          id: 'sec-lic-descargas-maestras',
-          titulo: 'Descarga Geodatabase Completa (.ZIP)',
-          icono: '📦',
-          desc: 'Paquete consolidado de 542 MB con 133 capas GeoJSON',
-          abajo: false
-        },
-        {
-          id: 'sec-lic-marco-tripartito',
-          titulo: 'Marco Tripartito de Licencias',
-          icono: '🛡️',
-          desc: 'CC BY-SA 4.0, ODbL 1.0 y GNU AGPLv3',
-          abajo: true
-        },
-        {
-          id: 'sec-lic-atribuciones-fuentes',
-          titulo: 'Atribuciones y Citas Bibliográficas',
-          icono: '🎓',
-          desc: 'Citación APA 7ª ed. y agradecimiento a fuentes',
-          abajo: true
-        }
+        { id: 'sec-lic-cabecera', titulo: 'Marco jurídico y reciprocidad', abajo: false },
+        { id: 'sec-lic-descargas-maestras', titulo: 'Descarga de geodatabase completa (ZIP)', abajo: false },
+        { id: 'sec-lic-marco-tripartito', titulo: 'Marco tripartito de licencias', abajo: true },
+        { id: 'sec-lic-atribuciones-fuentes', titulo: 'Atribuciones y citas bibliográficas', abajo: true }
       ]
     }
   };
@@ -423,9 +137,6 @@ const ModuloAtajosLeyenda = (() => {
   let observerScrollspy = null;
   let timerThrottle = null;
 
-  /**
-   * Normaliza el ID del módulo admitiendo variantes como "panel-inicio" o "inicio"
-   */
   function normalizarIdModulo(id) {
     if (!id) return 'inicio';
     const limpio = String(id).replace(/^panel-/, '').trim().toLowerCase();
@@ -439,9 +150,6 @@ const ModuloAtajosLeyenda = (() => {
     return 'inicio';
   }
 
-  /**
-   * Genera el contenedor HTML de la leyenda si aún no existe en el DOM
-   */
   function asegurarContenedorDOM() {
     let contenedor = document.getElementById('leyenda-atajos-modulo');
     if (contenedor) return contenedor;
@@ -449,56 +157,44 @@ const ModuloAtajosLeyenda = (() => {
     contenedor = document.createElement('aside');
     contenedor.id = 'leyenda-atajos-modulo';
     contenedor.className = 'leyenda-atajos-flotante';
-    contenedor.setAttribute('aria-label', 'Atajos y apartados del módulo activo');
+    contenedor.setAttribute('aria-label', 'Apartados y atajos del módulo');
 
     contenedor.innerHTML = `
-      <!-- Pestaña lateral para alternar colapso / expansión -->
       <button type="button" 
               id="btn-toggle-leyenda-atajos" 
               class="btn-toggle-leyenda-atajos" 
-              title="Mostrar u ocultar la leyenda de apartados"
+              title="Mostrar u ocultar apartados del módulo"
               aria-expanded="true">
-        <span class="icono-toggle-leyenda">📑</span>
         <span class="texto-toggle-leyenda">Apartados</span>
-        <span class="flecha-toggle-leyenda">▶</span>
+        <span class="flecha-toggle-leyenda">›</span>
       </button>
 
-      <!-- Caja principal con la lista de apartados -->
       <div class="caja-leyenda-atajos" id="caja-leyenda-atajos">
         <div class="cabecera-leyenda-atajos">
           <div class="meta-leyenda-modulo">
-            <span class="badge-modulo-leyenda" id="leyenda-badge-modulo">Módulo 01</span>
-            <h4 class="titulo-modulo-leyenda" id="leyenda-titulo-modulo">Visor y Atlas VGI</h4>
+            <span class="badge-modulo-leyenda" id="leyenda-badge-modulo">Módulo</span>
+            <h4 class="titulo-modulo-leyenda" id="leyenda-titulo-modulo">Apartados</h4>
           </div>
           <button type="button" 
                   id="btn-cerrar-leyenda-atajos" 
                   class="btn-cerrar-leyenda-atajos" 
-                  title="Minimizar panel de apartados"
-                  aria-label="Minimizar apartados">
-            ✕
+                  title="Ocultar apartados"
+                  aria-label="Ocultar panel de apartados">
+            −
           </button>
         </div>
 
-        <div class="aviso-guia-leyenda">
-          <span class="icono-aviso-guia">💡</span>
-          <span class="texto-aviso-guia">
-            <strong>Atajos de sección:</strong> Haz clic para navegar directamente. Los apartados marcados con <em>↓ Abajo</em> están disponibles al desplazarte.
-          </span>
-        </div>
-
-        <nav class="lista-atajos-modulo" id="lista-atajos-modulo" aria-label="Lista de apartados de este módulo">
+        <nav class="lista-atajos-modulo" id="lista-atajos-modulo" aria-label="Navegación interna del módulo">
           <!-- Renderizado dinámico de apartados -->
         </nav>
 
         <div class="pie-leyenda-atajos">
-          <div class="contador-apartados-leyenda" id="contador-apartados-leyenda">
-            6 apartados disponibles
-          </div>
+          <span class="contador-apartados-leyenda" id="contador-apartados-leyenda">0 apartados</span>
           <button type="button" 
                   class="btn-volver-arriba-modulo" 
                   id="btn-volver-arriba-modulo" 
-                  title="Desplazarse al inicio de este módulo">
-            ↑ Arriba
+                  title="Subir al inicio del módulo">
+            ↑ Inicio
           </button>
         </div>
       </div>
@@ -506,7 +202,6 @@ const ModuloAtajosLeyenda = (() => {
 
     document.body.appendChild(contenedor);
 
-    // Eventos de toggle (expandir / contraer)
     const btnToggle = document.getElementById('btn-toggle-leyenda-atajos');
     const btnCerrar = document.getElementById('btn-cerrar-leyenda-atajos');
     const btnArriba = document.getElementById('btn-volver-arriba-modulo');
@@ -532,7 +227,7 @@ const ModuloAtajosLeyenda = (() => {
       });
     }
 
-    // Cerrar en móviles si se hace clic fuera del widget
+    // En móviles (< 1024px), cerrar si se hace clic fuera
     document.addEventListener('click', (e) => {
       if (window.innerWidth <= 1024 && !colapsado) {
         if (!contenedor.contains(e.target)) {
@@ -544,9 +239,6 @@ const ModuloAtajosLeyenda = (() => {
     return contenedor;
   }
 
-  /**
-   * Controla el estado de colapso de la leyenda
-   */
   function setColapsado(nuevoEstado) {
     colapsado = Boolean(nuevoEstado);
     const cont = document.getElementById('leyenda-atajos-modulo');
@@ -558,14 +250,14 @@ const ModuloAtajosLeyenda = (() => {
       if (btnToggle) {
         btnToggle.setAttribute('aria-expanded', 'false');
         const flecha = btnToggle.querySelector('.flecha-toggle-leyenda');
-        if (flecha) flecha.textContent = '◀';
+        if (flecha) flecha.textContent = '‹';
       }
     } else {
       cont.classList.remove('colapsada');
       if (btnToggle) {
         btnToggle.setAttribute('aria-expanded', 'true');
         const flecha = btnToggle.querySelector('.flecha-toggle-leyenda');
-        if (flecha) flecha.textContent = '▶';
+        if (flecha) flecha.textContent = '›';
       }
     }
 
@@ -578,9 +270,6 @@ const ModuloAtajosLeyenda = (() => {
     setColapsado(!colapsado);
   }
 
-  /**
-   * Navega suavemente a un apartado identificado por su ID y aplica un resplandor momentáneo
-   */
   function desplazarseAApartado(idElemento) {
     if (!idElemento) return;
     const destino = document.getElementById(idElemento);
@@ -589,13 +278,11 @@ const ModuloAtajosLeyenda = (() => {
       return;
     }
 
-    // En pantallas estrechas (< 1024px), colapsar para despejar el campo de visión
     if (window.innerWidth <= 1024) {
       setColapsado(true);
     }
 
-    // Desplazamiento suave con compensación por la cabecera fija
-    const offsetCabecera = 110;
+    const offsetCabecera = 100;
     const posRect = destino.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const destinoTop = posRect.top + scrollTop - offsetCabecera;
@@ -605,20 +292,15 @@ const ModuloAtajosLeyenda = (() => {
       behavior: 'smooth'
     });
 
-    // Efecto de halo luminoso momentáneo
     destino.classList.remove('seccion-resaltada-atajo');
-    // Forzar reflow para reiniciar la animación
     void destino.offsetWidth;
     destino.classList.add('seccion-resaltada-atajo');
 
     setTimeout(() => {
       destino.classList.remove('seccion-resaltada-atajo');
-    }, 2200);
+    }, 2000);
   }
 
-  /**
-   * Renderiza los atajos correspondientes al módulo activo
-   */
   function renderizarAtajosModulo(modId) {
     const cont = asegurarContenedorDOM();
     const modKey = normalizarIdModulo(modId);
@@ -632,7 +314,7 @@ const ModuloAtajosLeyenda = (() => {
     const btnToggle = document.getElementById('btn-toggle-leyenda-atajos');
 
     if (elBadge) elBadge.textContent = info.badge || 'Módulo';
-    if (elTitulo) elTitulo.innerHTML = `${info.icono} ${info.nombre}`;
+    if (elTitulo) elTitulo.textContent = info.nombre || 'Apartados';
     if (btnToggle) {
       const txt = btnToggle.querySelector('.texto-toggle-leyenda');
       if (txt) txt.textContent = `Apartados (${info.apartados.length})`;
@@ -641,13 +323,11 @@ const ModuloAtajosLeyenda = (() => {
     if (!lista) return;
 
     let itemsHtml = '';
-    const totalAbajo = info.apartados.filter(a => a.abajo).length;
-
     info.apartados.forEach((ap, index) => {
       const numStr = String(index + 1).padStart(2, '0');
-      const badgeAbajo = ap.abajo 
-        ? `<span class="badge-indicador-abajo" title="Ubicado más abajo en la página">↓ Abajo</span>` 
-        : `<span class="badge-indicador-vista" title="En la zona superior de la pantalla">● Superior</span>`;
+      const tagAbajo = ap.abajo 
+        ? `<span class="tag-abajo-simple" title="Disponible más abajo en la página">↓</span>` 
+        : '';
 
       itemsHtml += `
         <button type="button" 
@@ -655,15 +335,9 @@ const ModuloAtajosLeyenda = (() => {
                 data-target-id="${ap.id}" 
                 id="btn-atajo-${ap.id}"
                 title="Ir a: ${ap.titulo}">
-          <div class="indicador-orden-atajo">${numStr}</div>
-          <div class="cuerpo-atajo-modulo">
-            <div class="fila-superior-atajo">
-              <span class="icono-apartado">${ap.icono}</span>
-              <strong class="titulo-apartado">${ap.titulo}</strong>
-              ${badgeAbajo}
-            </div>
-            <p class="desc-apartado">${ap.desc}</p>
-          </div>
+          <span class="num-apartado">${numStr}</span>
+          <span class="titulo-apartado">${ap.titulo}</span>
+          ${tagAbajo}
         </button>
       `;
     });
@@ -671,25 +345,20 @@ const ModuloAtajosLeyenda = (() => {
     lista.innerHTML = itemsHtml;
 
     if (elContador) {
-      elContador.innerHTML = `<strong>${info.apartados.length} apartados</strong> · ${totalAbajo} más abajo`;
+      const totalAbajo = info.apartados.filter(a => a.abajo).length;
+      elContador.textContent = `${info.apartados.length} apartados (${totalAbajo} abajo)`;
     }
 
-    // Configurar listeners de clic en cada atajo
     lista.querySelectorAll('.item-atajo-modulo').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const targetId = btn.dataset.targetId;
-        desplazarseAApartado(targetId);
+        desplazarseAApartado(btn.dataset.targetId);
       });
     });
 
-    // Reinicializar el observador Scrollspy
     configurarScrollspy(info.apartados);
   }
 
-  /**
-   * Scrollspy con IntersectionObserver para iluminar el apartado activo según scroll
-   */
   function configurarScrollspy(apartados) {
     if (observerScrollspy) {
       try { observerScrollspy.disconnect(); } catch (_) {}
@@ -714,7 +383,6 @@ const ModuloAtajosLeyenda = (() => {
 
       elementos.forEach(el => observerScrollspy.observe(el));
     } else {
-      // Fallback con evento scroll throttled
       configurarScrollFallback(ids);
     }
   }
@@ -740,7 +408,7 @@ const ModuloAtajosLeyenda = (() => {
     timerThrottle = setTimeout(() => {
       timerThrottle = null;
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      const offset = 140;
+      const offset = 130;
 
       const info = CONFIG_MODULOS[moduloActivo] || CONFIG_MODULOS['inicio'];
       let actualId = null;
@@ -749,25 +417,17 @@ const ModuloAtajosLeyenda = (() => {
         const el = document.getElementById(ap.id);
         if (el) {
           const top = el.offsetTop - offset;
-          if (scrollY >= top) {
-            actualId = ap.id;
-          }
+          if (scrollY >= top) actualId = ap.id;
         }
       });
 
-      if (actualId) {
-        marcarApartadoActivo(actualId);
-      }
+      if (actualId) marcarApartadoActivo(actualId);
     }, 120);
   }
 
-  /**
-   * Inicialización pública
-   */
   function inicializar() {
     asegurarContenedorDOM();
 
-    // Recuperar preferencia de minimizado (por defecto expandido en escritorio, colapsado en móvil)
     let prefColapso = false;
     try {
       const guardado = localStorage.getItem('atlas_leyenda_atajos_colapsada');
@@ -782,12 +442,10 @@ const ModuloAtajosLeyenda = (() => {
 
     setColapsado(prefColapso);
 
-    // Detectar panel activo inicial
     const panelActivoEl = document.querySelector('.panel.activo');
     const panelIdInicial = panelActivoEl ? panelActivoEl.id.replace('panel-', '') : 'inicio';
     renderizarAtajosModulo(panelIdInicial);
 
-    // Ajustar responsividad al redimensionar
     window.addEventListener('resize', () => {
       if (window.innerWidth <= 1024 && !colapsado) {
         setColapsado(true);
@@ -795,9 +453,6 @@ const ModuloAtajosLeyenda = (() => {
     }, { passive: true });
   }
 
-  /**
-   * Actualización pública invocada al cambiar de panel
-   */
   function actualizar(panelId) {
     const modKey = normalizarIdModulo(panelId);
     renderizarAtajosModulo(modKey);
@@ -813,7 +468,6 @@ const ModuloAtajosLeyenda = (() => {
   };
 })();
 
-// Exposición en ámbito global para llamadas de activación
 if (typeof window !== 'undefined') {
   window.ModuloAtajosLeyenda = ModuloAtajosLeyenda;
 }
