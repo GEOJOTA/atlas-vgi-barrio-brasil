@@ -1838,7 +1838,7 @@ async function manejarConsultaPersonalizada() {
     const res = await ModuloOSM.consultarPersonalizada(params);
     const duracionSeg = ((performance.now() - inicio) / 1000).toFixed(1);
 
-    const geojson = res.geojson;
+    let geojson = res.geojson;
     const total = geojson.features.length;
 
     if (total === 0) {
