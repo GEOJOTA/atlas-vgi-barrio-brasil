@@ -7419,21 +7419,38 @@ table.tabla-datos,
 
 
 
+
 /* ==========================================================================
    LEYENDA DE APARTADOS Y ATAJOS (DISEÑO SIMPLE, SOBRIO Y SIN ICONOS)
    ========================================================================== */
 
+/* Margen superior para evitar solapamiento con la cabecera sticky de 120px */
+[id^="sec-"],
+#mapa-atlas,
+#consola-capas-gis,
+#seccion-importador-capas,
+#resultado-osm,
+#resultado-gbif,
+#resultado-umap,
+#contenedor-acordeon-capas,
+#seccion-storyboards,
+#form-metadatos,
+#resultado-metadatos,
+#dicc-sec-esquema,
+#contenedor-filtros-diccionario,
+#contenido-diccionario,
+#buscador-general-manual,
+#lista-capitulos-manual,
+#cap-uso-04,
+#tbody-catalogo-manual {
+  scroll-margin-top: 130px;
+}
+
 .leyenda-atajos-flotante {
   position: fixed;
-  top: 155px;
+  top: 145px;
   right: 14px;
   z-index: 990;
-  width: 275px;
-  max-height: calc(100vh - 175px);
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  transition: transform 0.25s ease, opacity 0.2s ease;
   pointer-events: none;
 }
 
@@ -7441,20 +7458,23 @@ table.tabla-datos,
   box-sizing: border-box;
 }
 
-/* Pestaña / Botón de Toggle Lateral cuando está cerrada */
+/* Pestaña / Botón de Apertura cuando está cerrada */
 .btn-toggle-leyenda-atajos {
   pointer-events: auto;
   display: none;
+  position: fixed;
+  top: 145px;
+  right: 0;
   background: rgba(13, 21, 39, 0.98);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: var(--tinta, #f1f5f9);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-right: none;
   border-radius: 6px 0 0 6px;
-  padding: 8px 11px;
+  padding: 8px 12px;
   cursor: pointer;
-  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.4);
+  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.45);
   transition: background 0.15s ease, color 0.15s ease;
   align-items: center;
   gap: 6px;
@@ -7469,11 +7489,11 @@ table.tabla-datos,
   color: var(--ocre, #d4a017);
 }
 
-/* Caja Contenedora Principal */
+/* Caja Contenedora Principal de la Leyenda */
 .caja-leyenda-atajos {
   pointer-events: auto;
   width: 275px;
-  max-height: calc(100vh - 175px);
+  max-height: calc(100vh - 165px);
   background: rgba(11, 19, 36, 0.96);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -7483,27 +7503,22 @@ table.tabla-datos,
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
-/* Estado Colapsado en Escritorio */
-.leyenda-atajos-flotante.colapsada {
-  transform: translateX(calc(100% - 36px));
+/* Estado Colapsado (Oculta la caja y muestra el botón toggle) */
+.leyenda-atajos-flotante.colapsada .caja-leyenda-atajos {
+  display: none;
 }
 
 .leyenda-atajos-flotante.colapsada .btn-toggle-leyenda-atajos {
   display: inline-flex;
 }
 
-.leyenda-atajos-flotante.colapsada .caja-leyenda-atajos {
-  opacity: 0.08;
-  pointer-events: none;
-}
-
 /* Cabecera de la Leyenda */
 .cabecera-leyenda-atajos {
   padding: 10px 12px 9px 12px;
-  background: rgba(16, 27, 50, 0.9);
+  background: rgba(16, 27, 50, 0.92);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
@@ -7540,7 +7555,7 @@ table.tabla-datos,
 /* Botón de Cerrar (X) Claro y Visible */
 .btn-cerrar-leyenda-atajos {
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: #e2e8f0;
   font-size: 0.85rem;
   font-weight: 700;
@@ -7558,7 +7573,7 @@ table.tabla-datos,
 
 .btn-cerrar-leyenda-atajos:hover {
   color: #ffffff;
-  background: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.45);
   border-color: #ef4444;
 }
 
@@ -7655,7 +7670,7 @@ table.tabla-datos,
 /* Pie de la Leyenda */
 .pie-leyenda-atajos {
   padding: 7px 10px;
-  background: rgba(16, 27, 50, 0.9);
+  background: rgba(16, 27, 50, 0.92);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
@@ -7669,7 +7684,7 @@ table.tabla-datos,
 
 .btn-volver-arriba-modulo {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: var(--tinta-suave, #cbd5e1);
   border-radius: 3px;
   padding: 2px 7px;
@@ -7687,17 +7702,17 @@ table.tabla-datos,
 /* Animación de Resaltado del Apartado Destino */
 .seccion-resaltada-atajo {
   outline: 2px solid var(--ocre, #d4a017) !important;
-  outline-offset: 3px !important;
+  outline-offset: 4px !important;
   border-radius: 6px !important;
-  animation: pulsoResaltadoApartado 2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  animation: pulsoResaltadoApartado 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
 @keyframes pulsoResaltadoApartado {
   0% {
-    box-shadow: 0 0 0 0 rgba(212, 160, 23, 0.6);
+    box-shadow: 0 0 0 0 rgba(212, 160, 23, 0.65);
   }
   30% {
-    box-shadow: 0 0 20px 2px rgba(212, 160, 23, 0.4);
+    box-shadow: 0 0 22px 3px rgba(212, 160, 23, 0.45);
   }
   100% {
     box-shadow: 0 0 0 0 rgba(212, 160, 23, 0);
@@ -7714,20 +7729,17 @@ table.tabla-datos,
     top: auto;
     bottom: 16px;
     right: 14px;
-    width: auto;
-    max-height: none;
-    flex-direction: column-reverse;
   }
 
   .btn-toggle-leyenda-atajos {
-    display: inline-flex !important;
-    border-radius: 20px !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    padding: 8px 15px !important;
-    background: rgba(11, 19, 36, 0.98) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55) !important;
-    font-size: 0.80rem !important;
-    color: var(--tinta, #f8fafc) !important;
+    top: auto;
+    bottom: 16px;
+    right: 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 8px 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
+    font-size: 0.80rem;
   }
 
   .caja-leyenda-atajos {
@@ -7739,11 +7751,6 @@ table.tabla-datos,
     max-height: 68vh;
     border-radius: 8px;
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
-  }
-
-  .leyenda-atajos-flotante.colapsada .caja-leyenda-atajos {
-    display: none;
-    opacity: 0;
   }
 
   .lista-atajos-modulo {

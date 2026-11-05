@@ -94,7 +94,7 @@ const ModuloAtajosLeyenda = (() => {
         { id: 'sec-manual-cabecera', titulo: 'Introducción y arquitectura', abajo: false },
         { id: 'buscador-general-manual', titulo: 'Buscador de capítulos', abajo: false },
         { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true },
-        { id: 'tbody-catalogo-manual', titulo: 'Inventario de 133 capas', abajo: true }
+        { id: 'cap-uso-04', titulo: 'Inventario de 133 capas', abajo: true }
       ]
     },
     'metadatos-iso': {
@@ -209,13 +209,15 @@ const ModuloAtajosLeyenda = (() => {
 
     if (btnToggle) {
       btnToggle.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
-        toggleColapso();
+        setColapsado(false);
       });
     }
 
     if (btnCerrar) {
       btnCerrar.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
         setColapsado(true);
       });
@@ -223,12 +225,13 @@ const ModuloAtajosLeyenda = (() => {
 
     if (btnArriba) {
       btnArriba.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
 
-    // En móviles (< 1024px), cerrar si se hace clic fuera
+    // En pantallas pequeñas (< 1024px), cerrar si se hace clic fuera del widget
     document.addEventListener('click', (e) => {
       if (window.innerWidth <= 1024 && !colapsado) {
         if (!contenedor.contains(e.target)) {
@@ -250,15 +253,11 @@ const ModuloAtajosLeyenda = (() => {
       cont.classList.add('colapsada');
       if (btnToggle) {
         btnToggle.setAttribute('aria-expanded', 'false');
-        const flecha = btnToggle.querySelector('.flecha-toggle-leyenda');
-        if (flecha) flecha.textContent = '‹';
       }
     } else {
       cont.classList.remove('colapsada');
       if (btnToggle) {
         btnToggle.setAttribute('aria-expanded', 'true');
-        const flecha = btnToggle.querySelector('.flecha-toggle-leyenda');
-        if (flecha) flecha.textContent = '›';
       }
     }
 
@@ -273,33 +272,48 @@ const ModuloAtajosLeyenda = (() => {
 
   function desplazarseAApartado(idElemento) {
     if (!idElemento) return;
-    const destino = document.getElementById(idElemento);
+
+    // Si el destino es el inventario del manual, asegurar que dicho capítulo esté abierto
+    if (idElemento === 'cap-uso-04' && window.ModuloManual && typeof window.ModuloManual.irACapitulo === 'function') {
+      window.ModuloManual.irACapitulo('cap-uso-04');
+    }
+
+    let destino = document.getElementById(idElemento);
+
+    // Fallback especial para manual si el capítulo aún no se ha renderizado
+    if (!destino && idElemento === 'cap-uso-04') {
+      destino = document.getElementById('tbody-catalogo-manual') || document.getElementById('contenido-manual');
+    }
+
     if (!destino) {
       console.warn(`[ModuloAtajosLeyenda] Elemento no encontrado: #${idElemento}`);
       return;
     }
 
+    // En móviles/tablets, cerrar al seleccionar apartado para ver el contenido
     if (window.innerWidth <= 1024) {
       setColapsado(true);
     }
 
-    const offsetCabecera = 100;
+    // Desplazamiento suave con compensación de cabecera sticky
+    const offsetCabecera = 120;
     const posRect = destino.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const destinoTop = posRect.top + scrollTop - offsetCabecera;
+    const destinoTop = Math.max(0, posRect.top + scrollTop - offsetCabecera);
 
     window.scrollTo({
-      top: Math.max(0, destinoTop),
+      top: destinoTop,
       behavior: 'smooth'
     });
 
+    // Halo luminoso momentáneo
     destino.classList.remove('seccion-resaltada-atajo');
     void destino.offsetWidth;
     destino.classList.add('seccion-resaltada-atajo');
 
     setTimeout(() => {
       destino.classList.remove('seccion-resaltada-atajo');
-    }, 2000);
+    }, 2200);
   }
 
   function renderizarAtajosModulo(modId) {
@@ -352,6 +366,7 @@ const ModuloAtajosLeyenda = (() => {
 
     lista.querySelectorAll('.item-atajo-modulo').forEach(btn => {
       btn.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
         desplazarseAApartado(btn.dataset.targetId);
       });
@@ -415,7 +430,10 @@ const ModuloAtajosLeyenda = (() => {
       let actualId = null;
 
       info.apartados.forEach(ap => {
-        const el = document.getElementById(ap.id);
+        let el = document.getElementById(ap.id);
+        if (!el && ap.id === 'cap-uso-04') {
+          el = document.getElementById('tbody-catalogo-manual');
+        }
         if (el) {
           const top = el.offsetTop - offset;
           if (scrollY >= top) actualId = ap.id;
@@ -429,7 +447,7 @@ const ModuloAtajosLeyenda = (() => {
   function inicializar() {
     asegurarContenedorDOM();
 
-    // Requisito explícito: la leyenda siempre se despliega al abrir la página
+    // Requisito expreso del usuario: la leyenda siempre se despliega al abrir la página
     setColapsado(false);
 
     const panelActivoEl = document.querySelector('.panel.activo');
