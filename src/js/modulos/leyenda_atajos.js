@@ -8,12 +8,13 @@
 
   Adaptado dinámicamente a todos los dispositivos (escritorio, tablets y móviles)
   sin interferir con el visor Leaflet ni los controles interactivos.
+  Se despliega automáticamente al abrir la página y cuenta con un botón de cierre claro (✕).
 */
 
 const ModuloAtajosLeyenda = (() => {
   'use strict';
 
-  // Configuración de apartados por módulo (sin iconos, títulos concisos)
+  // Configuración de apartados por módulo (sin iconos, títulos claros)
   const CONFIG_MODULOS = {
     'inicio': {
       id: 'inicio',
@@ -163,7 +164,7 @@ const ModuloAtajosLeyenda = (() => {
       <button type="button" 
               id="btn-toggle-leyenda-atajos" 
               class="btn-toggle-leyenda-atajos" 
-              title="Mostrar u ocultar apartados del módulo"
+              title="Abrir apartados del módulo"
               aria-expanded="true">
         <span class="texto-toggle-leyenda">Apartados</span>
         <span class="flecha-toggle-leyenda">›</span>
@@ -178,9 +179,9 @@ const ModuloAtajosLeyenda = (() => {
           <button type="button" 
                   id="btn-cerrar-leyenda-atajos" 
                   class="btn-cerrar-leyenda-atajos" 
-                  title="Ocultar apartados"
-                  aria-label="Ocultar panel de apartados">
-            −
+                  title="Cerrar panel de apartados (X)"
+                  aria-label="Cerrar panel de apartados">
+            ✕
           </button>
         </div>
 
@@ -428,29 +429,12 @@ const ModuloAtajosLeyenda = (() => {
   function inicializar() {
     asegurarContenedorDOM();
 
-    let prefColapso = false;
-    try {
-      const guardado = localStorage.getItem('atlas_leyenda_atajos_colapsada');
-      if (guardado !== null) {
-        prefColapso = guardado === '1';
-      } else {
-        prefColapso = window.innerWidth <= 1024;
-      }
-    } catch (_) {
-      prefColapso = window.innerWidth <= 1024;
-    }
-
-    setColapsado(prefColapso);
+    // Requisito explícito: la leyenda siempre se despliega al abrir la página
+    setColapsado(false);
 
     const panelActivoEl = document.querySelector('.panel.activo');
     const panelIdInicial = panelActivoEl ? panelActivoEl.id.replace('panel-', '') : 'inicio';
     renderizarAtajosModulo(panelIdInicial);
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth <= 1024 && !colapsado) {
-        setColapsado(true);
-      }
-    }, { passive: true });
   }
 
   function actualizar(panelId) {

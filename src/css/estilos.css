@@ -7418,6 +7418,7 @@ table.tabla-datos,
 
 
 
+
 /* ==========================================================================
    LEYENDA DE APARTADOS Y ATAJOS (DISEÑO SIMPLE, SOBRIO Y SIN ICONOS)
    ========================================================================== */
@@ -7427,7 +7428,7 @@ table.tabla-datos,
   top: 155px;
   right: 14px;
   z-index: 990;
-  width: 240px;
+  width: 275px;
   max-height: calc(100vh - 175px);
   display: flex;
   flex-direction: row;
@@ -7440,25 +7441,25 @@ table.tabla-datos,
   box-sizing: border-box;
 }
 
-/* Pestaña / Botón de Toggle Lateral */
+/* Pestaña / Botón de Toggle Lateral cuando está cerrada */
 .btn-toggle-leyenda-atajos {
   pointer-events: auto;
   display: none;
-  background: rgba(13, 21, 39, 0.96);
+  background: rgba(13, 21, 39, 0.98);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: var(--tinta, #f1f5f9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-right: none;
   border-radius: 6px 0 0 6px;
-  padding: 8px 10px;
+  padding: 8px 11px;
   cursor: pointer;
-  box-shadow: -2px 4px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.4);
   transition: background 0.15s ease, color 0.15s ease;
   align-items: center;
   gap: 6px;
   font-family: var(--fuente-interfaz, system-ui, sans-serif);
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -7471,14 +7472,14 @@ table.tabla-datos,
 /* Caja Contenedora Principal */
 .caja-leyenda-atajos {
   pointer-events: auto;
-  width: 240px;
+  width: 275px;
   max-height: calc(100vh - 175px);
-  background: rgba(11, 19, 36, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(11, 19, 36, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -7487,7 +7488,7 @@ table.tabla-datos,
 
 /* Estado Colapsado en Escritorio */
 .leyenda-atajos-flotante.colapsada {
-  transform: translateX(calc(100% - 34px));
+  transform: translateX(calc(100% - 36px));
 }
 
 .leyenda-atajos-flotante.colapsada .btn-toggle-leyenda-atajos {
@@ -7495,32 +7496,33 @@ table.tabla-datos,
 }
 
 .leyenda-atajos-flotante.colapsada .caja-leyenda-atajos {
-  opacity: 0.1;
+  opacity: 0.08;
   pointer-events: none;
 }
 
 /* Cabecera de la Leyenda */
 .cabecera-leyenda-atajos {
-  padding: 9px 12px 8px 12px;
-  background: rgba(16, 27, 50, 0.85);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 12px 9px 12px;
+  background: rgba(16, 27, 50, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .meta-leyenda-modulo {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
   min-width: 0;
+  flex: 1;
 }
 
 .badge-modulo-leyenda {
   font-family: var(--fuente-datos, monospace);
-  font-size: 0.62rem;
-  font-weight: 600;
+  font-size: 0.64rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--ocre, #d4a017);
@@ -7528,60 +7530,67 @@ table.tabla-datos,
 
 .titulo-modulo-leyenda {
   margin: 0;
-  font-size: 0.80rem;
-  font-weight: 600;
+  font-size: 0.84rem;
+  font-weight: 700;
   color: var(--tinta, #f8fafc);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.25;
 }
 
+/* Botón de Cerrar (X) Claro y Visible */
 .btn-cerrar-leyenda-atajos {
-  background: transparent;
-  border: none;
-  color: var(--tinta-suave, #94a3b8);
-  font-size: 1.1rem;
-  font-weight: 400;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  font-weight: 700;
   cursor: pointer;
-  padding: 0 4px;
-  border-radius: 3px;
-  transition: color 0.15s ease;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .btn-cerrar-leyenda-atajos:hover {
-  color: #f87171;
+  color: #ffffff;
+  background: rgba(239, 68, 68, 0.4);
+  border-color: #ef4444;
 }
 
 /* Lista Desplazable de Atajos */
 .lista-atajos-modulo {
   padding: 6px;
   overflow-y: auto;
-  max-height: calc(100vh - 270px);
+  max-height: calc(100vh - 275px);
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
 .lista-atajos-modulo::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
 }
 
 .lista-atajos-modulo::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
 }
 
 /* Cada Ítem de Atajo */
 .item-atajo-modulo {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   width: 100%;
   text-align: left;
-  padding: 6px 8px;
+  padding: 7px 9px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 5px;
@@ -7589,18 +7598,18 @@ table.tabla-datos,
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   font-family: inherit;
-  font-size: 0.77rem;
-  line-height: 1.25;
+  font-size: 0.78rem;
+  line-height: 1.35;
 }
 
 .item-atajo-modulo:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
 }
 
 .item-atajo-modulo.activo {
-  background: rgba(212, 160, 23, 0.14);
-  border-color: rgba(212, 160, 23, 0.35);
+  background: rgba(212, 160, 23, 0.16);
+  border-color: rgba(212, 160, 23, 0.4);
   color: var(--ocre, #facc15);
   font-weight: 600;
 }
@@ -7608,14 +7617,15 @@ table.tabla-datos,
 .num-apartado {
   flex-shrink: 0;
   font-family: var(--fuente-datos, monospace);
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   color: #64748b;
-  font-weight: 500;
+  font-weight: 600;
+  margin-top: 1px;
   transition: color 0.15s ease;
 }
 
 .item-atajo-modulo:hover .num-apartado {
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 .item-atajo-modulo.activo .num-apartado {
@@ -7626,28 +7636,31 @@ table.tabla-datos,
 .titulo-apartado {
   flex: 1;
   min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  line-height: 1.35;
+  font-size: 0.78rem;
 }
 
 .tag-abajo-simple {
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--ocre, #d4a017);
   flex-shrink: 0;
   padding-left: 2px;
+  margin-top: 1px;
 }
 
 /* Pie de la Leyenda */
 .pie-leyenda-atajos {
-  padding: 6px 10px;
-  background: rgba(16, 27, 50, 0.85);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 7px 10px;
+  background: rgba(16, 27, 50, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.68rem;
+  font-size: 0.70rem;
 }
 
 .contador-apartados-leyenda {
@@ -7656,19 +7669,19 @@ table.tabla-datos,
 
 .btn-volver-arriba-modulo {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--tinta-suave, #94a3b8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--tinta-suave, #cbd5e1);
   border-radius: 3px;
-  padding: 2px 6px;
-  font-size: 0.66rem;
+  padding: 2px 7px;
+  font-size: 0.68rem;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .btn-volver-arriba-modulo:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   color: var(--ocre, #d4a017);
-  border-color: rgba(212, 160, 23, 0.3);
+  border-color: rgba(212, 160, 23, 0.4);
 }
 
 /* Animación de Resaltado del Apartado Destino */
@@ -7709,22 +7722,23 @@ table.tabla-datos,
   .btn-toggle-leyenda-atajos {
     display: inline-flex !important;
     border-radius: 20px !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    padding: 7px 14px !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    padding: 8px 15px !important;
     background: rgba(11, 19, 36, 0.98) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
-    font-size: 0.78rem !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55) !important;
+    font-size: 0.80rem !important;
     color: var(--tinta, #f8fafc) !important;
   }
 
   .caja-leyenda-atajos {
     position: fixed;
-    bottom: 58px;
+    bottom: 60px;
     right: 14px;
     width: calc(100vw - 28px);
-    max-width: 320px;
-    max-height: 65vh;
+    max-width: 330px;
+    max-height: 68vh;
     border-radius: 8px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
   }
 
   .leyenda-atajos-flotante.colapsada .caja-leyenda-atajos {
@@ -7733,7 +7747,7 @@ table.tabla-datos,
   }
 
   .lista-atajos-modulo {
-    max-height: calc(65vh - 90px);
+    max-height: calc(68vh - 95px);
   }
 
   .item-atajo-modulo {
@@ -7746,11 +7760,11 @@ table.tabla-datos,
   .caja-leyenda-atajos {
     right: 10px;
     width: calc(100vw - 20px);
-    max-width: 310px;
-    max-height: 70vh;
+    max-width: 320px;
+    max-height: 72vh;
   }
 
   .lista-atajos-modulo {
-    max-height: calc(70vh - 90px);
+    max-height: calc(72vh - 95px);
   }
 }
