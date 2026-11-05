@@ -324,12 +324,32 @@ const ModuloImportadorCapas = (() => {
     geojson.features.forEach((f, idx) => {
       if (!f.properties) f.properties = {};
       const props = f.properties;
+      const geom = f.geometry || {};
       props._capaId = idCapa;
       props._idUsuario = `${idCapa}_${idx}`;
       props._fuente = `Capa Importada: ${nombreArchivo}`;
       props._color = color;
       props._nombre = props.name || props.nombre || props.Name || props.NOMBRE || props.title || `Entidad #${idx + 1}`;
-      props._subtipo = props.tipo || props.type || props.category || props.categoria || f.geometry.type;
+      props._subtipo = props.tipo || props.type || props.category || props.categoria || (geom ? geom.type : 'Elemento');
+
+      // Garantizar presencia del esquema canónico de 17 atributos VGI
+      if (!props.id_vgi) props.id_vgi = `${idCapa}_${idx + 1}`;
+      if (!props.categoria) props.categoria = 'Capa de Usuario / Externa';
+      if (!props.subtipo) props.subtipo = props._subtipo;
+      if (!props.nombre) props.nombre = props._nombre;
+      if (!props.operador) props.operador = props.operator || null;
+      if (!props.direccion) props.direccion = props.address || props.direccion || null;
+      if (!props.accesibilidad) props.accesibilidad = props.wheelchair || null;
+      if (!props.fuente) props.fuente = `Capa Importada: ${nombreArchivo}`;
+      if (!props.metodo_adquisicion) props.metodo_adquisicion = 'Carga de archivo vectorial externo';
+      if (!props.licencia) props.licencia = 'Datos Abiertos / Aporte de Usuario';
+      if (!props.coordenadas && geom.coordinates) {
+        props.coordenadas = geom.type === 'Point' ? geom.coordinates : null;
+      }
+      if (!props.fecha_registro) props.fecha_registro = new Date().toISOString().slice(0, 10);
+      if (props.superficie_m2 === undefined) props.superficie_m2 = null;
+      if (props.superficie_ha === undefined) props.superficie_ha = null;
+      if (props.srs_superficie === undefined) props.srs_superficie = null;
     });
   }
 

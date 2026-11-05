@@ -655,24 +655,6 @@ const ModuloIDEChile = (() => {
       declaracion: 'Información pública oficial del Estado de Chile amparada por la Ley N° 20.285 de Transparencia.',
       citaAPA: "Estado de Chile. (2026). Áreas Funcionales de las ciudades (2026) (Capa N° 17). IDE Chile / Geoportal. https://geoide.minvu.cl/server/rest/services/Otros/AFU_2026/FeatureServer"
     },
-    'bbdd_18': {
-      id: 'bbdd_18',
-      num_bbdd: 18,
-      nombre: "Zonificación Termica",
-      institucion: "Estado de Chile / IDE Chile / geoide.minvu.cl",
-      ministerio: 'Organismo Público del Estado de Chile',
-      tipoServicio: 'Vectorial GeoJSON / Tabular BIDAT / OGC WMS',
-      urlServicio: "https://geoide.minvu.cl/server/rest/services/Otros/Zonificaci%C3%B3n_termica/FeatureServer",
-      archivoLocal: 'data/capa_bbdd_18.geojson',
-      color: '#D97706',
-      icono: '📜',
-      geometria: 'Vectorial / Tabular Georreferenciada',
-      grupo: 'normativa_ipt',
-      joinInfo: "ORIGINAL",
-      descripcion: "Capa cartográfica e indicador territorial N° 18: Zonificación Termica. Catastrada e integrada al Atlas VGI con respaldo de metadatos estandarizados.",
-      declaracion: 'Información pública oficial del Estado de Chile amparada por la Ley N° 20.285 de Transparencia.',
-      citaAPA: "Estado de Chile. (2026). Zonificación Termica (Capa N° 18). IDE Chile / Geoportal. https://geoide.minvu.cl/server/rest/services/Otros/Zonificaci%C3%B3n_termica/FeatureServer"
-    },
     'bbdd_19': {
       id: 'bbdd_19',
       num_bbdd: 19,

@@ -2,7 +2,7 @@
 
 * Entorno de Producción Primaria (Netlify CDN): [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * Entorno de Respaldo (GitHub Pages): [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* Parámetros Auditados: 134 Capas Operativas (`124` Oficiales + `10` VGI) · 140 Descriptores ISO 19110:2016 · 4 guiones visuales (83 Cartografías) · 21 Módulos JS ES6+ · Paridad Simétrica `data/` ↔ `src/data/` y `docs/` ↔ `src/docs/`.
+* Parámetros Auditados: 133 Capas Operativas (`123` Oficiales + `10` VGI) · 140 Descriptores ISO 19110:2016 · 4 guiones visuales (83 Cartografías) · 21 Módulos JS ES6+ · Paridad Simétrica `data/` ↔ `src/data/` y `docs/` ↔ `src/docs/`.
 
 ---
 
@@ -10,7 +10,7 @@
 
 Este documento define las reglas de validación técnica, los bancos de pruebas automatizadas en Python 3, la sincronización de directorios espejo, el control de caché (*Cache-Busting*) y el flujo de despliegue continuo hacia producción del Atlas de Información Geográfica Voluntaria (VGI).
 
-Su cumplimiento garantiza que ninguna actualización de código o de cartografía genere enlaces rotos (`HTTP 404`), archivos truncados por punteros de *Git LFS*, discrepancias en el conteo de las 134 coberturas operativas o pérdida de sincronización entre el repositorio raíz y el directorio de publicación web (`src/`).
+Su cumplimiento garantiza que ninguna actualización de código o de cartografía genere enlaces rotos (`HTTP 404`), archivos truncados por punteros de *Git LFS*, discrepancias en el conteo de las 133 coberturas operativas o pérdida de sincronización entre el repositorio raíz y el directorio de publicación web (`src/`).
 
 ---
 
@@ -24,7 +24,7 @@ flowchart LR
     end
 
     subgraph PROC["2. FLUJO DE PROCESAMIENTO Y AUDITORÍA (Scripts Python 3 y JSC)"]
-        V1["Etapa 1 · Paridad de Conteo y Descriptores<br/>python3 scripts/verificar_conteo_capas.py<br/>(134 Capas: 124 Oficiales + 10 VGI | 140 ISO 19110)"]
+        V1["Etapa 1 · Paridad de Conteo y Descriptores<br/>python3 scripts/verificar_conteo_capas.py<br/>(133 Capas: 123 Oficiales + 10 VGI | 140 ISO 19110)"]
         V2["Etapa 2 · Integridad Topológica y Espejo<br/>python3 scripts/verificar_integridad_despliegue.py<br/>(0 Punteros LFS | RFC 7946 | data/ == src/data/)"]
         V3["Etapa 3 · Recálculo WLC y Validación Sintáctica JS<br/>python3 scripts/analisis_metacalidad.py<br/>+ Validación de los 21 archivos JS + Cache-Busting (?v=...)"]
     end
@@ -81,9 +81,9 @@ Antes de ejecutar cualquier `git push origin main`, el equipo mantenedor debe ve
 
 | Banco | Script / Comando de Verificación | Condición de Aprobación (`PASS`) | Archivos Auditados |
 | :---: | :--- | :--- | :--- |
-| Banco 1 | `python3 scripts/verificar_conteo_capas.py` | Conteo exacto de 134 capas (`124` en `CAPAS_OFICIALES` de `ide_chile.js` + `10` en `categorias_osm` de `config.js`), `134` botones en `src/index.html` y `134` entradas en `indicadores_analisis.js`. | `src/js/config.js`, `src/js/modulos/ide_chile.js`, `src/js/modulos/indicadores_analisis.js`, `src/index.html` |
+| Banco 1 | `python3 scripts/verificar_conteo_capas.py` | Conteo exacto de 133 capas (`124` en `CAPAS_OFICIALES` de `ide_chile.js` + `10` en `categorias_osm` de `config.js`), `134` botones en `src/index.html` y `134` entradas en `indicadores_analisis.js`. | `src/js/config.js`, `src/js/modulos/ide_chile.js`, `src/js/modulos/indicadores_analisis.js`, `src/index.html` |
 | Banco 2 | `python3 scripts/verificar_conteo_capas.py` | Conteo exacto de 140 descriptores normativos en `CATALOGO_DICCIONARIO` (`86` brechas VGI sin homólogo estatal). | `src/js/modulos/diccionario.js`, `src/index.html` |
-| Banco 3 | `python3 scripts/verificar_integridad_despliegue.py` | Existencia física, validez sintáctica JSON (`FeatureCollection`), coordenadas en rango WGS84 (`EPSG:4326`) y 0 punteros Git LFS en las 134 capas. | `data/*.geojson`, `src/data/*.geojson` |
+| Banco 3 | `python3 scripts/verificar_integridad_despliegue.py` | Existencia física, validez sintáctica JSON (`FeatureCollection`), coordenadas en rango WGS84 (`EPSG:4326`) y 0 punteros Git LFS en las 133 capas. | `data/*.geojson`, `src/data/*.geojson` |
 | Banco 4 | `python3 scripts/verificar_integridad_despliegue.py` | Paridad simétrica entre `data/` y `src/data/`, y presencia de los entregables en `docs/` y `src/docs/`. | `data/` ↔ `src/data/`, `docs/` ↔ `src/docs/` |
 | Banco 5 | Verificación de guiones visuales y Cartografías | Presencia de los 4 guiones visuales en `indicadores_analisis.js` con sus 10 propiedades obligatorias y existencia física de las 83 cartografías JPG en `src/img/cartografias/`. | `src/js/modulos/indicadores_analisis.js`, `src/img/cartografias/` |
 | Banco 6 | `python3 scripts/analisis_metacalidad.py` | Cálculo exitoso de las 5 dimensiones ISO 19157/19115 (`C1` a `C5`) y actualización de las matrices WLC. | `docs/ANALISIS_METACALIDAD.md`, `docs/wlc_metacalidad_ranking.csv`, `docs/wlc_metacalidad_resultado.json`, `docs/matriz_metacalidad.json` |
@@ -103,7 +103,7 @@ El archivo `netlify.toml` en la raíz del proyecto controla el comportamiento de
 * Política de Caché Diferenciada:
   * `/index.html`: `Cache-Control: public, max-age=0, must-revalidate` (garantiza que el navegador consulte siempre la última versión del DOM y de las referencias `?v=...`).
   * `/js/*` y `/css/*`: `Cache-Control: public, max-age=3600, stale-while-revalidate=86400`.
-  * `/data/*`: `Cache-Control: public, max-age=86400, stale-while-revalidate=604800` (acelera la carga de las 134 capas vectoriales).
+  * `/data/*`: `Cache-Control: public, max-age=86400, stale-while-revalidate=604800` (acelera la carga de las 133 capas vectoriales).
 * Atajos de Redirección HTTP (`302` / `200`):
   * `/geodatabase` → `/docs/geodatabase_completa_atlas_vgi.zip`
   * `/api/catalogo` → `/docs/matriz_metacalidad.json`

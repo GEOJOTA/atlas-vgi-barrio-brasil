@@ -19,6 +19,8 @@ import glob
 from datetime import datetime
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 SRC_DATA_DIR = os.path.join(ROOT_DIR, 'src', 'data')
 DATA_DIR = os.path.join(ROOT_DIR, 'data')
 MATRIZ_PATH = os.path.join(ROOT_DIR, 'docs', 'matriz_metacalidad.json')

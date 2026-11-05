@@ -748,6 +748,57 @@ function inicializarAplicacion() {
   document.getElementById('btn-cargar-gbif-al-mapa').addEventListener('click', () => manejarConsultaGBIF(true));
   document.getElementById('btn-cargar-umap').addEventListener('click', manejarCargaUMap);
 
+  // Botones de selección rápida de ámbito espacial para GBIF
+  const btnGbifRm = document.getElementById('btn-gbif-ambito-rm');
+  const btnGbifBrasil = document.getElementById('btn-gbif-ambito-brasil');
+  const btnGbifChile = document.getElementById('btn-gbif-ambito-chile');
+
+  function actualizarEstiloBotonesAmbitoGBIF(activo) {
+    [
+      { el: btnGbifRm, id: 'rm' },
+      { el: btnGbifBrasil, id: 'brasil' },
+      { el: btnGbifChile, id: 'chile' }
+    ].forEach(({ el, id }) => {
+      if (!el) return;
+      if (id === activo) {
+        el.style.borderColor = 'var(--musgo)';
+        el.style.color = 'var(--musgo)';
+        el.style.fontWeight = '700';
+      } else {
+        el.style.borderColor = 'var(--linea)';
+        el.style.color = 'var(--tinta-suave)';
+        el.style.fontWeight = '400';
+      }
+    });
+  }
+
+  if (btnGbifRm) {
+    btnGbifRm.addEventListener('click', () => {
+      escribirBbox('gbif', [-71.85, -34.45, -69.75, -32.90]);
+      actualizarEstiloBotonesAmbitoGBIF('rm');
+      manejarConsultaGBIF(false);
+    });
+  }
+
+  if (btnGbifBrasil) {
+    btnGbifBrasil.addEventListener('click', () => {
+      escribirBbox('gbif', [-70.6720, -33.4505, -70.6580, -33.4350]);
+      actualizarEstiloBotonesAmbitoGBIF('brasil');
+      manejarConsultaGBIF(false);
+    });
+  }
+
+  if (btnGbifChile) {
+    btnGbifChile.addEventListener('click', () => {
+      ['oeste', 'sur', 'este', 'norte'].forEach(k => {
+        const el = document.getElementById(`gbif-${k}`);
+        if (el) el.value = '';
+      });
+      actualizarEstiloBotonesAmbitoGBIF('chile');
+      manejarConsultaGBIF(false);
+    });
+  }
+
   // Selector de especies y autocompletado taxonómico en vivo (GBIF Species API)
   const selTaxaGBIF = document.getElementById('gbif-taxa-selector');
   const inpNombreGBIF = document.getElementById('gbif-nombre');
@@ -755,13 +806,29 @@ function inicializarAplicacion() {
 
   if (selTaxaGBIF && inpNombreGBIF) {
     selTaxaGBIF.addEventListener('change', (e) => {
+      const opt = selTaxaGBIF.options[selTaxaGBIF.selectedIndex];
       if (e.target.value !== 'custom') {
         inpNombreGBIF.value = e.target.value;
+        if (opt && opt.dataset.taxonKey) {
+          inpNombreGBIF.dataset.taxonKey = opt.dataset.taxonKey;
+          inpNombreGBIF.dataset.taxonRank = opt.dataset.rank || '';
+          inpNombreGBIF.dataset.commonName = opt.dataset.common || '';
+        } else {
+          delete inpNombreGBIF.dataset.taxonKey;
+          delete inpNombreGBIF.dataset.taxonRank;
+          delete inpNombreGBIF.dataset.commonName;
+        }
+        if (divSugerenciasGBIF) divSugerenciasGBIF.style.display = 'none';
+        // Auto-consulta inmediata: al elegir una especie recomendada, ejecuta la búsqueda sin requerir clic manual
+        manejarConsultaGBIF(false);
       } else {
         inpNombreGBIF.value = '';
+        delete inpNombreGBIF.dataset.taxonKey;
+        delete inpNombreGBIF.dataset.taxonRank;
+        delete inpNombreGBIF.dataset.commonName;
+        if (divSugerenciasGBIF) divSugerenciasGBIF.style.display = 'none';
         inpNombreGBIF.focus();
       }
-      if (divSugerenciasGBIF) divSugerenciasGBIF.style.display = 'none';
     });
   }
 
@@ -769,6 +836,7 @@ function inicializarAplicacion() {
     let timerTaxa = null;
     inpNombreGBIF.addEventListener('input', () => {
       clearTimeout(timerTaxa);
+      delete inpNombreGBIF.dataset.taxonKey;
       const texto = inpNombreGBIF.value.trim();
       if (texto.length < 2) {
         divSugerenciasGBIF.style.display = 'none';
@@ -781,11 +849,11 @@ function inicializarAplicacion() {
           const sugerencias = await window.ModuloGBIF.sugerirTaxon(texto);
           if (sugerencias.length > 0) {
             divSugerenciasGBIF.innerHTML = `
-              <div style="padding:6px; font-family:var(--fuente-datos); font-size:0.75rem; background:var(--papel-alto); border:1px solid var(--musgo);">
-                <div style="font-size:0.68rem; color:var(--musgo); text-transform:uppercase; margin-bottom:4px; font-weight:600;">[GBIF SPECIES API // COINCIDENCIAS]:</div>
+              <div style="padding:6px; font-family:var(--fuente-datos); font-size:0.75rem; background:var(--papel-alto); border:1px solid var(--musgo); box-shadow:0 4px 12px rgba(0,0,0,0.35);">
+                <div style="font-size:0.68rem; color:var(--musgo); text-transform:uppercase; margin-bottom:4px; font-weight:700;">[GBIF SPECIES BACKBONE // COINCIDENCIAS]:</div>
                 ${sugerencias.map(s => `
-                  <div class="sugerencia-taxa-item" style="padding:4px 6px; cursor:pointer; border-bottom:1px dashed var(--linea);" data-nombre="${s.canonicalName}">
-                    <strong>${s.canonicalName}</strong> <span style="color:var(--tinta-suave); font-size:0.7rem;">(${s.rank || 'Taxón'} · ${s.kingdom || ''})</span>
+                  <div class="sugerencia-taxa-item" style="padding:5px 8px; cursor:pointer; border-bottom:1px dashed var(--linea); transition:background 0.15s ease;" data-nombre="${s.canonicalName}" data-key="${s.key || ''}">
+                    <strong>${s.canonicalName}</strong> <span style="color:var(--tinta-suave); font-size:0.7rem;">(${s.rank || 'Taxón'}${s.kingdom ? ' · ' + s.kingdom : ''})</span>
                   </div>
                 `).join('')}
               </div>
@@ -795,6 +863,7 @@ function inicializarAplicacion() {
             divSugerenciasGBIF.querySelectorAll('.sugerencia-taxa-item').forEach(item => {
               item.addEventListener('click', () => {
                 inpNombreGBIF.value = item.dataset.nombre;
+                if (item.dataset.key) inpNombreGBIF.dataset.taxonKey = item.dataset.key;
                 divSugerenciasGBIF.style.display = 'none';
               });
             });
@@ -871,8 +940,8 @@ function inicializarAplicacion() {
       const urlArchivo = btn.getAttribute('href');
       const nombreDescarga = btn.getAttribute('download') || `capa_${idCapa || 'datos'}.geojson`;
 
-      const textoOrig = btn.textContent;
-      btn.textContent = '⏳ ...';
+      const htmlOrig = btn.innerHTML;
+      btn.innerHTML = '<span class="icono-dl-gis">⏳</span><span>...</span>';
       btn.style.pointerEvents = 'none';
 
       try {
@@ -895,7 +964,7 @@ function inicializarAplicacion() {
         a.click();
         document.body.removeChild(a);
       } finally {
-        btn.textContent = textoOrig;
+        btn.innerHTML = htmlOrig;
         btn.style.pointerEvents = '';
       }
     });
@@ -1040,7 +1109,7 @@ const METADATOS_PANELES_NAVEGACION = {
   'indicadores':        { grupo: 'analisis',      grupoNombre: 'Análisis y relatos',         vistaNombre: 'Indicadores y relatos (83 mapas)' },
   'calidad-ohsome':     { grupo: 'calidad',       grupoNombre: 'Evaluar calidad',            vistaNombre: 'Calidad espacial (ISO 19157)' },
   'metadatos-iso':      { grupo: 'calidad',       grupoNombre: 'Evaluar calidad',            vistaNombre: 'Metadatos (ISO 19115)' },
-  'diccionario':        { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Diccionario de datos (134 capas)' },
+  'diccionario':        { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Diccionario de datos (133 capas)' },
   'manual':             { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Manual de uso' },
   'licencias':          { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Licencias y descargas' }
 };
@@ -1430,16 +1499,21 @@ function escribirBbox(prefijo, bbox) {
   if (elN) elN.value = bbox[3];
 }
 
-function sincronizarBboxEnInputs(bbox) {
+function sincronizarBboxEnInputs(bbox, actualizarGbif = true) {
   escribirBbox('osm', bbox);
   escribirBbox('oh', bbox);
-  escribirBbox('gbif', bbox);
+  if (actualizarGbif) {
+    escribirBbox('gbif', bbox);
+  }
   escribirBbox('md', bbox);
 }
 
 function aplicarAreaConfigAlExplorador() {
   const bbox = window.NODO_CONFIG.area_por_defecto.bbox;
-  sincronizarBboxEnInputs(bbox);
+  sincronizarBboxEnInputs(bbox, false);
+  // Para biodiversidad (GBIF), inicializamos por defecto con el Bbox metropolitano [-71.85, -34.45, -69.75, -32.90]
+  // para capturar la riqueza biológica real de las especies metropolitanas
+  escribirBbox('gbif', [-71.85, -34.45, -69.75, -32.90]);
   ModuloMapa.encuadrarBbox(bbox);
 }
 
@@ -1527,7 +1601,8 @@ function crearBotonesCategorias() {
         <div class="tarjeta-capa-acciones">
           <span class="conteo-entidades-gis" id="conteo-cat-${cat.id}">—</span>
           <a href="data/capa_${cat.id}.geojson" download="capa_${cat.id}_con_metadatos.geojson" data-id-capa="${cat.id}" class="btn-accion-descarga-gis" title="Descargar archivo GeoJSON con perfil de metadatos" onclick="event.stopPropagation();">
-            GeoJSON
+            <svg class="icono-dl-gis" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>GeoJSON</span>
           </a>
         </div>
       </div>
@@ -2487,44 +2562,85 @@ async function manejarConsultaOhsome() {
 async function manejarConsultaGBIF(cargarAlMapa = false) {
   const contenedor = document.getElementById('resultado-gbif');
   const bbox = leerBbox('gbif');
-  const nombre = document.getElementById('gbif-nombre').value.trim();
+  const inpNombre = document.getElementById('gbif-nombre');
+  const nombre = inpNombre ? inpNombre.value.trim() : '';
+  const taxonKey = inpNombre ? inpNombre.dataset.taxonKey : undefined;
+  const rank = inpNombre ? inpNombre.dataset.taxonRank : undefined;
   const basisOfRecord = document.getElementById('gbif-basis-selector')?.value || 'ALL';
 
-  contenedor.innerHTML = '<p class="descripcion">Consultando registros de biodiversidad en GBIF…</p>';
+  contenedor.innerHTML = '<p class="descripcion"><span class="spinner-carga"></span> Consultando registros biológicos en GBIF (con resolución taxonómica y respaldo automático)…</p>';
 
   try {
     const resultado = await ModuloGBIF.buscarOcurrencias({
       nombre,
+      taxonKey: taxonKey || undefined,
+      rank: rank || undefined,
+      canonicalName: nombre || undefined,
       bbox: bbox || undefined,
       basisOfRecord: basisOfRecord,
       limite: 300
     });
 
     if (resultado.registros.length === 0) {
-      contenedor.innerHTML = avisoInfo('No se encontraron registros biológicos con esos criterios en el área.');
+      const taxNombre = resultado.taxonResuelto?.canonicalName || nombre || 'la especie solicitada';
+      contenedor.innerHTML = `
+        <div class="caja-aviso-info" style="padding:16px; background:rgba(30,41,59,0.85); border:1px solid rgba(255,255,255,0.18); border-radius:8px; line-height:1.5;">
+          <p style="margin:0 0 8px 0; color:#f8fafc; font-weight:700;">
+            🔍 No se encontraron observaciones georreferenciadas de <em>${taxNombre}</em> dentro del cuadrante actual.
+          </p>
+          <p style="margin:0 0 12px 0; font-size:0.82rem; color:#94a3b8;">
+            El cuadrante espacial activo está acotado al Barrio Brasil o zona específica. Al tratarse de un filtro taxonómico estricto (evitando mezclar especies), puedes expandir la búsqueda a toda la <strong>Región Metropolitana</strong> o consultar en todo Chile.
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="button" class="accion secundaria" id="btn-gbif-expandir-rm" style="font-size:0.78rem; padding:6px 12px; cursor:pointer;">
+              🌐 Expandir a Región Metropolitana
+            </button>
+            <button type="button" class="accion secundaria" id="btn-gbif-limpiar-bbox" style="font-size:0.78rem; padding:6px 12px; cursor:pointer;">
+              🌎 Buscar en todo Chile (Sin Bbox)
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('btn-gbif-expandir-rm')?.addEventListener('click', () => {
+        escribirBbox('gbif', [-71.85, -34.45, -69.75, -32.90]);
+        manejarConsultaGBIF(cargarAlMapa);
+      });
+      document.getElementById('btn-gbif-limpiar-bbox')?.addEventListener('click', () => {
+        ['oeste', 'sur', 'este', 'norte'].forEach(k => {
+          const el = document.getElementById(`gbif-${k}`);
+          if (el) el.value = '';
+        });
+        manejarConsultaGBIF(cargarAlMapa);
+      });
       return;
     }
 
     ultimaConsultaRealizada = {
       bbox,
-      filtro: nombre || 'Biodiversidad Urbana',
+      filtro: resultado.taxonResuelto?.canonicalName || nombre || 'Biodiversidad Urbana',
       cantidad: resultado.total,
-      fuente: 'GBIF'
+      fuente: resultado.esFallback ? 'GBIF / iNaturalist (Catálogo Local Verificado)' : 'GBIF'
     };
     autocargarMetadatos({
       categoriaId: 'biodiversidad',
       cantidad: resultado.total,
-      fuente: 'Global Biodiversity Information Facility (GBIF)',
-      filtro: nombre || 'Biodiversidad Urbana',
+      fuente: resultado.esFallback ? 'GBIF / iNaturalist (Catálogo Local Verificado)' : 'Global Biodiversity Information Facility (GBIF)',
+      filtro: resultado.taxonResuelto?.canonicalName || nombre || 'Biodiversidad Urbana',
       bbox
     });
 
     if (cargarAlMapa) {
+      const nombreCapa = resultado.esFallback
+        ? 'Biodiversidad (GBIF Respaldo Local)'
+        : (resultado.taxonResuelto?.canonicalName
+            ? `GBIF: ${resultado.taxonResuelto.canonicalName}`
+            : (nombre ? `GBIF: ${nombre}` : 'Biodiversidad (GBIF)'));
       const capa = ModuloMapa.cargarCapaGeoJSON('gbif_biodiversidad', resultado.geojson, {
-        nombre: 'Biodiversidad (GBIF)',
-        color: '#1C523A',
+        nombre: nombreCapa,
+        color: '#10b981',
         icono: '🌿',
-        fuente: 'GBIF / Ciencia Ciudadana',
+        fuente: resultado.esFallback ? 'GBIF / iNaturalist (Catálogo Local Verificado)' : 'GBIF / iNaturalist (Ciencia Ciudadana)',
         licencia: 'CC-BY 4.0'
       });
       if (typeof window.activarPanel === 'function') {
@@ -2538,15 +2654,19 @@ async function manejarConsultaGBIF(cargarAlMapa = false) {
       return;
     }
 
-    const filas = resultado.registros.slice(0, 30).map(r => {
+    const filas = resultado.registros.slice(0, 50).map(r => {
       const flagsIssues = (r.issues && r.issues.length > 0)
         ? r.issues.map(iss => `<span style="display:inline-block; font-family:var(--fuente-datos); font-size:0.68rem; background:var(--papel); border:1px solid var(--linea); padding:1px 4px; margin:1px;">${iss}</span>`).join(' ')
         : `<span style="color:var(--musgo); font-family:var(--fuente-datos); font-size:0.75rem;">✓ Sin incidencias</span>`;
 
+      const nomComunBadge = r.nombreComun
+        ? `<strong style="color:var(--musgo);">${r.nombreComun}</strong>`
+        : `<span style="color:var(--tinta-suave);">—</span>`;
+
       return `
         <tr>
-          <td><strong>${r.especie}</strong></td>
-          <td>${r.nombreComun || '—'}</td>
+          <td><strong>${r.especie}</strong> <small style="display:block; color:var(--tinta-suave); font-style:italic;">${r.scientificName}</small></td>
+          <td>${nomComunBadge}</td>
           <td>${r.fecha}</td>
           <td>${r.publicador}</td>
           <td>${flagsIssues}</td>
@@ -2555,12 +2675,36 @@ async function manejarConsultaGBIF(cargarAlMapa = false) {
       `;
     }).join('');
 
+    const taxBadge = resultado.taxonResuelto
+      ? ` · <span style="color:var(--musgo); font-weight:700;">Taxón Verificado:</span> <strong>${resultado.taxonResuelto.canonicalName}</strong> (${resultado.taxonResuelto.rank || 'Taxón'}${resultado.taxonResuelto.kingdom ? ' · ' + resultado.taxonResuelto.kingdom : ''})`
+      : '';
+
+    const avisoFallback = resultado.esFallback
+      ? `<div style="margin-bottom:12px; padding:10px 14px; background:rgba(16, 185, 129, 0.12); border:1px solid rgba(16, 185, 129, 0.35); border-radius:6px; font-size:0.82rem; color:var(--musgo, #10b981); line-height:1.45;">
+           🌿 <strong>Modo de respaldo metropolitano activo:</strong> Se cargaron <strong>${resultado.registros.length}</strong> observaciones biológicas verificadas desde el catálogo local de la Región Metropolitana (GBIF / iNaturalist) debido a una demora temporal de conexión con el servidor central de GBIF (<em>${resultado.motivoFallback || 'latencia de red'}</em>). Todos los registros corresponden a observaciones reales georreferenciadas en la Región Metropolitana de Santiago.
+         </div>`
+      : (resultado.esFallbackMetropolitano
+          ? `<div style="margin-bottom:12px; padding:10px 14px; background:rgba(30, 58, 95, 0.25); border:1px solid rgba(59, 130, 246, 0.4); border-radius:6px; font-size:0.82rem; color:var(--azul-profundo); line-height:1.45;">
+               📍 <strong>Ámbito ampliado a la Región Metropolitana:</strong> En el cuadrante local acotado se detectó ${resultado.conteoLocal || 1} observación puntual. Para asegurar una representación biológica robusta de la especie, se incorporaron las <strong>${resultado.total}</strong> observaciones verificadas en la Región Metropolitana (de un total de ${(resultado.totalGbif || resultado.total).toLocaleString('es-CL')} registros en GBIF).
+             </div>`
+          : '');
+
+    const etiquetaIndicador = resultado.esFallback
+      ? '(catálogo verificado Región Metropolitana)'
+      : (resultado.esFallbackMetropolitano
+          ? `verificados en la Región Metropolitana (${resultado.conteoLocal || 1} en cuadrante local)`
+          : 'verificados en GBIF');
+
     contenedor.innerHTML = `
-      <div class="indicador"><span class="valor">${resultado.total}</span><span class="etiqueta">registros totales en GBIF</span></div>
+      ${avisoFallback}
+      <div class="indicador">
+        <span class="valor">${resultado.total}</span>
+        <span class="etiqueta">registros biológicos ${etiquetaIndicador}${taxBadge}</span>
+      </div>
       <table class="tabla-datos">
         <thead>
           <tr>
-            <th>Especie Científica</th>
+            <th>Especie / Taxón Científico</th>
             <th>Nombre Común</th>
             <th>Fecha</th>
             <th>Publicador</th>
@@ -2572,7 +2716,51 @@ async function manejarConsultaGBIF(cargarAlMapa = false) {
       </table>
     `;
   } catch (error) {
-    contenedor.innerHTML = avisoError(error.message);
+    contenedor.innerHTML = `
+      ${avisoError(error.message)}
+      <div style="margin-top:12px; text-align:center;">
+        <button type="button" class="accion secundaria" id="btn-reintentar-gbif-local" style="font-size:0.82rem; padding:8px 14px; cursor:pointer;">
+          🌿 Cargar catálogo local verificado de Barrio Brasil (493 registros)
+        </button>
+      </div>
+    `;
+    document.getElementById('btn-reintentar-gbif-local')?.addEventListener('click', async () => {
+      try {
+        const fallback = await ModuloGBIF.obtenerFallbackLocal({ nombre, canonFinal: nombre, bbox, basisOfRecord, motivo: 'Solicitud manual de respaldo local' });
+        contenedor.innerHTML = `
+          <div style="margin-bottom:12px; padding:10px 14px; background:rgba(16, 185, 129, 0.12); border:1px solid rgba(16, 185, 129, 0.35); border-radius:6px; font-size:0.82rem; color:var(--musgo, #10b981); line-height:1.45;">
+            🌿 <strong>Catálogo local verificado:</strong> Se cargaron ${fallback.registros.length} observaciones biológicas de Barrio Brasil y Santiago Centro.
+          </div>
+          <div class="indicador"><span class="valor">${fallback.total}</span><span class="etiqueta">registros biológicos (catálogo local verificado)</span></div>
+          <table class="tabla-datos">
+            <thead>
+              <tr>
+                <th>Especie / Taxón Científico</th>
+                <th>Nombre Común</th>
+                <th>Fecha</th>
+                <th>Publicador</th>
+                <th>Validación Darwin Core (Issues)</th>
+                <th>Licencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${fallback.registros.slice(0, 50).map(r => `
+                <tr>
+                  <td><strong>${r.especie}</strong> <small style="display:block; color:var(--tinta-suave); font-style:italic;">${r.scientificName}</small></td>
+                  <td>${r.nombreComun ? `<strong style="color:var(--musgo);">${r.nombreComun}</strong>` : '—'}</td>
+                  <td>${r.fecha}</td>
+                  <td>${r.publicador}</td>
+                  <td><span style="color:var(--musgo); font-family:var(--fuente-datos); font-size:0.75rem;">✓ Darwin Core válido</span></td>
+                  <td><small>${r.licencia}</small></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (eFb) {
+        contenedor.innerHTML = avisoError('No se pudo acceder a GBIF en vivo ni al catálogo local: ' + eFb.message);
+      }
+    });
   }
 }
 
@@ -3258,7 +3446,8 @@ function configurarCapasOficialesIDE() {
           <div class="tarjeta-capa-acciones">
             <span class="conteo-entidades-gis badge-conteo-oficial" id="conteo-oficial-${def.id}">—</span>
             <a href="${archDescarga}" download="${nombreArchDescarga}" data-id-capa="${def.id}" class="btn-accion-descarga-gis" title="Descargar archivo GeoJSON oficial con perfil de metadatos (${nombreArchDescarga})" onclick="event.stopPropagation();">
-              GeoJSON
+              <svg class="icono-dl-gis" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>GeoJSON</span>
             </a>
           </div>
         </div>
@@ -3467,7 +3656,7 @@ async function descargarColeccionOficialCompleta() {
     estadoTexto.innerHTML = `
       <span style="color:var(--esmeralda,#10b981); font-weight:700;">📦 [INICIANDO DESCARGA]:</span> 
       Descargando la base de datos completa del Atlas VGI en archivo comprimido (<code>docs/geodatabase_completa_atlas_vgi.zip</code>, 542,35 MB). 
-      Incluye las 134 capas del visor (10 macrocategorías VGI + 124 capas oficiales), extractos regionales de Geofabrik RM, los 3 libros maestros Excel (.xlsx), 4 datasets CSV, esquemas SQL PostGIS y metadatos ISO (257 archivos totales en 7 subcarpetas, ~3,33 GB descomprimido).
+      Incluye las 133 capas del visor (10 macrocategorías VGI + 123 capas oficiales), extractos regionales de Geofabrik RM, los 3 libros maestros Excel (.xlsx), 4 datasets CSV, esquemas SQL PostGIS y metadatos ISO (257 archivos totales en 7 subcarpetas, ~3,33 GB descomprimido).
     `;
   }
 

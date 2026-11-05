@@ -647,7 +647,6 @@ A continuación se expone la tabla maestra con el inventario universal de las 13
 | 045 | `bbdd_14` | Establecimientos de Educación Superior | Estado de Chile / IDE Chile / geoportal.cl | Organismo Público del Estado de Chile | Vectorial / Tabular Georreferenciada | `data/capa_bbdd_14.geojson` |
 | 046 | `bbdd_15` | Centros de SERNAM | Estado de Chile / IDE Chile / geoportal.cl | Organismo Público del Estado de Chile | Vectorial / Tabular Georreferenciada | `data/capa_bbdd_15.geojson` |
 | 047 | `bbdd_17` | Áreas Funcionales de las ciudades (2026) | Estado de Chile / IDE Chile / geoide.minvu.cl | Organismo Público del Estado de Chile | Vectorial / Tabular Georreferenciada | `data/capa_bbdd_17.geojson` |
-| 048 | `bbdd_18` | Zonificación Termica | Estado de Chile / IDE Chile / geoide.minvu.cl | Organismo Público del Estado de Chile | Vectorial / Tabular Georreferenciada | `data/capa_bbdd_18.geojson` |
 | 049 | `bbdd_19` | Cité | Estado de Chile / IDE Chile / geoide.minvu.cl | Organismo Público del Estado de Chile | Vectorial / Tabular Georreferenciada | `data/capa_bbdd_19.geojson` |
 | 050 | `bbdd_20` | SEREMI MINVU Región Metropolitana | SEREMI Metropolitana de Vivienda y Urbanismo / MINVU | Ministerio de Vivienda y Urbanismo | Polígono / Cobertura Regional | `data/capa_bbdd_20.geojson` |
 | 051 | `bbdd_21` | Oficinas Serviu | Estado de Chile / IDE Chile / geoide.minvu.cl | Organismo Público del Estado de Chile | Vectorial / Tabular Georreferenciada | `data/capa_bbdd_21.geojson` |

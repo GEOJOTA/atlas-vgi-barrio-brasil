@@ -74,7 +74,7 @@ const ModuloLicencias = (() => {
           <div style="flex:1; min-width:280px;">
             <h3 style="margin:0 0 6px 0; color:var(--musgo);">Descarga de la base de datos completa y catálogos</h3>
             <p class="descripcion" style="margin:0;">
-              El paquete consolidado incluye las <strong>134 capas del visor</strong> (10 categorías ciudadanas + 124 capas oficiales del Estado), los libros maestros en Excel, las matrices de calidad y los esquemas PostGIS (<strong>257 archivos · 542,35 MB comprimido / ~3,33 GB descomprimido</strong>).
+              El paquete consolidado incluye las <strong>133 capas del visor</strong> (10 categorías ciudadanas + 123 capas oficiales del Estado), los libros maestros en Excel, las matrices de calidad y los esquemas PostGIS (<strong>257 archivos · 542,35 MB comprimido / ~3,33 GB descomprimido</strong>).
             </p>
           </div>
           <div>
@@ -84,40 +84,40 @@ const ModuloLicencias = (() => {
           </div>
         </div>
 
-        <div style="overflow-x:auto;">
-          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem;">
+        <div class="contenedor-tabla-responsiva">
+          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem; width:100%;">
             <thead>
               <tr>
-                <th>Archivo / Catálogo</th>
-                <th>Contenido principal</th>
-                <th>Formato y peso aprox.</th>
-                <th>Acción</th>
+                <th style="min-width:200px;">Archivo / Catálogo</th>
+                <th style="min-width:240px;">Contenido principal</th>
+                <th style="min-width:140px;">Formato y peso aprox.</th>
+                <th style="min-width:130px;">Acción</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Taxonomía y diccionario OSM Chile</strong><br><code>docs/categorias_tematicas_osm.xlsx</code></td>
-                <td>4 hojas: 10 categorías maestras (CAT-01 a CAT-10), 140 descriptores, esquema de 23 atributos y 125 referencias APA 7ª ed.</td>
+                <td><strong>Taxonomía y diccionario OSM Chile</strong><br><code class="codigo-licencia">docs/categorias_tematicas_osm.xlsx</code></td>
+                <td>4 hojas: 10 categorías maestras (CAT-01 a CAT-10), 140 descriptores, esquema de 17 atributos y 125 referencias APA 7ª ed.</td>
                 <td>Excel (<code>.xlsx</code>) · ~85 KB</td>
-                <td><a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:5px 10px;">Descargar Excel</a></td>
+                <td><a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar Excel</a></td>
               </tr>
               <tr>
-                <td><strong>Perfil de metadatos y calidad (134 capas)</strong><br><code>docs/perfil_metadatos_vgi.xlsx</code></td>
-                <td>Matriz de evaluación multicriterio (WLC v2.0, IGV medio 95,4 %, 91 capas A+ y 43 A) y mapeo a ISO 19115 / IDE Chile.</td>
+                <td><strong>Perfil de metadatos y calidad (133 capas)</strong><br><code class="codigo-licencia">docs/perfil_metadatos_vgi.xlsx</code></td>
+                <td>Matriz de evaluación multicriterio (WLC v2.0, IGV medio 95,4 %, 90 capas A+ y 43 A) y mapeo a ISO 19115 / IDE Chile.</td>
                 <td>Excel (<code>.xlsx</code>) · ~65 KB</td>
-                <td><a href="docs/perfil_metadatos_vgi.xlsx" download="perfil_metadatos_vgi.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:5px 10px;">Descargar Excel</a></td>
+                <td><a href="docs/perfil_metadatos_vgi.xlsx" download="perfil_metadatos_vgi.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar Excel</a></td>
               </tr>
               <tr>
-                <td><strong>Catálogo sistemático de fuentes</strong><br><code>docs/catalogo_fuentes_vgi.xlsx</code></td>
+                <td><strong>Catálogo sistemático de fuentes</strong><br><code class="codigo-licencia">docs/catalogo_fuentes_vgi.xlsx</code></td>
                 <td>Inventario de fuentes colaborativas y ministeriales con escala, cobertura, licencia y aplicación en el Barrio Brasil.</td>
                 <td>Excel (<code>.xlsx</code>) · ~45 KB</td>
-                <td><a href="docs/catalogo_fuentes_vgi.xlsx" download="catalogo_fuentes_vgi.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:5px 10px;">Descargar Excel</a></td>
+                <td><a href="docs/catalogo_fuentes_vgi.xlsx" download="catalogo_fuentes_vgi.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar Excel</a></td>
               </tr>
               <tr>
-                <td><strong>Ranking consolidado de calidad (CSV)</strong><br><code>docs/wlc_metacalidad_ranking.csv</code></td>
-                <td>Tabla plana con las 134 capas, puntajes cuantitativos, cualitativos, índice IGV y clasificación de calidad.</td>
+                <td><strong>Ranking consolidado de calidad (CSV)</strong><br><code class="codigo-licencia">docs/wlc_metacalidad_ranking.csv</code></td>
+                <td>Tabla plana con las 133 capas, puntajes cuantitativos, cualitativos, índice IGV y clasificación de calidad.</td>
                 <td>CSV (<code>.csv</code>) · ~28 KB</td>
-                <td><a href="docs/wlc_metacalidad_ranking.csv" download="wlc_metacalidad_ranking.csv" class="accion secundaria" style="font-size:0.8rem; padding:5px 10px;">Descargar CSV</a></td>
+                <td><a href="docs/wlc_metacalidad_ranking.csv" download="wlc_metacalidad_ranking.csv" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar CSV</a></td>
               </tr>
             </tbody>
           </table>
@@ -139,23 +139,23 @@ const ModuloLicencias = (() => {
           </button>
         </div>
 
-        <div style="overflow-x:auto;">
-          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem;">
+        <div class="contenedor-tabla-responsiva">
+          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem; width:100%;">
             <thead>
               <tr>
-                <th>Componente del proyecto</th>
-                <th>Licencia aplicada</th>
-                <th>¿Qué permite y qué exige?</th>
-                <th>Texto legal</th>
+                <th style="min-width:180px;">Componente del proyecto</th>
+                <th style="min-width:200px;">Licencia aplicada</th>
+                <th style="min-width:280px;">¿Qué permite y qué exige?</th>
+                <th style="min-width:130px;">Texto legal</th>
               </tr>
             </thead>
             <tbody>
               ${LICENCIA_ATLAS.pilares.map(p => `
                 <tr>
-                  <td><strong>${p.ambito}</strong></td>
-                  <td><code>${p.licencia}</code></td>
-                  <td>${p.implicancia}</td>
-                  <td><a href="${p.url}" target="_blank" rel="noopener" style="white-space:nowrap;">Ver licencia ↗</a></td>
+                  <td><strong style="color:#ffffff;">${p.ambito}</strong></td>
+                  <td><code class="codigo-licencia">${p.licencia}</code></td>
+                  <td style="line-height:1.5;">${p.implicancia}</td>
+                  <td><a href="${p.url}" target="_blank" rel="noopener" class="enlace-externo-licencia">Ver licencia ↗</a></td>
                 </tr>
               `).join('')}
             </tbody>
@@ -168,23 +168,23 @@ const ModuloLicencias = (() => {
       <div class="bloque">
         <h3 style="margin:0 0 6px 0;">Comparativa de licencias por fuente de datos</h3>
         <p class="descripcion" style="margin:0 0 10px 0;">Condiciones de uso, atribución y redistribución de cada organismo o plataforma integrada:</p>
-        <div style="overflow-x:auto;">
-          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem;">
+        <div class="contenedor-tabla-responsiva">
+          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem; width:100%;">
             <thead>
               <tr>
-                <th>Fuente u organismo</th>
-                <th>Licencia</th>
-                <th>Condiciones de uso y atribución</th>
-                <th>Enlace oficial</th>
+                <th style="min-width:180px;">Fuente u organismo</th>
+                <th style="min-width:200px;">Licencia</th>
+                <th style="min-width:280px;">Condiciones de uso y atribución</th>
+                <th style="min-width:130px;">Enlace oficial</th>
               </tr>
             </thead>
             <tbody>
               ${FUENTES.map(f => `
                 <tr>
-                  <td><strong>${f.nombre}</strong></td>
-                  <td><code>${f.licencia}</code></td>
-                  <td>${f.implicancia}</td>
-                  <td><a href="${f.url}" target="_blank" rel="noopener" style="white-space:nowrap;">Sitio web ↗</a></td>
+                  <td><strong style="color:#ffffff;">${f.nombre}</strong></td>
+                  <td><code class="codigo-licencia">${f.licencia}</code></td>
+                  <td style="line-height:1.5;">${f.implicancia}</td>
+                  <td><a href="${f.url}" target="_blank" rel="noopener" class="enlace-externo-licencia">Sitio web ↗</a></td>
                 </tr>
               `).join('')}
             </tbody>

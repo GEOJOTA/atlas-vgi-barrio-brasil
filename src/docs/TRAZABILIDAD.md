@@ -3,7 +3,7 @@
 
 * Plataforma web en producción (CDN primario): [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * Repositorio espejo (GitHub Pages): [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* Cifras clave del sistema: Para el desglose consolidado de coberturas, descriptores, cartografías, módulos e índices de calidad (Índice Global de Calidad VGI (IGV, promedio multicriterio ISO 19157 de las 134 capas; véase el glosario) de 95,4 % para calidad espacial ISO 19157 e Índice Global de Metacalidad Documental (IGMC, cumplimiento de campos ISO 19115; véase el glosario) de 96,55 % para completitud de metadatos ISO 19115), véase la Tabla 1.1 del manual de actualización (`docs/MANUAL_ACTUALIZACION_ATLAS.md`) o del `README.md` principal.
+* Cifras clave del sistema: Para el desglose consolidado de coberturas, descriptores, cartografías, módulos e índices de calidad (Índice Global de Calidad VGI (IGV, promedio multicriterio ISO 19157 de las 133 capas; véase el glosario) de 95,4 % para calidad espacial ISO 19157 e Índice Global de Metacalidad Documental (IGMC, cumplimiento de campos ISO 19115; véase el glosario) de 96,55 % para completitud de metadatos ISO 19115), véase la Tabla 1.1 del manual de actualización (`docs/MANUAL_ACTUALIZACION_ATLAS.md`) o del `README.md` principal.
 
 ---
 
@@ -79,7 +79,7 @@ flowchart LR
 
 1. ISO 19115-1:2014 — Geographic information — Metadata — Part 1: Fundamentals:
    * *Enlace oficial:* [https://www.iso.org/standard/53798.html](https://www.iso.org/standard/53798.html)
-   * *Implementación:* El Módulo 08 ([`src/js/modulos/metadatos.js`](src/js/modulos/metadatos.js)) estructura los elementos núcleo obligatorios (`MD_DataIdentification`, `MD_TopicCategoryCode`, `EX_GeographicBoundingBox`, `LI_Lineage`, `MD_ReferenceSystem`, `CI_RoleCode`) para las 134 capas del Atlas.
+   * *Implementación:* El Módulo 08 ([`src/js/modulos/metadatos.js`](src/js/modulos/metadatos.js)) estructura los elementos núcleo obligatorios (`MD_DataIdentification`, `MD_TopicCategoryCode`, `EX_GeographicBoundingBox`, `LI_Lineage`, `MD_ReferenceSystem`, `CI_RoleCode`) para las 133 capas del Atlas.
 2. ISO/TS 19139:2007 — Geographic information — Metadata — XML schema implementation:
    * *Enlace oficial:* [https://www.iso.org/standard/32574.html](https://www.iso.org/standard/32574.html)
    * *Implementación:* Exportación directa en XML con esquema `<gmd:MD_Metadata>` (`http://www.isotc211.org/2005/gmd`), compatible con catálogos CSW como GeoNetwork y GeoNode.
@@ -88,7 +88,7 @@ flowchart LR
    * *Implementación:* Operacionalizado en el Módulo 06 mediante el Evaluador Universal combinación lineal ponderada (WLC, véase el glosario) v2.0 (`src/js/modulos/evaluador_calidad_cuantitativa.js`), el cliente histórico `src/js/modulos/ohsome.js` y el script `scripts/analisis_metacalidad.py`.
 4. ISO 19110:2016 — Geographic information — Methodology for entidad espacial cataloguing:
    * *Enlace oficial:* [https://www.iso.org/standard/57303.html](https://www.iso.org/standard/57303.html)
-   * *Implementación:* El Módulo 09 ([`src/js/modulos/diccionario.js`](src/js/modulos/diccionario.js)) cataloga las 134 coberturas y 140 descriptores normativos (incluyendo el esquema normalizado de atributos VGI y las correspondencias con IDE Chile).
+   * *Implementación:* El Módulo 09 ([`src/js/modulos/diccionario.js`](src/js/modulos/diccionario.js)) cataloga las 133 coberturas y 140 descriptores normativos (incluyendo el esquema normalizado de atributos VGI y las correspondencias con IDE Chile).
 5. Darwin Core Standard (TDWG / GBIF):
    * *Enlace oficial:* [https://dwc.tdwg.org/](https://dwc.tdwg.org/)
    * *Implementación:* El Módulo 03 ([`src/js/modulos/gbif.js`](src/js/modulos/gbif.js)) consulta ocurrencias biológicas georreferenciadas validando `scientificName`, `eventDate`, `basisOfRecord` e indicadores de calidad posicional.
@@ -226,13 +226,13 @@ En el área de estudio del barrio Brasil y el entorno del Campus Universidad Alb
 ## 7. Preguntas frecuentes sobre interoperabilidad, reproducibilidad y calidad
 
 ### P1: *¿cómo se articula la información geográfica voluntaria con los datos oficiales del estado?*
-> Respuesta: La VGI complementa la cartografía pública en escalas y atributos donde no existen catastros estatales continuos (como las 86 brechas temáticas VGI documentadas en el Módulo 09, incluyendo rebajes de solera, pavimento podotáctil o estacionamientos de bicicletas). Al mismo tiempo, las 134 capas son evaluadas con las mismas métricas cuantitativas y documentales (ISO 19157 / ISO 19115) en el Módulo 06, permitiendo conocer el nivel de completitud y consistencia de cada cobertura antes de utilizarla.
+> Respuesta: La VGI complementa la cartografía pública en escalas y atributos donde no existen catastros estatales continuos (como las 86 brechas temáticas VGI documentadas en el Módulo 09, incluyendo rebajes de solera, pavimento podotáctil o estacionamientos de bicicletas). Al mismo tiempo, las 133 capas son evaluadas con las mismas métricas cuantitativas y documentales (ISO 19157 / ISO 19115) en el Módulo 06, permitiendo conocer el nivel de completitud y consistencia de cada cobertura antes de utilizarla.
 
 ### P2: *¿cómo se adapta la plataforma a otra comuna, ciudad o región?*
 > Respuesta: Los parámetros de encuadre territorial (`bbox`), centroide, comunas e identificadores de capas se encuentran desacoplados en [`config/config.json`](config/config.json) y [`src/js/config.js`](src/js/config.js). El procedimiento completo paso a paso para cambiar el polígono de estudio, el huso UTM en `src/js/modulos/geodesia.js` y las coberturas locales se detalla en el Capítulo 8 de [`MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md).
 
 ### P3: *¿qué ocurre si una API externa presenta latencia o falta de conectividad?*
-> Respuesta: La arquitectura de triple contingencia conmuta automáticamente hacia las 134 coberturas preprocesadas en `src/data/*.geojson` (`data/*.geojson`) y permite descargar en cualquier momento el paquete autónomo `docs/geodatabase_completa_atlas_vgi.zip` (`542,35 MB`).
+> Respuesta: La arquitectura de triple contingencia conmuta automáticamente hacia las 133 coberturas preprocesadas en `src/data/*.geojson` (`data/*.geojson`) y permite descargar en cualquier momento el paquete autónomo `docs/geodatabase_completa_atlas_vgi.zip` (`542,35 MB`).
 
 ### P4: *¿cómo se garantiza la exactitud en el cálculo de áreas y densidades?*
 > Respuesta: Ninguna superficie se calcula sobre coordenadas angulares ni sobre proyecciones Web Mercator (`EPSG:3857`). Todas las geometrías se reproyectan a `EPSG:32719` (WGS 84 / UTM Huso 19 Sur / SIRGAS-Chile) mediante las ecuaciones de Redfearn en [`src/js/modulos/geodesia.js`](src/js/modulos/geodesia.js), calculando áreas exactas en `m²`, `ha` y `km²` conforme al estándar ISO 19111:2019.

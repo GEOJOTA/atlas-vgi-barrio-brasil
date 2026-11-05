@@ -105,8 +105,22 @@ html, body {
   font-family: var(--fuente-lectura);
   font-size: 16px;              /* Base Font Size Ampliada */
   line-height: 1.68;            /* Espaciado Holgado */
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
+  word-break: normal;
   overflow-x: hidden;
+}
+
+/* Reglas universales de prevención contra corte y truncamiento de textos */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, a, button, label, td, th {
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -254,10 +268,16 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
    BARRA SUPERIOR DE NAVEGACIÓN Y PESTAÑAS DE PROFUNDIDAD (RESPONSIVE PRO)
    ========================================================================== */
 
+/* ==========================================================================
+   BARRA SUPERIOR DE NAVEGACIÓN Y PESTAÑAS DE PROFUNDIDAD (RESPONSIVE PRO)
+   ========================================================================== */
+
 .cabecera-principal-atlas {
   width: 100%;
   background: rgba(15, 23, 42, 0.97);
   backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
+  border-top: 3.5px solid #ffffff; /* Remate blanco superior de alto contraste universal */
   border-bottom: 2.5px solid var(--musgo);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65), 0 2px 14px rgba(6, 182, 212, 0.25);
   position: sticky;
@@ -265,6 +285,38 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   z-index: 1000;
 }
 
+/* ==========================================================================
+   RECTÁNGULOS BLANCOS DINÁMICOS QUE CUBREN EL 100% DE LOS ESPACIOS VACÍOS LATERALES
+   ========================================================================== */
+
+.panel-acento-dinamico {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc((100% - 1560px) / 2);
+  background: #ffffff;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.2s ease;
+}
+
+.panel-acento-izq {
+  left: 0;
+}
+
+.panel-acento-der {
+  right: 0;
+}
+
+/* Ocultar automáticamente si la pantalla es menor o igual al ancho del contenido (1560px) */
+@media (max-width: 1560px) {
+  .panel-acento-dinamico {
+    display: none !important;
+  }
+}
 
 .barra-pestanas-profundidad {
   display: flex;
@@ -389,7 +441,34 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   max-width: 1560px;
   width: 100%;
   margin: 0 auto;
-  padding: 20px 32px 14px 32px;
+  padding: 18px 32px 14px 32px;
+  position: relative;
+  z-index: 5;
+  transition: padding 0.2s ease;
+}
+
+@media (max-width: 1560px) {
+  .cabecera-interior {
+    padding: 16px clamp(52px, 4.5vw, 68px) 12px clamp(52px, 4.5vw, 68px);
+  }
+}
+
+@media (max-width: 992px) {
+  .cabecera-interior {
+    padding: 14px clamp(42px, 4vw, 50px) 10px clamp(42px, 4vw, 50px);
+  }
+}
+
+@media (max-width: 768px) {
+  .cabecera-interior {
+    padding: 10px 38px 8px 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cabecera-interior {
+    padding: 8px 30px 6px 30px;
+  }
 }
 
 .cabecera-fila-marca {
@@ -405,8 +484,8 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   border-bottom: none;
   margin-bottom: 0;
   background: transparent;
-  flex: 1;
-  min-width: 320px;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .marca-header {
@@ -440,7 +519,7 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 
 .marca h1,
 .marca-texto h1 {
-  font-size: 1.35rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
   font-weight: 900;
   margin: 0 0 4px 0;
   color: #ffffff;
@@ -448,7 +527,9 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.01em;
-  line-height: 1.2;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .marca p,
@@ -848,23 +929,31 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 
 .pestanas-profundidad-derecha {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px 8px;
   border-bottom: 2px solid var(--linea);
-  padding-bottom: 14px;
+  padding-bottom: 12px;
 }
 
 .pestanas-profundidad-derecha button {
-  flex: 1;
-  padding: 10px 8px;
+  flex: 1 1 calc(20% - 8px);
+  min-width: 80px;
+  padding: 8px 6px;
   background: rgba(26, 41, 74, 0.7);
   border: 2px solid var(--linea-tarjeta);
   border-radius: 8px;
   color: var(--tinta-suave);
-  font-size: 0.82rem;
+  font-size: clamp(0.72rem, 0.8vw, 0.82rem);
   font-weight: 800;
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
+  white-space: normal;
+  word-break: normal;
+  line-height: 1.25;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pestanas-profundidad-derecha button:hover {
@@ -1269,12 +1358,12 @@ button.accion.secundaria:hover {
 table.tabla-datos {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 0.96rem;
+  margin-top: 14px;
+  font-size: 0.94rem;
   background: var(--papel-tarjeta);
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid var(--linea-tarjeta);
+  border: 1.5px solid var(--linea-tarjeta);
 }
 
 table.tabla-datos th {
@@ -1282,20 +1371,108 @@ table.tabla-datos th {
   color: var(--musgo);
   font-family: var(--fuente-titulos);
   text-align: left;
-  padding: 16px 18px;
+  padding: 14px 16px;
   border-bottom: 2px solid var(--musgo);
   font-weight: 800;
   letter-spacing: 0.02em;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  vertical-align: middle;
 }
 
 table.tabla-datos td {
-  padding: 14px 18px;
+  padding: 13px 16px;
   border-bottom: 1px solid var(--linea);
   color: var(--tinta-suave);
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  vertical-align: top;
 }
 
 table.tabla-datos tr:hover td {
   background: var(--papel-hover);
+  color: #ffffff;
+}
+
+/* Contenedores y utilidades dinámicas para tablas, licencias y diccionario */
+.contenedor-tabla-responsiva {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 12px 0 18px 0;
+  border-radius: 10px;
+  border: 1px solid var(--linea);
+  background: var(--papel-tarjeta);
+}
+
+.contenedor-tabla-responsiva table.tabla-datos {
+  margin-top: 0;
+  border: none;
+  border-radius: 0;
+}
+
+.codigo-licencia {
+  display: inline-block;
+  max-width: 100%;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  background: rgba(9, 13, 22, 0.7);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--linea-tarjeta);
+  font-family: var(--fuente-datos);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--musgo);
+}
+
+.badge-vgi-homologia {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 5px;
+  word-break: break-word;
+  white-space: normal;
+  max-width: 100%;
+  line-height: 1.4;
+}
+
+.badge-vgi-brecha {
+  background: var(--ocre-claro);
+  color: var(--ocre);
+  border: 1px solid var(--ocre);
+}
+
+.badge-vgi-oficial {
+  background: var(--esmeralda-claro);
+  color: var(--esmeralda);
+  border: 1px solid var(--esmeralda);
+}
+
+.enlace-externo-licencia {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--musgo);
+  text-decoration: underline;
+  padding: 4px 8px;
+  background: rgba(6, 182, 212, 0.1);
+  border-radius: 4px;
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  transition: all 0.2s ease;
+}
+
+.enlace-externo-licencia:hover {
+  background: rgba(6, 182, 212, 0.25);
   color: #ffffff;
 }
 
@@ -3569,25 +3746,31 @@ table.tabla-datos tr:hover td {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
-  margin-top: 6px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .btn-toggle-capa {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 5px;
-  padding: 5px 12px;
+  border-radius: 6px;
+  padding: 4px 10px;
   color: #cbd5e1;
   font-family: var(--fuente-datos);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.2s ease;
 }
 
@@ -3604,6 +3787,7 @@ table.tabla-datos tr:hover td {
   background: #64748b;
   display: inline-block;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .tarjeta-capa-gis.activo .btn-toggle-capa {
@@ -3619,16 +3803,33 @@ table.tabla-datos tr:hover td {
 }
 
 .tarjeta-capa-acciones {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+  min-width: 0;
+  margin-left: auto;
 }
 
 .conteo-entidades-gis {
   font-family: var(--fuente-datos);
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: #94a3b8;
   font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.tarjeta-capa-acciones .badge-conteo-oficial {
+  font-size: 0.70rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.2;
 }
 
 .tarjeta-capa-gis.activo .conteo-entidades-gis {
@@ -3637,22 +3838,47 @@ table.tabla-datos tr:hover td {
 }
 
 .btn-accion-descarga-gis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   font-family: var(--fuente-datos);
   font-size: 0.72rem;
   font-weight: 700;
-  color: #94a3b8;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 4px 8px;
-  border-radius: 4px;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.38);
+  padding: 3px 8px;
+  border-radius: 5px;
   text-decoration: none;
-  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 .btn-accion-descarga-gis:hover {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(56, 189, 248, 0.28);
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-accion-descarga-gis:active {
+  transform: translateY(0);
+}
+
+.btn-accion-descarga-gis .icono-dl-gis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
 }
 
 /* ========================================================================= */
@@ -6242,19 +6468,20 @@ table.tabla-datos tr:hover td {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 9px 18px;
+  gap: clamp(5px, 0.6vw, 8px);
+  padding: 8px clamp(10px, 1.1vw, 18px);
   background: rgba(26, 43, 75, 0.82);
   border: 1.5px solid rgba(255, 255, 255, 0.28);
   border-radius: 10px;
   color: var(--tinta-suave);
   font-family: var(--fuente-titulos);
-  font-size: 0.92rem;
+  font-size: clamp(0.78rem, 0.88vw, 0.92rem);
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   white-space: nowrap;
+  flex: 0 1 auto;
 }
 
 .btn-grupo-tarea:hover {
@@ -6574,9 +6801,16 @@ abbr[title] {
 
 .layout-modulo-dividido {
   display: grid;
-  grid-template-columns: 270px 1fr;
+  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
   gap: 22px;
   align-items: start;
+  width: 100%;
+  max-width: 100%;
+}
+
+.layout-modulo-dividido > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media (max-width: 960px) {
@@ -6733,9 +6967,24 @@ table.tabla-datos {
     gap: 8px;
   }
   .btn-grupo-tarea {
-    padding: 8px 14px;
-    font-size: 0.86rem;
-  }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(5px, 0.6vw, 8px);
+  padding: 8px clamp(10px, 1.1vw, 18px);
+  background: rgba(26, 43, 75, 0.82);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  color: var(--tinta-suave);
+  font-family: var(--fuente-titulos);
+  font-size: clamp(0.78rem, 0.88vw, 0.92rem);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  flex: 0 1 auto;
+}
 }
 
 /* Tablet y Móvil (<= 992px) */
@@ -6754,10 +7003,24 @@ table.tabla-datos {
     display: none;
   }
   .btn-grupo-tarea {
-    flex: 0 0 auto;
-    padding: 7px 13px;
-    font-size: 0.83rem;
-  }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(5px, 0.6vw, 8px);
+  padding: 8px clamp(10px, 1.1vw, 18px);
+  background: rgba(26, 43, 75, 0.82);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  color: var(--tinta-suave);
+  font-family: var(--fuente-titulos);
+  font-size: clamp(0.78rem, 0.88vw, 0.92rem);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  flex: 0 1 auto;
+}
   .barra-migas-subnavegacion {
     flex-direction: column;
     align-items: stretch;
@@ -6820,10 +7083,19 @@ table.tabla-datos {
     padding: 4px;
   }
   .marca h1,
-  .marca-texto h1 {
-    font-size: 1.15rem;
-    line-height: 1.25;
-  }
+.marca-texto h1 {
+  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+  font-weight: 900;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 40%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
   .marca p,
   .marca-texto p {
     font-size: 0.76rem;
@@ -6962,25 +7234,41 @@ table.tabla-datos {
     padding: 12px;
   }
   table.tabla-datos {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
+    display: table;
+    width: 100%;
+    white-space: normal;
     font-size: 0.84rem;
   }
   table.tabla-datos th,
   table.tabla-datos td {
     padding: 10px 12px;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 
 /* Teléfonos Móviles Pequeños (<= 480px) */
 @media (max-width: 480px) {
   .btn-grupo-tarea {
-    padding: 6px 10px;
-    font-size: 0.78rem;
-    gap: 5px;
-  }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(5px, 0.6vw, 8px);
+  padding: 8px clamp(10px, 1.1vw, 18px);
+  background: rgba(26, 43, 75, 0.82);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  color: var(--tinta-suave);
+  font-family: var(--fuente-titulos);
+  font-size: clamp(0.78rem, 0.88vw, 0.92rem);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  flex: 0 1 auto;
+}
   .btn-grupo-tarea svg {
     width: 14px;
     height: 14px;
@@ -7008,5 +7296,122 @@ table.tabla-datos {
   }
   .tarjeta-capa-gis {
     padding: 12px 14px;
+  }
+}
+
+
+/* ========================================================================== */
+/* ESCALABILIDAD DINÁMICA UNIVERSAL CROSS-PLATFORM (WINDOWS, MAC, iOS, ANDROID) */
+/* ========================================================================== */
+
+/* Paridad de tablas y contenedores de datos */
+.tabla-responsive,
+.contenedor-tabla,
+.doc-tabla-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 16px;
+}
+
+table.tabla-datos,
+.tabla-datos-storyboard,
+.tabla-catalogo-oficial,
+.doc-tabla-calidad {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+/* Ajustes fluidos de controles y barras de herramientas */
+.barra-herramientas-mapa {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.barra-herramientas-mapa select,
+.barra-herramientas-mapa button {
+  max-width: 100%;
+}
+
+@media (max-width: 992px) {
+  .barra-herramientas-mapa {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .barra-herramientas-mapa > div[style*="margin-left:auto"],
+  .barra-herramientas-mapa > div:last-child {
+    margin-left: 0 !important;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .barra-herramientas-mapa button.accion,
+  .grupo-control-territorio {
+    flex: 1 1 auto;
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .barra-herramientas-mapa {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .grupo-control-territorio {
+    width: 100%;
+  }
+  .grupo-control-territorio select {
+    width: 100%;
+  }
+  .barra-herramientas-mapa button.accion {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 0.84rem;
+  }
+  .area-mapa-principal {
+    min-width: 0;
+  }
+  #mapa-atlas {
+    height: clamp(380px, 56vh, 520px) !important;
+  }
+  .panel-profundidad-derecha {
+    height: auto !important;
+    max-height: none !important;
+    padding: 16px;
+  }
+  .marca-credito-institucional {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .panel {
+    padding: 16px 10px 32px 10px;
+  }
+  .hero-introduccion-atlas {
+    padding: 18px 12px;
+    border-radius: 12px;
+  }
+  .caja-tarjeta-hero {
+    padding: 14px;
+  }
+  .pestanas-profundidad-derecha button {
+    flex: 1 1 calc(50% - 6px);
+    font-size: 0.76rem;
+    padding: 8px 4px;
+  }
+  .bloque-metrica-kpi {
+    padding: 12px;
+  }
+  .modal-bd-contenedor {
+    padding: 16px;
+    max-width: 96vw;
   }
 }

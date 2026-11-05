@@ -1,7 +1,7 @@
 # Atlas de información geográfica voluntaria para la gestión territorial
 
 [![Estado de Producción](https://img.shields.io/badge/Estado-En_Producci%C3%B3n-10b981?style=for-the-badge)](https://atlasvgiuah.netlify.app)
-[![Coberturas Espaciales](https://img.shields.io/badge/Capas_Operativas-134_(124_Oficiales_+_10_VGI)-0284c7?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
+[![Coberturas Espaciales](https://img.shields.io/badge/Capas_Operativas-133_(123_Oficiales_+_10_VGI)-0284c7?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
 [![guiones visuales Territoriales](https://img.shields.io/badge/Storyboards-4_Ejes_(83_Cartograf%C3%ADas)-9333ea?style=for-the-badge)](#3-estructura-de-los-10-módulos-de-la-plataforma-web)
 [![Estándares ISO/OGC](https://img.shields.io/badge/Normas-ISO_19110_%7C_19115_%7C_19139_%7C_19157-d97706?style=for-the-badge)](#5-documentación-técnica-del-proyecto)
 [![Licencia de Datos](https://img.shields.io/badge/Licencias-ODbL_1.0_%7C_CC_BY--SA_4.0_%7C_AGPLv3-dc2626?style=for-the-badge)](#6-licenciamiento-y-gobernanza-de-datos-abiertos)
@@ -29,10 +29,10 @@ Desarrollar un atlas de información geográfica voluntaria (VGI) reproducible, 
 
 | Componente del sistema | Cifra o especificación | Definición y rutas asociadas |
 | :--- | :--- | :--- |
-| Coberturas geográficas operativas | 134 capas (124 oficiales + 10 VGI `CAT-01` a `CAT-10`) | `src/js/modulos/ide_chile.js`, `src/js/config.js`, `data/*.geojson`, `src/data/*.geojson` |
+| Coberturas geográficas operativas | 133 capas (123 oficiales + 10 VGI `CAT-01` a `CAT-10`) | `src/js/modulos/ide_chile.js`, `src/js/config.js`, `data/*.geojson`, `src/data/*.geojson` |
 | Descriptores del diccionario de datos | 140 descriptores bajo ISO 19110:2016 (86 brechas VGI) | Módulo `09` (`src/js/modulos/diccionario.js`), `docs/categorias_tematicas_osm.xlsx` |
 | Dimensiones y guiones visuales | 5 dimensiones y 4 guiones visuales con 83 cartografías | Módulo `05` (`src/js/modulos/indicadores_analisis.js`), `src/img/cartografias/` |
-| Índice Global de Calidad VGI (IGV) | 95,4 % (91 capas A+ y 43 A de 134 capas) | Calidad espacial multicriterio WLC v2.0 (ISO 19157) en Módulo `06` y `docs/ANALISIS_METACALIDAD.md` |
+| Índice Global de Calidad VGI (IGV) | 95,4 % (91 capas A+ y 43 A de 133 capas) | Calidad espacial multicriterio WLC v2.0 (ISO 19157) en Módulo `06` y `docs/ANALISIS_METACALIDAD.md` |
 | Índice Global de Metacalidad Documental (IGMC) | 96,55 % | Cumplimiento de campos obligatorios de metadatos ISO 19115 / IDE Chile en Módulo `08` |
 | Accesibilidad web | WCAG 2.1 nivel AA general y nivel AAA en texto | Contraste de `4,58:1` a `8,87:1` en componentes (AA) y de `9,43:1` a `19,00:1` en lectura (AAA) |
 | Arquitectura de software | 21 módulos JS y 25 scripts Python | Aplicación en `src/js/` y automatización en `scripts/` |
@@ -50,7 +50,7 @@ flowchart LR
     subgraph IN["1. INPUT / ENTRADA (Fuentes Primarias y Configuración)"]
         I1["caja delimitadora Territorial + Etiquetas OSM<br/>src/js/config.js & config/config.json"]
         I2["Capas IPT / PRC / Patrimonio / Riesgo<br/>data/ide_minvu_ipt_*.geojson"]
-        I3["134 Capas GeoJSON + Series ohsome API<br/>data/*.geojson & api.ohsome.org/v1"]
+        I3["133 Capas GeoJSON + Series ohsome API<br/>data/*.geojson & api.ohsome.org/v1"]
         I4["Censo 2024 + RSH 2026 + BIP + SUBDERE<br/>data/ide_censo2024_manzanas.geojson"]
     end
 
@@ -85,7 +85,7 @@ flowchart TD
     end
 
     subgraph VISOR["Módulo 01: Visor Territorial y Subpaneles"]
-        M01["01. Visor Territorial<br/>src/js/modulos/mapa.js & ide_chile.js<br/>(134 Capas: 124 Oficiales + 10 VGI)"]
+        M01["01. Visor Territorial<br/>src/js/modulos/mapa.js & ide_chile.js<br/>(133 Capas: 123 Oficiales + 10 VGI)"]
         ICV["Subpanel Métricas: ICV Dinámico<br/>src/js/app.js"]
         CIN["Subpanel Inspector Normativo PRC/OGUC<br/>src/js/modulos/evaluador_normativo.js"]
     end
@@ -123,15 +123,15 @@ flowchart TD
 
 | N° | Pestaña en la Interfaz (`src/index.html`) | ID del Panel DOM | Controladores JavaScript (`src/js/`) | Función Principal y Salidas Verificables |
 | :---: | :--- | :--- | :--- | :--- |
-| `01` | Visor para la gestión territorial | `#panel-inicio` | `app.js`, `modulos/mapa.js`, `modulos/ide_chile.js`, `modulos/evaluador_normativo.js`, `modulos/geodesia.js` | Superposición interactiva de las 134 capas (`124` oficiales + `10` VGI), cálculo del ICV Dinámico, dibujo de caja delimitadora con área en `EPSG:32719` y emisión del Certificado CIN-VGI (con los 10 hitos históricos del PRC 1990–2024). |
+| `01` | Visor para la gestión territorial | `#panel-inicio` | `app.js`, `modulos/mapa.js`, `modulos/ide_chile.js`, `modulos/evaluador_normativo.js`, `modulos/geodesia.js` | Superposición interactiva de las 133 capas (`123` oficiales + `10` VGI), cálculo del ICV Dinámico, dibujo de caja delimitadora con área en `EPSG:32719` y emisión del Certificado CIN-VGI (con los 10 hitos históricos del PRC 1990–2024). |
 | `02` | Consultas Overpass (OSM) | `#panel-explorador-osm` | `modulos/osm.js`, `modulos/taginfo.js` | Consultas en vivo mediante Overpass QL con conmutación por falla entre 3 servidores, reconstrucción topológica de nodos/vías, normalización al esquema de 14 atributos y auditoría semántica Taginfo API v4. |
 | `03` | Biodiversidad GBIF | `#panel-biodiversidad-gbif` | `modulos/gbif.js` | Consulta a GBIF API v1 bajo estándar Darwin Core (DwC) para registros de flora, arbolado y fauna urbana georreferenciada (`data/capa_biodiversidad.geojson`). |
 | `04` | Cartografía uMap | `#panel-proyectos-umap` | `modulos/umap.js`, `modulos/importador_capas.js` | Integración de proyectos comunitarios uMap e importador local *client-side* para archivos `.geojson`, `.kml`, `.kmz`, `.gpx` y `.csv`. |
-| `05` | Indicadores & guiones visuales | `#panel-indicadores` | `modulos/indicadores_analisis.js` | Sistematización de las 134 capas en 5 Dimensiones Analíticas y 4 guiones visuales Territoriales con 83 cartografías temáticas (`01`: 14 mapas KDE; `02`: 11 mapas LISA; `03`: 34 mapas Censo 2024/RSH; `04`: 24 mapas Socioambiente/Movilidad/Residuos). |
+| `05` | Indicadores & guiones visuales | `#panel-indicadores` | `modulos/indicadores_analisis.js` | Sistematización de las 133 capas en 5 Dimensiones Analíticas y 4 guiones visuales Territoriales con 83 cartografías temáticas (`01`: 14 mapas KDE; `02`: 11 mapas LISA; `03`: 34 mapas Censo 2024/RSH; `04`: 24 mapas Socioambiente/Movilidad/Residuos). |
 | `06` | Calidad & ICV | `#panel-calidad-ohsome` | `modulos/ohsome.js`, `modulos/calidad_analyst.js`, `modulos/evaluador_calidad_cuantitativa.js` | Submódulo A: Evaluador Universal WLC v2.0 (ISO 19157/19115). Submódulo B: Series históricas ohsome API v1/v2 con Índice de Saturación y Maduración Territorial (Herfort et al., 2023 / ISO 19157). Submódulo C: Auditoría de changesets con OSMCha. |
-| `07` | Manual de Uso | `#panel-manual` | `modulos/manual.js` | Documentación interactiva integrada: Parte I (Manual de Uso) con inventario filtrable de las 134 capas, y Parte II (Manual de Actualización Técnica) con catálogo multi-lenguaje y flujos de procesamiento de datos. |
+| `07` | Manual de Uso | `#panel-manual` | `modulos/manual.js` | Documentación interactiva integrada: Parte I (Manual de Uso) con inventario filtrable de las 133 capas, y Parte II (Manual de Actualización Técnica) con catálogo multi-lenguaje y flujos de procesamiento de datos. |
 | `08` | Metadatos ISO 19115 | `#panel-metadatos-iso` | `modulos/metadatos.js` | Generador de fichas de metadatos conformes al Perfil Nacional de IDE Chile (ISO 19115:2003 / ISO 19115-1:2014) con exportación directa en JSON y XML (ISO 19139:2007). |
-| `09` | Diccionario (134 Capas) | `#panel-diccionario` | `modulos/diccionario.js` | Catálogo de Objetos Geográficos (ISO 19110:2016) con 140 descriptores normativos, homologación con IDE Chile e identificación de 86 brechas temáticas cubiertas por VGI. |
+| `09` | Diccionario (133 Capas) | `#panel-diccionario` | `modulos/diccionario.js` | Catálogo de Objetos Geográficos (ISO 19110:2016) con 140 descriptores normativos, homologación con IDE Chile e identificación de 86 brechas temáticas cubiertas por VGI. |
 | `10` | Licencias & Catálogos (.xlsx) | `#panel-licencias` | `modulos/licencias.js` | Marco jurídico de datos abiertos y descarga directa de `docs/geodatabase_completa_atlas_vgi.zip` y de los 3 libros maestros `.xlsx`. |
 
 ---
@@ -164,9 +164,9 @@ nodo-geoabierto/
 
 | Archivo / Entregable en Git y Web | Formato | Descripción y Contenido |
 | :--- | :---: | :--- |
-| [`docs/geodatabase_completa_atlas_vgi.zip`](docs/geodatabase_completa_atlas_vgi.zip) | `.zip` | Paquete consolidado (`542,35 MB` / `257` archivos en `7` subcarpetas) con las 134 capas del visor, extractos RM, libros Excel, CSV, SQL y metadatos ISO. |
+| [`docs/geodatabase_completa_atlas_vgi.zip`](docs/geodatabase_completa_atlas_vgi.zip) | `.zip` | Paquete consolidado (`542,35 MB` / `257` archivos en `7` subcarpetas) con las 133 capas del visor, extractos RM, libros Excel, CSV, SQL y metadatos ISO. |
 | [`docs/categorias_tematicas_osm.xlsx`](docs/categorias_tematicas_osm.xlsx) | `.xlsx` | Libro Excel de 4 hojas con la taxonomía de las 10 macrocategorías VGI (`CAT-01` a `CAT-10`), etiquetas OSM y homologación ISO 19110. |
-| [`docs/catalogo_fuentes_vgi.xlsx`](docs/catalogo_fuentes_vgi.xlsx) | `.xlsx` | Libro Excel de 4 hojas con el inventario de las 134 coberturas operativas, instituciones custodias, escalas y licencias. |
+| [`docs/catalogo_fuentes_vgi.xlsx`](docs/catalogo_fuentes_vgi.xlsx) | `.xlsx` | Libro Excel de 4 hojas con el inventario de las 133 coberturas operativas, instituciones custodias, escalas y licencias. |
 | [`docs/perfil_metadatos_vgi.xlsx`](docs/perfil_metadatos_vgi.xlsx) | `.xlsx` | Libro Excel de 4 hojas con el perfil de metadatos ISO 19115 / IDE Chile y la matriz de evaluación WLC ISO 19157. |
 | [`docs/wlc_metacalidad_ranking.csv`](docs/wlc_metacalidad_ranking.csv) y [`.json`](docs/wlc_metacalidad_resultado.json) | `.csv` / `.json` | Ranking multicriterio WLC y resultados por dimensión (`C1` Linaje, `C2` Completitud, `C3` Consistencia Lógica, `C4` Exactitud Posicional, `C5` Actualidad). |
 | [`docs/matriz_metacalidad.json`](docs/matriz_metacalidad.json) y [`correlacion_dimensiones_calidad.csv`](docs/correlacion_dimensiones_calidad.csv) | `.json` / `.csv` | Matriz detallada de metacalidad por archivo GeoJSON y matriz de correlación de Pearson entre dimensiones de calidad. |
@@ -195,7 +195,7 @@ Toda la documentación se encuentra sincronizada en la raíz del proyecto, en `d
 # 1. Levantar servidor HTTP local apuntando al directorio de publicación web (src/)
 python3 -m http.server 8080 --directory src
 
-# 2. Verificar paridad de las 134 capas (124 Oficiales + 10 VGI) y 140 descriptores ISO 19110
+# 2. Verificar paridad de las 133 capas (123 Oficiales + 10 VGI) y 140 descriptores ISO 19110
 python3 scripts/verificar_conteo_capas.py
 
 # 3. Verificar integridad de archivos GeoJSON, ausencia de punteros LFS y sincronización data/ <-> src/data/

@@ -4,7 +4,7 @@
   Módulo de visualización cartográfica con Leaflet para el Atlas VGI.
   Maneja:
   - Inicialización del visor cartográfico en el territorio predeterminado (Barrio Brasil / UAH).
-  - Selección de capas base (Carto Positron, OSM Estándar, Topográfico).
+  - Selección de capas base (OpenStreetMap Estándar, Relieve Topográfico).
   - Herramienta de visualización y dibujo interactivo del Bounding Box (sincronizada con inputs).
   - Selector de territorios predefinidos (Barrio Brasil UAH, Santiago Centro, etc.).
   - Representación de capas temáticas GeoJSON con simbología de carta topográfica y popups informativos.
@@ -62,14 +62,8 @@ const ModuloMapa = (() => {
     const zoom = cfg.area_por_defecto?.zoom || 16;
 
     // Capas base de libre acceso sin llave API
-    const cartoPositron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 20
-    });
-
     const osmEstandar = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> colaboradores',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores',
       maxZoom: 19
     });
 
@@ -78,18 +72,46 @@ const ModuloMapa = (() => {
       maxZoom: 17
     });
 
+    // Capa Satelital Esri World Imagery (abierta, de alta resolución global y sin requerir clave API)
+    const satelitalEsri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a> &mdash; DigitalGlobe, GeoEye, Earthstar, CNES/Airbus, USDA, USGS, AeroGRID, IGN y Comunidad SIG',
+      maxZoom: 19
+    });
+
+    // Capa Satelital Bing Aerial (gratuita, directa por Quadkey sin requerir clave API)
+    const BingLayer = L.TileLayer.extend({
+      getTileUrl: function (coords) {
+        let quadkey = '';
+        for (let i = coords.z; i > 0; i--) {
+          let digit = 0;
+          const mask = 1 << (i - 1);
+          if ((coords.x & mask) !== 0) digit += 1;
+          if ((coords.y & mask) !== 0) digit += 2;
+          quadkey += digit;
+        }
+        const sub = (coords.x + coords.y) % 4;
+        return `https://ecn.t${sub}.tiles.virtualearth.net/tiles/a${quadkey}.jpeg?g=1`;
+      }
+    });
+
+    const satelitalBing = new BingLayer('', {
+      attribution: '&copy; <a href="https://www.bing.com/maps" target="_blank" rel="noopener">Microsoft Bing</a> Earthstar Geographics',
+      maxZoom: 19
+    });
+
     mapa = L.map(idContenedor, {
       center: centro,
       zoom: zoom,
-      layers: [cartoPositron],
+      layers: [osmEstandar],
       zoomControl: true,
       preferCanvas: true
     });
 
     const mapasBase = {
-      'Carto Positron (Limpio)': cartoPositron,
       'OpenStreetMap Estándar': osmEstandar,
-      'Relieve Topográfico (OpenTopo)': openTopo
+      'Relieve Topográfico (OpenTopo)': openTopo,
+      'Imagen Satelital (Esri)': satelitalEsri,
+      'Imagen Satelital (Bing)': satelitalBing
     };
 
     L.control.layers(mapasBase, null, { position: 'topright' }).addTo(mapa);

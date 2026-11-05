@@ -343,7 +343,32 @@ const ModuloOSM = (() => {
 
       if (!geometria) return;
 
-      let infoSuperficie = null;
+            function geometriaAWkt(geom) {
+        if (!geom) return null;
+        const t = geom.type;
+        const c = geom.coordinates;
+        if (t === 'Point') return `POINT(${c[0]} ${c[1]})`;
+        if (t === 'LineString') return `LINESTRING(${c.map(p => `${p[0]} ${p[1]}`).join(', ')})`;
+        if (t === 'Polygon') return `POLYGON(${c.map(r => `(${r.map(p => `${p[0]} ${p[1]}`).join(', ')})`).join(', ')})`;
+        return null;
+      }
+
+      function calcularBboxGeom(geom) {
+        if (!geom || !geom.coordinates) return null;
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        function rec(c) {
+          if (typeof c[0] === 'number') {
+            minX = Math.min(minX, c[0]); maxX = Math.max(maxX, c[0]);
+            minY = Math.min(minY, c[1]); maxY = Math.max(maxY, c[1]);
+          } else if (Array.isArray(c)) {
+            c.forEach(rec);
+          }
+        }
+        rec(geom.coordinates);
+        if (minX === Infinity) return null;
+        return [Number(minX.toFixed(6)), Number(minY.toFixed(6)), Number(maxX.toFixed(6)), Number(maxY.toFixed(6))];
+      }
+let infoSuperficie = null;
       if (geometria.type === 'Polygon' && Array.isArray(geometria.coordinates) && geometria.coordinates.length > 0 && typeof ModuloGeodesia !== 'undefined' && ModuloGeodesia.calcularSuperficiePoligono) {
         infoSuperficie = ModuloGeodesia.calcularSuperficiePoligono(geometria.coordinates[0]);
       }
@@ -358,24 +383,29 @@ const ModuloOSM = (() => {
         geometry: geometria,
         properties: {
           id_vgi: `OSM/${el.type}/${el.id}`,
-          osm_type: el.type,
-          osm_id: el.id,
-          tipo_geometria: geometria.type,
           categoria: categoriaId,
           subtipo: subtipo,
           nombre: nombre,
           operador: tags.operator || null,
           direccion: direccion || null,
           accesibilidad: tags.wheelchair || null,
+          fuente: 'OpenStreetMap (API Overpass)',
+          metodo_adquisicion: 'Consulta API Overpass QL en vivo',
+          licencia: 'ODbL 1.0 (© colaboradores de OpenStreetMap)',
+          coordenadas: geometria.type === 'Point' ? [geometria.coordinates[0], geometria.coordinates[1]] : (calcularBboxGeom(geometria) ? [Number(((calcularBboxGeom(geometria)[0] + calcularBboxGeom(geometria)[2]) / 2).toFixed(6)), Number(((calcularBboxGeom(geometria)[1] + calcularBboxGeom(geometria)[3]) / 2).toFixed(6))] : null),
+          geom_wkt: geometriaAWkt(geometria),
+          bbox: calcularBboxGeom(geometria),
+          fecha_registro: (el.timestamp || new Date().toISOString()).slice(0, 10),
           superficie_m2: infoSuperficie ? infoSuperficie.areaM2 : null,
           superficie_ha: infoSuperficie ? infoSuperficie.areaHa : null,
+          srs_superficie: infoSuperficie ? 'EPSG:32719 (WGS 84 / UTM Huso 19 Sur)' : null,
+          osm_type: el.type,
+          osm_id: el.id,
+          tipo_geometria: geometria.type,
           superficie_km2: infoSuperficie ? infoSuperficie.areaKm2 : null,
           fecha: el.timestamp || new Date().toISOString().slice(0, 10),
-          fuente: 'OpenStreetMap (API Overpass)',
           _fuente: 'OpenStreetMap (API Overpass)',
           proveedor: 'OpenStreetMap (Overpass API)',
-          metodo_adquisicion: 'Descarga de OSM (con la API)',
-          licencia: 'ODbL 1.0 (© colaboradores de OpenStreetMap)',
           etiquetas_completas: tags
         }
       });

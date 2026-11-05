@@ -162,115 +162,6 @@ const ModuloDiccionario = (() => {
       ejemplo: 'EPSG:32719 (WGS 84 / UTM Huso 19 Sur)',
       equivalenciaIDE: 'Sistema de Coordenadas de Referencia (gmd:MD_ReferenceSystem / EPSG:5361)',
       importancia: 'Garantiza la trazabilidad geodésica requerida por los estándares del SNIT e IDE Chile.'
-    },
-// --- Variables de Residuos Sólidos Domiciliarios (SUBDERE RSD 2024) ---
-    {
-      campo: 'rsdya_ton',
-      nombre: 'Generación Anual de Residuos Sólidos Domiciliarios y Asimilables (Ton/año)',
-      tipo: 'Numérico (Toneladas métricas anuales)',
-      definicion: 'Masa anual de residuos sólidos domiciliarios y asimilables recolectada y transportada para su disposición final autorizada.',
-      ejemplo: '45,210.5 Ton/año',
-      equivalenciaIDE: 'Generación Comunal de Residuos (SUBDERE RSD / SINIM)',
-      importancia: 'Permite dimensionar la huella metabólica de residuos del territorio barrial y comunal.'
-    },
-    {
-      campo: 'ppc_kg_hab_dia',
-      nombre: 'Producción Per Cápita de Residuos (kg/hab·día)',
-      tipo: 'Numérico (Decimal en kilogramos)',
-      definicion: 'Tasa promedio de generación diaria de residuos por habitante, calculada tanto sobre población residente (PCA) como corregida por población flotante (PTA).',
-      ejemplo: '1.14 kg/hab·día',
-      equivalenciaIDE: 'Índice de Generación Per Cápita (SUBDERE)',
-      importancia: 'Indicador fundamental para evaluar la sustentabilidad del consumo y eficiencia del reciclaje barrial.'
-    },
-    {
-      campo: 'pta_poblacion_atendida',
-      nombre: 'Población Total Atendida (PTA = PCA + PFP)',
-      tipo: 'Numérico (Personas)',
-      definicion: 'Población total cubierta por el servicio de aseo, sumando la población residente censalmente atendida (PCA) y la población flotante turística (PFP).',
-      ejemplo: '532,400 hab.',
-      equivalenciaIDE: 'Cobertura Demográfica del Servicio Sanitario (SUBDERE)',
-      importancia: 'Esencial en Santiago Centro y Barrio Brasil debido al alto volumen de estudiantes y trabajadores flotantes.'
-    },
-    {
-      campo: 'costo_aseo_anual',
-      nombre: 'Costo Total Anual del Servicio de Aseo Municipal ($/año)',
-      tipo: 'Moneda ($ CLP devengado)',
-      definicion: 'Presupuesto total devengado anualmente por el municipio para los contratos de recolección, transporte y disposición final en rellenos sanitarios.',
-      ejemplo: '$14,250,800,000',
-      equivalenciaIDE: 'Presupuesto de Aseo y Ornato (SINIM / SUBDERE)',
-      importancia: 'Permite comparar el costo fiscal de la gestión de residuos y la recaudación por derechos de aseo.'
-    },
-    {
-      campo: 'criticidad_sdf',
-      nombre: 'Índice de Criticidad del Sitio de Disposición Final (Relleno Sanitario)',
-      tipo: 'Texto (Nivel de Criticidad)',
-      definicion: 'Evaluación técnica de riesgo sanitario y capacidad operativa considerando los años de vida útil remanente y la presión poblacional atendida.',
-      ejemplo: 'Media / Alta',
-      equivalenciaIDE: 'Estado Sanitario y Vulnerabilidad de Infraestructura (SUBDERE)',
-      importancia: 'Alerta sobre la inminente saturación de rellenos metropolitanos (Santa Marta, Loma Los Colorados, Santiago Poniente).'
-    },
-    {
-      campo: 'distancia_transporte_sdf',
-      nombre: 'Distancia de Transporte a Relleno Sanitario (km)',
-      tipo: 'Numérico (Kilómetros de ruta)',
-      definicion: 'Distancia kilométrica efectiva de viaje desde el centro comunal hasta el sitio de disposición final autorizado.',
-      ejemplo: '64.8 km',
-      equivalenciaIDE: 'Logística de Residuos Urbanos (SUBDERE)',
-      importancia: 'Determina las emisiones de gases de efecto invernadero y el gasto en combustible de la flota de camiones recolectores.'
-    },
-    {
-      campo: 'zona_aseo',
-      nombre: 'Macro-Zona Operativa de Aseo y Residuos',
-      tipo: 'Texto (Categoría Territorial)',
-      definicion: 'Zonificación operativa municipal de aseo (Oriente, Centro Oriente, Centro Poniente, Centro Plaza, Poniente) adaptada para la gestión, fiscalización y mantenimiento de contenedores y papeleros.',
-      ejemplo: 'Centro Poniente',
-      equivalenciaIDE: 'Zona Operacional de Aseo / Sectorización Municipal',
-      importancia: 'Permite desagregar las políticas de acopio y recolección de residuos en unidades territoriales homogéneas.'
-    },
-    {
-      campo: 'contenedores_tot',
-      nombre: 'Total de Contenedores de Acopio Volumétrico',
-      tipo: 'Numérico Entero (Unidades)',
-      definicion: 'Número total de contenedores de carga domiciliaria y comercial instalados en la calzada o acera dentro de la macro-zona.',
-      ejemplo: '261 unidades',
-      equivalenciaIDE: 'Infraestructura de Acopio de Residuos Sólidos (MuniSTGO)',
-      importancia: 'Cuantifica el volumen de equipamiento primario disponible para la disposición de residuos de vecinos y locatarios.'
-    },
-    {
-      campo: 'papeleros_tot',
-      nombre: 'Total de Papeleros Peatonales',
-      tipo: 'Numérico Entero (Unidades)',
-      definicion: 'Número de papeleros o basureros peatonales destinados al descarte rápido de residuos menores por transeúntes.',
-      ejemplo: '24 unidades',
-      equivalenciaIDE: 'Mobiliario Urbano de Paseo y Vía Pública',
-      importancia: 'Esencial para evaluar la limpieza de paseos peatonales, paraderos y áreas de alta circulación.'
-    },
-    {
-      campo: 'capacidad_total_litros',
-      nombre: 'Capacidad Total de Acopio Simultáneo (Litros)',
-      tipo: 'Numérico Entero (Litros)',
-      definicion: 'Volumen total de almacenamiento simultáneo en litros resultante de la ponderación por tipología de contenedor (240L, 360L y 770L).',
-      ejemplo: '109,660 L',
-      equivalenciaIDE: 'Capacidad de Acopio Comunal de Residuos',
-      importancia: 'Permite estimar la suficiencia volumétrica frente a la generación diaria de residuos de la población atendida.'
-    },
-    {
-      campo: 'ratio_contenedores_papeleros',
-      nombre: 'Ratio Contenedores / Papeleros',
-      tipo: 'Numérico Flotante (Razón C/P)',
-      definicion: 'Relación cuantitativa entre contenedores de acopio volumétrico y papeleros peatonales instalados.',
-      ejemplo: '10.88',
-      equivalenciaIDE: 'Índice de Balance de Equipamiento de Aseo',
-      importancia: 'Identifica desequilibrios espaciales entre acopio domiciliario/comercial y mobiliario para peatones en el espacio público.'
-    },
-    {
-      campo: 'tasa_deterioro_pct',
-      nombre: 'Tasa de Deterioro Físico de Contenedores (%)',
-      tipo: 'Porcentaje (%)',
-      definicion: 'Porcentaje de contenedores catastrados en terreno cuyo estado de conservación fue clasificado como Regular o Malo.',
-      ejemplo: '91.19%',
-      equivalenciaIDE: 'Estado de Conservación de Mobiliario Urbano',
-      importancia: 'Prioriza zonas de intervención urgente para el recambio o reparación de infraestructura deteriorada.'
     }
   ];
 
@@ -1894,29 +1785,29 @@ const ModuloDiccionario = (() => {
     // 2. Tabla de Atributos Normalizados
     const htmlAtributos = atributosFiltrados.map(a => `
       <tr style="border-bottom:1px solid var(--linea);">
-        <td><strong style="color:var(--musgo); font-family:var(--fuente-datos);">${a.campo}</strong></td>
-        <td><strong>${a.nombre}</strong><br><small style="color:var(--tinta-suave); font-family:var(--fuente-datos);">${a.tipo}</small></td>
-        <td style="font-size:0.86rem;">${a.definicion}<br><span class="descripcion" style="font-style:italic;">Ejemplo: ${a.ejemplo}</span></td>
-        <td style="font-size:0.82rem; font-family:var(--fuente-datos);"><code>${a.equivalenciaIDE}</code></td>
-        <td style="font-size:0.84rem;">${a.importancia}</td>
+        <td><strong style="color:var(--musgo); font-family:var(--fuente-datos); word-break:break-word;">${a.campo}</strong></td>
+        <td><strong style="color:#ffffff;">${a.nombre}</strong><br><small style="color:var(--tinta-suave); font-family:var(--fuente-datos); display:inline-block; margin-top:2px;">${a.tipo}</small></td>
+        <td style="font-size:0.86rem; line-height:1.5;">${a.definicion}<br><span class="descripcion" style="font-style:italic; display:inline-block; margin-top:4px; word-break:break-word;">Ejemplo: ${a.ejemplo}</span></td>
+        <td style="font-size:0.82rem; font-family:var(--fuente-datos);"><code class="codigo-licencia">${a.equivalenciaIDE}</code></td>
+        <td style="font-size:0.84rem; line-height:1.5;">${a.importancia}</td>
       </tr>
     `).join('');
 
     const bloqueAtributosHTML = `
       <div class="bloque" id="dicc-sec-esquema">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
-          <h3 style="margin:0;">Esquema normalizado de atributos (23 campos · ISO 19110 / IDE Chile)</h3>
+          <h3 style="margin:0;">Esquema normalizado de atributos (17 campos · ISO 19110 / IDE Chile)</h3>
         </div>
         <p class="descripcion">Cada capa descargada o consultada en el Atlas incluye esta estructura estandarizada de atributos compatible con IDE Chile y software SIG (QGIS / PostGIS):</p>
-        <div style="overflow-x:auto;">
-          <table class="tabla-datos" style="margin-top:10px; font-size:0.88rem;">
+        <div class="contenedor-tabla-responsiva">
+          <table class="tabla-datos" style="margin-top:10px; font-size:0.88rem; width:100%;">
             <thead>
               <tr>
-                <th>Código de campo</th>
-                <th>Nombre del atributo</th>
-                <th>Definición y ejemplo</th>
-                <th>Equivalencia IDE Chile / ISO 19115</th>
-                <th>Utilidad práctica</th>
+                <th style="min-width:150px;">Código de campo</th>
+                <th style="min-width:180px;">Nombre del atributo</th>
+                <th style="min-width:260px;">Definición y ejemplo</th>
+                <th style="min-width:220px;">Equivalencia IDE Chile / ISO 19115</th>
+                <th style="min-width:240px;">Utilidad práctica</th>
               </tr>
             </thead>
             <tbody>
@@ -1936,31 +1827,31 @@ const ModuloDiccionario = (() => {
     const htmlEtiquetas = etiquetasPagina.map(e => {
       const esBrecha = e.ideChile.startsWith('Sin capa homóloga');
       const badgeHomologia = esBrecha
-        ? `<span style="display:inline-block; margin-top:3px; background:var(--ocre-claro); color:var(--ocre); font-size:0.74rem; font-weight:600; padding:2px 8px; border-radius:4px; border:1px solid var(--ocre);">Aporte ciudadano (VGI): ${e.ideChile}</span>`
-        : `<span style="display:inline-block; margin-top:3px; background:var(--esmeralda-claro); color:var(--esmeralda); font-size:0.74rem; font-weight:600; padding:2px 8px; border-radius:4px; border:1px solid var(--esmeralda);">Cobertura oficial: ${e.ideChile}</span>`;
+        ? `<span class="badge-vgi-homologia badge-vgi-brecha">Aporte ciudadano (VGI): ${e.ideChile}</span>`
+        : `<span class="badge-vgi-homologia badge-vgi-oficial">Cobertura oficial: ${e.ideChile}</span>`;
 
       return `
         <tr style="border-bottom:1px solid var(--linea);">
           <td>
-            <code style="font-weight:600; color:var(--musgo); font-size:0.86rem;">${e.tag}</code>
-            <div style="margin-top:4px;">
+            <code class="codigo-licencia" style="font-weight:700; color:var(--musgo); font-size:0.86rem; word-break:break-all;">${e.tag}</code>
+            <div style="margin-top:6px;">
               ${e.tag.startsWith('dwc:')
-                ? `<a href="https://dwc.tdwg.org/terms/#${e.tag.replace('dwc:', '')}" target="_blank" rel="noopener" style="font-size:0.74rem;">Estándar Darwin Core ↗</a>`
-                : `<button type="button" class="btn-taginfo-inspector" onclick="ModuloDiccionario.inspeccionarTaginfo('${e.tag}')" style="font-size:0.72rem; padding:2px 7px; background:var(--papel-alto); border:1px solid var(--linea-fuerte); border-radius:4px; color:var(--musgo); cursor:pointer;">Ver uso en Taginfo</button>`
+                ? `<a href="https://dwc.tdwg.org/terms/#${e.tag.replace('dwc:', '')}" target="_blank" rel="noopener" style="font-size:0.74rem; display:inline-block;">Estándar Darwin Core ↗</a>`
+                : `<button type="button" class="btn-taginfo-inspector" onclick="ModuloDiccionario.inspeccionarTaginfo('${e.tag}')" style="font-size:0.72rem; padding:3px 8px; background:var(--papel-alto); border:1px solid var(--linea-fuerte); border-radius:4px; color:var(--musgo); cursor:pointer; display:inline-block;">Ver uso en Taginfo</button>`
               }
             </div>
           </td>
           <td>
-            <strong>${e.significado}</strong>
-            ${e.aplicacionUAH ? `<div style="font-size:0.8rem; color:var(--tinta-suave); margin-top:2px;">Ejemplo local: ${e.aplicacionUAH}</div>` : ''}
+            <strong style="color:#ffffff;">${e.significado}</strong>
+            ${e.aplicacionUAH ? `<div style="font-size:0.8rem; color:var(--tinta-suave); margin-top:3px; line-height:1.45;">Ejemplo local: ${e.aplicacionUAH}</div>` : ''}
           </td>
           <td>
             <button type="button" class="dicc-tag-cat-link" onclick="ModuloDiccionario.irACategoriaManual('${e.categoria}')" title="Ver ficha en el Manual de uso">
               ${e.categoria} ↗
             </button>
           </td>
-          <td style="font-size:0.84rem;">
-            <strong>${e.institucion || 'Comunidad OpenStreetMap'}</strong><br>
+          <td style="font-size:0.84rem; line-height:1.45;">
+            <strong style="color:var(--tinta);">${e.institucion || 'Comunidad OpenStreetMap'}</strong><br>
             ${badgeHomologia}
           </td>
         </tr>
@@ -2011,14 +1902,14 @@ const ModuloDiccionario = (() => {
 
         ${controlesPaginacionHTML}
 
-        <div style="overflow-x:auto;">
-          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem;">
+        <div class="contenedor-tabla-responsiva">
+          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem; width:100%;">
             <thead>
               <tr>
-                <th style="cursor:pointer;" onclick="ModuloDiccionario.ordenarPor('tag')">Código / Etiqueta ${iconoOrden('tag')}</th>
-                <th style="cursor:pointer;" onclick="ModuloDiccionario.ordenarPor('significado')">Nombre y aplicación local ${iconoOrden('significado')}</th>
-                <th style="cursor:pointer;" onclick="ModuloDiccionario.ordenarPor('categoria')">Categoría ${iconoOrden('categoria')}</th>
-                <th style="cursor:pointer;" onclick="ModuloDiccionario.ordenarPor('institucion')">Institución y homología en IDE Chile ${iconoOrden('institucion')}</th>
+                <th style="cursor:pointer; min-width:170px;" onclick="ModuloDiccionario.ordenarPor('tag')">Código / Etiqueta ${iconoOrden('tag')}</th>
+                <th style="cursor:pointer; min-width:260px;" onclick="ModuloDiccionario.ordenarPor('significado')">Nombre y aplicación local ${iconoOrden('significado')}</th>
+                <th style="cursor:pointer; min-width:120px;" onclick="ModuloDiccionario.ordenarPor('categoria')">Categoría ${iconoOrden('categoria')}</th>
+                <th style="cursor:pointer; min-width:260px;" onclick="ModuloDiccionario.ordenarPor('institucion')">Institución y homología en IDE Chile ${iconoOrden('institucion')}</th>
               </tr>
             </thead>
             <tbody>

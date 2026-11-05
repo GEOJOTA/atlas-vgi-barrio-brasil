@@ -5,12 +5,12 @@
   Atlas de Información Geográfica Voluntaria para la Gestión Territorial.
 
   Estructura y Principios:
-  1. Agrupación analítica de las 134 capas del Atlas (124 Oficiales + 10 VGI) en 5 Dimensiones Estratégicas:
+  1. Agrupación analítica de las 133 capas del Atlas (123 Oficiales + 10 VGI) en 5 Dimensiones Estratégicas:
      - 1) Sociodemográfica (19 capas)
      - 2) Socioeconómica (18 capas)
      - 3) Socioambiental (37 capas)
      - 4) Sociosanitaria (3 capas)
-     - 5) Sociourbana o Habitabilidad (55 capas)
+     - 5) Sociourbana o Habitabilidad (54 capas)
   2. Nombres de capas rigurosamente idénticos a los del Módulo "00. Visor y Atlas VGI".
   3. Datos espaciales derivados exclusivamente de la base de datos formal del Atlas VGI (capas oficiales y VGI).
   4. Storyboards territoriales con rigor técnico y lenguaje accesible:
@@ -69,7 +69,6 @@ const ModuloIndicadoresAnalisis = (() => {
   "bbdd_14": "Establecimientos de Educación Superior",
   "bbdd_15": "Centros de SERNAM",
   "bbdd_17": "Áreas Funcionales de las ciudades (2026)",
-  "bbdd_18": "Zonificación Termica",
   "bbdd_19": "Cité",
   "bbdd_20": "SEREMI MINVU Región Metropolitana",
   "bbdd_21": "Oficinas Serviu",
@@ -321,7 +320,6 @@ const ModuloIndicadoresAnalisis = (() => {
         'ide_minvu_ipt_prms_riesgo',
         'catastro_predial_sii',
         'bbdd_17', // Áreas Funcionales de las ciudades (2026)
-        'bbdd_18', // Zonificación Termica
         'bbdd_19', // Cité
         'bbdd_20', // SEREMI MINVU Región Metropolitana
         'bbdd_21', // Oficinas Serviu
@@ -377,37 +375,36 @@ const ModuloIndicadoresAnalisis = (() => {
       dimensionId: 'metodologica',
       dimensionNombre: 'Resultados Espaciales · Densidades de Kernel (KDE)',
       titulo: 'Concentración Territorial y Núcleos de Actividad VGI en Santiago: Lo que Revelan las Superficies de Densidad de Kernel',
-      bajada: 'Análisis espacial de las 14 cartografías de densidad continua (KDE) sobre las 10 macro-categorías colaborativas del Atlas VGI, la red de semáforos UOCT y las dinámicas oficiales de Permisos de Edificación y Certificados de Recepción Final (CRF). Polarización entre la hiperconcentración del eje Alameda, Barrio Brasil, Santa Ana y Ejército frente a los vacíos de cobertura en la periferia sur de la comuna (Sierra Bella y Bogotá).',
+      bajada: 'Análisis espacial de las 14 cartografías de densidad continua (KDE) sobre la geodatabase comunitaria consolidada del Atlas VGI (79.841 entidades geométricas directas y 112.264 nodos muestreados en malla regular de 20 m), la red de semáforos UOCT y las dinámicas oficiales de Permisos de Edificación y Certificados de Recepción Final (CRF). Polarización entre la concentración del eje Alameda, Barrio Brasil, Santa Ana, Parque Almagro y Ejército frente a los vacíos en el arco periférico sur y suroriente de la comuna (Bogotá, Sierra Bella, Matta Sur, Diez de Julio y San Vicente).',
       imagen: 'img/storyboards/portada_analisis_kde.svg',
       imagenDestacada: 'img/storyboards/portada_analisis_kde.svg',
       piePortada: 'Ilustración síntesis de los núcleos de intensidad territorial VGI identificados en la Comuna de Santiago y el entorno de Barrio Brasil.',
       tags: ['Resultados KDE', 'Concentración VGI', 'Barrio Brasil', 'Semaforización UOCT', 'Permisos y CRF', '14 Cartografías'],
       capasRelevantes: ['cat01_educacion', 'cat02_servicios', 'cat03_transporte', 'cat04_movilidad_activa', 'cat05_espacio_publico', 'cat06_patrimonio', 'cat07_accesibilidad', 'cat08_biodiversidad', 'cat09_edificaciones', 'cat10_cobertura_suelo', 'semaforos_rm_uoct_2026', 'ine_permisos_edificacion_santiago', 'ine_crf_conjuntos_santiago'],
       contenido: {
-        introduccion: `El análisis de los 10.166 registros multigeométricos levantados en el Atlas VGI (3.186 puntos, 3.929 vértices de redes lineales y 3.051 polígonos) demuestra que la provisión de infraestructura, servicios y atributos ambientales en los 27 barrios oficiales de la Comuna de Santiago no se distribuye de forma homogénea ni concéntrica. Los resultados de las superficies de densidad revelan una marcada estructura axial y policéntrica: mientras el corredor Alameda, Barrio Brasil (media de 6.924,1 ent/km²), Santa Ana (1.728,2 ent/km²), Ejército (1.007,0 ent/km²), Parque Almagro (790,6 ent/km²) y Barrio Universitario (703,3 ent/km²) concentran los máximos absolutos de intensidad territorial, barrios del borde sur (agrupación AV10) como Sierra Bella (1,9 ent/km²), Bogotá (1,4 ent/km²), Matta Sur (2,1 ent/km²), Franklin (3,1 ent/km²) y San Vicente (15,3 ent/km²) exhiben severos vacíos de equipamiento y cobertura colaborativa.`,
+        introduccion: `El análisis de la base de datos geográfica comunitaria consolidada del Atlas VGI —que integra 79.841 entidades geométricas vectoriales directas (36.954 puntos comunitarios, 15.913 líneas de infraestructura y 26.974 polígonos de equipamientos y edificaciones) y 112.264 entidades y nodos muestreados en el modelo continuo de densidad de kernel a 20 m— constata espacialmente que la provisión de infraestructura, servicios y atributos ambientales en los 27 barrios oficiales de la Comuna de Santiago no se distribuye de forma homogénea ni concéntrica. Los resultados de las superficies de densidad revelan una marcada estructura axial y policéntrica: mientras el corredor Alameda, Barrio Brasil (media simple de 6.924,1 ent/km² y media ponderada por área de 6.149,0 ent/km²), Santa Ana (1.728,2 ent/km² simple / 1.730,1 ponderada), Parque Almagro (790,6 ent/km² simple / 792,0 ponderada), Ejército (1.007,0 ent/km² simple / 582,5 ponderada) y Barrio Universitario (703,3 ent/km² simple / 379,2 ponderada) concentran los máximos de intensidad territorial, los barrios del arco periférico sur y suroriente exhiben notorios vacíos de equipamiento y cobertura colaborativa por debajo de 5 ent/km²: Bogotá (1,4 ent/km²), Sierra Bella (1,9 ent/km²), Matta Sur (2,1 ent/km²), Diez de Julio (2,5 ent/km²), Santa Isabel (2,9 ent/km²), Franklin (3,1 ent/km²), Santa Elena (4,9 ent/km²) y San Vicente (15,3 ent/km²).`,
         datosClave: [
-          { valor: '20.203,8', label: 'Cima KDE Total VGI', sub: 'Máximo comunal (ent/km²) en eje Brasil-Alameda' },
-          { valor: '6.924,1', label: 'Media Barrio Brasil', sub: '14,1 veces el promedio comunal (489,1 ent/km²)' },
-          { valor: '10.166', label: 'Entidades Evaluadas', sub: '3.186 pts · 3.929 lín · 3.051 pol' },
+          { valor: '20.203,8', label: 'Cima Ráster KDE Total', sub: 'Máximo continuo (ent/km²); pico zonal de 26.377,7 en manzana núcleo de Brasil' },
+          { valor: '6.924,1 / 6.149,0', label: 'Media Barrio Brasil', sub: 'Media simple 6.924,1 ent/km² · Ponderada por área 6.149,0 ent/km²' },
+          { valor: '79.841 (112.264)', label: 'Entidades VGI Consolidadas', sub: '36.954 pts · 15.913 lín · 26.974 pol (112.264 nodos en KDE continuo)' },
           { valor: '14', label: 'Cartografías KDE', sub: '10 macro-categorías VGI + UOCT + Permisos INE + CRF + Síntesis Total' }
         ],
         porcentajesClave: [
-          { label: 'Peso de Edificaciones y Transporte en la Intensidad Total VGI', valor: '62,2%', porcentaje: 62.2, contexto: 'Edificaciones (3.305 registros) y Transporte (3.016 registros) dominan la estructura física mapeada.' },
-          { label: 'Superioridad de Densidad Media en Barrio Brasil vs. Media Comunal', valor: '93,4%', porcentaje: 93.4, contexto: 'Barrio Brasil lidera las 10 categorías por confluencia del campus UAH, Plaza Brasil y ejes viales.' },
-          { label: 'Concentración de Biodiversidad Arbórea en 3 Barrios Pericentrales', valor: '78,5%', porcentaje: 78.5, contexto: 'Brasil (843,8), Parque Almagro (221,4) y Ejército (190,0) concentran el grueso del dosel.' },
-          { label: 'Barrios con Densidad VGI Consolidada Crítica (< 15 ent/km²)', valor: '25,9%', porcentaje: 25.9, contexto: '7 de los 27 barrios comunales (Bogotá, Sierra Bella, Matta Sur, Diez de Julio, Santa Isabel, Franklin y Santa Elena) presentan vacíos de cobertura.' }
+          { label: 'Concentración Espacial del KDE Medio en el 10% Superior de Manzanas', valor: '85,3%', porcentaje: 85.3, contexto: 'El 10% de las manzanas censales (171 manzanas) concentra el 85,3% de la suma del KDE medio consolidado, y las 63 manzanas de Barrio Brasil concentran el 56,9%.' },
+          { label: 'Superioridad de Densidad Media en Barrio Brasil vs. Media Comunal', valor: '93,4%', porcentaje: 93.4, contexto: 'Barrio Brasil lidera la comuna con 6.924,1 ent/km² (simple) y 6.149,0 ent/km² (ponderada) por confluencia de equipamientos y ejes viales.' },
+          { label: 'Barrios con Vacío de Densidad VGI Consolidada (< 5 ent/km²)', valor: '25,9%', porcentaje: 25.9, contexto: '7 de los 27 barrios (Bogotá, Sierra Bella, Matta Sur, Diez de Julio, Santa Isabel, Franklin y Santa Elena) presentan densidades críticas inferiores a 5 ent/km².' },
+          { label: 'Entidades VGI Asignadas a Barrios vs. Ejes Límites Comunales', valor: '78,6%', porcentaje: 78.6, contexto: '29.051 puntos y 1.280 permisos están asignados a barrios oficiales; el resto se emplaza en franjas límites y autopistas metropolitanas.' }
         ],
         graficoComparativo: {
-          titulo: 'Densidad Media Comunal y Máximo en Barrio Líder por Categoría VGI (ent/km²)',
+          titulo: 'Densidad KDE Total Consolidada: Media Simple vs. Media Ponderada por Área (ent/km²)',
           filas: [
-            { label: 'KDE Total Consolidado (Líder: Barrio Brasil 6.924,1 | Media: 489,1)', valor: '20.203,8 máx', porcentaje: 100.0 },
-            { label: 'Edificaciones y Morfología (Líder: Barrio Brasil 2.651,8 | Media: 163,7)', valor: '7.155,8 máx', porcentaje: 78.0 },
-            { label: 'Biodiversidad y Arbolado (Líder: Barrio Brasil 843,8 | Media: 52,1)', valor: '7.364,5 máx', porcentaje: 74.0 },
-            { label: 'Transporte Público y Red (Líder: Barrio Brasil 1.729,7 | Media: 150,8)', valor: '3.213,7 máx', porcentaje: 58.0 },
-            { label: 'Movilidad Activa y Ciclovías (Líder: Barrio Brasil 819,2 | Media: 36,9)', valor: '3.616,9 máx', porcentaje: 52.0 },
-            { label: 'Espacio Público y Plazas (Líder: Barrio Brasil 345,3 | Media: 18,8)', valor: '5.074,4 máx', porcentaje: 46.0 },
-            { label: 'Servicios y Comercio Local (Líder: Barrio Brasil 420,1 | Media: 30,5)', valor: '1.356,7 máx', porcentaje: 36.0 },
-            { label: 'Educación y Universidades (Líder: Barrio Brasil 155,9 | Media: 14,2)', valor: '1.225,1 máx', porcentaje: 31.0 }
+            { label: 'Barrio Brasil (Media Simple: 6.924,1 | Ponderada por Superficie: 6.149,0)', valor: '6.149,0 pond', porcentaje: 100.0 },
+            { label: 'Santa Ana (Media Simple: 1.728,2 | Ponderada por Superficie: 1.730,1)', valor: '1.730,1 pond', porcentaje: 28.1 },
+            { label: 'Parque Almagro (Media Simple: 790,6 | Ponderada por Superficie: 792,0)', valor: '792,0 pond', porcentaje: 12.9 },
+            { label: 'Ejército (Media Simple: 1.007,0 | Ponderada por Superficie: 582,5)', valor: '582,5 pond', porcentaje: 9.5 },
+            { label: 'Barrio Universitario (Media Simple: 703,3 | Ponderada por Superficie: 379,2)', valor: '379,2 pond', porcentaje: 6.2 },
+            { label: 'Promedio Comunal Santiago (Media Simple: 489,1 | Ponderada: 312,4)', valor: '312,4 pond', porcentaje: 5.1 },
+            { label: 'Arco Periférico Sur (Bogotá 1,4 | Sierra Bella 1,9 | Matta Sur 2,1)', valor: '< 2,5 crít', porcentaje: 0.1 }
           ]
         },
         diagramaSVG: () => `
@@ -442,8 +439,8 @@ const ModuloIndicadoresAnalisis = (() => {
           {
             titulo: '1. La estructura axial y policéntrica del territorio: lo que revela el KDE Total VGI',
             parrafos: [
-              'La cartografía consolidada del total de aportes VGI (KDE_Total_VGI) muestra con nitidez que la intensidad de equipamiento y registros territoriales en la Comuna de Santiago alcanza un máximo de 20.203,8 entidades/km², estructurándose sobre dos grandes corredores: el eje longitudinal de la Alameda Libertador Bernardo O’Higgins y el eje norte-sur que articula Barrio Brasil, Santa Ana, Ejército y Barrio Universitario.',
-              'En el zoom sobre el entorno de Barrio Brasil se observa cómo los vectores de gradiente convergen hacia dos focos amarillos de máxima intensidad: el cuadrante suroriente del barrio (entorno del Campus Universidad Alberto Hurtado en Cienfuegos, Almirante Barroso y Alameda) y el núcleo central de Plaza Brasil junto al corredor de Av. Brasil y Compañía de Jesús. En contraste, los barrios del extremo suroriente y surponiente comunal —como Sierra Bella (con 1,9 ent/km²), Bogotá (con 1,4 ent/km²), Matta Sur (con 2,1 ent/km²), Franklin (con 3,1 ent/km²) y San Vicente (con 15,3 ent/km²)— aparecen en tonos azul profundo, evidenciando una pronunciada brecha norte-sur en la densidad de atributos urbanos registrados.'
+              'La cartografía consolidada del total de aportes VGI (KDE_Total_VGI) constata espacialmente que la intensidad de equipamiento y registros territoriales en la Comuna de Santiago alcanza una cima de ráster continuo de 20.203,8 entidades/km² (con un pico zonal por manzana censal de 26.377,7 ent/km² en la manzana 13101011001008 de Barrio Brasil), estructurándose sobre dos grandes corredores: el eje longitudinal de la Alameda Libertador Bernardo O’Higgins y el eje norte-sur que articula Barrio Brasil, Santa Ana, Parque Almagro, Ejército y Barrio Universitario.',
+              'En el zoom sobre el entorno de Barrio Brasil se observa cómo los vectores de gradiente convergen hacia dos focos amarillos de máxima intensidad: el cuadrante suroriente del barrio (entorno del Campus Universidad Alberto Hurtado en Cienfuegos, Almirante Barroso y Alameda) y el núcleo central de Plaza Brasil junto al corredor de Av. Brasil y Compañía de Jesús. En contraste, los barrios del arco periférico sur, suroriente y norponiente —como Sierra Bella (con 1,9 ent/km²), Bogotá (con 1,4 ent/km²), Matta Sur (con 2,1 ent/km²), Diez de Julio (con 2,5 ent/km²), Santa Isabel (con 2,9 ent/km²), Franklin (con 3,1 ent/km²), Santa Elena (con 4,9 ent/km²) y San Vicente (con 15,3 ent/km²)— aparecen en tonos azul profundo, evidenciando una marcada polarización entre el núcleo centro-poniente y el arco periférico comunal.'
             ],
             graficoInline: {
               titulo: 'Contraste de Densidad KDE Consolidada por Barrios Representativos (media ent/km²)',
@@ -607,7 +604,7 @@ const ModuloIndicadoresAnalisis = (() => {
         ],
         apartadoBibliografico: {
           fuentesDatos: [
-            { codigo: 'cat01_cat10_vgi', nombre: '10 Macro-categorías VGI Multigeométricas (10.166 registros)', institucion: 'Comunidad OSM / GBIF', crs: 'EPSG:32719', tipo: 'Puntos, Líneas y Polígonos' },
+            { codigo: 'cat01_cat10_vgi', nombre: '10 Macro-categorías VGI Multigeométricas (79.841 entidades consolidadas)', institucion: 'Comunidad OSM / GBIF', crs: 'EPSG:32719', tipo: 'Puntos, Líneas y Polígonos' },
             { codigo: 'semaforos_rm_uoct_2026', nombre: 'Red de Cruces Semaforizados RM (3.483 entidades)', institucion: 'Unidad Operativa de Control de Tránsito (UOCT) / MTT', crs: 'EPSG:32719', tipo: 'Puntos Georreferenciados' },
             { codigo: 'sintesis_manzanas_stgo', nombre: 'Matriz Zonal de 1.711 Manzanas Censales y 27 Barrios', institucion: 'INE / SECPLA', crs: 'EPSG:32719', tipo: 'Polígonos GeoPackage' },
             { codigo: 'catalogo_vgi_kde', nombre: 'Catálogo de Superficies de Densidad de Kernel (KDE)', institucion: 'Atlas de Información Geográfica Voluntaria', crs: 'EPSG:32719', tipo: 'Ráster / Cartografía' }
@@ -630,37 +627,37 @@ const ModuloIndicadoresAnalisis = (() => {
       dimensionId: 'metodologica',
       dimensionNombre: 'Resultados Espaciales · Clusters y Outliers LISA',
       titulo: 'Segregación Espacial, Hotspots y Áreas de Rezago en Santiago: Resultados de los Clusters Locales LISA',
-      bajada: 'Qué revelan las 11 cartografías de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas de Santiago: dónde se agrupan estadísticamente los núcleos Alto-Alto, qué barrios conforman bolsones Bajo-Bajo y qué significan las manzanas atípicas de transición.',
+      bajada: 'Qué revelan las 11 cartografías de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas censales (unidades territoriales básicas del INE) de Santiago: dónde se agrupan estadísticamente los núcleos Alto-Alto (HH), qué barrios conforman bolsones Bajo-Bajo (LL) y cómo la cobertura colaborativa exhibe un desajuste inverso frente a la densidad residencial comunal.',
       imagen: 'img/storyboards/portada_analisis_lisa.svg',
       imagenDestacada: 'img/storyboards/portada_analisis_lisa.svg',
       piePortada: 'Ilustración conceptual de la polarización territorial entre conglomerados Alto-Alto (Hotspots), Bajo-Bajo (Coldspots) y anomalías espaciales en la trama de Santiago.',
       tags: ['Resultados LISA', 'Hotspots Alto-Alto', 'Coldspots Bajo-Bajo', 'Outliers Territoriales', '11 Cartografías'],
       capasRelevantes: ['cat01_educacion', 'cat02_servicios', 'cat03_transporte', 'cat04_movilidad_activa', 'cat05_espacio_publico', 'censo2024_manzanas', 'minvu_ipt_prc_santiago'],
       contenido: {
-        introduccion: `El análisis de los Indicadores Locales de Asociación Espacial (LISA) sobre las 1.711 manzanas y los 27 barrios oficiales de la Comuna de Santiago demuestra que los atributos urbanos y colaborativos presentan una fuerte segregación territorial estadísticamente significativa. En el consolidado comunal, el 44,1% de las manzanas pertenece a conglomerados extremos: 140 manzanas (8,2%) conforman un núcleo compacto de alta concentración (Hotspot Alto-Alto) anclado en Barrio Brasil (63 manzanas), Santa Ana (23 manzanas), Yungay (17 manzanas), Parque Almagro (13 manzanas), Ejército (12 manzanas) y Barrio Universitario (9 manzanas), mientras 615 manzanas (35,9%) integran extensos bolsones de rezago (Coldspot Bajo-Bajo) en el sur, oriente y norponiente comunal, encabezados por Sierra Bella (90 manzanas), Bogotá (87 manzanas), Matta Sur (58 manzanas), Diez de Julio (52 manzanas), Matta Norte (50 manzanas), Santa Isabel (46 manzanas), San Eugenio (44 manzanas), Viel (39 manzanas) y Balmaceda (37 manzanas).`,
+        introduccion: `El análisis de los Indicadores Locales de Asociación Espacial (LISA) sobre las 1.711 manzanas censales (unidades territoriales mínimas delimitadas por el INE, abreviadas comúnmente como mz) y los 27 barrios oficiales de la Comuna de Santiago demuestra que los atributos urbanos y colaborativos presentan una fuerte segregación territorial estadísticamente significativa. En el consolidado comunal, el 44,1% de las manzanas pertenece a conglomerados extremos: 140 manzanas (8,2%) conforman un núcleo compacto de alta concentración (Hotspot Alto-Alto) anclado en Barrio Brasil (63 manzanas), Santa Ana (23 manzanas), Yungay (17 manzanas), Parque Almagro (13 manzanas), Ejército (12 manzanas) y Barrio Universitario (9 manzanas), mientras 615 manzanas (35,9%) integran extensos bolsones de rezago (Coldspot Bajo-Bajo) en el sur, oriente y norponiente comunal, encabezados por Sierra Bella (90 manzanas), Bogotá (87 manzanas), Matta Sur (58 manzanas), Diez de Julio (52 manzanas), Matta Norte (50 manzanas), Santa Isabel (46 manzanas), San Eugenio (44 manzanas), Viel (39 manzanas) y Balmaceda (37 manzanas).`,
         datosClave: [
-          { valor: '140', label: 'Manzanas Hotspot (HH)', sub: '8,2% comunal · 45% de ellas en Barrio Brasil' },
-          { valor: '615', label: 'Manzanas Coldspot (LL)', sub: '35,9% comunal · Concentradas en el sector sur' },
-          { valor: '956', label: 'No Significativas', sub: '55,9% de transición intermedia comunal' },
-          { valor: '11', label: 'Cartografías LISA', sub: '10 categorías VGI + Consolidado Total' }
+          { valor: '140 (8,2%)', label: 'Manzanas Hotspot (HH)', sub: '6,0% de la población (25.716 hab) · 45,0% de las manzanas en Barrio Brasil' },
+          { valor: '615 (35,9%)', label: 'Manzanas Coldspot (LL)', sub: '34,2% de la población (147.717 hab) · Cinturón sur, oriente y norponiente' },
+          { valor: '956 (55,9%)', label: 'No Significativas', sub: 'Régimen intermedio sin autocorrelación local significativa' },
+          { valor: '0 (0,0%)', label: 'Outliers (HL / LH)', sub: 'Estructura puramente polarizada (sin anomalías espaciales)' }
         ],
         porcentajesClave: [
-          { label: 'Proporción de Hotspots Comunales (Alto-Alto) Localizados en Barrio Brasil', valor: '45,0%', porcentaje: 45.0, contexto: '63 de las 140 manzanas Alto-Alto de toda la comuna se sitúan dentro de Barrio Brasil.' },
-          { label: 'Manzanas Comunales Clasificadas en Coldspots de Rezago (Bajo-Bajo)', valor: '35,9%', porcentaje: 35.9, contexto: '615 manzanas forman un cinturón continuo de baja dotación en el borde sur, norponiente y oriente.' },
-          { label: 'Concentración de Hotspots en los 4 Barrios Líderes (Brasil, Sta. Ana, Yungay, Almagro)', valor: '82,9%', porcentaje: 82.9, contexto: '116 de las 140 manzanas Alto-Alto se agrupan en el eje pericentral histórico-universitario.' },
-          { label: 'Peso de los 4 Barrios Sur (Sierra Bella, Bogotá, Matta Sur, 10 de Julio) en Coldspots', valor: '46,7%', porcentaje: 46.7, contexto: '287 de las 615 manzanas Bajo-Bajo se ubican en el cuadrante suroriente de la comuna.' }
+          { label: 'Población Comunal Residente en Coldspots de Rezago VGI (Bajo-Bajo)', valor: '34,2%', porcentaje: 34.2, contexto: '147.717 habitantes de Santiago viven en manzanas clasificadas como coldspot (LL), donde el KDE medio es de apenas 0,6 ent/km².' },
+          { label: 'Población Comunal Residente en Hotspots de Intensidad VGI (Alto-Alto)', valor: '6,0%', porcentaje: 6.0, contexto: 'Solo 25.716 habitantes residen en manzanas Alto-Alto (HH), donde el KDE medio asciende a 4.740,1 ent/km² (razón > 7.900 veces).' },
+          { label: 'Densidad Residencial en Coldspots vs. Hotspots (Desajuste Espacial)', valor: '239,2 vs 206,5', porcentaje: 86.3, contexto: 'La densidad neta media de las manzanas coldspot LL (239,2 hab/ha) supera a la de las manzanas hotspot HH (206,5 hab/ha). Santa Isabel concentra 46 de sus 61 manzanas en coldspot.' },
+          { label: 'Concentración de Hotspots en Barrio Brasil sobre el Total Comunal', valor: '45,0%', porcentaje: 45.0, contexto: 'Las 63 manzanas de Barrio Brasil son 100% Alto-Alto, conformando el 45,0% de todos los hotspots de la comuna.' }
         ],
         graficoComparativo: {
           titulo: 'Distribución de Manzanas Significativas por Barrio en el Cluster LISA Total VGI',
           filas: [
-            { label: 'Hotspot Alto-Alto: Barrio Brasil (63 manzanas · 45,0% del total HH)', valor: '63 mz HH', porcentaje: 100.0 },
-            { label: 'Hotspot Alto-Alto: Barrio Santa Ana (23 manzanas · 16,4% del total HH)', valor: '23 mz HH', porcentaje: 36.5 },
-            { label: 'Hotspot Alto-Alto: Barrio Yungay (17 manzanas · 12,1% del total HH)', valor: '17 mz HH', porcentaje: 27.0 },
-            { label: 'Hotspot Alto-Alto: Parque Almagro (13 manzanas · 9,3% del total HH)', valor: '13 mz HH', porcentaje: 20.6 },
-            { label: 'Coldspot Bajo-Bajo: Sierra Bella (90 manzanas en rezago espacial)', valor: '90 mz LL', porcentaje: 95.0 },
-            { label: 'Coldspot Bajo-Bajo: Barrio Bogotá (87 manzanas en rezago espacial)', valor: '87 mz LL', porcentaje: 91.5 },
-            { label: 'Coldspot Bajo-Bajo: Matta Sur (58 manzanas en rezago espacial)', valor: '58 mz LL', porcentaje: 61.0 },
-            { label: 'Coldspot Bajo-Bajo: Diez de Julio (52 manzanas en rezago espacial)', valor: '52 mz LL', porcentaje: 55.0 }
+            { label: 'Hotspot Alto-Alto: Barrio Brasil (63 manzanas · 45,0% del total HH)', valor: '63 manzanas HH', porcentaje: 100.0 },
+            { label: 'Hotspot Alto-Alto: Barrio Santa Ana (23 manzanas · 16,4% del total HH)', valor: '23 manzanas HH', porcentaje: 36.5 },
+            { label: 'Hotspot Alto-Alto: Barrio Yungay (17 manzanas · 12,1% del total HH)', valor: '17 manzanas HH', porcentaje: 27.0 },
+            { label: 'Hotspot Alto-Alto: Parque Almagro (13 manzanas · 9,3% del total HH)', valor: '13 manzanas HH', porcentaje: 20.6 },
+            { label: 'Coldspot Bajo-Bajo: Sierra Bella (90 manzanas en rezago espacial)', valor: '90 manzanas LL', porcentaje: 95.0 },
+            { label: 'Coldspot Bajo-Bajo: Barrio Bogotá (87 manzanas en rezago espacial)', valor: '87 manzanas LL', porcentaje: 91.5 },
+            { label: 'Coldspot Bajo-Bajo: Matta Sur (58 manzanas en rezago espacial)', valor: '58 manzanas LL', porcentaje: 61.0 },
+            { label: 'Coldspot Bajo-Bajo: Diez de Julio (52 manzanas en rezago espacial)', valor: '52 manzanas LL', porcentaje: 55.0 }
           ]
         },
         diagramaSVG: () => `
@@ -699,8 +696,10 @@ const ModuloIndicadoresAnalisis = (() => {
         `,
         seccionesAnaliticas: [
           {
-            titulo: '1. La fractura centro-periferia en el Cluster LISA Total VGI y la transición interna de Barrio Brasil',
+            titulo: '1. La fractura centro-periferia en el Cluster LISA Total VGI y el desajuste residencial',
             parrafos: [
+              'El análisis de autocorrelación espacial local (LISA) revela un hallazgo central de justicia espacial: la cobertura de información colaborativa no sigue la densidad residencial, sino que presenta una relación inversa débil (Spearman ρ = -0,153, p < 0,001). Mientras solo el 6,0% de los habitantes comunales (25.716 personas) reside en las 140 manzanas Hotspot Alto-Alto (KDE medio de 4.740,1 ent/km²), más de un tercio de la población (34,2%, correspondiente a 147.717 habitantes) vive en las 615 manzanas Coldspot Bajo-Bajo (KDE medio de 0,6 ent/km²). De hecho, la densidad residencial media en las manzanas coldspot (239,2 hab/ha) supera a la de las manzanas hotspot (206,5 hab/ha). El caso más crítico es Santa Isabel, el barrio más poblado de Santiago (52.658 habitantes), donde 46 de sus 61 manzanas se encuentran en coldspot de información VGI.',
+              'Asimismo, el cruce territorial entre el coldspot de información VGI y los hotspots de vulnerabilidad censal revela una situación de Doble Desventaja Socioterritorial: 71 manzanas combinan desierto de información con hacinamiento crítico (13.707 habitantes, concentradas en Bogotá con 14 manzanas censales (mz), Yungay con 12 manzanas, Sierra Bella con 12 manzanas, Balmaceda con 11 manzanas y Matta Sur con 9 manzanas); 87 manzanas con arriendo desregulado (35.130 hab); 104 manzanas con alta inmigración reciente (41.408 hab); y 95 manzanas con déficit habitacional cuantitativo (15.949 hab, con máximos en Bogotá con 21 manzanas, Sierra Bella con 21 manzanas y Yungay con 16 manzanas).',
               'La cartografía síntesis de autocorrelación local (cluster_lisa_vgi_kde_total) revela una geografía dual dentro de la comuna y dentro del propio Barrio Brasil. A escala comunal, las manzanas Alto-Alto (amarillo) configuran un macizo compacto en el centro-norte y pericentro poniente (Brasil, Santa Ana, Yungay, Parque Almagro, Ejército, Barrio Universitario y Panamá), mientras que los clusters Bajo-Bajo (azul) rodean la comuna por sus bordes norponiente (Balmaceda y norte de Yungay), oriente (Santa Isabel, Diez de Julio y San Borja) y todo el tercio sur (San Eugenio, San Vicente, Franklin, Bogotá, Sierra Bella, Matta Sur, Matta Norte y Viel).',
               'Al observar el panel derecho (Entorno Barrio Brasil), el mapa expone una reveladora diferenciación interna: la mitad sur y suroriente del barrio —entre Compañía, Av. Brasil, Cienfuegos, Almirante Barroso y la Alameda— forma un bloque continuo Alto-Alto acompañado de manzanas Bajo-Alto (verde) en el borde inmediato del eje Alameda, mientras que el sector norponiente (hacia Av. Mapocho y San Pablo) cae abruptamente en un cluster Bajo-Bajo, separado por una franja de manzanas Alto-Bajo (cian) que actúan como bisagra territorial.'
             ],
@@ -708,7 +707,7 @@ const ModuloIndicadoresAnalisis = (() => {
               {
                 src: 'img/cartografias/cluster_lisa_vgi_kde_total.jpg',
                 titulo: 'Cluster LISA KDE Total VGI (Comuna de Santiago y Entorno Barrio Brasil)',
-                subtitulo: '140 mz Alto-Alto · 615 mz Bajo-Bajo · 956 mz No Significativas',
+                subtitulo: '140 manzanas censales Alto-Alto · 615 manzanas Bajo-Bajo · 956 manzanas No Significativas',
                 lectura: 'Demuestra que el 45% de todas las manzanas Hotspot (Alto-Alto) de la comuna se concentra en la mitad sur y central de Barrio Brasil, mientras el sector norte hacia Mapocho y el sur comunal operan como Coldspots (Bajo-Bajo).'
               }
             ]
@@ -812,9 +811,9 @@ const ModuloIndicadoresAnalisis = (() => {
           }
         ],
         tablaIndicadores: [
-          { variable: 'Manzanas en Cluster Alto-Alto (Hotspot)', valor: '140 manzanas (8,2%)', referencial: 'Barrio Brasil concentra 63 mz (45%)', fuente: 'LISA Total VGI (1.711 mz)' },
-          { variable: 'Manzanas en Cluster Bajo-Bajo (Coldspot)', valor: '615 manzanas (35,9%)', referencial: 'Sierra Bella (90) y Bogotá (87)', fuente: 'LISA Total VGI (1.711 mz)' },
-          { variable: 'Manzanas No Significativas (p > 0,05)', valor: '956 manzanas (55,9%)', referencial: 'Tejido intermedio comunal', fuente: 'LISA Total VGI (1.711 mz)' },
+          { variable: 'Manzanas en Cluster Alto-Alto (Hotspot)', valor: '140 manzanas (8,2%)', referencial: 'Barrio Brasil concentra 63 manzanas (45%)', fuente: 'LISA Total VGI (1.711 manzanas censales)' },
+          { variable: 'Manzanas en Cluster Bajo-Bajo (Coldspot)', valor: '615 manzanas (35,9%)', referencial: 'Sierra Bella (90 manzanas) y Bogotá (87 manzanas)', fuente: 'LISA Total VGI (1.711 manzanas censales)' },
+          { variable: 'Manzanas No Significativas (p > 0,05)', valor: '956 manzanas (55,9%)', referencial: 'Tejido intermedio comunal', fuente: 'LISA Total VGI (1.711 manzanas censales)' },
           { variable: 'Principales Focos de Outliers (HL / LH)', valor: 'Bordes Alameda y San Pablo', referencial: 'Fronteras de transición espacial', fuente: 'Cartografías LISA por Categoría' }
         ],
         conclusion: 'La estadística local LISA comprueba que las brechas urbanas en Santiago no son aleatorias: existe una frontera espacial nítida que separa al pericentro histórico-universitario (cluster Alto-Alto en Brasil, Santa Ana, Yungay, Parque Almagro, Ejército y Barrio Universitario) de un extenso arco periférico Bajo-Bajo en el sur, oriente y norponiente de la comuna (Sierra Bella, Bogotá, Matta Sur, Diez de Julio, Matta Norte y Balmaceda), mientras que al interior del propio Barrio Brasil se evidencia una marcada transición hacia su borde norte.',
@@ -847,7 +846,7 @@ const ModuloIndicadoresAnalisis = (() => {
       dimensionId: 'sociourbana',
       dimensionNombre: 'Resultados Territoriales · Demografía, Vivienda, PRC & Morfología Predial',
       titulo: 'Estructura Sociodemográfica, Habitabilidad y Morfología Urbana en Santiago: Resultados del Censo 2024, RSH y Dinámica Edificatoria',
-      bajada: 'Qué revelan las 34 cartografías sociodemográficas, habitacionales y de morfología predial de la comuna: dónde se concentran los 432.081 habitantes, la hegemonía del departamento (92,7%) y del arriendo (72,1%), las alturas autorizadas de edificación, el COS medio (0,47) en conjuntos recepcionados (CRF), la persistencia de cités en el sur y la conservación en Barrio Brasil y Yungay.',
+      bajada: 'Qué revelan las 34 cartografías sociodemográficas, habitacionales y de morfología predial de la comuna: dónde se concentran los 432.081 habitantes, la hegemonía del departamento (92,7%) y del arriendo (72,1%), las alturas autorizadas de edificación, el Coeficiente de Ocupación del Suelo (COS medio de 0,47) en conjuntos habitacionales con Certificados de Recepción Final (CRF), la persistencia de cités en el sur y la conservación en Barrio Brasil y Yungay.',
       imagen: 'img/storyboards/portada_analisis_sociourbano.svg',
       imagenDestacada: 'img/storyboards/portada_analisis_sociourbano.svg',
       piePortada: 'Ilustración de los contrastes morfológicos y demográficos de Santiago: torres hiperdensas de arriendo frente a cités, casonas patrimoniales y barrios históricos.',
@@ -857,15 +856,15 @@ const ModuloIndicadoresAnalisis = (() => {
         introduccion: `Los resultados consolidados de las 1.711 manzanas censales y los 27 barrios oficiales de la Comuna de Santiago registran una población de 432.081 habitantes (219.003 hombres y 213.078 mujeres) distribuidos en 203.830 hogares y 211.435 viviendas particulares ocupadas. El cruce de las 34 cartografías demuestra una profunda fractura socio-morfológica entre tres realidades territoriales: 1) un corredor hiperdensificado de torres en altura —encabezado por Santa Isabel (con 52.658 hab. y 650,5 hab/ha), Santa Ana (con 26.343 hab. y 618,0 hab/ha) y Parque Almagro (con 46.948 hab. y 442,3 hab/ha)— dominado por departamentos (92,7% comunal) y hogares unipersonales (40,8%); 2) barrios patrimoniales de escala media como Barrio Brasil, Yungay, Ejército y Barrio Universitario, donde el Plan Regulador Comunal (Zona B de Conservación Histórica) ha preservado la morfología de casonas y cités; y 3) sectores pericentrales del sur y poniente —como Franklin, Matta Sur, San Vicente, Bogotá y Sierra Bella— donde se concentran el arriendo informal sin contrato, el hacinamiento habitacional (hasta 17,5%) y la población en el tramo de mayor vulnerabilidad socioeconómica (0-40% RSH).`,
         datosClave: [
           { valor: '432.081', label: 'Habitantes en Manzanas', sub: '50,7% hombres (219.003) · 49,3% mujeres (213.078)' },
-          { valor: '72,1%', label: 'Hogares en Arriendo', sub: '147.044 hogares (62,6% con contrato · 9,5% sin contrato)' },
-          { valor: '92,7%', label: 'Viviendas Departamento', sub: '196.060 deptos vs. 13,0% casas y 5,9% piezas/cités' },
-          { valor: '34', label: 'Cartografías Oficiales', sub: 'Censo 2024 · RSH · PRC · Permisos DOM · CRF' }
+          { valor: '92,7%', label: 'Viviendas Departamento', sub: '196.060 deptos sobre 211.435 viv. particulares ocupadas (82,9% censo total)' },
+          { valor: '72,2%', label: 'Hogares en Arriendo', sub: '147.044 hogares (62,6% formal · 9,5% informal) sobre 203.774 hogares' },
+          { valor: '0,47 / 0,51', label: 'COS Medio / Mediana CRF', sub: '51,4% de los conjuntos supera COS 0,5 · 53,5% suelo libre medio (49,1% mediana)' }
         ],
         porcentajesClave: [
-          { label: 'Predominio del Departamento en Edificio sobre el Parque Ocupado', valor: '92,7%', porcentaje: 92.7, contexto: '196.060 departamentos frente a 27.385 casas (concentradas en San Eugenio (75,3%) y San Vicente (74,5%)).' },
-          { label: 'Hegemonía del Régimen de Tenencia en Arriendo (Formal + Informal)', valor: '72,1%', porcentaje: 72.1, contexto: 'Lideran Santa Elena (82,5%), Matta Sur (80,7%) y Franklin (80,7%), frente a 23,0% de vivienda propia.' },
-          { label: 'Proporción de Hogares Unipersonales (1 Integrante) en la Comuna', valor: '40,8%', porcentaje: 40.8, contexto: 'Alcanza máximos en Parque O’Higgins (69,2%), Santa Lucía Forestal (58,4%) y San Borja (49,1%).' },
-          { label: 'Participación de Población Inmigrante Internacional Residente', valor: '40,4%', porcentaje: 40.4, contexto: '174.413 residentes internacionales, con cimas en Meiggs (61,3%), Matta Sur (58,2%) y Franklin (57,8%).' }
+          { label: 'Predominio del Departamento sobre el Parque Particular Ocupado', valor: '92,7%', porcentaje: 92.7, contexto: '196.060 departamentos sobre 211.435 viviendas ocupadas con moradores presentes (vs. 27.385 casas y 12.499 piezas/cités).' },
+          { label: 'Hegemonía del Arriendo sobre el Total de Hogares Declarados', valor: '72,2%', porcentaje: 72.2, contexto: '147.044 hogares arrendatarios sobre 203.774 hogares declarados. Lidera Santa Elena (82,5% total: 77,1% con contrato + 5,4% sin contrato).' },
+          { label: 'Hogares Unipersonales en Barrios Residenciales Consolidados (>1.000 hab)', valor: '40,8%', porcentaje: 40.8, contexto: '83.149 hogares comunales. Lideran Santa Lucía Forestal (58,4%) y San Borja (49,1%) (Parque O’Higgins registra 69,2% sobre base atípica de 48 hab).' },
+          { label: 'Concentración Poblacional en los 3 Barrios Más Poblados', valor: '31,0%', porcentaje: 31.0, contexto: 'Santa Isabel (52.658 hab), Parque Almagro (43.681 hab) y Yungay (37.498 hab) concentran el 30,97% de los 432.081 habitantes comunales.' }
         ],
         graficoComparativo: {
           titulo: 'Contrastes Territoriales entre Barrios Extremos de Santiago según Indicadores Censales',
@@ -921,7 +920,7 @@ const ModuloIndicadoresAnalisis = (() => {
             titulo: '1. Hiperdensificación vertical y distribución por sexo: el corredor oriente-central frente a la escala humana de Barrio Brasil',
             parrafos: [
               'Las cartografías de densidad poblacional del Censo 2024 revelan una concentración demográfica extraordinariamente asimétrica entre los 27 barrios de la comuna. De los 432.081 habitantes registrados en las manzanas comunales, solo tres barrios —Santa Isabel (con 52.658 hab.), Parque Almagro (con 46.948 hab.) y Yungay (con 34.220 hab.)— concentran el 31,0% de toda la población de Santiago, seguidos por Matta Norte (con 27.904 hab.), Santa Ana (con 26.343 hab.) y Centro Histórico (con 22.711 hab.). En términos de densidad neta, Santa Isabel alcanza 650,5 hab/ha y Santa Ana 618,0 hab/ha, formando una muralla azul oscura de manzanas en el cuartil superior (31,31% a 84,48% del máximo comunal) a lo largo de los ejes Santa Isabel, Lira, Carmen, San Martín y San Pablo oriente.',
-              'En marcado contraste, el recuadro de Barrio Brasil (con 13.783 hab. en 63 manzanas) en las láminas de densidad total, densidad de hombres (media comunal 50,7%, máximo de 5.211,7 hab/ha) y densidad de mujeres (media comunal 49,3%, máximo de 5.008,2 hab/ha) muestra un predominio de tonos amarillos y verdes (cuartiles bajos y medios), con densidades concentradas únicamente en las manzanas de borde sobre Av. San Pablo, Rosas y Alameda. Asimismo, el Índice de Masculinidad (media comunal de 102,8 hombres por cada 100 mujeres) exhibe una mayor presencia relativa masculina en enclaves comerciales e industriales del poniente y sur (Meiggs, San Vicente, Barrio Judicial y Franklin), mientras que los barrios residenciales consolidados del oriente y las manzanas interiores de Barrio Brasil mantienen una proporción equilibrada o mayoritariamente femenina.'
+              'En marcado contraste, los barrios patrimoniales tradicionales y universitarios —como Yungay (con densidad neta de 141,4 hab/ha), Barrio Brasil (219,8 hab/ha en 63 manzanas) y Ejército (261,4 hab/ha)— conservan densidades intermedias reguladas por Zonas Típicas, Inmuebles de Conservación Histórica y menores factores de ocupación. En particular, Yungay presenta una densidad residencial neta más baja (141,4 hab/ha) producto de su extensa trama de galpones, talleres y manzanas tradicionales de escala horizontal. Asimismo, el Índice de Masculinidad (media comunal de 102,8 hombres por cada 100 mujeres) exhibe una mayor presencia relativa masculina en enclaves comerciales e industriales del poniente y sur (Meiggs, San Vicente, Barrio Judicial y Franklin), mientras que los barrios residenciales consolidados del oriente y las manzanas interiores de Barrio Brasil mantienen una proporción equilibrada o mayoritariamente femenina.'
             ],
             graficoInline: {
               titulo: 'Barrios con Mayor Población Total y Densidad Neta en la Comuna de Santiago (Censo 2024)',
@@ -1261,10 +1260,10 @@ const ModuloIndicadoresAnalisis = (() => {
       contenido: {
         introduccion: `La evaluación espacial de las 24 cartografías socioambientales, de movilidad y de gestión de residuos revela cómo funciona el metabolismo cotidiano en los 27 barrios oficiales de la Comuna de Santiago. Por una parte, los datos censales de transporte confirman que el 84,6% de los 228.482 desplazamientos laborales y de estudio se realiza en modos sustentables (62,4% en transporte público, 17,0% a pie y 5,2% en bicicleta), frente a solo un 15,4% en modos motorizados privados (13,2% en automóvil y 2,2% en motocicleta). Sin embargo, esta alta caminabilidad convive con severas desigualdades ambientales: mientras barrios como Parque Almagro (con 1.092 árboles en un radio de 500 m), Ejército, Barrio Brasil y Santa Lucía Forestal gozan de acceso inmediato a áreas verdes y salud, sectores del surponiente y sur como San Vicente (795,7 m a espacio público), Sierra Bella (837,0 m a salud) y Barrio Judicial (965,8 m a salud) sufren déficits de proximidad, altos niveles de ruido vial (>68,6 dBA) y marcadas asimetrías en la dotación municipal de los 629 contenedores y 398 papeleros distribuidos en las 5 macro-zonas de aseo comunal.`,
         datosClave: [
-          { valor: '84,6%', label: 'Movilidad Sustentable', sub: '62,4% TP · 17,0% Caminata · 5,2% Bicicleta' },
-          { valor: '285,0', label: 'Árboles en Buffer 500m', sub: 'Media comunal (Máx: Parque Almagro con 1.092)' },
-          { valor: '62,7 dBA', label: 'Ruido Promedio Comunal', sub: 'Cimas de 69,4 dBA en bordes de autopistas y ejes' },
-          { valor: '285.860 L', label: 'Capacidad Red de Aseo', sub: '629 contenedores y 398 papeleros en 5 macro-zonas' }
+          { valor: '84,6%', label: 'Movilidad Sustentable', sub: '62,4% TP · 17,0% Caminata · 5,2% Bici (sobre 228.482 viajes clasificados)' },
+          { valor: '60,1 m (20,0 m)', label: 'Distancia a Espacio Público', sub: 'Media 60,1 m · Mediana comunal 20,0 m · Santa Lucía 8,0 m' },
+          { valor: '8,8 m (0,0 m)', label: 'Distancia a Servicios/Comercio', sub: 'Mediana 0,0 m: contigüidad inmediata en más del 76% de manzanas' },
+          { valor: '62,7 dBA', label: 'Ruido Promedio Comunal', sub: '28,4% de población sobre 65 dBA · Cimas de 69,4 dBA en autopistas' }
         ],
         porcentajesClave: [
           { label: 'Desplazamientos Realizados en Transporte Público (Metro y Buses Red)', valor: '62,4%', porcentaje: 62.4, contexto: '142.548 viajes diarios; alcanza máximos en Santa Elena (73,7%), Diez de Julio (69,8%) y Viel (69,2%).' },
@@ -1382,7 +1381,7 @@ const ModuloIndicadoresAnalisis = (() => {
           {
             titulo: '2. Justicia espacial y proximidad peatonal: distancias reales a áreas verdes, biodiversidad, salud y comercio',
             parrafos: [
-              'Las cinco cartografías de distancia euclidiana mínima desde cada manzana hacia los equipamientos revelan dónde se cumplen o vulneran los umbrales de la "ciudad de 15 minutos". En Distancia a Espacios Públicos VGI (media comunal de 176,8 m y mediana de 127,8 m) y Distancia a Áreas Verdes Totales, los barrios mejor servidos son Santa Lucía Forestal (41,1 m en promedio), Parque Almagro (45,1 m) y el corazón de Barrio Brasil en torno a Plaza Brasil; en cambio, barrios del borde surponiente como San Vicente (media de 795,7 m) y Meiggs (369,5 m) presentan las mayores distancias peatonales hacia una plaza o parque.',
+              'Las cartografías de distancia euclidiana mínima desde cada manzana hacia los equipamientos revelan el cumplimiento real de los umbrales de proximidad peatonal: la Distancia a Espacios Públicos VGI presenta una media comunal de 60,1 m (con una mediana de 20,0 m), destacando Santa Lucía Forestal (8,0 m), Parque O’Higgins (11,7 m), Ejército (13,9 m), Parque Almagro (15,2 m) y Barrio Brasil (23,4 m en el entorno de Plaza Brasil); en contraste, barrios como Bogotá (media de 157,0 m), Santa Elena (153,5 m), Sierra Bella (123,1 m) y San Vicente (91,6 m) presentan las mayores distancias hacia un espacio público recreativo. Asimismo, la Distancia a Áreas Verdes consolidadas (dist_area_verde_m) promedia 44,0 m a nivel comunal (con una mediana de 14,1 m), revelando desiertos vegetales críticos en el cuadrante suroriente: Bogotá (107,5 m), Sierra Bella (99,7 m) y Santa Elena (89,9 m).',
               'Un patrón similar se observa en la Distancia a Biodiversidad Urbana (media comunal de 114,7 m, mediana de 45,3 m): mientras en Parque Almagro (4,3 m), Parque O’Higgins (10,1 m) y Barrio Brasil la vegetación arbórea es contigua a las manzanas (tonos amarillos de <50 m), en San Vicente (466,3 m), Meiggs (367,6 m) y sectores de Franklin y Santa Isabel se forman islas carentes de arbolado cercano. Respecto a la Distancia a Establecimientos de Salud (media comunal de 395,8 m), los barrios San Borja (70,1 m) y Santa Lucía Forestal (119,8 m) gozan de acceso inmediato a hospitales y clínicas, mientras Barrio Judicial (965,8 m), Sierra Bella (837,0 m) y el extremo norponiente de Yungay/Brasil superan los 500 m de caminata. Por el contrario, la Distancia a Servicios y Comercio VGI promedia apenas 19,4 m en la comuna (mediana de 0,6 m), confirmando la ubicuidad del comercio de proximidad salvo en manzanas interiores de Franklin (47,9 m) y Sierra Bella (42,3 m).'
             ],
             graficoInline: {
@@ -1405,13 +1404,13 @@ const ModuloIndicadoresAnalisis = (() => {
               {
                 src: 'img/cartografias/distancia_a_espacios_publicos_vgi.jpg',
                 titulo: 'Distancia a Espacios Públicos Recreativos VGI (metros)',
-                subtitulo: 'Media comunal: 176,8 m · Máximo en San Vicente (795,7 m) y Meiggs (369,5 m)',
+                subtitulo: 'Media comunal: 60,1 m (mediana 20,0 m) · Mínimo en Santa Lucía (8,0 m) y máximo en Bogotá (157,0 m)',
                 lectura: 'En Barrio Brasil las manzanas centrales están a menos de 80 m de Plaza Brasil, pero la distancia aumenta hacia los bordes de Av. Mapocho y Ricardo Cumming.'
               },
               {
                 src: 'img/cartografias/distancia_a_biodiversidad_total.jpg',
                 titulo: 'Distancia a Registros de Biodiversidad y Arbolado Urbano (metros)',
-                subtitulo: 'Media comunal: 114,7 m (mediana 45,3 m) · Mínimo en Parque Almagro (4,3 m)',
+                subtitulo: 'Media comunal: 79,7 m (mediana 19,2 m) · Proximidad peatonal inmediata en Barrio Brasil (18,2 m)',
                 lectura: 'Confirma la alta cobertura ecológica de Barrio Brasil y el centro histórico, revelando en azul oscuro los vacíos de biodiversidad del cuadrante surponiente y oriente.'
               },
               {
@@ -1423,7 +1422,7 @@ const ModuloIndicadoresAnalisis = (() => {
               {
                 src: 'img/cartografias/distancia_a_servicios_vgi_m.jpg',
                 titulo: 'Distancia a Servicios y Comercio Barrial VGI (metros)',
-                subtitulo: 'Media comunal: 19,4 m (mediana 0,6 m) · Alta capilaridad de almacenes y locales',
+                subtitulo: 'Media comunal: 8,8 m (mediana 0,0 m) · Contigüidad inmediata en más del 76% de las manzanas',
                 lectura: 'Demuestra que casi todas las manzanas de Barrio Brasil y del centro cuentan con comercio a menos de 20 metros, salvo paños industriales o residenciales cerrados en el sur.'
               }
             ]
@@ -1541,7 +1540,7 @@ const ModuloIndicadoresAnalisis = (() => {
           { variable: 'Ruido Ambiental Ponderado Comunal', valor: '62,7 dBA (media comunal)', referencial: 'Rango: 44,5 a 77,5 dBA', fuente: 'Mapa Acústico MuniSTGO' },
           { variable: 'Infraestructura Municipal de Aseo', valor: '629 Contenedores · 398 Papeleros', referencial: '285.860 Litros en 5 Macro-Zonas', fuente: 'Catastro Aseo MuniSTGO 2026' }
         ],
-        conclusion: 'El cruce de los resultados socioambientales en los 27 barrios oficiales demuestra que la altísima sostenibilidad modal de Santiago (84,6% de viajes sin automóvil) requiere ser respaldada por una redistribución urgente de su infraestructura ambiental y operativa: resulta prioritario incrementar la dotación de arbolado y plazas en el borde surponiente y sur (San Vicente, Meiggs, Franklin y Sierra Bella), mitigar la exposición acústica (>68,6 dBA) en los bordes de la Autopista Central (Parque O’Higgins y Barrio Judicial) y Alameda, y corregir el déficit de papeleros peatonales en Barrio Brasil y la Zona Centro Poniente junto con la baja capacidad de contenedores en el corredor hiperdenso de Santa Isabel y la Zona Centro Oriente.',
+        conclusion: 'El mapeo colaborativo en Santiago se concentra en un núcleo centro-poniente de actividad terciaria, patrimonial y universitaria (Barrio Brasil, Santa Ana, Parque Almagro, Ejército y Barrio Universitario). Su cobertura no sigue mecánicamente la intensidad residencial: la asociación entre densidad poblacional y densidad VGI por manzana es débil e inversa (Spearman ρ = -0,153, p < 0,001), más de un tercio de la población comunal (34,2%, correspondiente a 147.717 habitantes) reside en coldspots Bajo-Bajo (LL) y entre 71 y 104 manzanas combinan desierto de información colaborativa con altos índices de hacinamiento, arriendo desregulado, migración o déficit habitacional. El Atlas VGI debe leerse, por tanto, como un mapa de cobertura de la información comunitaria además de un mapa del territorio físico, orientando las futuras campañas de mapeo y la inversión pública hacia las áreas de mayor vulnerabilidad objetiva.',
         analisisPorActor: [
           { id: 'institucion', icono: '🏛️', nombre: 'Institución / Autoridad Pública', subtitulo: 'Dirección de Aseo y Ornato · Dirección de Tránsito · Ministerio del Medio Ambiente', utilidad: 'Entrega evidencia exacta para instalar nuevos papeleros peatonales en la Zona Centro Poniente (Barrio Brasil, que hoy tiene solo 24 unidades frente a 261 contenedores) y reforzar contenedores en la Zona Centro Oriente (Santa Isabel).' },
           { id: 'comunidad', icono: '🏘️', nombre: 'Comunidad / Vecinal', subtitulo: 'Comités Ambientales · Juntas de Vecinos · Colectivos Ciclistas', utilidad: 'Fundamenta la exigencia de pantallas acústicas y calmado de tráfico en el eje Manuel Rodríguez (Autopista Central) y Alameda, donde el ruido supera los 68,6 dBA.' },
