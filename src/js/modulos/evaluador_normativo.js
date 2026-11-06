@@ -139,8 +139,8 @@ const ModuloEvaluadorNormativo = (() => {
     'censo2024_manzanas': { nombre: 'Censo 2024 — Manzanas Censales Oficiales', inst: 'Instituto Nacional de Estadísticas (INE)' },
     'ine_permisos_edificacion_santiago': { nombre: 'INE — Permisos de Edificación Georreferenciados (2010–2025)', inst: 'INE / DOM Santiago' },
     'ine_crf_conjuntos_santiago': { nombre: 'INE — Certificados de Recepción Final (CRF) Conjuntos Habitacionales', inst: 'INE / DOM Santiago' },
-    'ide_subdere_dpa_comunas': { nombre: 'División Político Administrativa Comunal (DPA)', inst: 'SUBDERE' },
-    'capa_bbdd_43': { nombre: 'División Político Administrativa Comunal (DPA)', inst: 'SUBDERE' },
+    'capa_bbdd_43': { nombre: 'División Política Administrativa 2023', inst: 'SUBDERE / IDE Chile' },
+    'bbdd_43': { nombre: 'División Política Administrativa 2023', inst: 'SUBDERE / IDE Chile' },
     'bbdd_66': { nombre: 'Unidades Vecinales Oficiales (RSH)', inst: 'Ministerio de Desarrollo Social y Familia' },
     'ide_minvu_unidades_vecinales_rsh': { nombre: 'Unidades Vecinales Oficiales (RSH)', inst: 'Ministerio de Desarrollo Social y Familia' },
     'minvu_ipt_areas_riesgo': { nombre: 'Áreas de Riesgo Normativas (Art. 2.1.17 OGUC)', inst: 'MINVU / DDU' },
@@ -233,14 +233,14 @@ const ModuloEvaluadorNormativo = (() => {
     }
 
     // 1. DPA Comunas
-    const capaDPA = capas['ide_subdere_dpa_comunas'] || capas['capa_bbdd_43'];
+    const capaDPA = capas['capa_bbdd_43'] || capas['bbdd_43'];
     if (capaDPA && capaDPA.features) {
       for (let f of capaDPA.features) {
         if (puntoEnGeometria(lng, lat, f.geometry)) {
           const props = f.properties || {};
           const nomCom = props.COMUNA || props.NOM_COMUNA || props.NOM_COM || props.CUT_COM;
           if (nomCom) res.comunaEspecifica = nomCom;
-          registrarCapaIntersecada('ide_subdere_dpa_comunas');
+          registrarCapaIntersecada('capa_bbdd_43');
           break;
         }
       }

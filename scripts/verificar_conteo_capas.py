@@ -29,14 +29,14 @@ def contar_capas():
     print("==================================================")
     print("AUDITORÍA DE CONTEO DE CAPAS — ATLAS VGI UAH")
     print("==================================================")
-    print(f"Capas Oficiales del Estado (IDE Chile/BBDD): {total_oficiales} (Meta: 123)")
+    print(f"Capas Oficiales del Estado (IDE Chile/BBDD): {total_oficiales} (Meta: 122)")
     print(f"Macro-categorías Comunitarias VGI (OSM/GBIF): {total_vgi} (Meta: 10)")
-    print(f"Total Capas Cartográficas en el Atlas:       {total_cartografia} (Meta: 133)")
+    print(f"Total Capas Cartográficas en el Atlas:       {total_cartografia} (Meta: 132)")
     print("==================================================")
     
-    assert total_oficiales == 123, f"Error: Se esperaban 123 capas oficiales, pero hay {total_oficiales}"
-    assert total_cartografia == 133, f"Error: Se esperaban 133 capas totales, pero hay {total_cartografia}"
-    print("✅ Verificación exitosa: 123 oficiales + 10 VGI = 133 capas cartográficas.")
+    assert total_oficiales == 122, f"Error: Se esperaban 122 capas oficiales, pero hay {total_oficiales}"
+    assert total_cartografia == 132, f"Error: Se esperaban 132 capas totales, pero hay {total_cartografia}"
+    print("✅ Verificación exitosa: 122 oficiales + 10 VGI = 132 capas cartográficas.")
 
 if __name__ == '__main__':
     contar_capas()

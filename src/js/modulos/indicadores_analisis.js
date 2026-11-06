@@ -53,7 +53,6 @@ const ModuloIndicadoresAnalisis = (() => {
   "minvu_ipt_limite_urbano": "Límite Urbano Oficial PRC (MINVU)",
   "ide_minvu_campamentos": "Catastro Campamentos 2024 (MINVU)",
   "ide_minvu_ipt_prms_riesgo": "PRMS: Riesgos Metropolitanos (Inundación / Remoción)",
-  "ide_subdere_dpa_comunas": "División Político-Administrativa (SUBDERE / IGM)",
   "bbdd_01": "Proyectos Mandatados - GEOMOP",
   "bbdd_02": "Red Vial Nacional - GEOMOP",
   "bbdd_03": "Red Hidrométrica - GEOMOP",
@@ -200,8 +199,7 @@ const ModuloIndicadoresAnalisis = (() => {
         'bbdd_70', // Mujeres en RSH adscritas a Fonasa o Isapre
         'bbdd_71', // Jóvenes en RSH adscritos a Fonasa o Isapre
         'bbdd_72', // Hombres en RSH adscritos a Fonasa o Isapre
-        'bbdd_73', // Personas mayores en RSH adscritos a Fonasa o Isapre
-        'ide_subdere_dpa_comunas'
+        'bbdd_73'  // Personas mayores en RSH adscritos a Fonasa o Isapre
       ]
     },
     {

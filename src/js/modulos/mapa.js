@@ -125,6 +125,7 @@ const ModuloMapa = (() => {
     }
 
     configurarEventosDibujoBbox();
+    inicializarControlSimbologia();
   }
 
   function actualizarRectanguloBbox(bbox) {
@@ -260,13 +261,45 @@ const ModuloMapa = (() => {
     }
   }
 
-  // Paleta cartográfica armónica y contrastada para simbología temática categorizada / graduada
-  const PALETA_CATEGORIZADA = [
-    '#2563eb', '#d97706', '#059669', '#dc2626', '#7c3aed',
-    '#0891b2', '#ea580c', '#4f46e5', '#16a34a', '#db2777',
-    '#ca8a04', '#0284c7', '#9333ea', '#e11d48', '#0d9488',
-    '#65a30d', '#f97316', '#6366f1', '#14b8a6', '#84cc16'
-  ];
+  // =========================================================================
+  // MOTOR DE SIMBOLOGÍA TEMÁTICA DINÁMICA CONFIGURABLE
+  // =========================================================================
+
+  const RAMPAS_CUANTITATIVAS = {
+    ylorrd: ['#ffffb2', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026'],
+    viridis: ['#440154', '#414487', '#2a788e', '#22a884', '#7ad151', '#bddf26', '#fde725'],
+    blues: ['#eff3ff', '#c6dbef', '#9ecae1', '#6baed6', '#4292c6', '#2171b5', '#084594'],
+    greens: ['#edf8e9', '#c7e9c0', '#a1d99b', '#74c476', '#41ab5d', '#238b45', '#005a32'],
+    magma: ['#000004', '#3b0f70', '#8c2981', '#de4968', '#fe9f6d', '#fec488', '#fcfdbf'],
+    purples: ['#fcfbfd', '#efedf5', '#dadaeb', '#bcbddc', '#9e9ac8', '#756bb1', '#54278f'],
+    oranges: ['#fff5eb', '#fee6ce', '#fdd0a2', '#fdae6b', '#fd8d3c', '#f16913', '#d94801']
+  };
+
+  const PALETAS_CATEGORICAS = {
+    armonica: [
+      '#2563eb', '#d97706', '#059669', '#dc2626', '#7c3aed',
+      '#0891b2', '#ea580c', '#4f46e5', '#16a34a', '#db2777',
+      '#ca8a04', '#0284c7', '#9333ea', '#e11d48', '#0d9488',
+      '#65a30d', '#f97316', '#6366f1', '#14b8a6', '#84cc16'
+    ],
+    vibrante: [
+      '#e11d48', '#2563eb', '#f59e0b', '#10b981', '#8b5cf6',
+      '#ec4899', '#06b6d4', '#f97316', '#84cc16', '#6366f1'
+    ],
+    pastel: [
+      '#93c5fd', '#fca5a5', '#86efac', '#fde047', '#c4b5fd',
+      '#fdba74', '#6ee7b7', '#f9a8d4', '#a5f3fc', '#d8b4fe'
+    ],
+    tierra: [
+      '#8b5a2b', '#556b2f', '#a0522d', '#cd853f', '#2e8b57',
+      '#8fbc8f', '#b8860b', '#bc8f8f', '#696969', '#4682b4'
+    ]
+  };
+
+  const PALETA_CATEGORIZADA = PALETAS_CATEGORICAS.armonica;
+
+  let registroCapasTematicas = {}; // idCapa -> { idCapa, geojson, opciones, capaLeaflet, cols, config, clasificacion }
+  let capaActivaSimbologiaId = null;
 
   function hashCadena(str) {
     if (!str) return 0;
@@ -279,13 +312,462 @@ const ModuloMapa = (() => {
     return Math.abs(hash);
   }
 
-  function obtenerColorDePaleta(clave) {
-    const idx = hashCadena(clave) % PALETA_CATEGORIZADA.length;
-    return PALETA_CATEGORIZADA[idx];
+  function obtenerColorDePaleta(clave, paletaKey = 'armonica') {
+    const paleta = PALETAS_CATEGORICAS[paletaKey] || PALETAS_CATEGORICAS.armonica;
+    const idx = hashCadena(clave) % paleta.length;
+    return paleta[idx];
+  }
+
+  function interpolarRampa(rampaKey, k) {
+    const base = RAMPAS_CUANTITATIVAS[rampaKey] || RAMPAS_CUANTITATIVAS.ylorrd;
+    const n = Math.max(2, Math.min(k, 10));
+    const colores = [];
+    for (let i = 0; i < n; i++) {
+      const idx = Math.round(i * (base.length - 1) / (n - 1 || 1));
+      colores.push(base[idx]);
+    }
+    return colores;
+  }
+
+  function formatearNumeroLegible(num) {
+    if (num === null || num === undefined || isNaN(num)) return '-';
+    const n = Number(num);
+    if (Math.abs(n) >= 1000000) {
+      return (n / 1000000).toLocaleString('es-CL', { maximumFractionDigits: 1 }) + 'M';
+    }
+    if (Math.abs(n) >= 1000) {
+      return n.toLocaleString('es-CL', { maximumFractionDigits: 0 });
+    }
+    if (Number.isInteger(n)) {
+      return n.toString();
+    }
+    return n.toLocaleString('es-CL', { maximumFractionDigits: 2 });
+  }
+
+  // --- Algoritmos Estadísticos de Clasificación Cuantitativa ---
+
+  function calcularPrettyBreaks(valores, n = 4) {
+    if (!valores || valores.length === 0) return [0, 1];
+    const min = Math.min(...valores);
+    const max = Math.max(...valores);
+    if (min === max) return [min, max + 1];
+
+    const rawRange = max - min;
+    const rawInterval = rawRange / n;
+    const base = Math.pow(10, Math.floor(Math.log10(rawInterval || 1)));
+    const normalized = rawInterval / (base || 1);
+
+    let prettyInterval;
+    if (normalized < 1.5) prettyInterval = 1 * base;
+    else if (normalized < 3) prettyInterval = 2 * base;
+    else if (normalized < 7) prettyInterval = 5 * base;
+    else prettyInterval = 10 * base;
+
+    const start = Math.floor(min / prettyInterval) * prettyInterval;
+    const end = Math.ceil(max / prettyInterval) * prettyInterval;
+
+    const breaks = [];
+    for (let v = start; v <= end + (prettyInterval * 0.5); v += prettyInterval) {
+      breaks.push(Math.round(v * 100) / 100);
+    }
+    const unicos = Array.from(new Set(breaks)).sort((a, b) => a - b);
+    return unicos.length >= 2 ? unicos : [min, max];
+  }
+
+  function calcularCuantiles(valores, k = 4) {
+    if (!valores || valores.length === 0) return [0, 1];
+    const sorted = [...valores].sort((a, b) => a - b);
+    const min = sorted[0];
+    const max = sorted[sorted.length - 1];
+    if (min === max) return [min, max + 1];
+
+    const breaks = [min];
+    for (let i = 1; i < k; i++) {
+      const pos = (sorted.length - 1) * (i / k);
+      const base = Math.floor(pos);
+      const rest = pos - base;
+      const val = sorted[base + 1] !== undefined
+        ? sorted[base] + rest * (sorted[base + 1] - sorted[base])
+        : sorted[base];
+      breaks.push(Math.round(val * 100) / 100);
+    }
+    breaks.push(max);
+    const unicos = Array.from(new Set(breaks)).sort((a, b) => a - b);
+    return unicos.length >= 2 ? unicos : [min, max];
+  }
+
+  function calcularIntervalosIguales(valores, k = 4) {
+    if (!valores || valores.length === 0) return [0, 1];
+    const min = Math.min(...valores);
+    const max = Math.max(...valores);
+    if (min === max) return [min, max + 1];
+    const step = (max - min) / k;
+    const breaks = [];
+    for (let i = 0; i <= k; i++) {
+      breaks.push(Math.round((min + i * step) * 100) / 100);
+    }
+    const unicos = Array.from(new Set(breaks)).sort((a, b) => a - b);
+    return unicos.length >= 2 ? unicos : [min, max];
+  }
+
+  function calcularDesviacionEstandar(valores) {
+    if (!valores || valores.length === 0) return [0, 1];
+    const n = valores.length;
+    const min = Math.min(...valores);
+    const max = Math.max(...valores);
+    if (min === max) return [min, max + 1];
+
+    const media = valores.reduce((a, b) => a + b, 0) / n;
+    const varianza = valores.reduce((acc, v) => acc + Math.pow(v - media, 2), 0) / n;
+    const std = Math.sqrt(varianza) || 1;
+
+    const b1 = Math.max(min, Math.round((media - std) * 100) / 100);
+    const b2 = Math.round(media * 100) / 100;
+    const b3 = Math.min(max, Math.round((media + std) * 100) / 100);
+    const breaks = [min, b1, b2, b3, max];
+    const unicos = Array.from(new Set(breaks)).sort((a, b) => a - b);
+    return unicos.length >= 2 ? unicos : [min, max];
+  }
+
+  function calcularJenks(valores, nClasses = 4) {
+    if (!valores || valores.length === 0) return [0, 1];
+    const data = [...valores].sort((a, b) => a - b);
+    const numData = data.length;
+    if (numData <= nClasses) {
+      const u = Array.from(new Set(data)).sort((a, b) => a - b);
+      return u.length >= 2 ? u : [data[0], data[0] + 1];
+    }
+    const min = data[0];
+    const max = data[numData - 1];
+    if (min === max) return [min, max + 1];
+
+    const mat1 = Array.from({ length: numData + 1 }, () => new Array(nClasses + 1).fill(0));
+    const mat2 = Array.from({ length: numData + 1 }, () => new Array(nClasses + 1).fill(0));
+
+    for (let y = 1; y <= nClasses; y++) {
+      mat1[1][y] = 1;
+      mat2[1][y] = 0;
+      for (let t = 2; t <= numData; t++) {
+        mat2[t][y] = Infinity;
+      }
+    }
+
+    let v = 0;
+    for (let l = 2; l <= numData; l++) {
+      let s1 = 0;
+      let s2 = 0;
+      let w = 0;
+      for (let m = 1; m <= l; m++) {
+        const i3 = l - m + 1;
+        const val = data[i3 - 1];
+        s2 += val * val;
+        s1 += val;
+        w++;
+        v = s2 - (s1 * s1) / w;
+        const i4 = i3 - 1;
+        if (i4 !== 0) {
+          for (let j = 2; j <= nClasses; j++) {
+            if (mat2[l][j] >= v + mat2[i4][j - 1]) {
+              mat1[l][j] = i3;
+              mat2[l][j] = v + mat2[i4][j - 1];
+            }
+          }
+        }
+      }
+      mat1[l][1] = 1;
+      mat2[l][1] = v;
+    }
+
+    let k = numData;
+    const kclass = new Array(nClasses + 1);
+    kclass[nClasses] = data[numData - 1];
+    kclass[0] = data[0];
+
+    for (let count = nClasses; count >= 2; count--) {
+      const id = mat1[k][count] - 2;
+      kclass[count - 1] = data[id];
+      k = mat1[k][count] - 1;
+    }
+    const unicos = Array.from(new Set(kclass)).sort((a, b) => a - b);
+    return unicos.length >= 2 ? unicos : [min, max];
+  }
+
+  function inspeccionarColumnasGeoJSON(geojson) {
+    if (!geojson || !geojson.features || geojson.features.length === 0) {
+      return { numericas: [], categoricas: [], todas: [] };
+    }
+    const numericCounts = {};
+    const totalCounts = {};
+    const samples = geojson.features.slice(0, 100);
+
+    samples.forEach(f => {
+      const props = f.properties || {};
+      Object.entries(props).forEach(([k, v]) => {
+        if (k.startsWith('_atlas') || k === 'meta_capa_id' || k === 'meta_cita_apa' || k === 'meta_contacto' || k === 'meta_url_servicio') return;
+        totalCounts[k] = (totalCounts[k] || 0) + 1;
+        if (typeof v === 'number' && !isNaN(v)) {
+          numericCounts[k] = (numericCounts[k] || 0) + 1;
+        } else if (typeof v === 'string') {
+          const trimmed = v.trim();
+          const parsed = Number(trimmed.replace(',', '.'));
+          if (!isNaN(parsed) && trimmed.length > 0 && !k.toLowerCase().includes('fecha') && !k.toLowerCase().includes('cut') && !k.toLowerCase().includes('codigo') && !k.toLowerCase().includes('id')) {
+            numericCounts[k] = (numericCounts[k] || 0) + 1;
+          }
+        }
+      });
+    });
+
+    const numericas = [];
+    const categoricas = [];
+    const todas = Object.keys(totalCounts).sort();
+
+    todas.forEach(k => {
+      const numRatio = (numericCounts[k] || 0) / (totalCounts[k] || 1);
+      if (numRatio >= 0.5) {
+        numericas.push(k);
+      } else {
+        categoricas.push(k);
+      }
+    });
+
+    return { numericas, categoricas, todas };
+  }
+
+  function calcularClasificacionCapa(reg) {
+    if (!reg || !reg.geojson || !reg.geojson.features) return null;
+    const cfg = reg.config || {};
+    const features = reg.geojson.features;
+
+    if (cfg.modo === 'plano') {
+      const colorPlano = reg.opciones?.color || COLORES_CATEGORIA[reg.idCapa] || '#35586B';
+      return {
+        modo: 'plano',
+        colorPlano,
+        totalValidos: features.length,
+        itemsLeyenda: [
+          { color: colorPlano, label: 'Entidades (Color Plano)', conteo: features.length }
+        ]
+      };
+    }
+
+    if (cfg.modo === 'automatico') {
+      return {
+        modo: 'automatico',
+        totalValidos: features.length,
+        itemsLeyenda: [
+          { color: '#38bdf8', label: 'Detección Inteligente por Atributos', conteo: features.length }
+        ]
+      };
+    }
+
+    if (cfg.modo === 'categorizado') {
+      const col = cfg.columna || 'subtipo';
+      const conteos = {};
+      let validos = 0;
+
+      features.forEach(f => {
+        const props = f.properties || {};
+        let val = props[col];
+        if (val === undefined || val === null || val === '') val = '(Sin dato)';
+        val = String(val).trim();
+        conteos[val] = (conteos[val] || 0) + 1;
+        validos++;
+      });
+
+      const categoriasOrdenadas = Object.keys(conteos).sort((a, b) => conteos[b] - conteos[a]);
+      const paleta = PALETAS_CATEGORICAS[cfg.paletaCat] || PALETAS_CATEGORICAS.armonica;
+
+      const asignacion = {};
+      const itemsLeyenda = [];
+
+      categoriasOrdenadas.forEach((cat, idx) => {
+        const color = paleta[idx % paleta.length];
+        asignacion[cat] = color;
+        if (itemsLeyenda.length < 15) {
+          itemsLeyenda.push({
+            color,
+            label: cat,
+            conteo: conteos[cat]
+          });
+        }
+      });
+
+      if (categoriasOrdenadas.length > 15) {
+        itemsLeyenda.push({
+          color: '#64748b',
+          label: `Otras (${categoriasOrdenadas.length - 15} categorías)`,
+          conteo: categoriasOrdenadas.slice(15).reduce((acc, c) => acc + conteos[c], 0)
+        });
+      }
+
+      return {
+        modo: 'categorizado',
+        columna: col,
+        asignacion,
+        totalValidos: validos,
+        itemsLeyenda
+      };
+    }
+
+    if (cfg.modo === 'graduado') {
+      const col = cfg.columna || 'superficie_m2';
+      const numClases = Number(cfg.numClases) || 4;
+      const metodo = cfg.metodoCuant || 'cuartiles';
+      const rampaKey = cfg.rampa || 'ylorrd';
+
+      const valoresValidos = [];
+      features.forEach(f => {
+        const props = f.properties || {};
+        const raw = props[col];
+        if (raw !== undefined && raw !== null && raw !== '') {
+          const num = typeof raw === 'number' ? raw : Number(String(raw).replace(',', '.'));
+          if (!isNaN(num)) valoresValidos.push(num);
+        }
+      });
+
+      if (valoresValidos.length === 0) {
+        return {
+          modo: 'graduado',
+          columna: col,
+          breaks: [0, 1],
+          colores: [RAMPAS_CUANTITATIVAS.ylorrd[0]],
+          totalValidos: 0,
+          itemsLeyenda: [{ color: '#94a3b8', label: 'Sin datos numéricos en esta columna', conteo: 0 }]
+        };
+      }
+
+      let breaks = [];
+      if (metodo === 'pretty') {
+        breaks = calcularPrettyBreaks(valoresValidos, numClases);
+      } else if (metodo === 'cuartiles') {
+        breaks = calcularCuantiles(valoresValidos, numClases);
+      } else if (metodo === 'iguales') {
+        breaks = calcularIntervalosIguales(valoresValidos, numClases);
+      } else if (metodo === 'jenks') {
+        breaks = calcularJenks(valoresValidos, numClases);
+      } else if (metodo === 'desviacion') {
+        breaks = calcularDesviacionEstandar(valoresValidos);
+      } else {
+        breaks = calcularCuantiles(valoresValidos, numClases);
+      }
+
+      const numIntervalos = Math.max(1, breaks.length - 1);
+      const colores = interpolarRampa(rampaKey, numIntervalos);
+
+      const conteosPorClase = new Array(numIntervalos).fill(0);
+      features.forEach(f => {
+        const props = f.properties || {};
+        const raw = props[col];
+        if (raw !== undefined && raw !== null && raw !== '') {
+          const v = typeof raw === 'number' ? raw : Number(String(raw).replace(',', '.'));
+          if (!isNaN(v)) {
+            let idx = 0;
+            if (v <= breaks[1]) {
+              idx = 0;
+            } else if (v >= breaks[breaks.length - 1]) {
+              idx = numIntervalos - 1;
+            } else {
+              for (let i = 1; i < breaks.length - 1; i++) {
+                if (v <= breaks[i + 1]) {
+                  idx = i;
+                  break;
+                }
+              }
+            }
+            conteosPorClase[idx]++;
+          }
+        }
+      });
+
+      const itemsLeyenda = [];
+      for (let i = 0; i < numIntervalos; i++) {
+        let label = '';
+        if (numIntervalos === 1) {
+          label = `Todo el rango (${formatearNumeroLegible(breaks[0])} – ${formatearNumeroLegible(breaks[1])})`;
+        } else if (i === 0) {
+          label = `≤ ${formatearNumeroLegible(breaks[1])}`;
+        } else if (i === numIntervalos - 1) {
+          label = `> ${formatearNumeroLegible(breaks[i])}`;
+        } else {
+          label = `${formatearNumeroLegible(breaks[i])} – ${formatearNumeroLegible(breaks[i + 1])}`;
+        }
+        itemsLeyenda.push({
+          color: colores[i],
+          label,
+          conteo: conteosPorClase[i]
+        });
+      }
+
+      return {
+        modo: 'graduado',
+        columna: col,
+        metodo,
+        breaks,
+        colores,
+        totalValidos: valoresValidos.length,
+        itemsLeyenda
+      };
+    }
+
+    return null;
   }
 
   /**
-   * Resuelve dinámicamente un color categorizado o graduado según los atributos de la entidad.
+   * Resuelve el color para una feature evaluando la clasificación activa de la capa
+   */
+  function resolverColorFeature(feature, idCapa, colorBasePorDefecto) {
+    const reg = registroCapasTematicas[idCapa];
+    if (!reg || !reg.config || reg.config.modo === 'automatico') {
+      return resolverColorSegunAtributo(feature, colorBasePorDefecto);
+    }
+
+    const cfg = reg.config;
+    const props = feature.properties || {};
+
+    if (cfg.modo === 'plano') {
+      return reg.clasificacion?.colorPlano || colorBasePorDefecto || '#f59e0b';
+    }
+
+    if (cfg.modo === 'categorizado') {
+      const col = cfg.columna || 'subtipo';
+      let val = props[col];
+      if (val === undefined || val === null || val === '') val = '(Sin dato)';
+      val = String(val).trim();
+      const asignacion = reg.clasificacion?.asignacion || {};
+      return asignacion[val] || obtenerColorDePaleta(val, cfg.paletaCat);
+    }
+
+    if (cfg.modo === 'graduado') {
+      const col = cfg.columna || 'superficie_m2';
+      const raw = props[col];
+      if (raw === undefined || raw === null || raw === '') return '#94a3b8';
+      const v = typeof raw === 'number' ? raw : Number(String(raw).replace(',', '.'));
+      if (isNaN(v)) return '#94a3b8';
+
+      const clasif = reg.clasificacion;
+      if (!clasif || !clasif.breaks || !clasif.colores) return colorBasePorDefecto || '#f59e0b';
+
+      const breaks = clasif.breaks;
+      const colores = clasif.colores;
+      const numInt = colores.length;
+
+      if (numInt === 1) return colores[0];
+      if (v <= breaks[1]) return colores[0];
+      if (v >= breaks[breaks.length - 1]) return colores[numInt - 1];
+
+      for (let i = 1; i < breaks.length - 1; i++) {
+        if (v <= breaks[i + 1]) {
+          return colores[i];
+        }
+      }
+      return colores[numInt - 1];
+    }
+
+    return resolverColorSegunAtributo(feature, colorBasePorDefecto);
+  }
+
+  /**
+   * Resuelve dinámicamente un color categorizado o graduado según los atributos de la entidad (modo automático).
    * Evita el monocolor plano en capas temáticas.
    */
   function resolverColorSegunAtributo(feature, colorBasePorDefecto) {
@@ -341,6 +823,318 @@ const ModuloMapa = (() => {
     return colorBasePorDefecto || '#f59e0b';
   }
 
+  function aplicarSimbologiaACapa(idCapa, nuevaConfig = {}) {
+    const reg = registroCapasTematicas[idCapa];
+    if (!reg || !reg.capaLeaflet) return;
+
+    reg.config = { ...reg.config, ...nuevaConfig };
+    reg.clasificacion = calcularClasificacionCapa(reg);
+
+    // Actualizar cada entidad en el mapa de Leaflet
+    reg.capaLeaflet.eachLayer(sublayer => {
+      const feat = sublayer.feature;
+      if (!feat) return;
+      const nuevoColor = resolverColorFeature(feat, idCapa, reg.opciones?.color);
+      sublayer._atlasColor = nuevoColor;
+
+      if (typeof sublayer.setStyle === 'function') {
+        if (feat.geometry && (feat.geometry.type === 'LineString' || feat.geometry.type === 'MultiLineString')) {
+          sublayer.setStyle({ color: nuevoColor, opacity: 0.9, weight: 3.5 });
+        } else {
+          sublayer.setStyle({ fillColor: nuevoColor, color: '#1a1f18', fillOpacity: 0.88, weight: 1.5 });
+        }
+      }
+    });
+
+    actualizarLeyendaPreview(reg);
+    actualizarBadgeHeaderSimbologia(reg);
+  }
+
+  function actualizarBadgeHeaderSimbologia(reg) {
+    const badge = document.getElementById('badge-simbologia-capa-activa');
+    if (!badge) return;
+    if (!reg) {
+      badge.textContent = 'Sin capas activas';
+      badge.style.color = '#94a3b8';
+      badge.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+      return;
+    }
+    const nombre = reg.opciones?.nombre || reg.idCapa.toUpperCase();
+    const modoNom = {
+      graduado: 'Graduado',
+      categorizado: 'Categorizado',
+      automatico: 'Automático',
+      plano: 'Plano'
+    }[reg.config.modo] || 'Automático';
+    badge.textContent = `${nombre} (${modoNom}: ${reg.config.columna || 'general'})`;
+    badge.style.color = '#38bdf8';
+    badge.style.borderColor = 'rgba(56, 189, 248, 0.4)';
+  }
+
+  function actualizarLeyendaPreview(reg) {
+    const contenedor = document.getElementById('simbologia-muestras-clases');
+    const badgeConteo = document.getElementById('conteo-preview-entidades');
+    if (!contenedor) return;
+
+    if (!reg || !reg.clasificacion) {
+      contenedor.innerHTML = '<span class="placeholder-simbologia">Selecciona o carga una capa para visualizar sus clases y rangos.</span>';
+      if (badgeConteo) badgeConteo.textContent = '0 entidades';
+      return;
+    }
+
+    const clasif = reg.clasificacion;
+    if (badgeConteo) {
+      badgeConteo.textContent = `${clasif.totalValidos || 0} entidades evaluadas`;
+    }
+
+    if (!clasif.itemsLeyenda || clasif.itemsLeyenda.length === 0) {
+      contenedor.innerHTML = '<span class="placeholder-simbologia">Sin clases definidas.</span>';
+      return;
+    }
+
+    contenedor.innerHTML = clasif.itemsLeyenda.map(item => `
+      <div class="item-clase-simbologia" title="${item.label} · ${item.conteo} entidades">
+        <span class="swatch-color-clase" style="background-color: ${item.color};"></span>
+        <span class="label-rango-clase">${item.label}</span>
+        <span class="conteo-rango-clase">(${item.conteo})</span>
+      </div>
+    `).join('');
+  }
+
+  function sincronizarSelectorCapasSimbologia(idCapaForzada = null) {
+    const selectCapa = document.getElementById('select-simbologia-capa');
+    if (!selectCapa) return;
+
+    const idsActivos = Object.keys(registroCapasTematicas);
+    if (idsActivos.length === 0) {
+      selectCapa.innerHTML = '<option value="">(Sin capas temáticas activas)</option>';
+      capaActivaSimbologiaId = null;
+      actualizarBadgeHeaderSimbologia(null);
+      actualizarLeyendaPreview(null);
+      return;
+    }
+
+    if (idCapaForzada && idsActivos.includes(idCapaForzada)) {
+      capaActivaSimbologiaId = idCapaForzada;
+    } else if (!capaActivaSimbologiaId || !idsActivos.includes(capaActivaSimbologiaId)) {
+      capaActivaSimbologiaId = idsActivos[idsActivos.length - 1];
+    }
+
+    selectCapa.innerHTML = idsActivos.map(id => {
+      const reg = registroCapasTematicas[id];
+      const nombre = reg.opciones?.nombre || id.toUpperCase();
+      const sel = id === capaActivaSimbologiaId ? 'selected' : '';
+      return `<option value="${id}" ${sel}>${nombre} (${id})</option>`;
+    }).join('');
+
+    sincronizarControlesConCapaActiva();
+  }
+
+  function sincronizarControlesConCapaActiva() {
+    if (!capaActivaSimbologiaId) return;
+    const reg = registroCapasTematicas[capaActivaSimbologiaId];
+    if (!reg) return;
+
+    const selectModo = document.getElementById('select-simbologia-modo');
+    const selectColumna = document.getElementById('select-simbologia-columna');
+    const selectMetodoCuant = document.getElementById('select-simbologia-metodo-cuant');
+    const selectNumClases = document.getElementById('select-simbologia-num-clases');
+    const selectRampa = document.getElementById('select-simbologia-rampa');
+    const selectPaleta = document.getElementById('select-simbologia-paleta');
+
+    const grupoMetodoCuant = document.getElementById('grupo-simbologia-metodo-cuant');
+    const grupoNumClases = document.getElementById('grupo-simbologia-num-clases');
+    const grupoRampa = document.getElementById('grupo-simbologia-rampa');
+    const grupoPaleta = document.getElementById('grupo-simbologia-paleta');
+    const grupoColumna = document.getElementById('grupo-simbologia-columna');
+
+    const cfg = reg.config;
+    if (selectModo) selectModo.value = cfg.modo;
+    if (selectMetodoCuant) selectMetodoCuant.value = cfg.metodoCuant;
+    if (selectNumClases) selectNumClases.value = String(cfg.numClases);
+    if (selectRampa) selectRampa.value = cfg.rampa;
+    if (selectPaleta) selectPaleta.value = cfg.paletaCat;
+
+    const esGraduado = cfg.modo === 'graduado';
+    const esCategorizado = cfg.modo === 'categorizado';
+    const esAutomatico = cfg.modo === 'automatico';
+    const esPlano = cfg.modo === 'plano';
+
+    if (grupoColumna) grupoColumna.style.display = (esPlano || esAutomatico) ? 'none' : '';
+    if (grupoMetodoCuant) grupoMetodoCuant.style.display = esGraduado ? '' : 'none';
+    if (grupoNumClases) grupoNumClases.style.display = esGraduado ? '' : 'none';
+    if (grupoRampa) grupoRampa.style.display = esGraduado ? '' : 'none';
+    if (grupoPaleta) grupoPaleta.style.display = esCategorizado ? '' : 'none';
+
+    if (selectColumna && reg.cols) {
+      const { numericas, categoricas } = reg.cols;
+      let html = '';
+
+      if (esGraduado) {
+        if (numericas.length > 0) {
+          html += `<optgroup label="Columnas Cuantitativas (Numéricas)">` +
+            numericas.map(c => `<option value="${c}" ${c === cfg.columna ? 'selected' : ''}>${c} [Numérico]</option>`).join('') +
+            `</optgroup>`;
+        }
+        if (categoricas.length > 0) {
+          html += `<optgroup label="Otras Columnas">` +
+            categoricas.map(c => `<option value="${c}" ${c === cfg.columna ? 'selected' : ''}>${c}</option>`).join('') +
+            `</optgroup>`;
+        }
+      } else {
+        if (categoricas.length > 0) {
+          html += `<optgroup label="Columnas Cualitativas (Categóricas)">` +
+            categoricas.map(c => `<option value="${c}" ${c === cfg.columna ? 'selected' : ''}>${c} [Categoría]</option>`).join('') +
+            `</optgroup>`;
+        }
+        if (numericas.length > 0) {
+          html += `<optgroup label="Columnas Cuantitativas">` +
+            numericas.map(c => `<option value="${c}" ${c === cfg.columna ? 'selected' : ''}>${c} [Numérico]</option>`).join('') +
+            `</optgroup>`;
+        }
+      }
+
+      if (!html) html = '<option value="">(Sin columnas disponibles)</option>';
+      selectColumna.innerHTML = html;
+
+      if (cfg.columna) {
+        selectColumna.value = cfg.columna;
+      } else {
+        cfg.columna = selectColumna.value;
+      }
+    }
+
+    actualizarBadgeHeaderSimbologia(reg);
+    actualizarLeyendaPreview(reg);
+  }
+
+  function inicializarControlSimbologia() {
+    const panel = document.getElementById('panel-simbologia-dinamica');
+    const header = document.getElementById('header-panel-simbologia');
+    const btnToggle = document.getElementById('btn-toggle-panel-simbologia');
+    const cuerpo = document.getElementById('cuerpo-simbologia-dinamica');
+    const labelToggle = document.getElementById('label-toggle-simbologia');
+    const iconoToggle = document.getElementById('icono-toggle-simbologia');
+
+    if (!panel || panel.dataset.iniciado === '1') return;
+    panel.dataset.iniciado = '1';
+
+    const togglePanel = () => {
+      const colapsado = panel.classList.toggle('colapsado');
+      if (cuerpo) cuerpo.style.display = colapsado ? 'none' : 'flex';
+      if (btnToggle) btnToggle.setAttribute('aria-expanded', String(!colapsado));
+      if (labelToggle) labelToggle.textContent = colapsado ? 'Ajustar' : 'Plegar';
+      if (iconoToggle) iconoToggle.textContent = colapsado ? '▾' : '▴';
+    };
+
+    if (btnToggle) {
+      btnToggle.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        togglePanel();
+      };
+    }
+
+    if (header) {
+      header.onclick = (e) => {
+        if (e.target && (e.target.id === 'btn-toggle-panel-simbologia' || e.target.closest('#btn-toggle-panel-simbologia'))) return;
+        togglePanel();
+      };
+    }
+
+    const selectCapa = document.getElementById('select-simbologia-capa');
+    const selectModo = document.getElementById('select-simbologia-modo');
+    const selectColumna = document.getElementById('select-simbologia-columna');
+    const selectMetodoCuant = document.getElementById('select-simbologia-metodo-cuant');
+    const selectNumClases = document.getElementById('select-simbologia-num-clases');
+    const selectRampa = document.getElementById('select-simbologia-rampa');
+    const selectPaleta = document.getElementById('select-simbologia-paleta');
+    const btnAplicar = document.getElementById('btn-aplicar-simbologia');
+    const btnRestablecer = document.getElementById('btn-restablecer-simbologia');
+
+    const leerConfigDesdeUI = () => {
+      return {
+        modo: selectModo ? selectModo.value : 'automatico',
+        columna: selectColumna ? selectColumna.value : null,
+        metodoCuant: selectMetodoCuant ? selectMetodoCuant.value : 'cuartiles',
+        numClases: selectNumClases ? Number(selectNumClases.value) : 4,
+        rampa: selectRampa ? selectRampa.value : 'ylorrd',
+        paletaCat: selectPaleta ? selectPaleta.value : 'armonica'
+      };
+    };
+
+    const aplicarDesdeUI = () => {
+      if (!capaActivaSimbologiaId) return;
+      const cfg = leerConfigDesdeUI();
+      aplicarSimbologiaACapa(capaActivaSimbologiaId, cfg);
+    };
+
+    if (selectCapa) {
+      selectCapa.onchange = () => {
+        capaActivaSimbologiaId = selectCapa.value;
+        sincronizarControlesConCapaActiva();
+        aplicarDesdeUI();
+      };
+    }
+
+    if (selectModo) {
+      selectModo.onchange = () => {
+        if (!capaActivaSimbologiaId) return;
+        const reg = registroCapasTematicas[capaActivaSimbologiaId];
+        if (reg) {
+          reg.config.modo = selectModo.value;
+          if (selectModo.value === 'graduado' && reg.cols && reg.cols.numericas.length > 0) {
+            if (!reg.cols.numericas.includes(reg.config.columna)) {
+              reg.config.columna = reg.cols.numericas[0];
+            }
+          }
+          if (selectModo.value === 'categorizado' && reg.cols && reg.cols.categoricas.length > 0) {
+            if (!reg.cols.categoricas.includes(reg.config.columna)) {
+              reg.config.columna = reg.cols.categoricas[0];
+            }
+          }
+          sincronizarControlesConCapaActiva();
+          aplicarDesdeUI();
+        }
+      };
+    }
+
+    [selectColumna, selectMetodoCuant, selectNumClases, selectRampa, selectPaleta].forEach(sel => {
+      if (sel) {
+        sel.onchange = () => {
+          aplicarDesdeUI();
+        };
+      }
+    });
+
+    if (btnAplicar) {
+      btnAplicar.onclick = (e) => {
+        e.preventDefault();
+        aplicarDesdeUI();
+        const textoOriginal = btnAplicar.innerHTML;
+        btnAplicar.innerHTML = '<span>✓ ¡Aplicado al mapa!</span>';
+        btnAplicar.style.background = '#16a34a';
+        setTimeout(() => {
+          btnAplicar.innerHTML = textoOriginal;
+          btnAplicar.style.background = '';
+        }, 1200);
+      };
+    }
+
+    if (btnRestablecer) {
+      btnRestablecer.onclick = (e) => {
+        e.preventDefault();
+        if (!capaActivaSimbologiaId) return;
+        const reg = registroCapasTematicas[capaActivaSimbologiaId];
+        if (reg) {
+          reg.config.modo = 'automatico';
+          sincronizarControlesConCapaActiva();
+          aplicarDesdeUI();
+        }
+      };
+    }
+  }
+
   /**
    * Agrega o reemplaza una capa GeoJSON en el mapa
    */
@@ -354,9 +1148,37 @@ const ModuloMapa = (() => {
     const color = opciones.color || COLORES_CATEGORIA[idCapa] || COLORES_CATEGORIA.defecto;
     const icono = opciones.icono || '📍';
 
+    // Registrar o actualizar metadatos y configuración de simbología
+    if (!registroCapasTematicas[idCapa]) {
+      const cols = inspeccionarColumnasGeoJSON(geojson);
+      const colInicial = cols.numericas[0] || cols.categoricas[0] || 'subtipo';
+      registroCapasTematicas[idCapa] = {
+        idCapa,
+        geojson,
+        opciones,
+        capaLeaflet: null,
+        cols,
+        config: {
+          modo: 'automatico',
+          columna: colInicial,
+          metodoCuant: 'cuartiles',
+          numClases: 4,
+          rampa: 'ylorrd',
+          paletaCat: 'armonica'
+        },
+        clasificacion: null
+      };
+      registroCapasTematicas[idCapa].clasificacion = calcularClasificacionCapa(registroCapasTematicas[idCapa]);
+    } else {
+      registroCapasTematicas[idCapa].geojson = geojson;
+      registroCapasTematicas[idCapa].opciones = opciones;
+      registroCapasTematicas[idCapa].cols = inspeccionarColumnasGeoJSON(geojson);
+      registroCapasTematicas[idCapa].clasificacion = calcularClasificacionCapa(registroCapasTematicas[idCapa]);
+    }
+
     const capa = L.geoJSON(geojson, {
       pointToLayer: (feature, latlng) => {
-        const colorFeature = resolverColorSegunAtributo(feature, color);
+        const colorFeature = resolverColorFeature(feature, idCapa, color);
         return L.circleMarker(latlng, {
           radius: 6,
           fillColor: colorFeature,
@@ -367,7 +1189,7 @@ const ModuloMapa = (() => {
         });
       },
       style: (feature) => {
-        const colorFeature = resolverColorSegunAtributo(feature, color);
+        const colorFeature = resolverColorFeature(feature, idCapa, color);
         if (feature.geometry && (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString')) {
           return {
             color: colorFeature,
@@ -385,7 +1207,7 @@ const ModuloMapa = (() => {
       },
       onEachFeature: (feature, layer) => {
         const props = feature.properties || {};
-        const colorFeature = resolverColorSegunAtributo(feature, color);
+        const colorFeature = resolverColorFeature(feature, idCapa, color);
         const idCapaStrItem = (idCapa || '').toString().toLowerCase();
         const esGbifItem = Boolean(
           idCapaStrItem.includes('gbif') ||
@@ -512,6 +1334,10 @@ const ModuloMapa = (() => {
 
     capasTematicasActivas[idCapa] = capa;
     grupoCapasTematicas.addLayer(capa);
+    if (registroCapasTematicas[idCapa]) {
+      registroCapasTematicas[idCapa].capaLeaflet = capa;
+    }
+    sincronizarSelectorCapasSimbologia(idCapa);
 
     // Ajuste automático de encuadre para que las geometrías aparezcan inmediatamente en pantalla
     if (opciones.ajustarVista !== false && capa.getBounds && capa.getBounds().isValid()) {
@@ -540,6 +1366,8 @@ const ModuloMapa = (() => {
     if (capasTematicasActivas[idCapa] && grupoCapasTematicas) {
       grupoCapasTematicas.removeLayer(capasTematicasActivas[idCapa]);
       delete capasTematicasActivas[idCapa];
+      delete registroCapasTematicas[idCapa];
+      sincronizarSelectorCapasSimbologia();
     }
   }
 
@@ -547,6 +1375,8 @@ const ModuloMapa = (() => {
     if (grupoCapasTematicas) {
       grupoCapasTematicas.clearLayers();
       capasTematicasActivas = {};
+      registroCapasTematicas = {};
+      sincronizarSelectorCapasSimbologia();
     }
   }
 
@@ -1469,9 +2299,33 @@ const ModuloMapa = (() => {
     removerCapaWMS,
     obtenerCapasWMSActivas,
     obtenerInstanciaMapa: () => mapa,
+    aplicarSimbologiaACapa,
+    restablecerSimbologia: (id) => {
+      if (registroCapasTematicas[id]) {
+        registroCapasTematicas[id].config.modo = 'automatico';
+        aplicarSimbologiaACapa(id, { modo: 'automatico' });
+      }
+    },
+    obtenerRegistroCapas: () => registroCapasTematicas,
+    sincronizarSelectorCapasSimbologia,
+    inicializarControlSimbologia,
+    RAMPAS_CUANTITATIVAS,
+    PALETAS_CATEGORICAS,
     COLORES_CATEGORIA
   };
 })();
+
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      try { ModuloMapa.inicializarControlSimbologia(); } catch (_) {}
+    });
+  } else {
+    setTimeout(() => {
+      try { ModuloMapa.inicializarControlSimbologia(); } catch (_) {}
+    }, 60);
+  }
+}
 
 if (typeof window !== 'undefined') {
   window.ModuloMapa = ModuloMapa;

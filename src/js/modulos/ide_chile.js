@@ -365,22 +365,6 @@ const ModuloIDEChile = (() => {
       declaracion: 'Zonas normativas de riesgo metropolitano reguladas por el Art. 2.1.17 de la OGUC y la Ordenanza del PRMS.',
       citaAPA: 'Secretaría Regional Ministerial Metropolitana de Vivienda y Urbanismo [SEREMI MINVU RM]. (2024). Áreas de Riesgo Metropolitano (PRMS): Fallas, Inundación y Remoción. DDU, MINVU. https://geoide.minvu.cl/server/rest/services/IPT/PRMS/FeatureServer/3'
     },
-    ide_subdere_dpa_comunas: {
-      id: 'ide_subdere_dpa_comunas',
-      nombre: 'División Político-Administrativa (SUBDERE / IGM)',
-      institucion: 'Subsecretaría de Desarrollo Regional (SUBDERE) / IGM / IDE Chile',
-      ministerio: 'Ministerio del Interior y Seguridad Pública',
-      tipoServicio: 'ArcGIS FeatureServer',
-      urlServicio: 'https://services5.arcgis.com/hUyD8u3TeZLKPe4T/ArcGIS/rest/services/SIET_comunas_16R_gdb/FeatureServer/0',
-      archivoLocal: 'data/ide_subdere_dpa_comunas.geojson',
-      color: '#475569',
-      icono: '🗺',
-      geometria: 'Polígonos (Límites Comunales Oficiales)',
-      grupo: 'normativa_ipt',
-      descripcion: 'Límites comunales y provinciales oficiales de Chile (División Político-Administrativa) con códigos únicos territoriales (CUT).',
-      declaracion: 'Cartografía base oficial de la República de Chile provista por SUBDERE, INE e Instituto Geográfico Militar (IGM).',
-      citaAPA: 'Subsecretaría de Desarrollo Regional y Administrativo [SUBDERE] & IGM. (2024). División Político Administrativa Oficial de Chile (DPA). IDE Chile. https://services5.arcgis.com/hUyD8u3TeZLKPe4T/ArcGIS/rest/services/SIET_comunas_16R_gdb/FeatureServer/0'
-    },
 
     // =========================================================================
     // CAPAS CATASTRADAS EN BBDD.XLSX (74 CAPAS ESTADO DE CHILE)
@@ -2592,11 +2576,11 @@ const ModuloIDEChile = (() => {
           'Marco Normativo': 'Art. 2.1.17 OGUC / PRMS',
           'Instrumento': 'Plan Regulador Metropolitano de Santiago'
         };
-      } else if (idCapa === 'ide_subdere_dpa_comunas') {
+      } else if (idCapa === 'bbdd_43' || idCapa === 'capa_bbdd_43') {
         nombreEntidad = `Comuna de ${props.NOM_COMUNA || props.COMUNA || 'Santiago'}`;
-        detalleTipo = 'División Político-Administrativa (SUBDERE / IGM)';
+        detalleTipo = 'División Política Administrativa 2023';
         extraInfo = {
-          'Código CUT': props.CUT || '-',
+          'Código CUT': props.CUT || props.CUT_COM || '-',
           'Provincia': props.NOM_PROVINCIA || props.PROVINCIA || '-',
           'Región': props.NOM_REGION || props.REGION || 'Metropolitana de Santiago'
         }

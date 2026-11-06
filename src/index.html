@@ -253,6 +253,124 @@
             </div>
           </div>
 
+          <!-- Recuadro / Panel de Control de Simbología Temática Dinámica -->
+          <div id="panel-simbologia-dinamica" class="panel-simbologia-dinamica colapsado" role="region" aria-label="Control de Simbología Temática Dinámica">
+            <div class="header-simbologia-dinamica" id="header-panel-simbologia" title="Clic para desplegar o plegar el editor de simbología temática">
+              <div class="titulo-simbologia-dinamica">
+                <span class="icono-simbologia">🎨</span>
+                <span class="texto-titulo-simbologia">Simbología Temática Dinámica</span>
+                <span id="badge-simbologia-capa-activa" class="badge-simbologia-capa" title="Capa temática actualmente en edición">Sin capas activas</span>
+              </div>
+              <div class="acciones-header-simbologia">
+                <button type="button" id="btn-toggle-panel-simbologia" class="btn-toggle-simbologia" title="Desplegar / Plegar opciones de clasificación" aria-expanded="false">
+                  <span id="label-toggle-simbologia">Ajustar</span>
+                  <span id="icono-toggle-simbologia">▾</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="cuerpo-simbologia-dinamica" class="cuerpo-simbologia-dinamica" style="display:none;">
+              <div class="grilla-controles-simbologia">
+                <!-- Selector de Capa a modificar -->
+                <div class="campo-control-simbologia">
+                  <label for="select-simbologia-capa" class="label-simbologia">Capa a simbolizar:</label>
+                  <select id="select-simbologia-capa" class="select-simbologia">
+                    <option value="">(Carga una capa temática en el mapa)</option>
+                  </select>
+                </div>
+
+                <!-- Selector de Método de Simbología General -->
+                <div class="campo-control-simbologia">
+                  <label for="select-simbologia-modo" class="label-simbologia">Método de clasificación:</label>
+                  <select id="select-simbologia-modo" class="select-simbologia">
+                    <option value="graduado" selected>Graduado (Cuantitativo / Numérico)</option>
+                    <option value="categorizado">Categorizado (Cualitativo / Valores Únicos)</option>
+                    <option value="automatico">Automático (Detección Inteligente)</option>
+                    <option value="plano">Color Único (Plano)</option>
+                  </select>
+                </div>
+
+                <!-- Selector de Columna / Atributo -->
+                <div class="campo-control-simbologia" id="grupo-simbologia-columna">
+                  <label for="select-simbologia-columna" class="label-simbologia">Columna / Atributo:</label>
+                  <select id="select-simbologia-columna" class="select-simbologia">
+                    <option value="">(Selecciona una capa)</option>
+                  </select>
+                </div>
+
+                <!-- Selector de Método Cuantitativo (Pretty Breaks, Cuartiles, etc.) -->
+                <div class="campo-control-simbologia grupo-cuantitativo" id="grupo-simbologia-metodo-cuant">
+                  <label for="select-simbologia-metodo-cuant" class="label-simbologia">Método cuantitativo:</label>
+                  <select id="select-simbologia-metodo-cuant" class="select-simbologia">
+                    <option value="pretty">Pretty Breaks (Intervalos redondeados R)</option>
+                    <option value="cuartiles" selected>Cuartiles / Cuantiles (Distribución equitativa)</option>
+                    <option value="iguales">Intervalos Iguales (Equal Intervals)</option>
+                    <option value="jenks">Cortes Naturales (Jenks / Varianza mín.)</option>
+                    <option value="desviacion">Desviación Estándar (Std Dev)</option>
+                  </select>
+                </div>
+
+                <!-- Número de Clases -->
+                <div class="campo-control-simbologia grupo-cuantitativo" id="grupo-simbologia-num-clases">
+                  <label for="select-simbologia-num-clases" class="label-simbologia">N° de clases:</label>
+                  <select id="select-simbologia-num-clases" class="select-simbologia">
+                    <option value="3">3 clases</option>
+                    <option value="4" selected>4 clases (Cuartiles)</option>
+                    <option value="5">5 clases (Quintiles)</option>
+                    <option value="6">6 clases</option>
+                    <option value="7">7 clases</option>
+                  </select>
+                </div>
+
+                <!-- Rampa de Colores Cuantitativa -->
+                <div class="campo-control-simbologia grupo-cuantitativo" id="grupo-simbologia-rampa">
+                  <label for="select-simbologia-rampa" class="label-simbologia">Rampa de color:</label>
+                  <select id="select-simbologia-rampa" class="select-simbologia">
+                    <option value="ylorrd" selected>Amarillo → Rojo (YlOrRd cálido)</option>
+                    <option value="viridis">Viridis (Azul → Verde → Amarillo)</option>
+                    <option value="blues">Azules (Celeste → Marino)</option>
+                    <option value="greens">Verdes (Esmeralda → Bosque)</option>
+                    <option value="magma">Magma (Morado → Naranja → Amarillo)</option>
+                    <option value="purples">Púrpuras (Lavanda → Violeta)</option>
+                    <option value="oranges">Naranjas (Degradado cálido)</option>
+                  </select>
+                </div>
+
+                <!-- Paleta Cualitativa (para Categorizado) -->
+                <div class="campo-control-simbologia grupo-categorico" id="grupo-simbologia-paleta" style="display:none;">
+                  <label for="select-simbologia-paleta" class="label-simbologia">Paleta cualitativa:</label>
+                  <select id="select-simbologia-paleta" class="select-simbologia">
+                    <option value="armonica" selected>Cartográfica Armónica (20 tonos)</option>
+                    <option value="vibrante">Vibrante / Alto Contraste</option>
+                    <option value="pastel">Pastel Equilibrado</option>
+                    <option value="tierra">Tonos Tierra / Orgánicos</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Muestra de Clases / Mini Leyenda Dinámica -->
+              <div class="contenedor-preview-simbologia">
+                <div class="header-preview-simbologia">
+                  <span class="titulo-preview-simbologia">Leyenda de la clasificación activa:</span>
+                  <span id="conteo-preview-entidades" class="badge-preview-entidades">0 entidades</span>
+                </div>
+                <div id="simbologia-muestras-clases" class="muestras-clases-simbologia">
+                  <span class="placeholder-simbologia">Selecciona o carga una capa para visualizar sus clases y rangos.</span>
+                </div>
+              </div>
+
+              <!-- Acciones del Panel -->
+              <div class="footer-simbologia-dinamica">
+                <button type="button" id="btn-aplicar-simbologia" class="btn-accion-simbologia primario" title="Aplicar de inmediato esta clasificación en el mapa">
+                  <span>⚡ Aplicar al mapa</span>
+                </button>
+                <button type="button" id="btn-restablecer-simbologia" class="btn-accion-simbologia secundario" title="Restablecer clasificación automática por defecto">
+                  <span>↺ Automático</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div id="mapa-atlas" role="region" aria-label="Mapa interactivo del Atlas VGI"></div>
 
           <!-- Sidebar de Más Detalles (slide-in sobre el mapa) -->
