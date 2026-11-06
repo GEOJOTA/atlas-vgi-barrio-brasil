@@ -260,6 +260,87 @@ const ModuloMapa = (() => {
     }
   }
 
+  // Paleta cartográfica armónica y contrastada para simbología temática categorizada / graduada
+  const PALETA_CATEGORIZADA = [
+    '#2563eb', '#d97706', '#059669', '#dc2626', '#7c3aed',
+    '#0891b2', '#ea580c', '#4f46e5', '#16a34a', '#db2777',
+    '#ca8a04', '#0284c7', '#9333ea', '#e11d48', '#0d9488',
+    '#65a30d', '#f97316', '#6366f1', '#14b8a6', '#84cc16'
+  ];
+
+  function hashCadena(str) {
+    if (!str) return 0;
+    let hash = 0;
+    const s = String(str);
+    for (let i = 0; i < s.length; i++) {
+      hash = ((hash << 5) - hash) + s.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash);
+  }
+
+  function obtenerColorDePaleta(clave) {
+    const idx = hashCadena(clave) % PALETA_CATEGORIZADA.length;
+    return PALETA_CATEGORIZADA[idx];
+  }
+
+  /**
+   * Resuelve dinámicamente un color categorizado o graduado según los atributos de la entidad.
+   * Evita el monocolor plano en capas temáticas.
+   */
+  function resolverColorSegunAtributo(feature, colorBasePorDefecto) {
+    if (!feature || !feature.properties) return colorBasePorDefecto || '#f59e0b';
+    const props = feature.properties;
+
+    // 1. Escala graduada si existe atributo cuantitativo relevante (superficie, población, inversión)
+    const valNum = props.superficie_m2 ?? props.poblacion ?? props.personas ?? props.PERSONAS ?? props.TOTAL_VIV ?? props.monto;
+    if (typeof valNum === 'number' && !isNaN(valNum) && valNum > 0) {
+      if (props.superficie_m2) {
+        if (valNum < 150) return '#38bdf8'; // Celeste (< 150 m²)
+        if (valNum < 500) return '#10b981'; // Esmeralda (150 - 500 m²)
+        if (valNum < 1500) return '#f59e0b'; // Ámbar (500 - 1500 m²)
+        if (valNum < 5000) return '#f97316'; // Naranja (1500 - 5000 m²)
+        return '#ef4444'; // Rojo (> 5000 m²)
+      }
+      if (props.poblacion || props.personas || props.PERSONAS) {
+        if (valNum < 80) return '#60a5fa';
+        if (valNum < 250) return '#34d399';
+        if (valNum < 700) return '#fbbf24';
+        if (valNum < 1800) return '#f87171';
+        return '#c084fc';
+      }
+    }
+
+    // 2. Clasificación categórica por subtipo temático o taxonomía espacial
+    const catVal = props._subtipo || props.subtipo || props.fclass || props.amenity ||
+                   props.shop || props.highway || props.building || props.leisure ||
+                   props.historic || props.natural || props.landuse || props.railway ||
+                   props.rubro || props.tipo || props.clase || props.categoria ||
+                   props.clasificacion || props.species || props.especie || props.family ||
+                   props.genus || props.tramo || props.sector || props.estado ||
+                   props.etapa || props.uso_suelo || props.zonificacion || props.comuna;
+
+    if (catVal && typeof catVal === 'string') {
+      const s = catVal.trim().toLowerCase();
+      if (s.length > 0 && s !== 'yes' && s !== 'no' && s !== '*' && s !== 'oficial' && s !== 'entidad cartográfica') {
+        return obtenerColorDePaleta(s);
+      }
+    }
+
+    // 3. Diferenciación secundaria por nombre, operador o marca si la categoría genérica es uniforme
+    const secVal = props.operador || props.operator || props.brand || props.nombre || props.name || props.etiqueta;
+    if (secVal && typeof secVal === 'string' && secVal.trim().length > 0 && secVal !== 'Sin denominación') {
+      return obtenerColorDePaleta(secVal.trim().toLowerCase());
+    }
+
+    // 4. Si aún no hay atributo o es ID único
+    if (props.id || feature.id || props.osm_id) {
+      return obtenerColorDePaleta(String(props.id || feature.id || props.osm_id));
+    }
+
+    return colorBasePorDefecto || '#f59e0b';
+  }
+
   /**
    * Agrega o reemplaza una capa GeoJSON en el mapa
    */
@@ -275,33 +356,36 @@ const ModuloMapa = (() => {
 
     const capa = L.geoJSON(geojson, {
       pointToLayer: (feature, latlng) => {
+        const colorFeature = resolverColorSegunAtributo(feature, color);
         return L.circleMarker(latlng, {
           radius: 6,
-          fillColor: color,
-          color: '#23281F',
+          fillColor: colorFeature,
+          color: '#1a1f18',
           weight: 1.5,
           opacity: 1,
-          fillOpacity: 0.85
+          fillOpacity: 0.88
         });
       },
       style: (feature) => {
+        const colorFeature = resolverColorSegunAtributo(feature, color);
         if (feature.geometry && (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString')) {
           return {
-            color: color,
+            color: colorFeature,
             weight: 3.5,
-            opacity: 0.85
+            opacity: 0.88
           };
         }
         return {
-          fillColor: color,
+          fillColor: colorFeature,
           weight: 1.5,
           opacity: 0.9,
-          color: '#23281F',
-          fillOpacity: 0.35
+          color: '#1a1f18',
+          fillOpacity: 0.42
         };
       },
       onEachFeature: (feature, layer) => {
         const props = feature.properties || {};
+        const colorFeature = resolverColorSegunAtributo(feature, color);
         const idCapaStrItem = (idCapa || '').toString().toLowerCase();
         const esGbifItem = Boolean(
           idCapaStrItem.includes('gbif') ||
@@ -370,7 +454,7 @@ const ModuloMapa = (() => {
         const contenidoPopup = `
           <div class="popup-vgi" style="font-family:Spectral, Georgia, serif; max-width:260px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
-              <span style="font-size:0.75rem; color:${color}; font-weight:bold; font-family:'IBM Plex Mono',monospace;">
+              <span style="font-size:0.75rem; color:${colorFeature}; font-weight:bold; font-family:'IBM Plex Mono',monospace;">
                 ${icono} ${opciones.nombre || idCapa.toUpperCase()}
               </span>
               <span style="font-size:0.7rem; background:#EDE6D6; color:#4B5142; padding:1px 5px; border-radius:3px; font-weight:600;">
@@ -405,7 +489,7 @@ const ModuloMapa = (() => {
         layer._atlasOpciones = opciones;
         layer._atlasIdCapa = idCapa;
         layer._atlasIcono = icono;
-        layer._atlasColor = color;
+        layer._atlasColor = colorFeature;
 
         // Vincular el botón «Más detalles» cada vez que el popup esté activo
         layer.on('popupopen', () => {
@@ -417,7 +501,7 @@ const ModuloMapa = (() => {
                 e.preventDefault();
                 e.stopPropagation();
               }
-              abrirSidebarDetalle(props, opciones, idCapa, icono, color);
+              abrirSidebarDetalle(props, opciones, idCapa, icono, colorFeature);
               layer.closePopup();
             };
           }

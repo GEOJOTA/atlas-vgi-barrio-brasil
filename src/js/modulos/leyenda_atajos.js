@@ -266,12 +266,25 @@ const ModuloAtajosLeyenda = (() => {
     } catch (_) {}
   }
 
+  let bloqueoScrollPorClick = false;
+  let timerDesbloqueoScroll = null;
+
   function toggleColapso() {
     setColapsado(!colapsado);
   }
 
   function desplazarseAApartado(idElemento) {
     if (!idElemento) return;
+
+    // 1. ILUMINAR INMEDIATAMENTE EL APARTADO SELECCIONADO POR EL USUARIO
+    marcarApartadoActivo(idElemento);
+
+    // 2. BLOQUEAR SOBREESCRITURAS DE SCROLLSPY MIENTRAS SE COMPLETA EL DESPLAZAMIENTO SUAVE
+    bloqueoScrollPorClick = true;
+    if (timerDesbloqueoScroll) clearTimeout(timerDesbloqueoScroll);
+    timerDesbloqueoScroll = setTimeout(() => {
+      bloqueoScrollPorClick = false;
+    }, 1400);
 
     // Si el destino es el inventario del manual, asegurar que dicho capítulo esté abierto
     if (idElemento === 'cap-uso-04' && window.ModuloManual && typeof window.ModuloManual.irACapitulo === 'function') {
@@ -372,38 +385,22 @@ const ModuloAtajosLeyenda = (() => {
       });
     });
 
-    configurarScrollspy(info.apartados);
+    configurarScrollspy();
   }
 
-  function configurarScrollspy(apartados) {
+  function configurarScrollspy() {
     if (observerScrollspy) {
       try { observerScrollspy.disconnect(); } catch (_) {}
       observerScrollspy = null;
     }
-
-    const ids = apartados.map(a => a.id);
-    const elementos = ids.map(id => document.getElementById(id)).filter(Boolean);
-
-    if ('IntersectionObserver' in window && elementos.length > 0) {
-      observerScrollspy = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            marcarApartadoActivo(entry.target.id);
-          }
-        });
-      }, {
-        root: null,
-        rootMargin: '-15% 0px -65% 0px',
-        threshold: [0, 0.2]
-      });
-
-      elementos.forEach(el => observerScrollspy.observe(el));
-    } else {
-      configurarScrollFallback(ids);
-    }
+    window.removeEventListener('scroll', handlerScrollFallback);
+    window.addEventListener('scroll', handlerScrollFallback, { passive: true });
+    // Evaluar estado inicial sin bloquear
+    determinarApartadoActivo();
   }
 
   function marcarApartadoActivo(idElemento) {
+    if (!idElemento) return;
     const lista = document.getElementById('lista-atajos-modulo');
     if (!lista) return;
 
@@ -414,34 +411,63 @@ const ModuloAtajosLeyenda = (() => {
     });
   }
 
-  function configurarScrollFallback(ids) {
-    window.removeEventListener('scroll', handlerScrollFallback);
-    window.addEventListener('scroll', handlerScrollFallback, { passive: true });
-  }
+  function determinarApartadoActivo() {
+    if (bloqueoScrollPorClick) return;
+    const info = CONFIG_MODULOS[moduloActivo] || CONFIG_MODULOS['inicio'];
+    if (!info || !info.apartados || info.apartados.length === 0) return;
 
-  function handlerScrollFallback() {
-    if (timerThrottle) return;
-    timerThrottle = setTimeout(() => {
-      timerThrottle = null;
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      const offset = 130;
+    const offsetCabecera = 140;
+    let mejorApartado = null;
+    let menorDistancia = Infinity;
 
-      const info = CONFIG_MODULOS[moduloActivo] || CONFIG_MODULOS['inicio'];
-      let actualId = null;
+    // Evaluar elementos visibles según su posición real en la ventana (getBoundingClientRect)
+    for (let i = 0; i < info.apartados.length; i++) {
+      const ap = info.apartados[i];
+      let el = document.getElementById(ap.id);
+      if (!el && ap.id === 'cap-uso-04') {
+        el = document.getElementById('tbody-catalogo-manual') || document.getElementById('contenido-manual');
+      }
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        // El elemento ocupa el área de lectura si su fondo supera la cabecera
+        if (rect.bottom > offsetCabecera) {
+          const dist = Math.abs(rect.top - offsetCabecera);
+          if (rect.top <= offsetCabecera + 60 && dist < menorDistancia) {
+            menorDistancia = dist;
+            mejorApartado = ap.id;
+          }
+        }
+      }
+    }
 
-      info.apartados.forEach(ap => {
+    if (!mejorApartado) {
+      for (let i = 0; i < info.apartados.length; i++) {
+        const ap = info.apartados[i];
         let el = document.getElementById(ap.id);
         if (!el && ap.id === 'cap-uso-04') {
           el = document.getElementById('tbody-catalogo-manual');
         }
         if (el) {
-          const top = el.offsetTop - offset;
-          if (scrollY >= top) actualId = ap.id;
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= offsetCabecera + 100 && rect.bottom >= offsetCabecera) {
+            mejorApartado = ap.id;
+            break;
+          }
         }
-      });
+      }
+    }
 
-      if (actualId) marcarApartadoActivo(actualId);
-    }, 120);
+    if (mejorApartado) {
+      marcarApartadoActivo(mejorApartado);
+    }
+  }
+
+  function handlerScrollFallback() {
+    if (timerThrottle || bloqueoScrollPorClick) return;
+    timerThrottle = setTimeout(() => {
+      timerThrottle = null;
+      determinarApartadoActivo();
+    }, 100);
   }
 
   function inicializar() {

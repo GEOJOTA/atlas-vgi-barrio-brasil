@@ -459,7 +459,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Rango: 0 a 20.203,8 ent/km² · 9.048 entidades únicas deduplicadas',
                 lectura: 'Revela una columna vertebral de altísima densidad sobre el eje Alameda y el centro-poniente (Brasil, Santa Ana, Ejército y Barrio Universitario), con vectores que apuntan hacia el campus UAH y Plaza Brasil, frente a vacíos profundos en el tercio sur comunal.'
               }
-            ]
+            ],
+            sintesis: 'La intensidad de registros colaborativos en Santiago se estructura sobre una columna axial Alameda-Norte-Sur liderada por Barrio Brasil (6.924,1 ent/km²), dejando en severo desierto informativo al arco periférico sur (Bogotá y Sierra Bella con menos de 2 ent/km²).'
           },
           {
             titulo: '2. Compacidad edificada, dinámicas de edificación (Permisos y CRF), polaridad comercial y el clúster universitario',
@@ -509,7 +510,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Rango: 0 a 1.249,2 ent/km² · 322 entidades evaluadas',
                 lectura: 'Evidencia la gravitación del distrito universitario sobre el borde sur de Barrio Brasil (Campus UAH en Almirante Barroso y Cienfuegos) y su continuidad hacia los barrios Ejército y Universitario.'
               }
-            ]
+            ],
+            sintesis: 'Mientras los permisos y recepciones de obras concentran la renovación en altura sobre Santa Ana y Santa Isabel, Barrio Brasil y Yungay preservan una compacidad predial horizontal tradicional con alta concentración de campus universitarios y polos gastronómicos barriales.'
           },
           {
             titulo: '3. Corredores de transporte público, regulación semafórica UOCT, redes de ciclovías y micro-infraestructura de accesibilidad',
@@ -543,7 +545,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Rango: 0 a 652,1 ent/km² · 498 entidades evaluadas',
                 lectura: 'Localiza las mayores concentraciones de rebajes peatonales y cruces accesibles en la intersección de Av. Brasil con Alameda y Compañía, así como en el entorno institucional de Santa Ana.'
               }
-            ]
+            ],
+            sintesis: 'Existe una marcada asimetría entre la robusta macro-conectividad metropolitana (Metro, Red y semaforización UOCT en ejes troncales) y la micro-caminabilidad barrial, donde la red de ciclovías y rebajes peatonales universales se diluyen al adentrarse en las manzanas residenciales interiores.'
           },
           {
             titulo: '4. Parches ecológicos, espacio público recreativo y resguardo del patrimonio histórico',
@@ -586,7 +589,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Rango: 0 a 288,9 ent/km² · 99 entidades evaluadas',
                 lectura: 'Configura un eje patrimonial continuo sobre las calles Huérfanos, Compañía, Cienfuegos y Almirante Barroso, articulando la Basílica del Salvador, cités históricos y casonas UAH.'
               }
-            ]
+            ],
+            sintesis: 'La infraestructura verde y el patrimonio protegido actúan como amortiguadores socioambientales indispensables en el poniente, contrastando críticamente con la escasez de espacio público y arbolado viario en los barrios del pericentro sur comunal.'
           }
         ],
         tablaIndicadores: [
@@ -710,7 +714,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: '140 manzanas censales Alto-Alto · 615 manzanas Bajo-Bajo · 956 manzanas No Significativas',
                 lectura: 'Demuestra que el 45% de todas las manzanas Hotspot (Alto-Alto) de la comuna se concentra en la mitad sur y central de Barrio Brasil, mientras el sector norte hacia Mapocho y el sur comunal operan como Coldspots (Bajo-Bajo).'
               }
-            ]
+            ],
+            sintesis: 'El análisis LISA constata una paradoja de justicia espacial: más de un tercio de la población comunal reside en manzanas coldspot de información VGI, configurando una situación de doble desventaja en barrios densamente habitados como Santa Isabel, Bogotá y Sierra Bella.'
           },
           {
             titulo: '2. Conglomerados de compacidad construida, actividad comercial y el polo educativo-universitario',
@@ -747,7 +752,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Enclave universitario Almirante Barroso - Cienfuegos - Ejército',
                 lectura: 'Revela un potente cluster Alto-Alto en el sector suroriente de Barrio Brasil (Campus UAH) y Barrio Ejército, mientras el resto del pericentro permanece no significativo o en Coldspot.'
               }
-            ]
+            ],
+            sintesis: 'La autocorrelación espacial confirma que los clústeres estadísticamente significativos de edificación y servicios se agrupan en el pericentro histórico poniente, mientras la periferia sur carece de conglomerados comerciales y educativos de proximidad.'
           },
           {
             titulo: '3. Corredores significativos de transporte, mallas de movilidad activa y brechas de accesibilidad',
@@ -774,7 +780,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Concentración de rebajes peatonales y vacíos periféricos',
                 lectura: 'Confirma que la infraestructura peatonal inclusiva se agrupa significativamente en el eje Alameda y el centro de Barrio Brasil, diluyéndose hacia el norte de San Pablo.'
               }
-            ]
+            ],
+            sintesis: 'Los conglomerados de movilidad activa y cruces peatonales accesibles forman un corredor continuo en el cuadrante centro-poniente que se fractura abruptamente hacia el sur, reproduciendo brechas de conectividad peatonal para personas con movilidad reducida.'
           },
           {
             titulo: '4. Islas ecológicas y clústeres patrimoniales frente a los desiertos verdes periféricos',
@@ -807,7 +814,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Concentración monumental e inmuebles de conservación histórica',
                 lectura: 'Dibuja un cluster Alto-Alto nítido sobre el eje patrimonial Huérfanos - Compañía - Cienfuegos en Barrio Brasil, validando los perímetros de Zona Típica y Conservación Histórica.'
               }
-            ]
+            ],
+            sintesis: 'Los enclaves verdes y patrimoniales forman islas protectoras bien delimitadas en el sector poniente, dejando en evidencia extensos desiertos de áreas verdes en los antiguos sectores industriales del sur comunal.'
           }
         ],
         tablaIndicadores: [
@@ -957,7 +965,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Razón Hombres / Mujeres · Media comunal: 102,8',
                 lectura: 'Identifica manzanas con predominio masculino en sectores de piezas, cités y actividad comercial (Meiggs, San Vicente, borde San Pablo), frente a mayor presencia femenina en sectores de departamentos familiares y de adultos mayores.'
               }
-            ]
+            ],
+            sintesis: 'El modelo de hiperdensificación en altura concentró a más del 30% de los habitantes en tres barrios orientales (superando 600 hab/ha), frente a la escala humana intermedia y equilibrada de Barrio Brasil y Yungay protegida por normativas de conservación histórica.'
           },
           {
             titulo: '2. Transición demográfica: envejecimiento en barrios históricos, hogares unipersonales e inserción migrante',
@@ -1012,7 +1021,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Total comunal: 83.149 hogares de 1 persona (40,8% comunal)',
                 lectura: 'Predomina de forma masiva (tramo 51,9%–100%) en el Centro Histórico, Santa Lucía Forestal, San Borja y el entorno universitario del sur de Barrio Brasil.'
               }
-            ]
+            ],
+            sintesis: 'Santiago evidencia una profunda transición demográfica dual: mientras en los barrios tradicionales predomina el envejecimiento poblacional en casonas y cités, los corredores en altura están dominados por hogares unipersonales jóvenes y población migrante trabajadora.'
           },
           {
             titulo: '3. Ordenamiento normativo (PRC) y tipologías residenciales: del edificio en altura a la resistencia de la casa y el cité',
@@ -1057,7 +1067,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Total comunal: 12.499 unidades (5,9%) · Líderes: San Vicente (25,6%) y Yungay (22,0%)',
                 lectura: 'Localiza los enclaves de cités y pasajes interiores en Yungay, San Vicente, Bogotá, Franklin y en el cuadrante central de Barrio Brasil.'
               }
-            ]
+            ],
+            sintesis: 'La zonificación del Plan Regulador Comunal opera como una frontera morfológica: las rasantes y zonas típicas resguardaron el tejido de casonas y cités en Barrio Brasil frente a las megatorres que saturaron los ejes de Alameda y Santa Isabel.'
           },
           {
             titulo: '4. Dinámica de edificación, alturas autorizadas y morfología predial: métricas OGUC de ocupación de suelo y conjuntos habitacionales',
@@ -1105,7 +1116,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Cociente entre profundidad y ancho del lote · Media: 1,86 (Rango: 1,01 a 6,92)',
                 lectura: 'Distingue entre lotes cuadrangulares producto de fusiones para torres residenciales (ratios 1,0 a 1,8) y predios alargados propios de la parcelación histórica del pericentro.'
               }
-            ]
+            ],
+            sintesis: 'Los indicadores de constructibilidad y recepción de obras certifican que la expansión vertical intensiva alcanzó su techo normativo en el centro-oriente, validando la urgencia de planificar el crecimiento con criterios de escala barrial y capacidad de infraestructura.'
           },
           {
             titulo: '5. Hegemonía del arriendo, subarriendo sin contrato, hacinamiento y brecha digital',
@@ -1167,7 +1179,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Total comunal: 198.898 hogares conectados (97,6% de cobertura)',
                 lectura: 'Aunque el estándar comunal es alto, visibiliza micro-brechas digitales en manzanas con alta proporción de adultos mayores solos o cités precarizados.'
               }
-            ]
+            ],
+            sintesis: 'El mercado habitacional comunal está dominado por el régimen de arrendamiento (72,1%), dividiéndose entre el arriendo formal en torres de renovación y el subarriendo informal desregulado en cités y conventillos con altos índices de hacinamiento.'
           },
           {
             titulo: '6. Estratificación socioeconómica (RSH 0–40%), empleo cotizante y demanda de cuidados por Unidad Vecinal',
@@ -1212,7 +1225,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Hogares vulnerables con demanda crítica de cuidados domiciliarios',
                 lectura: 'Visibiliza los territorios que requieren apoyo prioritario del Sistema Nacional de Cuidados, destacando el sector norte de Barrio Brasil, Yungay y el eje central-sur.'
               }
-            ]
+            ],
+            sintesis: 'La cartografía del RSH y dependencia funcional visibiliza una urgente demanda de sistemas locales de cuidados en las unidades vecinales del poniente y sur, donde convive población adulta mayor no autovalente con hogares del tramo de mayor vulnerabilidad socioeconómica.'
           }
         ],
         tablaIndicadores: [
@@ -1376,7 +1390,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Total comunal: 30.088 conductores/pasajeros de auto (13,2%)',
                 lectura: 'En términos absolutos, el mayor número de automóviles estacionados y en flujo proviene de las torres de alta densidad de Santa Isabel, Parque Almagro y San Borja.'
               }
-            ]
+            ],
+            sintesis: 'Más del 84% de los viajes locales en Barrio Brasil se realizan mediante modos sustentables (caminata, transporte público y bicicleta), consolidando al barrio como un territorio modelo de movilidad activa que requiere veredas seguras y cruces adaptados.'
           },
           {
             titulo: '2. Justicia espacial y proximidad peatonal: distancias reales a áreas verdes, biodiversidad, salud y comercio',
@@ -1425,7 +1440,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Media comunal: 8,8 m (mediana 0,0 m) · Contigüidad inmediata en más del 76% de las manzanas',
                 lectura: 'Demuestra que casi todas las manzanas de Barrio Brasil y del centro cuentan con comercio a menos de 20 metros, salvo paños industriales o residenciales cerrados en el sur.'
               }
-            ]
+            ],
+            sintesis: 'El análisis de proximidad efectiva demuestra que Barrio Brasil cumple el estándar de la «ciudad de 15 minutos» en equipamiento escolar y comercial, pero presenta brechas de cobertura en atención de urgencia sanitaria y grandes parques metropolitanos.'
           },
           {
             titulo: '3. Dotación acumulativa en radios caminables (buffers de 300 m y 500 m) y exposición al ruido ambiental',
@@ -1482,7 +1498,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Cuartiles: 44,5–57,9 · 58,0–62,8 · 62,9–68,5 · 68,6–77,5 dBA',
                 lectura: 'Expone las barreras acústicas críticas (>68,6 dBA, azul oscuro) sobre la Autopista Central (Av. Manuel Rodríguez), Alameda y San Pablo, mientras el interior de Barrio Brasil se mantiene bajo 62,8 dBA.'
               }
-            ]
+            ],
+            sintesis: 'La dotación de servicios en radios caminables de 300 a 500 metros es excepcionalmente alta en el corazón barrial, mientras que las fachadas hacia Alameda y Manuel Rodríguez sufren una severa contaminación acústica vehicular que supera los estándares recomendados.'
           },
           {
             titulo: '4. Metabolismo urbano de residuos: la asimetría operativa entre las 5 macro-zonas de aseo municipal',
@@ -1531,7 +1548,8 @@ const ModuloIndicadoresAnalisis = (() => {
                 subtitulo: 'Total comunal: 285.860 L · Máximo en Poniente (121.480 L) y Centro Poniente (109.660 L)',
                 lectura: 'Confirma que el 80,9% de la capacidad volumétrica de contenedores en calle se concentra en la mitad poniente de la comuna (Zonas Poniente y Centro Poniente), dejando al sector hiperdenso de Santa Isabel con apenas 13.680 L.'
               }
-            ]
+            ],
+            sintesis: 'La gestión de residuos sólidos municipal exhibe una clara diferenciación operativa entre el sistema de contenedores en calzada de las macro-zonas residenciales y la concentración intensiva de papeleros en el centro histórico, demandando rutas de recolección diferenciadas para el reciclaje barrial.'
           }
         ],
         tablaIndicadores: [
@@ -2219,6 +2237,17 @@ const ModuloIndicadoresAnalisis = (() => {
                     </div>
                   `).join('')}
                 </div>
+              </div>
+            ` : ''}
+
+            <!-- Frase sintética de los hallazgos al final de la sección -->
+            ${(sec.sintesis || sec.fraseSintetica) ? `
+              <div class="caja-sintesis-hallazgo-seccion">
+                <div class="header-sintesis-hallazgo">
+                  <span class="icono-sintesis-hallazgo">💡</span>
+                  <span class="tag-sintesis-hallazgo">SÍNTESIS DEL HALLAZGO TERRITORIAL 0${idxSec + 1}</span>
+                </div>
+                <p class="texto-sintesis-hallazgo">${sec.sintesis || sec.fraseSintetica}</p>
               </div>
             ` : ''}
           </section>
