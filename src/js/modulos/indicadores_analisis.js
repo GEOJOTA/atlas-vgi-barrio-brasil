@@ -2257,14 +2257,14 @@ const ModuloIndicadoresAnalisis = (() => {
             <h4>📋 Cuadro Resumen de Magnitudes Territoriales Comprobadas</h4>
             <span class="badge-fuente-datos">TRAZABILIDAD OFICIAL</span>
           </div>
-          <div style="overflow-x:auto;">
-            <table class="tabla-datos-storyboard">
+          <div class="contenedor-tabla-responsiva" style="margin:10px 0;">
+            <table class="tabla-datos-storyboard" style="min-width:720px;">
               <thead>
                 <tr>
-                  <th>Variable Territorial Evaluada</th>
-                  <th>Resultado Comunal / Local</th>
-                  <th>Contraste o Referencia Barrial</th>
-                  <th>Fuente / Cartografía</th>
+                  <th style="min-width:190px;">Variable Territorial Evaluada</th>
+                  <th style="min-width:150px;">Resultado Comunal / Local</th>
+                  <th style="min-width:170px;">Contraste o Referencia Barrial</th>
+                  <th style="min-width:150px;">Fuente / Cartografía</th>
                 </tr>
               </thead>
               <tbody>
@@ -2323,15 +2323,15 @@ const ModuloIndicadoresAnalisis = (() => {
           <!-- Fuentes Formales de Datos Espaciales -->
           <div>
             <h5 class="subtitulo-bloque-biblio">1. Catálogo de Capas y Cartografías Utilizadas en este Análisis</h5>
-            <div style="overflow-x:auto;">
-              <table class="tabla-datos-storyboard" style="font-size:0.78rem;">
+            <div class="contenedor-tabla-responsiva" style="margin:10px 0;">
+              <table class="tabla-datos-storyboard" style="font-size:0.78rem; min-width:720px;">
                 <thead>
                   <tr>
-                    <th>Código Capa</th>
-                    <th>Nombre de Capa / Fuente en el Atlas</th>
-                    <th>Institución / Autor</th>
-                    <th>Sistema Ref. (CRS)</th>
-                    <th>Geometría</th>
+                    <th style="min-width:100px;">Código Capa</th>
+                    <th style="min-width:230px;">Nombre de Capa / Fuente en el Atlas</th>
+                    <th style="min-width:160px;">Institución / Autor</th>
+                    <th style="min-width:120px;">Sistema Ref. (CRS)</th>
+                    <th style="min-width:100px;">Geometría</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -2002,10 +2002,21 @@ async function manejarConsultaPersonalizada() {
           <button class="accion secundaria" id="btn-metadatos-custom" style="font-size:0.85rem; padding:6px 12px;">📋 Crear Metadatos</button>
         </div>
       </div>
-      <table class="tabla-datos">
-        <thead><tr><th>ID VGI</th><th>Nombre</th><th>Subtipo</th><th>Superficie (m²)</th><th>Dirección</th><th>Accesibilidad</th></tr></thead>
-        <tbody>${filas}</tbody>
-      </table>
+      <div class="contenedor-tabla-responsiva" style="margin:12px 0;">
+        <table class="tabla-datos" style="width:100%; min-width:780px;">
+          <thead>
+            <tr>
+              <th style="min-width:110px;">ID VGI</th>
+              <th style="min-width:180px;">Nombre</th>
+              <th style="min-width:140px;">Subtipo</th>
+              <th style="min-width:130px;">Superficie (m²)</th>
+              <th style="min-width:180px;">Dirección</th>
+              <th style="min-width:120px;">Accesibilidad</th>
+            </tr>
+          </thead>
+          <tbody>${filas}</tbody>
+        </table>
+      </div>
       ${total > 30 ? `<p class="descripcion" style="margin-top:6px;">Mostrando los primeros 30 de ${total} registros extraídos.</p>` : ''}
     `;
 
@@ -2216,10 +2227,20 @@ async function manejarConsultaOSM(cargarAlMapa = false, modo = 'bbox') {
         📦 <strong>Fuente:</strong> Descarga de Geofabrik (Extracto Región Metropolitana · 921.401 entidades con superposición semántica · 319.380 edificaciones completas · 151.066 de transporte · 76.397 coberturas/usos de suelo) · <strong>Filtro:</strong> ${modoTexto} <code>[${bbox.map(n => Number(n).toFixed(4)).join(', ')}]</code> · Cobertura 100% Macro-Categoría <code>${catId.toUpperCase()}</code>
       </div>
 
-      <table class="tabla-datos">
-        <thead><tr><th>ID</th><th>Nombre</th><th>Tipo Principal</th><th>Superficie (m²)</th><th>Etiquetas Clave</th></tr></thead>
-        <tbody>${filas}</tbody>
-      </table>
+      <div class="contenedor-tabla-responsiva" style="margin:12px 0;">
+        <table class="tabla-datos" style="width:100%; min-width:780px;">
+          <thead>
+            <tr>
+              <th style="min-width:100px;">ID</th>
+              <th style="min-width:180px;">Nombre</th>
+              <th style="min-width:140px;">Tipo Principal</th>
+              <th style="min-width:130px;">Superficie (m²)</th>
+              <th style="min-width:220px;">Etiquetas Clave</th>
+            </tr>
+          </thead>
+          <tbody>${filas}</tbody>
+        </table>
+      </div>
       ${total > 35 ? `<p class="descripcion">Mostrando 35 de ${total} elementos descargados en Bbox.</p>` : ''}
     `;
 
@@ -2533,17 +2554,19 @@ async function manejarConsultaOhsome() {
       <div class="caja-cuadrado" style="margin-top:22px;">
         <h3 style="margin-top:0; color:#ffffff;">Evolución Histórica Multidimensional (ohsome API / OSHDB)</h3>
         <p class="descripcion" style="margin-bottom:14px;">Serie cronológica anual extraída directamente de la base de datos histórica de OpenStreetMap (HeiGIT):</p>
-        <table class="tabla-datos">
-          <thead>
-            <tr>
-              <th>Período / Año</th>
-              <th>Elementos Totales</th>
-              <th>Colaboradores Únicos</th>
-              <th>Contribuciones / Cambios</th>
-            </tr>
-          </thead>
-          <tbody>${filasSerie}</tbody>
-        </table>
+        <div class="contenedor-tabla-responsiva" style="margin:10px 0;">
+          <table class="tabla-datos" style="width:100%; min-width:560px;">
+            <thead>
+              <tr>
+                <th style="min-width:110px;">Período / Año</th>
+                <th style="min-width:140px;">Elementos Totales</th>
+                <th style="min-width:150px;">Colaboradores Únicos</th>
+                <th style="min-width:150px;">Contribuciones / Cambios</th>
+              </tr>
+            </thead>
+            <tbody>${filasSerie}</tbody>
+          </table>
+        </div>
       </div>
 
       <div class="caja-cuadrado" style="border-left:6px solid var(--musgo); margin-top:22px;">
@@ -2712,19 +2735,21 @@ async function manejarConsultaGBIF(cargarAlMapa = false) {
         <span class="valor">${resultado.total}</span>
         <span class="etiqueta">registros biológicos ${etiquetaIndicador}${taxBadge}</span>
       </div>
-      <table class="tabla-datos">
-        <thead>
-          <tr>
-            <th>Especie / Taxón Científico</th>
-            <th>Nombre Común</th>
-            <th>Fecha</th>
-            <th>Publicador</th>
-            <th>Validación Darwin Core (Issues)</th>
-            <th>Licencia</th>
-          </tr>
-        </thead>
-        <tbody>${filas}</tbody>
-      </table>
+      <div class="contenedor-tabla-responsiva" style="margin:12px 0;">
+        <table class="tabla-datos" style="width:100%; min-width:800px;">
+          <thead>
+            <tr>
+              <th style="min-width:180px;">Especie / Taxón Científico</th>
+              <th style="min-width:150px;">Nombre Común</th>
+              <th style="min-width:100px;">Fecha</th>
+              <th style="min-width:140px;">Publicador</th>
+              <th style="min-width:180px;">Validación Darwin Core (Issues)</th>
+              <th style="min-width:110px;">Licencia</th>
+            </tr>
+          </thead>
+          <tbody>${filas}</tbody>
+        </table>
+      </div>
     `;
   } catch (error) {
     contenedor.innerHTML = `
@@ -2743,30 +2768,32 @@ async function manejarConsultaGBIF(cargarAlMapa = false) {
             🌿 <strong>Catálogo local verificado:</strong> Se cargaron ${fallback.registros.length} observaciones biológicas de Barrio Brasil y Santiago Centro.
           </div>
           <div class="indicador"><span class="valor">${fallback.total}</span><span class="etiqueta">registros biológicos (catálogo local verificado)</span></div>
-          <table class="tabla-datos">
-            <thead>
-              <tr>
-                <th>Especie / Taxón Científico</th>
-                <th>Nombre Común</th>
-                <th>Fecha</th>
-                <th>Publicador</th>
-                <th>Validación Darwin Core (Issues)</th>
-                <th>Licencia</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${fallback.registros.slice(0, 50).map(r => `
+          <div class="contenedor-tabla-responsiva" style="margin:12px 0;">
+            <table class="tabla-datos" style="width:100%; min-width:800px;">
+              <thead>
                 <tr>
-                  <td><strong>${r.especie}</strong> <small style="display:block; color:var(--tinta-suave); font-style:italic;">${r.scientificName}</small></td>
-                  <td>${r.nombreComun ? `<strong style="color:var(--musgo);">${r.nombreComun}</strong>` : '—'}</td>
-                  <td>${r.fecha}</td>
-                  <td>${r.publicador}</td>
-                  <td><span style="color:var(--musgo); font-family:var(--fuente-datos); font-size:0.75rem;">✓ Darwin Core válido</span></td>
-                  <td><small>${r.licencia}</small></td>
+                  <th style="min-width:180px;">Especie / Taxón Científico</th>
+                  <th style="min-width:150px;">Nombre Común</th>
+                  <th style="min-width:100px;">Fecha</th>
+                  <th style="min-width:140px;">Publicador</th>
+                  <th style="min-width:180px;">Validación Darwin Core (Issues)</th>
+                  <th style="min-width:110px;">Licencia</th>
                 </tr>
-              `).join('')}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                ${fallback.registros.slice(0, 50).map(r => `
+                  <tr>
+                    <td><strong>${r.especie}</strong> <small style="display:block; color:var(--tinta-suave); font-style:italic;">${r.scientificName}</small></td>
+                    <td>${r.nombreComun ? `<strong style="color:var(--musgo);">${r.nombreComun}</strong>` : '—'}</td>
+                    <td>${r.fecha}</td>
+                    <td>${r.publicador}</td>
+                    <td><span style="color:var(--musgo); font-family:var(--fuente-datos); font-size:0.75rem;">✓ Darwin Core válido</span></td>
+                    <td><small>${r.licencia}</small></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
         `;
       } catch (eFb) {
         contenedor.innerHTML = avisoError('No se pudo acceder a GBIF en vivo ni al catálogo local: ' + eFb.message);

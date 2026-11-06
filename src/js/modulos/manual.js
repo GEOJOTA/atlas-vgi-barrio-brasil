@@ -79,7 +79,7 @@ const ModuloManual = (() => {
    */
   function obtenerCapitulosManual() {
     const inventarioCapas = construirInventarioDinamicoCapas();
-    const totalCapas = inventarioCapas.length || 133;
+    const totalCapas = inventarioCapas.length || 132;
 
     const filasTablaCapas = inventarioCapas.map(c => {
       const colorBadge = c.tipo === 'Colaborativa VGI'
@@ -298,7 +298,7 @@ const ModuloManual = (() => {
         parte: 'uso',
         numero: 'USO · 04',
         icono: '🗂️',
-        titulo: `Inventario General de las ${totalCapas} Coberturas Integradas (124 Oficiales + 10 VGI)`,
+        titulo: `Inventario General de las ${totalCapas} Coberturas Integradas (122 Oficiales + 10 VGI)`,
         subtitulo: 'Registro completo de capas operativas con filtrado dinámico por código, institución custodia o temática.',
         html: `
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
@@ -308,14 +308,14 @@ const ModuloManual = (() => {
             <input type="search" id="input-filtro-catalogo-manual" placeholder="🔍 Filtrar inventario (ej: SUBDERE, PRC, Censo, VGI)..." oninput="ModuloManual.filtrarTablaCatalogo(this.value)" style="min-width:280px; padding:7px 12px; border-radius:8px; border:1px solid var(--linea); background:rgba(15,23,42,0.8); color:var(--tinta);">
           </div>
           <div class="contenedor-tabla-responsiva" style="max-height:420px; overflow-y:auto; overflow-x:auto;">
-            <table class="tabla-metadatos" style="width:100%; border-collapse:collapse; font-size:0.83rem;">
+            <table class="tabla-metadatos" style="width:100%; min-width:860px; border-collapse:collapse; font-size:0.83rem;">
               <thead style="position:sticky; top:0; background:#0f172a; z-index:2;">
                 <tr>
-                  <th style="padding:10px; text-align:left; min-width:90px;">Código</th>
+                  <th style="padding:10px; text-align:left; min-width:90px; white-space:nowrap;">Código</th>
                   <th style="padding:10px; text-align:left; min-width:220px;">Denominación de Cobertura y Ruta</th>
-                  <th style="padding:10px; text-align:left; min-width:120px;">Origen</th>
+                  <th style="padding:10px; text-align:left; min-width:120px; white-space:nowrap;">Origen</th>
                   <th style="padding:10px; text-align:left; min-width:180px;">Institución Custodia</th>
-                  <th style="padding:10px; text-align:left; min-width:240px;">Descripción Técnica</th>
+                  <th style="padding:10px; text-align:left; min-width:250px;">Descripción Técnica</th>
                 </tr>
               </thead>
               <tbody id="tbody-catalogo-manual">
@@ -354,118 +354,118 @@ const ModuloManual = (() => {
           <p style="font-size:0.86rem; color:var(--tinta-suave); margin-bottom:10px;">
             Todos los archivos que componen la plataforma web (HTML5, CSS3, JavaScript ES6+ IIFE, SQL/PostGIS, Configuración TOML/JSON y Python 3) se documentan bajo una estructura estandarizada que especifica su lenguaje, ruta, rol funcional, componentes internos y protocolo de modificación:
           </p>
-          <div style="overflow-x:auto; border:1px solid var(--linea-tarjeta); border-radius:10px;">
-            <table class="tabla-metadatos" style="width:100%; font-size:0.8rem;">
+          <div class="contenedor-tabla-responsiva" style="margin:12px 0;">
+            <table class="tabla-metadatos" style="width:100%; min-width:980px; font-size:0.82rem;">
               <thead>
                 <tr>
-                  <th>Lenguaje</th>
-                  <th>Ruta del Archivo</th>
-                  <th>Rol Funcional en la Plataforma</th>
-                  <th>Estructura Interna / API Pública</th>
-                  <th>Protocolo de Modificación</th>
+                  <th style="min-width:130px; width:130px; white-space:nowrap;">Lenguaje</th>
+                  <th style="min-width:220px; width:220px;">Ruta del Archivo</th>
+                  <th style="min-width:270px;">Rol Funcional en la Plataforma</th>
+                  <th style="min-width:270px;">Estructura Interna / API Pública</th>
+                  <th style="min-width:250px;">Protocolo de Modificación</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>HTML5</strong></td>
+                  <td style="white-space:nowrap;"><strong>HTML5</strong></td>
                   <td><code>src/index.html</code></td>
                   <td>Documento DOM maestro (SPA): articula las 10 pestañas (<code>01</code> a <code>10</code>), el visor 2D, acordeones de capas, modales de Storyboards y Lightbox.</td>
                   <td>Secciones <code>&lt;section class="panel" id="panel-..."&gt;</code>, grilla de botones <code>.chip-oficial</code> y carga secuencial de 21 scripts.</td>
                   <td>Añadir controles <code>.chip-oficial</code> para nuevas capas y actualizar el parámetro <code>?v=...</code> al editar JS/CSS.</td>
                 </tr>
                 <tr>
-                  <td><strong>CSS3</strong></td>
+                  <td style="white-space:nowrap;"><strong>CSS3</strong></td>
                   <td><code>src/css/estilos.css</code></td>
                   <td>Hoja de estilos del sistema: variables nativas (<code>:root</code>), grillas responsivas, modo oscuro táctico, tarjetas de Storyboards y Lightbox multi-dispositivo.</td>
                   <td>Tokens de diseño, reglas <code>@media</code> para móvil/tablet/escritorio, clases <code>.lamina-storyboard-modal</code> y <code>.lightbox-figura-overlay</code>.</td>
                   <td>Editar variables CSS en <code>:root</code> para cambiar paleta cromática o tipografías en toda la plataforma.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/config.js</code></td>
                   <td>Configuración global síncrona (<code>window.NODO_CONFIG</code>): BBox territorial, comunas RM, endpoints API y las 10 macrocategorías VGI (<code>CAT-01</code> a <code>CAT-10</code>).</td>
                   <td>Objeto <code>CONFIG_PREDETERMINADA</code> y cargador asíncrono <code>cargarConfiguracion()</code> desde <code>config/config.json</code>.</td>
                   <td>Modificar coordenadas de encuadre, colores o consultas Overpass QL de las 10 categorías VGI.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/app.js</code></td>
                   <td>Orquestador central de la aplicación: navegación entre los 10 módulos, estado global de capas activas, filtros espaciales e ICV dinámico en tiempo real.</td>
                   <td>Funciones <code>activarPanel()</code>, <code>alternarCapaOficial()</code>, <code>actualizarTelemetriaCapasActivas()</code> y exportación GeoJSON/CSV.</td>
                   <td>Ajustar lógica de interacción global, contadores de telemetría o perfiles de usuario-tipo.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/geodesia.js</code></td>
                   <td>Motor matemático de reproyección geodésica al vuelo entre <code>EPSG:4326</code> (WGS84) y <code>EPSG:32719</code> (UTM 19S / SIRGAS-Chile).</td>
                   <td>IIFE <code>ModuloGeodesia</code> con serie de Redfearn / Transverse Mercator, área Gauss/Shoelace (m²/ha) y distancias euclidianas/Haversine.</td>
                   <td>Cambiar parámetros de huso UTM (ej. a Huso 18S) si el Atlas se adapta a otra región geográfica.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/mapa.js</code></td>
                   <td>Gestor del lienzo cartográfico Leaflet 1.9.4: mapas base, renderizado vectorial, simbología por categoría, popups y herramienta de dibujo de BBox.</td>
                   <td>IIFE <code>ModuloMapa</code> con <code>inicializarMapa()</code>, <code>dibujarCapaGeoJSON()</code> y <code>activarDibujoBbox()</code>.</td>
                   <td>Agregar nuevos proveedores de teselas base (WMS/XYZ) o personalizar estilos de marcadores y polígonos.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/ide_chile.js</code></td>
-                  <td>Catálogo maestro de las <strong>124 coberturas oficiales del Estado</strong> (MINVU, INE, MTT/UOCT, MDSF, SUBDERE, MuniSTGO, SII, CMN, MMA).</td>
+                  <td>Catálogo maestro de las <strong>122 coberturas oficiales del Estado</strong> (MINVU, INE, MTT/UOCT, MDSF, SUBDERE, MuniSTGO, SII, CMN, MMA).</td>
                   <td>IIFE <code>ModuloIDEChile</code> con diccionario <code>CAPAS_OFICIALES</code>, cargador con caché en memoria y recorte por BBox.</td>
                   <td>Registrar nuevas capas oficiales definiendo <code>id</code>, <code>nombre</code>, <code>institucion</code>, <code>archivoLocal</code> y simbología.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/evaluador_normativo.js</code></td>
                   <td>Inspector Normativo del Plan Regulador Comunal de Santiago (PRC/PRMS/OGUC), Certificado CIN-VGI y expediente histórico (1990–2024).</td>
                   <td>IIFE <code>ModuloEvaluadorNormativo</code> con algoritmo Ray-Casting (Point-in-Polygon), reglas Art. 2.1.24/2.1.17 OGUC y <code>HITOS_HISTORICOS_PRC_BRASIL</code>.</td>
                   <td>Añadir nuevas zonas normativas en <code>FUENTES_ORDENANZAS_IPT</code> o nuevos hitos de enmiendas al PRC.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/osm.js</code> &amp; <code>taginfo.js</code></td>
                   <td>Módulo 02: Cliente Overpass API con failover multi-servidor, constructor de consultas Overpass QL y validador semántico Taginfo API v4.</td>
                   <td>IIFE <code>ModuloOSM</code> y <code>ModuloTaginfo</code> con reconstrucción topológica de nodos/vías y normalización de etiquetas.</td>
                   <td>Añadir servidores espejo Overpass o incorporar nuevas plantillas de consulta rápida en 1 clic.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/gbif.js</code> &amp; <code>umap.js</code></td>
                   <td>Módulos 03 y 04: Cliente REST GBIF API v1 (estándar Darwin Core) y gestor de proyectos de cartografía participativa uMap e importación local.</td>
                   <td>IIFE <code>ModuloGBIF</code>, <code>ModuloUMap</code> e <code>ImportadorCapas</code> (soporte GeoJSON, KML, GPX y Shapefile ZIP).</td>
                   <td>Actualizar filtros taxonómicos Darwin Core o agregar nuevos enlaces de mapas colaborativos uMap.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/indicadores_analisis.js</code></td>
-                  <td>Módulo 05: Articulación de las 133 capas en <strong>5 Dimensiones Analíticas</strong> y motor de los <strong>4 Storyboards</strong> (83 cartografías, gráficos, SVG y Lightbox).</td>
+                  <td>Módulo 05: Articulación de las 132 capas en <strong>5 Dimensiones Analíticas</strong> y motor de los <strong>4 Storyboards</strong> (83 cartografías, gráficos, SVG y Lightbox).</td>
                   <td>IIFE <code>ModuloIndicadoresAnalisis</code> con arreglos <code>DIMENSIONES</code> y <code>STORYBOARDS</code>, modal de lectura y zoom pan/pinch.</td>
                   <td>Vincular nuevas capas en <code>capasIds</code> o agregar láminas y cartografías en <code>STORYBOARDS</code>.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/ohsome.js</code>, <code>calidad_analyst.js</code> &amp; <code>evaluador_calidad_cuantitativa.js</code></td>
                   <td>Módulo 06: Motor de Calidad Espacial ISO 19157/19115 (WLC v2.0), Índice de Saturación y Maduración Territorial (ohsome API v1/v2) y auditoría OSMCha.</td>
                   <td>Submódulo A (Evaluador Universal IGV), Submódulo B (Métricas históricas ohsome <code>/count</code>, <code>/length</code>, <code>/area</code> y Score de Madurez) y Submódulo C (OSMCha).</td>
                   <td>Ajustar pesos WLC en <code>PONDERADORES_DEFECTO</code> o umbrales heurísticos de saturación y changesets.</td>
                 </tr>
                 <tr>
-                  <td><strong>JS ES6+</strong></td>
+                  <td style="white-space:nowrap;"><strong>JS ES6+</strong></td>
                   <td><code>src/js/modulos/manual.js</code>, <code>metadatos.js</code>, <code>diccionario.js</code> &amp; <code>licencias.js</code></td>
                   <td>Módulos 07, 08, 09 y 10: Visor del Manual, generador de Metadatos ISO 19115/19139 (JSON/XML), Diccionario ISO 19110 (140 descriptores) y Licencias/Catálogos.</td>
                   <td>IIFE <code>ModuloManual</code>, <code>ModuloMetadatos</code>, <code>ModuloDiccionario</code> y <code>ModuloLicencias</code>.</td>
                   <td>Documentar nuevos descriptores en <code>CATALOGO_DICCIONARIO</code> o actualizar plantillas XML ISO 19139.</td>
                 </tr>
                 <tr>
-                  <td><strong>SQL / JSON / TOML</strong></td>
+                  <td style="white-space:nowrap;"><strong>SQL / JSON / TOML</strong></td>
                   <td><code>scripts/db/01_schema_postgis.sql</code>, <code>scripts/db/02_seed_metadata.sql</code>, <code>config/config.json</code> &amp; <code>netlify.toml</code></td>
                   <td>Esquema relacional espacial PostGIS (tablas, funciones RPC e índices GiST/GIN), semilla de metadatos, configuración JSON del nodo y reglas de despliegue CDN/CORS en Netlify.</td>
                   <td>DDL SQL con geometrías <code>EPSG:4326</code>/<code>EPSG:32719</code>, cabeceras HTTP de caché y redirecciones SPA (<code>/geodatabase</code> → <code>/docs/geodatabase_completa_atlas_vgi.zip</code>).</td>
                   <td>Ejecutar <code>scripts/db/01_schema_postgis.sql</code> y <code>02_seed_metadata.sql</code> en PostgreSQL/Supabase o ajustar cabeceras en <code>netlify.toml</code>.</td>
                 </tr>
                 <tr>
-                  <td><strong>Python 3</strong></td>
+                  <td style="white-space:nowrap;"><strong>Python 3</strong></td>
                   <td><code>scripts/*.py</code> (Scripts de ingeniería ETL, calidad y auditoría)</td>
                   <td>Pipelines de ingesta desde Overpass/GBIF/IDE, reproyección, recorte espacial, cálculo de metacalidad WLC, generación de catálogos Excel y validación pre-deploy.</td>
                   <td>Scripts modulares (<code>verificar_conteo_capas.py</code>, <code>verificar_integridad_despliegue.py</code>, <code>analisis_metacalidad.py</code>, <code>modelo_indice_lineal_wlc.py</code>, <code>generar_catalogos_excel.py</code>, <code>empaquetar_base_datos_completa.py</code>, <code>construir_manual_actualizacion_maestro.py</code>).</td>
@@ -706,13 +706,13 @@ git push origin main</code></pre>
         subtitulo: 'Guía de resolución de problemas técnicos frecuentes y marco legal de licenciamiento abierto.',
         html: `
           <h4 style="color:#ef4444; margin:0 0 8px 0;">1. Matriz de Diagnóstico y Resolución Rápida de Errores</h4>
-          <div style="overflow-x:auto; border:1px solid var(--linea-tarjeta); border-radius:10px; margin-bottom:16px;">
-            <table class="tabla-metadatos" style="width:100%; font-size:0.82rem;">
+          <div class="contenedor-tabla-responsiva" style="margin:12px 0 16px 0;">
+            <table class="tabla-metadatos" style="width:100%; min-width:800px; font-size:0.82rem;">
               <thead>
                 <tr>
-                  <th>Síntoma Técnico</th>
-                  <th>Causa Identificada</th>
-                  <th>Procedimiento de Solución</th>
+                  <th style="min-width:220px; width:220px;">Síntoma Técnico</th>
+                  <th style="min-width:260px;">Causa Identificada</th>
+                  <th style="min-width:320px;">Procedimiento de Solución</th>
                 </tr>
               </thead>
               <tbody>

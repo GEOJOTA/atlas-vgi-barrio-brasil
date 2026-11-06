@@ -85,7 +85,7 @@ const ModuloLicencias = (() => {
         </div>
 
         <div class="contenedor-tabla-responsiva">
-          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem; width:100%;">
+          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem; width:100%; min-width:740px;">
             <thead>
               <tr>
                 <th style="min-width:200px;">Archivo / Catálogo</th>
@@ -102,8 +102,8 @@ const ModuloLicencias = (() => {
                 <td><a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar Excel</a></td>
               </tr>
               <tr>
-                <td><strong>Perfil de metadatos y calidad (133 capas)</strong><br><code class="codigo-licencia">docs/perfil_metadatos_vgi.xlsx</code></td>
-                <td>Matriz de evaluación multicriterio (WLC v2.0, IGV medio 95,4 %, 90 capas A+ y 43 A) y mapeo a ISO 19115 / IDE Chile.</td>
+                <td><strong>Perfil de metadatos y calidad (132 capas)</strong><br><code class="codigo-licencia">docs/perfil_metadatos_vgi.xlsx</code></td>
+                <td>Matriz de evaluación multicriterio (WLC v2.0, IGV medio 95,4 %, 90 capas A+ y 42 A) y mapeo a ISO 19115 / IDE Chile.</td>
                 <td>Excel (<code>.xlsx</code>) · ~65 KB</td>
                 <td><a href="docs/perfil_metadatos_vgi.xlsx" download="perfil_metadatos_vgi.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar Excel</a></td>
               </tr>
@@ -115,7 +115,7 @@ const ModuloLicencias = (() => {
               </tr>
               <tr>
                 <td><strong>Ranking consolidado de calidad (CSV)</strong><br><code class="codigo-licencia">docs/wlc_metacalidad_ranking.csv</code></td>
-                <td>Tabla plana con las 133 capas, puntajes cuantitativos, cualitativos, índice IGV y clasificación de calidad.</td>
+                <td>Tabla plana con las 132 capas, puntajes cuantitativos, cualitativos, índice IGV y clasificación de calidad.</td>
                 <td>CSV (<code>.csv</code>) · ~28 KB</td>
                 <td><a href="docs/wlc_metacalidad_ranking.csv" download="wlc_metacalidad_ranking.csv" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar CSV</a></td>
               </tr>
@@ -140,7 +140,7 @@ const ModuloLicencias = (() => {
         </div>
 
         <div class="contenedor-tabla-responsiva">
-          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem; width:100%;">
+          <table class="tabla-datos" style="margin-top:8px; font-size:0.88rem; width:100%; min-width:800px;">
             <thead>
               <tr>
                 <th style="min-width:180px;">Componente del proyecto</th>
@@ -169,7 +169,7 @@ const ModuloLicencias = (() => {
         <h3 style="margin:0 0 6px 0;">Comparativa de licencias por fuente de datos</h3>
         <p class="descripcion" style="margin:0 0 10px 0;">Condiciones de uso, atribución y redistribución de cada organismo o plataforma integrada:</p>
         <div class="contenedor-tabla-responsiva">
-          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem; width:100%;">
+          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem; width:100%; min-width:800px;">
             <thead>
               <tr>
                 <th style="min-width:180px;">Fuente u organismo</th>

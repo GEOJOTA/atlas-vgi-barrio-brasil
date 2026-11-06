@@ -1800,7 +1800,7 @@ const ModuloDiccionario = (() => {
         </div>
         <p class="descripcion">Cada capa descargada o consultada en el Atlas incluye esta estructura estandarizada de atributos compatible con IDE Chile y software SIG (QGIS / PostGIS):</p>
         <div class="contenedor-tabla-responsiva">
-          <table class="tabla-datos" style="margin-top:10px; font-size:0.88rem; width:100%;">
+          <table class="tabla-datos" style="margin-top:10px; font-size:0.88rem; width:100%; min-width:1050px;">
             <thead>
               <tr>
                 <th style="min-width:150px;">Código de campo</th>
@@ -1903,7 +1903,7 @@ const ModuloDiccionario = (() => {
         ${controlesPaginacionHTML}
 
         <div class="contenedor-tabla-responsiva">
-          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem; width:100%;">
+          <table class="tabla-datos" style="margin-top:6px; font-size:0.88rem; width:100%; min-width:820px;">
             <thead>
               <tr>
                 <th style="cursor:pointer; min-width:170px;" onclick="ModuloDiccionario.ordenarPor('tag')">Código / Etiqueta ${iconoOrden('tag')}</th>

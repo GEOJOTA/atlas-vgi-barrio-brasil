@@ -1352,10 +1352,12 @@ button.accion.secundaria:hover {
 }
 
 /* ==========================================================================
-   TABLAS Y VISTAS PREVIAS DE DATOS DE ALTO CONTRASSTE
+   TABLAS Y VISTAS PREVIAS DE DATOS DE ALTO CONTRASTE Y METADATOS
    ========================================================================== */
 
-table.tabla-datos {
+table.tabla-datos,
+table.tabla-metadatos,
+table.tabla-datos-institucional {
   width: 100%;
   border-collapse: collapse;
   margin-top: 14px;
@@ -1376,7 +1378,7 @@ table.tabla-datos th {
   font-weight: 800;
   letter-spacing: 0.02em;
   white-space: normal;
-  word-break: break-word;
+  word-break: normal;
   overflow-wrap: break-word;
   vertical-align: middle;
 }
@@ -1386,7 +1388,7 @@ table.tabla-datos td {
   border-bottom: 1px solid var(--linea);
   color: var(--tinta-suave);
   white-space: normal;
-  word-break: break-word;
+  word-break: normal;
   overflow-wrap: break-word;
   vertical-align: top;
 }
@@ -1394,6 +1396,69 @@ table.tabla-datos td {
 table.tabla-datos tr:hover td {
   background: var(--papel-hover);
   color: #ffffff;
+}
+
+/* Tabla de Metadatos y Catálogo Multi-Lenguaje */
+table.tabla-metadatos {
+  font-size: 0.82rem;
+  border-radius: 10px;
+}
+
+table.tabla-metadatos th {
+  background: rgba(15, 23, 42, 0.98);
+  color: #38bdf8;
+  font-family: var(--fuente-titulos);
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 2px solid rgba(56, 189, 248, 0.35);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  vertical-align: middle;
+}
+
+table.tabla-metadatos td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--linea);
+  color: var(--tinta-suave);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  vertical-align: top;
+}
+
+table.tabla-metadatos tr:hover td {
+  background: rgba(56, 189, 248, 0.05);
+  color: #f8fafc;
+}
+
+table.tabla-metadatos th:first-child,
+table.tabla-metadatos td:first-child {
+  white-space: nowrap !important;
+  min-width: 120px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+table.tabla-datos-institucional th {
+  background: rgba(15, 23, 42, 0.98);
+  color: #f59e0b;
+  font-family: var(--fuente-titulos);
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 2px solid rgba(245, 158, 11, 0.35);
+  font-weight: 700;
+}
+
+table.tabla-datos-institucional td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--linea);
+  color: var(--tinta-suave);
+  vertical-align: top;
 }
 
 /* Contenedores y utilidades dinámicas para tablas, licencias y diccionario */
@@ -1408,10 +1473,34 @@ table.tabla-datos tr:hover td {
   background: var(--papel-tarjeta);
 }
 
-.contenedor-tabla-responsiva table.tabla-datos {
+.contenedor-tabla-responsiva::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.contenedor-tabla-responsiva::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.7);
+  border-radius: 4px;
+}
+
+.contenedor-tabla-responsiva::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.4);
+  border-radius: 4px;
+}
+
+.contenedor-tabla-responsiva::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.7);
+}
+
+.contenedor-tabla-responsiva table.tabla-datos,
+.contenedor-tabla-responsiva table.tabla-metadatos,
+.contenedor-tabla-responsiva table.tabla-datos-institucional,
+.contenedor-tabla-responsiva table.tabla-datos-storyboard {
   margin-top: 0;
+  margin-bottom: 0;
   border: none;
   border-radius: 0;
+  max-width: none !important;
 }
 
 .codigo-licencia {
@@ -7545,17 +7634,23 @@ table.tabla-datos {
     margin-bottom: 16px;
     padding: 12px;
   }
-  table.tabla-datos {
+  table.tabla-datos,
+  table.tabla-metadatos,
+  table.tabla-datos-institucional {
     display: table;
     width: 100%;
     white-space: normal;
     font-size: 0.84rem;
   }
   table.tabla-datos th,
-  table.tabla-datos td {
+  table.tabla-datos td,
+  table.tabla-metadatos th,
+  table.tabla-metadatos td,
+  table.tabla-datos-institucional th,
+  table.tabla-datos-institucional td {
     padding: 10px 12px;
     white-space: normal;
-    word-break: break-word;
+    word-break: normal;
     overflow-wrap: break-word;
   }
 }
@@ -7628,12 +7723,20 @@ table.tabla-datos {
 }
 
 table.tabla-datos,
+table.tabla-metadatos,
+table.tabla-datos-institucional,
 .tabla-datos-storyboard,
 .tabla-catalogo-oficial,
 .doc-tabla-calidad {
   width: 100%;
-  max-width: 100%;
   border-collapse: collapse;
+}
+
+.contenedor-tabla-responsiva table,
+.tabla-responsive table,
+.contenedor-tabla table,
+.doc-tabla-wrapper table {
+  max-width: none !important;
 }
 
 /* Ajustes fluidos de controles y barras de herramientas */

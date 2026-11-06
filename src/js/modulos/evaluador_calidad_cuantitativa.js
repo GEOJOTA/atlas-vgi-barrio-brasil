@@ -1822,18 +1822,18 @@ print("Dataset subsanado y listo para producción!")
           </div>
 
           <!-- Tabla de Desglose WLC -->
-          <div style="overflow-x:auto;">
-            <table class="tabla-datos" style="margin:0; width:100%; font-size:0.76rem;">
+          <div class="contenedor-tabla-responsiva" style="margin:8px 0;">
+            <table class="tabla-datos" style="margin:0; width:100%; min-width:820px; font-size:0.76rem;">
               <thead>
                 <tr style="background:var(--papel-tarjeta);">
-                  <th style="padding:6px 8px;">Criterio Evaluado</th>
-                  <th style="padding:6px 8px;">Dimensión ISO</th>
-                  <th style="padding:6px 8px; text-align:center;">Tipo</th>
-                  <th style="padding:6px 8px; text-align:right;">Valor Bruto</th>
-                  <th style="padding:6px 8px; text-align:right;">Norm. [0,1]</th>
-                  <th style="padding:6px 8px; text-align:right;">Peso (wᵢ)</th>
-                  <th style="padding:6px 8px; text-align:right;">Contribución</th>
-                  <th style="padding:6px 8px;">Diagnóstico / Métrica</th>
+                  <th style="padding:8px 10px; min-width:150px;">Criterio Evaluado</th>
+                  <th style="padding:8px 10px; min-width:120px;">Dimensión ISO</th>
+                  <th style="padding:8px 10px; text-align:center; min-width:70px;">Tipo</th>
+                  <th style="padding:8px 10px; text-align:right; min-width:90px;">Valor Bruto</th>
+                  <th style="padding:8px 10px; text-align:right; min-width:80px;">Norm. [0,1]</th>
+                  <th style="padding:8px 10px; text-align:right; min-width:80px;">Peso (wᵢ)</th>
+                  <th style="padding:8px 10px; text-align:right; min-width:90px;">Contribución</th>
+                  <th style="padding:8px 10px; min-width:140px;">Diagnóstico / Métrica</th>
                 </tr>
               </thead>
               <tbody>
@@ -2224,15 +2224,15 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
           <h4 style="margin:0 0 8px 0; font-size:0.95rem; font-family:var(--fuente-datos); color:var(--tinta);">
             📋 Análisis Tabular por Atributo (${resultado.atributosDetalle.length} Campos)
           </h4>
-          <div style="max-height:220px; overflow-y:auto; border:1px solid var(--linea); border-radius:6px;">
-            <table class="tabla-datos" style="margin:0; width:100%; font-size:0.78rem;">
+          <div class="contenedor-tabla-responsiva" style="max-height:260px; overflow-y:auto; overflow-x:auto; margin:8px 0;">
+            <table class="tabla-datos" style="margin:0; width:100%; min-width:600px; font-size:0.78rem;">
               <thead>
-                <tr style="background:var(--papel-alto); position:sticky; top:0;">
-                  <th style="padding:6px 10px;">Campo</th>
-                  <th style="padding:6px 10px;">Tipo de Dato</th>
-                  <th style="padding:6px 10px; text-align:center;">Válidos</th>
-                  <th style="padding:6px 10px; text-align:center;">Nulos / Vacíos</th>
-                  <th style="padding:6px 10px; text-align:right;">Completitud</th>
+                <tr style="background:var(--papel-alto); position:sticky; top:0; z-index:2;">
+                  <th style="padding:8px 10px; min-width:140px;">Campo</th>
+                  <th style="padding:8px 10px; min-width:110px;">Tipo de Dato</th>
+                  <th style="padding:8px 10px; text-align:center; min-width:90px;">Válidos</th>
+                  <th style="padding:8px 10px; text-align:center; min-width:100px;">Nulos / Vacíos</th>
+                  <th style="padding:8px 10px; text-align:right; min-width:100px;">Completitud</th>
                 </tr>
               </thead>
               <tbody>

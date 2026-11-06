@@ -298,18 +298,18 @@ const ModuloCalidadAnalyst = (() => {
           </div>
 
           <!-- Tabla de Cambios con Diagnóstico de Calidad -->
-          <div style="max-height:300px; overflow-y:auto; border:1px solid var(--linea); background:var(--papel);">
-            <table class="tabla-datos" style="margin:0; font-size:0.78rem; width:100%;">
+          <div class="contenedor-tabla-responsiva" style="max-height:320px; overflow-y:auto; overflow-x:auto; margin:8px 0;">
+            <table class="tabla-datos" style="margin:0; font-size:0.78rem; width:100%; min-width:820px;">
               <thead>
-                <tr style="background:var(--papel-alto); border-bottom:1px solid var(--linea);">
-                  <th style="padding:6px 8px;">Changeset</th>
-                  <th style="padding:6px 8px;">Mapeador</th>
-                  <th style="padding:6px 8px;">Fecha UTC</th>
-                  <th style="padding:6px 8px; text-align:center;">Cambios</th>
-                  <th style="padding:6px 8px;">Herramienta</th>
-                  <th style="padding:6px 8px;">Comentario de Edición</th>
-                  <th style="padding:6px 8px; text-align:center;">Estado</th>
-                  <th style="padding:6px 8px; text-align:center;">Acción</th>
+                <tr style="background:var(--papel-alto); border-bottom:1px solid var(--linea); position:sticky; top:0; z-index:2;">
+                  <th style="padding:8px 10px; min-width:90px;">Changeset</th>
+                  <th style="padding:8px 10px; min-width:110px;">Mapeador</th>
+                  <th style="padding:8px 10px; min-width:110px;">Fecha UTC</th>
+                  <th style="padding:8px 10px; text-align:center; min-width:80px;">Cambios</th>
+                  <th style="padding:8px 10px; min-width:100px;">Herramienta</th>
+                  <th style="padding:8px 10px; min-width:200px;">Comentario de Edición</th>
+                  <th style="padding:8px 10px; text-align:center; min-width:90px;">Estado</th>
+                  <th style="padding:8px 10px; text-align:center; min-width:80px;">Acción</th>
                 </tr>
               </thead>
               <tbody>
