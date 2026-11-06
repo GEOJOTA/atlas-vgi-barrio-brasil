@@ -543,13 +543,74 @@
         </details>
       </header>
 
-      <!-- Sugerencias Temáticas Ciudadanas (1 Clic) -->
+      <!-- 1. Consulta Rápida sobre la Base Regional Geofabrik RM (Recomendado / Local) -->
+      <div class="bloque" id="sec-osm-geodatabase-rm" style="background:var(--papel-alto); border:1px solid var(--linea); border-radius:10px; padding:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+          <h3 style="margin:0; font-size:1.15rem; color:var(--musgo);">Consulta rápida sobre la base regional descargada (Geofabrik Región Metropolitana)</h3>
+          <span style="font-size:0.75rem; background:rgba(21,128,61,0.12); color:#15803d; border:1px solid rgba(21,128,61,0.25); padding:2px 8px; border-radius:12px; font-weight:600;">Recomendado · Alta disponibilidad local</span>
+        </div>
+        <p class="descripcion" style="margin-bottom:14px;">
+          Filtra al instante la copia local de OpenStreetMap para las 52 comunas de la Región Metropolitana (1,55 millones de registros, 695 mil edificaciones y 326 mil tramos de transporte preprocesados desde extractos oficiales de Geofabrik GmbH) usando el <strong>encuadre actual del mapa</strong> o <strong>coordenadas manuales</strong>.
+        </p>
+
+        <!-- Modos de Consulta Pedagógicos -->
+        <div style="display:flex; gap:16px; margin-bottom:14px; padding:10px 14px; background:var(--papel-tarjeta); border:1px solid var(--linea); border-radius:8px; align-items:center; flex-wrap:wrap;">
+          <span style="font-size:0.86rem; font-weight:700; color:var(--tinta-suave);">Área de búsqueda:</span>
+          <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; cursor:pointer;">
+            <input type="radio" name="modo-consulta-local" id="modo-local-bbox" value="bbox" checked>
+            <span>Usar el encuadre visible del mapa</span>
+          </label>
+          <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; cursor:pointer;">
+            <input type="radio" name="modo-consulta-local" id="modo-local-coords" value="coords">
+            <span>Ingresar coordenadas manuales (WGS 84)</span>
+          </label>
+        </div>
+
+        <div class="fila-campos">
+          <div class="campo"><label for="osm-oeste">Oeste (Longitud mín.)</label><input type="number" step="any" id="osm-oeste"></div>
+          <div class="campo"><label for="osm-sur">Sur (Latitud mín.)</label><input type="number" step="any" id="osm-sur"></div>
+          <div class="campo"><label for="osm-este">Este (Longitud máx.)</label><input type="number" step="any" id="osm-este"></div>
+          <div class="campo"><label for="osm-norte">Norte (Latitud máx.)</label><input type="number" step="any" id="osm-norte"></div>
+        </div>
+        <div class="fila-campos">
+          <div class="campo" style="flex:1.2; min-width:260px;">
+            <label for="osm-categoria-preset">Categoría temática</label>
+            <select id="osm-categoria-preset">
+              <option value="">— Seleccionar categoría predefinida —</option>
+              <option value="educacion">CAT-01: Educación y Universidad (Campus UAH / Colegios)</option>
+              <option value="servicios">CAT-02: Servicios, Comercio y Abastecimiento</option>
+              <option value="transporte">CAT-03: Movilidad y Transporte Público (Red / Metro)</option>
+              <option value="movilidad_activa">CAT-04: Movilidad Activa y Ciclovías</option>
+              <option value="espacio_publico">CAT-05: Áreas Verdes, Plazas y Recreación</option>
+              <option value="patrimonio">CAT-06: Patrimonio, Cultura e Identidad Urbana</option>
+              <option value="accesibilidad">CAT-07: Accesibilidad Universal y Cruces</option>
+              <option value="biodiversidad">CAT-08: Biodiversidad Urbana (Arbolado y Agua)</option>
+              <option value="edificaciones">CAT-09: Edificaciones y Huella Urbana (building=*) [Polígonos]</option>
+              <option value="cobertura_suelo">CAT-10: Coberturas y Usos de Suelo (landuse=*) [Polígonos]</option>
+            </select>
+          </div>
+          <div class="campo" style="flex:1; min-width:200px;">
+            <label for="osm-etiqueta">Etiqueta específica (opcional)</label>
+            <input type="text" id="osm-etiqueta" placeholder="ej: amenity=cafe, shop=bakery">
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
+          <button class="accion" id="btn-consultar-osm" title="Consulta según el encuadre activo del mapa">Consultar en encuadre del mapa</button>
+          <button class="accion secundaria" id="btn-consultar-osm-coords" title="Consulta según las 4 coordenadas numéricas del formulario">Consultar por coordenadas</button>
+          <button class="accion secundaria" id="btn-cargar-osm-al-mapa">Enviar resultado al visor</button>
+          <button class="accion secundaria" id="btn-usar-area-config">Centrar en Barrio Brasil (UAH)</button>
+          <button class="accion secundaria" id="btn-encuadre-rm-completa">Ver toda la Región Metropolitana</button>
+        </div>
+      </div>
+
+      <!-- 2. Consultas Temáticas en Vivo (Overpass API) -->
       <div class="bloque" id="sec-osm-temas-rapidos">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-          <h3 style="margin:0; color:var(--musgo); font-size:1.2rem;">Consultas rápidas por tema (1 clic)</h3>
+          <h3 style="margin:0; color:var(--musgo); font-size:1.2rem;">Consultas temáticas en vivo (API Overpass)</h3>
+          <span style="font-size:0.75rem; background:rgba(180,83,9,0.1); color:#b45309; border:1px solid rgba(180,83,9,0.25); padding:2px 8px; border-radius:12px; font-weight:600;">Sujeto a disponibilidad del servidor público</span>
         </div>
         <p class="descripcion" style="margin-bottom:16px; color:var(--tinta-suave); font-size:0.95rem;">
-          Selecciona una categoría para consultar y visualizar en el mapa los elementos del Barrio Brasil y del entorno del Campus Universidad Alberto Hurtado:
+          Selecciona una categoría para consultar y visualizar en el mapa los elementos del Barrio Brasil y del entorno del Campus Universidad Alberto Hurtado directamente desde los servidores en vivo de Overpass API (pueden presentarse demoras según saturación del servidor):
         </p>
         <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:10px;" id="grilla-sugerencias-ciudadanas">
           <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-01" data-categoria="educacion" data-clave="amenity" data-valor="university" data-nombre="CAT-01: Educación y Universidad" data-color="#1e3a5f" data-entidad="nwr">CAT-01 · Educación y universidad</button>
@@ -565,10 +626,13 @@
         </div>
       </div>
 
-      <!-- Constructor Visual de Consultas -->
+      <!-- 3. Constructor Visual de Consultas Personalizadas (Overpass QL en vivo) -->
       <div class="bloque" id="sec-osm-constructor-overpass">
-        <h3 style="margin-top:0;">Constructor de consultas personalizadas</h3>
-        <p class="descripcion" style="margin-bottom:12px;">Define qué elementos deseas extraer dentro del recuadro de búsqueda actual.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+          <h3 style="margin-top:0; margin-bottom:0;">Constructor de consultas personalizadas (Overpass QL en vivo)</h3>
+          <span style="font-size:0.75rem; background:rgba(100,116,139,0.12); color:#475569; border:1px solid rgba(100,116,139,0.25); padding:2px 8px; border-radius:12px; font-weight:600;">Avanzado · Servidores externos</span>
+        </div>
+        <p class="descripcion" style="margin-bottom:12px;">Define qué elementos específicos deseas extraer en vivo dentro del recuadro de búsqueda actual vía Overpass API.</p>
 
         <div class="fila-campos">
           <div class="campo" style="flex:1; min-width:180px;">
@@ -681,68 +745,8 @@
         </div>
       </div>
 
-      <!-- Área de consulta espacial -->
-      <div class="bloque" id="sec-osm-geodatabase-rm" style="background:var(--papel-alto); border:1px solid var(--linea); border-radius:10px; padding:20px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
-          <h3 style="margin:0; font-size:1.15rem; color:var(--musgo);">Consulta rápida sobre la base regional descargada (Región Metropolitana)</h3>
-        </div>
-        <p class="descripcion" style="margin-bottom:14px;">
-          Filtra al instante la copia local de OpenStreetMap para las 52 comunas de la Región Metropolitana (1,55 millones de registros, 695 mil edificaciones y 326 mil tramos de transporte) usando el <strong>encuadre actual del mapa</strong> o <strong>coordenadas manuales</strong>.
-        </p>
-
-        <!-- Modos de Consulta Pedagógicos -->
-        <div style="display:flex; gap:16px; margin-bottom:14px; padding:10px 14px; background:var(--papel-tarjeta); border:1px solid var(--linea); border-radius:8px; align-items:center; flex-wrap:wrap;">
-          <span style="font-size:0.86rem; font-weight:700; color:var(--tinta-suave);">Área de búsqueda:</span>
-          <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; cursor:pointer;">
-            <input type="radio" name="modo-consulta-local" id="modo-local-bbox" value="bbox" checked>
-            <span>Usar el encuadre visible del mapa</span>
-          </label>
-          <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; cursor:pointer;">
-            <input type="radio" name="modo-consulta-local" id="modo-local-coords" value="coords">
-            <span>Ingresar coordenadas manuales (WGS 84)</span>
-          </label>
-        </div>
-
-        <div class="fila-campos">
-          <div class="campo"><label for="osm-oeste">Oeste (Longitud mín.)</label><input type="number" step="any" id="osm-oeste"></div>
-          <div class="campo"><label for="osm-sur">Sur (Latitud mín.)</label><input type="number" step="any" id="osm-sur"></div>
-          <div class="campo"><label for="osm-este">Este (Longitud máx.)</label><input type="number" step="any" id="osm-este"></div>
-          <div class="campo"><label for="osm-norte">Norte (Latitud máx.)</label><input type="number" step="any" id="osm-norte"></div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1.2; min-width:260px;">
-            <label for="osm-categoria-preset">Categoría temática</label>
-            <select id="osm-categoria-preset">
-              <option value="">— Seleccionar categoría predefinida —</option>
-              <option value="educacion">CAT-01: Educación y Universidad (Campus UAH / Colegios)</option>
-              <option value="servicios">CAT-02: Servicios, Comercio y Abastecimiento</option>
-              <option value="transporte">CAT-03: Movilidad y Transporte Público (Red / Metro)</option>
-              <option value="movilidad_activa">CAT-04: Movilidad Activa y Ciclovías</option>
-              <option value="espacio_publico">CAT-05: Áreas Verdes, Plazas y Recreación</option>
-              <option value="patrimonio">CAT-06: Patrimonio, Cultura e Identidad Urbana</option>
-              <option value="accesibilidad">CAT-07: Accesibilidad Universal y Cruces</option>
-              <option value="biodiversidad">CAT-08: Biodiversidad Urbana (Arbolado y Agua)</option>
-              <option value="edificaciones">CAT-09: Edificaciones y Huella Urbana (building=*) [Polígonos]</option>
-              <option value="cobertura_suelo">CAT-10: Coberturas y Usos de Suelo (landuse=*) [Polígonos]</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1; min-width:200px;">
-            <label for="osm-etiqueta">Etiqueta específica (opcional)</label>
-            <input type="text" id="osm-etiqueta" placeholder="ej: amenity=cafe, shop=bakery">
-          </div>
-        </div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
-          <button class="accion" id="btn-consultar-osm" title="Consulta según el encuadre activo del mapa">Consultar en encuadre del mapa</button>
-          <button class="accion secundaria" id="btn-consultar-osm-coords" title="Consulta según las 4 coordenadas numéricas del formulario">Consultar por coordenadas</button>
-          <button class="accion secundaria" id="btn-cargar-osm-al-mapa">Enviar resultado al visor</button>
-          <button class="accion secundaria" id="btn-usar-area-config">Centrar en Barrio Brasil (UAH)</button>
-          <button class="accion secundaria" id="btn-encuadre-rm-completa">Ver toda la Región Metropolitana</button>
-        </div>
-      </div>
-
-
       <div class="bloque resultado" id="resultado-osm" aria-live="polite">
-        <p class="descripcion">Todavía no hay ninguna consulta realizada. Utiliza el constructor superior para OpenStreetMap (API Overpass) o consulta la descarga regional de Geofabrik RM.</p>
+        <p class="descripcion">Todavía no hay ninguna consulta realizada. Utiliza la consulta sobre la base regional de Geofabrik RM (recomendado, alta disponibilidad) o las consultas en vivo para OpenStreetMap (API Overpass).</p>
       </div>
     </section>
 

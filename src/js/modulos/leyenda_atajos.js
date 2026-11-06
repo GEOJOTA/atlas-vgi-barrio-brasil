@@ -35,9 +35,9 @@ const ModuloAtajosLeyenda = (() => {
       badge: 'Módulo 02',
       apartados: [
         { id: 'sec-osm-cabecera', titulo: 'Guía y alcance técnico', abajo: false },
-        { id: 'sec-osm-temas-rapidos', titulo: 'Consultas rápidas por tema', abajo: false },
+        { id: 'sec-osm-geodatabase-rm', titulo: 'Consultas Geofabrik RM (local)', abajo: false },
+        { id: 'sec-osm-temas-rapidos', titulo: 'Consultas temáticas (API)', abajo: true },
         { id: 'sec-osm-constructor-overpass', titulo: 'Constructor Overpass API en vivo', abajo: true },
-        { id: 'sec-osm-geodatabase-rm', titulo: 'Geodatabase regional RM', abajo: true },
         { id: 'resultado-osm', titulo: 'Resultados y descargas', abajo: true }
       ]
     },
