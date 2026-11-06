@@ -257,14 +257,13 @@
           <div id="panel-simbologia-dinamica" class="panel-simbologia-dinamica colapsado" role="region" aria-label="Control de Simbología Temática Dinámica">
             <div class="header-simbologia-dinamica" id="header-panel-simbologia" title="Clic para desplegar o plegar el editor de simbología temática">
               <div class="titulo-simbologia-dinamica">
-                <span class="icono-simbologia">🎨</span>
                 <span class="texto-titulo-simbologia">Simbología Temática Dinámica</span>
                 <span id="badge-simbologia-capa-activa" class="badge-simbologia-capa" title="Capa temática actualmente en edición">Sin capas activas</span>
               </div>
               <div class="acciones-header-simbologia">
-                <button type="button" id="btn-toggle-panel-simbologia" class="btn-toggle-simbologia" title="Desplegar / Plegar opciones de clasificación" aria-expanded="false">
+                <button type="button" id="btn-toggle-panel-simbologia" class="btn-toggle-simbologia" title="Desplegar o plegar opciones de clasificación" aria-expanded="false">
                   <span id="label-toggle-simbologia">Ajustar</span>
-                  <span id="icono-toggle-simbologia">▾</span>
+                  <span id="icono-toggle-simbologia" class="indicador-chevron-simbologia">▼</span>
                 </button>
               </div>
             </div>
@@ -326,13 +325,43 @@
                 <div class="campo-control-simbologia grupo-cuantitativo" id="grupo-simbologia-rampa">
                   <label for="select-simbologia-rampa" class="label-simbologia">Rampa de color:</label>
                   <select id="select-simbologia-rampa" class="select-simbologia">
-                    <option value="ylorrd" selected>Amarillo → Rojo (YlOrRd cálido)</option>
-                    <option value="viridis">Viridis (Azul → Verde → Amarillo)</option>
-                    <option value="blues">Azules (Celeste → Marino)</option>
-                    <option value="greens">Verdes (Esmeralda → Bosque)</option>
-                    <option value="magma">Magma (Morado → Naranja → Amarillo)</option>
-                    <option value="purples">Púrpuras (Lavanda → Violeta)</option>
-                    <option value="oranges">Naranjas (Degradado cálido)</option>
+                    <optgroup label="Secuenciales Graduales">
+                      <option value="verde_azul">Verde a Azul (GnBu)</option>
+                      <option value="azul_verde">Azul a Verde (BuGn)</option>
+                      <option value="ylorrd" selected>Amarillo a Naranja y Rojo (YlOrRd)</option>
+                      <option value="blues">Azules (Celeste a Azul Marino)</option>
+                      <option value="greens">Verdes (Verde Claro a Bosque)</option>
+                      <option value="reds">Rojos (Rosa Claro a Rojo Intenso)</option>
+                      <option value="purples">Púrpuras (Lavanda a Violeta)</option>
+                      <option value="oranges">Naranjas (Melocotón a Cálido)</option>
+                      <option value="grises">Escala de Grises (Gris Claro a Negro)</option>
+                    </optgroup>
+                    <optgroup label="Perceptuales / Científicas">
+                      <option value="viridis">Viridis (Púrpura, Verde y Amarillo)</option>
+                      <option value="plasma">Plasma (Azul, Púrpura, Rojo y Amarillo)</option>
+                      <option value="inferno">Inferno (Negro, Morado, Naranja y Amarillo)</option>
+                      <option value="magma">Magma (Púrpura oscuro, Rosa y Naranja)</option>
+                      <option value="cividis">Cividis (Azul a Amarillo para accesibilidad)</option>
+                      <option value="turbo">Turbo (Arcoíris perceptual continuo)</option>
+                    </optgroup>
+                    <optgroup label="Divergentes / Bipolares">
+                      <option value="verde_rojo">Verde a Amarillo y Rojo (GnYlRd)</option>
+                      <option value="rojo_verde">Rojo a Amarillo y Verde (RdYlGn)</option>
+                      <option value="azul_rojo">Azul a Blanco y Rojo (BuRd)</option>
+                      <option value="rojo_azul">Rojo a Blanco y Azul (RdBu)</option>
+                      <option value="espectral">Espectral (Spectral multiescala)</option>
+                      <option value="marron_verde">Marrón a Blanco y Verde (BrBG)</option>
+                      <option value="purpura_verde">Púrpura a Blanco y Verde (PRGn)</option>
+                    </optgroup>
+                  </select>
+                </div>
+
+                <!-- Dirección / Orden de la Rampa (Directo / Invertido) -->
+                <div class="campo-control-simbologia" id="grupo-simbologia-orden">
+                  <label for="select-simbologia-orden" class="label-simbologia">Orden de la rampa:</label>
+                  <select id="select-simbologia-orden" class="select-simbologia">
+                    <option value="normal" selected>Directo (Bajo a Alto / Secuencial)</option>
+                    <option value="invertido">Invertido (Alto a Bajo / Al revés)</option>
                   </select>
                 </div>
 
@@ -341,9 +370,13 @@
                   <label for="select-simbologia-paleta" class="label-simbologia">Paleta cualitativa:</label>
                   <select id="select-simbologia-paleta" class="select-simbologia">
                     <option value="armonica" selected>Cartográfica Armónica (20 tonos)</option>
-                    <option value="vibrante">Vibrante / Alto Contraste</option>
+                    <option value="vibrante">Vibrante / Alto Contraste (10 tonos)</option>
+                    <option value="tableau">Tableau 10 Clásico</option>
+                    <option value="set1">ColorBrewer Set 1</option>
+                    <option value="set2">ColorBrewer Set 2</option>
+                    <option value="paired">Paired (Pares Contrastados)</option>
                     <option value="pastel">Pastel Equilibrado</option>
-                    <option value="tierra">Tonos Tierra / Orgánicos</option>
+                    <option value="tierra">Tonos Tierra y Naturales</option>
                   </select>
                 </div>
               </div>
@@ -362,10 +395,10 @@
               <!-- Acciones del Panel -->
               <div class="footer-simbologia-dinamica">
                 <button type="button" id="btn-aplicar-simbologia" class="btn-accion-simbologia primario" title="Aplicar de inmediato esta clasificación en el mapa">
-                  <span>⚡ Aplicar al mapa</span>
+                  <span>Aplicar al mapa</span>
                 </button>
                 <button type="button" id="btn-restablecer-simbologia" class="btn-accion-simbologia secundario" title="Restablecer clasificación automática por defecto">
-                  <span>↺ Automático</span>
+                  <span>Restablecer automático</span>
                 </button>
               </div>
             </div>

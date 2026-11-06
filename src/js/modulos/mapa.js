@@ -266,13 +266,28 @@ const ModuloMapa = (() => {
   // =========================================================================
 
   const RAMPAS_CUANTITATIVAS = {
+    verde_azul: ['#f0f9e8', '#ccebc5', '#a8ddb5', '#7bccc4', '#43a2ca', '#0868ac'],
+    azul_verde: ['#edf8fb', '#ccece6', '#99d8c9', '#66c2a4', '#2ca25f', '#006d2c'],
     ylorrd: ['#ffffb2', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026'],
-    viridis: ['#440154', '#414487', '#2a788e', '#22a884', '#7ad151', '#bddf26', '#fde725'],
     blues: ['#eff3ff', '#c6dbef', '#9ecae1', '#6baed6', '#4292c6', '#2171b5', '#084594'],
     greens: ['#edf8e9', '#c7e9c0', '#a1d99b', '#74c476', '#41ab5d', '#238b45', '#005a32'],
-    magma: ['#000004', '#3b0f70', '#8c2981', '#de4968', '#fe9f6d', '#fec488', '#fcfdbf'],
+    reds: ['#fee5d9', '#fcbba1', '#fc9272', '#fb6a4a', '#ef3b2c', '#cb181d', '#99000d'],
     purples: ['#fcfbfd', '#efedf5', '#dadaeb', '#bcbddc', '#9e9ac8', '#756bb1', '#54278f'],
-    oranges: ['#fff5eb', '#fee6ce', '#fdd0a2', '#fdae6b', '#fd8d3c', '#f16913', '#d94801']
+    oranges: ['#fff5eb', '#fee6ce', '#fdd0a2', '#fdae6b', '#fd8d3c', '#f16913', '#d94801'],
+    grises: ['#f7f7f7', '#d9d9d9', '#bdbdbd', '#969696', '#737373', '#525252', '#252525'],
+    viridis: ['#440154', '#414487', '#2a788e', '#22a884', '#7ad151', '#bddf26', '#fde725'],
+    plasma: ['#0d0887', '#46039f', '#7201a8', '#9c179e', '#bd3786', '#d8576b', '#ed7953', '#fb9f3a', '#fdca26', '#f0f921'],
+    inferno: ['#000004', '#160b39', '#420a68', '#6a176e', '#932667', '#ba3655', '#dd513a', '#f37819', '#fca50a', '#f6d746'],
+    magma: ['#000004', '#3b0f70', '#8c2981', '#de4968', '#fe9f6d', '#fec488', '#fcfdbf'],
+    cividis: ['#00204d', '#00377a', '#36537d', '#576f83', '#778c89', '#98aa8e', '#bcc78c', '#e5e478', '#ffea46'],
+    turbo: ['#30123b', '#4145ab', '#4675ed', '#39a2fc', '#1bcfd4', '#24eca6', '#61fc6c', '#a4fc3b', '#d1e834', '#f3c63a', '#fe9b2d', '#f36315', '#d93806', '#b01a02', '#7a0403'],
+    verde_rojo: ['#1a9850', '#66bd63', '#a6d96a', '#d9ef8b', '#fee08b', '#fdae61', '#f46d43', '#d73027'],
+    rojo_verde: ['#d73027', '#f46d43', '#fdae61', '#fee08b', '#d9ef8b', '#a6d96a', '#66bd63', '#1a9850'],
+    azul_rojo: ['#2166ac', '#4393c3', '#92c5de', '#d1e5f0', '#f7f7f7', '#fddbc7', '#f4a582', '#d6604d', '#b2182b'],
+    rojo_azul: ['#b2182b', '#d6604d', '#f4a582', '#fddbc7', '#f7f7f7', '#d1e5f0', '#92c5de', '#4393c3', '#2166ac'],
+    espectral: ['#9e0142', '#d53e4f', '#f46d43', '#fdae61', '#fee08b', '#e6f598', '#abdda4', '#66c2a5', '#3288bd', '#5e4fa2'],
+    marron_verde: ['#8c510a', '#bf812d', '#dfc27d', '#f6e8c3', '#f5f5f5', '#c7eae5', '#80cdc1', '#35978f', '#01665e'],
+    purpura_verde: ['#762a83', '#9970ab', '#c2a5cf', '#e7d4e8', '#f7f7f7', '#d9f0d3', '#a6dba0', '#5aae61', '#1b7837']
   };
 
   const PALETAS_CATEGORICAS = {
@@ -285,6 +300,22 @@ const ModuloMapa = (() => {
     vibrante: [
       '#e11d48', '#2563eb', '#f59e0b', '#10b981', '#8b5cf6',
       '#ec4899', '#06b6d4', '#f97316', '#84cc16', '#6366f1'
+    ],
+    tableau: [
+      '#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f',
+      '#edc949', '#af7aa1', '#ff9da7', '#9c755f', '#bab0ab'
+    ],
+    set1: [
+      '#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00',
+      '#ffff33', '#a65628', '#f781bf', '#999999'
+    ],
+    set2: [
+      '#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854',
+      '#ffd92f', '#e5c494', '#b3b3b3'
+    ],
+    paired: [
+      '#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99',
+      '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a'
     ],
     pastel: [
       '#93c5fd', '#fca5a5', '#86efac', '#fde047', '#c4b5fd',
@@ -312,14 +343,20 @@ const ModuloMapa = (() => {
     return Math.abs(hash);
   }
 
-  function obtenerColorDePaleta(clave, paletaKey = 'armonica') {
-    const paleta = PALETAS_CATEGORICAS[paletaKey] || PALETAS_CATEGORICAS.armonica;
+  function obtenerColorDePaleta(clave, paletaKey = 'armonica', invertido = false) {
+    let paleta = PALETAS_CATEGORICAS[paletaKey] || PALETAS_CATEGORICAS.armonica;
+    if (invertido) {
+      paleta = [...paleta].reverse();
+    }
     const idx = hashCadena(clave) % paleta.length;
     return paleta[idx];
   }
 
-  function interpolarRampa(rampaKey, k) {
-    const base = RAMPAS_CUANTITATIVAS[rampaKey] || RAMPAS_CUANTITATIVAS.ylorrd;
+  function interpolarRampa(rampaKey, k, invertido = false) {
+    let base = RAMPAS_CUANTITATIVAS[rampaKey] || RAMPAS_CUANTITATIVAS.ylorrd;
+    if (invertido) {
+      base = [...base].reverse();
+    }
     const n = Math.max(2, Math.min(k, 10));
     const colores = [];
     for (let i = 0; i < n; i++) {
@@ -575,7 +612,11 @@ const ModuloMapa = (() => {
       });
 
       const categoriasOrdenadas = Object.keys(conteos).sort((a, b) => conteos[b] - conteos[a]);
-      const paleta = PALETAS_CATEGORICAS[cfg.paletaCat] || PALETAS_CATEGORICAS.armonica;
+      const esInvertido = cfg.orden === 'invertido';
+      let paleta = PALETAS_CATEGORICAS[cfg.paletaCat] || PALETAS_CATEGORICAS.armonica;
+      if (esInvertido) {
+        paleta = [...paleta].reverse();
+      }
 
       const asignacion = {};
       const itemsLeyenda = [];
@@ -652,7 +693,8 @@ const ModuloMapa = (() => {
       }
 
       const numIntervalos = Math.max(1, breaks.length - 1);
-      const colores = interpolarRampa(rampaKey, numIntervalos);
+      const esInvertido = cfg.orden === 'invertido';
+      const colores = interpolarRampa(rampaKey, numIntervalos, esInvertido);
 
       const conteosPorClase = new Array(numIntervalos).fill(0);
       features.forEach(f => {
@@ -734,7 +776,7 @@ const ModuloMapa = (() => {
       if (val === undefined || val === null || val === '') val = '(Sin dato)';
       val = String(val).trim();
       const asignacion = reg.clasificacion?.asignacion || {};
-      return asignacion[val] || obtenerColorDePaleta(val, cfg.paletaCat);
+      return asignacion[val] || obtenerColorDePaleta(val, cfg.paletaCat, cfg.orden === 'invertido');
     }
 
     if (cfg.modo === 'graduado') {
@@ -940,11 +982,13 @@ const ModuloMapa = (() => {
     const selectMetodoCuant = document.getElementById('select-simbologia-metodo-cuant');
     const selectNumClases = document.getElementById('select-simbologia-num-clases');
     const selectRampa = document.getElementById('select-simbologia-rampa');
+    const selectOrden = document.getElementById('select-simbologia-orden');
     const selectPaleta = document.getElementById('select-simbologia-paleta');
 
     const grupoMetodoCuant = document.getElementById('grupo-simbologia-metodo-cuant');
     const grupoNumClases = document.getElementById('grupo-simbologia-num-clases');
     const grupoRampa = document.getElementById('grupo-simbologia-rampa');
+    const grupoOrden = document.getElementById('grupo-simbologia-orden');
     const grupoPaleta = document.getElementById('grupo-simbologia-paleta');
     const grupoColumna = document.getElementById('grupo-simbologia-columna');
 
@@ -953,6 +997,7 @@ const ModuloMapa = (() => {
     if (selectMetodoCuant) selectMetodoCuant.value = cfg.metodoCuant;
     if (selectNumClases) selectNumClases.value = String(cfg.numClases);
     if (selectRampa) selectRampa.value = cfg.rampa;
+    if (selectOrden) selectOrden.value = cfg.orden || 'normal';
     if (selectPaleta) selectPaleta.value = cfg.paletaCat;
 
     const esGraduado = cfg.modo === 'graduado';
@@ -964,6 +1009,7 @@ const ModuloMapa = (() => {
     if (grupoMetodoCuant) grupoMetodoCuant.style.display = esGraduado ? '' : 'none';
     if (grupoNumClases) grupoNumClases.style.display = esGraduado ? '' : 'none';
     if (grupoRampa) grupoRampa.style.display = esGraduado ? '' : 'none';
+    if (grupoOrden) grupoOrden.style.display = (esGraduado || esCategorizado) ? '' : 'none';
     if (grupoPaleta) grupoPaleta.style.display = esCategorizado ? '' : 'none';
 
     if (selectColumna && reg.cols) {
@@ -1024,7 +1070,7 @@ const ModuloMapa = (() => {
       if (cuerpo) cuerpo.style.display = colapsado ? 'none' : 'flex';
       if (btnToggle) btnToggle.setAttribute('aria-expanded', String(!colapsado));
       if (labelToggle) labelToggle.textContent = colapsado ? 'Ajustar' : 'Plegar';
-      if (iconoToggle) iconoToggle.textContent = colapsado ? '▾' : '▴';
+      if (iconoToggle) iconoToggle.textContent = colapsado ? '▼' : '▲';
     };
 
     if (btnToggle) {
@@ -1048,6 +1094,7 @@ const ModuloMapa = (() => {
     const selectMetodoCuant = document.getElementById('select-simbologia-metodo-cuant');
     const selectNumClases = document.getElementById('select-simbologia-num-clases');
     const selectRampa = document.getElementById('select-simbologia-rampa');
+    const selectOrden = document.getElementById('select-simbologia-orden');
     const selectPaleta = document.getElementById('select-simbologia-paleta');
     const btnAplicar = document.getElementById('btn-aplicar-simbologia');
     const btnRestablecer = document.getElementById('btn-restablecer-simbologia');
@@ -1059,6 +1106,7 @@ const ModuloMapa = (() => {
         metodoCuant: selectMetodoCuant ? selectMetodoCuant.value : 'cuartiles',
         numClases: selectNumClases ? Number(selectNumClases.value) : 4,
         rampa: selectRampa ? selectRampa.value : 'ylorrd',
+        orden: selectOrden ? selectOrden.value : 'normal',
         paletaCat: selectPaleta ? selectPaleta.value : 'armonica'
       };
     };
@@ -1099,7 +1147,7 @@ const ModuloMapa = (() => {
       };
     }
 
-    [selectColumna, selectMetodoCuant, selectNumClases, selectRampa, selectPaleta].forEach(sel => {
+    [selectColumna, selectMetodoCuant, selectNumClases, selectRampa, selectOrden, selectPaleta].forEach(sel => {
       if (sel) {
         sel.onchange = () => {
           aplicarDesdeUI();
@@ -1112,7 +1160,7 @@ const ModuloMapa = (() => {
         e.preventDefault();
         aplicarDesdeUI();
         const textoOriginal = btnAplicar.innerHTML;
-        btnAplicar.innerHTML = '<span>✓ ¡Aplicado al mapa!</span>';
+        btnAplicar.innerHTML = '<span>¡Aplicado al mapa!</span>';
         btnAplicar.style.background = '#16a34a';
         setTimeout(() => {
           btnAplicar.innerHTML = textoOriginal;
@@ -1164,6 +1212,7 @@ const ModuloMapa = (() => {
           metodoCuant: 'cuartiles',
           numClases: 4,
           rampa: 'ylorrd',
+          orden: 'normal',
           paletaCat: 'armonica'
         },
         clasificacion: null
