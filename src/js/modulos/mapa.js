@@ -331,6 +331,7 @@ const ModuloMapa = (() => {
 
   let registroCapasTematicas = {}; // idCapa -> { idCapa, geojson, opciones, capaLeaflet, cols, config, clasificacion }
   let capaActivaSimbologiaId = null;
+  let leyendaVisorCerradaManualmente = false;
 
   function hashCadena(str) {
     if (!str) return 0;
@@ -890,6 +891,7 @@ const ModuloMapa = (() => {
 
     actualizarLeyendaPreview(reg);
     actualizarBadgeHeaderSimbologia(reg);
+    actualizarLeyendaCartograficaVisor(reg);
   }
 
   function actualizarBadgeHeaderSimbologia(reg) {
@@ -943,6 +945,91 @@ const ModuloMapa = (() => {
     `).join('');
   }
 
+  /**
+   * Actualiza y sincroniza la leyenda cartográfica flotante directamente sobre el visor.
+   * Se muestra cuando el panel de configuración de simbología está plegado (escondido)
+   * para permitir interpretar los colores y clases temáticas en pantalla completa.
+   */
+  function actualizarLeyendaCartograficaVisor(regForzado = null) {
+    const elLeyenda = document.getElementById('leyenda-cartografica-visor');
+    if (!elLeyenda) return;
+
+    const panelSimbologia = document.getElementById('panel-simbologia-dinamica');
+    const estaColapsado = !panelSimbologia || panelSimbologia.classList.contains('colapsado');
+
+    // Solo se visualiza sobre el visor cuando el editor superior está plegado y no se ha cerrado manualmente
+    if (!estaColapsado || leyendaVisorCerradaManualmente) {
+      elLeyenda.style.display = 'none';
+      return;
+    }
+
+    let reg = regForzado;
+    if (!reg && capaActivaSimbologiaId) {
+      reg = registroCapasTematicas[capaActivaSimbologiaId];
+    }
+    if (!reg) {
+      const ids = Object.keys(registroCapasTematicas);
+      if (ids.length > 0) {
+        reg = registroCapasTematicas[ids[ids.length - 1]];
+      }
+    }
+
+    if (!reg || !reg.clasificacion || !reg.clasificacion.itemsLeyenda || reg.clasificacion.itemsLeyenda.length === 0) {
+      elLeyenda.style.display = 'none';
+      return;
+    }
+
+    const clasif = reg.clasificacion;
+    const cfg = reg.config || {};
+    const nombreCapa = reg.opciones?.nombre || reg.idCapa.toUpperCase();
+
+    let modoDesc = '';
+    if (cfg.modo === 'graduado') {
+      const nombresMetodo = {
+        pretty: 'Pretty Breaks',
+        cuartiles: 'Cuartiles',
+        iguales: 'Intervalos Iguales',
+        jenks: 'Jenks',
+        desviacion: 'Desv. Estándar'
+      };
+      const met = nombresMetodo[cfg.metodoCuant] || 'Graduado';
+      const ordenTxt = cfg.orden === 'invertido' ? ' (Invertido)' : '';
+      modoDesc = `Graduado (${met}${ordenTxt}) · ${cfg.columna || 'general'}`;
+    } else if (cfg.modo === 'categorizado') {
+      const ordenTxt = cfg.orden === 'invertido' ? ' (Invertido)' : '';
+      modoDesc = `Categorizado${ordenTxt} · ${cfg.columna || 'general'}`;
+    } else if (cfg.modo === 'plano') {
+      modoDesc = 'Color Único';
+    } else {
+      modoDesc = 'Detección Inteligente';
+    }
+
+    const elTitulo = document.getElementById('titulo-leyenda-cartografica-capa');
+    const elMetodo = document.getElementById('metodo-leyenda-cartografica');
+    const elItems = document.getElementById('items-leyenda-cartografica');
+    const elConteo = document.getElementById('conteo-leyenda-cartografica');
+
+    if (elTitulo) elTitulo.textContent = nombreCapa;
+    if (elMetodo) elMetodo.textContent = modoDesc;
+
+    if (elItems) {
+      elItems.innerHTML = clasif.itemsLeyenda.map(item => `
+        <div class="item-clase-cartografica" title="${item.label} (${Number(item.conteo || 0).toLocaleString('es-CL')} entidades)">
+          <span class="swatch-cartografico" style="background-color: ${item.color};"></span>
+          <span class="label-clase-cartografica">${item.label}</span>
+          <span class="conteo-clase-cartografica">${Number(item.conteo || 0).toLocaleString('es-CL')}</span>
+        </div>
+      `).join('');
+    }
+
+    if (elConteo) {
+      const total = clasif.totalValidos || 0;
+      elConteo.textContent = `${Number(total).toLocaleString('es-CL')} entidades simbolizadas`;
+    }
+
+    elLeyenda.style.display = 'flex';
+  }
+
   function sincronizarSelectorCapasSimbologia(idCapaForzada = null) {
     const selectCapa = document.getElementById('select-simbologia-capa');
     if (!selectCapa) return;
@@ -953,6 +1040,7 @@ const ModuloMapa = (() => {
       capaActivaSimbologiaId = null;
       actualizarBadgeHeaderSimbologia(null);
       actualizarLeyendaPreview(null);
+      actualizarLeyendaCartograficaVisor(null);
       return;
     }
 
@@ -1052,6 +1140,7 @@ const ModuloMapa = (() => {
 
     actualizarBadgeHeaderSimbologia(reg);
     actualizarLeyendaPreview(reg);
+    actualizarLeyendaCartograficaVisor(reg);
   }
 
   function inicializarControlSimbologia() {
@@ -1071,6 +1160,14 @@ const ModuloMapa = (() => {
       if (btnToggle) btnToggle.setAttribute('aria-expanded', String(!colapsado));
       if (labelToggle) labelToggle.textContent = colapsado ? 'Ajustar' : 'Plegar';
       if (iconoToggle) iconoToggle.textContent = colapsado ? '▼' : '▲';
+
+      if (colapsado) {
+        leyendaVisorCerradaManualmente = false;
+        actualizarLeyendaCartograficaVisor();
+      } else {
+        const elLey = document.getElementById('leyenda-cartografica-visor');
+        if (elLey) elLey.style.display = 'none';
+      }
     };
 
     if (btnToggle) {
@@ -1085,6 +1182,55 @@ const ModuloMapa = (() => {
       header.onclick = (e) => {
         if (e.target && (e.target.id === 'btn-toggle-panel-simbologia' || e.target.closest('#btn-toggle-panel-simbologia'))) return;
         togglePanel();
+      };
+    }
+
+    // Inicializar controles de la leyenda cartográfica flotante en el visor
+    const elLeyenda = document.getElementById('leyenda-cartografica-visor');
+    const headerLeyenda = document.getElementById('header-leyenda-cartografica');
+    const btnMinimizarLeyenda = document.getElementById('btn-minimizar-leyenda-cartografica');
+    const btnCerrarLeyenda = document.getElementById('btn-cerrar-leyenda-cartografica');
+
+    if (elLeyenda && typeof L !== 'undefined' && L.DomEvent) {
+      try {
+        L.DomEvent.disableClickPropagation(elLeyenda);
+        L.DomEvent.disableScrollPropagation(elLeyenda);
+      } catch (_) {}
+    }
+
+    if (btnMinimizarLeyenda) {
+      btnMinimizarLeyenda.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!elLeyenda) return;
+        const min = elLeyenda.classList.toggle('minimizada');
+        btnMinimizarLeyenda.textContent = min ? '▲' : '▼';
+        btnMinimizarLeyenda.setAttribute('aria-expanded', String(!min));
+        btnMinimizarLeyenda.title = min ? 'Expandir leyenda cartográfica' : 'Minimizar leyenda cartográfica';
+      };
+    }
+
+    if (headerLeyenda) {
+      headerLeyenda.onclick = (e) => {
+        if (e.target && (e.target.closest('#btn-cerrar-leyenda-cartografica') || e.target.closest('#btn-minimizar-leyenda-cartografica'))) {
+          return;
+        }
+        if (!elLeyenda) return;
+        const min = elLeyenda.classList.toggle('minimizada');
+        if (btnMinimizarLeyenda) {
+          btnMinimizarLeyenda.textContent = min ? '▲' : '▼';
+          btnMinimizarLeyenda.setAttribute('aria-expanded', String(!min));
+          btnMinimizarLeyenda.title = min ? 'Expandir leyenda cartográfica' : 'Minimizar leyenda cartográfica';
+        }
+      };
+    }
+
+    if (btnCerrarLeyenda) {
+      btnCerrarLeyenda.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        leyendaVisorCerradaManualmente = true;
+        if (elLeyenda) elLeyenda.style.display = 'none';
       };
     }
 
@@ -1159,6 +1305,8 @@ const ModuloMapa = (() => {
       btnAplicar.onclick = (e) => {
         e.preventDefault();
         aplicarDesdeUI();
+        leyendaVisorCerradaManualmente = false;
+        actualizarLeyendaCartograficaVisor();
         const textoOriginal = btnAplicar.innerHTML;
         btnAplicar.innerHTML = '<span>¡Aplicado al mapa!</span>';
         btnAplicar.style.background = '#16a34a';
@@ -1178,6 +1326,8 @@ const ModuloMapa = (() => {
           reg.config.modo = 'automatico';
           sincronizarControlesConCapaActiva();
           aplicarDesdeUI();
+          leyendaVisorCerradaManualmente = false;
+          actualizarLeyendaCartograficaVisor(reg);
         }
       };
     }
@@ -1387,6 +1537,7 @@ const ModuloMapa = (() => {
       registroCapasTematicas[idCapa].capaLeaflet = capa;
     }
     sincronizarSelectorCapasSimbologia(idCapa);
+    actualizarLeyendaCartograficaVisor(registroCapasTematicas[idCapa]);
 
     // Ajuste automático de encuadre para que las geometrías aparezcan inmediatamente en pantalla
     if (opciones.ajustarVista !== false && capa.getBounds && capa.getBounds().isValid()) {
@@ -1417,6 +1568,7 @@ const ModuloMapa = (() => {
       delete capasTematicasActivas[idCapa];
       delete registroCapasTematicas[idCapa];
       sincronizarSelectorCapasSimbologia();
+      actualizarLeyendaCartograficaVisor();
     }
   }
 
@@ -1425,7 +1577,9 @@ const ModuloMapa = (() => {
       grupoCapasTematicas.clearLayers();
       capasTematicasActivas = {};
       registroCapasTematicas = {};
+      capaActivaSimbologiaId = null;
       sincronizarSelectorCapasSimbologia();
+      actualizarLeyendaCartograficaVisor(null);
     }
   }
 
@@ -2357,6 +2511,7 @@ const ModuloMapa = (() => {
     },
     obtenerRegistroCapas: () => registroCapasTematicas,
     sincronizarSelectorCapasSimbologia,
+    actualizarLeyendaCartograficaVisor,
     inicializarControlSimbologia,
     RAMPAS_CUANTITATIVAS,
     PALETAS_CATEGORICAS,

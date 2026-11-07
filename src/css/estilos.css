@@ -6674,6 +6674,220 @@ table.tabla-datos-institucional td {
 }
 
 /* ========================================================================== */
+/* LEYENDA CARTOGRÁFICA DINÁMICA FLOTANTE EN EL VISOR                          */
+/* ========================================================================== */
+.leyenda-cartografica-visor {
+  position: absolute;
+  bottom: 28px;
+  left: 16px;
+  z-index: 950;
+  max-width: 320px;
+  min-width: 240px;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), 0 0 1px rgba(255, 255, 255, 0.2);
+  font-family: var(--fuente-interfaz, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: max-width 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.leyenda-cartografica-visor:hover {
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65), 0 0 6px rgba(56, 189, 248, 0.2);
+}
+
+.header-leyenda-cartografica {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 12px;
+  background: linear-gradient(90deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  gap: 8px;
+}
+
+.titulos-leyenda-cartografica {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.subtitulo-leyenda-cartografica {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #38bdf8;
+}
+
+.titulo-capa-leyenda-cartografica {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metodo-leyenda-cartografica {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.acciones-leyenda-cartografica {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.btn-ctrl-leyenda-cartografica {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.btn-ctrl-leyenda-cartografica:hover {
+  background: rgba(56, 189, 248, 0.25);
+  color: #ffffff;
+  border-color: #38bdf8;
+}
+
+.cuerpo-leyenda-cartografica {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px 10px;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.items-leyenda-cartografica {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 210px;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.4) transparent;
+}
+
+.items-leyenda-cartografica::-webkit-scrollbar {
+  width: 4px;
+}
+
+.items-leyenda-cartografica::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.4);
+  border-radius: 4px;
+}
+
+.item-clase-cartografica {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.15s ease;
+}
+
+.item-clase-cartografica:hover {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.25);
+}
+
+.swatch-cartografico {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+
+.label-clase-cartografica {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.74rem;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.conteo-clase-cartografica {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.70rem;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-left: auto;
+  padding-left: 6px;
+  flex-shrink: 0;
+}
+
+.footer-leyenda-cartografica {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 6px;
+  margin-top: 2px;
+}
+
+.badge-total-entidades-leyenda {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+/* Modo minimizado de la leyenda cartográfica */
+.leyenda-cartografica-visor.minimizada {
+  max-width: 260px;
+  border-color: rgba(56, 189, 248, 0.25);
+}
+
+.leyenda-cartografica-visor.minimizada .cuerpo-leyenda-cartografica {
+  display: none !important;
+}
+
+.leyenda-cartografica-visor.minimizada .header-leyenda-cartografica {
+  border-bottom: none;
+  padding: 6px 10px;
+}
+
+/* ========================================================================== */
 /* COMPATIBILIDAD MULTI-DISPOSITIVO (TABLETS, MÓVILES iOS/ANDROID, LAPTOPS)    */
 /* ========================================================================== */
 @media (max-width: 768px) {
@@ -7807,6 +8021,15 @@ table.tabla-datos-institucional,
   .grilla-controles-simbologia {
     grid-template-columns: 1fr;
   }
+  .leyenda-cartografica-visor {
+    bottom: 20px;
+    left: 10px;
+    max-width: 270px;
+    min-width: 210px;
+  }
+  .items-leyenda-cartografica {
+    max-height: 160px;
+  }
   #mapa-atlas {
     height: clamp(380px, 56vh, 520px) !important;
   }
@@ -7843,6 +8066,20 @@ table.tabla-datos-institucional,
   .modal-bd-contenedor {
     padding: 16px;
     max-width: 96vw;
+  }
+  .leyenda-cartografica-visor {
+    bottom: 10px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: calc(100% - 16px);
+    min-width: 0;
+  }
+  .items-leyenda-cartografica {
+    max-height: 130px;
+  }
+  .label-clase-cartografica {
+    max-width: 140px;
   }
 }
 
