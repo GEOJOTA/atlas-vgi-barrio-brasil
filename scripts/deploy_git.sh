@@ -28,8 +28,8 @@ fi
 
 # 2. Configuración de autor de la práctica
 git config user.name "GEOJOTA"
-git config user.email "juanpablolescanovillegas@gmail.com"
-echo "[+] Autor configurado: GEOJOTA <juanpablolescanovillegas@gmail.com>"
+git config user.email "tucorreoelectronico@gmail.com"
+echo "[+] Autor configurado: GEOJOTA <tucorreoelectronico@gmail.com>"
 
 # 3. Vincular remote origin si no está presente
 if ! git remote | grep -q "origin"; then

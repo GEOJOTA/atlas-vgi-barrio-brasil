@@ -150,7 +150,7 @@ Cada archivo del repositorio cumple un contrato técnico explícito según su le
 | `17` | [`src/js/modulos/metadatos.js`](src/js/modulos/metadatos.js) | `window.ModuloMetadatos` | Motor del Módulo 08: autocompletado de fichas para las 134 capas y exportación conforme a ISO 19115 (`.json`) e ISO 19139 / Perfil Nacional IDE Chile (`.xml`). |
 | `18` | [`src/js/modulos/diccionario.js`](src/js/modulos/diccionario.js) | `window.ModuloDiccionario` | Motor del Módulo 09: catálogo de 140 descriptores normativos ISO 19110:2016, homologación institucional e identificación de las 86 brechas temáticas VGI. |
 | `19` | [`src/js/modulos/licencias.js`](src/js/modulos/licencias.js) | `window.ModuloLicencias` | Motor del Módulo 10: comparador de licencias abiertas (`ODbL 1.0`, `CC BY-SA 4.0`, `Ley N° 20.285`, `Ley N° 19.628`) y panel de descarga de los libros `.xlsx` y `.zip`. |
-| `20` | [`src/js/modulos/territorio.js`](src/js/modulos/territorio.js) | `window.ModuloTerritorio` | Síntesis contextual del área de estudio (Barrio Brasil, Campus UAH y comuna de Santiago) e indicadores base de superficie y población. |
+| `20` | [`src/js/modulos/territorio.js`](src/js/modulos/territorio.js) | `window.ModuloTerritorio` | Síntesis contextual del área de estudio (Barrio Brasil, Campus universitario y comuna de Santiago) e indicadores base de superficie y población. |
 | `21` | [`src/js/app.js`](src/js/app.js) | Controlador Principal | Orquestador del ciclo de vida `DOMContentLoaded`, navegación entre los 10 paneles, cálculo del ICV Dinámico (`actualizarTelemetriaCapasActivas`) y exportación de datos. |
 
 ### 4.3. Capa de datos, configuración y backend relacional (`JSON`, `GeoJSON`, `GPKG`, `SQL`, `TOML`)

@@ -3,10 +3,10 @@
   -------
   Módulo de visualización cartográfica con Leaflet para el Atlas VGI.
   Maneja:
-  - Inicialización del visor cartográfico en el territorio predeterminado (Barrio Brasil / UAH).
+  - Inicialización del visor cartográfico en el territorio predeterminado (Barrio Brasil).
   - Selección de capas base (OpenStreetMap Estándar, Relieve Topográfico).
   - Herramienta de visualización y dibujo interactivo del Bounding Box (sincronizada con inputs).
-  - Selector de territorios predefinidos (Barrio Brasil UAH, Santiago Centro, etc.).
+  - Selector de territorios predefinidos (Barrio Brasil, Santiago Centro, etc.).
   - Representación de capas temáticas GeoJSON con simbología de carta topográfica y popups informativos.
   - Exportación de capas del mapa a archivo GeoJSON.
 */
@@ -1612,11 +1612,11 @@ const ModuloMapa = (() => {
           f.properties.meta_tipo_fuente = metaCapa.tipo_fuente || 'VGI (Comunitaria / Abierta)';
           f.properties.meta_temporalidad = metaCapa.temporalidad || '2026';
           f.properties.meta_licencia = metaCapa.licencia || 'ODbL 1.0 / Ley N° 20.285';
-          f.properties.meta_cita_apa = metaCapa.cita_apa || `Atlas VGI UAH. (2026). ${metaCapa.titulo || id}.`;
+          f.properties.meta_cita_apa = metaCapa.cita_apa || `Atlas VGI Territorial. (2026). ${metaCapa.titulo || id}.`;
           f.properties.meta_crs = 'EPSG:4326 (WGS 84)';
           f.properties.meta_igv = Number(metaCapa.igv || 100.0);
           f.properties.meta_grado_calidad = metaCapa.grado_calidad || 'A+ (Excelente)';
-          f.properties.meta_contacto = metaCapa.contacto || 'nodo-geoabierto@uahurtado.cl';
+          f.properties.meta_contacto = metaCapa.contacto || 'tucorreoelectronico@gmail.com';
           f.properties.meta_url_servicio = metaCapa.url_servicio || window.location.href;
           features.push(f);
         });
@@ -1624,13 +1624,13 @@ const ModuloMapa = (() => {
     });
     return {
       type: 'FeatureCollection',
-      name: 'Atlas_VGI_Barrio_Brasil_UAH',
+      name: 'Atlas_VGI_Barrio_Brasil',
       crs: { type: 'name', properties: { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       metadata: {
         estandar: 'ISO 19115-1:2014 / ISO 19157:2023 / Perfil IDE Chile SNIT v2.0',
         fileIdentifier: `urn:uuid:vgi-cl-consolidado-${Date.now()}`,
-        title: 'Colección de Capas Activas — Atlas VGI Barrio Brasil UAH',
-        organisationName: 'Universidad Alberto Hurtado / Nodo GeoAbierto',
+        title: 'Colección de Capas Activas — Atlas VGI Barrio Brasil',
+        organisationName: 'Atlas VGI Territorial / Nodo GeoAbierto',
         legalConstraints: 'Open Database License (ODbL) 1.0 / Ley N° 20.285',
         totalEntities: features.length,
         referenceSystemIdentifier: 'EPSG:4326',
@@ -1650,7 +1650,7 @@ const ModuloMapa = (() => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `atlas-vgi-barrio-brasil-uah-${new Date().toISOString().slice(0, 10)}.geojson`;
+    a.download = `atlas-vgi-barrio-brasil-${new Date().toISOString().slice(0, 10)}.geojson`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

@@ -710,7 +710,7 @@ def crear_perfil_metadatos():
         [
             13, "CI_ResponsibleParty.electronicMailAddress", "Correo Electrónico de Contacto", "Obligatorio ISO (M)",
             "Correo válido", "Correo de Contacto", "Canal formal para consultas sobre el recurso.",
-            "juanpablolescanovillegas@gmail.com"
+            "tucorreoelectronico@gmail.com"
         ],
         [
             14, "MD_DigitalTransferOptions.onLine.linkage", "Servicios Web y Descarga en Red", "Recomendado (R)",

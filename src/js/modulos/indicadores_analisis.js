@@ -155,7 +155,7 @@ const ModuloIndicadoresAnalisis = (() => {
 };
 
   const NOMBRES_VGI_FALLBACK = {
-    'cat01_educacion': { codigo: 'CAT-01', nombre: 'Educación y Universidad', institucion: 'OSM / VGI', geom: 'POLÍGONO', desc: 'Equipamiento escolar, superior (Campus UAH), bibliotecas y jardines infantiles.' },
+    'cat01_educacion': { codigo: 'CAT-01', nombre: 'Educación y Universidad', institucion: 'OSM / VGI', geom: 'POLÍGONO', desc: 'Equipamiento escolar, superior (Campus universitario), bibliotecas y jardines infantiles.' },
     'cat02_servicios': { codigo: 'CAT-02', nombre: 'Servicios y Comercio Barrial', institucion: 'OSM / VGI', geom: 'PUNTO', desc: 'Comercios minoristas, farmacias, bancos, notarías, restaurantes y almacenes.' },
     'cat03_transporte': { codigo: 'CAT-03', nombre: 'Movilidad y Transporte', institucion: 'OSM / VGI', geom: 'LÍNEA', desc: 'Paraderos, estaciones de Metro (L1/L2/L5), terminales y ciclovías estructurantes.' },
     'cat04_movilidad_activa': { codigo: 'CAT-04', nombre: 'Movilidad Activa y Ciclovías', institucion: 'OSM / VGI', geom: 'LÍNEA', desc: 'Red de ciclovías, bicicleteros públicos, zonas 30 km/h y ejes peatonales.' },
@@ -427,7 +427,7 @@ const ModuloIndicadoresAnalisis = (() => {
             <text x="565" y="168" fill="#94a3b8" font-size="9" font-weight="bold" text-anchor="middle">Sierra Bella / Bogotá (&lt;2)</text>
             <!-- Etiquetas eje X -->
             <text x="70" y="210" fill="#cbd5e1" font-size="8.5" text-anchor="middle">Yungay</text>
-            <text x="165" y="210" fill="#fef08a" font-size="9" font-weight="bold" text-anchor="middle">Barrio Brasil - UAH</text>
+            <text x="165" y="210" fill="#fef08a" font-size="9" font-weight="bold" text-anchor="middle">Barrio Brasil</text>
             <text x="275" y="210" fill="#cbd5e1" font-size="8.5" text-anchor="middle">Centro Histórico / Santa Ana</text>
             <text x="395" y="210" fill="#cbd5e1" font-size="8.5" text-anchor="middle">B. Universitario / Parque Almagro</text>
             <text x="565" y="210" fill="#94a3b8" font-size="8.5" text-anchor="middle">Periferia Sur (Franklin / Bogotá)</text>
@@ -438,12 +438,12 @@ const ModuloIndicadoresAnalisis = (() => {
             titulo: '1. La estructura axial y policéntrica del territorio: lo que revela el KDE Total VGI',
             parrafos: [
               'La cartografía consolidada del total de aportes VGI (KDE_Total_VGI) constata espacialmente que la intensidad de equipamiento y registros territoriales en la Comuna de Santiago alcanza una cima de ráster continuo de 20.203,8 entidades/km² (con un pico zonal por manzana censal de 26.377,7 ent/km² en la manzana 13101011001008 de Barrio Brasil), estructurándose sobre dos grandes corredores: el eje longitudinal de la Alameda Libertador Bernardo O’Higgins y el eje norte-sur que articula Barrio Brasil, Santa Ana, Parque Almagro, Ejército y Barrio Universitario.',
-              'En el zoom sobre el entorno de Barrio Brasil se observa cómo los vectores de gradiente convergen hacia dos focos amarillos de máxima intensidad: el cuadrante suroriente del barrio (entorno del Campus Universidad Alberto Hurtado en Cienfuegos, Almirante Barroso y Alameda) y el núcleo central de Plaza Brasil junto al corredor de Av. Brasil y Compañía de Jesús. En contraste, los barrios del arco periférico sur, suroriente y norponiente —como Sierra Bella (con 1,9 ent/km²), Bogotá (con 1,4 ent/km²), Matta Sur (con 2,1 ent/km²), Diez de Julio (con 2,5 ent/km²), Santa Isabel (con 2,9 ent/km²), Franklin (con 3,1 ent/km²), Santa Elena (con 4,9 ent/km²) y San Vicente (con 15,3 ent/km²)— aparecen en tonos azul profundo, evidenciando una marcada polarización entre el núcleo centro-poniente y el arco periférico comunal.'
+              'En el zoom sobre el entorno de Barrio Brasil se observa cómo los vectores de gradiente convergen hacia dos focos amarillos de máxima intensidad: el cuadrante suroriente del barrio (entorno del distrito universitario en Cienfuegos, Almirante Barroso y Alameda) y el núcleo central de Plaza Brasil junto al corredor de Av. Brasil y Compañía de Jesús. En contraste, los barrios del arco periférico sur, suroriente y norponiente —como Sierra Bella (con 1,9 ent/km²), Bogotá (con 1,4 ent/km²), Matta Sur (con 2,1 ent/km²), Diez de Julio (con 2,5 ent/km²), Santa Isabel (con 2,9 ent/km²), Franklin (con 3,1 ent/km²), Santa Elena (con 4,9 ent/km²) y San Vicente (con 15,3 ent/km²)— aparecen en tonos azul profundo, evidenciando una marcada polarización entre el núcleo centro-poniente y el arco periférico comunal.'
             ],
             graficoInline: {
               titulo: 'Contraste de Densidad KDE Consolidada por Barrios Representativos (media ent/km²)',
               filas: [
-                { label: 'Barrio Brasil (Núcleo UAH - Plaza Brasil)', valor: '6.924,1 ent/km²', porcentaje: 100 },
+                { label: 'Barrio Brasil (Núcleo Alameda - Plaza Brasil)', valor: '6.924,1 ent/km²', porcentaje: 100 },
                 { label: 'Barrio Santa Ana (Eje Catedral - San Martín)', valor: '1.728,2 ent/km²', porcentaje: 55 },
                 { label: 'Barrio Ejército (Polo Institucional)', valor: '1.007,0 ent/km²', porcentaje: 40 },
                 { label: 'Promedio Comunal Santiago (1.711 manzanas · 27 Barrios)', valor: '489,1 ent/km²', porcentaje: 22 },
@@ -455,7 +455,7 @@ const ModuloIndicadoresAnalisis = (() => {
                 src: 'img/cartografias/KDE_Total_VGI.jpg',
                 titulo: 'KDE Total VGI Consolidado (Comuna de Santiago y Barrio Brasil)',
                 subtitulo: 'Rango: 0 a 20.203,8 ent/km² · 9.048 entidades únicas deduplicadas',
-                lectura: 'Revela una columna vertebral de altísima densidad sobre el eje Alameda y el centro-poniente (Brasil, Santa Ana, Ejército y Barrio Universitario), con vectores que apuntan hacia el campus UAH y Plaza Brasil, frente a vacíos profundos en el tercio sur comunal.'
+                lectura: 'Revela una columna vertebral de altísima densidad sobre el eje Alameda y el centro-poniente (Brasil, Santa Ana, Ejército y Barrio Universitario), con vectores que apuntan hacia el campus universitario y Plaza Brasil, frente a vacíos profundos en el tercio sur comunal.'
               }
             ],
             sintesis: 'La intensidad de registros colaborativos en Santiago se estructura sobre una columna axial Alameda-Norte-Sur liderada por Barrio Brasil (6.924,1 ent/km²), dejando en severo desierto informativo al arco periférico sur (Bogotá y Sierra Bella con menos de 2 ent/km²).'
@@ -464,7 +464,7 @@ const ModuloIndicadoresAnalisis = (() => {
             titulo: '2. Compacidad edificada, dinámicas de edificación (Permisos y CRF), polaridad comercial y el clúster universitario',
             parrafos: [
               'Al desagregar los resultados en morfología construida, servicios comerciales y educación, las cartografías demuestran cómo distintas funciones urbanas modelan el pericentro. La superficie de Edificaciones (KDE_Edificaciones, con cima de 5.839,5 ent/km²) exhibe una mancha continua de alta compacidad que cubre casi la totalidad de Barrio Brasil (media de 2.651,8 ent/km²), Santa Ana (539,2 ent/km²), Barrio Universitario (319,8 ent/km²), Ejército (233,8 ent/km²) y Yungay (154,0 ent/km²), reflejando la subdivisión predial histórica de cités, casonas continuas y pabellones institucionales.',
-              'En cambio, la densidad de Servicios y Comercio (KDE_Servicios, máximo de 1.376,3 ent/km²) abandona la distribución homogénea para concentrarse selectivamente en subcentros gastronómicos y comerciales: el entorno de Plaza Brasil (calles Huérfanos, Compañía y Av. Brasil con media barrial de 420,1 ent/km² en Brasil), Santa Ana (147,1 ent/km²), Ejército (96,0 ent/km²) y el eje Alameda. Por su parte, la cartografía de Educación (KDE_Educacion, máximo de 1.249,2 ent/km²) dibuja islas muy definidas de equipamiento superior y escolar lideradas por Barrio Brasil (155,9 ent/km², impulsado por los 34 predios del campus UAH y colegios históricos), Barrio Ejército (66,5 ent/km²), Barrio Universitario (47,8 ent/km²) y Parque Almagro (31,0 ent/km²), mientras el pericentro sur carece de núcleos equivalentes.',
+              'En cambio, la densidad de Servicios y Comercio (KDE_Servicios, máximo de 1.376,3 ent/km²) abandona la distribución homogénea para concentrarse selectivamente en subcentros gastronómicos y comerciales: el entorno de Plaza Brasil (calles Huérfanos, Compañía y Av. Brasil con media barrial de 420,1 ent/km² en Brasil), Santa Ana (147,1 ent/km²), Ejército (96,0 ent/km²) y el eje Alameda. Por su parte, la cartografía de Educación (KDE_Educacion, máximo de 1.249,2 ent/km²) dibuja islas muy definidas de equipamiento superior y escolar lideradas por Barrio Brasil (155,9 ent/km², impulsado por los 34 predios del campus universitario y colegios históricos), Barrio Ejército (66,5 ent/km²), Barrio Universitario (47,8 ent/km²) y Parque Almagro (31,0 ent/km²), mientras el pericentro sur carece de núcleos equivalentes.',
               'La incorporación de las cartografías de dinámicas de edificación oficial del INE —Permisos de Edificación (KDE_Permisos_Edificacion, cima de 639,6 permisos/km²) y Certificados de Recepción Final (KDE_Certificados_Recepcion_Final, cima de 99,6 conjuntos/km²)— complementa el diagnóstico morfológico de la comuna. Mientras las autorizaciones de edificación trazan una marcada presión constructiva sobre los corredores estructurantes de Santa Ana, Santa Isabel, San Borja y Parque Almagro, la recepción efectiva de conjuntos habitacionales concluidos constata la materialización física de obras en altura en el sector centro-oriente y suroriente comunal. Este patrón contrasta nítidamente con las áreas patrimoniales de Barrio Brasil y Yungay, donde las bajas densidades de nuevos permisos reflejan la contención normativa y la prevalencia de la conservación sobre la demolición.'
             ],
             graficoInline: {
@@ -472,7 +472,7 @@ const ModuloIndicadoresAnalisis = (() => {
               filas: [
                 { label: 'KDE Edificaciones (Morfología predial y huella construida)', valor: '5.839,5 máx', porcentaje: 100 },
                 { label: 'KDE Servicios y Comercio (Gastronomía y abastecimiento)', valor: '1.376,3 máx', porcentaje: 38 },
-                { label: 'KDE Educación (Campus UAH, liceos y jardines)', valor: '1.249,2 máx', porcentaje: 34 },
+                { label: 'KDE Educación (Campus universitario, liceos y jardines)', valor: '1.249,2 máx', porcentaje: 34 },
                 { label: 'KDE Permisos de Edificación (2010–2025 DOM/INE)', valor: '639,6 máx', porcentaje: 26 },
                 { label: 'KDE Recepción Final CRF (Conjuntos concluidos)', valor: '99,6 máx', porcentaje: 12 }
               ]
@@ -506,7 +506,7 @@ const ModuloIndicadoresAnalisis = (() => {
                 src: 'img/cartografias/KDE_Educacion.jpg',
                 titulo: 'KDE Educación, Colegios y Campus Universitarios',
                 subtitulo: 'Rango: 0 a 1.249,2 ent/km² · 322 entidades evaluadas',
-                lectura: 'Evidencia la gravitación del distrito universitario sobre el borde sur de Barrio Brasil (Campus UAH en Almirante Barroso y Cienfuegos) y su continuidad hacia los barrios Ejército y Universitario.'
+                lectura: 'Evidencia la gravitación del distrito universitario sobre el borde sur de Barrio Brasil (campus universitario en Almirante Barroso y Cienfuegos) y su continuidad hacia los barrios Ejército y Universitario.'
               }
             ],
             sintesis: 'Mientras los permisos y recepciones de obras concentran la renovación en altura sobre Santa Ana y Santa Isabel, Barrio Brasil y Yungay preservan una compacidad predial horizontal tradicional con alta concentración de campus universitarios y polos gastronómicos barriales.'
@@ -567,7 +567,7 @@ const ModuloIndicadoresAnalisis = (() => {
                 src: 'img/cartografias/KDE_Biodiversidad.jpg',
                 titulo: 'KDE Biodiversidad Urbana y Arbolado (GBIF / OSM)',
                 subtitulo: 'Rango: 0 a 5.394,8 ent/km² · 979 entidades evaluadas',
-                lectura: 'Exhibe un núcleo ecológico sobresaliente en Plaza Brasil, el eje arbolado de Av. Brasil y los patios del campus UAH, seguidos por Parque Almagro y Ejército.'
+                lectura: 'Exhibe un núcleo ecológico sobresaliente en Plaza Brasil, el eje arbolado de Av. Brasil y los patios del campus universitario, seguidos por Parque Almagro y Ejército.'
               },
               {
                 src: 'img/cartografias/KDE_Espacio_Publico.jpg',
@@ -585,7 +585,7 @@ const ModuloIndicadoresAnalisis = (() => {
                 src: 'img/cartografias/KDE_Patrimonio.jpg',
                 titulo: 'KDE Patrimonio Histórico, Sitios de Memoria y Cultura',
                 subtitulo: 'Rango: 0 a 288,9 ent/km² · 99 entidades evaluadas',
-                lectura: 'Configura un eje patrimonial continuo sobre las calles Huérfanos, Compañía, Cienfuegos y Almirante Barroso, articulando la Basílica del Salvador, cités históricos y casonas UAH.'
+                lectura: 'Configura un eje patrimonial continuo sobre las calles Huérfanos, Compañía, Cienfuegos y Almirante Barroso, articulando la Basílica del Salvador, cités históricos y casonas patrimoniales.'
               }
             ],
             sintesis: 'La infraestructura verde y el patrimonio protegido actúan como amortiguadores socioambientales indispensables en el poniente, contrastando críticamente con la escasez de espacio público y arbolado viario en los barrios del pericentro sur comunal.'
@@ -674,7 +674,7 @@ const ModuloIndicadoresAnalisis = (() => {
             <text x="40" y="128" fill="#cbd5e1" font-size="9.5">· Santa Ana: 23 manzanas</text>
             <text x="40" y="144" fill="#cbd5e1" font-size="9.5">· Yungay: 17 manzanas</text>
             <text x="40" y="160" fill="#cbd5e1" font-size="9.5">· P. Almagro: 13 manzanas</text>
-            <text x="40" y="185" fill="#fde047" font-size="8.5" font-weight="bold">Núcleo Alameda - Plaza Brasil - UAH</text>
+            <text x="40" y="185" fill="#fde047" font-size="8.5" font-weight="bold">Núcleo Alameda - Plaza Brasil</text>
             <!-- Bloque 2: Transición Atípicos HL / LH -->
             <rect x="240" y="45" width="200" height="160" rx="8" fill="#10b981" fill-opacity="0.12" stroke="#34d399" stroke-width="1.5"/>
             <text x="255" y="70" fill="#4ade80" font-size="12" font-weight="bold">ATÍPICOS (HL y LH)</text>
@@ -719,7 +719,7 @@ const ModuloIndicadoresAnalisis = (() => {
             titulo: '2. Conglomerados de compacidad construida, actividad comercial y el polo educativo-universitario',
             parrafos: [
               'El cruce entre las cartografías LISA de Edificaciones, Servicios y Educación permite distinguir cómo se agrupan las funciones estructurales de la ciudad. En Edificaciones (cluster_lisa_vgi_edificaciones), el cluster Alto-Alto cubre de forma casi ininterrumpida el corazón de Barrio Brasil, Yungay oriental y Santa Ana, confirmando un tejido homogéneo de alta densidad predial; sin embargo, emergen manzanas Bajo-Alto (verde) insertas en medio del cluster amarillo, correspondientes a grandes paños abiertos o predios no subdivididos rodeados de manzanas intensamente edificadas.',
-              'En Servicios y Comercio (cluster_lisa_vgi_servicios), los Hotspots Alto-Alto se retraen hacia nodos específicos: el cuadrante gastronómico de Plaza Brasil (Huérfanos-Compañía-Brasil), el centro cívico y el eje Alameda, apareciendo flanqueados por manzanas Alto-Bajo (cian) que señalan esquinas comerciales aisladas en entornos residenciales. Por su parte, el mapa LISA de Educación (cluster_lisa_vgi_educacion) delimita con precisión quirúrgica el "distrito universitario" en el extremo suroriente de Barrio Brasil (Campus UAH) conectado con los barrios Universitario y Ejército, frente a un extenso Coldspot Bajo-Bajo en las periferias norte y sur.'
+              'En Servicios y Comercio (cluster_lisa_vgi_servicios), los Hotspots Alto-Alto se retraen hacia nodos específicos: el cuadrante gastronómico de Plaza Brasil (Huérfanos-Compañía-Brasil), el centro cívico y el eje Alameda, apareciendo flanqueados por manzanas Alto-Bajo (cian) que señalan esquinas comerciales aisladas en entornos residenciales. Por su parte, el mapa LISA de Educación (cluster_lisa_vgi_educacion) delimita con precisión quirúrgica el "distrito universitario" en el extremo suroriente de Barrio Brasil (Campus universitario) conectado con los barrios Universitario y Ejército, frente a un extenso Coldspot Bajo-Bajo en las periferias norte y sur.'
             ],
             graficoInline: {
               titulo: 'Intensidad Media en los Barrios Núcleo de los Clusters Alto-Alto (Edificaciones, Servicios y Educación)',
@@ -727,7 +727,7 @@ const ModuloIndicadoresAnalisis = (() => {
                 { label: 'Edificaciones en Barrio Brasil (Núcleo HH)', valor: '2.651,8 ent/km²', porcentaje: 100 },
                 { label: 'Edificaciones en Santa Ana (Continuidad HH)', valor: '539,2 ent/km²', porcentaje: 45 },
                 { label: 'Servicios en Barrio Brasil (Polo Plaza Brasil - Alameda)', valor: '420,1 ent/km²', porcentaje: 38 },
-                { label: 'Educación en Barrio Brasil (Polo Campus UAH)', valor: '155,9 ent/km²', porcentaje: 28 },
+                { label: 'Educación en Barrio Brasil (Polo Campus universitario)', valor: '155,9 ent/km²', porcentaje: 28 },
                 { label: 'Educación en Barrio Ejército (Continuidad Universitaria)', valor: '66,5 ent/km²', porcentaje: 18 }
               ]
             },
@@ -748,7 +748,7 @@ const ModuloIndicadoresAnalisis = (() => {
                 src: 'img/cartografias/cluster_lisa_vgi_educacion.jpg',
                 titulo: 'Cluster LISA: Educación y Campus Universitarios',
                 subtitulo: 'Enclave universitario Almirante Barroso - Cienfuegos - Ejército',
-                lectura: 'Revela un potente cluster Alto-Alto en el sector suroriente de Barrio Brasil (Campus UAH) y Barrio Ejército, mientras el resto del pericentro permanece no significativo o en Coldspot.'
+                lectura: 'Revela un potente cluster Alto-Alto en el sector suroriente de Barrio Brasil (Campus universitario) y Barrio Ejército, mientras el resto del pericentro permanece no significativo o en Coldspot.'
               }
             ],
             sintesis: 'La autocorrelación espacial confirma que los clústeres estadísticamente significativos de edificación y servicios se agrupan en el pericentro histórico poniente, mientras la periferia sur carece de conglomerados comerciales y educativos de proximidad.'
@@ -785,7 +785,7 @@ const ModuloIndicadoresAnalisis = (() => {
             titulo: '4. Islas ecológicas y clústeres patrimoniales frente a los desiertos verdes periféricos',
             parrafos: [
               'Las cuatro cartografías restantes —Biodiversidad, Espacio Público, Coberturas de Suelo y Patrimonio— muestran los patrones más focalizados de toda la serie LISA. Tanto en Biodiversidad (cluster_lisa_vgi_biodiversidad) como en Espacio Público (cluster_lisa_vgi_espacio_publico) y Coberturas de Suelo (cluster_lisa_vgi_coberturas_de_suelo), los clusters Alto-Alto se restringen a parches muy acotados en torno a Plaza Brasil, el eje arbolado de Av. Brasil, Parque Almagro y Barrio Ejército, rodeados por anillos de manzanas Alto-Bajo (cian) y Bajo-Alto (verde) que evidencian una transición brusca entre las plazas arboladas y las manzanas densamente pavimentadas.',
-              'Finalmente, la cartografía LISA de Patrimonio (cluster_lisa_vgi_patrimonio) sintetiza el valor histórico del sector poniente: las manzanas Alto-Alto se concentran de forma exclusiva en el corazón de Barrio Brasil (eje Huérfanos, Compañía, Basílica del Salvador y casonas UAH) y su articulación con Santa Ana y Ejército, confirmando estadísticamente que este cuadrante constituye el núcleo patrimonial más denso y continuo de la comuna.'
+              'Finalmente, la cartografía LISA de Patrimonio (cluster_lisa_vgi_patrimonio) sintetiza el valor histórico del sector poniente: las manzanas Alto-Alto se concentran de forma exclusiva en el corazón de Barrio Brasil (eje Huérfanos, Compañía, Basílica del Salvador y casonas patrimoniales) y su articulación con Santa Ana y Ejército, confirmando estadísticamente que este cuadrante constituye el núcleo patrimonial más denso y continuo de la comuna.'
             ],
             cartografias: [
               {
@@ -1340,7 +1340,7 @@ const ModuloIndicadoresAnalisis = (() => {
             titulo: '1. Hegemonía de la movilidad sustentable (84,6%) y geografía barrial de la partición modal',
             parrafos: [
               'Las seis cartografías de movilidad elaboradas a partir del Censo 2024 demuestran que la Comuna de Santiago posee un patrón de desplazamiento abrumadoramente sustentable: el 84,6% de todos los viajes cotidianos se realiza en transporte público, a pie o en bicicleta, situando a la mayoría de las manzanas comunales (y casi la totalidad de Barrio Brasil) en el cuartil superior de Movilidad Sustentable (75,24% a 100%). En contrapartida, la Movilidad Motorizada Privada (automóvil y motocicleta) promedia apenas un 15,4% comunal, superando el 25% únicamente en barrios periféricos del surponiente como Club Hípico (30,4% de uso de automóvil), Parque O’Higgins (23,5%) y San Eugenio (20,7%).',
-              'Al desglosar cada modo, emergen especializaciones territoriales muy marcadas. El Transporte Público (62,4% comunal) alcanza sus tasas más altas en los barrios residenciales alejados del centro cívico pero conectados a líneas de Metro y corredores de buses, liderados por Santa Elena (73,7%), Diez de Julio (69,8%) y Viel (69,2%). Los Viajes a Pie (17,0% comunal) se disparan en los barrios donde coinciden vivienda y fuentes de trabajo comercial o administrativo, encabezados por Meiggs (58,1%), San Vicente (28,7%) y Centro Histórico (28,3%), además del sector sur de Barrio Brasil en torno a la Alameda y el campus UAH. Finalmente, el uso de la Bicicleta (5,2% comunal, con manzanas que llegan al 28,6%) alcanza sus promedios barriales más altos en el corredor oriente —Santa Lucía Forestal (8,6%), Santa Isabel (7,0%) y Diez de Julio (6,1%)— y en las manzanas interiores de Barrio Brasil conectadas a las ciclovías de Rosas y Compañía.'
+              'Al desglosar cada modo, emergen especializaciones territoriales muy marcadas. El Transporte Público (62,4% comunal) alcanza sus tasas más altas en los barrios residenciales alejados del centro cívico pero conectados a líneas de Metro y corredores de buses, liderados por Santa Elena (73,7%), Diez de Julio (69,8%) y Viel (69,2%). Los Viajes a Pie (17,0% comunal) se disparan en los barrios donde coinciden vivienda y fuentes de trabajo comercial o administrativo, encabezados por Meiggs (58,1%), San Vicente (28,7%) y Centro Histórico (28,3%), además del sector sur de Barrio Brasil en torno a la Alameda y el campus universitario. Finalmente, el uso de la Bicicleta (5,2% comunal, con manzanas que llegan al 28,6%) alcanza sus promedios barriales más altos en el corredor oriente —Santa Lucía Forestal (8,6%), Santa Isabel (7,0%) y Diez de Julio (6,1%)— y en las manzanas interiores de Barrio Brasil conectadas a las ciclovías de Rosas y Compañía.'
             ],
             graficoInline: {
               titulo: 'Barrios Líderes según Modo Principal de Desplazamiento en la Comuna de Santiago',
@@ -1444,7 +1444,7 @@ const ModuloIndicadoresAnalisis = (() => {
           {
             titulo: '3. Dotación acumulativa en radios caminables (buffers de 300 m y 500 m) y exposición al ruido ambiental',
             parrafos: [
-              'Mientras las distancias mínimas miden el acceso al elemento más cercano, las siete cartografías de conteo en buffers caminables (300 m y 500 m) miden la abundancia real de oportunidades alrededor de cada manzana. En Arbolado Urbano en 500 m (media comunal de 285,0 árboles), Parque Almagro (1.092,0), Ejército (637,6) y el sur de Barrio Brasil lideran la comuna, mientras San Vicente y Meiggs apenas promedian 2,7 árboles en su entorno caminable. En Equipamiento Educativo en 500 m (media de 23,2 recintos), el polo Ejército (74,5), Barrio Universitario (68,3) y el suroriente de Barrio Brasil (Campus UAH) concentran la mayor oferta formativa del país, frente a apenas 6,4 recintos en Sierra Bella.',
+              'Mientras las distancias mínimas miden el acceso al elemento más cercano, las siete cartografías de conteo en buffers caminables (300 m y 500 m) miden la abundancia real de oportunidades alrededor de cada manzana. En Arbolado Urbano en 500 m (media comunal de 285,0 árboles), Parque Almagro (1.092,0), Ejército (637,6) y el sur de Barrio Brasil lideran la comuna, mientras San Vicente y Meiggs apenas promedian 2,7 árboles en su entorno caminable. En Equipamiento Educativo en 500 m (media de 23,2 recintos), el polo Ejército (74,5), Barrio Universitario (68,3) y el suroriente de Barrio Brasil (Campus universitario) concentran la mayor oferta formativa del país, frente a apenas 6,4 recintos en Sierra Bella.',
               'De igual forma, el Centro Histórico y Santa Lucía Forestal lideran en Edificaciones en 500 m (884,0 predios), Paraderos de Bus en 500 m (342,2 puntos de parada), Patrimonio en 500 m (51,5 inmuebles) y Cruces Semaforizados UOCT en 300 m (25,5 cruces, frente a solo 2,7 en Club Hípico), mientras Barrio Brasil ocupa el segundo lugar comunal en densidad de Transporte VGI en 300 m (134,4 entidades, solo detrás de Centro Histórico con 144,7). No obstante, la cartografía de Ruido Ambiental Promedio (media comunal de 62,7 dBA, con rangos de 44,5 a 77,5 dBA) revela el costo ambiental de esta centralidad: las manzanas que enfrentan la Autopista Central (Parque O’Higgins con 69,4 dBA y Barrio Judicial con 69,3 dBA), la Alameda, Av. Matta y San Pablo superan el umbral crítico de 68,6 dBA (azul oscuro), mientras el interior de Barrio Brasil logra mantenerse como un refugio acústico relativo entre 44,5 y 62,8 dBA.'
             ],
             cartografias: [
@@ -1458,7 +1458,7 @@ const ModuloIndicadoresAnalisis = (() => {
                 src: 'img/cartografias/n_equip_educativos_buffer500_m_total.jpg',
                 titulo: 'Equipamientos Educativos Totales en Buffer de 500 Metros',
                 subtitulo: 'Media comunal: 23,2 recintos · Líderes: Ejército (74,5) y Barrio Universitario (68,3)',
-                lectura: 'Muestra la extraordinaria concentración de universidades, liceos y jardines en el cuadrante sur de Barrio Brasil (Campus UAH) y su proyección hacia Ejército.'
+                lectura: 'Muestra la extraordinaria concentración de universidades, liceos y jardines en el cuadrante sur de Barrio Brasil (Campus universitario) y su proyección hacia Ejército.'
               },
               {
                 src: 'img/cartografias/n_paraderos_bus_buffer500m.jpg',

@@ -72,7 +72,7 @@ flowchart TD
 ## 4. Procedimiento paso a paso de configuración en Supabase
 
 ### Paso 1 · creación del proyecto y habilitación de PostGIS
-1. Ingrese a [https://supabase.com/dashboard](https://supabase.com/dashboard) y cree un proyecto nuevo (por ejemplo, `atlas-vgi-uah`, región `South America - São Paulo`).
+1. Ingrese a [https://supabase.com/dashboard](https://supabase.com/dashboard) y cree un proyecto nuevo (por ejemplo, `atlas-vgi-territorial`, región `South America - São Paulo`).
 2. Abra la sección SQL Editor → New Query.
 
 ### Paso 2 · ejecución de los scripts DDL y semilla de metadatos

@@ -45,7 +45,7 @@ const EvaluadorCalidadCuantitativa = (() => {
   const LIMITE_BYTES_CAPA_INTERNA = 80 * 1024 * 1024;   // 80 MB máximo para capas oficiales internas (recortadas por Bbox)
   const LIMITE_ENTIDADES_PROCESAMIENTO = 15000;         // 15.000 entidades vectoriales concurrentes
 
-  // BBox Territorial Oficial del Caso Piloto: Barrio Brasil y Campus Patrimonial UAH
+  // BBox Territorial Oficial del Caso Piloto: Barrio Brasil y Sector Patrimonial
   // Envolvente: Oeste (Matucana) -70.6740, Sur (Alameda) -33.4530, Este (Manuel Rodríguez) -70.6550, Norte (San Pablo) -33.4330
   const BBOX_BARRIO_BRASIL_PILOTO = [-70.6740, -33.4530, -70.6550, -33.4330];
 
@@ -2205,7 +2205,7 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
     "id": "${resultado.capaId || 'capa_territorial'}",
     "title": "${resultado.nombreCapa || 'Nombre Descriptivo de la Capa'}",
     "description": "Propósito territorial y alcance metodológico del conjunto de datos",
-    "custodian": "Organismo o investigador responsable (ej. IDE Chile / UAH)",
+    "custodian": "Organismo o investigador responsable (ej. IDE Chile / Atlas VGI)",
     "date": "${new Date().toISOString().split('T')[0]}",
     "category": "boundaries",
     "license": "Open Data Commons Open Database License (ODbL) 1.0 / CC-BY 4.0",
@@ -2269,7 +2269,7 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
             </button>
           </div>
           <span style="font-size:0.72rem; color:var(--tinta-tenue); font-family:var(--fuente-datos);">
-            Auditoría conforme a ISO 19157-1:2023 · UAH Geografía 2026
+            Auditoría conforme a ISO 19157-1:2023 · Gestión Territorial 2026
           </span>
         </div>
 
@@ -2364,7 +2364,7 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
           const inpResumen = document.getElementById('md-resumen');
           if (inpResumen && resultado.resumenDataset) {
             const rd = resultado.resumenDataset;
-            inpResumen.value = `Conjunto de datos espaciales: ${resultado.nombreCapa || 'Capa territorial'}. Comprende ${rd.totalFeatures} entidades vectoriales (${rd.tasaValidezTopologica} conformes con OGC SFA) y ${rd.totalVertices ? rd.totalVertices.toLocaleString('es-CL') : 0} vértices evaluados bajo norma ISO 19157 e ISO 19115 (Atlas VGI - Geografía UAH).`;
+            inpResumen.value = `Conjunto de datos espaciales: ${resultado.nombreCapa || 'Capa territorial'}. Comprende ${rd.totalFeatures} entidades vectoriales (${rd.tasaValidezTopologica} conformes con OGC SFA) y ${rd.totalVertices ? rd.totalVertices.toLocaleString('es-CL') : 0} vértices evaluados bajo norma ISO 19157 e ISO 19115 (Atlas VGI - Gestión Territorial).`;
           }
           if (resultado.resumenDataset && resultado.resumenDataset.bbox) {
             const bbox = resultado.resumenDataset.bbox;
@@ -2379,7 +2379,7 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
           }
           const inpLinaje = document.getElementById('md-linaje');
           if (inpLinaje && resultado.nombreCapa) {
-            inpLinaje.value = `Capa vectorial "${resultado.nombreCapa}" auditada con el Evaluador de Calidad Espacial ISO 19157 del Atlas VGI (UAH Geografía UAH). Índice Global IGV: ${resultado.indiceGlobal ? resultado.indiceGlobal.igv : 100}%.`;
+            inpLinaje.value = `Capa vectorial "${resultado.nombreCapa}" auditada con el Evaluador de Calidad Espacial ISO 19157 del Atlas VGI (Gestión Territorial). Índice Global IGV: ${resultado.indiceGlobal ? resultado.indiceGlobal.igv : 100}%.`;
           }
 
           // Disparar generación automática de la ficha ISO para reflejar de inmediato los datos
@@ -2415,7 +2415,7 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
     if (btnCopiar) {
       btnCopiar.addEventListener('click', () => {
         const resumenTexto = `CERTIFICADO DE CALIDAD ESPACIAL ISO 19157 / ISO 19115\n` +
-          `Atlas VGI Territorial — Nodo GeoAbierto (UAH Geografía UAH)\n` +
+          `Atlas VGI Territorial — Nodo GeoAbierto (Gestión Territorial)\n` +
           `Fecha: ${resultado.fechaAuditoria}\n` +
           `Índice Global IGV: ${ig.igv}% [${ig.grado}]\n` +
           `- Pilar Cuantitativo: ${ig.scoreCuantitativo}%\n` +
@@ -2932,8 +2932,8 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
               id: idCapa || 'capa_interna',
               nombre: metaDef ? metaDef.nombre : (optSeleccionada ? optSeleccionada.text : urlCapa),
               titulo: metaDef ? metaDef.nombre : (optSeleccionada ? optSeleccionada.text : urlCapa),
-              institucion: metaDef ? metaDef.institucion : 'Atlas VGI UAH / IDE Chile',
-              tipoFuente: 'Geodatabase Oficial / VGI (Atlas UAH)'
+              institucion: metaDef ? metaDef.institucion : 'Atlas VGI Territorial / IDE Chile',
+              tipoFuente: 'Geodatabase Oficial / VGI (Atlas VGI)'
             };
           } else if (!dataGeojson && txtGeojson && txtGeojson.value.trim().startsWith('{')) {
             const valorTexto = txtGeojson.value.trim();

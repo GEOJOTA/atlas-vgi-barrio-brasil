@@ -20,8 +20,8 @@ const ModuloOSM = (() => {
       filtro: `
         nwr["amenity"~"university|college|library|school|kindergarten|childcare|language_school|music_school|driving_school|student_accommodation|research_institute|training_centre"]({{bbox}});
         nwr["building"~"university|school|college|kindergarten|library"]({{bbox}});
-        nwr["name"~"Universidad|Facultad|Liceo|Colegio|UAH|Alberto Hurtado"]({{bbox}});
-        nwr["operator"~"Universidad|Alberto Hurtado|UAH|CRUCH"]({{bbox}});
+        nwr["name"~"Universidad|Facultad|Liceo|Colegio|Instituto"]({{bbox}});
+        nwr["operator"~"Universidad|Instituto|CRUCH|MINEDUC"]({{bbox}});
       `
     },
     servicios: {
@@ -540,7 +540,7 @@ let infoSuperficie = null;
     if (etiqueta) {
       const e = etiqueta.toLowerCase().trim();
       if (e.includes('building') || e.includes('edifici') || e.includes('manzana')) return 'edificaciones';
-      if (e.includes('universi') || e.includes('college') || e.includes('school') || e.includes('educacion') || e.includes('kindergarten') || e.includes('uah') || e.includes('alberto hurtado')) return 'educacion';
+      if (e.includes('universi') || e.includes('college') || e.includes('school') || e.includes('educacion') || e.includes('kindergarten') || e.includes('instituto')) return 'educacion';
       if (e.includes('cycleway') || e.includes('bicycle') || e.includes('ciclovia') || e.includes('bici')) return 'movilidad_activa';
       if (e.includes('bus') || e.includes('metro') || e.includes('railway') || e.includes('transporte') || e.includes('station')) return 'transporte';
       if (e.includes('park') || e.includes('leisure') || e.includes('plaza') || e.includes('jardin') || e.includes('pitch')) return 'espacio_publico';
@@ -588,7 +588,7 @@ let infoSuperficie = null;
     // 1. Cargar dataset RM pre-descargado
     let dataset = await cargarDatasetGeoJSON(archivoRM);
 
-    // 2. Si no carga el RM, recurrir al catálogo validado local de Barrio Brasil / UAH
+    // 2. Si no carga el RM, recurrir al catálogo validado local de Barrio Brasil
     if (!dataset || !dataset.features || dataset.features.length === 0) {
       console.warn(`[Geodatabase RM] No se pudo cargar ${archivoRM}, intentando ${archivoLocal}...`);
       dataset = await cargarDatasetGeoJSON(archivoLocal);
@@ -601,17 +601,17 @@ let infoSuperficie = null;
     // 3. Filtrar geométricamente por el Bounding Box consultado aprovechando f.bbox (índice espacial por entidad)
     let featuresFiltradas = dataset.features.filter(f => geometriaIntersecaBbox(f.geometry, bbox, f.bbox));
 
-    // Si la categoría consultada es educación o se busca UAH/Alberto Hurtado,
-    // consolidar también los polígonos del campus UAH de edificaciones si aún no están en la lista
-    if (categoriaId === 'educacion' || (etiquetaManual && (etiquetaManual.includes('uah') || etiquetaManual.includes('alberto hurtado')))) {
+    // Si la categoría consultada es educación o se busca educación superior,
+    // consolidar también los polígonos del campus universitario de edificaciones si aún no están en la lista
+    if (categoriaId === 'educacion' || (etiquetaManual && (etiquetaManual.includes('universi') || etiquetaManual.includes('instituto')))) {
       const edifDataset = await cargarDatasetGeoJSON(DATASETS_RM.edificaciones);
       if (edifDataset && edifDataset.features) {
-        const uahEdif = edifDataset.features.filter(f => {
+        const univEdif = edifDataset.features.filter(f => {
           const str = JSON.stringify(f.properties).toLowerCase();
-          return (str.includes('uah') || str.includes('alberto hurtado') || str.includes('barroso 10') || str.includes('erasmo escala 1822')) && geometriaIntersecaBbox(f.geometry, bbox, f.bbox);
+          return (str.includes('universi') || str.includes('barroso 10') || str.includes('erasmo escala 1822')) && geometriaIntersecaBbox(f.geometry, bbox, f.bbox);
         });
         const existingIds = new Set(featuresFiltradas.map(f => f.properties?.id_vgi || f.id));
-        uahEdif.forEach(feat => {
+        univEdif.forEach(feat => {
           const id = feat.properties?.id_vgi || feat.id;
           if (!existingIds.has(id)) {
             const fClone = JSON.parse(JSON.stringify(feat));

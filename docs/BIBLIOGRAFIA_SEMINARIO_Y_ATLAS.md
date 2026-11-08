@@ -655,7 +655,7 @@ Fuentes oficiales del Estado de Chile, estándares internacionales ISO/OGC y esp
 - Año: 2020
 - Título: Ley N° 17.288 de Monumentos Nacionales
 - Enlace: [https://www.monumentos.gob.cl/](https://www.monumentos.gob.cl/)
-- Pertinencia Territorial: Norma que ampara la protección jurídica de la Zona Típica de Barrio Brasil, Monumentos Históricos y el patrimonio de la manzana UAH.
+- Pertinencia Territorial: Norma que ampara la protección jurídica de la Zona Típica de Barrio Brasil, Monumentos Históricos y el patrimonio de la sector patrimonial.
 
 ### 86. (Ley N° 21.156) — *ley de la república de chile*
 - Referencia APA: Ministerio de Salud [MINSAL]. (2019). Ley N° 21.156: Establece la obligación de disponer de desfibriladores externos automáticos portátiles en recintos públicos. Diario Oficial de la República de Chile.
@@ -735,7 +735,7 @@ Fuentes oficiales del Estado de Chile, estándares internacionales ISO/OGC y esp
 - Año: 2019
 - Título: Plan Regulador Comunal de Santiago (PRC)
 - Enlace: [https://www.munistgo.cl](https://www.munistgo.cl)
-- Pertinencia Territorial: Instrumento legal que fija las alturas máximas, usos de suelo y protección patrimonial en el polígono Barrio Brasil - UAH.
+- Pertinencia Territorial: Instrumento legal que fija las alturas máximas, usos de suelo y protección patrimonial en el polígono Barrio Brasil.
 
 ### 96. (ISO 19157:2013) — *norma internacional de calidad*
 - Referencia APA: International Organization for Standardization. (2013). Geographic information — Data quality (ISO Standard No. 19157:2013). ISO.

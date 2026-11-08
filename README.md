@@ -6,7 +6,7 @@
 [![Estándares ISO/OGC](https://img.shields.io/badge/Normas-ISO_19110_%7C_19115_%7C_19139_%7C_19157-d97706?style=for-the-badge)](#5-documentación-técnica-del-proyecto)
 [![Licencia de Datos](https://img.shields.io/badge/Licencias-ODbL_1.0_%7C_CC_BY--SA_4.0_%7C_AGPLv3-dc2626?style=for-the-badge)](#6-licenciamiento-y-gobernanza-de-datos-abiertos)
 
-Plataforma web abierta que reúne mapas oficiales del Estado de Chile e información geográfica voluntaria (*Volunteered Geographic Information*, VGI; Goodchild, 2007; Haklay, 2010) para el análisis multiescalar del barrio Brasil, el entorno del Campus Universidad Alberto Hurtado, la comuna de Santiago y la Región Metropolitana de Santiago.
+Plataforma web abierta que reúne mapas oficiales del Estado de Chile e información geográfica voluntaria (*Volunteered Geographic Information*, VGI; Goodchild, 2007; Haklay, 2010) para el análisis multiescalar del barrio Brasil, el entorno del Campus universitario patrimonial, la comuna de Santiago y la Región Metropolitana de Santiago.
 
 * Plataforma web en producción (CDN primario): [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * Repositorio espejo (GitHub Pages): [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)

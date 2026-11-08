@@ -363,7 +363,7 @@ A continuación se reproduce el fragmento XML validable que genera el Módulo 08
           <gmd:address>
             <gmd:CI_Address>
               <gmd:electronicMailAddress>
-                <gco:CharacterString>juanpablolescanovillegas@gmail.com</gco:CharacterString>
+                <gco:CharacterString>tucorreoelectronico@gmail.com</gco:CharacterString>
               </gmd:electronicMailAddress>
             </gmd:CI_Address>
           </gmd:address>

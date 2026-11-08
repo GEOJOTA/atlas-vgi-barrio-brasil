@@ -129,7 +129,7 @@ exports.handler = async function (event, context) {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
           'Accept': 'application/json, text/javascript, */*; q=0.01',
           'Accept-Language': 'es-CL,es;q=0.9,en;q=0.8',
-          'User-Agent': 'AtlasVGI-UAH/1.0 (contacto@geovgi.uahurtado.cl)'
+          'User-Agent': 'AtlasVGI-Territorial/1.0 (tucorreoelectronico@gmail.com)'
         },
         body: 'data=' + encodeURIComponent(consultaQL),
         signal: controller.signal

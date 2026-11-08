@@ -153,7 +153,7 @@
 
 ## 1. Identificación y alcance operativo del proyecto
 
-El Atlas de Información Geográfica Voluntaria (VGI) para la gestión territorial (Nodo GeoAbierto) es una plataforma web abierta que reúne mapas oficiales y colaborativos para el diagnóstico urbano, la consulta normativa y la descarga de datos espaciales en el sector poniente de la comuna de Santiago, con foco en el Barrio Brasil y el entorno del Campus Universidad Alberto Hurtado (UAH).
+El Atlas de Información Geográfica Voluntaria (VGI) para la gestión territorial (Nodo GeoAbierto) es una plataforma web abierta que reúne mapas oficiales y colaborativos para el diagnóstico urbano, la consulta normativa y la descarga de datos espaciales en el sector poniente de la comuna de Santiago, con foco en el Barrio Brasil y el entorno del Campus universitario patrimonial (VGI).
 
 El sistema articula estándares del Open Geospatial Consortium (OGC) y de la Organización Internacional de Normalización (ISO 19115 para metadatos, ISO 19157 para calidad espacial e ISO 19110 para catalogación de objetos geográficos). Para evitar la repetición de conteos a lo largo del documento, la Tabla 1.1 concentra las cifras clave del proyecto que sirven de referencia para los capítulos siguientes.
 
@@ -602,7 +602,7 @@ A continuación se detalla la especificación técnica de cada categoría:
 * Etiquetas OSM Primarias: `amenity=school`, `amenity=kindergarten`, `amenity=college`, `amenity=university`, `amenity=library`.
 * Etiquetas OSM Complementarias: `operator:type=public|private`, `name=*`, `addr:street=*`, `capacity=*`, `wheelchair=yes|no|limited`.
 * Geometrías Admitidas: Puntos (nodos de acceso) y Polígonos (huella predial del establecimiento).
-* Entidades Clave en Barrio Brasil: Campus Universidad Alberto Hurtado (sedes patrimoniales Cienfuegos, Erasmo Escala y Almirante Barroso), Liceo Experimental Manuel de Salas, Escuela Básica República de Panamá, Biblioteca Pública de Santiago.
+* Entidades Clave en Barrio Brasil: Campus universitario patrimonial (sedes patrimoniales Cienfuegos, Erasmo Escala y Almirante Barroso), Liceo Experimental Manuel de Salas, Escuela Básica República de Panamá, Biblioteca Pública de Santiago.
 
 ### 6.2. CAT-02: Servicios y comercio barrial
 * Etiquetas OSM Primarias: `amenity=hospital`, `amenity=clinic`, `amenity=doctors`, `amenity=pharmacy`, `healthcare=centre`.
@@ -627,7 +627,7 @@ A continuación se detalla la especificación técnica de cada categoría:
 ### 6.6. CAT-06: Patrimonio y cultura
 * Etiquetas OSM Primarias: `historic=monument`, `historic=memorial`, `historic=building`, `heritage=*`.
 * Etiquetas Complementarias: `heritage:operator=Consejo de Monumentos Nacionales`, `start_date=*`.
-* Entidades Clave: Zona Típica Barrio Brasil (D.S. 432/1993), Basílica del Salvador, Iglesia San Saturnino, casonas patrimoniales UAH, placas conmemorativas.
+* Entidades Clave: Zona Típica Barrio Brasil (D.S. 432/1993), Basílica del Salvador, Iglesia San Saturnino, casonas patrimoniales, placas conmemorativas.
 
 ### 6.7. CAT-07: Accesibilidad universal
 * Etiquetas OSM Primarias: `highway=crossing`, `kerb=lowered|flush|raised`, `blind:description=*`, `traffic_signals:sound=yes|no`.
@@ -637,7 +637,7 @@ A continuación se detalla la especificación técnica de cada categoría:
 ### 6.8. CAT-08: Biodiversidad urbana
 * Etiquetas OSM / GBIF: `natural=tree`, `landuse=forest`, `natural=wood`, registros Darwin Core (`taxonRank`, `scientificName`).
 * Etiquetas Complementarias: `species=*`, `circumference=*`, `height=*`, `denotation=urban`.
-* Entidades Clave: Arbolado viario de plátanos orientales de Avenida Brasil, palmeras centenarias de Plaza Brasil, jardines interiores UAH.
+* Entidades Clave: Arbolado viario de plátanos orientales de Avenida Brasil, palmeras centenarias de Plaza Brasil, jardines interiores comunitarios.
 
 ### 6.9. CAT-09: Edificaciones y huella urbana (polígonos)
 * Etiquetas OSM Primarias: `building=yes|residential|commercial`, `building:levels=*`, `building:cité=yes`, `highway=service`.
@@ -1336,8 +1336,8 @@ Para garantizar que el Inspector Normativo, el Evaluador de Calidad ISO 19157 y 
 | 1 | `id_atlas` | String | Clave única alfanumérica sin espacios | `"VGI-CL-RM-CAT01-000412"` |
 | 2 | `categoria` | String | Una de las 10 macrocategorías o grupos IDE | `"Educación y Equipamiento"` |
 | 3 | `subcategoria` | String | Clasificador secundario estandarizado | `"Universidad / Sede Académica"` |
-| 4 | `nombre` | String | Nombre formal (no dejar en blanco) | `"Universidad Alberto Hurtado - Sede Cienfuegos"` |
-| 5 | `fuente_origen`| String | Fuente primaria de procedencia del dato | `"OpenStreetMap / Colaboradores UAH"` |
+| 4 | `nombre` | String | Nombre formal (no dejar en blanco) | `"Sede Universitaria Patrimonial - Cienfuegos"` |
+| 5 | `fuente_origen`| String | Fuente primaria de procedencia del dato | `"OpenStreetMap / Colaboradores Comunitarios"` |
 | 6 | `licencia` | String | Licencia abierta explícita | `"Open Database License (ODbL 1.0)"` |
 | 7 | `fecha_captura`| String | Formato ISO 8601 `YYYY-MM-DD` | `"2026-09-24"` |
 | 8 | `comuna` | String | Nombre oficial según DPA Subdere | `"Santiago"` |
@@ -1372,7 +1372,7 @@ def normalizar_geojson(ruta_archivo, id_prefijo, categoria_defecto):
             "categoria": props.get("categoria", categoria_defecto),
             "subcategoria": props.get("subcategoria", props.get("tipo", "General")),
             "nombre": props.get("nombre", props.get("name", "Entidad Sin Nombre")),
-            "fuente_origen": props.get("fuente_origen", "Atlas VGI UAH"),
+            "fuente_origen": props.get("fuente_origen", "Atlas VGI Territorial"),
             "licencia": props.get("licencia", "CC BY-SA 4.0 / ODbL 1.0"),
             "fecha_captura": props.get("fecha_captura", "2026-10-01"),
             "comuna": props.get("comuna", "Santiago"),
@@ -1751,7 +1751,7 @@ A continuación se reproduce el fragmento XML validable que genera el Módulo 08
           <gmd:address>
             <gmd:CI_Address>
               <gmd:electronicMailAddress>
-                <gco:CharacterString>juanpablolescanovillegas@gmail.com</gco:CharacterString>
+                <gco:CharacterString>tucorreoelectronico@gmail.com</gco:CharacterString>
               </gmd:electronicMailAddress>
             </gmd:CI_Address>
           </gmd:address>
@@ -1787,7 +1787,7 @@ A continuación se reproduce el fragmento XML validable que genera el Módulo 08
         </gmd:CI_Citation>
       </gmd:citation>
       <gmd:abstract>
-        <gco:CharacterString>Capa vectorial comunitaria que compila establecimientos escolares, sedes universitarias (UAH) y bibliotecas públicas en Barrio Brasil, normalizada a EPSG:4326 con 14 atributos maestros ISO.</gco:CharacterString>
+        <gco:CharacterString>Capa vectorial comunitaria que compila establecimientos escolares, sedes universitarias (VGI) y bibliotecas públicas en Barrio Brasil, normalizada a EPSG:4326 con 14 atributos maestros ISO.</gco:CharacterString>
       </gmd:abstract>
       <gmd:extent>
         <gmd:EX_Extent>
@@ -3381,7 +3381,7 @@ CREATE TABLE IF NOT EXISTS public.auditoria_actualizaciones (
     capa_id VARCHAR(100) REFERENCES public.capas_metadata(id) ON DELETE SET NULL,
     tipo_evento VARCHAR(50) NOT NULL,
     entidades_afectadas INTEGER NOT NULL,
-    ejecutado_por VARCHAR(100) DEFAULT 'pipeline_python_uah',
+    ejecutado_por VARCHAR(100) DEFAULT 'pipeline_python_vgi',
     tiempo_ejecucion_segundos NUMERIC(8,2),
     detalles JSONB,
     fecha_evento TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
@@ -4311,7 +4311,7 @@ El mantenimiento continuo y la reproducibilidad del Atlas de Información Geogr�
 │                   CICLO DE INTEGRACIÓN Y DESPLIEGUE CONTINUO           │
 ├────────────────────────────────────────────────────────────────────────┤
 │                                                                        │
-│   Desarrollador / Investigador UAH                                      │
+│   Desarrollador / Investigador Territorial                                      │
 │             │                                                          │
 │             ├──► 1. Edición y Validación Local                         │
 │             │       python3 scripts/verificar_integridad_despliegue.py │
@@ -4334,7 +4334,7 @@ El mantenimiento continuo y la reproducibilidad del Atlas de Información Geogr�
 
 ```mermaid
 flowchart LR
-    DEV["Desarrollador / Investigador UAH"]
+    DEV["Desarrollador / Investigador Territorial"]
     VAL["scripts/verificar_integridad_despliegue.py"]
     GIT["git commit & git lfs track"]
     HUB["GitHub Repository (main)"]
@@ -4839,7 +4839,7 @@ Obligaciones Clave del Usuario:
 
 El Atlas VGI cumple de forma verificable con la política de uso de servidores de mosaicos de la OpenStreetMap Foundation (OSMF):
 - Se prohíbe el raspado masivo (*scraping*) y la precarga automática de todas las teselas del mapa.
-- El visor web envía una cabecera de agente de usuario (*User-Agent*) válida e identificable: `AtlasVGI-UAH-Geografia/1.0`.
+- El visor web envía una cabecera de agente de usuario (*User-Agent*) válida e identificable: `AtlasVGI-Territorial/1.0`.
 - Se implementa almacenamiento en caché del lado del cliente en mosaicos ya visualizados, minimizando las solicitudes a los servidores comunitarios.
 
 ### 38.4 Licencia del código fuente del Atlas
@@ -5442,7 +5442,7 @@ Fuentes oficiales del Estado de Chile, estándares internacionales ISO/OGC y esp
 - Año: 2020
 - Título: Ley N° 17.288 de Monumentos Nacionales
 - Enlace: [https://www.monumentos.gob.cl/](https://www.monumentos.gob.cl/)
-- Pertinencia Territorial: Norma que ampara la protección jurídica de la Zona Típica de Barrio Brasil, Monumentos Históricos y el patrimonio de la manzana UAH.
+- Pertinencia Territorial: Norma que ampara la protección jurídica de la Zona Típica de Barrio Brasil, Monumentos Históricos y el patrimonio de la sector patrimonial.
 
 #### 86. (Ley N° 21.156) — *ley de la república de chile*
 - Referencia APA: Ministerio de Salud [MINSAL]. (2019). Ley N° 21.156: Establece la obligación de disponer de desfibriladores externos automáticos portátiles en recintos públicos. Diario Oficial de la República de Chile.
@@ -5522,7 +5522,7 @@ Fuentes oficiales del Estado de Chile, estándares internacionales ISO/OGC y esp
 - Año: 2019
 - Título: Plan Regulador Comunal de Santiago (PRC)
 - Enlace: [https://www.munistgo.cl](https://www.munistgo.cl)
-- Pertinencia Territorial: Instrumento legal que fija las alturas máximas, usos de suelo y protección patrimonial en el polígono Barrio Brasil - UAH.
+- Pertinencia Territorial: Instrumento legal que fija las alturas máximas, usos de suelo y protección patrimonial en el polígono Barrio Brasil.
 
 #### 96. (ISO 19157:2013) — *norma internacional de calidad*
 - Referencia APA: International Organization for Standardization. (2013). Geographic information — Data quality (ISO Standard No. 19157:2013). ISO.

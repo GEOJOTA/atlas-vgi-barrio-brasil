@@ -30,7 +30,7 @@ const ModuloMetadatos = (() => {
       uuid: uuid,
       fechaCreacion: ahora,
       identificacion: {
-        titulo: datos.titulo || 'Catastro VGI Barrio Brasil — Universidad Alberto Hurtado',
+        titulo: datos.titulo || 'Catastro VGI Barrio Brasil, Santiago Centro',
         resumen: datos.resumen || 'Capa de datos espaciales voluntarios compilada para la gestión territorial.',
         proposito: datos.proposito || 'Evaluación, catalogación y gestión territorial con Información Geográfica Voluntaria (VGI).',
         categoriaTema: datos.categoriaTema || 'planningCadastre'
@@ -44,7 +44,7 @@ const ModuloMetadatos = (() => {
         superficie_ha: sup ? sup.areaHa : (datos.superficie_ha || null),
         superficie_km2: sup ? sup.areaKm2 : (datos.superficie_km2 || null),
         srs_superficie: sup ? sup.srs : 'EPSG:32719 (WGS 84 / UTM Huso 19 Sur)',
-        descripcionTerritorio: datos.descripcionTerritorio || 'Barrio Brasil y Campus Universidad Alberto Hurtado, Santiago Centro, Chile'
+        descripcionTerritorio: datos.descripcionTerritorio || 'Barrio Brasil, Santiago Centro, Chile'
       },
       sistemaReferencia: {
         codigo: datos.srs || 'EPSG:4326 (WGS84)',
@@ -54,7 +54,7 @@ const ModuloMetadatos = (() => {
       linaje: {
         declaracion: datos.linaje || 'Datos extraídos en vivo desde OpenStreetMap y GBIF vía Overpass QL.',
         fechaConsulta: ahora.slice(0, 10),
-        procesamiento: 'Normalización de atributos según taxonomía VGI de 10 categorías (CAT-01 a CAT-10) y cálculo de superficies métricas en m² (EPSG:32719).'
+        procesamiento: datos.procesamiento || 'Normalización de atributos según taxonomía VGI de 10 categorías (CAT-01 a CAT-10) y cálculo de superficies métricas en m² (EPSG:32719).'
       },
       restriccionesDeUso: {
         licencia: datos.restricciones || 'Open Database License (ODbL) 1.0 para datos OSM; CC-BY para registros biológicos.',
@@ -63,7 +63,7 @@ const ModuloMetadatos = (() => {
       puntoDeContacto: {
         organizacion: datos.contactoOrganizacion || 'Atlas de Información Geográfica Voluntaria — Nodo GeoAbierto',
         persona: datos.contactoPersona || 'GEOJOTA',
-        correo: datos.contactoCorreo || 'juanpablolescanovillegas@gmail.com',
+        correo: datos.contactoCorreo || 'tucorreoelectronico@gmail.com',
         rol: datos.rol || 'custodian'
       },
       mantenimiento: {
@@ -190,7 +190,7 @@ const ModuloMetadatos = (() => {
       </gmd:scope>
       <gmd:lineage>
         <gmd:LI_Lineage>
-          <gmd:statement><gco:CharacterString>${escapeXML(ficha.linaje.declaracion)} | Fecha: ${ficha.linaje.fechaConsulta}</gco:CharacterString></gmd:statement>
+          <gmd:statement><gco:CharacterString>${escapeXML(ficha.linaje.declaracion)}${ficha.linaje.procesamiento ? ' | Proceso: ' + escapeXML(ficha.linaje.procesamiento) : ''} | Fecha: ${ficha.linaje.fechaConsulta}</gco:CharacterString></gmd:statement>
         </gmd:LI_Lineage>
       </gmd:lineage>
     </gmd:DQ_DataQuality>
@@ -304,11 +304,11 @@ const ModuloMetadatos = (() => {
     const tipoFuente = cat.tipo_fuente || fallbackInfo.tipo_fuente || (esOficial ? 'Oficial (Estado de Chile)' : 'VGI (Comunitaria / Abierta)');
     const temporalidad = cat.temporalidad || (defOficial ? defOficial.temporalidad : null) || (esSII ? 'Segundo Semestre 2025' : null) || fallbackInfo.temporalidad || '2026';
     const licencia = cat.licencia || (defOficial ? defOficial.declaracion : null) || (esSII ? 'Información pública oficial — Ley N° 20.285 de Transparencia (Servicio de Impuestos Internos)' : null) || fallbackInfo.licencia || 'Open Database License (ODbL) 1.0 / Ley N° 20.285';
-    const citaApa = cat.cita_apa || (defOficial ? defOficial.citaAPA : null) || (esSII ? 'Servicio de Impuestos Internos [SII]. (2025). Catastro de Bienes Raíces (Segundo Semestre 2025). Ministerio de Hacienda, Gobierno de Chile. https://www.sii.cl' : null) || fallbackInfo.cita_apa || fallbackInfo.citaAPA || `Atlas VGI UAH. (2026). ${titulo}. Universidad Alberto Hurtado.`;
+    const citaApa = cat.cita_apa || (defOficial ? defOficial.citaAPA : null) || (esSII ? 'Servicio de Impuestos Internos [SII]. (2025). Catastro de Bienes Raíces (Segundo Semestre 2025). Ministerio de Hacienda, Gobierno de Chile. https://www.sii.cl' : null) || fallbackInfo.cita_apa || fallbackInfo.citaAPA || `Atlas VGI Territorial. (2026). ${titulo}. Nodo GeoAbierto.`;
     const crs = 'EPSG:4326 (WGS 84)';
     const igv = typeof cat.igv === 'number' ? cat.igv : (fallbackInfo.igv ? Number(fallbackInfo.igv) : 98.5);
     const grado = cat.grado || fallbackInfo.grado || (igv >= 95.0 ? 'A+ (Excelente)' : 'A (Muy Bueno)');
-    const contacto = 'nodo-geoabierto@uahurtado.cl / contacto@ide.cl';
+    const contacto = 'tucorreoelectronico@gmail.com / contacto@ide.cl';
     const urlServicio = cat.url_servicio || (defOficial ? defOficial.urlServicio : null) || fallbackInfo.urlServicio || 'https://atlasvgiuah.netlify.app/';
 
     return {

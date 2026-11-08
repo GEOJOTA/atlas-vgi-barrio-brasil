@@ -27,7 +27,7 @@ Desarrollar un atlas de información geográfica voluntaria (VGI) reproducible, 
 3. [Evaluación de Calidad de Datos Espaciales (ISO 19157, Modelo WLC v2.0 y ohsome API v1/v2)](#3-evaluación-de-calidad-de-datos-espaciales-iso-19157-modelo-wlc-v20-y-ohsome-api-v1v2)
 4. [Decisiones de Arquitectura de Software y Diseño Multi-Lenguaje](#4-decisiones-de-arquitectura-de-software-y-diseño-multi-lenguaje)
 5. [Auditoría Universal de MetaCalidad de la Base de Datos (`134 Capas`)](#5-auditoría-universal-de-metacalidad-de-la-base-de-datos-134-capas)
-6. [Aplicación Territorial en el Caso de Estudio: Barrio Brasil, Campus UAH y Santiago](#6-aplicación-territorial-en-el-caso-de-estudio-barrio-brasil-campus-uah-y-santiago)
+6. [Aplicación Territorial en el Caso de Estudio: Barrio Brasil y Santiago](#6-aplicación-territorial-en-el-caso-de-estudio-barrio-brasil-y-santiago)
 7. [Preguntas Frecuentes sobre Interoperabilidad, Reproducibilidad y Calidad](#7-preguntas-frecuentes-sobre-interoperabilidad-reproducibilidad-y-calidad)
 8. [Referencias Bibliográficas y Fuentes Oficiales (Norma APA 7ª Edición)](#8-referencias-bibliográficas-y-fuentes-oficiales-norma-apa-7ª-edición)
 
@@ -126,9 +126,9 @@ flowchart TD
     T1 & T2 --> H1 --> H2 --> H3 --> S1 & S2
 ```
 
-| Código | Categoría Temática Maestra | Contraparte Institucional Estatal | Norma / Estándar Técnico Vinculado | Cobertura en Barrio Brasil / UAH |
+| Código | Categoría Temática Maestra | Contraparte Institucional Estatal | Norma / Estándar Técnico Vinculado | Cobertura en Barrio Brasil |
 | :---: | :--- | :--- | :--- | :--- |
-| `CAT-01` | Educación, Universidades e Investigación | MINEDUC / Subsecretaría de Educación Superior / JUNJI | Directorio Oficial de Establecimientos MINEDUC; Ley N° 21.091 | Campus Universidad Alberto Hurtado, Liceo de Aplicación, colegios, jardines infantiles y bibliotecas (`247` entidades). |
+| `CAT-01` | Educación, Universidades e Investigación | MINEDUC / Subsecretaría de Educación Superior / JUNJI | Directorio Oficial de Establecimientos MINEDUC; Ley N° 21.091 | Campus universitario patrimonial, Liceo de Aplicación, colegios, jardines infantiles y bibliotecas (`247` entidades). |
 | `CAT-02` | Servicios Urbanos, Salud y Comercio Barrial | MINSAL / SEREMI de Salud RM / SERCOTEC / MuniSTGO | Modelo de Salud Familiar MINSAL; Ley de Rentas Municipales D.L. 3.063 | Comercio minorista, almacenes, panaderías, farmacias, CESFAM Ignacio Domeyko y gastronomía (`365` entidades). |
 | `CAT-03` | Movilidad, Transporte Público y Paraderos | MTT / DTPM / Metro de Santiago S.A. | Manual de Paraderos Red Movilidad (DTPM); Manual REDEVU (MINVU) | Estaciones Metro Los Héroes (L1/L2), Santa Ana (L2/L5), Cumming (L5), República (L1) y paradas Red (`191` entidades). |
 | `CAT-04` | Movilidad Activa, Ciclovías y Peatonalidad | MTT / SECTRA / SERVIU RM / MuniSTGO | Manual de Vialidad Cicloinclusiva (MINVU); Ley de Convivencia Vial N° 21.088 | Ciclovías segregadas en ejes Rosas y Compañía, ciclobanda Av. Brasil y biciestacionamientos (`11` trazados). |
@@ -212,9 +212,9 @@ Donde:
 
 ---
 
-## 6. Aplicación territorial en el caso de estudio: Barrio Brasil, campus UAH y Santiago
+## 6. Aplicación territorial en el caso de estudio: Barrio Brasil, campus universitario y Santiago
 
-En el área de estudio del barrio Brasil y el entorno del Campus Universidad Alberto Hurtado (`data/atlas_vgi_barrio_brasil_uah_completo.geojson` y `data/resumen_catastro_vgi.csv`), las 10 macrocategorías VGI consolidan 3.677 entidades locales (y 1.552.144 entidades en los extractos metropolitanos `data/capa_osm_rm_cat01_educacion.geojson` a `cat10_cobertura_suelo.geojson`), las cuales se articulan con las 124 capas oficiales en los 4 guiones visuales Territoriales (`83` cartografías temáticas) del Módulo 05:
+En el área de estudio del barrio Brasil y el entorno del Campus universitario patrimonial (`data/atlas_vgi_barrio_brasil_uah_completo.geojson` y `data/resumen_catastro_vgi.csv`), las 10 macrocategorías VGI consolidan 3.677 entidades locales (y 1.552.144 entidades en los extractos metropolitanos `data/capa_osm_rm_cat01_educacion.geojson` a `cat10_cobertura_suelo.geojson`), las cuales se articulan con las 124 capas oficiales en los 4 guiones visuales Territoriales (`83` cartografías temáticas) del Módulo 05:
 
 1. guion visual 01 (`14` mapas): Densidad de Kernel (`KDE`) de equipamientos educativos, salud, comercio, patrimonio, semáforos UOCT, proyectos BIP y accesibilidad peatonal.
 2. guion visual 02 (`11` mapas): Autocorrelación espacial local (`LISA` / `I de Moran`) entre densidad VGI y coberturas oficiales a escala de manzana (`data/matriz_sintesis_barrio_brasil_manzanas.geojson`).

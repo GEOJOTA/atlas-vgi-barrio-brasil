@@ -234,7 +234,7 @@ XML_ISO19139 = f"""<?xml version="1.0" encoding="UTF-8"?>
         <gmd:CI_Contact>
           <gmd:address>
             <gmd:CI_Address>
-              <gmd:electronicMailAddress><gco:CharacterString>juanpablolescanovillegas@gmail.com</gco:CharacterString></gmd:electronicMailAddress>
+              <gmd:electronicMailAddress><gco:CharacterString>tucorreoelectronico@gmail.com</gco:CharacterString></gmd:electronicMailAddress>
             </gmd:CI_Address>
           </gmd:address>
         </gmd:CI_Contact>
@@ -350,7 +350,7 @@ JSON_ISO19115 = {
         "organizacion": "Departamento de Geografía — Universidad Alberto Hurtado (UAH)",
         "proyecto": "Investigación Cartográfica UAH · Práctica Profesional 2026 S2",
         "practicante": "Juan Pablo Lescano Villegas (GEOJOTA)",
-        "correo": "juanpablolescanovillegas@gmail.com",
+        "correo": "tucorreoelectronico@gmail.com",
         "supervisor": "Prof. Manuel Fuenzalida",
         "repositorio": "https://github.com/GEOJOTA/atlas_vgi_uah",
         "visor_en_linea": "https://atlasvgiuah.netlify.app/"
@@ -525,7 +525,7 @@ Raíz:
 --------------------------------------------------------------------------------
 4. CRÉDITOS Y CONTACTO
 --------------------------------------------------------------------------------
-- Practicante: Juan Pablo Lescano Villegas (GEOJOTA) - juanpablolescanovillegas@gmail.com
+- Practicante: Juan Pablo Lescano Villegas (GEOJOTA) - tucorreoelectronico@gmail.com
 - Supervisor: Prof. Manuel Fuenzalida — Departamento de Geografía, Universidad Alberto Hurtado.
 - Repositorio: https://github.com/GEOJOTA/atlas_vgi_uah
 - Visor en Línea: https://atlasvgiuah.netlify.app/

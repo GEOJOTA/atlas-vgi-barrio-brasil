@@ -5,7 +5,7 @@
   Maneja:
   - Inicialización del mapa Leaflet y sincronización reactiva del Bounding Box.
   - Carga y toggle de las 8 capas temáticas VGI en el mapa interactivo.
-  - Selector de territorios (Barrio Brasil UAH, Santiago Centro, etc.).
+  - Selector de territorios (Barrio Brasil, Santiago Centro, etc.).
   - Consultas en vivo a Overpass, ohsome y GBIF con retroalimentación visual.
   - Generación y exportación dual de metadatos ISO 19115 (JSON) e ISO 19139 (XML).
   - Exportación de conjuntos de datos espaciales a GeoJSON para QGIS.
@@ -18,7 +18,7 @@ let capasOficialesCargadas = {};
 const DICCIONARIO_VALORES_OSM = {
   amenity: [
     { valor: 'pharmacy', etiqueta: '💊 Farmacias y Boticas (pharmacy)', nombre: 'Farmacias Barrio Brasil', color: '#B33928' },
-    { valor: 'university', etiqueta: '🎓 Sedes Universitarias UAH (university)', nombre: 'Campus UAH', color: '#1C523A' },
+    { valor: 'university', etiqueta: '🎓 Sedes Universitarias (university)', nombre: 'Campus Universitario', color: '#1C523A' },
     { valor: 'college', etiqueta: '🏛️ Institutos y Centros de Formación (college)', nombre: 'Institutos Técnicos', color: '#2E8B57' },
     { valor: 'school', etiqueta: '🎒 Colegios y Escuelas (school)', nombre: 'Escuelas y Liceos', color: '#3A7D44' },
     { valor: 'hospital', etiqueta: '🏥 Hospitales y Clínicas (hospital)', nombre: 'Hospitales', color: '#D9534F' },
@@ -67,7 +67,7 @@ const DICCIONARIO_VALORES_OSM = {
     { valor: 'house', etiqueta: '🏡 Casas Habitación Unifamiliares (house)', nombre: 'Casas Unifamiliares', color: '#9E7E63' },
     { valor: 'commercial', etiqueta: '🏪 Edificios Comerciales y Oficinas (commercial)', nombre: 'Edificios Comerciales', color: '#D35400' },
     { valor: 'civic', etiqueta: '🏛️ Edificios Cívicos e Institucionales (civic)', nombre: 'Edificios Cívicos', color: '#3A5A6B' },
-    { valor: 'university', etiqueta: '🎓 Pabellones Universitarios UAH (university)', nombre: 'Pabellones UAH', color: '#1C523A' },
+    { valor: 'university', etiqueta: '🎓 Pabellones Universitarios (university)', nombre: 'Pabellones Educativos', color: '#1C523A' },
     { valor: 'school', etiqueta: '🎒 Pabellones Escolares (school)', nombre: 'Escuelas y Liceos', color: '#2E7D32' },
     { valor: 'church', etiqueta: '⛪ Iglesias y Templos (church)', nombre: 'Templos e Iglesias', color: '#7D3C98' }
   ],
@@ -138,8 +138,8 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: 'amenity=university and (type:node or type:way)',
     gbifTaxa: 'custom',
     isoTopic: 'society',
-    tituloMd: 'Catastro VGI de Educación y Campus Universitario UAH: Barrio Brasil',
-    resumenMd: 'Inventario geoespacial de sedes universitarias, pabellones patrimoniales de la Universidad Alberto Hurtado (UAH), colegios, liceos y bibliotecas en Barrio Brasil y Santiago Centro.'
+    tituloMd: 'Catastro VGI de Educación y Campus Universitario: Barrio Brasil, Santiago Centro',
+    resumenMd: 'Inventario geoespacial de sedes universitarias, pabellones patrimoniales, colegios, liceos y bibliotecas en Barrio Brasil y Santiago Centro.'
   },
   servicios: {
     codigo: 'CAT-02',
@@ -152,8 +152,8 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: 'shop=* and (type:node or type:way)',
     gbifTaxa: 'custom',
     isoTopic: 'planningCadastre',
-    tituloMd: 'Catastro VGI de Servicios y Comercio Barrial: Barrio Brasil - Universidad Alberto Hurtado',
-    resumenMd: 'Red de abastecimiento de proximidad, locales comerciales, almacenes, panaderías, cafeterías y farmacias comunitarias en Barrio Brasil y entorno del campus UAH.'
+    tituloMd: 'Catastro VGI de Servicios y Comercio Barrial: Barrio Brasil, Santiago Centro',
+    resumenMd: 'Red de abastecimiento de proximidad, locales comerciales, almacenes, panaderías, cafeterías y farmacias comunitarias en Barrio Brasil y entorno patrimonial.'
   },
   transporte: {
     codigo: 'CAT-03',
@@ -166,7 +166,7 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: 'highway=bus_stop and type:node',
     gbifTaxa: 'custom',
     isoTopic: 'transportation',
-    tituloMd: 'Catastro VGI de Movilidad y Transporte: Barrio Brasil - Universidad Alberto Hurtado',
+    tituloMd: 'Catastro VGI de Movilidad y Transporte: Barrio Brasil, Santiago Centro',
     resumenMd: 'Infraestructura intermodal de transporte público: paraderos del Sistema Red Movilidad, accesos a estaciones de Metro (Los Héroes, Santa Ana, Cumming) y ejes estructurantes en Barrio Brasil.'
   },
   movilidad_activa: {
@@ -180,8 +180,8 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: '(highway=cycleway or cycleway=*) and type:way',
     gbifTaxa: 'custom',
     isoTopic: 'transportation',
-    tituloMd: 'Catastro VGI de Movilidad Activa y Ciclovías: Barrio Brasil - Universidad Alberto Hurtado',
-    resumenMd: 'Ejes de micromovilidad y movilidad sustentable: ciclovías segregadas, ciclobandas, sendas ciclables, talleres comunitarios y estacionamientos de bicicletas en Barrio Brasil y campus UAH.'
+    tituloMd: 'Catastro VGI de Movilidad Activa y Ciclovías: Barrio Brasil, Santiago Centro',
+    resumenMd: 'Ejes de micromovilidad y movilidad sustentable: ciclovías segregadas, ciclobandas, sendas ciclables, talleres comunitarios y estacionamientos de bicicletas en Barrio Brasil y campus universitario.'
   },
   espacio_publico: {
     codigo: 'CAT-05',
@@ -194,7 +194,7 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: 'leisure=park and (type:way or type:relation)',
     gbifTaxa: 'Plantae',
     isoTopic: 'environment',
-    tituloMd: 'Catastro VGI de Áreas Verdes y Espacios Públicos: Barrio Brasil - Universidad Alberto Hurtado',
+    tituloMd: 'Catastro VGI de Áreas Verdes y Espacios Públicos: Barrio Brasil, Santiago Centro',
     resumenMd: 'Superficie métrica calculada y catastro de plazas públicas (Plaza Brasil), parques urbanos, bandejones verdes, juegos infantiles y áreas de permanencia y recreación comunitaria.'
   },
   patrimonio: {
@@ -208,8 +208,8 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: 'historic=* and (type:node or type:way)',
     gbifTaxa: 'custom',
     isoTopic: 'society',
-    tituloMd: 'Catastro VGI de Patrimonio y Cultura: Zona Típica Barrio Brasil - Universidad Alberto Hurtado',
-    resumenMd: 'Inmuebles de Conservación Histórica (ICH), casonas neoclásicas UAH, templos religiosos (Basílica del Salvador), centros culturales comunitarios, teatros y monumentos en la Zona Típica de Barrio Brasil.'
+    tituloMd: 'Catastro VGI de Patrimonio y Cultura: Zona Típica Barrio Brasil, Santiago Centro',
+    resumenMd: 'Inmuebles de Conservación Histórica (ICH), casonas neoclásicas patrimoniales, templos religiosos (Basílica del Salvador), centros culturales comunitarios, teatros y monumentos en la Zona Típica de Barrio Brasil.'
   },
   accesibilidad: {
     codigo: 'CAT-07',
@@ -222,8 +222,8 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: '(highway=crossing or kerb=*) and type:node',
     gbifTaxa: 'custom',
     isoTopic: 'transportation',
-    tituloMd: 'Catastro VGI de Caminabilidad y Accesibilidad Universal: Barrio Brasil - Universidad Alberto Hurtado',
-    resumenMd: 'Diagnóstico de caminabilidad inclusiva: rebajes de cordón en veredas, pasos peatonales seguros, pavimentos podotáctiles y rampas de acceso en el entorno de Barrio Brasil y UAH.'
+    tituloMd: 'Catastro VGI de Caminabilidad y Accesibilidad Universal: Barrio Brasil, Santiago Centro',
+    resumenMd: 'Diagnóstico de caminabilidad inclusiva: rebajes de cordón en veredas, pasos peatonales seguros, pavimentos podotáctiles y rampas de acceso en el entorno de Barrio Brasil.'
   },
   biodiversidad: {
     codigo: 'CAT-08',
@@ -236,7 +236,7 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: 'natural=tree and type:node',
     gbifTaxa: 'Plantae',
     isoTopic: 'biota',
-    tituloMd: 'Catastro VGI de Biodiversidad Urbana y Arbolado: Barrio Brasil - Universidad Alberto Hurtado',
+    tituloMd: 'Catastro VGI de Biodiversidad Urbana y Arbolado: Barrio Brasil, Santiago Centro',
     resumenMd: 'Registros de arbolado urbano georreferenciado, flora y fauna comunitaria compilados desde OpenStreetMap y la Infraestructura Mundial de Información en Biodiversidad (GBIF).'
   },
   edificaciones: {
@@ -250,8 +250,8 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: 'building=* and type:way',
     gbifTaxa: 'custom',
     isoTopic: 'structure',
-    tituloMd: 'Catastro VGI de Edificaciones y Huella Urbana: Barrio Brasil - Universidad Alberto Hurtado',
-    resumenMd: 'Huella poligonal de edificaciones, manzaneo catastral y volumetría construida en Barrio Brasil y entorno del campus UAH.'
+    tituloMd: 'Catastro VGI de Edificaciones y Huella Urbana: Barrio Brasil, Santiago Centro',
+    resumenMd: 'Huella poligonal de edificaciones, manzaneo catastral y volumetría construida en Barrio Brasil y entorno patrimonial.'
   },
   cobertura_suelo: {
     codigo: 'CAT-10',
@@ -264,7 +264,7 @@ const MAPA_COHERENCIA_CATEGORIAS = {
     ohFiltro: 'landuse=* and (type:way or type:relation)',
     gbifTaxa: 'custom',
     isoTopic: 'planningCadastre',
-    tituloMd: 'Catastro VGI de Coberturas y Usos de Suelo: Barrio Brasil - Universidad Alberto Hurtado',
+    tituloMd: 'Catastro VGI de Coberturas y Usos de Suelo: Barrio Brasil, Santiago Centro',
     resumenMd: 'Zonificación de usos de suelo y coberturas territoriales en Barrio Brasil y Santiago Centro.'
   }
 };
@@ -360,7 +360,7 @@ function sincronizarCoherenciaEntreModulos(identificador, opciones = {}) {
   // 6. Autocarga reactiva de metadatos ISO 19115/19139
   autocargarMetadatos({
     categoriaId: catId,
-    titulo: opciones.nombre ? `Catastro VGI: ${opciones.nombre} - Barrio Brasil / UAH` : mapa.tituloMd,
+    titulo: opciones.nombre ? `Catastro VGI: ${opciones.nombre} - Barrio Brasil` : mapa.tituloMd,
     resumen: mapa.resumenMd,
     forzar: false
   });
@@ -1399,7 +1399,7 @@ function actualizarFichaTerritorio(nombre, bbox) {
     <strong>${nombre}</strong><br>
     Bbox WGS84: <code>[${bbox.join(', ')}]</code>
     ${txtSuperficie}<br>
-    <span class="descripcion">Foco territorial: Barrio Brasil Completo y Manzana Campus Universidad Alberto Hurtado (Santiago Centro, Chile).</span>
+    <span class="descripcion">Foco territorial: Barrio Brasil Completo y Sector Patrimonial (Santiago Centro, Chile).</span>
   `;
 }
 
@@ -2851,7 +2851,9 @@ function construirObjetoFichaDesdeFormulario() {
     norte: document.getElementById('md-norte').value,
     srs: document.getElementById('md-srs').value,
     linaje: document.getElementById('md-linaje').value,
+    procesamiento: document.getElementById('md-procesamiento')?.value || 'Normalización de atributos según taxonomía VGI de 10 categorías (CAT-01 a CAT-10) y cálculo de superficies métricas en m² (EPSG:32719).',
     restricciones: document.getElementById('md-restricciones').value,
+    contactoPersona: document.getElementById('md-contacto-persona')?.value || 'GEOJOTA',
     contactoOrganizacion: document.getElementById('md-contacto-org').value,
     contactoCorreo: document.getElementById('md-contacto-correo').value
   });
@@ -2874,13 +2876,13 @@ function prellenarMetadatosDesdeUltimaConsulta() {
   escribirBbox('md', bbox);
 
   const fuente = ultimaConsultaRealizada?.fuente || 'OpenStreetMap / Overpass QL';
-  const filtro = ultimaConsultaRealizada?.filtro || 'Campus UAH y Barrio Brasil';
+  const filtro = ultimaConsultaRealizada?.filtro || 'Barrio Brasil y entorno';
   const cantidad = ultimaConsultaRealizada?.cantidad || 'múltiples';
 
   document.getElementById('md-linaje').value =
     `Extraído desde ${fuente} (${filtro}) para el Bbox [${bbox.join(', ')}] el ${new Date().toISOString().slice(0, 10)}. Comprende ${cantidad} registros validados y normalizados.`;
   document.getElementById('md-titulo').value =
-    `Catastro VGI de Equipamiento Universitario y Urbano: Barrio Brasil - Universidad Alberto Hurtado (${new Date().getFullYear()})`;
+    `Catastro VGI de Equipamiento Comunitario y Urbano: Barrio Brasil, Santiago Centro (${new Date().getFullYear()})`;
 }
 
 function exportarMetadatosJSON() {

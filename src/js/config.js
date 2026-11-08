@@ -11,9 +11,9 @@ const CONFIG_PREDETERMINADA = {
   organizacion: {
     nombre: 'Atlas de Información Geográfica Voluntaria',
     subtitulo: 'Plataforma VGI para la Gestión Territorial',
-    descripcion_corta: 'Consulta, calidad y metadatos VGI | Barrio Brasil & UAH',
-    contacto: 'juanpablolescanovillegas@gmail.com',
-    area_de_interes_nombre: 'Barrio Brasil — Universidad Alberto Hurtado (Santiago Centro, Chile)'
+    descripcion_corta: 'Consulta, calidad y metadatos VGI | Barrio Brasil, Santiago',
+    contacto: 'tucorreoelectronico@gmail.com',
+    area_de_interes_nombre: 'Barrio Brasil, Santiago Centro, Chile'
   },
   area_por_defecto: {
     bbox: [-70.6720, -33.4505, -70.6580, -33.4350],
@@ -31,11 +31,11 @@ const CONFIG_PREDETERMINADA = {
     },
     {
       id: 'uah-manzana',
-      nombre: 'Barrio Brasil — Universidad Alberto Hurtado (Manzana UAH)',
+      nombre: 'Barrio Brasil — Sector Patrimonial',
       bbox: [-70.6675, -33.4505, -70.6565, -33.4385],
       centro: [-33.4445, -70.6620],
       zoom: 16,
-      descripcion: 'Campus patrimonial UAH (Almirante Barroso, Erasmo Escala, Cienfuegos, Los Héroes)'
+      descripcion: 'Sector patrimonial (Almirante Barroso, Erasmo Escala, Cienfuegos, Los Héroes)'
     }
   ],
   endpoints: {
@@ -75,8 +75,8 @@ const CONFIG_PREDETERMINADA = {
       color: '#35586B',
       geometrias: ['Puntos (Nodos)', 'Polígonos (Huellas de Campus)'],
       entidades: ['Universidades y facultades', 'Institutos profesionales', 'Colegios y liceos', 'Jardines infantiles', 'Bibliotecas académicas y comunales', 'Pabellones y edificios educativos', 'Residencias estudiantiles', 'Institutos de investigación'],
-      filtro_overpass: 'nwr["amenity"~"university|college|library|school|kindergarten|childcare|student_accommodation|research_institute|music_school|training_centre"]; nwr["building"~"university|school|college|kindergarten|library"]; nwr["name"~"Universidad|Facultad|Liceo|Colegio|UAH|Alberto Hurtado"];',
-      descripcion: 'Instalaciones de educación superior, campus patrimonial UAH (Almirante Barroso/Erasmo Escala/Cienfuegos), colegios, jardines infantiles, bibliotecas y huellas poligonales de pabellones universitarios'
+      filtro_overpass: 'nwr["amenity"~"university|college|library|school|kindergarten|childcare|student_accommodation|research_institute|music_school|training_centre"]; nwr["building"~"university|school|college|kindergarten|library"]; nwr["name"~"Universidad|Facultad|Liceo|Colegio|Instituto"];',
+      descripcion: 'Instalaciones de educación superior, sedes patrimoniales (Almirante Barroso/Erasmo Escala/Cienfuegos), colegios, jardines infantiles, bibliotecas y huellas poligonales de pabellones universitarios'
     },
     {
       id: 'servicios',
@@ -107,7 +107,7 @@ const CONFIG_PREDETERMINADA = {
       icono: '🚲',
       color: '#3F5D4E',
       geometrias: ['Líneas (Ciclovías y Ciclobandas)', 'Puntos (Biciestacionamientos y Talleres)', 'Polígonos (Patios Ciclables)'],
-      entidades: ['Ciclovías segregadas exclusivas', 'Ciclobandas y vías compartidas', 'Sendas ciclables y paseos mixtos', 'Biciestacionamientos públicos y UAH', 'Estaciones de bicicletas compartidas', 'Talleres comunitarios de bicicletas', 'Estaciones de carga'],
+      entidades: ['Ciclovías segregadas exclusivas', 'Ciclobandas y vías compartidas', 'Sendas ciclables y paseos mixtos', 'Biciestacionamientos públicos y barriales', 'Estaciones de bicicletas compartidas', 'Talleres comunitarios de bicicletas', 'Estaciones de carga'],
       filtro_overpass: 'way["highway"="cycleway"]; way["cycleway"]; way["cycleway:left"]; way["cycleway:right"]; way["cycleway:both"]; way["highway"~"living_street|track|steps"]; way["highway"~"footway|path"]["bicycle"~"yes|designated"]; nwr["amenity"~"bicycle_parking|bicycle_rental|bicycle_repair_station|charging_station"]; nwr["shop"="bicycle"];',
       descripcion: 'Ejes de micromovilidad y movilidad sustentable: ciclovías segregadas (Rosas, Brasil), estacionamientos para bicicletas, estaciones de arriendo y talleres mecánicos de barrio'
     },
@@ -129,7 +129,7 @@ const CONFIG_PREDETERMINADA = {
       icono: '🏛',
       color: '#8F3A2C',
       geometrias: ['Polígonos (Casonas, Iglesias y Centros Culturales)', 'Puntos (Esculturas, Memoriales y Placas)'],
-      entidades: ['Inmuebles de Conservación Histórica (ICH)', 'Zona Típica Barrio Brasil', 'Casonas Neoclásicas UAH', 'Templos e iglesias (Basílica del Salvador, Parroquia San Lázaro)', 'Museos, galerías y murales', 'Centros culturales comunitarios', 'Esculturas, monumentos y memoriales'],
+      entidades: ['Inmuebles de Conservación Histórica (ICH)', 'Zona Típica Barrio Brasil', 'Casonas Patrimoniales', 'Templos e iglesias (Basílica del Salvador, Parroquia San Lázaro)', 'Museos, galerías y murales', 'Centros culturales comunitarios', 'Esculturas, monumentos y memoriales'],
       filtro_overpass: 'nwr["historic"]; nwr["heritage"]; nwr["building"~"church|cathedral|chapel"]; nwr["amenity"~"theatre|arts_centre|place_of_worship|museum|community_centre|cinema"]; nwr["tourism"~"museum|artwork|gallery"];',
       descripcion: 'Memoria urbana y patrimonio arquitectónico: casonas de la Zona Típica, Basílica del Salvador, centros culturales comunitarios, teatros, museos, monumentos y memoriales históricos'
     },
@@ -162,9 +162,9 @@ const CONFIG_PREDETERMINADA = {
       icono: '🏙',
       color: '#555555',
       geometrias: ['Polígonos (Huellas de Manzanas y Edificios)', 'Puntos (Direcciones y Entradas)'],
-      entidades: ['Viviendas unifamiliares y casonas', 'Edificios residenciales en altura', 'Pabellones universitarios UAH', 'Inmuebles comerciales', 'Edificios públicos y cívicos', 'Templos e iglesias'],
+      entidades: ['Viviendas unifamiliares y casonas', 'Edificios residenciales en altura', 'Pabellones universitarios y educativos', 'Inmuebles comerciales', 'Edificios públicos y cívicos', 'Templos e iglesias'],
       filtro_overpass: 'way["building"]; relation["building"]; node["building"]; nwr["building:levels"];',
-      descripcion: 'Catastro poligonal de edificaciones y volumetría construida: huellas de manzanas, casonas patrimoniales, campus UAH y edificaciones con cálculo de superficie métrica en m² (EPSG:32719 UTM 19S)'
+      descripcion: 'Catastro poligonal de edificaciones y volumetría construida: huellas de manzanas, casonas patrimoniales, equipamiento y edificaciones con cálculo de superficie métrica en m² (EPSG:32719 UTM 19S)'
     },
     {
       id: 'cobertura_suelo',
@@ -184,7 +184,7 @@ const CONFIG_PREDETERMINADA = {
     sistema_referencia_nacional: 'EPSG:5361 (SIRGAS-Chile / UTM 19S)',
     idioma_recurso: 'spa',
     punto_de_contacto_organizacion: 'Atlas de Información Geográfica Voluntaria — Nodo GeoAbierto',
-    punto_de_contacto_correo: 'juanpablolescanovillegas@gmail.com',
+    punto_de_contacto_correo: 'tucorreoelectronico@gmail.com',
     restricciones_defecto: 'Datos OpenStreetMap: Open Database License (ODbL) 1.0 (© colaboradores de OpenStreetMap). Datos GBIF: CC-BY 4.0 / CC0 según registro original.'
   }
 };

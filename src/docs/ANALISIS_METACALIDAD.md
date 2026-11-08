@@ -1,5 +1,5 @@
 # Informe de Auditoría del Índice de Calidad y MetaCalidad Cartográfica (IGV / IGMC)
-### Atlas de Información Geográfica Voluntaria para la Gestión Territorial — Nodo GeoAbierto UAH
+### Atlas de Información Geográfica Voluntaria para la Gestión Territorial — Nodo GeoAbierto
 ---
 
 ## 🧭 Índice de Contenidos
@@ -217,10 +217,10 @@ graph TD
 - **Código de Capa:** `CAT-01` | **Identificador Interno:** `educacion`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Ley N° 21.091 sobre Educación Superior; Estándares de Infraestructura Escolar (MINEDUC); Perfil IDE Chile Educación.
-- **Volumen de Entidades:** **247 entidades (6.7% del universo local)** en Barrio Brasil / UAH | **7,503 entidades (0.5% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **247 entidades (6.7% del universo local)** en Barrio Brasil | **7,503 entidades (0.5% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Multi-geometría: Nodos (accesos/servicios), Vías (pabellones/aulas) y Relaciones (campus universitario)
 - **Taxonomía Urbana y Rol Funcional:** Equipamiento de educación superior, técnica, básica, media e inicial, junto con centros de investigación científica y bibliotecas comunitarias integradas a la trama barrial.
-- **Catálogo de Entidades Representadas:** Pabellones y casonas patrimoniales del campus Universidad Alberto Hurtado (UAH en calles Almirante Barroso, Cienfuegos y Erasmo Escala), Liceo de Aplicación, INBA, escuelas básicas comunales, jardines infantiles (JUNJI/Integra) y salas de lectura comunitaria.
+- **Catálogo de Entidades Representadas:** Pabellones y casonas patrimoniales del campus universitario patrimonial (patrimonial en calles Almirante Barroso, Cienfuegos y Erasmo Escala), Liceo de Aplicación, INBA, escuelas básicas comunales, jardines infantiles (JUNJI/Integra) y salas de lectura comunitaria.
 - **Claves y Valores OSM / Darwin Core:**
   - `amenity=university`
   - `amenity=college`
@@ -247,7 +247,7 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-02` | **Identificador Interno:** `servicios`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Modelo de Atención Integral en Salud Familiar (MINSAL); Ley de Rentas Municipales (D.L. 3.063); D.S. N° 469/1993.
-- **Volumen de Entidades:** **365 entidades (9.9% del universo local)** en Barrio Brasil / UAH | **54,442 entidades (3.5% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **365 entidades (9.9% del universo local)** en Barrio Brasil | **54,442 entidades (3.5% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Multi-geometría: Nodos (locales en placa comercial), Vías (locales independientes) y Polígonos (recintos médicos)
 - **Taxonomía Urbana y Rol Funcional:** Red de abastecimiento de proximidad, microeconomía minorista barrial, servicios bancarios y postales, junto con infraestructura de salud primaria, consultorios familiares (CESFAM) y centros médicos.
 - **Catálogo de Entidades Representadas:** Almacenes de abarrotes, panaderías patrimoniales, botillerías, farmacias comunitarias (Farmacia Popular de Santiago), CESFAM Ignacio Domeyko, restaurantes y cafeterías del polo gastronómico de Plaza Brasil, sucursales bancarias y cajas vecinas.
@@ -281,7 +281,7 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-03` | **Identificador Interno:** `transporte`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Manual de Normas Técnicas para Paraderos Red Movilidad (DTPM 2023); Manual REDEVU (MINVU); Ley N° 18.290 de Tránsito.
-- **Volumen de Entidades:** **191 entidades (5.2% del universo local)** en Barrio Brasil / UAH | **326,545 entidades (21.0% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **191 entidades (5.2% del universo local)** en Barrio Brasil | **326,545 entidades (21.0% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Nodos puntuales (paraderos, postes de parada, bocas de metro) y Vías (plataformas de trasbordo)
 - **Taxonomía Urbana y Rol Funcional:** Infraestructura de transporte público colectivo multimodal: red estructurante de buses metropolitanos, accesos a red de metro subterráneo y nodos de intercambio modal interurbano.
 - **Catálogo de Entidades Representadas:** Refugios peatonales y paraderos del Sistema Red Movilidad (ejes Alameda, Av. Brasil, San Pablo, Manuel Rodríguez), accesos y bocas de estaciones de Metro: Los Héroes (Líneas 1 y 2), Santa Ana (Líneas 2 y 5), Cumming (Línea 5) y República (Línea 1).
@@ -308,10 +308,10 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-04` | **Identificador Interno:** `movilidad_activa`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Manual de Vialidad del Ciclo (MINVU/MTT 2015); Ley de Convivencia Vial N° 21.088; D.S. N° 102/2019 MTT.
-- **Volumen de Entidades:** **11 entidades (0.3% del universo local)** en Barrio Brasil / UAH | **128,891 entidades (8.3% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **11 entidades (0.3% del universo local)** en Barrio Brasil | **128,891 entidades (8.3% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Vías lineales continuas (trazados de ciclovías) y Nodos (estacionamientos y herramientas comunitarias)
 - **Taxonomía Urbana y Rol Funcional:** Ejes viales destinados a la micromovilidad y movilidad no motorizada, ciclovías segregadas, ciclobandas demarcadas, infraestructura de estacionamiento y mantención de ciclos.
-- **Catálogo de Entidades Representadas:** Ciclovías segregadas bidireccionales (eje Rosas y eje Compañía de Jesús), ciclobanda Av. Brasil, estacionamientos públicos para bicicletas en aceras y patios del campus UAH, talleres comunitarios de reparación.
+- **Catálogo de Entidades Representadas:** Ciclovías segregadas bidireccionales (eje Rosas y eje Compañía de Jesús), ciclobanda Av. Brasil, estacionamientos públicos para bicicletas en aceras y patios del campus universitario, talleres comunitarios de reparación.
 - **Claves y Valores OSM / Darwin Core:**
   - `highway=cycleway`
   - `cycleway=lane`
@@ -337,7 +337,7 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-05` | **Identificador Interno:** `espacio_publico`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Política Nacional de Parques Urbanos (MINVU 2021); Estándares Urbanos Indicativos de Áreas Verdes (CNDU 2018); Art. 2.2.4 OGUC.
-- **Volumen de Entidades:** **144 entidades (3.9% del universo local)** en Barrio Brasil / UAH | **41,433 entidades (2.7% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **144 entidades (3.9% del universo local)** en Barrio Brasil | **41,433 entidades (2.7% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Vías cerradas y Relaciones multipolígono (superficies métricas de plazas/parques) y Nodos (mobiliario urbano)
 - **Taxonomía Urbana y Rol Funcional:** Infraestructura verde urbana y espacios abiertos de uso colectivo: parques urbanos, plazas barriales de permanencia, áreas de juegos infantiles, canchas comunitarias y mobiliario urbano de descanso.
 - **Catálogo de Entidades Representadas:** Plaza Brasil (15.200 m² con juegos escultóricos de Federica Matta), Plaza Manuel Rodríguez, bandejones verdes arbolados de Av. Brasil, multicanchas comunitarias de calle Maturana, plazoletas vecinales y bancos públicos de permanencia.
@@ -367,10 +367,10 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-06` | **Identificador Interno:** `patrimonio`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Ley N° 17.288 de Monumentos Nacionales; D.E. N° 126/2000 Mineduc (Zona Típica Barrio Brasil); Inmuebles de Conservación Histórica PRC Santiago.
-- **Volumen de Entidades:** **71 entidades (1.9% del universo local)** en Barrio Brasil / UAH | **2,576 entidades (0.2% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **71 entidades (1.9% del universo local)** en Barrio Brasil | **2,576 entidades (0.2% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Multi-geometría: Vías poligonales (edificaciones patrimoniales e iglesias) y Nodos (monumentos y placas)
 - **Taxonomía Urbana y Rol Funcional:** Bienes del patrimonio cultural material e inmaterial: arquitectura patrimonial vernácula y monumental, inmuebles de conservación histórica, sitios de memoria de derechos humanos y centros culturales comunitarios.
-- **Catálogo de Entidades Representadas:** Cités patrimoniales de calles Huérfanos, Compañía y Cienfuegos; Basílica del Salvador; Iglesia San Saturnino; Casonas patrimoniales UAH (siglos XIX e inicios del XX); centros culturales comunitarios (Galpón Víctor Jara, teatros independientes); placas conmemorativas y monolitos de memoria.
+- **Catálogo de Entidades Representadas:** Cités patrimoniales de calles Huérfanos, Compañía y Cienfuegos; Basílica del Salvador; Iglesia San Saturnino; Casonas patrimoniales (siglos XIX e inicios del XX); centros culturales comunitarios (Galpón Víctor Jara, teatros independientes); placas conmemorativas y monolitos de memoria.
 - **Claves y Valores OSM / Darwin Core:**
   - `historic=memorial`
   - `historic=monument`
@@ -402,10 +402,10 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-07` | **Identificador Interno:** `accesibilidad`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** D.S. N° 50 OGUC sobre Accesibilidad Universal (MINVU 2016); Ley N° 20.422 de Igualdad de Oportunidades; Norma ISO 21542:2021.
-- **Volumen de Entidades:** **185 entidades (5.0% del universo local)** en Barrio Brasil / UAH | **94,461 entidades (6.1% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **185 entidades (5.0% del universo local)** en Barrio Brasil | **94,461 entidades (6.1% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Nodos puntuales (rebajes de cordón, cruces peatonales) y Vías (tramos de acera con atributos de accesibilidad)
 - **Taxonomía Urbana y Rol Funcional:** Micro-infraestructura física de caminabilidad inclusiva: rebajes de cordón en aceras, pasos peatonales semáforizados con aviso sonoro, bandas táctiles podotáctiles y accesibilidad motriz para sillas de ruedas.
-- **Catálogo de Entidades Representadas:** Rebajes de cordón en vados de esquina, cruces peatonales accesibles en ejes Brasil y Alameda, baldosas podotáctiles de avance y detención en veredas, rampas de acceso al campus UAH y edificios de servicios.
+- **Catálogo de Entidades Representadas:** Rebajes de cordón en vados de esquina, cruces peatonales accesibles en ejes Brasil y Alameda, baldosas podotáctiles de avance y detención en veredas, rampas de acceso al campus universitario y edificios de servicios.
 - **Claves y Valores OSM / Darwin Core:**
   - `highway=crossing`
   - `crossing=traffic_signals|uncontrolled|zebra`
@@ -432,10 +432,10 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-08` | **Identificador Interno:** `biodiversidad`
 - **Licencia Legal:** `Creative Commons CC-BY 4.0 / CC0 1.0 (GBIF) y ODbL 1.0 (OSM)`
 - **Norma Técnica Chilena Asociada:** Ley Marco de Cambio Climático N° 21.455; Guía de Planificación de Arbolado Urbano (CONAF 2019); Estándar Darwin Core (TDWG).
-- **Volumen de Entidades:** **390 entidades (10.6% del universo local)** en Barrio Brasil / UAH | **121,134 entidades (7.8% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **390 entidades (10.6% del universo local)** en Barrio Brasil | **121,134 entidades (7.8% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Nodos (árboles individuales y observaciones biológicas Darwin Core) y Vías (alineaciones de árboles en ejes viales)
 - **Taxonomía Urbana y Rol Funcional:** Infraestructura ecológica urbana: arbolado viario de alineación, ejemplares arbóreos notables de plazas, masas boscosas y registros de ciencia ciudadana sobre flora y avifauna compilados bajo el estándar internacional Darwin Core.
-- **Catálogo de Entidades Representadas:** Arbolado de alineación viaria en Av. Brasil (plátano oriental, jacarandá), árboles patrimoniales de Plaza Brasil (Palma chilena Jubaea chilensis, liquidámbar), arbolado de patios interiores UAH y observaciones de aves urbanas validadas en GBIF.org.
+- **Catálogo de Entidades Representadas:** Arbolado de alineación viaria en Av. Brasil (plátano oriental, jacarandá), árboles patrimoniales de Plaza Brasil (Palma chilena Jubaea chilensis, liquidámbar), arbolado de patios interiores comunitarios y observaciones de aves urbanas validadas en GBIF.org.
 - **Claves y Valores OSM / Darwin Core:**
   - `natural=tree`
   - `natural=tree_row`
@@ -464,10 +464,10 @@ GBIF API: GET /v1/occurrence/search?decimalLatitude=-33.45,-33.43&decimalLongitu
 - **Código de Capa:** `CAT-09` | **Identificador Interno:** `edificaciones`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Ley General de Urbanismo y Construcciones (LGUC); Art. 2.1.24 OGUC; Catastro de Bienes Raíces (SII); ISO 19157 (Completitud de Área).
-- **Volumen de Entidades:** **1673 entidades (45.5% del universo local)** en Barrio Brasil / UAH | **695,412 entidades (44.8% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **1673 entidades (45.5% del universo local)** en Barrio Brasil | **695,412 entidades (44.8% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Vías poligonales cerradas (type:way) y Relaciones multipolígono con patios interiores (type:relation)
 - **Taxonomía Urbana y Rol Funcional:** Morfología urbana construida: huella poligonal basal de edificaciones, volumetría, número de niveles y caracterización del tejido de manzaneo tradicional y contemporáneo.
-- **Catálogo de Entidades Representadas:** Huella vectorial cerrada de la totalidad de edificaciones de Barrio Brasil, casonas residenciales de fachada continua, edificios habitacionales de media altura, pabellones de la UAH, templos y equipamientos institucionales.
+- **Catálogo de Entidades Representadas:** Huella vectorial cerrada de la totalidad de edificaciones de Barrio Brasil, casonas residenciales de fachada continua, edificios habitacionales de media altura, pabellones universitarios, templos y equipamientos institucionales.
 - **Claves y Valores OSM / Darwin Core:**
   - `building=yes`
   - `building=residential`
@@ -496,10 +496,10 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-10` | **Identificador Interno:** `cobertura_suelo`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Plan Regulador Comunal de Santiago (PRC); Ley N° 21.074 de Fortalecimiento de la Regionalización; OGC LandInfra Standard.
-- **Volumen de Entidades:** **400 entidades (10.9% del universo local)** en Barrio Brasil / UAH | **79,747 entidades (5.1% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **400 entidades (10.9% del universo local)** en Barrio Brasil | **79,747 entidades (5.1% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Vías cerradas (type:way) y Relaciones multipolígono (type:relation)
 - **Taxonomía Urbana y Rol Funcional:** Macrozoniación funcional del territorio barrial: caracterización de usos predominantes de suelo (residencial, comercial, educativo, recreativo) y tipología de materialidad superficial de calzadas y veredas.
-- **Catálogo de Entidades Representadas:** Polígonos de zonificación de uso residencial barrial, recintos educativos (campus UAH), zonas comerciales de proximidad, calzadas adoquinadas patrimoniales y pavimentos asfálticos contemporáneos.
+- **Catálogo de Entidades Representadas:** Polígonos de zonificación de uso residencial barrial, recintos educativos (campus universitario), zonas comerciales de proximidad, calzadas adoquinadas patrimoniales y pavimentos asfálticos contemporáneos.
 - **Claves y Valores OSM / Darwin Core:**
   - `landuse=residential`
   - `landuse=commercial`
@@ -524,7 +524,7 @@ out body; >; out skel qt;
 
 ### Tabla Resumen de las 10 Macro-categorías VGI
 
-A continuación se presenta la distribución cuantitativa de entidades levantadas en el caso piloto de Barrio Brasil / UAH y en la Región Metropolitana (RM), contrastando los recuentos absolutos con su **peso porcentual normalizado (Share %)** respecto al universo total de VGI, junto con los puntajes normalizados de conformidad en las 5 dimensiones de MetaCalidad y el Índice Global de MetaCalidad (IGMC):
+A continuación se presenta la distribución cuantitativa de entidades levantadas en el caso piloto de Barrio Brasil y en la Región Metropolitana (RM), contrastando los recuentos absolutos con su **peso porcentual normalizado (Share %)** respecto al universo total de VGI, junto con los puntajes normalizados de conformidad en las 5 dimensiones de MetaCalidad y el Índice Global de MetaCalidad (IGMC):
 
 | Código | Macro-categoría VGI | Claves Principales OSM / GBIF | Geometría OGC | Entidades Local (N°) | % Local (Share) | Entidades RM (N°) | % RM (Share) | MC (%) | CC (%) | LL (%) | RG (%) | AI (%) | IGMC Global (%) | Grado ISO 19157 |
 | :---: | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |

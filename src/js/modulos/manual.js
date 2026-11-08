@@ -156,7 +156,7 @@ const ModuloManual = (() => {
             <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:15px;">
               <h4 style="margin:0 0 6px 0; color:#38bdf8;">1. Control de Coberturas, Encuadre Territorial y Exportación</h4>
               <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                <li><strong>Delimitación del ámbito de estudio:</strong> El selector superior permite alternar entre el polígono del <em>Barrio Brasil Completo</em> (223,75 ha) y la <em>Manzana UAH</em> (136,10 ha), o trazar un área personalizada mediante <strong>⛶ Dibujar Bbox</strong> (con cálculo métrico en m² y ha reproyectado a <code>EPSG:32719</code>).</li>
+                <li><strong>Delimitación del ámbito de estudio:</strong> El selector superior permite alternar entre el polígono del <em>Barrio Brasil Completo</em> (223,75 ha) y la <em>Sector Patrimonial</em> (136,10 ha), o trazar un área personalizada mediante <strong>⛶ Dibujar Bbox</strong> (con cálculo métrico en m² y ha reproyectado a <code>EPSG:32719</code>).</li>
                 <li><strong>Superposición multicapa:</strong> El subpanel <strong>🏛 Capas IDE</strong> y los selectores VGI habilitan la visualización simultánea de coberturas estatales y comunitarias (recomendándose activar entre 2 y 4 capas simultáneamente para preservar la legibilidad cartográfica).</li>
                 <li><strong>Inspección de atributos y descarga:</strong> La selección de cualquier geometría despliega su ficha de atributos normalizados, la institución custodia y el enlace de exportación individual en formato <code>GeoJSON</code>. El botón <strong>📦 Base de Datos (.zip)</strong> descarga el repositorio completo.</li>
               </ul>
@@ -748,7 +748,7 @@ git push origin main</code></pre>
           <h4 style="color:#c084fc; margin:16px 0 8px 0;">2. Régimen Jurídico de Licencias y Protección de Datos</h4>
           <ul style="padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65; margin-bottom:14px;">
             <li><strong>Open Database License (ODbL 1.0)</strong>: Rige las categorías VGI provenientes de OpenStreetMap, exigiendo atribución y compartición bajo términos idénticos.</li>
-            <li><strong>Creative Commons Atribución-CompartirIgual 4.0 (CC BY-SA 4.0)</strong>: Aplica sobre las capas de síntesis y productos cartográficos derivados generados por la Universidad Alberto Hurtado.</li>
+            <li><strong>Creative Commons Atribución-CompartirIgual 4.0 (CC BY-SA 4.0)</strong>: Aplica sobre las capas de síntesis y productos cartográficos derivados generados por el Atlas VGI Territorial.</li>
             <li><strong>GNU Affero General Public License v3 (AGPLv3)</strong>: Licencia del código fuente de software, asegurando la libertad comunitaria de auditoría y mejora.</li>
             <li><strong>Ley N° 20.285 de Transparencia</strong>: Fundamenta la disponibilidad y reutilización de datos geográficos generados por organismos públicos del Estado de Chile.</li>
             <li><strong>Ley N° 19.628 de Protección de la Vida Privada</strong>: Garantizada mediante la anonimización y agregación espacial de microdatos (RSH, Censo, SII) a nivel de manzana y unidad vecinal.</li>

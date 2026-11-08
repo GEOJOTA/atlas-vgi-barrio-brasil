@@ -6,7 +6,7 @@
       <stop offset="70%" stop-color="#e29b58"/>
       <stop offset="100%" stop-color="#f8cf8d"/>
     </linearGradient>
-    <linearGradient id="facadeUAH" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id="facadePatrimonial" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#c4823f"/>
       <stop offset="50%" stop-color="#dd9c55"/>
       <stop offset="100%" stop-color="#b67431"/>
@@ -28,9 +28,9 @@
   <path d="M0,520 L80,480 L180,510 L300,450 L420,490 L560,440 L690,480 L800,460 L800,600 L0,600 Z" fill="#2d3748" opacity="0.4"/>
   <path d="M0,535 L120,505 L260,530 L380,490 L510,515 L660,480 L800,510 L800,600 L0,600 Z" fill="#1a202c" opacity="0.6"/>
 
-  <!-- Fachadas Patrimoniales UAH (Cienfuegos / Almirante Barroso) -->
-  <!-- Edificio Izquierdo: Casona Neoclásica UAH -->
-  <rect x="40" y="240" width="280" height="340" fill="url(#facadeUAH)" rx="4"/>
+  <!-- Fachadas Patrimoniales Patrimonial (Cienfuegos / Almirante Barroso) -->
+  <!-- Edificio Izquierdo: Casona Neoclásica Patrimonial -->
+  <rect x="40" y="240" width="280" height="340" fill="url(#facadePatrimonial)" rx="4"/>
   <rect x="40" y="225" width="280" height="20" fill="#8c531b"/>
   <!-- Mansarda y tejado -->
   <polygon points="30,225 180,140 330,225" fill="#4a5568"/>
@@ -45,12 +45,12 @@
   <!-- Ventanales piso inferior y portal universitario -->
   <rect x="70" y="410" width="50" height="80" rx="4" fill="#2d3748"/>
   <rect x="240" y="410" width="50" height="80" rx="4" fill="#2d3748"/>
-  <!-- Gran Portón Universitario UAH -->
+  <!-- Gran Portón Universitario Patrimonial -->
   <path d="M145,580 L145,430 Q180,395 215,430 L215,580 Z" fill="#2b1810"/>
   <rect x="135" y="410" width="90" height="12" fill="#cbd5e0"/>
-  <!-- Letrero Campus UAH -->
+  <!-- Letrero Campus Patrimonial -->
   <rect x="125" y="380" width="110" height="22" rx="3" fill="#0f172a" stroke="#cbd5e0" stroke-width="1.5"/>
-  <text x="180" y="395" font-family="'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="10" fill="#f8fafc" text-anchor="middle" letter-spacing="1.5">CAMPUS UAH</text>
+  <text x="180" y="395" font-family="'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="10" fill="#f8fafc" text-anchor="middle" letter-spacing="1.5">SECTOR PATRIMONIAL</text>
 
   <!-- Edificio Derecho: Casona Café & Librería Barrial -->
   <rect x="340" y="280" width="420" height="300" fill="url(#facadeAlt)" rx="4"/>
@@ -115,5 +115,5 @@
   <!-- Insignia Overlay Superior -->
   <rect x="30" y="30" width="310" height="42" rx="8" fill="#0f172a" opacity="0.92" stroke="#e2e8f0" stroke-width="1.5"/>
   <text x="48" y="56" font-family="'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="14" fill="#38bdf8" letter-spacing="1">BARRIO BRASIL</text>
-  <text x="180" y="56" font-family="'Segoe UI', Roboto, sans-serif" font-weight="600" font-size="12" fill="#cbd5e1">· Ecosistema UAH</text>
+  <text x="180" y="56" font-family="'Segoe UI', Roboto, sans-serif" font-weight="600" font-size="12" fill="#cbd5e1">· Ecosistema Territorial</text>
 </svg>

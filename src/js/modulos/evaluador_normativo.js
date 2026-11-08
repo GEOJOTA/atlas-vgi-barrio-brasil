@@ -2,7 +2,7 @@
   evaluador_normativo.js
   ----------------------
   Módulo de Auditoría y Evaluación Normativa Automática del PRC y PRMS
-  para el Atlas VGI UAH (Práctica Profesional 2026).
+  para el Atlas VGI Territorial (2026).
   
   Capacidades:
   1. Identificación geométrica precisa de Zonificación PRC (Santiago), PRMS y Límite Urbano.
@@ -562,7 +562,7 @@ const ModuloEvaluadorNormativo = (() => {
     if (!txtCapas) txtCapas = '    * Capas oficiales consultadas en memoria activa.';
 
     return `================================================================================
-REPÚBLICA DE CHILE — UNIVERSIDAD ALBERTO HURTADO
+REPÚBLICA DE CHILE — INVESTIGACIÓN TERRITORIAL APLICADA
 ATLAS DE INFORMACIÓN GEOGRÁFICA VOLUNTARIA & GESTIÓN TERRITORIAL
 CERTIFICADO DE INFORMACIONES NORMATIVAS VGI (CIN-VGI)
 Ley General de Urbanismo y Construcciones (DFL 458/1975) & OGUC (D.S. 47/1992)
@@ -628,7 +628,7 @@ ${txtCapas}
 ${TEXTO_DISCLAIMER_LEGAL}
 
 ================================================================================
-Generado dinámicamente por: Atlas VGI UAH — Sistema Abierto de Información Territorial.
+Generado dinámicamente por: Atlas VGI Territorial — Sistema Abierto de Información Territorial.
 ================================================================================`;
   }
 

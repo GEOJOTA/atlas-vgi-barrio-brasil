@@ -8,7 +8,7 @@
   - Puntos/Comunes: /elements/count, /users/count, /contributions/count.
 */
 
-const USER_AGENT = 'AtlasVGI-UAH/2.0 (nodo.geoabierto@uahurtado.cl)';
+const USER_AGENT = 'AtlasVGI-Territorial/2.0 (tucorreoelectronico@gmail.com)';
 
 // Parámetros geodésicos del elipsoide WGS 84 para UTM 19S (EPSG:32719)
 const A_WGS84 = 6378137.0;

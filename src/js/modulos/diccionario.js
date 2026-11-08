@@ -2,7 +2,7 @@
   diccionario.js
   --------------
   Diccionario de metadatos, atributos normalizados y etiquetas territoriales
-  para el Atlas de Información Geográfica Voluntaria (Barrio Brasil / UAH).
+  para el Atlas de Información Geográfica Voluntaria (Barrio Brasil).
   Traduce la jerga técnica de OpenStreetMap a conceptos comprensibles para
   instituciones, organizaciones comunitarias y estudiantes.
 */
@@ -42,7 +42,7 @@ const ModuloDiccionario = (() => {
       nombre: 'Nombre Propio / Denominación',
       tipo: 'Texto',
       definicion: 'Nombre oficial o comercial con el cual la comunidad o institución reconoce el lugar en el territorio.',
-      ejemplo: 'Universidad Alberto Hurtado - Casa Central, Farmacia Ahumada, Plaza Brasil',
+      ejemplo: 'Campus universitario central, Farmacia Ahumada, Plaza Brasil',
       equivalenciaIDE: 'Toponimia Oficial / Nombre Geográfico (gmd:title)',
       importancia: 'Permite la búsqueda toponímica y la orientación espacial en terreno.'
     },
@@ -51,7 +51,7 @@ const ModuloDiccionario = (() => {
       nombre: 'Operador / Entidad Administradora',
       tipo: 'Texto',
       definicion: 'Institución pública, empresa u organización comunitaria responsable de la administración o mantención del equipamiento.',
-      ejemplo: 'Universidad Alberto Hurtado, Metro de Santiago, Ilustre Municipalidad de Santiago',
+      ejemplo: 'Nodo GeoAbierto, Metro de Santiago, Ilustre Municipalidad de Santiago',
       equivalenciaIDE: 'Punto de Contacto Responsable (gmd:CI_ResponsibleParty / Custodio)',
       importancia: 'Clave para autoridades: identifica a quién corresponde gestionar o fiscalizar el recinto.'
     },
@@ -173,7 +173,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINEDUC / CRUCH",
     "ideChile": "Establecimientos de Educación Superior (MINEDUC / IDE Chile)",
-    "aplicacionUAH": "Universidad Alberto Hurtado (Casa Central Barroso 10)",
+    "aplicacionLocal": "Sede universitaria patrimonial (Barroso 10)",
     "citaAPA": "(MINEDUC, 2023; WikiProject Chile, 2024)"
   },
   {
@@ -183,7 +183,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINEDUC / Subsecretaría de Educación Superior",
     "ideChile": "Establecimientos de Educación Superior - IP y CFT (MINEDUC / IDE Chile)",
-    "aplicacionUAH": "Sedes de educación técnica en eje Alameda y República",
+    "aplicacionLocal": "Sedes de educación técnica en eje Alameda y República",
     "citaAPA": "(MINEDUC, 2023)"
   },
   {
@@ -193,7 +193,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINEDUC / SLEP Santiago",
     "ideChile": "Establecimientos de Educación Escolar (MINEDUC / IDE Chile)",
-    "aplicacionUAH": "Liceo Miguel Luis Amunátegui / Escuela Rep. de Panamá",
+    "aplicacionLocal": "Liceo Miguel Luis Amunátegui / Escuela Rep. de Panamá",
     "citaAPA": "(MINEDUC, 2023; IDE Chile / SNIT, 2024)"
   },
   {
@@ -203,7 +203,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Subsecretaría de Educación Parvularia",
     "ideChile": "Establecimientos de Educación Parvularia (JUNJI - Integra / IDE Chile)",
-    "aplicacionUAH": "Jardín Infantil Barrial JUNJI calle Cienfuegos",
+    "aplicacionLocal": "Jardín Infantil Barrial JUNJI calle Cienfuegos",
     "citaAPA": "(JUNJI, 2022; MINEDUC, 2023)"
   },
   {
@@ -213,8 +213,8 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Servicio Nacional del Patrimonio Cultural (SERPAT)",
     "ideChile": "Red de Bibliotecas Públicas (SERPAT / IDE Chile)",
-    "aplicacionUAH": "Biblioteca Central UAH / Biblioteca de Santiago",
-    "citaAPA": "(SERPAT, 2023; UAH, 2023)"
+    "aplicacionLocal": "Biblioteca Central Universitaria / Biblioteca de Santiago",
+    "citaAPA": "(SERPAT, 2023; Atlas VGI, 2023)"
   },
   {
     "tag": "amenity=student_accommodation",
@@ -223,7 +223,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINEDUC / Instituciones Universitarias",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Residencias universitarias en eje Almirante Barroso",
+    "aplicacionLocal": "Residencias universitarias en eje Almirante Barroso",
     "citaAPA": "(MINEDUC, 2023)"
   },
   {
@@ -233,8 +233,8 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Ministerio de Ciencia, Tecnología e Innovación",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Centros de investigación de facultades UAH",
-    "citaAPA": "(OECD, 2017; UAH, 2023)"
+    "aplicacionLocal": "Centros de investigación de facultades universitarias",
+    "citaAPA": "(OECD, 2017; Atlas VGI, 2023)"
   },
   {
     "tag": "amenity=music_school",
@@ -243,7 +243,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINCAP / MINEDUC",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Academias de música y arte en Barrio Brasil",
+    "aplicacionLocal": "Academias de música y arte en Barrio Brasil",
     "citaAPA": "(MINCAP, 2022)"
   },
   {
@@ -253,7 +253,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINSAL / FONASA (Modelo Salud Familiar)",
     "ideChile": "Establecimientos de Salud - Atención Primaria CESFAM (DEIS - MINSAL / IDE Chile)",
-    "aplicacionUAH": "CESFAM N° 1 Ramón Corbalán Melgarejo",
+    "aplicacionLocal": "CESFAM N° 1 Ramón Corbalán Melgarejo",
     "citaAPA": "(MINSAL, 2023; IDE Chile / SNIT, 2024)"
   },
   {
@@ -263,7 +263,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINSAL / Red Asistencial Pública",
     "ideChile": "Establecimientos de Salud - Hospitales (DEIS - MINSAL / IDE Chile)",
-    "aplicacionUAH": "Hospital San Juan de Dios / Posta Central",
+    "aplicacionLocal": "Hospital San Juan de Dios / Posta Central",
     "citaAPA": "(MINSAL, 2023; IDE Chile / SNIT, 2024)"
   },
   {
@@ -273,7 +273,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINSAL / Instituto de Salud Pública (ISP)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Farmacia Popular Comuna de Santiago / Cruz Verde Brasil",
+    "aplicacionLocal": "Farmacia Popular Comuna de Santiago / Cruz Verde Brasil",
     "citaAPA": "(ISP Chile, 2022; INE, 2021)"
   },
   {
@@ -283,7 +283,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINSAL / Colegio de Cirujano Dentistas",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Clínicas odontológicas universitarias en sector República",
+    "aplicacionLocal": "Clínicas odontológicas universitarias en sector República",
     "citaAPA": "(MINSAL, 2023)"
   },
   {
@@ -293,7 +293,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SUBDERE (Ley N° 21.020 Tenencia Responsable)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Clínica veterinaria barrial en calle Maturana",
+    "aplicacionLocal": "Clínica veterinaria barrial en calle Maturana",
     "citaAPA": "(SUBDERE, 2018)"
   },
   {
@@ -303,7 +303,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINSAL / SAMU Metropolitano",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Base SAMU Poniente en Hospital San Juan de Dios",
+    "aplicacionLocal": "Base SAMU Poniente en Hospital San Juan de Dios",
     "citaAPA": "(MINSAL, 2023)"
   },
   {
@@ -313,7 +313,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINSAL (Ley N° 21.156 Desfibriladores Públicos)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "DEA en andenes de Metro Los Héroes y Santa Ana",
+    "aplicacionLocal": "DEA en andenes de Metro Los Héroes y Santa Ana",
     "citaAPA": "(MINSAL, 2019)"
   },
   {
@@ -323,7 +323,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Superintendencia de Servicios Sanitarios (SISS) / Bomberos",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Grifo de incendio en Almirante Barroso esq. Alameda",
+    "aplicacionLocal": "Grifo de incendio en Almirante Barroso esq. Alameda",
     "citaAPA": "(Bomberos de Chile, 2022; SISS, 2022)"
   },
   {
@@ -333,7 +333,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Ministerio del Interior y Seguridad Pública",
     "ideChile": "Unidades Policiales y Comisarías (Carabineros de Chile / IDE Chile)",
-    "aplicacionUAH": "3ª Comisaría de Carabineros de Santiago Centro",
+    "aplicacionLocal": "3ª Comisaría de Carabineros de Santiago Centro",
     "citaAPA": "(Ministerio del Interior, 2022; Carabineros, 2023)"
   },
   {
@@ -343,7 +343,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Junta Nacional de Cuerpos de Bomberos (Ley 20.564)",
     "ideChile": "Cuarteles de Bomberos (Bomberos de Chile / IDE Chile)",
-    "aplicacionUAH": "11ª Compañía Pompa Italia (Calle República)",
+    "aplicacionLocal": "11ª Compañía Pompa Italia (Calle República)",
     "citaAPA": "(Bomberos de Chile, 2022)"
   },
   {
@@ -353,7 +353,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Subsecretaría de Prevención del Delito / Seguridad Vecinal",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Cámaras de televigilancia en esquinas de Plaza Brasil",
+    "aplicacionLocal": "Cámaras de televigilancia en esquinas de Plaza Brasil",
     "citaAPA": "(Ministerio del Interior, 2022)"
   },
   {
@@ -363,7 +363,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SUBDERE / Municipalidad de Santiago",
     "ideChile": "Edificios Consistoriales Municipales (SUBDERE / IDE Chile)",
-    "aplicacionUAH": "Casa Consistorial / Centro Comunitario Municipal Brasil",
+    "aplicacionLocal": "Casa Consistorial / Centro Comunitario Municipal Brasil",
     "citaAPA": "(SUBDERE, 2022)"
   },
   {
@@ -373,7 +373,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Ministerio de Justicia / Hacienda / Trabajo",
     "ideChile": "Inmuebles Fiscales y Servicios Públicos (Ministerio de Bienes Nacionales / IDE Chile)",
-    "aplicacionUAH": "Sucursal Registro Civil Santiago Centro / ChileAtiende",
+    "aplicacionLocal": "Sucursal Registro Civil Santiago Centro / ChileAtiende",
     "citaAPA": "(ChileAtiende, 2023; IDE Chile / SNIT, 2024)"
   },
   {
@@ -383,7 +383,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SUBDERE / Municipalidad de Santiago",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Junta de Vecinos Barrio Brasil (calle Huérfanos)",
+    "aplicacionLocal": "Junta de Vecinos Barrio Brasil (calle Huérfanos)",
     "citaAPA": "(INE, 2017; Municipalidad de Santiago, 2021)"
   },
   {
@@ -393,7 +393,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Ministerio de Transportes y Telecomunicaciones",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Sucursal CorreosChile en calle Moneda / Alameda",
+    "aplicacionLocal": "Sucursal CorreosChile en calle Moneda / Alameda",
     "citaAPA": "(Correos de Chile, 2023)"
   },
   {
@@ -403,7 +403,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SERCOTEC / Fomento Productivo Barrial",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Panadería Las Rosas Chicas / Panadería Brasil",
+    "aplicacionLocal": "Panadería Las Rosas Chicas / Panadería Brasil",
     "citaAPA": "(SERCOTEC, 2022; INE, 2021)"
   },
   {
@@ -413,7 +413,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SERCOTEC / Economía Social Barrial",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Almacén Don Lucho (calle Cienfuegos)",
+    "aplicacionLocal": "Almacén Don Lucho (calle Cienfuegos)",
     "citaAPA": "(SERCOTEC, 2022; INE, 2021)"
   },
   {
@@ -423,7 +423,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Ministerio de Economía / INE",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Santa Isabel calle Brasil / Lider Express San Pablo",
+    "aplicacionLocal": "Santa Isabel calle Brasil / Lider Express San Pablo",
     "citaAPA": "(INE, 2021; Taginfo Chile, 2026)"
   },
   {
@@ -433,7 +433,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "ASOF Chile / I. Municipalidad de Santiago",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Feria Libre calle Esperanza / Mercado Cueto",
+    "aplicacionLocal": "Feria Libre calle Esperanza / Mercado Cueto",
     "citaAPA": "(ASOF Chile, 2021; ODEPA, 2022)"
   },
   {
@@ -443,7 +443,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Dirección de Rentas Municipales",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Botillería Barriocentro en calle Maturana",
+    "aplicacionLocal": "Botillería Barriocentro en calle Maturana",
     "citaAPA": "(INE, 2021)"
   },
   {
@@ -453,7 +453,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SERCOTEC",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Verdulería tradicional en calle Compañía de Jesús",
+    "aplicacionLocal": "Verdulería tradicional en calle Compañía de Jesús",
     "citaAPA": "(INE, 2021)"
   },
   {
@@ -463,7 +463,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SEREMI de Salud / ISP",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Carnicería de barrio en calle Huérfanos",
+    "aplicacionLocal": "Carnicería de barrio en calle Huérfanos",
     "citaAPA": "(INE, 2021)"
   },
   {
@@ -473,7 +473,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SERCOTEC",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Ferretería El Candado en calle Rosas",
+    "aplicacionLocal": "Ferretería El Candado en calle Rosas",
     "citaAPA": "(INE, 2021)"
   },
   {
@@ -483,7 +483,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Sindicato de Suplementeros / Rentas Municipales",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Quiosco de suplementero en Alameda esq. Almirante Barroso",
+    "aplicacionLocal": "Quiosco de suplementero en Alameda esq. Almirante Barroso",
     "citaAPA": "(INE, 2021)"
   },
   {
@@ -493,7 +493,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Comisión para el Mercado Financiero (CMF)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "BancoEstado Sucursal Brasil / Alameda",
+    "aplicacionLocal": "BancoEstado Sucursal Brasil / Alameda",
     "citaAPA": "(CMF Chile, 2023)"
   },
   {
@@ -503,7 +503,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Comisión para el Mercado Financiero (CMF)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Cajero Redbanc en estaciones Metro y farmacias",
+    "aplicacionLocal": "Cajero Redbanc en estaciones Metro y farmacias",
     "citaAPA": "(CMF Chile, 2023)"
   },
   {
@@ -513,7 +513,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SERNATUR / Municipalidad de Santiago",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Cafés universitarios en Av. Brasil y calle Maturana",
+    "aplicacionLocal": "Cafés universitarios en Av. Brasil y calle Maturana",
     "citaAPA": "(INE, 2021; SERNATUR, 2022)"
   },
   {
@@ -523,7 +523,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SERNATUR / Ministerio de las Culturas",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Restaurante El Huaso Enrique / Fuentes de soda Alameda",
+    "aplicacionLocal": "Restaurante El Huaso Enrique / Fuentes de soda Alameda",
     "citaAPA": "(SERNATUR, 2022)"
   },
   {
@@ -533,7 +533,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Ministerio del Medio Ambiente (Ley REP 20.920)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Campana de reciclaje en Plaza Brasil y patios UAH",
+    "aplicacionLocal": "Campana de reciclaje en Plaza Brasil y patios universitarios",
     "citaAPA": "(MMA, 2022; Ley N° 20.920)"
   },
   {
@@ -543,7 +543,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Dirección de Aseo y Ornato Municipal",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Papeleros peatonales en eje Av. Brasil y Alameda",
+    "aplicacionLocal": "Papeleros peatonales en eje Av. Brasil y Alameda",
     "citaAPA": "(Municipalidad de Santiago, 2021)"
   },
   {
@@ -553,7 +553,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Municipalidad de Santiago / Enel",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Faroles coloniales patrimoniales en Barrio Brasil",
+    "aplicacionLocal": "Faroles coloniales patrimoniales en Barrio Brasil",
     "citaAPA": "(Municipalidad de Santiago, 2021)"
   },
   {
@@ -563,7 +563,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Metro de Santiago / MTT / DTPM",
     "ideChile": "Estaciones de Metro y Ferrocarriles (DTPM - Metro S.A. / IDE Chile)",
-    "aplicacionUAH": "Estación Los Héroes (L1/L2) y Estación Santa Ana (L2/L5)",
+    "aplicacionLocal": "Estación Los Héroes (L1/L2) y Estación Santa Ana (L2/L5)",
     "citaAPA": "(Metro de Santiago, 2024; DTPM & MTT, 2023)"
   },
   {
@@ -573,7 +573,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Metro S.A.",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Boca Metro Santa Ana por Manuel Rodríguez / Catedral",
+    "aplicacionLocal": "Boca Metro Santa Ana por Manuel Rodríguez / Catedral",
     "citaAPA": "(Metro de Santiago, 2024)"
   },
   {
@@ -583,7 +583,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Directorio de Transporte Público Metropolitano (DTPM)",
     "ideChile": "Paradas de Transporte Público Red Movilidad (DTPM - MTT / IDE Chile)",
-    "aplicacionUAH": "Paradero PA347 Alameda esq. Almirante Barroso",
+    "aplicacionLocal": "Paradero PA347 Alameda esq. Almirante Barroso",
     "citaAPA": "(DTPM & MTT, 2023)"
   },
   {
@@ -593,7 +593,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "DTPM / MTT",
     "ideChile": "Paradas de Transporte Público Red Movilidad (DTPM - MTT / IDE Chile)",
-    "aplicacionUAH": "Andén segregado en corredor Alameda Bernardo O'Higgins",
+    "aplicacionLocal": "Andén segregado en corredor Alameda Bernardo O'Higgins",
     "citaAPA": "(DTPM & MTT, 2023)"
   },
   {
@@ -603,7 +603,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MTT / SEREMI de Transportes RM",
     "ideChile": "Terminales de Buses Interurbanos (MTT / IDE Chile)",
-    "aplicacionUAH": "Terminal Los Héroes (Tucapel Jiménez)",
+    "aplicacionLocal": "Terminal Los Héroes (Tucapel Jiménez)",
     "citaAPA": "(MTT, 2022)"
   },
   {
@@ -613,7 +613,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Metro S.A. / DTPM",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Punto de carga bip! en boletería Metro Los Héroes",
+    "aplicacionLocal": "Punto de carga bip! en boletería Metro Los Héroes",
     "citaAPA": "(DTPM & MTT, 2023)"
   },
   {
@@ -623,7 +623,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Metro S.A.",
     "ideChile": "Trazados de Líneas de Metro de Santiago (DTPM / IDE Chile)",
-    "aplicacionUAH": "Trazado Línea 1 bajo eje Alameda / Línea 2 Manuel Rodríguez",
+    "aplicacionLocal": "Trazado Línea 1 bajo eje Alameda / Línea 2 Manuel Rodríguez",
     "citaAPA": "(Metro de Santiago, 2024)"
   },
   {
@@ -633,7 +633,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SEREMI de Transportes RM / MTT",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Parada de taxis en Alameda frente a Metro Los Héroes",
+    "aplicacionLocal": "Parada de taxis en Alameda frente a Metro Los Héroes",
     "citaAPA": "(MTT, 2022)"
   },
   {
@@ -643,7 +643,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "MINVU (Manual Vialidad Cicloinclusiva) / MTT",
     "ideChile": "Catastro de Ciclovías Urbanas (SECTRA - MTT / IDE Chile)",
-    "aplicacionUAH": "Ciclovía calle Rosas / Ciclovía Alameda Poniente",
+    "aplicacionLocal": "Ciclovía calle Rosas / Ciclovía Alameda Poniente",
     "citaAPA": "(MINVU, 2020; MTT, 2021)"
   },
   {
@@ -653,7 +653,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "MINVU / Dirección de Tránsito Municipal",
     "ideChile": "Catastro de Ciclovías Urbanas (SECTRA - MTT / IDE Chile)",
-    "aplicacionUAH": "Ciclobanda en eje Av. Brasil",
+    "aplicacionLocal": "Ciclobanda en eje Av. Brasil",
     "citaAPA": "(MINVU, 2020)"
   },
   {
@@ -661,10 +661,10 @@ const ModuloDiccionario = (() => {
     "significado": "Biciestacionamiento / Punto de Anclaje",
     "categoria": "CAT-04",
     "grupo": "educacion_servicios",
-    "institucion": "MINVU / DTPM / UAH",
+    "institucion": "MINVU / DTPM / VGI",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Biciestacionamientos en patios UAH y exterior Metro",
-    "citaAPA": "(MINVU, 2020; UAH, 2023)"
+    "aplicacionLocal": "Biciestacionamientos en patios universitarios y exterior Metro",
+    "citaAPA": "(MINVU, 2020; Atlas VGI, 2023)"
   },
   {
     "tag": "amenity=bicycle_rental",
@@ -673,7 +673,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "GORE Metropolitano / Municipios",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Estación Bike Santiago en Plaza Brasil",
+    "aplicacionLocal": "Estación Bike Santiago en Plaza Brasil",
     "citaAPA": "(GORE RM, 2021)"
   },
   {
@@ -683,7 +683,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Municipios / Organizaciones Ciclistas",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Tótem de herramientas en acceso campus UAH",
+    "aplicacionLocal": "Tótem de herramientas en acceso campus universitario",
     "citaAPA": "(WikiProject Chile, 2024)"
   },
   {
@@ -693,7 +693,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Ministerio de Energía / SEC",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Electrolinera de carga rápida en eje Alameda",
+    "aplicacionLocal": "Electrolinera de carga rápida en eje Alameda",
     "citaAPA": "(Ministerio de Energía, 2023)"
   },
   {
@@ -703,7 +703,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "CONASET / MINVU",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Calles de velocidad reducida en torno a Plaza Brasil",
+    "aplicacionLocal": "Calles de velocidad reducida en torno a Plaza Brasil",
     "citaAPA": "(CONASET, 2022; MINVU, 2020)"
   },
   {
@@ -713,7 +713,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "CONASET / Dirección de Tránsito",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Radar indicador de velocidad en calle Cienfuegos",
+    "aplicacionLocal": "Radar indicador de velocidad en calle Cienfuegos",
     "citaAPA": "(CONASET, 2022)"
   },
   {
@@ -723,7 +723,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINVU (Política Nacional de Parques Urbanos)",
     "ideChile": "Catastro de Parques Urbanos (MINVU / IDE Chile)",
-    "aplicacionUAH": "Plaza Brasil (parque barrial estructurante)",
+    "aplicacionLocal": "Plaza Brasil (parque barrial estructurante)",
     "citaAPA": "(MINVU, 2021; IDE Chile / SNIT, 2024)"
   },
   {
@@ -733,7 +733,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINVU / Municipalidad de Santiago",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Esculturas lúdicas de Federica Matta en Plaza Brasil",
+    "aplicacionLocal": "Esculturas lúdicas de Federica Matta en Plaza Brasil",
     "citaAPA": "(MINVU, 2021)"
   },
   {
@@ -743,7 +743,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Instituto Nacional de Deportes (IND)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Multicancha deportiva en JJVV Barrio Brasil",
+    "aplicacionLocal": "Multicancha deportiva en JJVV Barrio Brasil",
     "citaAPA": "(IND Chile, 2021)"
   },
   {
@@ -753,7 +753,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "IND / I. Municipalidad de Santiago",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Polideportivo Comunal Santiago Centro",
+    "aplicacionLocal": "Polideportivo Comunal Santiago Centro",
     "citaAPA": "(IND Chile, 2021)"
   },
   {
@@ -763,7 +763,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINVU / Municipalidades",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Estación de máquinas de calistenia en Plaza Brasil",
+    "aplicacionLocal": "Estación de máquinas de calistenia en Plaza Brasil",
     "citaAPA": "(MINVU, 2021)"
   },
   {
@@ -773,7 +773,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINVU / Dirección de Aseo y Ornato",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Escaños patrimoniales en bandejón central de Av. Brasil",
+    "aplicacionLocal": "Escaños patrimoniales en bandejón central de Av. Brasil",
     "citaAPA": "(MINVU, 2021)"
   },
   {
@@ -783,7 +783,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Aguas Andinas / Municipalidades",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Bebedero público en Plaza Brasil",
+    "aplicacionLocal": "Bebedero público en Plaza Brasil",
     "citaAPA": "(MINVU, 2021)"
   },
   {
@@ -793,7 +793,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Municipalidad de Santiago (Tenencia Responsable)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Canil cerrado y zona de adiestramiento en Parque Quinta Normal",
+    "aplicacionLocal": "Canil cerrado y zona de adiestramiento en Parque Quinta Normal",
     "citaAPA": "(SUBDERE, 2018)"
   },
   {
@@ -803,7 +803,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Dirección de Parques y Jardines / MINVU",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Prados ajardinados centrales en Plaza Brasil",
+    "aplicacionLocal": "Prados ajardinados centrales en Plaza Brasil",
     "citaAPA": "(MINVU, 2021)"
   },
   {
@@ -813,7 +813,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "Consejo de Monumentos Nacionales (CMN) / DOM",
     "ideChile": "Monumentos Históricos e Inmuebles Protegidos (CMN - SERPAT / IDE Chile)",
-    "aplicacionUAH": "Casonas Neoclásicas UAH (Barroso 10, Cienfuegos 41)",
+    "aplicacionLocal": "Casonas Neoclásicas Patrimoniales (Barroso 10, Cienfuegos 41)",
     "citaAPA": "(CMN & MINCAP, 2022; Municipalidad de Santiago, 2019)"
   },
   {
@@ -823,7 +823,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "Consejo de Monumentos Nacionales (CMN)",
     "ideChile": "Monumentos Públicos (CMN - SERPAT / IDE Chile)",
-    "aplicacionUAH": "Esculturas conmemorativas en Plaza Brasil",
+    "aplicacionLocal": "Esculturas conmemorativas en Plaza Brasil",
     "citaAPA": "(CMN & MINCAP, 2022; Ley N° 17.288)"
   },
   {
@@ -833,7 +833,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "Subsecretaría de Derechos Humanos / CMN",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Placas conmemorativas en sedes comunitarias y sindicales",
+    "aplicacionLocal": "Placas conmemorativas en sedes comunitarias y sindicales",
     "citaAPA": "(Subsecretaría de DDHH, 2021)"
   },
   {
@@ -843,7 +843,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "MINVU / CMN / Municipalidad de Santiago",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Cité Lucrecia Valdés / Pasajes de calle Huérfanos",
+    "aplicacionLocal": "Cité Lucrecia Valdés / Pasajes de calle Huérfanos",
     "citaAPA": "(Municipalidad de Santiago, 2019; Hidalgo, 2005)"
   },
   {
@@ -853,7 +853,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "CMN / Arzobispado de Santiago",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Basílica del Salvador (Monumento Histórico)",
+    "aplicacionLocal": "Basílica del Salvador (Monumento Histórico)",
     "citaAPA": "(CMN & MINCAP, 2022)"
   },
   {
@@ -863,7 +863,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "Ministerio de las Culturas, las Artes y el Patrimonio",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Centro Cultural de Barrio Brasil / Galpón Víctor Jara",
+    "aplicacionLocal": "Centro Cultural de Barrio Brasil / Galpón Víctor Jara",
     "citaAPA": "(MINCAP, 2022)"
   },
   {
@@ -873,7 +873,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "Servicio Nacional del Patrimonio Cultural (SERPAT)",
     "ideChile": "Catastro Nacional de Museos (SERPAT / IDE Chile)",
-    "aplicacionUAH": "Museo de la Educación Gabriela Mistral",
+    "aplicacionLocal": "Museo de la Educación Gabriela Mistral",
     "citaAPA": "(SERPAT, 2023)"
   },
   {
@@ -883,7 +883,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "MINCAP / Red de Salas de Cine de Chile",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Cine Normandie y salas independientes de Barrio Universitario",
+    "aplicacionLocal": "Cine Normandie y salas independientes de Barrio Universitario",
     "citaAPA": "(MINCAP, 2022)"
   },
   {
@@ -893,7 +893,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "Consejo de Monumentos Nacionales (CMN)",
     "ideChile": "Sitios Arqueológicos Protegidos (CMN - SERPAT / IDE Chile)",
-    "aplicacionUAH": "Hallazgos arqueológicos coloniales en obras viales de Santiago Poniente",
+    "aplicacionLocal": "Hallazgos arqueológicos coloniales en obras viales de Santiago Poniente",
     "citaAPA": "(CMN & MINCAP, 2022)"
   },
   {
@@ -903,7 +903,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "MINVU (OGUC Art. 2.2.8) / SENADIS",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Rebaje de solera en cruce Alameda con Almirante Barroso",
+    "aplicacionLocal": "Rebaje de solera en cruce Alameda con Almirante Barroso",
     "citaAPA": "(MINVU, 2016; SENADIS, 2021)"
   },
   {
@@ -913,7 +913,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "MINVU / SERVIU Metropolitano",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Pasos a nivel en paseos peatonales y calles calmadas",
+    "aplicacionLocal": "Pasos a nivel en paseos peatonales y calles calmadas",
     "citaAPA": "(MINVU, 2016)"
   },
   {
@@ -923,7 +923,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "CONASET (Ministerio de Transportes) / MINVU",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Paso de cebra demarcado en Cienfuegos frente a UAH",
+    "aplicacionLocal": "Paso de cebra demarcado en Cienfuegos frente a sede patrimonial",
     "citaAPA": "(CONASET, 2022; MTT, 2021)"
   },
   {
@@ -933,7 +933,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "MINVU (D.S. 50) / SENADIS",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Baldosas podotáctiles en esquinas y andenes de Metro",
+    "aplicacionLocal": "Baldosas podotáctiles en esquinas y andenes de Metro",
     "citaAPA": "(MINVU, 2016; SENADIS, 2021)"
   },
   {
@@ -943,7 +943,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "Unidad Operativa de Control de Tránsito (UOCT)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Semáforo sonoro en eje Alameda con Los Héroes",
+    "aplicacionLocal": "Semáforo sonoro en eje Alameda con Los Héroes",
     "citaAPA": "(UOCT & MTT, 2022)"
   },
   {
@@ -953,7 +953,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "UOCT / MTT",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Cruces semaforizados sincronizados en Alameda con Manuel Rodríguez",
+    "aplicacionLocal": "Cruces semaforizados sincronizados en Alameda con Manuel Rodríguez",
     "citaAPA": "(UOCT & MTT, 2022)"
   },
   {
@@ -963,7 +963,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "MINVU / SENADIS",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Edificio Erasmo Escala UAH con rampa y ascensor accesible",
+    "aplicacionLocal": "Edificio patrimonial Erasmo Escala con rampa y ascensor accesible",
     "citaAPA": "(SENADIS, 2021; ISO 21542:2021)"
   },
   {
@@ -973,7 +973,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "MINVU / SENADIS",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Casonas patrimoniales con accesibilidad restringida en segundo piso",
+    "aplicacionLocal": "Casonas patrimoniales con accesibilidad restringida en segundo piso",
     "citaAPA": "(SENADIS, 2021)"
   },
   {
@@ -983,7 +983,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "MINVU / SECPLAN Santiago",
     "ideChile": "Red Vial Urbana - Paseos Peatonales (MOP - SERVIU / IDE Chile)",
-    "aplicacionUAH": "Paseo peatonal Huérfanos Poniente y pasajes patrimoniales",
+    "aplicacionLocal": "Paseo peatonal Huérfanos Poniente y pasajes patrimoniales",
     "citaAPA": "(MINVU, 2021)"
   },
   {
@@ -993,7 +993,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad",
     "institucion": "MINVU (D.S. 50) / SENADIS",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Rampas con pasamanos en accesos de facultades UAH",
+    "aplicacionLocal": "Rampas con pasamanos en accesos de facultades universitarias",
     "citaAPA": "(MINVU, 2016; SENADIS, 2021)"
   },
   {
@@ -1003,7 +1003,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "Corporación Nacional Forestal (CONAF) / Municipios",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Plátanos orientales y jacarandás en Av. Brasil",
+    "aplicacionLocal": "Plátanos orientales y jacarandás en Av. Brasil",
     "citaAPA": "(CONAF, 2019; MMA, 2022)"
   },
   {
@@ -1013,7 +1013,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "CONAF / MMA",
     "ideChile": "Catastro de Recursos Vegetacionales Nativos (CONAF / IDE Chile)",
-    "aplicacionUAH": "Área arbolada densa en Parque Quinta Normal",
+    "aplicacionLocal": "Área arbolada densa en Parque Quinta Normal",
     "citaAPA": "(CONAF, 2019; IDE Chile / SNIT, 2024)"
   },
   {
@@ -1023,7 +1023,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "CONAF / Catastro Arbolado Urbano Santiago",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Alineaciones arbóreas históricas en Av. Brasil y bandejón Alameda",
+    "aplicacionLocal": "Alineaciones arbóreas históricas en Av. Brasil y bandejón Alameda",
     "citaAPA": "(CONAF, 2019)"
   },
   {
@@ -1033,7 +1033,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "CONAF / Dirección de Aseo y Ornato",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Jacarandás florecidos en primavera en torno a Plaza Brasil",
+    "aplicacionLocal": "Jacarandás florecidos en primavera en torno a Plaza Brasil",
     "citaAPA": "(CONAF, 2019)"
   },
   {
@@ -1043,7 +1043,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "CONAF / Ministerio del Medio Ambiente",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Ejemplares monumentales de palma chilena en plazas de Santiago",
+    "aplicacionLocal": "Ejemplares monumentales de palma chilena en plazas de Santiago",
     "citaAPA": "(CONAF, 2019; MMA, 2022)"
   },
   {
@@ -1053,7 +1053,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "CONAF / MMA",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Pimientos nativos resistentes a escasez hídrica en Barrio Brasil",
+    "aplicacionLocal": "Pimientos nativos resistentes a escasez hídrica en Barrio Brasil",
     "citaAPA": "(CONAF, 2019)"
   },
   {
@@ -1063,7 +1063,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "CONAF / MMA",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Quillayes en platabandas sostenibles de la comuna de Santiago",
+    "aplicacionLocal": "Quillayes en platabandas sostenibles de la comuna de Santiago",
     "citaAPA": "(CONAF, 2019; MMA, 2022)"
   },
   {
@@ -1073,7 +1073,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "SENCE / Ministerio del Trabajo y Previsión Social",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Centros de capacitación laboral y sedes OTEC en Santiago Poniente y regiones",
+    "aplicacionLocal": "Centros de capacitación laboral y sedes OTEC en Santiago Poniente y regiones",
     "citaAPA": "(SENCE & Mintrab, 2022; OECD, 2017)"
   },
   {
@@ -1083,7 +1083,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "MINSAL / Red Asistencial Rural",
     "ideChile": "Establecimientos de Salud - Atención Primaria Rural (DEIS - MINSAL / IDE Chile)",
-    "aplicacionUAH": "Postas rurales en comunas periurbanas de la RM (Melipilla, Talagante, Tiltil) y regiones",
+    "aplicacionLocal": "Postas rurales en comunas periurbanas de la RM (Melipilla, Talagante, Tiltil) y regiones",
     "citaAPA": "(MINSAL, 2023; IDE Chile / SNIT, 2024)"
   },
   {
@@ -1093,7 +1093,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Servicio Nacional del Adulto Mayor (SENAMA) / MDSF",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Residencias de adultos mayores en Barrio Brasil, Quinta Normal y ciudades regionales",
+    "aplicacionLocal": "Residencias de adultos mayores en Barrio Brasil, Quinta Normal y ciudades regionales",
     "citaAPA": "(SENAMA & MDSF, 2021)"
   },
   {
@@ -1103,7 +1103,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Dirección de Obras Hidráulicas (DOH - MOP) / SISS",
     "ideChile": "Sistemas de Agua Potable y Estanques de Regulación (DOH - MOP / IDE Chile)",
-    "aplicacionUAH": "Copas de agua y estanques de distribución en Santiago Poniente y cabeceras comunales",
+    "aplicacionLocal": "Copas de agua y estanques de distribución en Santiago Poniente y cabeceras comunales",
     "citaAPA": "(DOH & MOP, 2022; SISS, 2022)"
   },
   {
@@ -1113,7 +1113,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Subdirección de Servicios Sanitarios Rurales (DOH - MOP, Ley N° 20.998)",
     "ideChile": "Sistemas de Agua Potable Rural (DOH - MOP / IDE Chile)",
-    "aplicacionUAH": "Cooperativas y comités de agua potable rural en cuencas de Maipo, Aconcagua y Maule",
+    "aplicacionLocal": "Cooperativas y comités de agua potable rural en cuencas de Maipo, Aconcagua y Maule",
     "citaAPA": "(DOH & MOP, 2022; Ley N° 20.998)"
   },
   {
@@ -1123,7 +1123,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Corporación Nacional Forestal (CONAF) / SENAPRED",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Torres de vigilancia en cerros islas y áreas de interfaz urbano-forestal en regiones",
+    "aplicacionLocal": "Torres de vigilancia en cerros islas y áreas de interfaz urbano-forestal en regiones",
     "citaAPA": "(CONAF, 2022; SENAPRED, 2023)"
   },
   {
@@ -1133,7 +1133,7 @@ const ModuloDiccionario = (() => {
     "grupo": "educacion_servicios",
     "institucion": "Dirección General del Territorio Marítimo y Marina Mercante (DIRECTEMAR)",
     "ideChile": "Capitanías de Puerto y Alcaldías de Mar (DIRECTEMAR / IDE Chile)",
-    "aplicacionUAH": "Alcaldías de mar y capitanías en puertos de Valparaíso, San Antonio, Talcahuano y fiordos australes",
+    "aplicacionLocal": "Alcaldías de mar y capitanías en puertos de Valparaíso, San Antonio, Talcahuano y fiordos australes",
     "citaAPA": "(DIRECTEMAR & Armada de Chile, 2021)"
   },
   {
@@ -1143,7 +1143,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Dirección de Obras Portuarias (DOP - MOP) / MTT",
     "ideChile": "Terminales y Rampas de Conectividad Austral (DOP - MOP / IDE Chile)",
-    "aplicacionUAH": "Rampas de conectividad en Pargua, Chacao, Quellón, Puerto Chacabuco y Punta Arenas",
+    "aplicacionLocal": "Rampas de conectividad en Pargua, Chacao, Quellón, Puerto Chacabuco y Punta Arenas",
     "citaAPA": "(DOP & MOP, 2023; MTT, 2022)"
   },
   {
@@ -1153,7 +1153,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Empresa de los Ferrocarriles del Estado (EFE) / MTT",
     "ideChile": "Cruces Ferroviarios (EFE - MTT / IDE Chile)",
-    "aplicacionUAH": "Cruces a nivel de tren Nos-Alameda, Biotren y ramal Talca-Constitución",
+    "aplicacionLocal": "Cruces a nivel de tren Nos-Alameda, Biotren y ramal Talca-Constitución",
     "citaAPA": "(EFE & MTT, 2023)"
   },
   {
@@ -1163,7 +1163,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Dirección General de Concesiones (DGC - MOP)",
     "ideChile": "Plazas de Peaje Concesionadas (DGC - MOP / IDE Chile)",
-    "aplicacionUAH": "Pórticos TAG en autopistas urbanas y plazas de peaje en Ruta 5 y Ruta 68",
+    "aplicacionLocal": "Pórticos TAG en autopistas urbanas y plazas de peaje en Ruta 5 y Ruta 68",
     "citaAPA": "(DGC & MOP, 2023)"
   },
   {
@@ -1173,7 +1173,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Dirección General de Aeronáutica Civil (DGAC)",
     "ideChile": "Aeródromos y Helipuertos Públicos (DGAC / IDE Chile)",
-    "aplicacionUAH": "Aeródromo Tobalaba, Peldehue y pistas de enlace comunitario en regiones",
+    "aplicacionLocal": "Aeródromo Tobalaba, Peldehue y pistas de enlace comunitario en regiones",
     "citaAPA": "(DGAC, 2023)"
   },
   {
@@ -1183,7 +1183,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "Dirección de Vialidad (MOP) / Indap",
     "ideChile": "Red Vial Rural y Huellas (Dirección de Vialidad - MOP / IDE Chile)",
-    "aplicacionUAH": "Redes viales secundarias y huellas agrícolas en periferia de Santiago y regiones",
+    "aplicacionLocal": "Redes viales secundarias y huellas agrícolas en periferia de Santiago y regiones",
     "citaAPA": "(Dirección de Vialidad & MOP, 2022)"
   },
   {
@@ -1193,7 +1193,7 @@ const ModuloDiccionario = (() => {
     "grupo": "movilidad",
     "institucion": "MINVU / Municipalidades (Planes de Cerros)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Escaleras de quebradas urbanas y accesos a cerros en Valparaíso y Santiago Poniente",
+    "aplicacionLocal": "Escaleras de quebradas urbanas y accesos a cerros en Valparaíso y Santiago Poniente",
     "citaAPA": "(MINVU, 2020; Municipalidad de Valparaíso, 2021)"
   },
   {
@@ -1203,7 +1203,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "Servicio Nacional de Pesca y Acuicultura (SERNAPESCA) / DOP MOP",
     "ideChile": "Caletas Pesqueras Artesanales (SERNAPESCA / IDE Chile)",
-    "aplicacionUAH": "Caletas pesqueras artesanales (Caleta Portales, Caleta San Antonio, Caleta Angelmó)",
+    "aplicacionLocal": "Caletas pesqueras artesanales (Caleta Portales, Caleta San Antonio, Caleta Angelmó)",
     "citaAPA": "(SERNAPESCA & Subpesca, 2022)"
   },
   {
@@ -1213,7 +1213,7 @@ const ModuloDiccionario = (() => {
     "grupo": "patrimonio_verde",
     "institucion": "Consejo de Monumentos Nacionales (Patrimonio Cultural Inmaterial)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Animitas y grutas de devoción popular en esquinas barriales y calzadas interurbanas",
+    "aplicacionLocal": "Animitas y grutas de devoción popular en esquinas barriales y calzadas interurbanas",
     "citaAPA": "(CMN & MINCAP, 2022; Weigell, 2023)"
   },
   {
@@ -1223,7 +1223,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "Dirección de Vialidad (MOP) / Gobiernos Regionales",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Garitas de madera y hormigón en paradas de micro rural e interprovincial",
+    "aplicacionLocal": "Garitas de madera y hormigón en paradas de micro rural e interprovincial",
     "citaAPA": "(Dirección de Vialidad & MOP, 2022; MTT, 2021)"
   },
   {
@@ -1233,7 +1233,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "MINVU / SENADIS / Municipalidades",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Ascensores en pasarelas de autopistas urbanas, estaciones de Metro y funiculares patrimoniales",
+    "aplicacionLocal": "Ascensores en pasarelas de autopistas urbanas, estaciones de Metro y funiculares patrimoniales",
     "citaAPA": "(MINVU, 2016; SENADIS, 2021)"
   },
   {
@@ -1243,7 +1243,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "Ministerio del Medio Ambiente (MMA - Inventario Nacional de Humedales)",
     "ideChile": "Humedales Urbanos Declarados (MMA / IDE Chile)",
-    "aplicacionUAH": "Humedales urbanos protegidos en Quilicura, Batuco, Concón, Llanquihue y Valdivia",
+    "aplicacionLocal": "Humedales urbanos protegidos en Quilicura, Batuco, Concón, Llanquihue y Valdivia",
     "citaAPA": "(MMA, 2022; Ley N° 21.202)"
   },
   {
@@ -1253,7 +1253,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "CONAF (Programa de Arborización Urbana y Restauración)",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Ejemplares nativos de peumo en parques urbanos y campus universitarios",
+    "aplicacionLocal": "Ejemplares nativos de peumo en parques urbanos y campus universitarios",
     "citaAPA": "(CONAF, 2019; MMA, 2022)"
   },
   {
@@ -1263,7 +1263,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "CONAF / Ministerio del Medio Ambiente",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Maitenes protegidos en bandejones y áreas verdes comunitarias",
+    "aplicacionLocal": "Maitenes protegidos en bandejones y áreas verdes comunitarias",
     "citaAPA": "(CONAF, 2019; MMA, 2022)"
   },
   {
@@ -1273,7 +1273,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "GBIF Chile / Ministerio del Medio Ambiente (MMA)",
     "ideChile": "Especies Nativas e Introducidas (MMA / IDE Chile)",
-    "aplicacionUAH": "Taxonomía biológica de flora urbana y avifauna en Plaza Brasil y campus UAH",
+    "aplicacionLocal": "Taxonomía biológica de flora urbana y avifauna en Plaza Brasil y campus universitario",
     "citaAPA": "(GBIF Secretariat, 2024; TDWG, 2023)"
   },
   {
@@ -1283,7 +1283,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "MMA / Inventario Nacional de Especies / Red de Ciencia Ciudadana",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Identificación comunitaria de especies: chincol, zorzal, tórtola, pimiento, quillay",
+    "aplicacionLocal": "Identificación comunitaria de especies: chincol, zorzal, tórtola, pimiento, quillay",
     "citaAPA": "(GBIF Secretariat, 2024; MMA, 2022)"
   },
   {
@@ -1293,7 +1293,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "GBIF Secretariat / TDWG Darwin Core",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Observaciones comunitarias fotográficas con grado de investigación en Barrio Brasil",
+    "aplicacionLocal": "Observaciones comunitarias fotográficas con grado de investigación en Barrio Brasil",
     "citaAPA": "(TDWG, 2023; GBIF Secretariat, 2024)"
   },
   {
@@ -1303,7 +1303,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "GBIF Secretariat / IGM / ISO 19157",
     "ideChile": "Exactitud Posicional Absoluta (gmd:DQ_AbsoluteExternalPositionalAccuracy / IDE Chile)",
-    "aplicacionUAH": "Radio de precisión métrica (<15 m) en registros móviles de biodiversidad urbana",
+    "aplicacionLocal": "Radio de precisión métrica (<15 m) en registros móviles de biodiversidad urbana",
     "citaAPA": "(Chapman, 2005a; ISO 19157:2013)"
   },
   {
@@ -1313,7 +1313,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "GBIF Chile / iNaturalist / Comunidad",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Trazabilidad de autoría ciudadana de avistamientos de fauna y arbolado en el barrio",
+    "aplicacionLocal": "Trazabilidad de autoría ciudadana de avistamientos de fauna y arbolado en el barrio",
     "citaAPA": "(Goodchild, 2007; Haklay, 2013)"
   },
   {
@@ -1323,7 +1323,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "GBIF Secretariat / ISO 19157",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Auditoría algorítmica de anomalías en coordenadas y nombres taxonómicos",
+    "aplicacionLocal": "Auditoría algorítmica de anomalías en coordenadas y nombres taxonómicos",
     "citaAPA": "(Chapman, 2005b; Chapman, 2010)"
   },
   {
@@ -1333,7 +1333,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "GBIF Secretariat / Nodos Participantes",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Trazabilidad DOI de repositorios institucionales y de ciencia ciudadana",
+    "aplicacionLocal": "Trazabilidad DOI de repositorios institucionales y de ciencia ciudadana",
     "citaAPA": "(Wilkinson et al., 2016; GBIF.org, 2025)"
   },
   {
@@ -1343,7 +1343,7 @@ const ModuloDiccionario = (() => {
     "grupo": "accesibilidad_biodiv",
     "institucion": "GBIF Secretariat / TDWG",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Resolución del nivel taxonómico de observaciones de flora y fauna en la cuenca de Santiago",
+    "aplicacionLocal": "Resolución del nivel taxonómico de observaciones de flora y fauna en la cuenca de Santiago",
     "citaAPA": "(TDWG, 2023; CONAF, 2019)"
   },
   {
@@ -1353,7 +1353,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "Servicio de Impuestos Internos (SII) / DOM",
     "ideChile": "Catastro Nacional de Bienes Raíces (SII / IDE Chile)",
-    "aplicacionUAH": "Huellas poligonales de manzanas patrimoniales y campus UAH",
+    "aplicacionLocal": "Huellas poligonales de manzanas patrimoniales y campus universitario",
     "citaAPA": "(IDE Chile / SNIT, 2024; SII, 2023)"
   },
   {
@@ -1363,7 +1363,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "MINVU / Dirección de Obras Municipales",
     "ideChile": "Catastro Habitacional Urbano (MINVU / IDE Chile)",
-    "aplicacionUAH": "Inmuebles residenciales en calles Maturana, Brasil y Huérfanos",
+    "aplicacionLocal": "Inmuebles residenciales en calles Maturana, Brasil y Huérfanos",
     "citaAPA": "(MINVU, 2020; INE, 2017)"
   },
   {
@@ -1373,7 +1373,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "Dirección de Obras Municipales / MINVU",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Torres de departamentos en eje Alameda, San Pablo y Manuel Rodríguez",
+    "aplicacionLocal": "Torres de departamentos en eje Alameda, San Pablo y Manuel Rodríguez",
     "citaAPA": "(MINVU, 2020; Hidalgo, 2005)"
   },
   {
@@ -1383,7 +1383,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "Dirección de Obras Municipales (DOM) / INE",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Casas tradicionales de 1 y 2 pisos en pasajes interiores de Barrio Brasil",
+    "aplicacionLocal": "Casas tradicionales de 1 y 2 pisos en pasajes interiores de Barrio Brasil",
     "citaAPA": "(INE, 2017; Municipalidad de Santiago, 2019)"
   },
   {
@@ -1393,7 +1393,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "SERCOTEC / Rentas Municipales",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Galerías comerciales y locales en Av. Brasil y Alameda",
+    "aplicacionLocal": "Galerías comerciales y locales en Av. Brasil y Alameda",
     "citaAPA": "(SERCOTEC, 2022; INE, 2021)"
   },
   {
@@ -1403,7 +1403,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "Dirección de Arquitectura (MOP) / Bienes Nacionales",
     "ideChile": "Infraestructura Pública del Estado (MOP / IDE Chile)",
-    "aplicacionUAH": "Edificios públicos de ministerios y servicios en Santiago Poniente",
+    "aplicacionLocal": "Edificios públicos de ministerios y servicios en Santiago Poniente",
     "citaAPA": "(IDE Chile / SNIT, 2024; MOP, 2022)"
   },
   {
@@ -1413,7 +1413,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "MINEDUC / SLEP Santiago",
     "ideChile": "Establecimientos de Educación Escolar (MINEDUC / IDE Chile)",
-    "aplicacionUAH": "Pabellones del Liceo Amunátegui y Escuela República de Panamá",
+    "aplicacionLocal": "Pabellones del Liceo Amunátegui y Escuela República de Panamá",
     "citaAPA": "(MINEDUC, 2023; IDE Chile / SNIT, 2024)"
   },
   {
@@ -1423,8 +1423,8 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "MINEDUC / CRUCH",
     "ideChile": "Establecimientos de Educación Superior (MINEDUC / IDE Chile)",
-    "aplicacionUAH": "Pabellones y casonas académicas del campus UAH (Barroso / Erasmo Escala)",
-    "citaAPA": "(MINEDUC, 2023; UAH, 2023)"
+    "aplicacionLocal": "Pabellones y casonas académicas del campus universitario (Barroso / Erasmo Escala)",
+    "citaAPA": "(MINEDUC, 2023; Atlas VGI, 2023)"
   },
   {
     "tag": "building=church",
@@ -1433,7 +1433,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "Consejo de Monumentos Nacionales / Arzobispado",
     "ideChile": "Inmuebles Religiosos y Templos Catastrados (CMN / IDE Chile)",
-    "aplicacionUAH": "Basílica del Salvador e Iglesia San Lázaro en el entorno barrial",
+    "aplicacionLocal": "Basílica del Salvador e Iglesia San Lázaro en el entorno barrial",
     "citaAPA": "(CMN & MINCAP, 2022; Ley N° 17.288)"
   },
   {
@@ -1443,7 +1443,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "Dirección de Obras Municipales / MINVU",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Catastro de alturas para análisis morfológico y rasantes en Barrio Brasil",
+    "aplicacionLocal": "Catastro de alturas para análisis morfológico y rasantes en Barrio Brasil",
     "citaAPA": "(MINVU, 2020; Municipalidad de Santiago, 2019)"
   },
   {
@@ -1453,7 +1453,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "MINVU / Secretaría Técnica PRC Municipal",
     "ideChile": "Zonificación Planes Reguladores Comunales (MINVU / IDE Chile)",
-    "aplicacionUAH": "Manzanas de uso predominantemente habitacional de la Zona Típica",
+    "aplicacionLocal": "Manzanas de uso predominantemente habitacional de la Zona Típica",
     "citaAPA": "(MINVU, 2017; IDE Chile / SNIT, 2024)"
   },
   {
@@ -1463,7 +1463,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "MINVU / Secretaría Técnica PRC Municipal",
     "ideChile": "Zonificación Planes Reguladores Comunales (MINVU / IDE Chile)",
-    "aplicacionUAH": "Corredores comerciales en Av. Brasil, Huérfanos y Alameda Poniente",
+    "aplicacionLocal": "Corredores comerciales en Av. Brasil, Huérfanos y Alameda Poniente",
     "citaAPA": "(MINVU, 2017; IDE Chile / SNIT, 2024)"
   },
   {
@@ -1473,7 +1473,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "MINVU / MINEDUC",
     "ideChile": "Zonificación de Equipamiento Educacional (MINVU / IDE Chile)",
-    "aplicacionUAH": "Polígono del Campus Universitario Universidad Alberto Hurtado",
+    "aplicacionLocal": "Polígono del Campus Universitario Nodo GeoAbierto",
     "citaAPA": "(MINVU, 2017; MINEDUC, 2023)"
   },
   {
@@ -1483,7 +1483,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "Instituto Nacional de Deportes (IND) / MINVU",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Canchas comunitarias y áreas recreativas exteriores en Barrio Brasil",
+    "aplicacionLocal": "Canchas comunitarias y áreas recreativas exteriores en Barrio Brasil",
     "citaAPA": "(IND Chile, 2021; MINVU, 2021)"
   },
   {
@@ -1493,7 +1493,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "Dirección de Obras Municipales / CChC",
     "ideChile": "Sin capa homóloga en IDE Chile (Dato VGI / Brecha de información oficial)",
-    "aplicacionUAH": "Sitios en demolición, remodelación o edificación de nuevas obras",
+    "aplicacionLocal": "Sitios en demolición, remodelación o edificación de nuevas obras",
     "citaAPA": "(MINVU, 2020)"
   },
   {
@@ -1503,7 +1503,7 @@ const ModuloDiccionario = (() => {
     "grupo": "edificaciones_suelo",
     "institucion": "Dirección de Vialidad (MOP) / SERVIU Metropolitano",
     "ideChile": "Red Vial Pavimentada (Dirección de Vialidad - MOP / IDE Chile)",
-    "aplicacionUAH": "Calzadas vehiculares principales de Av. Brasil, Alameda y Ricardo Cumming",
+    "aplicacionLocal": "Calzadas vehiculares principales de Av. Brasil, Alameda y Ricardo Cumming",
     "citaAPA": "(Dirección de Vialidad & MOP, 2022; IDE Chile / SNIT, 2024)"
   }
 ];
@@ -1514,7 +1514,7 @@ const ModuloDiccionario = (() => {
       id_manual: 'manual-cat-01',
       nombre: 'Educación y Universidad',
       icono: '🏫',
-      resumen: 'Campus universitario UAH (Almirante Barroso, Erasmo Escala), facultades, institutos, colegios, liceos y bibliotecas.',
+      resumen: 'Campus universitario patrimonial (Almirante Barroso, Erasmo Escala), facultades, institutos, colegios, liceos y bibliotecas.',
       filtro_grupo: 'educacion_servicios'
     },
     {
@@ -1538,7 +1538,7 @@ const ModuloDiccionario = (() => {
       id_manual: 'manual-cat-04',
       nombre: 'Movilidad Activa y Ciclovías',
       icono: '🚲',
-      resumen: 'Ciclovías segregadas Rosas y Brasil, ciclobandas, biciestacionamientos públicos y campus UAH, y talleres comunitarios.',
+      resumen: 'Ciclovías segregadas Rosas y Brasil, ciclobandas, biciestacionamientos públicos y campus universitario, y talleres comunitarios.',
       filtro_grupo: 'movilidad'
     },
     {
@@ -1554,7 +1554,7 @@ const ModuloDiccionario = (() => {
       id_manual: 'manual-cat-06',
       nombre: 'Patrimonio Histórico y Cultura',
       icono: '🏛',
-      resumen: 'Zona Típica Barrio Brasil, Inmuebles de Conservación Histórica (ICH), Basílica del Salvador, Casonas UAH y museos.',
+      resumen: 'Zona Típica Barrio Brasil, Inmuebles de Conservación Histórica (ICH), Basílica del Salvador, Casonas patrimoniales y museos.',
       filtro_grupo: 'patrimonio_verde'
     },
     {
@@ -1711,7 +1711,7 @@ const ModuloDiccionario = (() => {
     );
 
     const etiquetasFiltradas = ETIQUETAS_TERRITORIALES_OSM.filter(e => {
-      const coincideTexto = !texto || e.tag.toLowerCase().includes(texto) || e.significado.toLowerCase().includes(texto) || e.aplicacionUAH.toLowerCase().includes(texto) || e.categoria.toLowerCase().includes(texto) || (e.institucion && e.institucion.toLowerCase().includes(texto)) || (e.ideChile && e.ideChile.toLowerCase().includes(texto)) || (e.citaAPA && e.citaAPA.toLowerCase().includes(texto));
+      const coincideTexto = !texto || e.tag.toLowerCase().includes(texto) || e.significado.toLowerCase().includes(texto) || e.aplicacionLocal.toLowerCase().includes(texto) || e.categoria.toLowerCase().includes(texto) || (e.institucion && e.institucion.toLowerCase().includes(texto)) || (e.ideChile && e.ideChile.toLowerCase().includes(texto)) || (e.citaAPA && e.citaAPA.toLowerCase().includes(texto));
       
       let coincideGrupo = false;
       if (filtroGrupo === 'todos') coincideGrupo = true;
@@ -1842,7 +1842,7 @@ const ModuloDiccionario = (() => {
           </td>
           <td>
             <strong style="color:#ffffff;">${e.significado}</strong>
-            ${e.aplicacionUAH ? `<div style="font-size:0.8rem; color:var(--tinta-suave); margin-top:3px; line-height:1.45;">Ejemplo local: ${e.aplicacionUAH}</div>` : ''}
+            ${e.aplicacionLocal ? `<div style="font-size:0.8rem; color:var(--tinta-suave); margin-top:3px; line-height:1.45;">Ejemplo local: ${e.aplicacionLocal}</div>` : ''}
           </td>
           <td>
             <button type="button" class="dicc-tag-cat-link" onclick="ModuloDiccionario.irACategoriaManual('${e.categoria}')" title="Ver ficha en el Manual de uso">

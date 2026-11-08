@@ -18,7 +18,7 @@ El Atlas de Información Geográfica Voluntaria (VGI) constituye una plataforma 
 ```mermaid
 flowchart LR
     subgraph IN["1. INPUT / ENTRADA (Selección del Usuario en Interfaz)"]
-        U1["Selección de Encuadre Territorial<br/>Barrio Brasil (223,75 ha) | Manzana UAH (136,10 ha)<br/>o Dibujo Libre de caja delimitadora (EPSG:32719)"]
+        U1["Selección de Encuadre Territorial<br/>Barrio Brasil (223,75 ha) | Sector Patrimonial (136,10 ha)<br/>o Dibujo Libre de caja delimitadora (EPSG:32719)"]
         U2["Activación de Capas en el Visor<br/>10 Categorías VGI + 124 Capas Oficiales<br/>o Importación Local (.geojson/.kml/.kmz/.gpx/.csv)"]
         U3["Consultas Especializadas por Módulo<br/>Overpass QL (02) | GBIF (03) | guiones visuales (05)<br/>Calidad WLC/ohsome (06) | Metadatos/Diccionario (08-09)"]
     end
@@ -87,7 +87,7 @@ flowchart LR
 ```
 
 #### Funciones clave del módulo 01:
-* Encuadre Territorial y Medición Geodésica (`EPSG:32719`): Los botones superiores permiten centrar la vista en el Barrio Brasil Completo (`223,75 ha`), el cuadrante Manzana UAH (`136,10 ha`) o trazar un rectángulo personalizado mediante  Dibujar Bbox. El módulo `src/js/modulos/geodesia.js` transforma los vértices de `EPSG:4326` a `EPSG:32719` (UTM Huso 19 Sur) aplicando las ecuaciones de Redfearn y calcula la superficie exacta en metros cuadrados (`m²`) y hectáreas (`ha`).
+* Encuadre Territorial y Medición Geodésica (`EPSG:32719`): Los botones superiores permiten centrar la vista en el Barrio Brasil Completo (`223,75 ha`), el cuadrante Sector Patrimonial (`136,10 ha`) o trazar un rectángulo personalizado mediante  Dibujar Bbox. El módulo `src/js/modulos/geodesia.js` transforma los vértices de `EPSG:4326` a `EPSG:32719` (UTM Huso 19 Sur) aplicando las ecuaciones de Redfearn y calcula la superficie exacta en metros cuadrados (`m²`) y hectáreas (`ha`).
 * Subpanel ` Capas IDE` (`124 Coberturas Oficiales`): Organiza las 124 coberturas estatales en acordeones temáticos con buscador en tiempo real. Para mantener una adecuada legibilidad visual, se recomienda superponer simultáneamente entre 2 y 4 coberturas (por ejemplo, una capa de zonificación poligonal, una red lineal de movilidad y una capa puntual de equipamientos).
 * Subpanel ` Métricas` (ICV Dinámico en Tiempo Real): Cada vez que se activa o desactiva una cobertura, la función `actualizarTelemetriaCapasActivas()` recalcula tres indicadores sobre el conjunto de entidades visibles:
   1. Completitud Espacial (`%`): Proporción de entidades con geometría válida y atributos principales poblados (`nombre`, `tipo`, `categoria`).

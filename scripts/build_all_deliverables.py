@@ -608,7 +608,7 @@ def build_07():
         ["md-linaje", "gmd:statement", "Condicional", "Extraído de OpenStreetMap vía Overpass API QL y GBIF. Normalizado a EPSG:32719.", "Historial de procesamiento, captura y transformaciones."],
         ["md-restricciones", "gmd:useLimitation", "Mandatorio", "Open Database License (ODbL 1.0) para OSM; CC-BY 4.0 para GBIF; Ley 20.285 para IDE Chile.", "Declaración de licencias abiertas y derechos de uso."],
         ["md-contacto-org", "gmd:organisationName", "Mandatorio", "Práctica Profesional Geografía 2026 — Universidad Alberto Hurtado", "Organización responsable del dataset."],
-        ["md-contacto-correo", "gmd:electronicMailAddress", "Mandatorio", "juanpablolescanovillegas@gmail.com", "Correo electrónico de contacto institucional."]
+        ["md-contacto-correo", "gmd:electronicMailAddress", "Mandatorio", "tucorreoelectronico@gmail.com", "Correo electrónico de contacto institucional."]
     ]
     add_styled_table(doc, headers_m, rows_m, oe_tag="OE 2")
     

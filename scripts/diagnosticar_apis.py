@@ -16,7 +16,7 @@ def test_endpoint(categoria, nombre, metodo, url, **kwargs):
     try:
         headers = kwargs.pop('headers', {})
         if 'User-Agent' not in headers:
-            headers['User-Agent'] = 'AtlasVGI-UAH/2026 (diagnostico territorial; contacto: juanpablolescanovillegas@gmail.com)'
+            headers['User-Agent'] = 'AtlasVGI-UAH/2026 (diagnostico territorial; contacto: tucorreoelectronico@gmail.com)'
         
         if metodo == 'GET':
             resp = requests.get(url, headers=headers, timeout=12, **kwargs)
