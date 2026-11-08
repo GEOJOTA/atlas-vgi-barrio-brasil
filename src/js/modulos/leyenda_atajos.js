@@ -176,13 +176,22 @@ const ModuloAtajosLeyenda = (() => {
             <span class="badge-modulo-leyenda" id="leyenda-badge-modulo">Módulo</span>
             <h4 class="titulo-modulo-leyenda" id="leyenda-titulo-modulo">Apartados</h4>
           </div>
-          <button type="button" 
-                  id="btn-cerrar-leyenda-atajos" 
-                  class="btn-cerrar-leyenda-atajos" 
-                  title="Cerrar panel de apartados (X)"
-                  aria-label="Cerrar panel de apartados">
-            ✕
-          </button>
+          <div class="controles-cabecera-leyenda">
+            <button type="button" 
+                    id="btn-minimizar-leyenda-atajos" 
+                    class="btn-min-leyenda" 
+                    title="Minimizar panel de apartados"
+                    aria-label="Minimizar panel de apartados">
+              ─
+            </button>
+            <button type="button" 
+                    id="btn-cerrar-leyenda-atajos" 
+                    class="btn-cerrar-leyenda-atajos" 
+                    title="Cerrar panel de apartados (Esc)"
+                    aria-label="Cerrar panel de apartados">
+              ✕
+            </button>
+          </div>
         </div>
 
         <nav class="lista-atajos-modulo" id="lista-atajos-modulo" aria-label="Navegación interna del módulo">
@@ -204,6 +213,7 @@ const ModuloAtajosLeyenda = (() => {
     document.body.appendChild(contenedor);
 
     const btnToggle = document.getElementById('btn-toggle-leyenda-atajos');
+    const btnMinimizar = document.getElementById('btn-minimizar-leyenda-atajos');
     const btnCerrar = document.getElementById('btn-cerrar-leyenda-atajos');
     const btnArriba = document.getElementById('btn-volver-arriba-modulo');
 
@@ -212,6 +222,14 @@ const ModuloAtajosLeyenda = (() => {
         e.preventDefault();
         e.stopPropagation();
         setColapsado(false);
+      });
+    }
+
+    if (btnMinimizar) {
+      btnMinimizar.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setColapsado(true);
       });
     }
 
@@ -231,12 +249,25 @@ const ModuloAtajosLeyenda = (() => {
       });
     }
 
-    // En pantallas pequeñas (< 1024px), cerrar si se hace clic fuera del widget
+    // En todos los dispositivos, si se hace clic fuera del widget se colapsa automáticamente
+    // para no tapar los formularios, tablas o mapas del módulo específico.
     document.addEventListener('click', (e) => {
-      if (window.innerWidth <= 1024 && !colapsado) {
-        if (!contenedor.contains(e.target)) {
-          setColapsado(true);
-        }
+      if (!colapsado && contenedor && !contenedor.contains(e.target)) {
+        setColapsado(true);
+      }
+    });
+
+    // Permitir colapsar con la tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !colapsado) {
+        setColapsado(true);
+      }
+    });
+
+    // Auto-colapso al redimensionar si la pantalla es reducida
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 1360 && !colapsado) {
+        setColapsado(true);
       }
     });
 
@@ -303,8 +334,9 @@ const ModuloAtajosLeyenda = (() => {
       return;
     }
 
-    // En móviles/tablets, cerrar al seleccionar apartado para ver el contenido
-    if (window.innerWidth <= 1024) {
+    // Al seleccionar un apartado, si la pantalla no es ultra-ancha (< 1440px),
+    // colapsar para despejar completamente la visualización del módulo de destino
+    if (window.innerWidth < 1440) {
       setColapsado(true);
     }
 
@@ -473,8 +505,19 @@ const ModuloAtajosLeyenda = (() => {
   function inicializar() {
     asegurarContenedorDOM();
 
-    // Requisito expreso del usuario: la leyenda siempre se despliega al abrir la página
-    setColapsado(false);
+    // Adaptación dinámica por dispositivo y resolución:
+    // En pantallas de laptops, tablets y móviles (< 1360px) inicia colapsado para nunca tapar los módulos específicos.
+    // En pantallas de escritorio amplias (>= 1360px), respeta preferencia guardada o inicia visible.
+    const pantallaPequena = window.innerWidth < 1360;
+    const prefGuardada = localStorage.getItem('atlas_leyenda_atajos_colapsada');
+
+    if (pantallaPequena) {
+      setColapsado(true);
+    } else if (prefGuardada !== null) {
+      setColapsado(prefGuardada === '1');
+    } else {
+      setColapsado(false);
+    }
 
     const panelActivoEl = document.querySelector('.panel.activo');
     const panelIdInicial = panelActivoEl ? panelActivoEl.id.replace('panel-', '') : 'inicio';
@@ -483,6 +526,10 @@ const ModuloAtajosLeyenda = (() => {
 
   function actualizar(panelId) {
     const modKey = normalizarIdModulo(panelId);
+    // En pantallas medianas y reducidas (< 1360px), asegurar que al cambiar de módulo no tape el contenido del nuevo módulo
+    if (window.innerWidth < 1360) {
+      setColapsado(true);
+    }
     renderizarAtajosModulo(modKey);
   }
 

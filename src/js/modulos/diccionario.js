@@ -1967,7 +1967,7 @@ const ModuloDiccionario = (() => {
             ${CATEGORIAS_MAESTRAS.map(cat => `
               <li>
                 <button type="button" class="btn-ancla-indice ${texto === cat.codigo.toLowerCase() ? 'activo' : ''}" onclick="ModuloDiccionario.cambiarSeccionDiccionario('descriptores'); ModuloDiccionario.filtrarPorCodigo('${cat.codigo}')">
-                  <span>${cat.codigo}: ${cat.nombre.split(' ')[0]}</span>
+                  <span>${cat.codigo}: ${cat.nombre}</span>
                 </button>
               </li>
             `).join('')}
