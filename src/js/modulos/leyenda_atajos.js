@@ -14,12 +14,12 @@
 const ModuloAtajosLeyenda = (() => {
   'use strict';
 
-  // Configuración de apartados por módulo (sin iconos, títulos claros)
+  // Configuración de apartados por módulo alineada con las 5 tareas de navegación
   const CONFIG_MODULOS = {
     'inicio': {
       id: 'inicio',
       nombre: 'Visor cartográfico',
-      badge: 'Módulo 01',
+      badge: 'Explorar mapa',
       apartados: [
         { id: 'sec-inicio-hero', titulo: 'Propósito y resumen', abajo: false },
         { id: 'mapa-atlas', titulo: 'Visor cartográfico', abajo: false },
@@ -32,7 +32,7 @@ const ModuloAtajosLeyenda = (() => {
     'explorador-osm': {
       id: 'explorador-osm',
       nombre: 'Consultas en OpenStreetMap',
-      badge: 'Módulo 02',
+      badge: 'Consultar datos',
       apartados: [
         { id: 'sec-osm-cabecera', titulo: 'Guía y alcance técnico', abajo: false },
         { id: 'sec-osm-geodatabase-rm', titulo: 'Consultas Geofabrik RM (local)', abajo: false },
@@ -44,7 +44,7 @@ const ModuloAtajosLeyenda = (() => {
     'biodiversidad-gbif': {
       id: 'biodiversidad-gbif',
       nombre: 'Biodiversidad urbana (GBIF)',
-      badge: 'Módulo 03',
+      badge: 'Consultar datos',
       apartados: [
         { id: 'sec-gbif-cabecera', titulo: 'Marco de ciencia ciudadana', abajo: false },
         { id: 'sec-gbif-busqueda', titulo: 'Búsqueda taxonómica inteligente', abajo: false },
@@ -56,7 +56,7 @@ const ModuloAtajosLeyenda = (() => {
     'proyectos-umap': {
       id: 'proyectos-umap',
       nombre: 'Mapas comunitarios (uMap)',
-      badge: 'Módulo 04',
+      badge: 'Consultar datos',
       apartados: [
         { id: 'sec-umap-cabecera', titulo: 'Cartografía social y participativa', abajo: false },
         { id: 'sec-umap-selector', titulo: 'Catálogo de mapas colaborativos', abajo: false },
@@ -67,7 +67,7 @@ const ModuloAtajosLeyenda = (() => {
     'indicadores': {
       id: 'indicadores',
       nombre: 'Indicadores y relatos',
-      badge: 'Módulo 05',
+      badge: 'Análisis y relatos',
       apartados: [
         { id: 'sec-ind-cabecera', titulo: 'Marco analítico multidimensional', abajo: false },
         { id: 'sec-ind-dimensiones', titulo: '5 dimensiones territoriales', abajo: false },
@@ -77,8 +77,8 @@ const ModuloAtajosLeyenda = (() => {
     },
     'calidad-ohsome': {
       id: 'calidad-ohsome',
-      nombre: 'Evaluación de calidad (ISO 19157)',
-      badge: 'Módulo 06',
+      nombre: 'Calidad espacial (ISO 19157)',
+      badge: 'Evaluar calidad',
       apartados: [
         { id: 'sec-calidad-cabecera', titulo: 'Marco de calidad cartográfica', abajo: false },
         { id: 'sec-calidad-evaluador', titulo: 'Evaluador de capas (IGV)', abajo: false },
@@ -88,8 +88,8 @@ const ModuloAtajosLeyenda = (() => {
     },
     'manual': {
       id: 'manual',
-      nombre: 'Manual metodológico',
-      badge: 'Módulo 07',
+      nombre: 'Manual de uso',
+      badge: 'Documentación y descargas',
       apartados: [
         { id: 'sec-manual-cabecera', titulo: 'Introducción y arquitectura', abajo: false },
         { id: 'buscador-general-manual', titulo: 'Buscador de capítulos', abajo: false },
@@ -99,8 +99,8 @@ const ModuloAtajosLeyenda = (() => {
     },
     'metadatos-iso': {
       id: 'metadatos-iso',
-      nombre: 'Catálogo y metadatos (ISO 19115)',
-      badge: 'Módulo 08',
+      nombre: 'Catálogo y generador de metadatos',
+      badge: 'Evaluar calidad',
       apartados: [
         { id: 'sec-meta-cabecera', titulo: 'Marco de metadatos espaciales', abajo: false },
         { id: 'sec-meta-calidad-general', titulo: 'Calidad general (133 capas)', abajo: false },
@@ -111,8 +111,8 @@ const ModuloAtajosLeyenda = (() => {
     },
     'diccionario': {
       id: 'diccionario',
-      nombre: 'Diccionario de datos',
-      badge: 'Módulo 09',
+      nombre: 'Diccionario de datos (133 capas)',
+      badge: 'Documentación y descargas',
       apartados: [
         { id: 'sec-dicc-cabecera', titulo: 'Marco del diccionario territorial', abajo: false },
         { id: 'dicc-sec-esquema', titulo: 'Esquema de 17 atributos canónicos', abajo: false },
@@ -123,7 +123,7 @@ const ModuloAtajosLeyenda = (() => {
     'licencias': {
       id: 'licencias',
       nombre: 'Licencias y descargas',
-      badge: 'Módulo 10',
+      badge: 'Documentación y descargas',
       apartados: [
         { id: 'sec-lic-cabecera', titulo: 'Marco jurídico y reciprocidad', abajo: false },
         { id: 'sec-lic-descargas-maestras', titulo: 'Descarga de geodatabase completa (ZIP)', abajo: false },
@@ -264,9 +264,9 @@ const ModuloAtajosLeyenda = (() => {
       }
     });
 
-    // Auto-colapso al redimensionar si la pantalla es reducida
+    // Auto-colapso al redimensionar solo en pantallas móviles
     window.addEventListener('resize', () => {
-      if (window.innerWidth < 1360 && !colapsado) {
+      if (window.innerWidth <= 768 && !colapsado) {
         setColapsado(true);
       }
     });
@@ -334,9 +334,9 @@ const ModuloAtajosLeyenda = (() => {
       return;
     }
 
-    // Al seleccionar un apartado, si la pantalla no es ultra-ancha (< 1440px),
-    // colapsar para despejar completamente la visualización del módulo de destino
-    if (window.innerWidth < 1440) {
+    // Solo en dispositivos móviles pequeños (<= 768px) colapsar al seleccionar apartado.
+    // En escritorio/laptop no forzar colapso (haciendo un poco de scroll el apartado no obstruye)
+    if (window.innerWidth <= 768) {
       setColapsado(true);
     }
 
@@ -506,9 +506,9 @@ const ModuloAtajosLeyenda = (() => {
     asegurarContenedorDOM();
 
     // Adaptación dinámica por dispositivo y resolución:
-    // En pantallas de laptops, tablets y móviles (< 1360px) inicia colapsado para nunca tapar los módulos específicos.
-    // En pantallas de escritorio amplias (>= 1360px), respeta preferencia guardada o inicia visible.
-    const pantallaPequena = window.innerWidth < 1360;
+    // En móviles y tablets (< 1024px) inicia colapsado para nunca tapar los módulos específicos.
+    // En pantallas de escritorio y laptops (>= 1024px), respeta preferencia guardada o inicia visible.
+    const pantallaPequena = window.innerWidth < 1024;
     const prefGuardada = localStorage.getItem('atlas_leyenda_atajos_colapsada');
 
     if (pantallaPequena) {
@@ -526,10 +526,7 @@ const ModuloAtajosLeyenda = (() => {
 
   function actualizar(panelId) {
     const modKey = normalizarIdModulo(panelId);
-    // En pantallas medianas y reducidas (< 1360px), asegurar que al cambiar de módulo no tape el contenido del nuevo módulo
-    if (window.innerWidth < 1360) {
-      setColapsado(true);
-    }
+    // Mantener la coherencia del estado visual (no forzar colapso ni movimientos bruscos al cambiar de pestaña)
     renderizarAtajosModulo(modKey);
   }
 

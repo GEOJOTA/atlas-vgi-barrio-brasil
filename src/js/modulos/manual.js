@@ -132,7 +132,7 @@ const ModuloManual = (() => {
             <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3); border-radius:10px; padding:14px;">
               <div style="font-size:1.35rem; font-weight:800; color:#fbbf24;">IGV: 95,4 % | IGMC: 96,55 %</div>
               <div style="font-size:0.85rem; color:var(--tinta-suave); margin-top:4px;">
-                <strong>IGV (95,4 %):</strong> promedio multicriterio de calidad espacial ISO 19157 de las 133 capas (90 A+ y 43 A). <strong>IGMC (96,55 %):</strong> cumplimiento de campos obligatorios de metadatos ISO 19115 en el Módulo 08.
+                <strong>IGV (95,4 %):</strong> promedio multicriterio de calidad espacial ISO 19157 de las 133 capas (90 A+ y 43 A). <strong>IGMC (96,55 %):</strong> cumplimiento de campos obligatorios en Catálogo y generador de metadatos (ISO 19115 / Evaluar calidad).
               </div>
             </div>
             <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:10px; padding:14px;">
@@ -266,29 +266,29 @@ const ModuloManual = (() => {
 
             <div style="background:rgba(15,23,42,0.6); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
-                <span style="font-size:0.74rem; font-weight:800; color:#fbbf24;">MÓDULO 08</span>
-                <h4 style="margin:4px 0 6px 0;">Metadatos ISO 19115</h4>
+                <span style="font-size:0.74rem; font-weight:800; color:#fbbf24;">EVALUAR CALIDAD</span>
+                <h4 style="margin:4px 0 6px 0;">Catálogo y generador de metadatos (ISO 19115)</h4>
                 <p style="font-size:0.84rem; color:var(--tinta-suave); line-height:1.55;">Estructuración y exportación de fichas de metadatos en JSON y XML (ISO 19139) conforme al Perfil Nacional de IDE Chile.</p>
               </div>
-              <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('metadatos-iso')" style="margin-top:10px; font-size:0.8rem;">Abrir Módulo 08 ↗</button>
+              <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('metadatos-iso')" style="margin-top:10px; font-size:0.8rem;">Abrir Catálogo y generador de metadatos ↗</button>
             </div>
 
             <div style="background:rgba(15,23,42,0.6); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
-                <span style="font-size:0.74rem; font-weight:800; color:#fbbf24;">MÓDULO 09</span>
-                <h4 style="margin:4px 0 6px 0;">Diccionario (133 Capas / 140 Descriptores)</h4>
+                <span style="font-size:0.74rem; font-weight:800; color:#fbbf24;">DOCUMENTACIÓN Y DESCARGAS</span>
+                <h4 style="margin:4px 0 6px 0;">Diccionario de datos (133 Capas / 140 Descriptores)</h4>
                 <p style="font-size:0.84rem; color:var(--tinta-suave); line-height:1.55;">Catálogo de objetos y atributos (ISO 19110), homologación semántica con IDE Chile e identificación de brechas de información VGI.</p>
               </div>
-              <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('diccionario')" style="margin-top:10px; font-size:0.8rem;">Abrir Módulo 09 ↗</button>
+              <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('diccionario')" style="margin-top:10px; font-size:0.8rem;">Abrir Diccionario de datos ↗</button>
             </div>
 
             <div style="background:rgba(15,23,42,0.6); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
-                <span style="font-size:0.74rem; font-weight:800; color:#c084fc;">MÓDULO 10</span>
-                <h4 style="margin:4px 0 6px 0;">Licencias &amp; Catálogos (.xlsx)</h4>
+                <span style="font-size:0.74rem; font-weight:800; color:#c084fc;">DOCUMENTACIÓN Y DESCARGAS</span>
+                <h4 style="margin:4px 0 6px 0;">Licencias y descargas (.xlsx / ZIP)</h4>
                 <p style="font-size:0.84rem; color:var(--tinta-suave); line-height:1.55;">Marco jurídico de datos abiertos (ODbL 1.0, CC BY-SA 4.0, Ley N° 20.285, Ley N° 19.628) y catálogos tabulares consolidados.</p>
               </div>
-              <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('licencias')" style="margin-top:10px; font-size:0.8rem;">Abrir Módulo 09/10 ↗</button>
+              <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('licencias')" style="margin-top:10px; font-size:0.8rem;">Abrir Licencias y descargas ↗</button>
             </div>
           </div>
         `

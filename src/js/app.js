@@ -1113,7 +1113,7 @@ const METADATOS_PANELES_NAVEGACION = {
   'proyectos-umap':     { grupo: 'consultar',     grupoNombre: 'Consultar datos',            vistaNombre: 'Mapas comunitarios (uMap)' },
   'indicadores':        { grupo: 'analisis',      grupoNombre: 'Análisis y relatos',         vistaNombre: 'Indicadores y relatos (83 mapas)' },
   'calidad-ohsome':     { grupo: 'calidad',       grupoNombre: 'Evaluar calidad',            vistaNombre: 'Calidad espacial (ISO 19157)' },
-  'metadatos-iso':      { grupo: 'calidad',       grupoNombre: 'Evaluar calidad',            vistaNombre: 'Metadatos (ISO 19115)' },
+  'metadatos-iso':      { grupo: 'calidad',       grupoNombre: 'Evaluar calidad',            vistaNombre: 'Catálogo y generador de metadatos' },
   'diccionario':        { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Diccionario de datos (133 capas)' },
   'manual':             { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Manual de uso' },
   'licencias':          { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Licencias y descargas' }
@@ -1248,6 +1248,9 @@ function configurarNavegacion() {
       '08': 'metadatos-iso',
       '8': 'metadatos-iso',
       'metadatos': 'metadatos-iso',
+      'metadatos-iso': 'metadatos-iso',
+      'catalogo-metadatos': 'metadatos-iso',
+      'generador-metadatos': 'metadatos-iso',
 
       '09': 'diccionario',
       '9': 'diccionario',

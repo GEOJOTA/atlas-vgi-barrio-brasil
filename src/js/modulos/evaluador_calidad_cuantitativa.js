@@ -2188,8 +2188,8 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
               </div>
 
               <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
-                <button type="button" class="accion" id="btn-ir-a-modulo-05-metadatos" data-panel="metadatos-iso" style="background:#38bdf8; color:#0f172a; font-weight:700; font-size:0.78rem; padding:8px 14px; border-radius:6px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
-                  <span>🏛️</span> Abrir Generador de Metadatos ISO 19115 (Módulo 05)
+                <button type="button" class="accion" id="btn-ir-a-metadatos-calidad" data-panel="metadatos-iso" onclick="if(window.activarPanel) window.activarPanel('metadatos-iso');" style="background:#38bdf8; color:#0f172a; font-weight:700; font-size:0.78rem; padding:8px 14px; border-radius:6px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:6px;" title="Ir al Catálogo y generador de metadatos dentro de Evaluar calidad">
+                  <span>🏛️</span> Abrir Catálogo y generador de metadatos (Evaluar calidad)
                 </button>
                 <button type="button" class="accion secundaria" id="btn-copiar-plantilla-metadatos" style="font-size:0.78rem; padding:8px 14px; background:rgba(56, 189, 248, 0.12); color:#38bdf8; border:1px solid #38bdf8; font-weight:700; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
                   <span>📋</span> Copiar Plantilla de Metadatos GeoJSON
@@ -2339,23 +2339,23 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
       });
     }
 
-    const btnIrModulo05 = document.getElementById('btn-ir-a-modulo-05-metadatos');
-    if (btnIrModulo05) {
-      btnIrModulo05.addEventListener('click', (e) => {
+    const btnIrMetadatos = document.getElementById('btn-ir-a-metadatos-calidad') || document.getElementById('btn-ir-a-modulo-05-metadatos');
+    if (btnIrMetadatos) {
+      btnIrMetadatos.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        // 1. Redireccionar al panel del Módulo 05
-        if (typeof window.navegarAModulo === 'function') {
-          window.navegarAModulo('05');
-        } else if (typeof window.activarPanel === 'function') {
+        // 1. Redireccionar directamente a Catálogo y generador de metadatos dentro de Evaluar calidad
+        if (typeof window.activarPanel === 'function') {
           window.activarPanel('metadatos-iso');
+        } else if (typeof window.navegarAModulo === 'function') {
+          window.navegarAModulo('metadatos-iso');
         } else {
           const btnNav = document.querySelector('button[data-panel="metadatos-iso"]');
           if (btnNav) btnNav.click();
         }
 
-        // 2. Prellenar datos en Módulo 05 a partir del dataset evaluado
+        // 2. Prellenar datos en Catálogo y generador de metadatos a partir del dataset evaluado
         try {
           const inpTitulo = document.getElementById('md-titulo');
           if (inpTitulo && resultado.nombreCapa) {
@@ -2388,7 +2388,7 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
             formMeta.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
           }
         } catch (err) {
-          console.warn('Error al precargar metadatos en Módulo 05:', err);
+          console.warn('Error al precargar metadatos en Catálogo y generador de metadatos:', err);
         }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });

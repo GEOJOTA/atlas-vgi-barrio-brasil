@@ -1625,7 +1625,6 @@ const ModuloDiccionario = (() => {
     if (input) {
       input.value = codigo;
       input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 
