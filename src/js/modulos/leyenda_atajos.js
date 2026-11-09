@@ -16,139 +16,67 @@ const ModuloAtajosLeyenda = (() => {
 
   // Configuración de apartados por módulo alineada con las 5 tareas de navegación
   const CONFIG_MODULOS = {
-    'inicio': {
-      id: 'inicio',
-      nombre: 'Visor cartográfico',
-      badge: 'Explorar mapa',
-      apartados: [
-        { id: 'sec-inicio-hero', titulo: 'Propósito y resumen', abajo: false },
-        { id: 'mapa-atlas', titulo: 'Visor cartográfico', abajo: false },
-        { id: 'sec-inicio-inspector', titulo: 'Inspector de atributos y calidad', abajo: false },
-        { id: 'consola-capas-gis', titulo: 'Catálogo de 123 capas oficiales', abajo: true },
-        { id: 'seccion-importador-capas', titulo: 'Importador de capas locales', abajo: true },
-        { id: 'sec-inicio-territorio', titulo: 'Ficha territorial de estudio', abajo: true }
-      ]
-    },
-    'explorador-osm': {
-      id: 'explorador-osm',
-      nombre: 'Consultas en OpenStreetMap',
-      badge: 'Explorar mapa',
-      apartados: [
-        { id: 'sec-osm-cabecera', titulo: 'Guía y alcance técnico', abajo: false },
-        { id: 'sec-osm-geodatabase-rm', titulo: 'Consultas Geofabrik RM (local)', abajo: false },
-        { id: 'sec-osm-temas-rapidos', titulo: 'Consultas temáticas (API)', abajo: true },
-        { id: 'sec-osm-constructor-overpass', titulo: 'Constructor Overpass API en vivo', abajo: true },
-        { id: 'resultado-osm', titulo: 'Resultados y descargas', abajo: true }
-      ]
-    },
-    'biodiversidad-gbif': {
-      id: 'biodiversidad-gbif',
-      nombre: 'Biodiversidad urbana (GBIF)',
-      badge: 'Explorar mapa',
-      apartados: [
-        { id: 'sec-gbif-cabecera', titulo: 'Marco de ciencia ciudadana', abajo: false },
-        { id: 'sec-gbif-busqueda', titulo: 'Búsqueda taxonómica inteligente', abajo: false },
-        { id: 'sec-gbif-ambito', titulo: 'Ámbito espacial de consulta', abajo: true },
-        { id: 'sec-gbif-guia', titulo: 'Metodología Darwin Core', abajo: true },
-        { id: 'resultado-gbif', titulo: 'Registros biológicos y descargas', abajo: true }
-      ]
-    },
-    'proyectos-umap': {
-      id: 'proyectos-umap',
-      nombre: 'Mapas comunitarios (uMap)',
-      badge: 'Explorar mapa',
-      apartados: [
-        { id: 'sec-umap-cabecera', titulo: 'Cartografía social y participativa', abajo: false },
-        { id: 'sec-umap-selector', titulo: 'Catálogo de mapas colaborativos', abajo: false },
-        { id: 'sec-umap-guia', titulo: 'Guía de mapeo ciudadano', abajo: true },
-        { id: 'resultado-umap', titulo: 'Visor embebido interactivo', abajo: true }
-      ]
-    },
     'indicadores': {
       id: 'indicadores',
       nombre: 'Análisis territorial',
       badge: 'Análisis',
       apartados: [
-        { id: 'sec-ind-cabecera', titulo: 'Síntesis analítica', abajo: false },
         { id: 'seccion-storyboards', titulo: 'Narrativas espaciales (4 láminas)', abajo: false },
-        { id: 'sec-ind-dimensiones', titulo: 'Dimensiones Analíticas', abajo: true },
-        { id: 'contenedor-acordeon-capas', titulo: 'Métricas e indicadores por dimensión', abajo: true }
+        { id: 'sec-ind-dimensiones', titulo: 'Dimensiones Analíticas', abajo: true }
       ]
     },
-    'calidad-ohsome': {
-      id: 'calidad-ohsome',
-      nombre: 'Calidad espacial (ISO 19157)',
-      badge: 'Documentación',
+    'inicio': {
+      id: 'inicio',
+      nombre: 'Visor cartográfico',
+      badge: 'Explorar mapa',
       apartados: [
-        { id: 'sec-calidad-cabecera', titulo: 'Marco de calidad cartográfica', abajo: false },
-        { id: 'sec-calidad-evaluador', titulo: 'Evaluador de capas (IGV)', abajo: false },
-        { id: 'sec-calidad-ohsome', titulo: 'Evolución histórica (ohsome API)', abajo: true },
-        { id: 'sec-calidad-osmcha', titulo: 'Auditoría de cambios (OSMCha)', abajo: true }
+        { id: 'mapa-atlas', titulo: 'Explorar mapa', abajo: false },
+        { id: 'consola-capas-gis', titulo: 'Explorar capas', abajo: true }
       ]
     },
     'manual': {
       id: 'manual',
-      nombre: 'Manual del sistema',
+      nombre: 'Manual de uso',
       badge: 'Documentación',
       apartados: [
-        { id: 'sec-manual-cabecera', titulo: 'Introducción y arquitectura', abajo: false },
-        { id: 'buscador-general-manual', titulo: 'Buscador de capítulos', abajo: false },
-        { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true },
-        { id: 'cap-uso-04', titulo: 'Inventario de 133 capas', abajo: true }
-      ]
-    },
-    'metadatos-iso': {
-      id: 'metadatos-iso',
-      nombre: 'Catálogo y generador de metadatos',
-      badge: 'Evaluar calidad',
-      apartados: [
-        { id: 'sec-meta-cabecera', titulo: 'Marco de metadatos espaciales', abajo: false },
-        { id: 'sec-meta-calidad-general', titulo: 'Calidad general (133 capas)', abajo: false },
-        { id: 'form-metadatos', titulo: 'Formulario de perfil de metadatos', abajo: true },
-        { id: 'sec-meta-estandar', titulo: 'Especificaciones IDE Chile', abajo: true },
-        { id: 'resultado-metadatos', titulo: 'Generador y exportador XML/JSON', abajo: true }
+        { id: 'sec-manual-cabecera', titulo: 'Introducción al Atlas', abajo: false },
+        { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true }
       ]
     },
     'diccionario': {
       id: 'diccionario',
-      nombre: 'Diccionario de datos (133 capas)',
-      badge: 'Documentación y descargas',
+      nombre: 'Diccionario de descriptores',
+      badge: 'Documentación',
       apartados: [
         { id: 'sec-dicc-cabecera', titulo: 'Marco del diccionario territorial', abajo: false },
-        { id: 'dicc-sec-esquema', titulo: 'Esquema de 17 atributos canónicos', abajo: false },
-        { id: 'contenedor-filtros-diccionario', titulo: 'Buscador y filtro de capas', abajo: true },
-        { id: 'contenido-diccionario', titulo: 'Catálogo detallado de 133 capas', abajo: true }
+        { id: 'contenido-diccionario', titulo: 'Catálogo de descriptores', abajo: true }
       ]
     },
     'licencias': {
       id: 'licencias',
       nombre: 'Licencias y descargas',
-      badge: 'Documentación y descargas',
+      badge: 'Documentación',
       apartados: [
         { id: 'sec-lic-cabecera', titulo: 'Marco jurídico y reciprocidad', abajo: false },
-        { id: 'sec-lic-descargas-maestras', titulo: 'Descarga de geodatabase completa (ZIP)', abajo: false },
-        { id: 'sec-lic-marco-tripartito', titulo: 'Marco tripartito de licencias', abajo: true },
-        { id: 'sec-lic-atribuciones-fuentes', titulo: 'Atribuciones y citas bibliográficas', abajo: true }
+        { id: 'sec-lic-descargas-maestras', titulo: 'Descargas de datos', abajo: false },
+        { id: 'sec-lic-marco-tripartito', titulo: 'Marco de licencias abiertas', abajo: true }
       ]
     }
   };
 
-  let moduloActivo = 'inicio';
+  let moduloActivo = 'indicadores';
   let colapsado = false;
   let observerScrollspy = null;
   let timerThrottle = null;
 
   function normalizarIdModulo(id) {
-    if (!id) return 'inicio';
+    if (!id) return 'indicadores';
     const limpio = String(id).replace(/^panel-/, '').trim().toLowerCase();
     if (CONFIG_MODULOS[limpio]) return limpio;
-    if (limpio === 'visor') return 'inicio';
-    if (limpio === 'osm') return 'explorador-osm';
-    if (limpio === 'gbif') return 'biodiversidad-gbif';
-    if (limpio === 'umap') return 'proyectos-umap';
-    if (limpio === 'calidad') return 'calidad-ohsome';
-    if (limpio === 'metadatos') return 'metadatos-iso';
-    return 'inicio';
+    if (limpio === 'analisis' || limpio === 'relatos') return 'indicadores';
+    if (limpio === 'visor' || limpio === 'explorar' || limpio === 'mapa') return 'inicio';
+    if (limpio === 'documentacion' || limpio === 'doc') return 'manual';
+    return 'indicadores';
   }
 
   function asegurarContenedorDOM() {

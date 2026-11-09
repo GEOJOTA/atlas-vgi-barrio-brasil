@@ -3385,8 +3385,46 @@ table.tabla-datos-institucional td {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 12px;
-  padding: 18px;
+  padding: 12px 18px 18px 18px;
   background: rgba(7, 12, 24, 0.65);
+}
+
+.contenedor-acordeones-dimensiones {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.subseccion-capas-bloque {
+  padding: 14px 18px 8px 18px;
+  background: rgba(10, 18, 36, 0.45);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.subseccion-capas-bloque:last-child {
+  border-bottom: none;
+}
+
+.subseccion-capas-titulo {
+  font-family: var(--fuente-titulos);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subseccion-capas-titulo .badge-subtipo {
+  font-family: var(--fuente-datos);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
 }
 
 .btn-wms-oficial {

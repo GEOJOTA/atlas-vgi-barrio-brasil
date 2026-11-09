@@ -161,14 +161,14 @@ El sistema articula estándares del Open Geospatial Consortium (OGC) y de la Org
 
 | Indicador o componente | Valor verificado | Definición operativa y alcance |
 | :--- | :---: | :--- |
-| Coberturas cartográficas totales | 133 capas | 124 capas oficiales del Estado de Chile + 10 macrocategorías de información geográfica voluntaria (VGI). |
-| Volumen de datos espaciales | 3,33 GB (542,35 MB en ZIP) | 220 archivos GeoJSON en `src/data/` y paquete descargable `docs/geodatabase_completa_atlas_vgi.zip` (257 archivos en 7 subcarpetas). |
-| Descriptores del diccionario de datos | 140 descriptores | Atributos documentados bajo la norma ISO 19110:2016, incluyendo la identificación de 86 brechas temáticas entre catastros públicos y mapeo ciudadano. |
-| Cartografías temáticas e indicadores | 83 cartografías | Distribuidas en 4 narrativas espaciales (*narrativas espaciales*) territoriales y 5 dimensiones de análisis urbano en el Módulo 05. |
-| Índice Global de Calidad VGI (IGV) | 95,4 % (95,41 %) | Promedio multicriterio de calidad espacial (modelo de combinación lineal ponderada, WLC, bajo ISO 19157) evaluado sobre las 133 capas del catálogo (91 en grado A+ y 43 en grado A). |
-| Índice Global de Metacalidad Documental (IGMC) | 96,55 % | Porcentaje de cumplimiento de los campos documentales obligatorios del Perfil Nacional de Metadatos IDE Chile (ISO 19115 / XML ISO 19139) en el generador del Módulo 08. |
+| Coberturas cartográficas totales | 257 capas | 123 capas oficiales del Estado de Chile + 134 coberturas de información geográfica voluntaria (IGV) descentralizadas en GeoJSON independientes. |
+| Volumen de datos espaciales | 3,33 GB (542,35 MB en ZIP) | 257 coberturas espaciales activas en `data/` y `src/data/`, y paquete descargable `docs/geodatabase_completa_atlas_vgi.zip`. |
+| Descriptores del diccionario de datos | 134 descriptores | Atributos documentados bajo la norma ISO 19110:2016 traducidos 100% al español, vinculados a las 134 capas IGV descentralizadas. |
+| Cartografías temáticas e indicadores | 83 cartografías | Distribuidas en 4 narrativas espaciales (*narrativas espaciales*) territoriales y 5 dimensiones de análisis urbano en el Módulo 01. |
+| Índice Global de Calidad VGI (IGV) | 95,4 % (95,41 %) | Promedio multicriterio de calidad espacial (modelo de combinación lineal ponderada, WLC, bajo ISO 19157) evaluado sobre el catálogo espacial. |
+| Índice Global de Metacalidad Documental (IGMC) | 96,55 % | Porcentaje de cumplimiento de los campos documentales obligatorios del Perfil Nacional de Metadatos IDE Chile (ISO 19115 / XML ISO 19139). |
 | Conformidad de accesibilidad web | WCAG 2.1 AA / AAA | Nivel AA general en todos los componentes interactivos (contraste de 4,58:1 a 8,87:1) y nivel AAA en todo el texto de lectura (contraste de 9,43:1 a 19,00:1). |
-| Arquitectura de software | 21 módulos JS y 25 scripts Python | Aplicación web sin compilación previa en `src/js/` y conjunto de scripts de extracción, validación y empaquetado en `scripts/`. |
+| Arquitectura de software | 3 Módulos SPA y scripts Python | Aplicación web en `src/js/` estructurada en 3 módulos funcionales (Análisis, Explorar Mapa, Documentación) y scripts en `scripts/`. |
 
 ### 1.1. Propósito y misión operativa
 El proyecto responde a la necesidad de cubrir los vacíos de información territorial a escala de manzana censal y unidad vecinal que presentan los catastros estatales tradicionales. Mientras las fuentes oficiales suelen registrar rezagos de actualización o agregaciones comunales que ocultan el detalle de la infraestructura peatonal, el comercio local o la red de cités, el mapeo ciudadano aporta datos actualizados a escala barrial.

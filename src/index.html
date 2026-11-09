@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261109_v42">
+  <link rel="stylesheet" href="css/estilos.css?v=20261109_v44">
 </head>
 <body>
 
@@ -82,30 +82,6 @@
       </div>
 
       <nav class="barra-pestanas-profundidad" id="lista-navegacion" aria-label="Vistas de la sección activa">
-        <!-- Vistas Grupo 01: Análisis (activo al inicio) -->
-        <button type="button" class="pestana-nodo activa" data-grupo="analisis" data-panel="indicadores" aria-current="true">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          <span>Narrativas espaciales (83 mapas)</span>
-        </button>
-
-        <!-- Vistas Grupo 02: Explorar mapa -->
-        <button type="button" class="pestana-nodo" data-grupo="explorar" data-panel="inicio" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
-          <span>Visor y catálogo</span>
-        </button>
-        <button type="button" class="pestana-nodo" data-grupo="explorar" data-panel="explorador-osm" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <span>Consultas Overpass (OSM)</span>
-        </button>
-        <button type="button" class="pestana-nodo" data-grupo="explorar" data-panel="biodiversidad-gbif" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-          <span>Biodiversidad (GBIF)</span>
-        </button>
-        <button type="button" class="pestana-nodo" data-grupo="explorar" data-panel="proyectos-umap" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-          <span>Mapas comunitarios (uMap)</span>
-        </button>
-
         <!-- Vistas Grupo 03: Documentación -->
         <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="manual" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -114,14 +90,6 @@
         <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="diccionario" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           <span>Diccionario de datos (133 capas)</span>
-        </button>
-        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="metadatos-iso" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          <span>Catálogo y generador de metadatos</span>
-        </button>
-        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="calidad-ohsome" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <span>Calidad de datos (ISO 19157)</span>
         </button>
         <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="licencias" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -145,50 +113,12 @@
 
     <!-- ---------- 02. EXPLORAR MAPA: VISOR Y ATLAS (LEAFLET) ---------- -->
     <section class="panel" id="panel-inicio">
-      <header class="hero-introduccion-atlas" id="sec-inicio-hero">
+      <header class="hero-introduccion-atlas" id="sec-inicio-hero" style="padding:14px 18px 10px 18px; margin-bottom:10px;">
         <div class="insignia-institucional">
           <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          <span>MÓDULO 02 · EXPLORAR MAPA // INFRAESTRUCTURA DE DATOS ESPACIALES</span>
+          <span>Modulo 02 | Explorar Mapa</span>
         </div>
-        <h1 class="titulo-hero">Exploración Territorial y Visor Cartográfico</h1>
-        <p class="subtitulo-hero" id="badge-perfil-info">
-          Análisis y Exploración | Municipio de Santiago y Barrio Brasil
-        </p>
-
-        <div class="grilla-resumen-introduccion">
-          <div class="caja-tarjeta-hero">
-            <span class="icono-hero">
-              <svg class="icono-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-            </span>
-            <h3>Propósito del Atlas</h3>
-            <p>Infraestructura pública de datos espaciales que integra y contrasta la <abbr title="Información Geográfica Voluntaria: datos espaciales levantados colaborativamente por ciudadanos">Información Geográfica Voluntaria (VGI)</abbr> con los catastros oficiales del Estado de Chile.</p>
-          </div>
-          <div class="caja-tarjeta-hero">
-            <span class="icono-hero">
-              <svg class="icono-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </span>
-            <h3>Ámbito Territorial</h3>
-            <p>Comuna de Santiago (27 barrios y 1.711 manzanas censales) con foco analítico en el Barrio Brasil (223,75 ha) y su sector patrimonial (136,10 ha).</p>
-          </div>
-          <div class="caja-tarjeta-hero">
-            <span class="icono-hero">
-              <svg class="icono-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            </span>
-            <h3>Calidad Verificada (95,4 %)</h3>
-            <p><strong>Calidad muy alta:</strong> 9 de cada 10 capas cumplen el estándar completo bajo las normas ISO 19157 e ISO 19115 (91 capas A+ y 42 A de 133 coberturas).</p>
-          </div>
-          <div class="caja-tarjeta-hero">
-            <span class="icono-hero">
-              <svg class="icono-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </span>
-            <h3>Acceso y Descarga Directa</h3>
-            <p style="margin-bottom:10px;">Consulta interactiva de las 133 capas, certificados del <abbr title="Plan Regulador Comunal">PRC</abbr> y descarga de la geodatabase completa.</p>
-            <button type="button" class="accion primaria-cta" id="btn-descargar-bd-portada" onclick="document.getElementById('btn-descargar-bd-mapa').click();" style="width:100%;">
-              <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span>Descargar base de datos (.zip)</span>
-            </button>
-          </div>
-        </div>
+        <h1 class="titulo-hero" style="margin:4px 0 0 0; font-size:1.45rem;">Exploración Territorial y Visor Cartográfico</h1>
       </header>
 
       <!-- Barra de herramientas del mapa -->
@@ -574,15 +504,15 @@
         <!-- Encabezado de la Consola -->
         <header class="consola-header">
           <div class="consola-header-info">
-            <div class="consola-insignia">CATÁLOGO MAESTRO CARTOGRÁFICO</div>
-            <h3 class="consola-titulo">Catálogo Cartográfico y Coberturas del Territorio</h3>
+            <div class="consola-insignia">CATÁLOGO MAESTRO CARTOGRÁFICO // 5 DIMENSIONES DE ANÁLISIS</div>
+            <h3 class="consola-titulo">Catálogo Cartográfico y Explorador de Coberturas</h3>
             <p class="consola-subtitulo">
-              Sistematización de las 133 coberturas espaciales del Atlas, articulando las 123 fuentes oficiales del Estado de Chile y las 10 categorías temáticas de información geográfica voluntaria.
+              Sistematización de las 257 coberturas espaciales del Atlas agrupadas en 5 Dimensiones de Análisis, articulando 123 fuentes oficiales del Estado de Chile y 134 capas de información geográfica voluntaria (VGI) descentralizada.
             </p>
           </div>
           <div class="consola-header-metricas">
             <div class="kpi-consola">
-              <span class="kpi-valor" id="kpi-total-capas">133</span>
+              <span class="kpi-valor" id="kpi-total-capas">257</span>
               <span class="kpi-etiqueta">Capas Totales</span>
             </div>
             <div class="kpi-consola">
@@ -599,7 +529,7 @@
         <div class="consola-toolbar">
           <div class="buscador-capas-contenedor">
             <span class="buscador-icono">⌕</span>
-            <input type="search" id="busqueda-capas-atlas" class="input-busqueda-capas" placeholder="Buscar capa por nombre, institución (UOCT, MINVU, INE, MOP...), código o atributo..." autocomplete="off">
+            <input type="search" id="busqueda-capas-atlas" class="input-busqueda-capas" placeholder="Buscar capa por nombre en español (farmacias, árboles, cesfam, escuelas, censo, metro...), institución o código..." autocomplete="off">
             <button type="button" id="btn-limpiar-busqueda-capas" class="btn-limpiar-busqueda" style="display:none;" title="Limpiar filtro">✕</button>
           </div>
           <div class="consola-toolbar-acciones">
@@ -609,52 +539,37 @@
           </div>
         </div>
 
-        <!-- Chips de Filtrado Temático Rápido -->
+        <!-- Chips de Filtrado Temático Rápido por las 5 Dimensiones -->
         <div class="consola-chips-filtro" id="contenedor-chips-filtro">
-          <button type="button" class="chip-filtro activo" data-filtro="todos">Todas las Capas (133)</button>
-          <button type="button" class="chip-filtro" data-filtro="normativa">Normativa & Catastro</button>
-          <button type="button" class="chip-filtro" data-filtro="movilidad">Movilidad & Vialidad</button>
-          <button type="button" class="chip-filtro" data-filtro="demografia">Censo 2024 & Social</button>
-          <button type="button" class="chip-filtro" data-filtro="economia">Economía & Inversión BIP</button>
-          <button type="button" class="chip-filtro" data-filtro="equipamiento">Equipamiento & Patrimonio</button>
-          <button type="button" class="chip-filtro" data-filtro="medio_ambiente">Medio Ambiente & Agua</button>
-          <button type="button" class="chip-filtro" data-filtro="seguridad">Seguridad & Justicia</button>
-          <button type="button" class="chip-filtro" data-filtro="vgi">VGI Comunitario OSM</button>
+          <button type="button" class="chip-filtro activo" data-filtro="todos">Todas las Capas (257)</button>
+          <button type="button" class="chip-filtro" data-filtro="sociodemografica">👥 1. Sociodemográfica</button>
+          <button type="button" class="chip-filtro" data-filtro="socioeconomica">📈 2. Socioeconómica</button>
+          <button type="button" class="chip-filtro" data-filtro="socioambiental">🌿 3. Socioambiental</button>
+          <button type="button" class="chip-filtro" data-filtro="sociosanitaria">🏥 4. Sociosanitaria</button>
+          <button type="button" class="chip-filtro" data-filtro="sociourbana">🏛️ 5. Sociourbana</button>
+          <button type="button" class="chip-filtro" data-filtro="oficial">🏛️ Solo Oficiales (123)</button>
+          <button type="button" class="chip-filtro" data-filtro="vgi">👥 Solo IGV (134)</button>
         </div>
 
         <!-- Navegación por Pestañas Segmentadas -->
         <div class="consola-pestanas-nav">
-          <button type="button" class="pestana-capas activa" data-seccion="seccion-capas-oficiales">
-            Capas Oficiales del Estado <span class="badge-tab-conteo">123</span>
-          </button>
-          <button type="button" class="pestana-capas" data-seccion="seccion-capas-vgi">
-            Capas Colaborativas VGI (OSM/GBIF) <span class="badge-tab-conteo">10</span>
+          <button type="button" class="pestana-capas activa" data-seccion="seccion-capas-dimensiones">
+            Capas Agrupadas por Dimensión <span class="badge-tab-conteo">257</span>
           </button>
           <button type="button" class="pestana-capas" data-seccion="seccion-capas-activas">
             Capas Activas en Mapa <span class="badge-tab-conteo" id="badge-conteo-activas">0</span>
           </button>
         </div>
 
-        <!-- SECCIÓN 1: Capas Oficiales del Estado (Acordeones Estructurados) -->
-        <div class="seccion-panel-capas activa" id="seccion-capas-oficiales">
-          <div class="contenedor-acordeones-oficiales" id="contenedor-botones-oficiales-ide">
+        <!-- SECCIÓN 1: Capas Agrupadas por las 5 Dimensiones de Análisis -->
+        <div class="seccion-panel-capas activa" id="seccion-capas-dimensiones">
+          <div class="contenedor-acordeones-dimensiones" id="contenedor-acordeones-dimensiones">
             <!-- Renderizado dinámico desde app.js -->
           </div>
           <div id="estado-carga-capas-oficiales" class="descripcion estado-telemetria-carga"></div>
         </div>
 
-        <!-- SECCIÓN 2: Capas Comunitarias VGI (OSM / GBIF) -->
-        <div class="seccion-panel-capas" id="seccion-capas-vgi" style="display:none;">
-          <p class="consola-seccion-desc">
-            Capas vectoriales comunitarias obtenidas mediante OpenStreetMap (API Overpass) o el extracto regional descargado de Geofabrik, integrando ciencia ciudadana (GBIF) sobre el polígono territorial activo.
-          </p>
-          <div class="grilla-capas-vgi" id="contenedor-botones-categorias">
-            <!-- Renderizado dinámico desde app.js -->
-          </div>
-          <div id="estado-carga-capas" class="descripcion estado-telemetria-carga"></div>
-        </div>
-
-        <!-- SECCIÓN 3: Capas Activas en Sesión -->
+        <!-- SECCIÓN 2: Capas Activas en Sesión -->
         <div class="seccion-panel-capas" id="seccion-capas-activas" style="display:none;">
           <div id="contenedor-resumen-capas-activas" class="grilla-capas-activas">
             <!-- Se actualiza dinámicamente cuando se enciende/apaga una capa -->
@@ -700,395 +615,6 @@
       <div class="bloque" id="sec-inicio-territorio">
         <h3>Ficha del Territorio de Estudio</h3>
         <p id="resumen-area-defecto">Cargando configuración territorial…</p>
-      </div>
-    </section>
-
-    <!-- ---------- 02. CONSULTAS PROPIAS Y EXPLORADOR OSM ---------- -->
-    <section class="panel" id="panel-explorador-osm">
-      <header class="cabecera-modulo-limpia" id="sec-osm-cabecera">
-        <h2>Consultas en OpenStreetMap</h2>
-        <p class="descripcion">Busca y mapea equipamientos, comercios, redes peatonales y ciclovías registrados colaborativamente en el Barrio Brasil y la Región Metropolitana.</p>
-        <details class="detalle-estandar-plegable">
-          <summary>Ver alcance territorial y estándar técnico (ISO 19110 / Overpass QL)</summary>
-          <p>Permite caracterizar la cobertura de infraestructura barrial cotidiana y contrastar su distribución con el catálogo oficial de objetos geográficos de IDE Chile (norma ISO 19110).</p>
-        </details>
-      </header>
-
-      <!-- Recuadro Guía: Cómo llegar al Diccionario / Descripción de Datos para Keys OSM -->
-      <div class="bloque recuadro-guia-claves-osm" style="background:var(--papel-tarjeta); border:1.5px solid var(--linea-fuerte, rgba(255,255,255,0.18)); border-left:5px solid var(--musgo, #1e3a5f); border-radius:10px; padding:16px 20px; margin-bottom:18px; box-shadow:0 4px 14px rgba(0,0,0,0.25);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
-          <div style="flex:1; min-width:280px;">
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
-              <span style="font-size:1.15rem;" aria-hidden="true">💡</span>
-              <h4 style="margin:0; font-size:1.02rem; color:var(--musgo, #38bdf8); font-weight:700;">
-                ¿Buscas claves específicas (keys) o etiquetas técnicas de OpenStreetMap?
-              </h4>
-            </div>
-            <p style="margin:0 0 6px 0; font-size:0.90rem; color:var(--tinta); line-height:1.5;">
-              Para consultar el catálogo completo de etiquetas normalizadas con sus equivalencias oficiales de IDE Chile (ej: <code>amenity=*</code>, <code>highway=*</code>, <code>shop=*</code>, <code>building=*</code>), accede al apartado de <strong>Descripción de datos</strong> en:
-            </p>
-            <div style="display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.12); color:var(--tinta);">
-              <span style="color:var(--ocre, #d4a017); font-weight:700;">Ruta de acceso:</span>
-              <span>Barra superior › <strong>Documentación y descargas</strong> › <strong>Diccionario de datos (133 capas)</strong></span>
-            </div>
-          </div>
-          <div style="flex-shrink:0;">
-            <button type="button" class="accion" onclick="if(window.activarPanel) window.activarPanel('diccionario');" style="white-space:nowrap; font-size:0.88rem; padding:10px 16px; font-weight:600; cursor:pointer;" title="Ir directamente al Diccionario de Datos y Catálogo de Claves OSM">
-              📖 Abrir Diccionario / Descripción de Datos →
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 1. Consulta Rápida sobre la Base Regional Geofabrik RM (Recomendado / Local) -->
-      <div class="bloque" id="sec-osm-geodatabase-rm" style="background:var(--papel-alto); border:1px solid var(--linea); border-radius:10px; padding:20px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
-          <h3 style="margin:0; font-size:1.15rem; color:var(--musgo);">Consulta rápida sobre la base regional descargada (Geofabrik Región Metropolitana)</h3>
-          <span style="font-size:0.75rem; background:rgba(21,128,61,0.12); color:#15803d; border:1px solid rgba(21,128,61,0.25); padding:2px 8px; border-radius:12px; font-weight:600;">Recomendado · Alta disponibilidad local</span>
-        </div>
-        <p class="descripcion" style="margin-bottom:14px;">
-          Filtra al instante la copia local de OpenStreetMap para las 52 comunas de la Región Metropolitana (1,55 millones de registros, 695 mil edificaciones y 326 mil tramos de transporte preprocesados desde extractos oficiales de Geofabrik GmbH) usando el <strong>encuadre actual del mapa</strong> o <strong>coordenadas manuales</strong>.
-        </p>
-
-        <!-- Modos de Consulta Pedagógicos -->
-        <div style="display:flex; gap:16px; margin-bottom:14px; padding:10px 14px; background:var(--papel-tarjeta); border:1px solid var(--linea); border-radius:8px; align-items:center; flex-wrap:wrap;">
-          <span style="font-size:0.86rem; font-weight:700; color:var(--tinta-suave);">Área de búsqueda:</span>
-          <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; cursor:pointer;">
-            <input type="radio" name="modo-consulta-local" id="modo-local-bbox" value="bbox" checked>
-            <span>Usar el encuadre visible del mapa</span>
-          </label>
-          <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; cursor:pointer;">
-            <input type="radio" name="modo-consulta-local" id="modo-local-coords" value="coords">
-            <span>Ingresar coordenadas manuales (WGS 84)</span>
-          </label>
-        </div>
-
-        <div class="fila-campos">
-          <div class="campo"><label for="osm-oeste">Oeste (Longitud mín.)</label><input type="number" step="any" id="osm-oeste"></div>
-          <div class="campo"><label for="osm-sur">Sur (Latitud mín.)</label><input type="number" step="any" id="osm-sur"></div>
-          <div class="campo"><label for="osm-este">Este (Longitud máx.)</label><input type="number" step="any" id="osm-este"></div>
-          <div class="campo"><label for="osm-norte">Norte (Latitud máx.)</label><input type="number" step="any" id="osm-norte"></div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1.2; min-width:260px;">
-            <label for="osm-categoria-preset">Categoría temática</label>
-            <select id="osm-categoria-preset">
-              <option value="">— Seleccionar categoría predefinida —</option>
-              <option value="educacion">CAT-01: Educación y Universidad (Instituciones y Colegios)</option>
-              <option value="servicios">CAT-02: Servicios, Comercio y Abastecimiento</option>
-              <option value="transporte">CAT-03: Movilidad y Transporte Público (Red / Metro)</option>
-              <option value="movilidad_activa">CAT-04: Movilidad Activa y Ciclovías</option>
-              <option value="espacio_publico">CAT-05: Áreas Verdes, Plazas y Recreación</option>
-              <option value="patrimonio">CAT-06: Patrimonio, Cultura e Identidad Urbana</option>
-              <option value="accesibilidad">CAT-07: Accesibilidad Universal y Cruces</option>
-              <option value="biodiversidad">CAT-08: Biodiversidad Urbana (Arbolado y Agua)</option>
-              <option value="edificaciones">CAT-09: Edificaciones y Huella Urbana (building=*) [Polígonos]</option>
-              <option value="cobertura_suelo">CAT-10: Coberturas y Usos de Suelo (landuse=*) [Polígonos]</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1; min-width:200px;">
-            <label for="osm-etiqueta">Etiqueta específica (opcional)</label>
-            <input type="text" id="osm-etiqueta" placeholder="ej: amenity=cafe, shop=bakery">
-          </div>
-        </div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
-          <button class="accion" id="btn-consultar-osm" title="Consulta según el encuadre activo del mapa">Consultar en encuadre del mapa</button>
-          <button class="accion secundaria" id="btn-consultar-osm-coords" title="Consulta según las 4 coordenadas numéricas del formulario">Consultar por coordenadas</button>
-          <button class="accion secundaria" id="btn-cargar-osm-al-mapa">Enviar resultado al visor</button>
-          <button class="accion secundaria" id="btn-usar-area-config">Centrar en Barrio Brasil</button>
-          <button class="accion secundaria" id="btn-encuadre-rm-completa">Ver toda la Región Metropolitana</button>
-        </div>
-      </div>
-
-      <!-- 2. Consultas Temáticas en Vivo (Overpass API) -->
-      <div class="bloque" id="sec-osm-temas-rapidos">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-          <h3 style="margin:0; color:var(--musgo); font-size:1.2rem;">Consultas temáticas en vivo (API Overpass)</h3>
-          <span style="font-size:0.75rem; background:rgba(180,83,9,0.1); color:#b45309; border:1px solid rgba(180,83,9,0.25); padding:2px 8px; border-radius:12px; font-weight:600;">Sujeto a disponibilidad del servidor público</span>
-        </div>
-        <p class="descripcion" style="margin-bottom:16px; color:var(--tinta-suave); font-size:0.95rem;">
-          Selecciona una categoría para consultar y visualizar en el mapa los elementos del Barrio Brasil y su entorno barrial directamente desde los servidores en vivo de Overpass API (pueden presentarse demoras según saturación del servidor):
-        </p>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:10px;" id="grilla-sugerencias-ciudadanas">
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-01" data-categoria="educacion" data-clave="amenity" data-valor="university" data-nombre="CAT-01: Educación y Universidad" data-color="#1e3a5f" data-entidad="nwr">CAT-01 · Educación y universidad</button>
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-02" data-categoria="servicios" data-clave="shop" data-valor="*" data-operador="*" data-nombre="CAT-02: Servicios y Comercio Barrial" data-color="#b45309" data-entidad="nwr">CAT-02 · Servicios y comercio barrial</button>
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-03" data-categoria="transporte" data-clave="highway" data-valor="bus_stop" data-nombre="CAT-03: Movilidad y Transporte" data-color="#1e40af" data-entidad="node">CAT-03 · Movilidad y transporte público</button>
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-04" data-categoria="movilidad_activa" data-clave="highway" data-valor="cycleway" data-nombre="CAT-04: Movilidad Activa y Ciclovías" data-color="#15803d" data-entidad="way">CAT-04 · Movilidad activa y ciclovías</button>
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-05" data-categoria="espacio_publico" data-clave="leisure" data-valor="park" data-nombre="CAT-05: Áreas Verdes y Espacio Público" data-color="#166534" data-entidad="nwr">CAT-05 · Áreas verdes y espacio público</button>
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-06" data-categoria="patrimonio" data-clave="historic" data-valor="*" data-operador="*" data-nombre="CAT-06: Patrimonio y Cultura" data-color="#9a3412" data-entidad="nwr">CAT-06 · Patrimonio y cultura</button>
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-07" data-categoria="accesibilidad" data-clave="kerb" data-valor="lowered" data-nombre="CAT-07: Accesibilidad Universal" data-color="#0f766e" data-entidad="node">CAT-07 · Accesibilidad universal</button>
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-08" data-categoria="biodiversidad" data-clave="natural" data-valor="tree" data-nombre="CAT-08: Biodiversidad Urbana" data-color="#15803d" data-entidad="node">CAT-08 · Biodiversidad y arbolado</button>
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-09" data-categoria="edificaciones" data-clave="building" data-valor="yes" data-operador="*" data-nombre="CAT-09: Edificaciones y Huella Urbana" data-color="#334155" data-entidad="way">CAT-09 · Edificaciones y huella urbana</button>
-          <button type="button" class="btn-sugerencia-ciudadana" data-cat="CAT-10" data-categoria="cobertura_suelo" data-clave="landuse" data-valor="*" data-operador="*" data-nombre="CAT-10: Coberturas y Usos de Suelo" data-color="#4338ca" data-entidad="way">CAT-10 · Coberturas y usos de suelo</button>
-        </div>
-      </div>
-
-      <!-- 3. Constructor Visual de Consultas Personalizadas (Overpass QL en vivo) -->
-      <div class="bloque" id="sec-osm-constructor-overpass">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
-          <h3 style="margin-top:0; margin-bottom:0;">Constructor de consultas personalizadas (Overpass QL en vivo)</h3>
-          <span style="font-size:0.75rem; background:rgba(100,116,139,0.12); color:#475569; border:1px solid rgba(100,116,139,0.25); padding:2px 8px; border-radius:12px; font-weight:600;">Avanzado · Servidores externos</span>
-        </div>
-        <p class="descripcion" style="margin-bottom:12px;">Define qué elementos específicos deseas extraer en vivo dentro del recuadro de búsqueda actual vía Overpass API.</p>
-
-        <div class="fila-campos">
-          <div class="campo" style="flex:1; min-width:180px;">
-            <label for="custom-entidad">Tipo de Entidad</label>
-            <select id="custom-entidad">
-              <option value="nwr" selected>Todos (Nodos, Vías y Polígonos)</option>
-              <option value="node">Solo Puntos (Nodos)</option>
-              <option value="way">Solo Líneas / Polígonos (Vías)</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1; min-width:180px;">
-            <label for="custom-clave-select">Clave Frecuente</label>
-            <select id="custom-clave-select">
-              <option value="otra" selected>— Otra clave manual —</option>
-              <option value="amenity">amenity (Equipamiento)</option>
-              <option value="building">building (Edificaciones y Huella Urbana)</option>
-              <option value="landuse">landuse (Uso y Cobertura de Suelo)</option>
-              <option value="shop">shop (Comercio)</option>
-              <option value="historic">historic (Patrimonio)</option>
-              <option value="highway">highway (Vialidad / Cruces)</option>
-              <option value="leisure">leisure (Recreación / Plazas)</option>
-              <option value="natural">natural (Elementos Naturales / Coberturas)</option>
-              <option value="healthcare">healthcare (Salud)</option>
-              <option value="tourism">tourism (Turismo / Cultura)</option>
-              <option value="emergency">emergency (Emergencias)</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1; min-width:140px;">
-            <label for="custom-clave-manual">Clave OSM</label>
-            <input type="text" id="custom-clave-manual" value="" placeholder="ej: amenity, building, landuse...">
-          </div>
-          <div class="campo" style="width:110px;">
-            <label for="custom-operador">Operador</label>
-            <select id="custom-operador">
-              <option value="=" selected>= (igual)</option>
-              <option value="~">~ (contiene)</option>
-              <option value="*">* (cualquiera)</option>
-              <option value="!=">!= (distinto)</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1.5; min-width:200px;">
-            <label for="custom-valor-select">Valor Temático Frecuente (Seleccionable)</label>
-            <select id="custom-valor-select">
-              <option value="custom" selected>✍️ — Escribir valor manual —</option>
-              <!-- Poblado dinámicamente según la clave seleccionada -->
-            </select>
-          </div>
-          <div class="campo" style="flex:1; min-width:140px;">
-            <label for="custom-valor">Valor OSM Manual</label>
-            <input type="text" id="custom-valor" value="" placeholder="ej: pharmacy, school, bakery, park...">
-          </div>
-        </div>
-
-        <div class="fila-campos" style="margin-top:10px;">
-          <div class="campo" style="flex:1; min-width:220px;">
-            <label for="custom-filtro-extra">Filtro Condicional Adicional (Calidad y Atributos Específicos)</label>
-            <select id="custom-filtro-extra">
-              <option value="todos" selected>— Sin restricción adicional (Todas las geometrías del área) —</option>
-              <option value="con_nombre">🏷️ Solo entidades con nombre propio registrado [name]</option>
-              <option value="accesibles">♿ Solo entidades con accesibilidad universal confirmada [wheelchair=yes]</option>
-              <option value="con_direccion">📍 Solo con dirección catastral (calle y número) [addr:street]</option>
-              <option value="con_operador">🏛️ Solo con entidad administradora identificada [operator]</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="fila-campos" style="align-items:flex-end; margin-top:10px;">
-          <div class="campo" style="flex:2; min-width:220px;">
-            <label for="custom-nombre-capa">Nombre de la Capa en el Mapa</label>
-            <input type="text" id="custom-nombre-capa" value="Farmacias Barrio Brasil" placeholder="Nombre descriptivo para la capa">
-          </div>
-          <div class="campo" style="width:120px;">
-            <label for="custom-color-capa">Color de Capa</label>
-            <input type="color" id="custom-color-capa" value="#A97722" style="height:36px; padding:2px; cursor:pointer;">
-          </div>
-          <button class="accion primaria-cta" id="btn-ejecutar-consulta-custom" style="padding:9px 18px;">Ejecutar consulta y mostrar en mapa</button>
-          <button class="accion secundaria" id="btn-validar-taginfo" title="Comprobar frecuencia de uso de esta etiqueta en Taginfo">Validar etiqueta</button>
-          <button class="accion secundaria" id="btn-guardar-consulta" title="Guardar esta consulta para usarla después">Guardar consulta</button>
-          <button class="accion secundaria" id="btn-toggle-ql-avanzado" title="Ver o editar código Overpass QL">Ver código QL</button>
-        </div>
-
-        <!-- Contenedor interactivo para telemetría Taginfo API -->
-        <div id="contenedor-resultado-taginfo-custom"></div>
-
-        <!-- Editor avanzado Overpass QL (oculto por defecto) -->
-        <div id="contenedor-ql-avanzado" style="display:none; margin-top:14px; padding-top:12px; border-top:1px dashed var(--linea);">
-          <label for="custom-ql-codigo" style="font-size:0.82rem; font-weight:600; color:var(--musgo);">Código Overpass QL personalizado (usa {{bbox}} como marcador del recuadro):</label>
-          <textarea id="custom-ql-codigo" rows="4" style="width:100%; font-family:var(--fuente-datos); font-size:0.82rem; margin-top:4px;" placeholder="nwr[&quot;amenity&quot;=&quot;pharmacy&quot;]({{bbox}});"></textarea>
-        </div>
-
-        <!-- Consultas guardadas por el usuario -->
-        <div style="margin-top:14px; font-size:0.85rem;">
-          <span style="font-weight:600; color:var(--tinta-suave);">Mis consultas guardadas:</span>
-          <div id="lista-consultas-guardadas" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-            <!-- Poblado dinámicamente con chips clickeables -->
-          </div>
-        </div>
-
-        <!-- Guía metodológica para personas no técnicas -->
-        <div class="caja-guia-referencia">
-          <h4>Guía rápida para consultas en OpenStreetMap</h4>
-          <p>
-            En OpenStreetMap, cada elemento territorial se representa como un <strong>nodo</strong> (punto con coordenadas), una <strong>vía</strong> (línea como una ciclovía o polígono como un edificio) o una <strong>relación</strong> (agrupación), descrito mediante pares <code>clave=valor</code>.
-          </p>
-          <ul>
-            <li><strong>¿Qué es una clave?</strong> La categoría general del elemento (por ejemplo: <code>amenity</code> para equipamientos, <code>shop</code> para comercio, <code>leisure</code> para áreas verdes).</li>
-            <li><strong>¿Qué es un valor?</strong> El uso específico del lugar (por ejemplo: <code>pharmacy</code>, <code>bakery</code>, <code>park</code>, <code>university</code>).</li>
-            <li><strong>¿Qué es el recuadro de búsqueda (delimitación geográfica)?</strong> La ventana rectangular de cuatro coordenadas (Oeste, Sur, Este, Norte) que acota el área consultada.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bloque resultado" id="resultado-osm" aria-live="polite">
-        <p class="descripcion">Todavía no hay ninguna consulta realizada. Utiliza la consulta sobre la base regional de Geofabrik RM (recomendado, alta disponibilidad) o las consultas en vivo para OpenStreetMap (API Overpass).</p>
-      </div>
-    </section>
-
-    <!-- ---------- 03. GBIF & INATURALIST (BIODIVERSIDAD) ---------- -->
-    <section class="panel" id="panel-biodiversidad-gbif">
-      <header class="cabecera-modulo-limpia" id="sec-gbif-cabecera">
-        <h2>Biodiversidad urbana y ciencia ciudadana</h2>
-        <p class="descripcion">Consulta observaciones georreferenciadas de flora, arbolado viario y avifauna urbana en el Barrio Brasil y la Comuna de Santiago (red global <abbr title="Infraestructura Mundial de Información en Biodiversidad">GBIF</abbr> e iNaturalist).</p>
-        <details class="detalle-estandar-plegable">
-          <summary>Ver estándar técnico aplicado (Darwin Core / CC-BY 4.0)</summary>
-          <p>Los registros biológicos se estructuran bajo el estándar internacional Darwin Core (DwC), permitiendo valorar la función ecológica de plazas, jardines universitarios y corredores arbolados.</p>
-        </details>
-      </header>
-
-      <div class="bloque" id="sec-gbif-busqueda">
-        <h3>Búsqueda Espacial y Taxonómica</h3>
-        <div class="fila-campos">
-          <div class="campo" style="flex:2; min-width:260px;">
-            <label for="gbif-taxa-selector">Especie o Grupo Biológico Urbano (Seleccionable)</label>
-            <select id="gbif-taxa-selector">
-              <option value="" data-rank="ALL" selected>🌿 Cualquier especie (Todas las observaciones en el área)</option>
-              <optgroup label="🕊️ Aves Urbanas de Santiago y Valle Central">
-                <option value="Aves" data-taxon-key="212" data-rank="CLASS" data-common="Aves">Todas las Aves Urbanas (Clase Aves)</option>
-                <option value="Zonotrichia capensis" data-taxon-key="5231103" data-rank="SPECIES" data-common="Chincol / Gorrión americano">Chincol / Gorrión americano (Zonotrichia capensis) — Ave nativa</option>
-                <option value="Turdus falcklandii" data-taxon-key="2490775" data-rank="SPECIES" data-common="Zorzal patagónico">Zorzal patagónico (Turdus falcklandii) — Ave común en plazas</option>
-                <option value="Columbina picui" data-taxon-key="2495865" data-rank="SPECIES" data-common="Tortolita cuyana">Tortolita cuyana (Columbina picui) — Paloma nativa pequeña</option>
-                <option value="Vanellus chilensis" data-taxon-key="5229146" data-rank="SPECIES" data-common="Queltehue / Treile">Queltehue / Treile (Vanellus chilensis) — Espacios abiertos y campus</option>
-                <option value="Mimus thenca" data-taxon-key="5231685" data-rank="SPECIES" data-common="Tenca">Tenca (Mimus thenca) — Ave endémica de Chile central</option>
-                <option value="Zenaida auriculata" data-taxon-key="2495358" data-rank="SPECIES" data-common="Tórtola torcaza">Tórtola torcaza (Zenaida auriculata) — Muy frecuente</option>
-                <option value="Sephanoides sephaniodes" data-taxon-key="2476817" data-rank="SPECIES" data-common="Picaflor chico / Colibrí">Picaflor chico / Colibrí (Sephanoides sephaniodes)</option>
-              </optgroup>
-              <optgroup label="🌳 Flora, Arbolado Patrimonial y Especies Nativas">
-                <option value="Plantae" data-taxon-key="6" data-rank="KINGDOM" data-common="Plantas">Todo el Reino Vegetal (Plantae)</option>
-                <option value="Quillaja saponaria" data-taxon-key="3029379" data-rank="SPECIES" data-common="Quillay">Quillay (Quillaja saponaria) — Árbol esclerófilo nativo</option>
-                <option value="Cryptocarya alba" data-taxon-key="4178741" data-rank="SPECIES" data-common="Peumo">Peumo (Cryptocarya alba) — Especie esclerófila perennifolia</option>
-                <option value="Peumus boldus" data-taxon-key="3034108" data-rank="SPECIES" data-common="Boldo">Boldo (Peumus boldus) — Especie endémica aromática</option>
-                <option value="Lithraea caustica" data-taxon-key="3660323" data-rank="SPECIES" data-common="Litre">Litre (Lithraea caustica) — Árbol nativo del matorral</option>
-                <option value="Schinus molle" data-taxon-key="3190642" data-rank="SPECIES" data-common="Pimiento boliviano / Molle">Pimiento boliviano / Molle (Schinus molle) — Árbol patrimonial</option>
-                <option value="Vachellia caven" data-taxon-key="3795588" data-rank="SPECIES" data-common="Espino">Espino (Vachellia caven) — Árbol espinoso dominante en la cuenca</option>
-                <option value="Maytenus boaria" data-taxon-key="3790726" data-rank="SPECIES" data-common="Maitén">Maitén (Maytenus boaria) — Árbol siempreverde nativo</option>
-                <option value="Prosopis chilensis" data-taxon-key="5358466" data-rank="SPECIES" data-common="Algarrobo chileno">Algarrobo chileno (Prosopis chilensis) — Leguminosa nativa</option>
-                <option value="Jubaea chilensis" data-taxon-key="2735138" data-rank="SPECIES" data-common="Palma chilena">Palma chilena (Jubaea chilensis) — Especie protegida vulnerable</option>
-                <option value="Jacaranda mimosifolia" data-taxon-key="3172499" data-rank="SPECIES" data-common="Jacarandá">Jacarandá (Jacaranda mimosifolia) — Árbol ornamental en plazas</option>
-              </optgroup>
-              <optgroup label="🐝 Insectos y Polinizadores">
-                <option value="Insecta" data-taxon-key="216" data-rank="CLASS" data-common="Insectos">Todos los insectos urbanos (Insecta)</option>
-                <option value="Bombus" data-taxon-key="1340278" data-rank="GENUS" data-common="Abejorros y polinizadores">Abejorros y polinizadores (Bombus spp.)</option>
-                <option value="Bombus dahlbomii" data-taxon-key="1340388" data-rank="SPECIES" data-common="Moscardón del bosque (Abejorro nativo)">Moscardón del bosque (Bombus dahlbomii) — Abejorro nativo chileno</option>
-                <option value="Lepidoptera" data-taxon-key="797" data-rank="ORDER" data-common="Mariposas">Mariposas urbanas (Lepidoptera)</option>
-              </optgroup>
-              <option value="custom">✍️ — Escribir taxón o nombre científico manual —</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1; min-width:180px; position:relative;">
-            <label for="gbif-nombre">Nombre Científico / Taxón</label>
-            <input type="text" id="gbif-nombre" placeholder="ej: Aves, Zonotrichia capensis" autocomplete="off">
-            <div id="gbif-sugerencias-taxa" style="display:none; position:absolute; top:100%; left:0; right:0; z-index:20; background:var(--papel-alto); border:1px solid var(--musgo); box-shadow:0 4px 10px rgba(0,0,0,0.15);"></div>
-          </div>
-          <div class="campo" style="width:170px;">
-            <label for="gbif-basis-selector">Base de Registro</label>
-            <select id="gbif-basis-selector">
-              <option value="ALL" selected>Todas las Bases</option>
-              <option value="HUMAN_OBSERVATION">Ciencia Ciudadana (iNaturalist/eBird)</option>
-              <option value="PRESERVED_SPECIMEN">Especímenes de Museos</option>
-            </select>
-          </div>
-        </div>
-
-        <div style="display:flex; gap:8px; margin:14px 0 6px 0; align-items:center; flex-wrap:wrap;" id="sec-gbif-ambito">
-          <span style="font-size:0.75rem; font-weight:700; color:var(--musgo); text-transform:uppercase; letter-spacing:0.04em;">Ámbito Espacial de Consulta:</span>
-          <button type="button" class="btn-micro" id="btn-gbif-ambito-rm" title="Consultar en toda la Región Metropolitana" style="background:var(--papel-alto); border:1px solid var(--musgo); color:var(--musgo); font-weight:700; padding:4px 9px; border-radius:4px; font-size:0.75rem; cursor:pointer;">🌐 Región Metropolitana (Recomendado)</button>
-          <button type="button" class="btn-micro" id="btn-gbif-ambito-brasil" title="Acotar a Barrio Brasil y Santiago Centro (1 km²)" style="background:var(--papel-alto); border:1px solid var(--linea); color:var(--tinta-suave); padding:4px 9px; border-radius:4px; font-size:0.75rem; cursor:pointer;">📍 Barrio Brasil (1 km²)</button>
-          <button type="button" class="btn-micro" id="btn-gbif-ambito-chile" title="Sin filtro espacial (Consultar en todo Chile)" style="background:var(--papel-alto); border:1px solid var(--linea); color:var(--tinta-suave); padding:4px 9px; border-radius:4px; font-size:0.75rem; cursor:pointer;">🇨🇱 Todo Chile (Sin Bbox)</button>
-        </div>
-
-        <div class="fila-campos">
-          <div class="campo"><label for="gbif-oeste">Oeste</label><input type="number" step="any" id="gbif-oeste"></div>
-          <div class="campo"><label for="gbif-sur">Sur</label><input type="number" step="any" id="gbif-sur"></div>
-          <div class="campo"><label for="gbif-este">Este</label><input type="number" step="any" id="gbif-este"></div>
-          <div class="campo"><label for="gbif-norte">Norte</label><input type="number" step="any" id="gbif-norte"></div>
-        </div>
-        <button class="accion primaria-cta" id="btn-consultar-gbif">Buscar observaciones en GBIF</button>
-        <button class="accion secundaria" id="btn-cargar-gbif-al-mapa">Enviar al visor cartográfico</button>
-
-        <div class="caja-guia-referencia" id="sec-gbif-guia">
-          <h4>Monitoreo de biodiversidad urbana y ciencia ciudadana (GBIF e iNaturalist)</h4>
-          <p>
-            La <strong>Infraestructura Mundial de Información en Biodiversidad (<abbr title="Global Biodiversity Information Facility">GBIF</abbr>)</strong> es la mayor red pública de datos sobre biodiversidad, integrando observaciones de plataformas ciudadanas como <strong>iNaturalist</strong> y <strong>eBird</strong> junto con colecciones del Museo Nacional de Historia Natural de Chile.
-          </p>
-          <ul>
-            <li><strong>Valor ecológico en el Barrio Brasil:</strong> El arbolado de Av. Brasil, la Plaza Brasil y los jardines y patios comunitarios actúan como refugios de avifauna y reguladores térmicos en Santiago Centro.</li>
-            <li><strong>Estándar Darwin Core:</strong> Esquema internacional que homologa el nombre científico, la fecha y la coordenada de cada avistamiento.</li>
-            <li><strong>Licencia y atribución:</strong> Registros bajo licencias abiertas Creative Commons (CC0 y CC BY 4.0).</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bloque resultado" id="resultado-gbif" aria-live="polite">
-        <p class="descripcion">Todavía no hay ninguna búsqueda realizada.</p>
-      </div>
-    </section>
-
-    <!-- ---------- 04. CARTOGRAFÍA COMUNITARIA UMAP ---------- -->
-    <section class="panel" id="panel-proyectos-umap">
-      <header class="cabecera-modulo-limpia" id="sec-umap-cabecera">
-        <h2>Mapas comunitarios y participativos (uMap)</h2>
-        <p class="descripcion">Integra levantamientos colaborativos sobre patrimonio local, ciclovías, huertos urbanos y rutas de accesibilidad elaborados por organizaciones barriales.</p>
-      </header>
-
-      <div class="bloque" id="sec-umap-selector">
-        <h3>Cargar un mapa colaborativo</h3>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1.5; min-width:240px;">
-            <label for="umap-preset-selector">Proyecto cartográfico comunitario</label>
-            <select id="umap-preset-selector">
-              <option value="" selected>— Seleccionar proyecto colaborativo territorial —</option>
-              <option value="https://umap.openstreetmap.fr/es/map/patrimonio-santiago-centro_19382">Patrimonio arquitectónico y casonas de Santiago Centro</option>
-              <option value="https://umap.openstreetmap.fr/es/map/ciclovias-santiago_28412">Red de ciclovías y micromovilidad del Gran Santiago</option>
-              <option value="https://umap.openstreetmap.fr/es/map/huertos-urbanos-santiago_31045">Huertos urbanos y soberanía alimentaria barrial</option>
-              <option value="https://umap.openstreetmap.fr/es/map/rutas-accesibles-brasil_20914">Rutas peatonales accesibles y desniveles en Barrio Brasil</option>
-              <option value="https://umap.openstreetmap.fr/es/map/espacios-culturales-brasil_18204">Centros culturales y espacios autogestionados en Barrio Brasil</option>
-              <option value="custom">— Ingresar otra dirección web (URL) de uMap —</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1; min-width:200px;">
-            <label for="umap-url">Dirección pública del mapa uMap</label>
-            <input type="text" id="umap-url" placeholder="https://umap.openstreetmap.fr/es/map/...">
-          </div>
-        </div>
-        <button class="accion primaria-cta" id="btn-cargar-umap">Cargar mapa comunitario</button>
-
-        <div class="caja-guia-referencia" id="sec-umap-guia">
-          <h4>Cartografía social y colaborativa con uMap</h4>
-          <p>
-            <strong>uMap</strong> es una herramienta libre basada en OpenStreetMap que permite a juntas de vecinos, estudiantes y municipios crear mapas interactivos propios y compartirlos abiertamente.
-          </p>
-          <ul>
-            <li><strong>Datos abiertos:</strong> Cada mapa puede descargarse en formato GeoJSON para integrarse en este visor o abrirse en programas como QGIS.</li>
-            <li><strong>Diagnóstico barrial:</strong> Facilita el registro comunitario de puntos de interés, problemas de veredas o iniciativas vecinales en el Barrio Brasil.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bloque resultado" id="resultado-umap" aria-live="polite">
-        <p class="descripcion">Todavía no se ha cargado ningún mapa.</p>
       </div>
     </section>
 
@@ -1411,203 +937,6 @@
       </div>
     </section>
 
-    <!-- ---------- 06. CALIDAD ESPACIAL, TOPOLOGÍA E ÍNDICE IGV ---------- -->
-    <section class="panel" id="panel-calidad-ohsome">
-      <header class="cabecera-modulo-limpia" id="sec-calidad-cabecera">
-        <h2>Evaluación de calidad de datos</h2>
-        <p class="descripcion">
-          Verifica la consistencia geométrica, la completitud de atributos, la evolución histórica del mapeo y la documentación de las capas espaciales (norma ISO 19157).
-        </p>
-        <details class="detalle-estandar-plegable">
-          <summary>Ver estándares técnicos aplicados (ISO 19157 · OGC SFA · HeiGIT ohsome)</summary>
-          <p>Integra la evaluación multicriterio de combinación lineal ponderada (WLC v2.0), el análisis histórico de saturación mediante ohsome API (HeiGIT) y la inspección de conjuntos de cambios en OSMCha.</p>
-        </details>
-      </header>
-
-      <!-- SUBMÓDULO A: EVALUADOR UNIVERSAL DE CALIDAD ESPACIAL, TOPOLOGÍA E ÍNDICE IGV -->
-      <div class="bloque" id="sec-calidad-evaluador" style="border-top: 4px solid var(--esmeralda);">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--linea); padding-bottom:6px; margin-bottom:12px;">
-          <h3 style="margin:0;">Evaluador de calidad de capas (<abbr title="Índice Global de Calidad Geográfica (ISO 19157)">IGV</abbr>)</h3>
-        </div>
-        <p class="descripcion" style="margin-bottom:14px;">
-          Selecciona una de las 133 capas del Atlas o sube un archivo <code>.geojson</code> propio para verificar si sus geometrías están cerradas, si sus tablas están completas y obtener su calificación de calidad.
-        </p>
-
-        <!-- Zona de Carga de Datos (Drag & Drop y Selectores) -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:14px;">
-          
-          <!-- Opción 1: Drag & Drop para Archivo Externo -->
-          <div id="calidad-dropzone" style="border:2px dashed var(--linea); border-radius:10px; background:var(--papel-alto); padding:20px 16px; text-align:center; cursor:pointer; transition:all 0.2s ease;">
-            <div style="font-size:1.8rem; margin-bottom:6px;">📁</div>
-            <strong style="display:block; font-size:0.88rem; color:var(--tinta); margin-bottom:4px;">Arrastra aquí un archivo .geojson o .json</strong>
-            <span style="font-size:0.78rem; color:var(--tinta-suave); display:block;">o haz clic para examinar desde tu equipo (límite seguro: 25 MB)</span>
-            <input type="file" id="calidad-input-archivo" accept=".geojson,.json" style="display:none;">
-            <div id="calidad-archivo-seleccionado-nombre" style="display:none; margin-top:8px; font-family:var(--fuente-datos); font-size:0.76rem; background:rgba(16, 185, 129, 0.15); color:var(--esmeralda); padding:3px 8px; border-radius:4px; border:1px solid var(--esmeralda);"></div>
-          </div>
-
-          <!-- Opción 2: Selector de Capas del Atlas -->
-          <div style="background:var(--papel-alto); border:1px solid var(--linea); border-radius:10px; padding:16px;">
-            <label for="calidad-selector-capa-interna" style="font-size:0.82rem; font-weight:700; color:var(--tinta); display:block; margin-bottom:6px;">
-              O auditar una capa de la Geodatabase (133 componentes):
-            </label>
-            <select id="calidad-selector-capa-interna" style="width:100%; font-size:0.82rem; padding:8px; background:var(--papel); border:1px solid var(--linea); border-radius:6px; color:var(--tinta);">
-              <option value="">-- Selecciona una capa de la base de datos --</option>
-            </select>
-            <span style="font-size:0.74rem; color:var(--tinta-tenue); display:block; margin-top:6px;">
-              Permite contrastar métricas cuantitativas sobre las capas oficiales y VGI existentes.
-            </span>
-          </div>
-
-        </div>
-
-        <!-- Opción 3 Colapsable: Pegar GeoJSON en Texto Plano -->
-        <details style="margin-bottom:14px; background:var(--papel-alto); border:1px solid var(--linea); border-radius:8px; padding:10px 14px;">
-          <summary style="font-size:0.82rem; font-weight:600; cursor:pointer; color:var(--musgo);">
-            ✍️ O pegar contenido GeoJSON directo en texto plano / Información del Índice IGV
-          </summary>
-          <div style="margin-top:10px;">
-            <textarea id="calidad-textarea-geojson" rows="3" placeholder="Pega aquí el objeto FeatureCollection o Feature en formato JSON/GeoJSON..." style="width:100%; font-family:var(--fuente-datos); font-size:0.75rem; padding:8px; background:var(--papel); border:1px solid var(--linea); border-radius:6px; color:var(--tinta);"></textarea>
-            <div style="font-size:0.74rem; color:var(--tinta-tenue); margin-top:6px;">
-              Ponderadores oficiales estándar: <strong>50% Cuantitativo Espacial</strong> (Topología 30%, Completitud 25%, Posicional 20%, Estructura 15%, Granularidad 10%) + <strong>50% Cualitativo</strong> (Metadatos ISO 19115).
-            </div>
-          </div>
-        </details>
-
-        <!-- Control de Focalización Territorial BBox Barrio Brasil -->
-        <div style="background:rgba(30, 58, 95, 0.05); border:1px solid var(--linea); border-radius:8px; padding:10px 14px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-          <label for="calidad-chk-filtrar-bbox" style="display:flex; align-items:center; gap:8px; font-size:0.86rem; color:var(--tinta); cursor:pointer;">
-            <input type="checkbox" id="calidad-chk-filtrar-bbox" checked style="accent-color:var(--musgo); width:16px; height:16px;">
-            <span><strong>Recortar evaluación al área del Barrio Brasil</strong> <code id="calidad-label-bbox-coordenadas" style="color:var(--musgo); font-size:0.78rem;">[-70.6740, -33.4530, -70.6550, -33.4330]</code></span>
-          </label>
-          <span style="font-size:0.78rem; color:var(--tinta-tenue);">Acota capas comunales o regionales extensas al cuadrante de estudio</span>
-        </div>
-
-        <!-- Botones de Ejecución -->
-        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-          <button class="accion primaria-cta" id="btn-ejecutar-auditoria-igv">
-            Evaluar calidad espacial e índice IGV
-          </button>
-          <button class="accion secundaria" id="btn-cargar-ejemplo-calidad" style="font-size:0.86rem;">
-            Cargar ejemplo de prueba (CAT-01 Educación)
-          </button>
-        </div>
-
-        <!-- Contenedor Dinámico de Resultados de la Auditoría -->
-        <div id="resultado-auditoria-igv" aria-live="polite"></div>
-
-      </div>
-
-      <!-- SUBMÓDULO B: OHSOME API & OQT -->
-      <div class="bloque" id="sec-calidad-ohsome">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--linea); padding-bottom:6px; margin-bottom:12px;">
-          <h3 style="margin:0;">Evolución histórica del mapeo en OpenStreetMap (ohsome)</h3>
-        </div>
-
-        <div class="fila-campos">
-          <div class="campo"><label for="oh-oeste">Oeste</label><input type="number" step="any" id="oh-oeste"></div>
-          <div class="campo"><label for="oh-sur">Sur</label><input type="number" step="any" id="oh-sur"></div>
-          <div class="campo"><label for="oh-este">Este</label><input type="number" step="any" id="oh-este"></div>
-          <div class="campo"><label for="oh-norte">Norte</label><input type="number" step="any" id="oh-norte"></div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:2; min-width:260px;">
-            <label for="oh-preset-selector">Categoría temática a consultar</label>
-            <select id="oh-preset-selector">
-              <option value="amenity=university and (type:node or type:way)">CAT-01: Educación y Universidad (amenity=university)</option>
-              <option value="(shop=* or amenity=pharmacy or amenity=clinic or amenity=restaurant or amenity=cafe) and (type:node or type:way)">CAT-02: Servicios, Comercio y Salud Barrial (shop=* / amenity=*)</option>
-              <option value="(highway=bus_stop or railway=station or railway=subway_entrance) and (type:node or type:way)">CAT-03: Movilidad y Transporte Público (bus_stop / metro)</option>
-              <option value="(highway=cycleway or cycleway=*) and type:way">CAT-04: Movilidad Activa y Ciclovías (cycleway=*)</option>
-              <option value="leisure=park and (type:way or type:relation)">CAT-05: Áreas Verdes y Espacio Público (leisure=park)</option>
-              <option value="(historic=* or heritage=*) and (type:node or type:way)">CAT-06: Patrimonio Histórico y Cultura (historic=*)</option>
-              <option value="(highway=crossing or kerb=*) and type:node">CAT-07: Accesibilidad Universal y Caminabilidad (crossing / kerb)</option>
-              <option value="natural=tree and type:node">CAT-08: Biodiversidad Urbana y Arbolado (natural=tree)</option>
-              <option value="building=* and type:way" selected>CAT-09: Edificaciones y Huella Urbana (building=*)</option>
-              <option value="landuse=* and (type:way or type:relation)">CAT-10: Coberturas y Usos de Suelo (landuse=*)</option>
-              <option value="custom">— Filtro ohsome personalizado —</option>
-            </select>
-          </div>
-          <div class="campo" style="width:160px;">
-            <label for="oh-intervalo-selector">Intervalo temporal</label>
-            <select id="oh-intervalo-selector">
-              <option value="P1Y" selected>Anual (últimos 5 años)</option>
-              <option value="P6M">Semestral</option>
-              <option value="P1M">Mensual</option>
-            </select>
-          </div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1;">
-            <label for="oh-filtro">Expresión de filtro ohsome</label>
-            <input type="text" id="oh-filtro" placeholder="Ej: amenity=university and (type:node or type:way), building=*, landuse=*" value="">
-          </div>
-        </div>
-        <div class="fila-campos" style="margin-top:10px;">
-          <div class="campo" style="flex:1.4; min-width:260px;">
-            <label for="oh-version-selector">Versión del servicio ohsome (HeiGIT)</label>
-            <select id="oh-version-selector">
-              <option value="v1" selected>ohsome API v1 (Acceso público sin clave)</option>
-              <option value="v2">ohsome API v2 (Alta velocidad — opcional con clave)</option>
-            </select>
-          </div>
-          <div class="campo" id="contenedor-oh-api-key" style="display:none; flex:1.6; min-width:240px;">
-            <label for="oh-api-key">Clave de acceso HeiGIT (ohsome v2)</label>
-            <input type="password" id="oh-api-key" placeholder="Pega tu clave de api.heigit.org (opcional)">
-          </div>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-          <button class="accion" id="btn-consultar-ohsome">Calcular serie histórica de mapeo</button>
-        </div>
-
-        <div class="caja-guia-referencia">
-          <h4>¿Cómo se mide la evolución histórica del mapeo?</h4>
-          <p>
-            El servicio <strong>ohsome</strong> del instituto HeiGIT analiza el historial completo de ediciones en OpenStreetMap bajo la norma <strong>ISO 19157</strong>:
-          </p>
-          <ul>
-            <li><strong>Cálculo en metros y hectáreas reales:</strong> Todas las geometrías se miden en el sistema métrico oficial de Santiago (UTM Huso 19 Sur, EPSG:32719).</li>
-            <li><strong>Métrica según el tipo de objeto:</strong> Las vías se miden por longitud (km), las edificaciones por superficie (m²) y los equipamientos por cantidad de registros.</li>
-            <li><strong>Madurez del mapeo:</strong> Una curva estabilizada indica que la cobertura del barrio ya está prácticamente completa.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bloque resultado" id="resultado-ohsome" aria-live="polite">
-        <p class="descripcion">Todavía no hay ningún cálculo realizado.</p>
-      </div>
-
-      <!-- SUBMÓDULO C: CONTROL DE CAMBIOS Y VALIDACIÓN CON OSMCHA -->
-      <div class="bloque" id="sec-calidad-osmcha" style="margin-top:16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--linea); padding-bottom:6px; margin-bottom:12px;">
-          <h3 style="margin:0;">Revisión de ediciones recientes en el área (OSMCha)</h3>
-        </div>
-        <p class="descripcion" style="margin-bottom:10px;">
-          Consulta los últimos conjuntos de cambios realizados por colaboradores en el área de estudio, revisa el autor, el programa utilizado y el comentario de cada edición.
-        </p>
-
-        <div class="fila-campos">
-          <div class="campo" style="flex:1.5; min-width:240px;">
-            <label for="osmcha-filtro-modo">Modo de búsqueda</label>
-            <select id="osmcha-filtro-modo">
-              <option value="bbox" selected>Ediciones recientes en el recuadro de búsqueda actual</option>
-              <option value="id">Buscar un conjunto de cambios por su número identificador</option>
-            </select>
-          </div>
-          <div class="campo" id="contenedor-osmcha-id" style="display:none; flex:1; min-width:180px;">
-            <label for="osmcha-input-id">Identificador del conjunto de cambios (ej: 148202930)</label>
-            <input type="text" id="osmcha-input-id" placeholder="Ingresa el número de edición">
-          </div>
-        </div>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-          <button class="accion" id="btn-ejecutar-validacion-osmcha">Consultar ediciones recientes</button>
-          <button class="accion secundaria" id="btn-abrir-osmcha-externo">Abrir en osmcha.org ↗</button>
-        </div>
-
-        <!-- Contenedor interactivo para OSM Changesets & OSMCha API -->
-        <div id="contenedor-auditoria-osmcha" style="margin-top:14px;"></div>
-      </div>
-    </section>
-
     <!-- ---------- 07. MANUAL DE USO Y ACTUALIZACIÓN TÉCNICA ---------- -->
     <section class="panel" id="panel-manual">
       <header class="cabecera-modulo-limpia" id="sec-manual-cabecera">
@@ -1615,161 +944,6 @@
         <p class="descripcion">Guía práctica por capítulos para utilizar el visor, interpretar los indicadores e incorporar nuevas capas a la plataforma.</p>
       </header>
       <div id="contenido-manual"></div>
-    </section>
-
-    <!-- ---------- 08. METADATOS ISO 19115 / ISO 19139 ---------- -->
-    <section class="panel" id="panel-metadatos-iso">
-      <header class="cabecera-modulo-limpia" id="sec-meta-cabecera">
-        <h2>Catálogo y generador de metadatos</h2>
-        <p class="descripcion">Consulta y exporta la ficha técnica, fuente, sistema de coordenadas y licencia de cada capa en formato JSON (ISO 19115) o XML (ISO 19139 / IDE Chile).</p>
-      </header>
-
-      <!-- Resumen de Calidad con Explicación en Lenguaje Ciudadano y Tooltip Técnico -->
-      <div class="caja-metacalidad-kpi" id="sec-meta-calidad-general">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 8px;">
-          <h3 style="margin: 0; color: var(--esmeralda); font-size: 1.12rem;">
-            Calidad general de la base de datos (133 capas)
-          </h3>
-          <span class="insignia-calidad-explicada" title="Fórmula técnica ISO 19157 / ISO 19115 (modelo WLC v2.0): 50 % Pilar Cuantitativo Espacial (96,7 %) + 50 % Pilar Cualitativo de Metadatos (94,1 %) = 95,4 %.">
-            Índice global (<abbr title="Índice Global de Calidad y MetaCalidad Geográfica">IGV</abbr>): 95,4 % · Nivel óptimo (A+)
-          </span>
-        </div>
-        <p style="margin: 0 0 8px 0; font-size: 0.96rem; color: var(--tinta); font-weight: 600;">
-          Calidad muy alta: 9 de cada 10 capas cumplen el estándar completo (91 capas en nivel óptimo A+ y 43 en nivel alto A; ninguna capa con defectos críticos).
-        </p>
-        <p style="margin: 0 0 12px 0; font-size: 0.9rem; color: var(--tinta-suave); line-height: 1.55;">
-          Desglose técnico (normas ISO 19115-1 e ISO 19157): <strong>96,7 % en consistencia geométrica y espacial</strong> y <strong>94,1 % en documentación de metadatos</strong> (96,4 % en metadatos básicos, 94,0 % en conformidad normativa, 98,0 % en origen y marco legal, 81,2 % en resolución geodésica y 97,4 % en disponibilidad de descarga).
-        </p>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="docs/perfil_metadatos_vgi.xlsx" download="perfil_metadatos_vgi.xlsx" class="accion primaria-cta" style="font-size: 0.85rem; padding: 7px 14px; text-decoration: none;">
-            Descargar matriz en Excel (.xlsx)
-          </a>
-          <a href="docs/ANALISIS_METACALIDAD.md" target="_blank" class="accion secundaria" style="font-size: 0.85rem; padding: 7px 14px; text-decoration: none;">
-            Ver informe detallado de calidad
-          </a>
-          <a href="docs/matriz_metacalidad.json" download="matriz_metacalidad.json" class="accion secundaria" style="font-size: 0.85rem; padding: 7px 14px; text-decoration: none;">
-            Descargar datos en JSON
-          </a>
-        </div>
-      </div>
-
-      <div class="bloque">
-        <button class="accion secundaria" id="btn-prellenar-metadatos">Prellenar con datos de la última consulta (Barrio Brasil)</button>
-      </div>
-
-      <form class="bloque" id="form-metadatos">
-        <h3>Identificación del Recurso</h3>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1"><label for="md-titulo">Título del recurso</label><input type="text" id="md-titulo" value="Catastro VGI de Equipamiento Comunitario y Urbano: Barrio Brasil, Santiago Centro"></div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1.5;">
-            <label for="md-categoria-iso">Categoría Temática ISO 19115 (topicCategory)</label>
-            <select id="md-categoria-iso">
-              <option value="planningCadastre" selected>planningCadastre (Planificación Urbana y Catastro)</option>
-              <option value="structure">structure (Estructuras, Edificaciones y Casonas)</option>
-              <option value="transportation">transportation (Transporte, Red Vial y Ciclovías)</option>
-              <option value="society">society (Sociedad, Equipamiento y Cultura)</option>
-              <option value="health">health (Salud, Farmacias y Servicios de Emergencia)</option>
-              <option value="biota">biota (Biota, Fauna y Flora Urbana)</option>
-              <option value="environment">environment (Medio Ambiente y Espacios Públicos)</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1;">
-            <label for="md-frecuencia">Frecuencia de Mantenimiento</label>
-            <select id="md-frecuencia">
-              <option value="asNeeded" selected>asNeeded (Según necesidad / Mapeo continuo VGI)</option>
-              <option value="monthly">monthly (Mensual)</option>
-              <option value="quarterly">quarterly (Trimestral)</option>
-              <option value="annually">annually (Anual)</option>
-              <option value="continual">continual (En tiempo real)</option>
-            </select>
-          </div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1"><label for="md-resumen">Resumen / Abstract</label><textarea id="md-resumen" rows="3">Conjunto de datos espaciales voluntarios compilado para la gestión territorial en Barrio Brasil (Santiago Centro, Chile). Comprende infraestructura comunitaria, movilidad, espacio público, patrimonio y comercio.</textarea></div>
-        </div>
-
-        <h3>Extensión Geográfica y Sistema de Coordenadas</h3>
-        <div class="fila-campos">
-          <div class="campo"><label for="md-oeste">Oeste (Lng Min)</label><input type="number" step="any" id="md-oeste"></div>
-          <div class="campo"><label for="md-sur">Sur (Lat Min)</label><input type="number" step="any" id="md-sur"></div>
-          <div class="campo"><label for="md-este">Este (Lng Max)</label><input type="number" step="any" id="md-este"></div>
-          <div class="campo"><label for="md-norte">Norte (Lat Max)</label><input type="number" step="any" id="md-norte"></div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1.2;">
-            <label for="md-srs-select">Sistema de Referencia Espacial (Seleccionable)</label>
-            <select id="md-srs-select">
-              <option value="EPSG:4326 (WGS84)" selected>EPSG:4326 — WGS84 (Grados Decimales / GPS y Web)</option>
-              <option value="EPSG:5361 (SIRGAS-Chile 2016)">EPSG:5361 — SIRGAS-Chile 2016 (Oficial IDE Chile / SNIT)</option>
-              <option value="EPSG:32719 (WGS 84 / UTM Zona 19S)">EPSG:32719 — UTM Huso 19 Sur (Métrico para Santiago)</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1;">
-            <label for="md-srs">Código SRS Oficial</label>
-            <input type="text" id="md-srs" value="EPSG:4326 (WGS84) / Compatible con EPSG:5361 SIRGAS-Chile">
-          </div>
-        </div>
-
-        <h3>Linaje, Metodología y Restricciones</h3>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1"><label for="md-linaje">Linaje / Proceso de captura</label><textarea id="md-linaje" rows="2">Extraído de OpenStreetMap vía Overpass API QL y de GBIF Occurrence API. Normalizado según taxonomía de 10 categorías maestras VGI en septiembre de 2026.</textarea></div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1"><label for="md-procesamiento">Descripción del Procesamiento y Geoprocesos (Linaje técnico)</label><textarea id="md-procesamiento" rows="2">Normalización de atributos según taxonomía VGI de 10 categorías (CAT-01 a CAT-10) y cálculo de superficies métricas en m² (EPSG:32719).</textarea></div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1.2;">
-            <label for="md-licencia-select">Marco Jurídico de Licenciamiento (Seleccionable)</label>
-            <select id="md-licencia-select">
-              <option value="odbl" selected>Open Database License (ODbL 1.0) — OpenStreetMap</option>
-              <option value="cc_by">Creative Commons Atribución (CC-BY 4.0) — GBIF</option>
-              <option value="datos_gob">Datos Abiertos del Estado de Chile (IDE Chile / GeoNode)</option>
-              <option value="vgi_mixta">Licencia Mixta VGI (ODbL 1.0 para OSM + CC-BY para GBIF)</option>
-            </select>
-          </div>
-          <div class="campo" style="flex:1;">
-            <label for="md-rol-select">Rol de la Parte Responsable</label>
-            <select id="md-rol-select">
-              <option value="author" selected>author (Autor / Geógrafo Investigador)</option>
-              <option value="custodian">custodian (Custodio Institucional)</option>
-              <option value="pointOfContact">pointOfContact (Punto de Contacto)</option>
-              <option value="distributor">distributor (Distribuidor de Datos Abiertos)</option>
-            </select>
-          </div>
-        </div>
-        <div class="fila-campos">
-          <div class="campo" style="flex:1"><label for="md-restricciones">Declaración de Restricciones Legales y Licencia</label><textarea id="md-restricciones" rows="2">Open Database License (ODbL) 1.0 para datos vectoriales de OSM (© colaboradores de OpenStreetMap); Creative Commons CC-BY 4.0 para registros biológicos.</textarea></div>
-        </div>
-
-        <h3>Punto de Contacto Responsable</h3>
-        <div class="fila-campos">
-          <div class="campo"><label for="md-contacto-persona">Persona de contacto / Autor</label><input type="text" id="md-contacto-persona" value="GEOJOTA"></div>
-          <div class="campo"><label for="md-contacto-org">Organización</label><input type="text" id="md-contacto-org" value="Atlas de Información Geográfica Voluntaria — Nodo GeoAbierto"></div>
-          <div class="campo"><label for="md-contacto-correo">Correo electrónico</label><input type="email" id="md-contacto-correo" value="tucorreoelectronico@gmail.com"></div>
-        </div>
-
-        <div class="caja-guia-referencia" id="sec-meta-estandar">
-          <h4>🏛️ Estándar de Metadatos Espaciales (ISO 19115 / ISO 19139 / IDE Chile)</h4>
-          <p>
-            Los metadatos son la documentación estandarizada que responde a las preguntas clave sobre cualquier dato geográfico: <em>¿quién lo produjo?, ¿cuándo?, ¿con qué método (linaje)?, ¿con qué licencia? y ¿en qué sistema de coordenadas?</em>.
-          </p>
-          <ul>
-            <li><strong>Perfil Nacional de Metadatos de Chile:</strong> Basado en ISO 19115:2003 / Cor 1:2006 y codificado en XML mediante ISO 19139:2007. Obligatorio para servicios públicos bajo el SNIT (Decreto N° 28 del Ministerio de Bienes Nacionales).</li>
-            <li><strong>Interoperabilidad Institucional:</strong> El archivo XML descargable desde este panel puede subirse directamente a catálogos nacionales como GeoNetwork o plataformas comunales como GeoNode.</li>
-            <li><strong>Ley N° 20.285:</strong> Marco legal chileno de Acceso a la Información Pública y Reutilización de Datos Abiertos.</li>
-          </ul>
-        </div>
-
-        <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap;">
-          <button type="submit" class="accion">Generar Ficha en Pantalla</button>
-          <button type="button" class="accion" id="btn-exportar-json" style="background:var(--agua);">📄 Exportar JSON (ISO 19115)</button>
-          <button type="button" class="accion secundaria" id="btn-exportar-xml">🏛️ Exportar XML (ISO 19139 / IDE Chile)</button>
-        </div>
-      </form>
-
-      <div class="bloque resultado" id="resultado-metadatos" aria-live="polite"></div>
     </section>
 
     <!-- ---------- 09. DICCIONARIO TERRITORIAL (133 CAPAS) ---------- -->
@@ -1946,27 +1120,28 @@
 <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261109_v42"></script>
-<script src="js/modulos/db_client.js?v=20261109_v42"></script>
-<script src="js/modulos/geodesia.js?v=20261109_v42"></script>
-<script src="js/modulos/mapa.js?v=20261109_v42"></script>
-<script src="js/modulos/importador_capas.js?v=20261109_v42"></script>
-<script src="js/modulos/ide_chile.js?v=20261109_v42"></script>
-<script src="js/modulos/evaluador_normativo.js?v=20261109_v42"></script>
-<script src="js/modulos/osm.js?v=20261109_v42"></script>
-<script src="js/modulos/ohsome.js?v=20261109_v42"></script>
-<script src="js/modulos/gbif.js?v=20261109_v42"></script>
-<script src="js/modulos/umap.js?v=20261109_v42"></script>
-<script src="js/modulos/metadatos.js?v=20261109_v42"></script>
-<script src="js/modulos/licencias.js?v=20261109_v42"></script>
-<script src="js/modulos/manual.js?v=20261109_v42"></script>
-<script src="js/modulos/indicadores_analisis.js?v=20261109_v42"></script>
-<script src="js/modulos/taginfo.js?v=20261109_v42"></script>
-<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v42"></script>
-<script src="js/modulos/calidad_analyst.js?v=20261109_v42"></script>
-<script src="js/modulos/diccionario.js?v=20261109_v42"></script>
-<script src="js/modulos/manifold_canvas.js?v=20261109_v42"></script>
-<script src="js/modulos/leyenda_atajos.js?v=20261109_v42"></script>
-<script src="js/app.js?v=20261109_v42"></script>
+<script src="js/config.js?v=20261109_v44"></script>
+<script src="js/modulos/db_client.js?v=20261109_v44"></script>
+<script src="js/modulos/geodesia.js?v=20261109_v44"></script>
+<script src="js/modulos/mapa.js?v=20261109_v44"></script>
+<script src="js/modulos/importador_capas.js?v=20261109_v44"></script>
+<script src="js/modulos/ide_chile.js?v=20261109_v44"></script>
+<script src="js/modulos/evaluador_normativo.js?v=20261109_v44"></script>
+<script src="js/modulos/osm.js?v=20261109_v44"></script>
+<script src="js/modulos/ohsome.js?v=20261109_v44"></script>
+<script src="js/modulos/gbif.js?v=20261109_v44"></script>
+<script src="js/modulos/umap.js?v=20261109_v44"></script>
+<script src="js/modulos/metadatos.js?v=20261109_v44"></script>
+<script src="js/modulos/licencias.js?v=20261109_v44"></script>
+<script src="js/modulos/manual.js?v=20261109_v44"></script>
+<script src="js/modulos/indicadores_analisis.js?v=20261109_v44"></script>
+<script src="js/modulos/taginfo.js?v=20261109_v44"></script>
+<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v44"></script>
+<script src="js/modulos/calidad_analyst.js?v=20261109_v44"></script>
+<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261109_v44"></script>
+<script src="js/modulos/diccionario.js?v=20261109_v44"></script>
+<script src="js/modulos/manifold_canvas.js?v=20261109_v44"></script>
+<script src="js/modulos/leyenda_atajos.js?v=20261109_v44"></script>
+<script src="js/app.js?v=20261109_v44"></script>
 </body>
 </html>

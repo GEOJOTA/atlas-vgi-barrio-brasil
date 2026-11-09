@@ -1,5 +1,5 @@
 # Informe de Auditoría del Índice de Calidad y MetaCalidad Cartográfica (IGV / IGMC)
-### Atlas de Información Geográfica Voluntaria para la Gestión Territorial — Nodo GeoAbierto
+### Atlas de Información Geográfica Voluntaria para la Gestión Territorial — Nodo GeoAbierto UAH
 ---
 
 ## 🧭 Índice de Contenidos
@@ -16,9 +16,9 @@
 
 ## 1. Resumen Ejecutivo y Dictamen de Calidad Integral
 
-Se realizó una auditoría universal programática del **Índice Global de Calidad Geográfica (IGV / IGMC)**, integrando el **Pilar Cuantitativo Espacial (50%)** (consistencia topológica OGC, completitud tabular, rango de coordenadas, estructura y micro-slivers) con el **Pilar Cualitativo de Metadatos (50%)** (completitud de catálogo ISO 19115, conformidad sintáctica, linaje jurídico y accesibilidad operativa) sobre el **100% de la base de datos cartográfica** del proyecto, compuesta por **133 componentes espaciales** (123 capas oficiales del Estado de Chile y 10 macro-categorías comunitarias VGI de OpenStreetMap y GBIF), abarcando un volumen vectorial activo verificado de **2155.89 MB** (2.11 GB) —integrando tanto los extractos locales de Barrio Brasil (7.97 MB VGI) como los extractos masivos regionales de **Geofabrik RM** (1207.60 MB VGI)—, en el marco de un repositorio integral en disco de **3411.28 MB** (3.33 GB / 214 archivos GeoJSON).
+Se realizó una auditoría universal programática del **Índice Global de Calidad Geográfica (IGV / IGMC)**, integrando el **Pilar Cuantitativo Espacial (50%)** (consistencia topológica OGC, completitud tabular, rango de coordenadas, estructura y micro-slivers) con el **Pilar Cualitativo de Metadatos (50%)** (completitud de catálogo ISO 19115, conformidad sintáctica, linaje jurídico y accesibilidad operativa) sobre el **100% de la base de datos cartográfica** del proyecto, compuesta por **132 componentes espaciales** (122 capas oficiales del Estado de Chile y 10 macro-categorías comunitarias VGI de OpenStreetMap y GBIF), abarcando un volumen vectorial activo verificado de **2153.94 MB** (2.10 GB) —integrando tanto los extractos locales de Barrio Brasil (7.97 MB VGI) como los extractos masivos regionales de **Geofabrik RM** (1207.60 MB VGI)—, en el marco de un repositorio integral en disco de **3421.83 MB** (3.34 GB / 214 archivos GeoJSON).
 
-> **DICTAMEN GLOBAL DE CALIDAD GEOESPACIAL:** El repositorio cartográfico alcanza un **Índice Global de Calidad (IGV) de 95.3%**, clasificando formalmente en la categoría **Grado A+ (Excelente)** conforme al marco de evaluación de la norma **ISO 19157:2013 / ISO 19157-1:2023**. El desempeño se desglosa en **96.5% en el Pilar Cuantitativo Espacial** y **94.1% en el Pilar Cualitativo de Metadatos**. La totalidad de los componentes vectoriales se encuentra operativa en el Geoportal, y el sistema dispone ahora del **Evaluador Universal de Calidad (Módulo 06)** que permite auditar cualquier dato vectorial externo (.geojson o texto plano) bajo las mismas métricas estandarizadas.
+> **DICTAMEN GLOBAL DE CALIDAD GEOESPACIAL:** El repositorio cartográfico alcanza un **Índice Global de Calidad (IGV) de 95.3%**, clasificando formalmente en la categoría **Grado A+ (Excelente)** conforme al marco de evaluación de la norma **ISO 19157:2013 / ISO 19157-1:2023**. El desempeño se desglosa en **96.5% en el Pilar Cuantitativo Espacial** y **94.2% en el Pilar Cualitativo de Metadatos**. La totalidad de los componentes vectoriales se encuentra operativa en el Geoportal, y el sistema dispone ahora del **Evaluador Universal de Calidad (Módulo 06)** que permite auditar cualquier dato vectorial externo (.geojson o texto plano) bajo las mismas métricas estandarizadas.
 
 ### Indicadores Clave de Desempeño (KPIs del Modelo Dual IGV)
 
@@ -29,19 +29,19 @@ Se realizó una auditoría universal programática del **Índice Global de Calid
 | ├── 2. Completitud Tabular (Comp) | ISO 19157 / Celdas no nulas | 25% del pilar | **96.5%** | 🟢 Muy Bueno |
 | ├── 3. Integridad Posicional (Pos) | EPSG:4326 / EPSG:32719 | 20% del pilar | **99.8%** | 🟢 Excelente |
 | ├── 4. Estructura y Esquema (Estruc) | Homogeneidad & Clave Única | 15% del pilar | **86.3%** | 🟢 Muy Bueno |
-| └── 5. Granularidad Geométrica (Gran) | Complejidad & Sin Slivers | 10% del pilar | **95.1%** | 🟢 Excelente |
-| 🛡️ **PILAR CUALITATIVO METADATOS (S_cual)** | **ISO 19115-1 / IDE Chile** | **50% (Global)** | **94.1%** | 🟢 Excelente |
+| └── 5. Granularidad Geométrica (Gran) | Complejidad & Sin Slivers | 10% del pilar | **95.0%** | 🟢 Excelente |
+| 🛡️ **PILAR CUALITATIVO METADATOS (S_cual)** | **ISO 19115-1 / IDE Chile** | **50% (Global)** | **94.2%** | 🟢 Excelente |
 | ├── 1. Metadatos Núcleo (MC) | ISO 19115 Core (10 campos) | 30% del pilar | **96.4%** | 🟢 Excelente |
-| ├── 2. Conformidad Normativa (CC) | ISO 19139 / ISO 19110 | 20% del pilar | **94.0%** | 🟢 Excelente |
-| ├── 3. Linaje y Trazabilidad (LL) | Ley 20.285 / ODbL / CC-BY | 25% del pilar | **97.9%** | 🟢 Excelente |
-| ├── 4. Resolución Geodésica (RG) | EPSG:32719 UTM 19S / Escala Cartográfica | 15% del pilar | **81.0%** | 🟢 Excelente |
-| └── 5. Accesibilidad Operativa (AI) | CDN Edge / Sin Punteros Rotos | 10% del pilar | **97.4%** | 🟢 Excelente |
+| ├── 2. Conformidad Normativa (CC) | ISO 19139 / ISO 19110 | 20% del pilar | **93.9%** | 🟢 Excelente |
+| ├── 3. Linaje y Trazabilidad (LL) | Ley 20.285 / ODbL / CC-BY | 25% del pilar | **98.2%** | 🟢 Excelente |
+| ├── 4. Resolución Geodésica (RG) | EPSG:32719 UTM 19S / Escala Cartográfica | 15% del pilar | **81.2%** | 🟢 Excelente |
+| └── 5. Accesibilidad Operativa (AI) | CDN Edge / Sin Punteros Rotos | 10% del pilar | **97.3%** | 🟢 Excelente |
 | 🏆 **ÍNDICE GLOBAL DE CALIDAD (IGV)** | **ISO 19157:2023 & ISO 19115** | **100% TOTAL** | **95.3%** | **🟢 Grado A+ (Excelente)** |
 
 ### Distribución de Grados de Calidad en la Base de Datos
 
-- **Grado A+ (Excelente):** `█████████████░░░░░░░` **90 capas** (67.7%)
-- **Grado A (Muy Bueno):** `██████░░░░░░░░░░░░░░` **43 capas** (32.3%)
+- **Grado A+ (Excelente):** `████████████░░░░░░░░` **85 capas** (64.4%)
+- **Grado A (Muy Bueno):** `███████░░░░░░░░░░░░░` **47 capas** (35.6%)
 - **Grado B (Aceptable):** `░░░░░░░░░░░░░░░░░░░░` **0 capas** (0.0%)
 - **Grado C (Deficiente):** `░░░░░░░░░░░░░░░░░░░░` **0 capas** (0.0%)
 
@@ -110,7 +110,7 @@ SUMA_k(w_k) = 1.00   y   w_k > 0
 ```mermaid
 flowchart LR
     subgraph IN["1. INPUT / ENTRADA (Catálogo y Capas GeoJSON)"]
-        I1["134 Capas Operativas en data/*.geojson y src/data/*.geojson<br/>(123 Oficiales en ide_chile.js + 10 VGI en config.js)"]
+        I1["134 Capas Operativas en data/*.geojson y src/data/*.geojson<br/>(122 Oficiales en ide_chile.js + 10 VGI en config.js)"]
     end
     subgraph PROC["2. PIPELINE DE PROCESAMIENTO (Scripts Python y Módulo 06 JS)"]
         P1["scripts/analisis_metacalidad.py &<br/>scripts/modelo_indice_lineal_wlc.py"]
@@ -158,7 +158,7 @@ flowchart TD
 ```mermaid
 flowchart LR
     EXT["Usuario arrastra .geojson externo<br/>o pega texto plano"] --> MOD06["Módulo 06: Calidad & ICV<br/>(Submódulos A, B y C)"]
-    INT["O selecciona una de las 133 capas<br/>de la Geodatabase"] --> MOD06
+    INT["O selecciona una de las 132 capas<br/>de la Geodatabase"] --> MOD06
     MOD06 --> ALG["Submódulo A: Evaluador Universal WLC v2.0<br/>(src/js/modulos/evaluador_calidad_cuantitativa.js)"]
     MOD06 --> OHS["Submódulo B: Series ohsome API v1/v2<br/>Índice de Saturación y Maduración Territorial<br/>(Herfort et al., 2023 / ISO 19157)"]
     MOD06 --> CHA["Submódulo C: Auditoría de Changesets<br/>en OSMCha"]
@@ -169,7 +169,7 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    subgraph FuentesOficiales ["Datos Oficiales del Estado de Chile - 123 Capas"]
+    subgraph FuentesOficiales ["Datos Oficiales del Estado de Chile - 122 Capas"]
         O1["Ministerios: MINVU, MTT, MMA, MINSAL, MDSF"]
         O2["Servicios: INE Censo 2024, UOCT, DGA, CMN, SUBDERE"]
         O3["Marco Legal: Ley N° 20.285 de Transparencia Activa"]
@@ -217,10 +217,10 @@ graph TD
 - **Código de Capa:** `CAT-01` | **Identificador Interno:** `educacion`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Ley N° 21.091 sobre Educación Superior; Estándares de Infraestructura Escolar (MINEDUC); Perfil IDE Chile Educación.
-- **Volumen de Entidades:** **247 entidades (6.7% del universo local)** en Barrio Brasil | **7,503 entidades (0.5% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **247 entidades (6.7% del universo local)** en Barrio Brasil / UAH | **7,503 entidades (0.5% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Multi-geometría: Nodos (accesos/servicios), Vías (pabellones/aulas) y Relaciones (campus universitario)
 - **Taxonomía Urbana y Rol Funcional:** Equipamiento de educación superior, técnica, básica, media e inicial, junto con centros de investigación científica y bibliotecas comunitarias integradas a la trama barrial.
-- **Catálogo de Entidades Representadas:** Pabellones y casonas patrimoniales del campus universitario patrimonial (patrimonial en calles Almirante Barroso, Cienfuegos y Erasmo Escala), Liceo de Aplicación, INBA, escuelas básicas comunales, jardines infantiles (JUNJI/Integra) y salas de lectura comunitaria.
+- **Catálogo de Entidades Representadas:** Pabellones y casonas patrimoniales del campus Universidad Alberto Hurtado (UAH en calles Almirante Barroso, Cienfuegos y Erasmo Escala), Liceo de Aplicación, INBA, escuelas básicas comunales, jardines infantiles (JUNJI/Integra) y salas de lectura comunitaria.
 - **Claves y Valores OSM / Darwin Core:**
   - `amenity=university`
   - `amenity=college`
@@ -240,14 +240,14 @@ graph TD
 );
 out body; >; out skel qt;
 ```
-- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **91%** | RG: **79%** | AI: **95%** | **IGMC Global: 95.0% (A+ (Excelente))**
+- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **91%** | RG: **80%** | AI: **95%** | **IGMC Global: 95.0% (A+ (Excelente))**
 
 ### CAT-02 — Servicios Urbanos, Salud y Comercio Barrial
 
 - **Código de Capa:** `CAT-02` | **Identificador Interno:** `servicios`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Modelo de Atención Integral en Salud Familiar (MINSAL); Ley de Rentas Municipales (D.L. 3.063); D.S. N° 469/1993.
-- **Volumen de Entidades:** **365 entidades (9.9% del universo local)** en Barrio Brasil | **54,442 entidades (3.5% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **365 entidades (9.9% del universo local)** en Barrio Brasil / UAH | **54,442 entidades (3.5% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Multi-geometría: Nodos (locales en placa comercial), Vías (locales independientes) y Polígonos (recintos médicos)
 - **Taxonomía Urbana y Rol Funcional:** Red de abastecimiento de proximidad, microeconomía minorista barrial, servicios bancarios y postales, junto con infraestructura de salud primaria, consultorios familiares (CESFAM) y centros médicos.
 - **Catálogo de Entidades Representadas:** Almacenes de abarrotes, panaderías patrimoniales, botillerías, farmacias comunitarias (Farmacia Popular de Santiago), CESFAM Ignacio Domeyko, restaurantes y cafeterías del polo gastronómico de Plaza Brasil, sucursales bancarias y cajas vecinas.
@@ -274,14 +274,14 @@ out body; >; out skel qt;
 );
 out body; >; out skel qt;
 ```
-- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **92%** | RG: **80%** | AI: **90%** | **IGMC Global: 93.2% (A (Muy Bueno))**
+- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **91%** | RG: **81%** | AI: **90%** | **IGMC Global: 93.3% (A (Muy Bueno))**
 
 ### CAT-03 — Movilidad, Transporte Público y Paraderos
 
 - **Código de Capa:** `CAT-03` | **Identificador Interno:** `transporte`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Manual de Normas Técnicas para Paraderos Red Movilidad (DTPM 2023); Manual REDEVU (MINVU); Ley N° 18.290 de Tránsito.
-- **Volumen de Entidades:** **191 entidades (5.2% del universo local)** en Barrio Brasil | **326,545 entidades (21.0% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **191 entidades (5.2% del universo local)** en Barrio Brasil / UAH | **326,545 entidades (21.0% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Nodos puntuales (paraderos, postes de parada, bocas de metro) y Vías (plataformas de trasbordo)
 - **Taxonomía Urbana y Rol Funcional:** Infraestructura de transporte público colectivo multimodal: red estructurante de buses metropolitanos, accesos a red de metro subterráneo y nodos de intercambio modal interurbano.
 - **Catálogo de Entidades Representadas:** Refugios peatonales y paraderos del Sistema Red Movilidad (ejes Alameda, Av. Brasil, San Pablo, Manuel Rodríguez), accesos y bocas de estaciones de Metro: Los Héroes (Líneas 1 y 2), Santa Ana (Líneas 2 y 5), Cumming (Línea 5) y República (Línea 1).
@@ -301,17 +301,17 @@ out body; >; out skel qt;
 );
 out body; >; out skel qt;
 ```
-- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **91%** | RG: **80%** | AI: **90%** | **IGMC Global: 93.2% (A (Muy Bueno))**
+- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **90%** | RG: **80%** | AI: **90%** | **IGMC Global: 93.0% (A (Muy Bueno))**
 
 ### CAT-04 — Movilidad Activa, Ciclovías y Peatonalidad
 
 - **Código de Capa:** `CAT-04` | **Identificador Interno:** `movilidad_activa`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Manual de Vialidad del Ciclo (MINVU/MTT 2015); Ley de Convivencia Vial N° 21.088; D.S. N° 102/2019 MTT.
-- **Volumen de Entidades:** **11 entidades (0.3% del universo local)** en Barrio Brasil | **128,891 entidades (8.3% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **11 entidades (0.3% del universo local)** en Barrio Brasil / UAH | **128,891 entidades (8.3% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Vías lineales continuas (trazados de ciclovías) y Nodos (estacionamientos y herramientas comunitarias)
 - **Taxonomía Urbana y Rol Funcional:** Ejes viales destinados a la micromovilidad y movilidad no motorizada, ciclovías segregadas, ciclobandas demarcadas, infraestructura de estacionamiento y mantención de ciclos.
-- **Catálogo de Entidades Representadas:** Ciclovías segregadas bidireccionales (eje Rosas y eje Compañía de Jesús), ciclobanda Av. Brasil, estacionamientos públicos para bicicletas en aceras y patios del campus universitario, talleres comunitarios de reparación.
+- **Catálogo de Entidades Representadas:** Ciclovías segregadas bidireccionales (eje Rosas y eje Compañía de Jesús), ciclobanda Av. Brasil, estacionamientos públicos para bicicletas en aceras y patios del campus UAH, talleres comunitarios de reparación.
 - **Claves y Valores OSM / Darwin Core:**
   - `highway=cycleway`
   - `cycleway=lane`
@@ -330,14 +330,14 @@ out body; >; out skel qt;
 );
 out body; >; out skel qt;
 ```
-- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **90%** | RG: **80%** | AI: **90%** | **IGMC Global: 93.2% (A (Muy Bueno))**
+- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **91%** | RG: **79%** | AI: **90%** | **IGMC Global: 93.2% (A (Muy Bueno))**
 
 ### CAT-05 — Áreas Verdes, Espacio Público y Recreación
 
 - **Código de Capa:** `CAT-05` | **Identificador Interno:** `espacio_publico`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Política Nacional de Parques Urbanos (MINVU 2021); Estándares Urbanos Indicativos de Áreas Verdes (CNDU 2018); Art. 2.2.4 OGUC.
-- **Volumen de Entidades:** **144 entidades (3.9% del universo local)** en Barrio Brasil | **41,433 entidades (2.7% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **144 entidades (3.9% del universo local)** en Barrio Brasil / UAH | **41,433 entidades (2.7% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Vías cerradas y Relaciones multipolígono (superficies métricas de plazas/parques) y Nodos (mobiliario urbano)
 - **Taxonomía Urbana y Rol Funcional:** Infraestructura verde urbana y espacios abiertos de uso colectivo: parques urbanos, plazas barriales de permanencia, áreas de juegos infantiles, canchas comunitarias y mobiliario urbano de descanso.
 - **Catálogo de Entidades Representadas:** Plaza Brasil (15.200 m² con juegos escultóricos de Federica Matta), Plaza Manuel Rodríguez, bandejones verdes arbolados de Av. Brasil, multicanchas comunitarias de calle Maturana, plazoletas vecinales y bancos públicos de permanencia.
@@ -367,10 +367,10 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-06` | **Identificador Interno:** `patrimonio`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Ley N° 17.288 de Monumentos Nacionales; D.E. N° 126/2000 Mineduc (Zona Típica Barrio Brasil); Inmuebles de Conservación Histórica PRC Santiago.
-- **Volumen de Entidades:** **71 entidades (1.9% del universo local)** en Barrio Brasil | **2,576 entidades (0.2% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **71 entidades (1.9% del universo local)** en Barrio Brasil / UAH | **2,576 entidades (0.2% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Multi-geometría: Vías poligonales (edificaciones patrimoniales e iglesias) y Nodos (monumentos y placas)
 - **Taxonomía Urbana y Rol Funcional:** Bienes del patrimonio cultural material e inmaterial: arquitectura patrimonial vernácula y monumental, inmuebles de conservación histórica, sitios de memoria de derechos humanos y centros culturales comunitarios.
-- **Catálogo de Entidades Representadas:** Cités patrimoniales de calles Huérfanos, Compañía y Cienfuegos; Basílica del Salvador; Iglesia San Saturnino; Casonas patrimoniales (siglos XIX e inicios del XX); centros culturales comunitarios (Galpón Víctor Jara, teatros independientes); placas conmemorativas y monolitos de memoria.
+- **Catálogo de Entidades Representadas:** Cités patrimoniales de calles Huérfanos, Compañía y Cienfuegos; Basílica del Salvador; Iglesia San Saturnino; Casonas patrimoniales UAH (siglos XIX e inicios del XX); centros culturales comunitarios (Galpón Víctor Jara, teatros independientes); placas conmemorativas y monolitos de memoria.
 - **Claves y Valores OSM / Darwin Core:**
   - `historic=memorial`
   - `historic=monument`
@@ -395,17 +395,17 @@ out body; >; out skel qt;
 );
 out body; >; out skel qt;
 ```
-- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **90%** | RG: **81%** | AI: **100%** | **IGMC Global: 93.8% (A (Muy Bueno))**
+- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **92%** | RG: **80%** | AI: **100%** | **IGMC Global: 94.2% (A (Muy Bueno))**
 
 ### CAT-07 — Accesibilidad Universal y Discapacidad
 
 - **Código de Capa:** `CAT-07` | **Identificador Interno:** `accesibilidad`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** D.S. N° 50 OGUC sobre Accesibilidad Universal (MINVU 2016); Ley N° 20.422 de Igualdad de Oportunidades; Norma ISO 21542:2021.
-- **Volumen de Entidades:** **185 entidades (5.0% del universo local)** en Barrio Brasil | **94,461 entidades (6.1% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **185 entidades (5.0% del universo local)** en Barrio Brasil / UAH | **94,461 entidades (6.1% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Nodos puntuales (rebajes de cordón, cruces peatonales) y Vías (tramos de acera con atributos de accesibilidad)
 - **Taxonomía Urbana y Rol Funcional:** Micro-infraestructura física de caminabilidad inclusiva: rebajes de cordón en aceras, pasos peatonales semáforizados con aviso sonoro, bandas táctiles podotáctiles y accesibilidad motriz para sillas de ruedas.
-- **Catálogo de Entidades Representadas:** Rebajes de cordón en vados de esquina, cruces peatonales accesibles en ejes Brasil y Alameda, baldosas podotáctiles de avance y detención en veredas, rampas de acceso al campus universitario y edificios de servicios.
+- **Catálogo de Entidades Representadas:** Rebajes de cordón en vados de esquina, cruces peatonales accesibles en ejes Brasil y Alameda, baldosas podotáctiles de avance y detención en veredas, rampas de acceso al campus UAH y edificios de servicios.
 - **Claves y Valores OSM / Darwin Core:**
   - `highway=crossing`
   - `crossing=traffic_signals|uncontrolled|zebra`
@@ -432,10 +432,10 @@ out body; >; out skel qt;
 - **Código de Capa:** `CAT-08` | **Identificador Interno:** `biodiversidad`
 - **Licencia Legal:** `Creative Commons CC-BY 4.0 / CC0 1.0 (GBIF) y ODbL 1.0 (OSM)`
 - **Norma Técnica Chilena Asociada:** Ley Marco de Cambio Climático N° 21.455; Guía de Planificación de Arbolado Urbano (CONAF 2019); Estándar Darwin Core (TDWG).
-- **Volumen de Entidades:** **390 entidades (10.6% del universo local)** en Barrio Brasil | **121,134 entidades (7.8% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **390 entidades (10.6% del universo local)** en Barrio Brasil / UAH | **121,134 entidades (7.8% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Nodos (árboles individuales y observaciones biológicas Darwin Core) y Vías (alineaciones de árboles en ejes viales)
 - **Taxonomía Urbana y Rol Funcional:** Infraestructura ecológica urbana: arbolado viario de alineación, ejemplares arbóreos notables de plazas, masas boscosas y registros de ciencia ciudadana sobre flora y avifauna compilados bajo el estándar internacional Darwin Core.
-- **Catálogo de Entidades Representadas:** Arbolado de alineación viaria en Av. Brasil (plátano oriental, jacarandá), árboles patrimoniales de Plaza Brasil (Palma chilena Jubaea chilensis, liquidámbar), arbolado de patios interiores comunitarios y observaciones de aves urbanas validadas en GBIF.org.
+- **Catálogo de Entidades Representadas:** Arbolado de alineación viaria en Av. Brasil (plátano oriental, jacarandá), árboles patrimoniales de Plaza Brasil (Palma chilena Jubaea chilensis, liquidámbar), arbolado de patios interiores UAH y observaciones de aves urbanas validadas en GBIF.org.
 - **Claves y Valores OSM / Darwin Core:**
   - `natural=tree`
   - `natural=tree_row`
@@ -457,17 +457,17 @@ OSM: (
 ); out body; >; out skel qt;
 GBIF API: GET /v1/occurrence/search?decimalLatitude=-33.45,-33.43&decimalLongitude=-70.68,-70.65
 ```
-- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **90%** | RG: **79%** | AI: **90%** | **IGMC Global: 92.9% (A (Muy Bueno))**
+- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **91%** | RG: **78%** | AI: **90%** | **IGMC Global: 93.1% (A (Muy Bueno))**
 
 ### CAT-09 — Edificaciones y Huella Urbana
 
 - **Código de Capa:** `CAT-09` | **Identificador Interno:** `edificaciones`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Ley General de Urbanismo y Construcciones (LGUC); Art. 2.1.24 OGUC; Catastro de Bienes Raíces (SII); ISO 19157 (Completitud de Área).
-- **Volumen de Entidades:** **1673 entidades (45.5% del universo local)** en Barrio Brasil | **695,412 entidades (44.8% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **1673 entidades (45.5% del universo local)** en Barrio Brasil / UAH | **695,412 entidades (44.8% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Vías poligonales cerradas (type:way) y Relaciones multipolígono con patios interiores (type:relation)
 - **Taxonomía Urbana y Rol Funcional:** Morfología urbana construida: huella poligonal basal de edificaciones, volumetría, número de niveles y caracterización del tejido de manzaneo tradicional y contemporáneo.
-- **Catálogo de Entidades Representadas:** Huella vectorial cerrada de la totalidad de edificaciones de Barrio Brasil, casonas residenciales de fachada continua, edificios habitacionales de media altura, pabellones universitarios, templos y equipamientos institucionales.
+- **Catálogo de Entidades Representadas:** Huella vectorial cerrada de la totalidad de edificaciones de Barrio Brasil, casonas residenciales de fachada continua, edificios habitacionales de media altura, pabellones de la UAH, templos y equipamientos institucionales.
 - **Claves y Valores OSM / Darwin Core:**
   - `building=yes`
   - `building=residential`
@@ -489,17 +489,17 @@ GBIF API: GET /v1/occurrence/search?decimalLatitude=-33.45,-33.43&decimalLongitu
 );
 out body; >; out skel qt;
 ```
-- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **90%** | RG: **100%** | AI: **90%** | **IGMC Global: 96.8% (A+ (Excelente))**
+- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **91%** | RG: **100%** | AI: **90%** | **IGMC Global: 97.0% (A+ (Excelente))**
 
 ### CAT-10 — Coberturas y Usos de Suelo
 
 - **Código de Capa:** `CAT-10` | **Identificador Interno:** `cobertura_suelo`
 - **Licencia Legal:** `Open Database License (ODbL) 1.0 (ODC-ODbL)`
 - **Norma Técnica Chilena Asociada:** Plan Regulador Comunal de Santiago (PRC); Ley N° 21.074 de Fortalecimiento de la Regionalización; OGC LandInfra Standard.
-- **Volumen de Entidades:** **400 entidades (10.9% del universo local)** en Barrio Brasil | **79,747 entidades (5.1% del universo regional)** en Región Metropolitana
+- **Volumen de Entidades:** **400 entidades (10.9% del universo local)** en Barrio Brasil / UAH | **79,747 entidades (5.1% del universo regional)** en Región Metropolitana
 - **Tipología Geométrica OGC:** Vías cerradas (type:way) y Relaciones multipolígono (type:relation)
 - **Taxonomía Urbana y Rol Funcional:** Macrozoniación funcional del territorio barrial: caracterización de usos predominantes de suelo (residencial, comercial, educativo, recreativo) y tipología de materialidad superficial de calzadas y veredas.
-- **Catálogo de Entidades Representadas:** Polígonos de zonificación de uso residencial barrial, recintos educativos (campus universitario), zonas comerciales de proximidad, calzadas adoquinadas patrimoniales y pavimentos asfálticos contemporáneos.
+- **Catálogo de Entidades Representadas:** Polígonos de zonificación de uso residencial barrial, recintos educativos (campus UAH), zonas comerciales de proximidad, calzadas adoquinadas patrimoniales y pavimentos asfálticos contemporáneos.
 - **Claves y Valores OSM / Darwin Core:**
   - `landuse=residential`
   - `landuse=commercial`
@@ -520,25 +520,25 @@ out body; >; out skel qt;
 );
 out body; >; out skel qt;
 ```
-- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **90%** | RG: **79%** | AI: **90%** | **IGMC Global: 93.8% (A (Muy Bueno))**
+- **Evaluación de MetaCalidad (ISO 19157):** MC: **100%** | CC: **98%** | LL: **91%** | RG: **80%** | AI: **90%** | **IGMC Global: 93.8% (A (Muy Bueno))**
 
 ### Tabla Resumen de las 10 Macro-categorías VGI
 
-A continuación se presenta la distribución cuantitativa de entidades levantadas en el caso piloto de Barrio Brasil y en la Región Metropolitana (RM), contrastando los recuentos absolutos con su **peso porcentual normalizado (Share %)** respecto al universo total de VGI, junto con los puntajes normalizados de conformidad en las 5 dimensiones de MetaCalidad y el Índice Global de MetaCalidad (IGMC):
+A continuación se presenta la distribución cuantitativa de entidades levantadas en el caso piloto de Barrio Brasil / UAH y en la Región Metropolitana (RM), contrastando los recuentos absolutos con su **peso porcentual normalizado (Share %)** respecto al universo total de VGI, junto con los puntajes normalizados de conformidad en las 5 dimensiones de MetaCalidad y el Índice Global de MetaCalidad (IGMC):
 
 | Código | Macro-categoría VGI | Claves Principales OSM / GBIF | Geometría OGC | Entidades Local (N°) | % Local (Share) | Entidades RM (N°) | % RM (Share) | MC (%) | CC (%) | LL (%) | RG (%) | AI (%) | IGMC Global (%) | Grado ISO 19157 |
 | :---: | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **CAT-01** | Educación, Universidades e Investigación | `amenity=university|school, building=*` | Nodos, Vías, Multipolígonos | 247 | 6.7% | 7,503 | 0.5% | 100% | 98% | 91% | 79% | 95% | **95.0%** | 🟢 A+ |
-| **CAT-02** | Servicios Urbanos, Salud y Comercio Barrial | `shop=*, amenity=pharmacy|clinic|cafe` | Nodos, Vías, Polígonos | 365 | 9.9% | 54,442 | 3.5% | 100% | 98% | 92% | 80% | 90% | **93.2%** | 🔵 A |
-| **CAT-03** | Movilidad, Transporte Público y Paraderos | `highway=bus_stop, railway=station|subway` | Nodos puntuales, Vías | 191 | 5.2% | 326,545 | 21.0% | 100% | 98% | 91% | 80% | 90% | **93.2%** | 🔵 A |
-| **CAT-04** | Movilidad Activa, Ciclovías y Peatonalidad | `highway=cycleway, amenity=bicycle_parking` | Vías continuas, Nodos | 11 | 0.3% | 128,891 | 8.3% | 100% | 98% | 90% | 80% | 90% | **93.2%** | 🔵 A |
+| **CAT-01** | Educación, Universidades e Investigación | `amenity=university|school, building=*` | Nodos, Vías, Multipolígonos | 247 | 6.7% | 7,503 | 0.5% | 100% | 98% | 91% | 80% | 95% | **95.0%** | 🟢 A+ |
+| **CAT-02** | Servicios Urbanos, Salud y Comercio Barrial | `shop=*, amenity=pharmacy|clinic|cafe` | Nodos, Vías, Polígonos | 365 | 9.9% | 54,442 | 3.5% | 100% | 98% | 91% | 81% | 90% | **93.3%** | 🔵 A |
+| **CAT-03** | Movilidad, Transporte Público y Paraderos | `highway=bus_stop, railway=station|subway` | Nodos puntuales, Vías | 191 | 5.2% | 326,545 | 21.0% | 100% | 98% | 90% | 80% | 90% | **93.0%** | 🔵 A |
+| **CAT-04** | Movilidad Activa, Ciclovías y Peatonalidad | `highway=cycleway, amenity=bicycle_parking` | Vías continuas, Nodos | 11 | 0.3% | 128,891 | 8.3% | 100% | 98% | 91% | 79% | 90% | **93.2%** | 🔵 A |
 | **CAT-05** | Áreas Verdes, Espacio Público y Recreación | `leisure=park|playground, landuse=grass` | Vías cerradas, Multipolígonos, Nodos | 144 | 3.9% | 41,433 | 2.7% | 100% | 98% | 91% | 80% | 90% | **93.0%** | 🔵 A |
-| **CAT-06** | Patrimonio Histórico, Memoria y Cultura | `historic=*, heritage=*, building=church` | Vías poligonales, Nodos | 71 | 1.9% | 2,576 | 0.2% | 100% | 98% | 90% | 81% | 100% | **93.8%** | 🔵 A |
+| **CAT-06** | Patrimonio Histórico, Memoria y Cultura | `historic=*, heritage=*, building=church` | Vías poligonales, Nodos | 71 | 1.9% | 2,576 | 0.2% | 100% | 98% | 92% | 80% | 100% | **94.2%** | 🔵 A |
 | **CAT-07** | Accesibilidad Universal y Discapacidad | `highway=crossing, kerb=*, wheelchair=*` | Nodos puntuales, Vías | 185 | 5.0% | 94,461 | 6.1% | 100% | 98% | 91% | 79% | 90% | **93.0%** | 🔵 A |
-| **CAT-08** | Biodiversidad Urbana y Arbolado (OSM / GBIF) | `natural=tree|wood, DarwinCore (GBIF)` | Nodos puntuales, Vías | 390 | 10.6% | 121,134 | 7.8% | 100% | 98% | 90% | 79% | 90% | **92.9%** | 🔵 A |
-| **CAT-09** | Edificaciones y Huella Urbana | `building=yes|residential, addr:*` | Vías poligonales, Multipolígonos | 1673 | 45.5% | 695,412 | 44.8% | 100% | 98% | 90% | 100% | 90% | **96.8%** | 🟢 A+ |
-| **CAT-10** | Coberturas y Usos de Suelo | `landuse=residential|commercial, surface=*` | Vías cerradas, Multipolígonos | 400 | 10.9% | 79,747 | 5.1% | 100% | 98% | 90% | 79% | 90% | **93.8%** | 🔵 A |
-| **TOTAL / PROMEDIO VGI** | — | — | — | **3,677** | **100.0%** | **1,552,144** | **100.0%** | **100%** | **98%** | **91%** | **82%** | **92%** | **93.8%** | **🟢 Grado A+ (Excelente)** |
+| **CAT-08** | Biodiversidad Urbana y Arbolado (OSM / GBIF) | `natural=tree|wood, DarwinCore (GBIF)` | Nodos puntuales, Vías | 390 | 10.6% | 121,134 | 7.8% | 100% | 98% | 91% | 78% | 90% | **93.1%** | 🔵 A |
+| **CAT-09** | Edificaciones y Huella Urbana | `building=yes|residential, addr:*` | Vías poligonales, Multipolígonos | 1673 | 45.5% | 695,412 | 44.8% | 100% | 98% | 91% | 100% | 90% | **97.0%** | 🟢 A+ |
+| **CAT-10** | Coberturas y Usos de Suelo | `landuse=residential|commercial, surface=*` | Vías cerradas, Multipolígonos | 400 | 10.9% | 79,747 | 5.1% | 100% | 98% | 91% | 80% | 90% | **93.8%** | 🔵 A |
+| **TOTAL / PROMEDIO VGI** | — | — | — | **3,677** | **100.0%** | **1,552,144** | **100.0%** | **100%** | **98%** | **91%** | **82%** | **92%** | **93.9%** | **🟢 Grado A+ (Excelente)** |
 
 
 ---
@@ -549,166 +549,165 @@ La base de datos cartográfica se organiza en **8 grupos temáticos** normalizad
 
 | Grupo Temático | Capas (N°) | % Capas | Volumen (MB) | % Volumen | Cuant (50%) | Cual (50%) | MC (%) | CC (%) | LL (%) | RG (%) | AI (%) | IGV Promedio (%) | Grado ISO 19157 |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Economía, Fomento e Inversión Pública** | 15 | 11.3% | 212.94 MB | 9.9% | 96.9% | 93.9% | 95.7% | 94.0% | 98.5% | 79.4% | 98.3% | **95.4%** | 🟢 Grado A+ (Excelente) |
-| **Equipamiento Público y Patrimonio** | 28 | 21.1% | 68.77 MB | 3.2% | 96.8% | 92.8% | 90.8% | 93.9% | 98.9% | 80.7% | 99.3% | **94.8%** | 🔵 Grado A (Muy Bueno) |
-| **Medio Ambiente y Recursos Hídricos** | 35 | 26.3% | 142.63 MB | 6.6% | 97.1% | 95.0% | 99.5% | 93.2% | 98.2% | 80.6% | 98.7% | **96.0%** | 🟢 Grado A+ (Excelente) |
-| **Movilidad y Transporte** | 7 | 5.3% | 72.82 MB | 3.4% | 96.3% | 93.5% | 95.4% | 93.1% | 98.3% | 79.6% | 97.1% | **94.9%** | 🔵 Grado A (Muy Bueno) |
-| **Normativa e Instrumentos de Planificación Territorial (IPT)** | 14 | 10.5% | 225.24 MB | 10.4% | 95.2% | 94.3% | 95.3% | 93.7% | 98.5% | 84.0% | 97.1% | **94.7%** | 🔵 Grado A (Muy Bueno) |
-| **Seguridad, Bomberos y Justicia** | 5 | 3.8% | 1.46 MB | 0.1% | 96.3% | 94.3% | 96.8% | 93.6% | 98.5% | 79.3% | 100.0% | **95.3%** | 🟢 Grado A+ (Excelente) |
-| **Demografía y Vulnerabilidad Social** | 19 | 14.3% | 216.45 MB | 10.0% | 97.3% | 94.6% | 98.3% | 93.9% | 98.5% | 82.1% | 93.9% | **96.0%** | 🟢 Grado A+ (Excelente) |
-| **Información Geográfica Voluntaria (VGI Comunitario)** | 10 | 7.5% | 1215.57 MB | 56.4% | 94.0% | 93.7% | 100.0% | 98.0% | 90.7% | 81.5% | 91.5% | **93.8%** | 🔵 Grado A (Muy Bueno) |
-| **TOTAL / REPOSITORIO GLOBAL** | **133** | **100.0%** | **2155.89 MB** | **100.0%** | **96.5%** | **94.1%** | **96.4%** | **94.0%** | **97.9%** | **81.0%** | **97.4%** | **95.3%** | **🟢 Grado A+ (Excelente)** |
+| **Economía, Fomento e Inversión Pública** | 15 | 11.4% | 212.94 MB | 9.9% | 96.8% | 93.7% | 95.7% | 93.1% | 98.4% | 79.7% | 98.3% | **95.3%** | 🟢 Grado A+ (Excelente) |
+| **Equipamiento Público y Patrimonio** | 28 | 21.2% | 68.77 MB | 3.2% | 96.7% | 92.8% | 90.8% | 93.8% | 99.1% | 80.5% | 99.3% | **94.7%** | 🔵 Grado A (Muy Bueno) |
+| **Medio Ambiente y Recursos Hídricos** | 35 | 26.5% | 142.63 MB | 6.6% | 97.1% | 95.4% | 99.5% | 93.4% | 98.9% | 81.5% | 98.7% | **96.2%** | 🟢 Grado A+ (Excelente) |
+| **Movilidad y Transporte** | 7 | 5.3% | 72.82 MB | 3.4% | 96.3% | 93.6% | 95.4% | 93.1% | 98.6% | 80.2% | 97.1% | **94.9%** | 🔵 Grado A (Muy Bueno) |
+| **Normativa e Instrumentos de Planificación Territorial (IPT)** | 13 | 9.8% | 223.29 MB | 10.4% | 95.1% | 94.3% | 95.5% | 93.5% | 98.7% | 84.0% | 96.9% | **94.7%** | 🔵 Grado A (Muy Bueno) |
+| **Seguridad, Bomberos y Justicia** | 5 | 3.8% | 1.46 MB | 0.1% | 96.2% | 94.5% | 96.8% | 93.0% | 99.3% | 80.2% | 100.0% | **95.3%** | 🟢 Grado A+ (Excelente) |
+| **Demografía y Vulnerabilidad Social** | 19 | 14.4% | 216.45 MB | 10.0% | 97.3% | 94.6% | 98.3% | 94.4% | 98.4% | 81.5% | 93.9% | **95.9%** | 🟢 Grado A+ (Excelente) |
+| **Información Geográfica Voluntaria (VGI Comunitario)** | 10 | 7.6% | 1215.57 MB | 56.4% | 94.0% | 93.8% | 100.0% | 98.0% | 91.1% | 81.6% | 91.5% | **93.9%** | 🔵 Grado A (Muy Bueno) |
+| **TOTAL / REPOSITORIO GLOBAL** | **132** | **100.0%** | **2153.94 MB** | **100.0%** | **96.5%** | **94.2%** | **96.4%** | **93.9%** | **98.2%** | **81.2%** | **97.3%** | **95.3%** | **🟢 Grado A+ (Excelente)** |
 
 
 ---
 
 ## 5. Matriz Exhaustiva de Calidad e Índice IGV — Auditoría Universal
 
-A continuación se presenta el desglose universal de las **133 capas** evaluadas bajo los pilares cuantitativo y cualitativo:
+A continuación se presenta el desglose universal de las **132 capas** evaluadas bajo los pilares cuantitativo y cualitativo:
 
 | N° | ID Capa | Nombre Oficial / Temático | Tipo Fuente | Cuantitativo (50%) | Topología (30%) | Atributos (25%) | Cualitativo (50%) | IGV Global (%) | Grado ISO 19157 |
 | :---: | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| 1 | `bbdd_51` | Localización de viveros en Chile conti... | Oficial | 97.9% | 100.0% | 99.6% | 97.9% | **97.9%** | 🟢 A+ |
-| 2 | `ine_permisos_edificacion_santiago` | INE - Permisos de Edificación Georrefe... | Oficial | 97.4% | 100.0% | 100.0% | 98.3% | **97.8%** | 🟢 A+ |
-| 3 | `censo2024_manzanas` | Censo 2024 (Manzanas Censales RM) | Oficial | 97.1% | 100.0% | 99.6% | 98.2% | **97.7%** | 🟢 A+ |
-| 4 | `bbdd_32` | Vertederos Ilegales | Oficial | 99.7% | 100.0% | 100.0% | 95.5% | **97.6%** | 🟢 A+ |
-| 5 | `bbdd_54` | Mercados Mayoristas (ODEPA) | Oficial | 99.5% | 100.0% | 100.0% | 95.1% | **97.3%** | 🟢 A+ |
-| 6 | `bbdd_55` | Sistema Nacional de Áreas Silvestres P... | Oficial | 98.5% | 100.0% | 100.0% | 96.1% | **97.3%** | 🟢 A+ |
-| 7 | `bbdd_52` | Estaciones Meteorológicas Automáticas ... | Oficial | 99.7% | 100.0% | 100.0% | 94.8% | **97.2%** | 🟢 A+ |
-| 8 | `subdere_rsd_analisis_costos_comuna_rm` | SUBDERE RSD 2024 - Costos Comunales de... | Oficial | 97.4% | 100.0% | 100.0% | 97.1% | **97.2%** | 🟢 A+ |
-| 9 | `subdere_rsd_poblacion_comunal_pta_poligonos_rm` | SUBDERE RSD 2024 - Población Total Ate... | Oficial | 97.3% | 100.0% | 100.0% | 97.2% | **97.2%** | 🟢 A+ |
-| 10 | `censo2024_regional` | Censo 2024 (Marco Regional RM) | Oficial | 97.5% | 100.0% | 100.0% | 96.7% | **97.1%** | 🟢 A+ |
-| 11 | `bbdd_42` | Pisos vegetacionales de Luebert y Plis... | Oficial | 99.5% | 100.0% | 100.0% | 94.4% | **97.0%** | 🟢 A+ |
-| 12 | `bbdd_47` | Zona Fronteriza | Oficial | 99.5% | 100.0% | 100.0% | 94.4% | **97.0%** | 🟢 A+ |
-| 13 | `bbdd_44` | Municipios con certificación ambiental... | Oficial | 99.5% | 100.0% | 100.0% | 94.2% | **96.8%** | 🟢 A+ |
-| 14 | `edificaciones` | Edificaciones y Huella Urbana | VGI | 97.6% | 100.0% | 94.2% | 96.1% | **96.8%** | 🟢 A+ |
-| 15 | `bbdd_19` | Cité | Oficial | 97.5% | 100.0% | 100.0% | 95.8% | **96.7%** | 🟢 A+ |
-| 16 | `bbdd_53` | Industria Forestal Primeria (INFOR) | Oficial | 98.0% | 100.0% | 96.1% | 95.2% | **96.6%** | 🟢 A+ |
-| 17 | `bbdd_43` | División Política Administrativa 2023 | Oficial | 97.4% | 100.0% | 100.0% | 95.8% | **96.6%** | 🟢 A+ |
-| 18 | `bbdd_39` | Estaciones de monitoreo de calidad de ... | Oficial | 98.5% | 100.0% | 95.8% | 94.4% | **96.5%** | 🟢 A+ |
-| 19 | `bbdd_66` | Unidades Vecinales 2026 | Oficial | 97.6% | 100.0% | 100.0% | 95.4% | **96.5%** | 🟢 A+ |
-| 20 | `bbdd_10` | Jardines Infantiles Fundación Integra | Oficial | 97.4% | 100.0% | 100.0% | 95.6% | **96.5%** | 🟢 A+ |
-| 21 | `bbdd_38` | Territorios de los Servicios de Salud | Oficial | 95.3% | 95.0% | 95.0% | 97.7% | **96.5%** | 🟢 A+ |
-| 22 | `subdere_rsd_ppc_generacion_pta_rm` | SUBDERE RSD 2024 - Generación de Resid... | Oficial | 97.6% | 100.0% | 100.0% | 95.2% | **96.4%** | 🟢 A+ |
-| 23 | `subdere_rsd_sdf_comunas_destino_rm` | SUBDERE RSD 2024 - Destino de Disposic... | Oficial | 97.6% | 100.0% | 100.0% | 95.2% | **96.4%** | 🟢 A+ |
-| 24 | `bbdd_08` | Municipios | Oficial | 97.4% | 100.0% | 100.0% | 95.4% | **96.4%** | 🟢 A+ |
-| 25 | `bbdd_24` | Juzgados de Familia | Oficial | 97.4% | 100.0% | 100.0% | 95.4% | **96.4%** | 🟢 A+ |
-| 26 | `subdere_rsd_distancia_municipio_sdf_rm` | SUBDERE RSD 2024 - Distancias Municipi... | Oficial | 97.4% | 100.0% | 100.0% | 95.4% | **96.4%** | 🟢 A+ |
-| 27 | `subdere_rsd_poblacion_atendida_pta_puntos_rm` | SUBDERE RSD 2024 - Población Total Ate... | Oficial | 97.3% | 100.0% | 100.0% | 95.5% | **96.4%** | 🟢 A+ |
-| 28 | `bbdd_05` | Contratos MOP - GEOMOP | Oficial | 97.0% | 100.0% | 99.6% | 95.8% | **96.4%** | 🟢 A+ |
-| 29 | `bbdd_21` | Oficinas Serviu | Oficial | 97.6% | 100.0% | 100.0% | 95.1% | **96.3%** | 🟢 A+ |
-| 30 | `bbdd_63` | Inventario de Biomasa y Carbono - Metr... | Oficial | 97.4% | 100.0% | 100.0% | 95.2% | **96.3%** | 🟢 A+ |
-| 31 | `cmn_sitios_memoria` | Sitios de Memoria y Monumentos CMN | Oficial | 97.2% | 100.0% | 100.0% | 95.4% | **96.3%** | 🟢 A+ |
-| 32 | `catastro_predial_sii` | Catastro Predial del Servicio de Impue... | Oficial | 95.0% | 95.0% | 95.0% | 97.7% | **96.3%** | 🟢 A+ |
-| 33 | `munistgo_aseo_zonas_residuos_2026` | MuniSTGO - Catastro Zonas de Aseo, Con... | Oficial | 99.5% | 100.0% | 100.0% | 92.8% | **96.2%** | 🟢 A+ |
-| 34 | `bbdd_25` | Estaciones Meteorológicas | Oficial | 97.5% | 100.0% | 100.0% | 95.0% | **96.2%** | 🟢 A+ |
-| 35 | `ine_crf_conjuntos_santiago` | INE - Certificados de Recepción Final ... | Oficial | 97.5% | 100.0% | 100.0% | 95.0% | **96.2%** | 🟢 A+ |
-| 36 | `bbdd_17` | Áreas Funcionales de las ciudades (202... | Oficial | 97.4% | 100.0% | 100.0% | 95.1% | **96.2%** | 🟢 A+ |
-| 37 | `bbdd_06` | Jardines Infantiles JUNJI | Oficial | 97.4% | 100.0% | 100.0% | 95.0% | **96.2%** | 🟢 A+ |
-| 38 | `subdere_rsd_sdf_municipios_puntos_rm` | SUBDERE RSD 2024 - Sedes Municipales y... | Oficial | 97.4% | 100.0% | 100.0% | 95.0% | **96.2%** | 🟢 A+ |
-| 39 | `bbdd_04` | Contratos Concesionados - GEOMOP | Oficial | 97.4% | 100.0% | 100.0% | 94.9% | **96.2%** | 🟢 A+ |
-| 40 | `bbdd_48` | Pasos Fronterizos | Oficial | 97.3% | 100.0% | 100.0% | 95.2% | **96.2%** | 🟢 A+ |
-| 41 | `bbdd_01` | Proyectos Mandatados - GEOMOP | Oficial | 97.3% | 100.0% | 99.7% | 95.1% | **96.2%** | 🟢 A+ |
-| 42 | `bbdd_23` | Sitios BIO-Prioritarios | Oficial | 97.6% | 100.0% | 100.0% | 94.6% | **96.1%** | 🟢 A+ |
-| 43 | `subdere_rsd_gastos_ingresos_sinim_rm` | SUBDERE RSD 2024 - Finanzas Municipale... | Oficial | 97.4% | 100.0% | 100.0% | 94.7% | **96.1%** | 🟢 A+ |
-| 44 | `bbdd_13` | Establecimientos Educación Parvularia | Oficial | 97.0% | 100.0% | 99.8% | 95.2% | **96.1%** | 🟢 A+ |
-| 45 | `subdere_rsd_criticidad_sitios_disposicion_rm` | SUBDERE RSD 2024 - Criticidad de Relle... | Oficial | 97.0% | 100.0% | 97.7% | 95.2% | **96.1%** | 🟢 A+ |
-| 46 | `bbdd_70` | Mujeres en RSH adscritas a Fonasa o Is... | Oficial | 97.6% | 100.0% | 100.0% | 94.5% | **96.0%** | 🟢 A+ |
-| 47 | `bbdd_26` | Estaciones Sedimentométricas | Oficial | 97.5% | 100.0% | 100.0% | 94.5% | **96.0%** | 🟢 A+ |
-| 48 | `bbdd_27` | Estaciones de Calidad de Aguas | Oficial | 97.4% | 100.0% | 100.0% | 94.6% | **96.0%** | 🟢 A+ |
-| 49 | `bbdd_65` | Iniciativas de inversión del Banco Int... | Oficial | 97.4% | 100.0% | 100.0% | 94.5% | **96.0%** | 🟢 A+ |
-| 50 | `bbdd_40` | Circuitos Turísticos | Oficial | 97.3% | 100.0% | 100.0% | 94.8% | **96.0%** | 🟢 A+ |
-| 51 | `bbdd_62` | Cobertura de polígonos representativos... | Oficial | 97.2% | 100.0% | 100.0% | 94.7% | **96.0%** | 🟢 A+ |
-| 52 | `bbdd_11` | Cuerpos de Bomberos | Oficial | 96.7% | 100.0% | 99.0% | 95.2% | **96.0%** | 🟢 A+ |
-| 53 | `bbdd_15` | Centros de SERNAM | Oficial | 96.7% | 100.0% | 99.8% | 95.2% | **96.0%** | 🟢 A+ |
-| 54 | `bbdd_31` | Ciclovías | Oficial | 97.3% | 100.0% | 100.0% | 94.6% | **95.9%** | 🟢 A+ |
-| 55 | `bbdd_12` | Establecimientos Educación Escolar | Oficial | 97.2% | 100.0% | 99.7% | 94.6% | **95.9%** | 🟢 A+ |
-| 56 | `bbdd_69` | NNA en RSH adscritas a Fonasa o Isapre... | Oficial | 97.2% | 100.0% | 100.0% | 94.6% | **95.9%** | 🟢 A+ |
-| 57 | `bbdd_03` | Red Hidrométrica - GEOMOP | Oficial | 96.6% | 100.0% | 97.9% | 95.2% | **95.9%** | 🟢 A+ |
-| 58 | `bbdd_14` | Establecimientos de Educación Superior | Oficial | 96.3% | 100.0% | 98.0% | 95.6% | **95.9%** | 🟢 A+ |
-| 59 | `bbdd_49` | Estaciones Fluviométricas | Oficial | 97.5% | 100.0% | 100.0% | 94.2% | **95.8%** | 🟢 A+ |
-| 60 | `bbdd_73` | Personas mayores en RSH adscritos a Fo... | Oficial | 97.5% | 100.0% | 100.0% | 94.1% | **95.8%** | 🟢 A+ |
-| 61 | `bbdd_74` | Personas en RSH ocupadas y cotizando, ... | Oficial | 97.4% | 100.0% | 100.0% | 94.3% | **95.8%** | 🟢 A+ |
-| 62 | `bbdd_33` | Plan Cuadrante Carabineros | Oficial | 96.8% | 100.0% | 97.2% | 94.8% | **95.8%** | 🟢 A+ |
-| 63 | `subdere_rsd_sitios_disposicion_instalaciones_rm` | SUBDERE RSD 2024 - Rellenos Sanitarios... | Oficial | 96.7% | 100.0% | 97.2% | 95.0% | **95.8%** | 🟢 A+ |
-| 64 | `bbdd_29` | Cuencas Banco Nacional de Aguas | Oficial | 96.6% | 100.0% | 100.0% | 95.1% | **95.8%** | 🟢 A+ |
-| 65 | `bbdd_68` | Personas en RSH según CSE y sexo - 202... | Oficial | 97.4% | 100.0% | 100.0% | 93.9% | **95.7%** | 🟢 A+ |
-| 66 | `bbdd_71` | Jóvenes en RSH adscritos a Fonasa o Is... | Oficial | 97.4% | 100.0% | 100.0% | 93.9% | **95.7%** | 🟢 A+ |
-| 67 | `bbdd_50` | Oficinas de Protección de Derechos (OD... | Oficial | 97.2% | 100.0% | 100.0% | 94.2% | **95.7%** | 🟢 A+ |
-| 68 | `bbdd_64` | Índice Global de Vulnerabilidad Sociot... | Oficial | 97.2% | 100.0% | 100.0% | 94.2% | **95.7%** | 🟢 A+ |
-| 69 | `censo2024_limite_urbano` | Censo 2024 (Límites Urbanos Censales R... | Oficial | 97.4% | 100.0% | 99.7% | 93.7% | **95.6%** | 🟢 A+ |
-| 70 | `bbdd_35` | Antenas en Servicio Ley de Torres | Oficial | 97.3% | 100.0% | 100.0% | 93.9% | **95.6%** | 🟢 A+ |
-| 71 | `bbdd_34` | Zonas climáticas de Chile según Köppen... | Oficial | 96.4% | 100.0% | 100.0% | 94.7% | **95.6%** | 🟢 A+ |
-| 72 | `bbdd_67` | Personas en RSH en situación de depend... | Oficial | 97.5% | 100.0% | 100.0% | 93.5% | **95.5%** | 🟢 A+ |
-| 73 | `ide_minvu_campamentos` | Catastro Campamentos 2024 (MINVU) | Oficial | 97.5% | 100.0% | 100.0% | 93.4% | **95.5%** | 🟢 A+ |
-| 74 | `bbdd_72` | Hombres en RSH adscritos a Fonasa o Is... | Oficial | 97.5% | 100.0% | 100.0% | 93.4% | **95.5%** | 🟢 A+ |
-| 75 | `energia_almacenamiento_rm` | Sistemas de Almacenamiento de Energía ... | Oficial | 97.6% | 100.0% | 100.0% | 93.0% | **95.3%** | 🟢 A+ |
-| 76 | `censo2024_zonal` | Censo 2024 (Zonas y Distritos Censales... | Oficial | 97.4% | 100.0% | 100.0% | 93.3% | **95.3%** | 🟢 A+ |
-| 77 | `ide_subdere_dpa_comunas` | División Político-Administrativa (SUBD... | Oficial | 97.2% | 100.0% | 100.0% | 93.4% | **95.3%** | 🟢 A+ |
-| 78 | `bbdd_07` | Infraestructura Deportiva | Oficial | 96.3% | 100.0% | 96.4% | 94.4% | **95.3%** | 🟢 A+ |
-| 79 | `subdere_rsd_recoleccion_transporte_operativo_rm` | SUBDERE RSD 2024 - Recolección y Trans... | Oficial | 95.7% | 100.0% | 92.2% | 95.0% | **95.3%** | 🟢 A+ |
-| 80 | `subdere_rsd_ciudades_poblacion_rm` | SUBDERE RSD 2024 - Ciudades y Entidade... | Oficial | 95.5% | 100.0% | 92.8% | 95.1% | **95.3%** | 🟢 A+ |
-| 81 | `subdere_rsd_sitios_intermedios_transferencia_rm` | SUBDERE RSD 2024 - Estaciones de Trans... | Oficial | 95.1% | 100.0% | 90.0% | 95.5% | **95.3%** | 🟢 A+ |
-| 82 | `energia_electrolineras_rm` | Red de Electrolineras RM | Oficial | 97.3% | 100.0% | 100.0% | 93.0% | **95.2%** | 🟢 A+ |
-| 83 | `energia_solares_rm` | Plantas Solares Fotovoltaicas RM | Oficial | 97.3% | 100.0% | 99.9% | 93.0% | **95.2%** | 🟢 A+ |
-| 84 | `minvu_ipt_resguardo_infraestructura` | Fajas de Resguardo e Infraestructura P... | Oficial | 97.4% | 100.0% | 100.0% | 92.8% | **95.1%** | 🟢 A+ |
-| 85 | `energia_lineas_transmision_rm` | Líneas de Transmisión Eléctrica RM | Oficial | 96.9% | 100.0% | 99.9% | 93.2% | **95.1%** | 🟢 A+ |
-| 86 | `estaciones_metro` | Estaciones de Metro de Santiago | Oficial | 97.4% | 100.0% | 100.0% | 92.6% | **95.0%** | 🟢 A+ |
-| 87 | `educacion_parvularia` | Jardines y Salas Cuna (JUNJI / Integra... | Oficial | 97.2% | 100.0% | 99.8% | 92.7% | **95.0%** | 🟢 A+ |
-| 88 | `ide_minvu_ipt_prms_riesgo` | PRMS: Riesgos Metropolitanos (Inundaci... | Oficial | 97.0% | 100.0% | 99.9% | 93.1% | **95.0%** | 🟢 A+ |
-| 89 | `educacion` | Educación y Universidad | VGI | 96.3% | 100.0% | 89.0% | 93.8% | **95.0%** | 🟢 A+ |
-| 90 | `censo2024_localidades` | Censo 2024 (Localidades y Asentamiento... | Oficial | 94.0% | 100.0% | 99.0% | 96.1% | **95.0%** | 🟢 A+ |
-| 91 | `bbdd_37` | Red de Interconexión | Oficial | 95.5% | 95.0% | 95.0% | 94.3% | **94.9%** | 🔵 A |
-| 92 | `energia_bioenergia_rm` | Centrales de Bioenergía RM | Oficial | 96.7% | 100.0% | 98.9% | 92.9% | **94.8%** | 🔵 A |
-| 93 | `bbdd_46` | Predios Urbanos (Comuna de Santiago) | Oficial | 97.3% | 100.0% | 100.0% | 92.0% | **94.7%** | 🔵 A |
-| 94 | `energia_hidroelectricas_rm` | Centrales Hidroeléctricas RM | Oficial | 96.2% | 100.0% | 96.8% | 93.0% | **94.6%** | 🔵 A |
-| 95 | `semaforos_rm_uoct_2026` | Cruces Semaforizados Conectados SC-RM ... | Oficial | 95.7% | 100.0% | 97.8% | 93.5% | **94.6%** | 🔵 A |
-| 96 | `carabineros` | Comisarías y Cuarteles Policiales | Oficial | 96.0% | 100.0% | 95.5% | 93.0% | **94.5%** | 🔵 A |
-| 97 | `bbdd_02` | Red Vial Nacional - GEOMOP | Oficial | 95.6% | 100.0% | 96.5% | 93.5% | **94.5%** | 🔵 A |
-| 98 | `bbdd_60` | Catastro y Actualización de los Recurs... | Oficial | 95.1% | 95.0% | 95.0% | 93.9% | **94.5%** | 🔵 A |
-| 99 | `energia_termoelectricas_rm` | Centrales Termoeléctricas RM | Oficial | 95.8% | 100.0% | 96.1% | 93.0% | **94.4%** | 🔵 A |
-| 100 | `red_ferroviaria` | Red Ferroviaria EFE (MTT) | Oficial | 95.3% | 100.0% | 94.0% | 93.0% | **94.2%** | 🔵 A |
-| 101 | `bbdd_30` | Indice Calidad de Aguas | Oficial | 93.1% | 100.0% | 84.8% | 95.2% | **94.2%** | 🔵 A |
-| 102 | `energia_gasoducto_rm` | Red de Gasoductos RM | Oficial | 94.9% | 100.0% | 89.2% | 93.3% | **94.1%** | 🔵 A |
-| 103 | `ccu_rm_2011` | Continuo de Construcciones Urbanas (20... | Oficial | 97.6% | 100.0% | 100.0% | 90.4% | **94.0%** | 🔵 A |
-| 104 | `ccu_rm_2006` | Continuo de Construcciones Urbanas (20... | Oficial | 97.4% | 100.0% | 100.0% | 90.5% | **94.0%** | 🔵 A |
-| 105 | `ccu_rm_2022` | Continuo de Construcciones Urbanas (20... | Oficial | 97.4% | 100.0% | 100.0% | 90.5% | **94.0%** | 🔵 A |
-| 106 | `energia_oleoducto_rm` | Red de Oleoductos RM | Oficial | 94.7% | 100.0% | 89.2% | 93.2% | **94.0%** | 🔵 A |
-| 107 | `ccu_rm_2021` | Continuo de Construcciones Urbanas (20... | Oficial | 97.6% | 100.0% | 100.0% | 90.1% | **93.8%** | 🔵 A |
-| 108 | `ccu_rm_1993` | Continuo de Construcciones Urbanas (19... | Oficial | 97.6% | 100.0% | 100.0% | 90.0% | **93.8%** | 🔵 A |
-| 109 | `ccu_rm_2019` | Continuo de Construcciones Urbanas (20... | Oficial | 97.5% | 100.0% | 100.0% | 90.1% | **93.8%** | 🔵 A |
-| 110 | `ccu_rm_2020` | Continuo de Construcciones Urbanas (20... | Oficial | 97.5% | 100.0% | 100.0% | 90.1% | **93.8%** | 🔵 A |
-| 111 | `bbdd_20` | SEREMI MINVU Región Metropolitana | Oficial | 97.5% | 100.0% | 100.0% | 90.0% | **93.8%** | 🔵 A |
-| 112 | `ccu_rm_2024` | Continuo de Construcciones Urbanas (20... | Oficial | 97.5% | 100.0% | 100.0% | 90.0% | **93.8%** | 🔵 A |
-| 113 | `ccu_rm_2018` | Continuo de Construcciones Urbanas (20... | Oficial | 97.3% | 100.0% | 100.0% | 90.4% | **93.8%** | 🔵 A |
-| 114 | `ccu_rm_2023` | Continuo de Construcciones Urbanas (20... | Oficial | 97.3% | 100.0% | 100.0% | 90.4% | **93.8%** | 🔵 A |
-| 115 | `minvu_ipt_areas_riesgo` | Áreas de Riesgo Normativas (IPT) | Oficial | 95.0% | 100.0% | 91.1% | 92.6% | **93.8%** | 🔵 A |
-| 116 | `cobertura_suelo` | Coberturas y Usos de Suelo | VGI | 94.8% | 100.0% | 91.8% | 92.9% | **93.8%** | 🔵 A |
-| 117 | `patrimonio` | Patrimonio y Cultura | VGI | 93.4% | 100.0% | 88.8% | 94.3% | **93.8%** | 🔵 A |
-| 118 | `establecimientos_salud` | Salud Pública (CESFAM y Hospitales) | Oficial | 92.6% | 100.0% | 80.0% | 95.0% | **93.8%** | 🔵 A |
-| 119 | `ccu_rm_2002` | Continuo de Construcciones Urbanas (20... | Oficial | 97.2% | 100.0% | 100.0% | 90.1% | **93.7%** | 🔵 A |
-| 120 | `bomberos` | Cuarteles de Bomberos de Chile | Oficial | 94.4% | 100.0% | 95.1% | 93.0% | **93.7%** | 🔵 A |
-| 121 | `ccu_rm_2017` | Continuo de Construcciones Urbanas (20... | Oficial | 97.2% | 100.0% | 100.0% | 90.0% | **93.6%** | 🔵 A |
-| 122 | `minvu_ipt_limite_urbano` | Límite Urbano Oficial PRC (MINVU) | Oficial | 93.2% | 100.0% | 88.2% | 93.8% | **93.5%** | 🔵 A |
-| 123 | `minvu_ipt_areas_verdes` | Áreas Verdes Normativas (MINVU / INE 2... | Oficial | 94.8% | 100.0% | 89.3% | 91.8% | **93.3%** | 🔵 A |
-| 124 | `movilidad_activa` | Movilidad Activa y Ciclovías | VGI | 93.3% | 100.0% | 84.2% | 93.0% | **93.2%** | 🔵 A |
-| 125 | `transporte` | Movilidad y Transporte | VGI | 93.0% | 100.0% | 84.1% | 93.4% | **93.2%** | 🔵 A |
-| 126 | `servicios` | Servicios y Comercio Barrial | VGI | 92.9% | 100.0% | 84.4% | 93.6% | **93.2%** | 🔵 A |
-| 127 | `bbdd_59` | Cobertura de canales a nivel nacional | Oficial | 91.8% | 100.0% | 80.8% | 94.7% | **93.2%** | 🔵 A |
-| 128 | `accesibilidad` | Accesibilidad Universal | VGI | 92.8% | 100.0% | 83.3% | 93.3% | **93.0%** | 🔵 A |
-| 129 | `espacio_publico` | Áreas Verdes y Espacio Público | VGI | 92.7% | 100.0% | 83.0% | 93.2% | **93.0%** | 🔵 A |
-| 130 | `biodiversidad` | Biodiversidad Urbana | VGI | 92.9% | 100.0% | 82.9% | 92.9% | **92.9%** | 🔵 A |
-| 131 | `minvu_ipt_prms_usosuelo` | Plan Regulador Metropolitano (PRMS): U... | Oficial | 96.4% | 100.0% | 96.8% | 89.2% | **92.8%** | 🔵 A |
-| 132 | `minvu_patrimonio` | Patrimonio IPT: Inmuebles y Zonas de C... | Oficial | 88.7% | 100.0% | 65.2% | 93.4% | **91.1%** | 🔵 A |
-| 133 | `minvu_ipt_prc_santiago` | Planes Reguladores Comunales (PRC - RM... | Oficial | 74.9% | 100.0% | 21.3% | 96.5% | **85.7%** | 🔵 A |
+| 1 | `bbdd_51` | Localización de viveros en Chile conti... | Oficial | 97.8% | 100.0% | 99.6% | 98.3% | **98.0%** | 🟢 A+ |
+| 2 | `ine_permisos_edificacion_santiago` | INE - Permisos de Edificación Georrefe... | Oficial | 97.4% | 100.0% | 100.0% | 98.5% | **98.0%** | 🟢 A+ |
+| 3 | `bbdd_44` | Municipios con certificación ambiental... | Oficial | 99.5% | 100.0% | 100.0% | 96.3% | **97.9%** | 🟢 A+ |
+| 4 | `bbdd_52` | Estaciones Meteorológicas Automáticas ... | Oficial | 99.7% | 100.0% | 100.0% | 95.3% | **97.5%** | 🟢 A+ |
+| 5 | `subdere_rsd_analisis_costos_comuna_rm` | SUBDERE RSD 2024 - Costos Comunales de... | Oficial | 97.5% | 100.0% | 100.0% | 97.4% | **97.5%** | 🟢 A+ |
+| 6 | `subdere_rsd_poblacion_comunal_pta_poligonos_rm` | SUBDERE RSD 2024 - Población Total Ate... | Oficial | 97.4% | 100.0% | 100.0% | 97.4% | **97.4%** | 🟢 A+ |
+| 7 | `bbdd_47` | Zona Fronteriza | Oficial | 99.7% | 100.0% | 100.0% | 94.8% | **97.2%** | 🟢 A+ |
+| 8 | `bbdd_54` | Mercados Mayoristas (ODEPA) | Oficial | 99.7% | 100.0% | 100.0% | 94.6% | **97.2%** | 🟢 A+ |
+| 9 | `bbdd_42` | Pisos vegetacionales de Luebert y Plis... | Oficial | 99.6% | 100.0% | 100.0% | 94.9% | **97.2%** | 🟢 A+ |
+| 10 | `bbdd_39` | Estaciones de monitoreo de calidad de ... | Oficial | 98.3% | 100.0% | 95.8% | 96.0% | **97.2%** | 🟢 A+ |
+| 11 | `censo2024_manzanas` | Censo 2024 (Manzanas Censales RM) | Oficial | 97.1% | 100.0% | 99.6% | 97.4% | **97.2%** | 🟢 A+ |
+| 12 | `bbdd_32` | Vertederos Ilegales | Oficial | 99.3% | 100.0% | 100.0% | 94.7% | **97.0%** | 🟢 A+ |
+| 13 | `edificaciones` | Edificaciones y Huella Urbana | VGI | 97.6% | 100.0% | 94.2% | 96.5% | **97.0%** | 🟢 A+ |
+| 14 | `bbdd_55` | Sistema Nacional de Áreas Silvestres P... | Oficial | 98.6% | 100.0% | 100.0% | 95.2% | **96.9%** | 🟢 A+ |
+| 15 | `bbdd_25` | Estaciones Meteorológicas | Oficial | 97.6% | 100.0% | 100.0% | 96.1% | **96.8%** | 🟢 A+ |
+| 16 | `bbdd_10` | Jardines Infantiles Fundación Integra | Oficial | 97.5% | 100.0% | 100.0% | 96.2% | **96.8%** | 🟢 A+ |
+| 17 | `censo2024_regional` | Censo 2024 (Marco Regional RM) | Oficial | 97.5% | 100.0% | 100.0% | 96.0% | **96.8%** | 🟢 A+ |
+| 18 | `bbdd_63` | Inventario de Biomasa y Carbono - Metr... | Oficial | 97.4% | 100.0% | 100.0% | 96.3% | **96.8%** | 🟢 A+ |
+| 19 | `bbdd_53` | Industria Forestal Primeria (INFOR) | Oficial | 97.8% | 100.0% | 96.1% | 95.6% | **96.7%** | 🟢 A+ |
+| 20 | `ine_crf_conjuntos_santiago` | INE - Certificados de Recepción Final ... | Oficial | 97.6% | 100.0% | 100.0% | 95.7% | **96.7%** | 🟢 A+ |
+| 21 | `bbdd_27` | Estaciones de Calidad de Aguas | Oficial | 97.5% | 100.0% | 100.0% | 95.7% | **96.6%** | 🟢 A+ |
+| 22 | `bbdd_04` | Contratos Concesionados - GEOMOP | Oficial | 97.4% | 100.0% | 100.0% | 95.7% | **96.6%** | 🟢 A+ |
+| 23 | `bbdd_35` | Antenas en Servicio Ley de Torres | Oficial | 97.6% | 100.0% | 100.0% | 95.5% | **96.5%** | 🟢 A+ |
+| 24 | `subdere_rsd_distancia_municipio_sdf_rm` | SUBDERE RSD 2024 - Distancias Municipi... | Oficial | 97.6% | 100.0% | 100.0% | 95.5% | **96.5%** | 🟢 A+ |
+| 25 | `bbdd_43` | División Política Administrativa 2023 | Oficial | 97.6% | 100.0% | 100.0% | 95.4% | **96.5%** | 🟢 A+ |
+| 26 | `bbdd_21` | Oficinas Serviu | Oficial | 97.5% | 100.0% | 100.0% | 95.6% | **96.5%** | 🟢 A+ |
+| 27 | `subdere_rsd_ppc_generacion_pta_rm` | SUBDERE RSD 2024 - Generación de Resid... | Oficial | 97.5% | 100.0% | 100.0% | 95.5% | **96.5%** | 🟢 A+ |
+| 28 | `cmn_sitios_memoria` | Sitios de Memoria y Monumentos CMN | Oficial | 97.5% | 100.0% | 100.0% | 95.4% | **96.5%** | 🟢 A+ |
+| 29 | `bbdd_23` | Sitios BIO-Prioritarios | Oficial | 97.4% | 100.0% | 100.0% | 95.6% | **96.5%** | 🟢 A+ |
+| 30 | `bbdd_08` | Municipios | Oficial | 97.2% | 100.0% | 100.0% | 95.8% | **96.5%** | 🟢 A+ |
+| 31 | `munistgo_aseo_zonas_residuos_2026` | MuniSTGO - Catastro Zonas de Aseo, Con... | Oficial | 99.6% | 100.0% | 100.0% | 93.2% | **96.4%** | 🟢 A+ |
+| 32 | `bbdd_26` | Estaciones Sedimentométricas | Oficial | 97.6% | 100.0% | 100.0% | 95.3% | **96.4%** | 🟢 A+ |
+| 33 | `bbdd_48` | Pasos Fronterizos | Oficial | 97.4% | 100.0% | 100.0% | 95.4% | **96.4%** | 🟢 A+ |
+| 34 | `subdere_rsd_sdf_municipios_puntos_rm` | SUBDERE RSD 2024 - Sedes Municipales y... | Oficial | 97.4% | 100.0% | 100.0% | 95.4% | **96.4%** | 🟢 A+ |
+| 35 | `bbdd_19` | Cité | Oficial | 97.3% | 100.0% | 100.0% | 95.5% | **96.4%** | 🟢 A+ |
+| 36 | `bbdd_49` | Estaciones Fluviométricas | Oficial | 97.3% | 100.0% | 100.0% | 95.5% | **96.4%** | 🟢 A+ |
+| 37 | `subdere_rsd_sdf_comunas_destino_rm` | SUBDERE RSD 2024 - Destino de Disposic... | Oficial | 97.5% | 100.0% | 100.0% | 95.2% | **96.3%** | 🟢 A+ |
+| 38 | `bbdd_50` | Oficinas de Protección de Derechos (OD... | Oficial | 97.4% | 100.0% | 100.0% | 95.3% | **96.3%** | 🟢 A+ |
+| 39 | `bbdd_13` | Establecimientos Educación Parvularia | Oficial | 97.2% | 100.0% | 99.8% | 95.5% | **96.3%** | 🟢 A+ |
+| 40 | `bbdd_12` | Establecimientos Educación Escolar | Oficial | 97.2% | 100.0% | 99.7% | 95.4% | **96.3%** | 🟢 A+ |
+| 41 | `catastro_predial_sii` | Catastro Predial del Servicio de Impue... | Oficial | 95.1% | 95.0% | 95.0% | 97.5% | **96.3%** | 🟢 A+ |
+| 42 | `subdere_rsd_poblacion_atendida_pta_puntos_rm` | SUBDERE RSD 2024 - Población Total Ate... | Oficial | 97.5% | 100.0% | 100.0% | 95.0% | **96.2%** | 🟢 A+ |
+| 43 | `bbdd_68` | Personas en RSH según CSE y sexo - 202... | Oficial | 97.4% | 100.0% | 100.0% | 94.9% | **96.2%** | 🟢 A+ |
+| 44 | `bbdd_31` | Ciclovías | Oficial | 97.3% | 100.0% | 100.0% | 95.0% | **96.2%** | 🟢 A+ |
+| 45 | `subdere_rsd_gastos_ingresos_sinim_rm` | SUBDERE RSD 2024 - Finanzas Municipale... | Oficial | 97.3% | 100.0% | 100.0% | 95.0% | **96.2%** | 🟢 A+ |
+| 46 | `bbdd_06` | Jardines Infantiles JUNJI | Oficial | 97.2% | 100.0% | 100.0% | 95.2% | **96.2%** | 🟢 A+ |
+| 47 | `bbdd_15` | Centros de SERNAM | Oficial | 97.0% | 100.0% | 99.8% | 95.3% | **96.2%** | 🟢 A+ |
+| 48 | `bbdd_33` | Plan Cuadrante Carabineros | Oficial | 96.8% | 100.0% | 97.2% | 95.7% | **96.2%** | 🟢 A+ |
+| 49 | `bbdd_11` | Cuerpos de Bomberos | Oficial | 96.6% | 100.0% | 99.0% | 95.8% | **96.2%** | 🟢 A+ |
+| 50 | `bbdd_40` | Circuitos Turísticos | Oficial | 97.4% | 100.0% | 100.0% | 94.8% | **96.1%** | 🟢 A+ |
+| 51 | `bbdd_66` | Unidades Vecinales 2026 | Oficial | 97.4% | 100.0% | 100.0% | 94.8% | **96.1%** | 🟢 A+ |
+| 52 | `bbdd_24` | Juzgados de Familia | Oficial | 97.3% | 100.0% | 100.0% | 94.7% | **96.0%** | 🟢 A+ |
+| 53 | `bbdd_69` | NNA en RSH adscritas a Fonasa o Isapre... | Oficial | 97.2% | 100.0% | 100.0% | 94.7% | **96.0%** | 🟢 A+ |
+| 54 | `bbdd_01` | Proyectos Mandatados - GEOMOP | Oficial | 97.0% | 100.0% | 99.7% | 94.9% | **96.0%** | 🟢 A+ |
+| 55 | `bbdd_29` | Cuencas Banco Nacional de Aguas | Oficial | 96.8% | 100.0% | 100.0% | 95.3% | **96.0%** | 🟢 A+ |
+| 56 | `subdere_rsd_criticidad_sitios_disposicion_rm` | SUBDERE RSD 2024 - Criticidad de Relle... | Oficial | 96.7% | 100.0% | 97.7% | 95.2% | **96.0%** | 🟢 A+ |
+| 57 | `bbdd_03` | Red Hidrométrica - GEOMOP | Oficial | 96.3% | 100.0% | 97.9% | 95.7% | **96.0%** | 🟢 A+ |
+| 58 | `bbdd_38` | Territorios de los Servicios de Salud | Oficial | 95.0% | 95.0% | 95.0% | 97.1% | **96.0%** | 🟢 A+ |
+| 59 | `bbdd_34` | Zonas climáticas de Chile según Köppen... | Oficial | 96.8% | 100.0% | 100.0% | 95.1% | **95.9%** | 🟢 A+ |
+| 60 | `subdere_rsd_sitios_disposicion_instalaciones_rm` | SUBDERE RSD 2024 - Rellenos Sanitarios... | Oficial | 96.7% | 100.0% | 97.2% | 95.1% | **95.9%** | 🟢 A+ |
+| 61 | `bbdd_07` | Infraestructura Deportiva | Oficial | 96.4% | 100.0% | 96.4% | 95.4% | **95.9%** | 🟢 A+ |
+| 62 | `bbdd_17` | Áreas Funcionales de las ciudades (202... | Oficial | 97.6% | 100.0% | 100.0% | 93.9% | **95.8%** | 🟢 A+ |
+| 63 | `bbdd_72` | Hombres en RSH adscritos a Fonasa o Is... | Oficial | 97.5% | 100.0% | 100.0% | 94.0% | **95.8%** | 🟢 A+ |
+| 64 | `bbdd_14` | Establecimientos de Educación Superior | Oficial | 96.2% | 100.0% | 98.0% | 95.4% | **95.8%** | 🟢 A+ |
+| 65 | `bbdd_64` | Índice Global de Vulnerabilidad Sociot... | Oficial | 97.3% | 100.0% | 100.0% | 94.0% | **95.7%** | 🟢 A+ |
+| 66 | `bbdd_05` | Contratos MOP - GEOMOP | Oficial | 96.7% | 100.0% | 99.6% | 94.6% | **95.7%** | 🟢 A+ |
+| 67 | `subdere_rsd_ciudades_poblacion_rm` | SUBDERE RSD 2024 - Ciudades y Entidade... | Oficial | 95.8% | 100.0% | 92.8% | 95.5% | **95.7%** | 🟢 A+ |
+| 68 | `bbdd_73` | Personas mayores en RSH adscritos a Fo... | Oficial | 97.6% | 100.0% | 100.0% | 93.6% | **95.6%** | 🟢 A+ |
+| 69 | `bbdd_62` | Cobertura de polígonos representativos... | Oficial | 97.4% | 100.0% | 100.0% | 93.8% | **95.6%** | 🟢 A+ |
+| 70 | `bbdd_74` | Personas en RSH ocupadas y cotizando, ... | Oficial | 97.2% | 100.0% | 100.0% | 94.0% | **95.6%** | 🟢 A+ |
+| 71 | `bbdd_70` | Mujeres en RSH adscritas a Fonasa o Is... | Oficial | 97.4% | 100.0% | 100.0% | 93.6% | **95.5%** | 🟢 A+ |
+| 72 | `bbdd_67` | Personas en RSH en situación de depend... | Oficial | 97.2% | 100.0% | 100.0% | 93.7% | **95.5%** | 🟢 A+ |
+| 73 | `bbdd_65` | Iniciativas de inversión del Banco Int... | Oficial | 97.4% | 100.0% | 100.0% | 93.4% | **95.4%** | 🟢 A+ |
+| 74 | `bbdd_71` | Jóvenes en RSH adscritos a Fonasa o Is... | Oficial | 97.2% | 100.0% | 100.0% | 93.6% | **95.4%** | 🟢 A+ |
+| 75 | `estaciones_metro` | Estaciones de Metro de Santiago | Oficial | 97.6% | 100.0% | 100.0% | 93.1% | **95.3%** | 🟢 A+ |
+| 76 | `subdere_rsd_recoleccion_transporte_operativo_rm` | SUBDERE RSD 2024 - Recolección y Trans... | Oficial | 95.2% | 100.0% | 92.2% | 95.4% | **95.3%** | 🟢 A+ |
+| 77 | `censo2024_limite_urbano` | Censo 2024 (Límites Urbanos Censales R... | Oficial | 97.4% | 100.0% | 99.7% | 93.1% | **95.2%** | 🟢 A+ |
+| 78 | `energia_almacenamiento_rm` | Sistemas de Almacenamiento de Energía ... | Oficial | 97.4% | 100.0% | 100.0% | 93.0% | **95.2%** | 🟢 A+ |
+| 79 | `energia_electrolineras_rm` | Red de Electrolineras RM | Oficial | 97.4% | 100.0% | 100.0% | 93.0% | **95.2%** | 🟢 A+ |
+| 80 | `subdere_rsd_sitios_intermedios_transferencia_rm` | SUBDERE RSD 2024 - Estaciones de Trans... | Oficial | 95.1% | 100.0% | 90.0% | 95.2% | **95.2%** | 🟢 A+ |
+| 81 | `minvu_ipt_resguardo_infraestructura` | Fajas de Resguardo e Infraestructura P... | Oficial | 97.4% | 100.0% | 100.0% | 92.7% | **95.1%** | 🟢 A+ |
+| 82 | `censo2024_zonal` | Censo 2024 (Zonas y Distritos Censales... | Oficial | 97.4% | 100.0% | 100.0% | 92.6% | **95.0%** | 🟢 A+ |
+| 83 | `ide_minvu_campamentos` | Catastro Campamentos 2024 (MINVU) | Oficial | 97.3% | 100.0% | 100.0% | 92.8% | **95.0%** | 🟢 A+ |
+| 84 | `energia_lineas_transmision_rm` | Líneas de Transmisión Eléctrica RM | Oficial | 97.2% | 100.0% | 99.9% | 92.8% | **95.0%** | 🟢 A+ |
+| 85 | `educacion` | Educación y Universidad | VGI | 96.3% | 100.0% | 89.0% | 93.7% | **95.0%** | 🟢 A+ |
+| 86 | `energia_bioenergia_rm` | Centrales de Bioenergía RM | Oficial | 97.1% | 100.0% | 98.9% | 92.7% | **94.9%** | 🔵 A |
+| 87 | `ide_minvu_ipt_prms_riesgo` | PRMS: Riesgos Metropolitanos (Inundaci... | Oficial | 97.0% | 100.0% | 99.9% | 92.8% | **94.9%** | 🔵 A |
+| 88 | `energia_solares_rm` | Plantas Solares Fotovoltaicas RM | Oficial | 97.0% | 100.0% | 99.9% | 92.8% | **94.9%** | 🔵 A |
+| 89 | `bbdd_37` | Red de Interconexión | Oficial | 95.1% | 95.0% | 95.0% | 94.8% | **94.9%** | 🔵 A |
+| 90 | `bbdd_60` | Catastro y Actualización de los Recurs... | Oficial | 95.2% | 95.0% | 95.0% | 94.3% | **94.8%** | 🔵 A |
+| 91 | `censo2024_localidades` | Censo 2024 (Localidades y Asentamiento... | Oficial | 94.0% | 100.0% | 99.0% | 95.7% | **94.8%** | 🔵 A |
+| 92 | `bbdd_46` | Predios Urbanos (Comuna de Santiago) | Oficial | 97.5% | 100.0% | 100.0% | 91.8% | **94.7%** | 🔵 A |
+| 93 | `bbdd_30` | Indice Calidad de Aguas | Oficial | 93.4% | 100.0% | 84.8% | 95.9% | **94.7%** | 🔵 A |
+| 94 | `energia_hidroelectricas_rm` | Centrales Hidroeléctricas RM | Oficial | 96.1% | 100.0% | 96.8% | 93.1% | **94.6%** | 🔵 A |
+| 95 | `educacion_parvularia` | Jardines y Salas Cuna (JUNJI / Integra... | Oficial | 97.0% | 100.0% | 99.8% | 92.1% | **94.5%** | 🔵 A |
+| 96 | `semaforos_rm_uoct_2026` | Cruces Semaforizados Conectados SC-RM ... | Oficial | 96.0% | 100.0% | 97.8% | 93.1% | **94.5%** | 🔵 A |
+| 97 | `carabineros` | Comisarías y Cuarteles Policiales | Oficial | 95.8% | 100.0% | 95.5% | 93.1% | **94.4%** | 🔵 A |
+| 98 | `bbdd_02` | Red Vial Nacional - GEOMOP | Oficial | 95.2% | 100.0% | 96.5% | 93.4% | **94.3%** | 🔵 A |
+| 99 | `red_ferroviaria` | Red Ferroviaria EFE (MTT) | Oficial | 95.4% | 100.0% | 94.0% | 93.1% | **94.2%** | 🔵 A |
+| 100 | `patrimonio` | Patrimonio y Cultura | VGI | 93.7% | 100.0% | 88.8% | 94.6% | **94.2%** | 🔵 A |
+| 101 | `energia_termoelectricas_rm` | Centrales Termoeléctricas RM | Oficial | 95.5% | 100.0% | 96.1% | 92.6% | **94.0%** | 🔵 A |
+| 102 | `bbdd_20` | SEREMI MINVU Región Metropolitana | Oficial | 97.2% | 100.0% | 100.0% | 90.6% | **93.9%** | 🔵 A |
+| 103 | `minvu_ipt_areas_riesgo` | Áreas de Riesgo Normativas (IPT) | Oficial | 95.3% | 100.0% | 91.1% | 92.6% | **93.9%** | 🔵 A |
+| 104 | `ccu_rm_2022` | Continuo de Construcciones Urbanas (20... | Oficial | 97.5% | 100.0% | 100.0% | 90.2% | **93.8%** | 🔵 A |
+| 105 | `ccu_rm_2023` | Continuo de Construcciones Urbanas (20... | Oficial | 97.5% | 100.0% | 100.0% | 90.2% | **93.8%** | 🔵 A |
+| 106 | `ccu_rm_2018` | Continuo de Construcciones Urbanas (20... | Oficial | 97.5% | 100.0% | 100.0% | 90.0% | **93.8%** | 🔵 A |
+| 107 | `ccu_rm_1993` | Continuo de Construcciones Urbanas (19... | Oficial | 97.4% | 100.0% | 100.0% | 90.3% | **93.8%** | 🔵 A |
+| 108 | `ccu_rm_2002` | Continuo de Construcciones Urbanas (20... | Oficial | 97.4% | 100.0% | 100.0% | 90.3% | **93.8%** | 🔵 A |
+| 109 | `ccu_rm_2011` | Continuo de Construcciones Urbanas (20... | Oficial | 97.4% | 100.0% | 100.0% | 90.2% | **93.8%** | 🔵 A |
+| 110 | `ccu_rm_2024` | Continuo de Construcciones Urbanas (20... | Oficial | 97.3% | 100.0% | 100.0% | 90.2% | **93.8%** | 🔵 A |
+| 111 | `ccu_rm_2006` | Continuo de Construcciones Urbanas (20... | Oficial | 97.2% | 100.0% | 100.0% | 90.3% | **93.8%** | 🔵 A |
+| 112 | `cobertura_suelo` | Coberturas y Usos de Suelo | VGI | 94.5% | 100.0% | 91.8% | 93.2% | **93.8%** | 🔵 A |
+| 113 | `energia_oleoducto_rm` | Red de Oleoductos RM | Oficial | 94.5% | 100.0% | 89.2% | 93.0% | **93.8%** | 🔵 A |
+| 114 | `bomberos` | Cuarteles de Bomberos de Chile | Oficial | 94.4% | 100.0% | 95.1% | 93.2% | **93.8%** | 🔵 A |
+| 115 | `ccu_rm_2017` | Continuo de Construcciones Urbanas (20... | Oficial | 97.4% | 100.0% | 100.0% | 89.9% | **93.7%** | 🔵 A |
+| 116 | `ccu_rm_2019` | Continuo de Construcciones Urbanas (20... | Oficial | 97.3% | 100.0% | 100.0% | 90.0% | **93.7%** | 🔵 A |
+| 117 | `ccu_rm_2021` | Continuo de Construcciones Urbanas (20... | Oficial | 97.3% | 100.0% | 100.0% | 90.0% | **93.7%** | 🔵 A |
+| 118 | `energia_gasoducto_rm` | Red de Gasoductos RM | Oficial | 94.6% | 100.0% | 89.2% | 92.8% | **93.7%** | 🔵 A |
+| 119 | `establecimientos_salud` | Salud Pública (CESFAM y Hospitales) | Oficial | 92.3% | 100.0% | 80.0% | 95.0% | **93.7%** | 🔵 A |
+| 120 | `minvu_ipt_limite_urbano` | Límite Urbano Oficial PRC (MINVU) | Oficial | 93.2% | 100.0% | 88.2% | 94.0% | **93.6%** | 🔵 A |
+| 121 | `ccu_rm_2020` | Continuo de Construcciones Urbanas (20... | Oficial | 97.3% | 100.0% | 100.0% | 89.8% | **93.5%** | 🔵 A |
+| 122 | `minvu_ipt_areas_verdes` | Áreas Verdes Normativas (MINVU / INE 2... | Oficial | 94.8% | 100.0% | 89.3% | 92.2% | **93.5%** | 🔵 A |
+| 123 | `servicios` | Servicios y Comercio Barrial | VGI | 93.1% | 100.0% | 84.4% | 93.6% | **93.3%** | 🔵 A |
+| 124 | `bbdd_59` | Cobertura de canales a nivel nacional | Oficial | 91.8% | 100.0% | 80.8% | 94.9% | **93.3%** | 🔵 A |
+| 125 | `movilidad_activa` | Movilidad Activa y Ciclovías | VGI | 93.2% | 100.0% | 84.2% | 93.3% | **93.2%** | 🔵 A |
+| 126 | `biodiversidad` | Biodiversidad Urbana | VGI | 92.9% | 100.0% | 82.9% | 93.2% | **93.1%** | 🔵 A |
+| 127 | `transporte` | Movilidad y Transporte | VGI | 93.0% | 100.0% | 84.1% | 93.0% | **93.0%** | 🔵 A |
+| 128 | `espacio_publico` | Áreas Verdes y Espacio Público | VGI | 92.8% | 100.0% | 83.0% | 93.3% | **93.0%** | 🔵 A |
+| 129 | `accesibilidad` | Accesibilidad Universal | VGI | 92.7% | 100.0% | 83.3% | 93.3% | **93.0%** | 🔵 A |
+| 130 | `minvu_ipt_prms_usosuelo` | Plan Regulador Metropolitano (PRMS): U... | Oficial | 96.5% | 100.0% | 96.8% | 88.6% | **92.5%** | 🔵 A |
+| 131 | `minvu_patrimonio` | Patrimonio IPT: Inmuebles y Zonas de C... | Oficial | 88.9% | 100.0% | 65.2% | 92.9% | **90.9%** | 🔵 A |
+| 132 | `minvu_ipt_prc_santiago` | Planes Reguladores Comunales (PRC - RM... | Oficial | 74.9% | 100.0% | 21.3% | 96.6% | **85.8%** | 🔵 A |
 
 ---
 
 ## 6. Hallazgos Clave y Plan de Calibración Futura
 
-1. **Disponibilidad Binaria Ininterrumpida (100% de Integridad):** Las 133 capas auditadas cuentan con archivos GeoJSON físicamente presentes en `data/` y `src/data/` y en la red CDN Netlify Edge, sin registrarse punteros rotos ni enlaces huérfanos. Esto asegura que el Atlas sea completamente operativo sin costos recurrentes de servidor.
+1. **Disponibilidad Binaria Ininterrumpida (100% de Integridad):** Las 132 capas auditadas cuentan con archivos GeoJSON físicamente presentes en `data/` y `src/data/` y en la red CDN Netlify Edge, sin registrarse punteros rotos ni enlaces huérfanos. Esto asegura que el Atlas sea completamente operativo sin costos recurrentes de servidor.
 
-2. **Trazabilidad Jurídica Inequívoca:** Los datos comunitarios VGI de OpenStreetMap (`CAT-01` a `CAT-10`) están declarados bajo la licencia copyleft ODbL 1.0; los registros de biodiversidad ciudadana se amparan en CC-BY 4.0 / CC0 (GBIF); y las 123 capas estatales se distribuyen bajo la Ley N° 20.285 de Transparencia del Estado de Chile.
+2. **Trazabilidad Jurídica Inequívoca:** Los datos comunitarios VGI de OpenStreetMap (`CAT-01` a `CAT-10`) están declarados bajo la licencia copyleft ODbL 1.0; los registros de biodiversidad ciudadana se amparan en CC-BY 4.0 / CC0 (GBIF); y las 122 capas estatales se distribuyen bajo la Ley N° 20.285 de Transparencia del Estado de Chile.
 
 3. **Doble Modelación Geodésica Documentada:** Cada conjunto de datos declara formalmente su proyección elipsoidal WGS84 (`EPSG:4326`) para renderizado web y su proyección métrica proyectada UTM Huso 19 Sur (`EPSG:32719` / SIRGAS-Chile) para cálculo conforme de distancias y polígonos mediante las ecuaciones de Redfearn / Snyder (1987) y la fórmula de Gauss en `src/js/modulos/geodesia.js`.
 
