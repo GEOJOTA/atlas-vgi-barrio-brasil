@@ -32,7 +32,7 @@ const ModuloAtajosLeyenda = (() => {
     'explorador-osm': {
       id: 'explorador-osm',
       nombre: 'Consultas en OpenStreetMap',
-      badge: 'Consultar datos',
+      badge: 'Explorar mapa',
       apartados: [
         { id: 'sec-osm-cabecera', titulo: 'Guía y alcance técnico', abajo: false },
         { id: 'sec-osm-geodatabase-rm', titulo: 'Consultas Geofabrik RM (local)', abajo: false },
@@ -44,7 +44,7 @@ const ModuloAtajosLeyenda = (() => {
     'biodiversidad-gbif': {
       id: 'biodiversidad-gbif',
       nombre: 'Biodiversidad urbana (GBIF)',
-      badge: 'Consultar datos',
+      badge: 'Explorar mapa',
       apartados: [
         { id: 'sec-gbif-cabecera', titulo: 'Marco de ciencia ciudadana', abajo: false },
         { id: 'sec-gbif-busqueda', titulo: 'Búsqueda taxonómica inteligente', abajo: false },
@@ -56,7 +56,7 @@ const ModuloAtajosLeyenda = (() => {
     'proyectos-umap': {
       id: 'proyectos-umap',
       nombre: 'Mapas comunitarios (uMap)',
-      badge: 'Consultar datos',
+      badge: 'Explorar mapa',
       apartados: [
         { id: 'sec-umap-cabecera', titulo: 'Cartografía social y participativa', abajo: false },
         { id: 'sec-umap-selector', titulo: 'Catálogo de mapas colaborativos', abajo: false },
@@ -66,19 +66,19 @@ const ModuloAtajosLeyenda = (() => {
     },
     'indicadores': {
       id: 'indicadores',
-      nombre: 'Indicadores y relatos',
-      badge: 'Análisis y relatos',
+      nombre: 'Análisis territorial',
+      badge: 'Análisis',
       apartados: [
-        { id: 'sec-ind-cabecera', titulo: 'Marco analítico multidimensional', abajo: false },
-        { id: 'sec-ind-dimensiones', titulo: '5 dimensiones territoriales', abajo: false },
-        { id: 'contenedor-acordeon-capas', titulo: 'Métricas e indicadores por dimensión', abajo: true },
-        { id: 'seccion-storyboards', titulo: '8 relatos cartográficos (83 mapas)', abajo: true }
+        { id: 'sec-ind-cabecera', titulo: 'Síntesis analítica', abajo: false },
+        { id: 'seccion-storyboards', titulo: 'Narrativas espaciales (4 láminas)', abajo: false },
+        { id: 'sec-ind-dimensiones', titulo: 'Dimensiones Analíticas', abajo: true },
+        { id: 'contenedor-acordeon-capas', titulo: 'Métricas e indicadores por dimensión', abajo: true }
       ]
     },
     'calidad-ohsome': {
       id: 'calidad-ohsome',
       nombre: 'Calidad espacial (ISO 19157)',
-      badge: 'Evaluar calidad',
+      badge: 'Documentación',
       apartados: [
         { id: 'sec-calidad-cabecera', titulo: 'Marco de calidad cartográfica', abajo: false },
         { id: 'sec-calidad-evaluador', titulo: 'Evaluador de capas (IGV)', abajo: false },
@@ -88,8 +88,8 @@ const ModuloAtajosLeyenda = (() => {
     },
     'manual': {
       id: 'manual',
-      nombre: 'Manual de uso',
-      badge: 'Documentación y descargas',
+      nombre: 'Manual del sistema',
+      badge: 'Documentación',
       apartados: [
         { id: 'sec-manual-cabecera', titulo: 'Introducción y arquitectura', abajo: false },
         { id: 'buscador-general-manual', titulo: 'Buscador de capítulos', abajo: false },

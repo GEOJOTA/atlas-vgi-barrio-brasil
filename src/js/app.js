@@ -1104,19 +1104,19 @@ function inicializarAplicacion() {
   }
 }
 
-/* ---------------------- NAVEGACIÓN POR TAREA, MIGAS DE PAN, TEMA Y GLOSARIO ---------------------- */
+/* ---------------------- NAVEGACIÓN POR TAREA, MIGAS DE PAN, TEMA Y GLOSARIO (PROTOTIPO 02) ---------------------- */
 
 const METADATOS_PANELES_NAVEGACION = {
-  'inicio':             { grupo: 'explorar',      grupoNombre: 'Explorar mapa',              vistaNombre: 'Visor cartográfico' },
-  'explorador-osm':     { grupo: 'consultar',     grupoNombre: 'Consultar datos',            vistaNombre: 'OpenStreetMap (Overpass)' },
-  'biodiversidad-gbif': { grupo: 'consultar',     grupoNombre: 'Consultar datos',            vistaNombre: 'Biodiversidad (GBIF)' },
-  'proyectos-umap':     { grupo: 'consultar',     grupoNombre: 'Consultar datos',            vistaNombre: 'Mapas comunitarios (uMap)' },
-  'indicadores':        { grupo: 'analisis',      grupoNombre: 'Análisis y relatos',         vistaNombre: 'Indicadores y relatos (83 mapas)' },
-  'calidad-ohsome':     { grupo: 'calidad',       grupoNombre: 'Evaluar calidad',            vistaNombre: 'Calidad espacial (ISO 19157)' },
-  'metadatos-iso':      { grupo: 'calidad',       grupoNombre: 'Evaluar calidad',            vistaNombre: 'Catálogo y generador de metadatos' },
-  'diccionario':        { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Diccionario de datos (133 capas)' },
-  'manual':             { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Manual de uso' },
-  'licencias':          { grupo: 'documentacion', grupoNombre: 'Documentación y descargas',  vistaNombre: 'Licencias y descargas' }
+  'indicadores':        { grupo: 'analisis',      grupoNombre: 'Análisis',         vistaNombre: 'Narrativas espaciales (83 mapas)' },
+  'inicio':             { grupo: 'explorar',      grupoNombre: 'Explorar mapa',    vistaNombre: 'Visor cartográfico' },
+  'explorador-osm':     { grupo: 'explorar',      grupoNombre: 'Explorar mapa',    vistaNombre: 'Consultas OpenStreetMap' },
+  'biodiversidad-gbif': { grupo: 'explorar',      grupoNombre: 'Explorar mapa',    vistaNombre: 'Biodiversidad (GBIF)' },
+  'proyectos-umap':     { grupo: 'explorar',      grupoNombre: 'Explorar mapa',    vistaNombre: 'Mapas comunitarios (uMap)' },
+  'manual':             { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Manual del sistema' },
+  'diccionario':        { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Diccionario de datos (133 capas)' },
+  'metadatos-iso':      { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Catálogo y generador de metadatos' },
+  'calidad-ohsome':     { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Calidad espacial (ISO 19157)' },
+  'licencias':          { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Licencias y descargas' }
 };
 
 function configurarNavegacion() {
@@ -1215,62 +1215,61 @@ function configurarNavegacion() {
   window.navegarAModulo = function(moduloId) {
     if (!moduloId) return;
     const mapaModulos = {
-      '01': 'inicio',
-      '1': 'inicio',
-      'inicio': 'inicio',
-      'visor': 'inicio',
-
-      '02': 'explorador-osm',
-      '2': 'explorador-osm',
-      'explorador': 'explorador-osm',
-
-      '03': 'biodiversidad-gbif',
-      '3': 'biodiversidad-gbif',
-      'biodiversidad': 'biodiversidad-gbif',
-
-      '04': 'proyectos-umap',
-      '4': 'proyectos-umap',
-      'umap': 'proyectos-umap',
-
-      '05': 'indicadores',
-      '5': 'indicadores',
+      // Prototipo 02: 3 Módulos Principales
+      '01': 'indicadores',
+      '1': 'indicadores',
+      'analisis': 'indicadores',
       'indicadores': 'indicadores',
+      'narrativas': 'indicadores',
       'storyboards': 'indicadores',
 
-      '06': 'calidad-ohsome',
-      '6': 'calidad-ohsome',
-      'calidad': 'calidad-ohsome',
+      '02': 'inicio',
+      '2': 'inicio',
+      'inicio': 'inicio',
+      'visor': 'inicio',
+      'explorar': 'inicio',
+      'mapa': 'inicio',
 
-      '07': 'manual',
-      '7': 'manual',
+      '03': 'manual',
+      '3': 'manual',
+      'documentacion': 'manual',
       'manual': 'manual',
 
-      '08': 'metadatos-iso',
-      '8': 'metadatos-iso',
-      'metadatos': 'metadatos-iso',
+      // Vistas y herramientas secundarias
+      'explorador-osm': 'explorador-osm',
+      'explorador': 'explorador-osm',
+      'osm': 'explorador-osm',
+
+      'biodiversidad-gbif': 'biodiversidad-gbif',
+      'biodiversidad': 'biodiversidad-gbif',
+      'gbif': 'biodiversidad-gbif',
+
+      'proyectos-umap': 'proyectos-umap',
+      'umap': 'proyectos-umap',
+
+      'calidad-ohsome': 'calidad-ohsome',
+      'calidad': 'calidad-ohsome',
+
       'metadatos-iso': 'metadatos-iso',
+      'metadatos': 'metadatos-iso',
       'catalogo-metadatos': 'metadatos-iso',
       'generador-metadatos': 'metadatos-iso',
 
-      '09': 'diccionario',
-      '9': 'diccionario',
       'diccionario': 'diccionario',
-
-      '10': 'licencias',
       'licencias': 'licencias',
 
-      '00': 'inicio'
+      '00': 'indicadores'
     };
     const panelId = mapaModulos[moduloId] || moduloId;
     activarPanel(panelId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Clic en los 5 botones principales por tarea
+  // Clic en los botones principales de tarea (Prototipo 02: Análisis, Explorar mapa, Documentación)
   document.querySelectorAll('.btn-grupo-tarea').forEach(btnGrupo => {
     btnGrupo.addEventListener('click', (e) => {
       e.stopPropagation();
-      const panelDef = btnGrupo.dataset.panelDefecto || 'inicio';
+      const panelDef = btnGrupo.dataset.panelDefecto || 'indicadores';
       activarPanel(panelDef);
     });
   });
@@ -1290,6 +1289,11 @@ function configurarNavegacion() {
       activarPanel(btn.dataset.panel);
     }
   });
+
+  // Prototipo 02: Módulo 01 (Análisis) activo al entrar a la página
+  const panelInicialHash = window.location.hash ? window.location.hash.replace('#panel-', '').replace('#', '') : null;
+  const panelApertura = (panelInicialHash && METADATOS_PANELES_NAVEGACION[panelInicialHash]) ? panelInicialHash : 'indicadores';
+  activarPanel(panelApertura);
 }
 
 function configurarSubpanelesDerecha() {

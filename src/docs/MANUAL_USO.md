@@ -1,8 +1,9 @@
-# Manual de USO de la plataforma web — Atlas de información geográfica voluntaria para la gestión territorial
+# Manual de Uso del Atlas para la Gestión Territorial (Prototipo 02)
+### Análisis y Exploración | Municipio de Santiago y Barrio Brasil
 
 * Plataforma Web Interactiva: [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * Repositorio Espejo (GitHub Pages): [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* Cobertura Espacial y Normativa: 133 Capas Operativas (`123` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) · 140 Descriptores ISO 19110:2016 · 5 Dimensiones Analíticas · 4 guiones visuales Territoriales (83 Cartografías Temáticas) · 10 Módulos Funcionales (`01` al `10`).
+* Cobertura Espacial y Normativa: 133 Capas Operativas (`123` Oficiales del Estado + `10` Macrocategorías VGI `CAT-01` a `CAT-10`) · 140 Descriptores ISO 19110:2016 · 5 Dimensiones Analíticas · 4 Narrativas Espaciales Territoriales (83 Cartografías Temáticas) · 10 Módulos Funcionales (`01` al `10`).
 
 ---
 
@@ -20,7 +21,7 @@ flowchart LR
     subgraph IN["1. INPUT / ENTRADA (Selección del Usuario en Interfaz)"]
         U1["Selección de Encuadre Territorial<br/>Barrio Brasil (223,75 ha) | Sector Patrimonial (136,10 ha)<br/>o Dibujo Libre de caja delimitadora (EPSG:32719)"]
         U2["Activación de Capas en el Visor<br/>10 Categorías VGI + 124 Capas Oficiales<br/>o Importación Local (.geojson/.kml/.kmz/.gpx/.csv)"]
-        U3["Consultas Especializadas por Módulo<br/>Overpass QL (02) | GBIF (03) | guiones visuales (05)<br/>Calidad WLC/ohsome (06) | Metadatos/Diccionario (08-09)"]
+        U3["Consultas Especializadas por Módulo<br/>Overpass QL (02) | GBIF (03) | Narrativas Espaciales (05)<br/>Calidad WLC/ohsome (06) | Metadatos/Diccionario (08-09)"]
     end
 
     subgraph PROC["2. FLUJO DE PROCESAMIENTO (Motores Client-Side JS ES6+)"]
@@ -31,7 +32,7 @@ flowchart LR
 
     subgraph OUT["3. OUTPUT / ENTREGABLES DESCARGABLES EN WEB Y GIT"]
         O1["Capas GeoJSON Filtradas + Tabla CSV<br/>Certificado Normativo CIN-VGI (.txt / .html)"]
-        O2["Lectura Interactiva de 4 guiones visuales (83 Mapas)<br/>Ranking WLC v2.0 + Score de Madurez ohsome"]
+        O2["Lectura Interactiva de 4 Narrativas Espaciales (83 Mapas)<br/>Ranking WLC v2.0 + Score de Madurez ohsome"]
         O3["Fichas ISO 19115 (.json) / ISO 19139 (.xml)<br/>Libros Excel (.xlsx) y Geodatabase (.zip, 542,35 MB)"]
     end
 
@@ -146,9 +147,9 @@ Articula catastros ciudadanos elaborados sobre uMap (`src/js/modulos/umap.js`) y
 
 ---
 
-### Módulo 05 · indicadores & guiones visuales territoriales (`#panel-indicadores`)
+### Módulo 05 · indicadores & Narrativas Espaciales territoriales (`#panel-indicadores`)
 
-El Módulo 05 (`src/js/modulos/indicadores_analisis.js`) organiza las 133 coberturas operativas en 5 Dimensiones Analíticas y presenta 4 guiones visuales Territoriales que integran 83 cartografías temáticas (`src/img/cartografias/`), tarjetas de indicadores clave (KPI), gráficos comparativos, diagramas vectoriales SVG, análisis diferenciados para 4 perfiles de actores (`Institución Pública`, `Comunidad Vecinal`, `Voluntariado VGI`, `ONG / Academia`) y visor Lightbox de alta magnificación (`zoom` de `0.5x` a `4.5x` y desplazamiento táctil).
+El Módulo 05 (`src/js/modulos/indicadores_analisis.js`) organiza las 133 coberturas operativas en 5 Dimensiones Analíticas y presenta 4 Narrativas Espaciales Territoriales que integran 83 cartografías temáticas (`src/img/cartografias/`), tarjetas de indicadores clave (KPI), gráficos comparativos, diagramas vectoriales SVG, análisis diferenciados para 4 perfiles de actores (`Institución Pública`, `Comunidad Vecinal`, `Voluntariado VGI`, `ONG / Academia`) y visor Lightbox de alta magnificación (`zoom` de `0.5x` a `4.5x` y desplazamiento táctil).
 
 ```mermaid
 flowchart TD
@@ -265,7 +266,7 @@ Sistematiza el régimen jurídico de propiedad intelectual y acceso público (`s
 
 | Perfil de Actor Territorial | Flujo de Trabajo Recomendado en la Plataforma | Entregables y Salidas Principales |
 | :--- | :--- | :--- |
-| 1. Equipos Técnicos Municipales y Ministeriales (SECPLA, DOM, Asesoría Urbana, MINVU, SUBDERE) | `Módulo 01` (Superposición de capas `BBDD` + Inspector Normativo PRC) → `Módulo 05` (guiones visuales 03 y 04 de Censo 2024, RSH y Residuos SUBDERE) → `Módulo 08` (Exportación XML ISO 19139). | Certificado CIN-VGI (`.txt`), fichas XML ISO 19139 para GeoNetwork/GeoNode y paquete `docs/geodatabase_completa_atlas_vgi.zip`. |
-| 2. Organizaciones Comunitarias, Juntas de Vecinos y Colectivos Barriales | `Módulo 01` (Activación de equipamientos, áreas verdes y accesibilidad) → `Módulo 04` (Importación de catastros vecinales en `.kml`/`.geojson`) → `Módulo 05` (Lectura de guiones visuales 01 y 02). | Cartografías temáticas en Lightbox (PNG), tablas CSV de equipamientos barriales y diagnóstico normativo PRC de predios. |
+| 1. Equipos Técnicos Municipales y Ministeriales (SECPLA, DOM, Asesoría Urbana, MINVU, SUBDERE) | `Módulo 01` (Superposición de capas `BBDD` + Inspector Normativo PRC) → `Módulo 05` (Narrativas Espaciales 03 y 04 de Censo 2024, RSH y Residuos SUBDERE) → `Módulo 08` (Exportación XML ISO 19139). | Certificado CIN-VGI (`.txt`), fichas XML ISO 19139 para GeoNetwork/GeoNode y paquete `docs/geodatabase_completa_atlas_vgi.zip`. |
+| 2. Organizaciones Comunitarias, Juntas de Vecinos y Colectivos Barriales | `Módulo 01` (Activación de equipamientos, áreas verdes y accesibilidad) → `Módulo 04` (Importación de catastros vecinales en `.kml`/`.geojson`) → `Módulo 05` (Lectura de Narrativas Espaciales 01 y 02). | Cartografías temáticas en Lightbox (PNG), tablas CSV de equipamientos barriales y diagnóstico normativo PRC de predios. |
 | 3. Comunidad de Mapeadores Voluntarios (OpenStreetMap / Ciencia Ciudadana) | `Módulo 02` (Consultas Overpass QL y validación Taginfo) → `Módulo 06` (Submódulos B y C: curvas ohsome de saturación y auditoría OSMCha) → `Módulo 09` (Revisión de las 86 brechas VGI). | Identificación de sectores con baja completitud atributiva (`surface=*`, `wheelchair=*`, `tactile_paving=*`) para priorizar campañas de mapeo. |
 | 4. Investigadores, Docentes y Analistas Geoespaciales | `Módulo 05` (Análisis KDE y LISA I de Moran) → `Módulo 06` (Submódulo A: Ranking multicriterio WLC v2.0) → `Módulo 10` (Descarga de los 3 libros `.xlsx` y matrices `.csv`/`.json`). | Matrices `docs/wlc_metacalidad_ranking.csv`, `docs/correlacion_dimensiones_calidad.csv`, `data/matriz_sintesis_barrio_brasil_manzanas.geojson` y `docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`. |

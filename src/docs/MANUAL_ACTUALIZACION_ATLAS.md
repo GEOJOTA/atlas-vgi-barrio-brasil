@@ -86,7 +86,7 @@
   * [22.1. El algoritmo ray-casting (point-in-polygon)](#221-el-algoritmo-ray-casting-point-in-polygon)
   * [22.2. Generación del certificado de informaciones normativas (CIN-VGI)](#222-generación-del-certificado-de-informaciones-normativas-cin-vgi)
   * [22.3. Métodos de cálculo empleados para las métricas morfológicas y dinámica edificatoria (LGUC / OGUC)](#223-métodos-de-cálculo-empleados-para-las-métricas-morfológicas-y-dinámica-edificatoria-lguc--oguc)
-* [23. Los cuatro guiones visuales territoriales y las 83 Cartografías temáticas](#23-los-cuatro-guiones-visuales-territoriales-y-las-83-cartografías-temáticas)
+* [23. Los cuatro narrativas espaciales territoriales y las 83 Cartografías temáticas](#23-los-cuatro-guiones-visuales-territoriales-y-las-83-cartografías-temáticas)
   * [23.1. Guion visual 01: Concentración territorial y núcleos de actividad VGI (KDE — 14 Cartografías)](#231-guion-visual-01-concentración-territorial-y-núcleos-de-actividad-vgi-kde--14-cartografías)
   * [23.2. Guion visual 02: Segregación espacial, hotspots y áreas de rezago (LISA — 11 Cartografías)](#232-guion-visual-02-segregación-espacial-hotspots-y-áreas-de-rezago-lisa--11-cartografías)
   * [23.3. Guion visual 03: Estructura sociodemográfica, habitabilidad y morfología urbana (censo 2024 Y RSH — 34 Cartografías)](#233-guion-visual-03-estructura-sociodemográfica-habitabilidad-y-morfología-urbana-censo-2024-y-rsh--34-cartografías)
@@ -164,7 +164,7 @@ El sistema articula estándares del Open Geospatial Consortium (OGC) y de la Org
 | Coberturas cartográficas totales | 133 capas | 124 capas oficiales del Estado de Chile + 10 macrocategorías de información geográfica voluntaria (VGI). |
 | Volumen de datos espaciales | 3,33 GB (542,35 MB en ZIP) | 220 archivos GeoJSON en `src/data/` y paquete descargable `docs/geodatabase_completa_atlas_vgi.zip` (257 archivos en 7 subcarpetas). |
 | Descriptores del diccionario de datos | 140 descriptores | Atributos documentados bajo la norma ISO 19110:2016, incluyendo la identificación de 86 brechas temáticas entre catastros públicos y mapeo ciudadano. |
-| Cartografías temáticas e indicadores | 83 cartografías | Distribuidas en 4 guiones visuales (*guiones visuales*) territoriales y 5 dimensiones de análisis urbano en el Módulo 05. |
+| Cartografías temáticas e indicadores | 83 cartografías | Distribuidas en 4 narrativas espaciales (*narrativas espaciales*) territoriales y 5 dimensiones de análisis urbano en el Módulo 05. |
 | Índice Global de Calidad VGI (IGV) | 95,4 % (95,41 %) | Promedio multicriterio de calidad espacial (modelo de combinación lineal ponderada, WLC, bajo ISO 19157) evaluado sobre las 133 capas del catálogo (91 en grado A+ y 43 en grado A). |
 | Índice Global de Metacalidad Documental (IGMC) | 96,55 % | Porcentaje de cumplimiento de los campos documentales obligatorios del Perfil Nacional de Metadatos IDE Chile (ISO 19115 / XML ISO 19139) en el generador del Módulo 08. |
 | Conformidad de accesibilidad web | WCAG 2.1 AA / AAA | Nivel AA general en todos los componentes interactivos (contraste de 4,58:1 a 8,87:1) y nivel AAA en todo el texto de lectura (contraste de 9,43:1 a 19,00:1). |
@@ -451,7 +451,7 @@ flowchart TD
     end
 
     subgraph FASE3["Fase III: Geoportal web y despliegue"]
-        H7["Hito 7: Interfaz web accesible y conexión a APIs"] --> H8["Hito 8: Inspector PRC, guiones visuales y publicación"]
+        H7["Hito 7: Interfaz web accesible y conexión a APIs"] --> H8["Hito 8: Inspector PRC, narrativas espaciales y publicación"]
     end
 
     subgraph FASE4["Fase IV: Evaluación y transferibilidad"]
@@ -472,7 +472,7 @@ flowchart TD
 | Hito 5 | Evaluación de calidad ISO 19157 (WLC v2.0, IGV 95,4 %) e inyección de 14 atributos. | OE 2 | Fase II | 100 % cerrado | `docs/ANALISIS_METACALIDAD.md`, `docs/matriz_metacalidad.json`, `docs/wlc_metacalidad_resultado.json` y `docs/perfil_metadatos_vgi.xlsx` |
 | Hito 6 | Cruces espaciales barriales y síntesis en 5 dimensiones territoriales. | OE 2 | Fase II | 100 % cerrado | `data/matriz_sintesis_barrio_brasil_manzanas.geojson`, `data/resumen_catastro_vgi.csv` y `data/bip_inversiones_santiago.csv` |
 | Hito 7 | Desarrollo de la interfaz web, visor cartográfico y clientes de APIs. | OE 3 | Fase III | 100 % cerrado | `src/index.html`, `src/css/estilos.css`, `src/js/app.js` y `src/js/modulos/*.js` |
-| Hito 8 | Inspector normativo PRC, 4 guiones visuales (83 cartografías) y despliegue. | OE 3 | Fase III | 100 % cerrado | `src/js/modulos/evaluador_normativo.js`, `src/js/modulos/indicadores_analisis.js` y `netlify.toml` |
+| Hito 8 | Inspector normativo PRC, 4 narrativas espaciales (83 cartografías) y despliegue. | OE 3 | Fase III | 100 % cerrado | `src/js/modulos/evaluador_normativo.js`, `src/js/modulos/indicadores_analisis.js` y `netlify.toml` |
 | Hito 9 | Evaluación de la plataforma con usuarios y organizaciones del territorio. | OE 4 | Fase IV | 100 % cerrado | `docs/TRAZABILIDAD.md`, `MANUAL_USO.md` y `docs/MANUAL_USO.md` (`src/docs/`) |
 | Hito 10 | Pruebas de integridad pre-despliegue, paquete ZIP y manual técnico. | OE 4 | Fase IV | 100 % cerrado | `scripts/verificar_integridad_despliegue.py`, `docs/geodatabase_completa_atlas_vgi.zip` y `MANUAL_ACTUALIZACION_ATLAS.md` |
 
@@ -540,10 +540,10 @@ En correspondencia con el selector `#sel-perfil-usuario` configurado en `src/ind
   > *"Vista para investigación y academia: prioriza indicadores espaciales (KDE y LISA), Censo 2024, calidad ISO 19157 y descargas."*
 * Usuarios destinatarios: Organizaciones no gubernamentales de estudios urbanos, centros de investigación, docentes y estudiantes universitarios.
 * Tareas principales:
-  - Explorar las cartografías temáticas de estimación de densidad por núcleo (KDE) y de autocorrelación espacial local mediante el índice I de Moran local (LISA) en los cuatro guiones visuales del Módulo 05.
+  - Explorar las cartografías temáticas de estimación de densidad por núcleo (KDE) y de autocorrelación espacial local mediante el índice I de Moran local (LISA) en los cuatro narrativas espaciales del Módulo 05.
   - Descargar las capas vectoriales en GeoJSON (EPSG:4326), GeoPackage OGC y tablas CSV para su análisis en sistemas de información geográfica de escritorio como QGIS.
   - Revisar las matrices de evaluación multicriterio (WLC v2.0) y las referencias bibliográficas en formato APA 7.ª edición.
-* Vistas prioritarias: `indicadores` (Indicadores y guiones visuales), `calidad-ohsome` (Evaluación de calidad ISO 19157), `licencias` (Descarga de geodatabase y catálogos) y `metadatos-iso` (Metadatos ISO 19115).
+* Vistas prioritarias: `indicadores` (Indicadores y narrativas espaciales), `calidad-ohsome` (Evaluación de calidad ISO 19157), `licencias` (Descarga de geodatabase y catálogos) y `metadatos-iso` (Metadatos ISO 19115).
 
 ---
 
@@ -1093,7 +1093,7 @@ flowchart LR
     subgraph OUT_IDE["3. OUTPUT: CATÁLOGO OFICIAL"]
         IDE_122["124 Capas Oficiales Homologadas (src/data/*.geojson)"]
         XLSX_132["Catálogo Maestro catalogo_fuentes_vgi.xlsx (134 Filas)"]
-        WEB_MOD01["Sincronización en Visor Web (Módulo 01) y guiones visuales (Módulo 05)"]
+        WEB_MOD01["Sincronización en Visor Web (Módulo 01) y narrativas espaciales (Módulo 05)"]
     end
 
     IN_IDE --> PROC_IDE --> OUT_IDE
@@ -1941,7 +1941,7 @@ El Atlas de Información Geográfica Voluntaria adopta una filosofía de ingenie
 │  • ModuloOSM (Overpass QL)                    • L.tileLayer / WMS      │
 │  • ModuloOhsome (HeiGIT API)                  • L.geoJSON / L.divIcon  │
 │  • ModuloEvaluadorNormativo (PRC)             • Popups Dinámicos       │
-│  • ModuloIndicadores (Storyboards)            • Control de Escala      │
+│  • ModuloIndicadores (Narrativas Espaciales)            • Control de Escala      │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -2334,15 +2334,15 @@ El Inspector Normativo implementa la consulta espacial articulando simultáneame
 
 ---
 
-## 23. Los cuatro guiones visuales territoriales y las 83 Cartografías temáticas
+## 23. Los cuatro narrativas espaciales territoriales y las 83 Cartografías temáticas
 
-El Atlas implementa en el Módulo 05 (`src/js/modulos/indicadores_analisis.js`) un sistema de divulgación y síntesis territorial guiada denominado guiones visuales. Cada guion visual constituye un documento analítico interactivo que articula secciones metodológicas intercaladas con gráficos estadísticos dinámicos, diagramas vectoriales de arquitectura SVG y el catálogo completo de 83 cartografías temáticas (`2200 × 1423 px` y `3264 × 2112 px`), además de permitir la activación directa de sus capas vectoriales asociadas en el visor interactivo.
+El Atlas implementa en el Módulo 05 (`src/js/modulos/indicadores_analisis.js`) un sistema de divulgación y síntesis territorial guiada denominado narrativas espaciales. Cada guion visual constituye un documento analítico interactivo que articula secciones metodológicas intercaladas con gráficos estadísticos dinámicos, diagramas vectoriales de arquitectura SVG y el catálogo completo de 83 cartografías temáticas (`2200 × 1423 px` y `3264 × 2112 px`), además de permitir la activación directa de sus capas vectoriales asociadas en el visor interactivo.
 
 ```mermaid
 flowchart LR
     subgraph IN_SB["1. INPUT"]
         CARTO_83["83 Cartografías Temáticas (img/cartografias/*.jpg)"]
-        PORTADAS_4["4 Portadas Vectoriales SVG (img/storyboards/*.svg)"]
+        PORTADAS_4["4 Portadas Vectoriales SVG (img/narrativas espaciales/*.svg)"]
         DATA_134["133 Capas GeoJSON + Estadísticas Censo 2024 / SUBDERE / MuniSTGO"]
     end
 
@@ -2522,7 +2522,7 @@ nodo-geoabierto/
     ├── js/app.js                           # Orquestador central de la aplicación
     ├── js/modulos/                         # 19 módulos JS IIFE (mapa, ide_chile, osm, ohsome, etc.)
     ├── img/cartografias/                   # 83 cartografías temáticas JPG (2200x1423 / 3264x2112 px)
-    ├── img/storyboards/                    # 4 portadas vectoriales SVG de los guiones visuales
+    ├── img/narrativas espaciales/                    # 4 portadas vectoriales SVG de los narrativas espaciales
     ├── data/                               # Espejo exacto de data/ servido en producción
     └── docs/                               # Espejo exacto de docs/ servido en producción
 ```
@@ -2646,14 +2646,14 @@ flowchart LR
 
 ---
 
-### Módulo 05: Indicadores & guiones visuales (`data-panel="indicadores"` — `src/js/modulos/indicadores_analisis.js`)
-* Propósito Operativo: Articulación de las 133 coberturas del Atlas en 5 Dimensiones Analíticas (Sociodemográfica, Socioeconómica, Socioambiental, Sociosanitaria y Sociourbana/Habitabilidad) y 4 guiones visuales de Resultados Territoriales con 83 cartografías temáticas, gráficos comparativos, diagramas vectoriales SVG y visor Lightbox multi-dispositivo.
+### Módulo 05: Indicadores & narrativas espaciales (`data-panel="indicadores"` — `src/js/modulos/indicadores_analisis.js`)
+* Propósito Operativo: Articulación de las 133 coberturas del Atlas en 5 Dimensiones Analíticas (Sociodemográfica, Socioeconómica, Socioambiental, Sociosanitaria y Sociourbana/Habitabilidad) y 4 narrativas espaciales de Resultados Territoriales con 83 cartografías temáticas, gráficos comparativos, diagramas vectoriales SVG y visor Lightbox multi-dispositivo.
 
 ```mermaid
 flowchart LR
     subgraph IN_M5["1. INPUT"]
         DIM_5["5 Dimensiones Analíticas (133 Capas Asociadas)"]
-        STORY_ID["4 guiones visuales Temáticos (KDE, LISA, Censo 2024, Socioambiental)"]
+        STORY_ID["4 narrativas espaciales Temáticos (KDE, LISA, Censo 2024, Socioambiental)"]
         CARTO_SET["83 Cartografías (2200x1423 / 3264x2112 px) + Diagramas SVG + Gráficos"]
     end
 
@@ -3754,7 +3754,7 @@ Para facilitar la comprensión integral del ecosistema y permitir su modificaci�
 - Estructura Interna y Componentes Clave:
   - Bloque `:root`: Tokens semánticos de color (`--musgo`, `--esmeralda`, `--ocre`, `--carmesí`, `--bg-dark`, `--papel`, `--tinta`), tipografía (`--fuente-texto`, `--fuente-datos`) y dimensiones (`--ancho-consola-gis`, `--alto-header`).
   - Layout Principal: Reglas para `.contenedor-visor`, `.consola-lateral-gis`, `.area-mapa` y `.vista-contenido`.
-  - Componentes Analíticos: Estilos para `.tarjeta-capa-gis`, `.kpi-card`, `.tabla-datos`, `.badge-estado`, `.modal-overlay` y tarjetas narrativas de guiones visuales (`.tarjeta-storyboard`).
+  - Componentes Analíticos: Estilos para `.tarjeta-capa-gis`, `.kpi-card`, `.tabla-datos`, `.badge-estado`, `.modal-overlay` y tarjetas narrativas de narrativas espaciales (`.tarjeta-storyboard`).
   - Simbología Cartográfica: Clases `.pin-svg-pulso`, `.pin-halo`, `.pin-cuerpo` y cursores `.modo-inspeccion-activa`.
 - Entradas y Salidas (I/O):
   - *Entradas:* Clases, atributos `data-*` y variables en línea (`style="--color-pin: ..."`) aplicadas en el DOM.
@@ -3786,7 +3786,7 @@ La lógica interactiva del cliente web se compone de 21 archivos JavaScript ES6+
 | JS-13 | `js/modulos/calidad_analyst.js` | Analista Multicriterio WLC y Correlación (Módulo 06): Ejecuta el modelo de Combinación Lineal Ponderada (WLC v2.0) combinando las 10 dimensiones cuantitativas y cualitativas ISO 19157, y grafica matrices de correlación de Pearson. | `CalidadAnalyst.calcularWLC()`, `actualizarPesos()`, `renderizarMatrizPearson()` | In: `docs/wlc_metacalidad_resultado.json`, `docs/matriz_metacalidad.json` y `docs/correlacion_dimensiones_calidad.csv`. Out: Índice Global VGI (`IGV`), clasificación por niveles y gráficos radar. | Modifique los pesos predeterminados en `PESOS_WLC_DEFAULT` manteniendo siempre la restricción `∑ w_i = 1.00`. |
 | JS-14 | `js/modulos/evaluador_calidad_cuantitativa.js` | Auditor Cuantitativo de Geometrías y Topología (Módulo 06): Verifica el cierre de anillos poligonales, ausencia de vértices duplicados, validez de rangos WGS84, completitud del esquema de 14 atributos y frescura temporal. | `EvaluadorCuantitativo.auditarCapa()`, `validarTopologia()`, `verificarEsquema14()` | In: Geometrías y propiedades de las 133 capas vectoriales (`data/*.geojson`) o archivo externo. Out: Puntajes `[0-100%]` en las 5 dimensiones cuantitativas ISO 19157 y plan de subsanación. | Añada nuevas reglas geométricas o campos obligatorios dentro de `validarEntidadIndividual()`. |
 | JS-15 | `js/modulos/evaluador_normativo.js` | Inspector Normativo PRC e Isócronas de Accesibilidad (Módulo 01): Evalúa mediante algoritmo *Ray-Casting* (*Point-in-Polygon*) la zona del PRC Santiago (`data/ide_minvu_ipt_prc_santiago.geojson`), Zonas Típicas e ICH (`data/ide_minvu_patrimonio_urbano.geojson`), y emite el Certificado CIN-VGI. | `EvaluadorNormativo.inspeccionarPredio()`, `calcularIsocronas()`, `emitirCertificado()` | In: Coordenadas `[lon, lat]` del clic, polígonos PRC/CMN y capas de equipamiento. Out: Ficha normativa de edificación CIN-VGI y polígonos de isócronas. | Actualice los parámetros urbanísticos en `ZONAS_PRC_SANTIAGO` ante modificaciones o enmiendas comunales. |
-| JS-16 | `js/modulos/indicadores_analisis.js` | Indicadores Territoriales y guiones visuales Narrativos (Módulo 05): Gestiona las 5 Dimensiones Analíticas y los 4 guiones visuales Interactivos con 83 cartografías integradas (`img/cartografias/*.jpg`), portadas SVG (`img/storyboards/*.svg`) y Lightbox HD. | `IndicadoresAnalisis.inicializar()`, `abrirStoryboard()`, `cargarCartografiaEnVisor()` | In: `data/resumen_catastro_vgi.csv`, `docs/wlc_metacalidad_resultado.json`, `img/cartografias/*.jpg` y catálogo `STORYBOARDS`. Out: Acordeones de dimensiones, modal narrativo interactivo con Lightbox HD y activación de capas en el visor. | Para agregar un nuevo guion visual o capítulo cartográfico, añada un objeto al arreglo `STORYBOARDS` especificando sus `capas` y `secciones`. |
+| JS-16 | `js/modulos/indicadores_analisis.js` | Indicadores Territoriales y narrativas espaciales Narrativos (Módulo 05): Gestiona las 5 Dimensiones Analíticas y los 4 narrativas espaciales Interactivos con 83 cartografías integradas (`img/cartografias/*.jpg`), portadas SVG (`img/narrativas espaciales/*.svg`) y Lightbox HD. | `IndicadoresAnalisis.inicializar()`, `abrirStoryboard()`, `cargarCartografiaEnVisor()` | In: `data/resumen_catastro_vgi.csv`, `docs/wlc_metacalidad_resultado.json`, `img/cartografias/*.jpg` y catálogo `STORYBOARDS`. Out: Acordeones de dimensiones, modal narrativo interactivo con Lightbox HD y activación de capas en el visor. | Para agregar un nuevo guion visual o capítulo cartográfico, añada un objeto al arreglo `STORYBOARDS` especificando sus `capas` y `secciones`. |
 | JS-17 | `js/modulos/metadatos.js` | Catálogo de Metadatos ISO 19115-1 y Exportador XML ISO 19139 (Módulo 08): Renderiza el explorador interactivo de fichas de metadatos para las 133 coberturas (123 oficiales + 10 VGI) y genera documentos XML `gmd:MD_Metadata`. | `Metadatos.inicializar()`, `mostrarFichaISO()`, `exportarXMLISO19139()` | In: Inventario de 133 capas y `docs/perfil_metadatos_vgi.xlsx` (`src/docs/perfil_metadatos_vgi.xlsx`). Out: Tabla maestra de metadatos, vista previa ISO 19115 y descarga XML/JSON. | Edite la función `generarXMLISO19139()` para incorporar campos adicionales del Perfil Nacional de Metadatos de IDE Chile. |
 | JS-18 | `js/modulos/diccionario.js` | Diccionario Territorial Interactivo ISO 19110 (Módulo 09): Administra el catálogo de los 140 descriptores normativos y etiquetas OSM (`CATALOGO_ATRIBUTOS`), permitiendo filtrar por origen y consultar su equivalencia oficial-comunitaria. | `Diccionario.inicializar()`, `buscarDescriptor()`, `filtrarPorCategoria()` | In: Base de 140 descriptores semánticos ISO 19110 en `CATALOGO_ATRIBUTOS`. Out: Grilla interactiva de definiciones, tipos de datos y exportación JSON/CSV. | Incorpore nuevos descriptores en el arreglo `CATALOGO_ATRIBUTOS` especificando clave OSM, fuente oficial y capa relacionada. |
 | JS-19 | `js/modulos/licencias.js` | Centro de Descargas, Licencias y Gobernanza (Módulo 10): Administra el portal de descarga de la Geodatabase completa (`docs/geodatabase_completa_atlas_vgi.zip`), los 3 catálogos Excel OpenXML (`docs/categorias_tematicas_osm.xlsx`, `docs/catalogo_fuentes_vgi.xlsx`, `docs/perfil_metadatos_vgi.xlsx`), los 4 CSVs y la matriz jurídica. | `Licencias.inicializar()`, `descargarGeodatabase()`, `filtrarPorLicencia()` | In: Archivos en `docs/`, `src/docs/`, `data/` y `src/data/`. Out: Descargas directas con validación de integridad y fichas legales. | Si se actualiza el paquete ZIP masivo, actualice los metadatos de peso (542,35 MB) y conteo de archivos (133 capas del visor y 257 archivos) en el módulo. |
@@ -6003,7 +6003,7 @@ flowchart LR
 
 ## 46. Tutorial 07: Diseño y publicación de un nuevo guion visual (*guion visual*)
 
-* **Objetivo:** Agregar un nuevo relato cartográfico con tarjetas de indicadores y mapas temáticos en el Módulo 05 (*Análisis y relatos*).
+* **Objetivo:** Agregar un nuevo relato cartográfico con tarjetas de indicadores y mapas temáticos en el Módulo 05 (*Análisis*).
 * **Archivos:** `src/js/modulos/indicadores_analisis.js`.
 * **Pasos:**
   1. Guarde las láminas cartográficas o diagramas SVG del nuevo relato en la carpeta `src/img/cartografias/` (o `src/docs/`).
@@ -6023,7 +6023,7 @@ flowchart LR
      }
      ```
   4. Guarde el archivo y recargue la plataforma.
-* **Verificación:** Navegue a *Análisis y relatos > Indicadores y relatos*, haga clic sobre la nueva tarjeta y verifique que se abra la lámina de lectura con sus indicadores y el botón para cargar las capas asociadas en el visor.
+* **Verificación:** Navegue a *Análisis > Indicadores y relatos*, haga clic sobre la nueva tarjeta y verifique que se abra la lámina de lectura con sus indicadores y el botón para cargar las capas asociadas en el visor.
 
 > [!WARNING]
 > **Qué hacer si falla:** Si alguna imagen del relato muestra el ícono de recurso roto, compruebe que la ruta relativa comience sin barra diagonal inicial (por ejemplo, `img/...` o `docs/...` relativas a `src/`) y respete exactamente las mayúsculas y minúsculas del nombre de archivo (Linux en Netlify distingue mayúsculas de minúsculas).

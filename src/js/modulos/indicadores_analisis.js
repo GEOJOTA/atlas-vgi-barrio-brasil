@@ -372,8 +372,8 @@ const ModuloIndicadoresAnalisis = (() => {
       id: 'storyboard-densidad-kernel-kde',
       dimensionId: 'metodologica',
       dimensionNombre: 'Resultados Espaciales · Densidades de Kernel (KDE)',
-      titulo: 'Concentración Territorial y Núcleos de Actividad VGI en Santiago: Lo que Revelan las Superficies de Densidad de Kernel',
-      bajada: 'Análisis espacial de las 14 cartografías de densidad continua (KDE) sobre la geodatabase comunitaria consolidada del Atlas VGI (79.841 entidades geométricas directas y 112.264 nodos muestreados en malla regular de 20 m), la red de semáforos UOCT y las dinámicas oficiales de Permisos de Edificación y Certificados de Recepción Final (CRF). Polarización entre la concentración del eje Alameda, Barrio Brasil, Santa Ana, Parque Almagro y Ejército frente a los vacíos en el arco periférico sur y suroriente de la comuna (Bogotá, Sierra Bella, Matta Sur, Diez de Julio y San Vicente).',
+      titulo: 'Concentración Territorial de Actividad IGV en Santiago:',
+      bajada: 'Análisis espacial de las 14 cartografís de densidad continua (KDE) sobre la geodatabase comunitaria consolidada del Atlas IGV (79.841 entidades geométricas directas y 112.264 nodos muestreados en malla regular de 20 m), la red de semáforos UOCT y las dinámicas oficiales de Permisos de Edificación y Certificados de Recepción Final (CRF). Polarización entre la concentración del eje Alameda, Barrio Brasil, Santa Ana, Parque Almagro y Ejército frente a los vacíos en el arco periférico sur y suroriente de la comuna (Bogotá, Sierra Bella, Matta Sur, Diez de Julio y San Vicente).',
       imagen: 'img/storyboards/portada_analisis_kde.svg',
       imagenDestacada: 'img/storyboards/portada_analisis_kde.svg',
       piePortada: 'Ilustración síntesis de los núcleos de intensidad territorial VGI identificados en la Comuna de Santiago y el entorno de Barrio Brasil.',
@@ -628,8 +628,8 @@ const ModuloIndicadoresAnalisis = (() => {
       id: 'storyboard-autocorrelacion-lisa',
       dimensionId: 'metodologica',
       dimensionNombre: 'Resultados Espaciales · Clusters y Outliers LISA',
-      titulo: 'Segregación Espacial, Hotspots y Áreas de Rezago en Santiago: Resultados de los Clusters Locales LISA',
-      bajada: 'Qué revelan las 11 cartografías de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas censales (unidades territoriales básicas del INE) de Santiago: dónde se agrupan estadísticamente los núcleos Alto-Alto (HH), qué barrios conforman bolsones Bajo-Bajo (LL) y cómo la cobertura colaborativa exhibe un desajuste inverso frente a la densidad residencial comunal.',
+      titulo: 'Segregación Espacial, Hotspots y Áreas de Rezago en Santiago:',
+      bajada: 'Análisis espacial de las 11 cartografías de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas censales (unidades territoriales básicas del INE) de Santiago: dónde se agrupan estadísticamente los núcleos Alto-Alto (HH), qué barrios conforman bolsones Bajo-Bajo (LL) y cómo la cobertura colaborativa exhibe un desajuste inverso frente a la densidad residencial comunal..',
       imagen: 'img/storyboards/portada_analisis_lisa.svg',
       imagenDestacada: 'img/storyboards/portada_analisis_lisa.svg',
       piePortada: 'Ilustración conceptual de la polarización territorial entre conglomerados Alto-Alto (Hotspots), Bajo-Bajo (Coldspots) y anomalías espaciales en la trama de Santiago.',
@@ -851,8 +851,8 @@ const ModuloIndicadoresAnalisis = (() => {
       id: 'storyboard-demografia-habitabilidad-sociourbana',
       dimensionId: 'sociourbana',
       dimensionNombre: 'Resultados Territoriales · Demografía, Vivienda, PRC & Morfología Predial',
-      titulo: 'Estructura Sociodemográfica, Habitabilidad y Morfología Urbana en Santiago: Resultados del Censo 2024, RSH y Dinámica Edificatoria',
-      bajada: 'Qué revelan las 34 cartografías sociodemográficas, habitacionales y de morfología predial de la comuna: dónde se concentran los 432.081 habitantes, la hegemonía del departamento (92,7%) y del arriendo (72,1%), las alturas autorizadas de edificación, el Coeficiente de Ocupación del Suelo (COS medio de 0,47) en conjuntos habitacionales con Certificados de Recepción Final (CRF), la persistencia de cités en el sur y la conservación en Barrio Brasil y Yungay.',
+      titulo: 'Estructura Sociodemográfica, Habitabilidad y Morfología Urbana en Santiago:',
+      bajada: 'Análisis espacial de las 34 cartografías sociodemográficas, habitacionales y de morfología predial de la comuna: dónde se concentran los 432.081 habitantes, la hegemonía del departamento (92,7%) y del arriendo (72,1%), las alturas autorizadas de edificación, el Coeficiente de Ocupación del Suelo (COS medio de 0,47) en conjuntos habitacionales con Certificados de Recepción Final (CRF), la persistencia de cités en el sur y la conservación en Barrio Brasil y Yungay.',
       imagen: 'img/storyboards/portada_analisis_sociourbano.svg',
       imagenDestacada: 'img/storyboards/portada_analisis_sociourbano.svg',
       piePortada: 'Ilustración de los contrastes morfológicos y demográficos de Santiago: torres hiperdensas de arriendo frente a cités, casonas patrimoniales y barrios históricos.',
@@ -1262,8 +1262,8 @@ const ModuloIndicadoresAnalisis = (() => {
       id: 'storyboard-socioambiental-movilidad-servicios',
       dimensionId: 'ambiental',
       dimensionNombre: 'Resultados Territoriales · Movilidad, Proximidad & Aseo',
-      titulo: 'Socioambiente, Proximidad Peatonal, Movilidad y Metabolismo Urbano: Resultados en la Comuna de Santiago',
-      bajada: 'Qué revelan las 24 cartografías socioambientales y operativas: el 84,6% de viajes en modos sustentables, las brechas de distancia a áreas verdes y salud en el borde sur, la exposición a ruido (>68 dBA) en corredores viales y la asimetría de contenedores entre las 5 zonas de aseo municipal.',
+      titulo: 'Metabolismo Urbano de Santiago:',
+      bajada: 'Análisis espacial de las 24 cartografías socioambientales y operativas: el 84,6% de viajes en modos sustentables, las brechas de distancia a áreas verdes y salud en el borde sur, la exposición a ruido (>68 dBA) en corredores viales y la asimetría de contenedores entre las 5 zonas de aseo municipal.',
       imagen: 'img/storyboards/portada_analisis_socioambiental.svg',
       imagenDestacada: 'img/storyboards/portada_analisis_socioambiental.svg',
       piePortada: 'Ilustración de los flujos de movilidad sustentable, accesibilidad peatonal a parques, paisaje acústico y metabolismo de residuos en Santiago.',
@@ -1711,28 +1711,70 @@ const ModuloIndicadoresAnalisis = (() => {
     const contenedor = document.getElementById(contenedorId);
     if (!contenedor) return;
 
-    const totalCapasAtlas = 134; // 124 oficiales + 10 VGI
+    const totalCapasAtlas = 133;
     
     contenedor.innerHTML = `
       <div class="modulo-indicadores-analisis-wrapper">
 
-        <!-- Encabezado del Módulo (Centrado y Visualmente Destacado) -->
-        <header class="header-modulo-indicadores">
+        <!-- Encabezado del Módulo 01 -->
+        <header class="header-modulo-indicadores" id="sec-ind-cabecera">
           <div class="insignia-indicadores">
             <span class="punto-pulso"></span>
-            MÓDULO 05 · ANÁLISIS MULTIDIMENSIONAL Y NARRATIVAS TERRITORIALES
+            MÓDULO 01 · ANÁLISIS
           </div>
-          <h2 class="titulo-modulo-indicadores">Indicadores de Análisis Territorial y Storyboards</h2>
+          <h2 class="titulo-modulo-indicadores">Análisis</h2>
           <p class="bajada-modulo-indicadores">
-            Articulación de las <strong>${totalCapasAtlas} coberturas geoespaciales del Atlas VGI</strong> (124 fuentes oficiales del Estado y 10 categorías colaborativas) en <strong>5 dimensiones de análisis territorial</strong>, complementadas con storyboards temáticos para la Comuna de Santiago y el Barrio Brasil.
+            Síntesis territorial elaborada a partir de 83 cartografías temáticas que representan patrones de concentración, segregación espacial, estructura demográfica, habitabilidad, movilidad y metabolismo urbano en la Comuna de Santiago y el Barrio Brasil.
           </p>
         </header>
 
         <!-- ===================================================================== -->
+        <!-- LÁMINAS DEL ATLAS: NARRATIVAS ESPACIALES BASADAS EN DATOS             -->
+        <!-- ===================================================================== -->
+        <section class="seccion-storyboards-barrio-brasil" id="seccion-storyboards" aria-label="Narrativas espaciales y análisis territorial de Santiago">
+          <header class="header-seccion-storyboards">
+            <h3 class="titulo-storyboards">Narrativas espaciales basadas en datos</h3>
+            <p class="bajada-storyboards">
+              Síntesis territorial elaborada a partir de 83 cartografías temáticas que representan patrones de concentración, segregación espacial, estructura demográfica, habitabilidad, movilidad y metabolismo urbano en la Comuna de Santiago y el Barrio Brasil.
+            </p>
+          </header>
+
+          <div class="grilla-storyboards-cuadrados">
+            ${STORYBOARDS.map((sb) => {
+              return `
+                <article class="tarjeta-storyboard-cuadrada" 
+                         data-storyboard-id="${sb.id}"
+                         role="button"
+                         tabindex="0"
+                         aria-label="Abrir lámina: ${sb.titulo}"
+                         onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('${sb.id}')">
+                  <div class="imagen-cuadrada-wrapper">
+                    <img src="${sb.imagen}" alt="${sb.titulo}" decoding="async" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src=this.src.startsWith('src/')?this.src.slice(4):'src/'+this.src;}" class="img-storyboard-cuadro">
+                    <div class="overlay-gradiente-storyboard"></div>
+                    <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('${sb.id}')" title="Ampliar imagen / cartografía">🔍</button>
+                    <span class="badge-dimension-tag">${sb.dimensionNombre.split('&')[0]}</span>
+                  </div>
+                  <div class="cuerpo-tarjeta-storyboard">
+                    <h4 class="titulo-tarjeta-storyboard">${sb.titulo}</h4>
+                    <p class="bajada-tarjeta-storyboard">${sb.bajada}</p>
+                    <div class="footer-tarjeta-storyboard">
+                      <div class="tags-storyboard">
+                        ${sb.tags.slice(0, 2).map(t => `<span class="tag-chip">${t}</span>`).join('')}
+                      </div>
+                      <span class="btn-abrir-historia">Ver Lámina ↗</span>
+                    </div>
+                  </div>
+                </article>
+              `;
+            }).join('')}
+          </div>
+        </section>
+
+        <!-- ===================================================================== -->
         <!-- GRILLA DE LAS 5 GRANDES DIMENSIONES ANALÍTICAS                         -->
         <!-- ===================================================================== -->
-        <section class="seccion-dimensiones-analisis" aria-label="Dimensiones de Análisis">
-          <h3 class="subtitulo-centrado-seccion">Dimensiones Analíticas y Coberturas Asociadas</h3>
+        <section class="seccion-dimensiones-analisis" id="sec-ind-dimensiones" aria-label="Dimensiones Analíticas">
+          <h3 class="subtitulo-centrado-seccion">Dimensiones Analíticas</h3>
           
           <div class="grilla-dimensiones-indicadores" id="grilla-tarjetas-dimensiones">
             ${DIMENSIONES.map(dim => {
@@ -1768,49 +1810,6 @@ const ModuloIndicadoresAnalisis = (() => {
           <!-- Contenedor del Acordeón Desplegable de Capas (Centrado) -->
           <div class="contenedor-acordeon-dimension" id="contenedor-acordeon-capas" style="display:none;">
             <!-- Contenido inyectado dinámicamente al seleccionar dimensión -->
-          </div>
-        </section>
-
-        <!-- ===================================================================== -->
-        <!-- SECCIÓN STORYBOARDS: NARRATIVAS DE DATOS EN BARRIO BRASIL               -->
-        <!-- ===================================================================== -->
-        <section class="seccion-storyboards-barrio-brasil" id="seccion-storyboards" aria-label="Storyboards de Barrio Brasil">
-          <header class="header-seccion-storyboards">
-            <div class="insignia-storyboards">NARRATIVAS ESPACIALES BASADAS EN DATOS</div>
-            <h3 class="titulo-storyboards">Storyboards</h3>
-            <p class="bajada-storyboards">
-              Síntesis de resultados territoriales donde las <strong>83 cartografías temáticas</strong> revelan los patrones de concentración, segregación espacial, estructura demográfica, habitabilidad, movilidad y metabolismo urbano en la <strong>Comuna de Santiago y el Barrio Brasil</strong>.
-            </p>
-          </header>
-
-          <div class="grilla-storyboards-cuadrados">
-            ${STORYBOARDS.map((sb) => {
-              return `
-                <article class="tarjeta-storyboard-cuadrada" 
-                         data-storyboard-id="${sb.id}"
-                         role="button"
-                         tabindex="0"
-                         aria-label="Abrir historia: ${sb.titulo}"
-                         onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('${sb.id}')">
-                  <div class="imagen-cuadrada-wrapper">
-                    <img src="${sb.imagen}" alt="${sb.titulo}" decoding="async" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src=this.src.startsWith('src/')?this.src.slice(4):'src/'+this.src;}" class="img-storyboard-cuadro">
-                    <div class="overlay-gradiente-storyboard"></div>
-                    <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('${sb.id}')" title="Ampliar imagen / cartografía">🔍</button>
-                    <span class="badge-dimension-tag">${sb.dimensionNombre.split('&')[0]}</span>
-                  </div>
-                  <div class="cuerpo-tarjeta-storyboard">
-                    <h4 class="titulo-tarjeta-storyboard">${sb.titulo}</h4>
-                    <p class="bajada-tarjeta-storyboard">${sb.bajada}</p>
-                    <div class="footer-tarjeta-storyboard">
-                      <div class="tags-storyboard">
-                        ${sb.tags.slice(0, 2).map(t => `<span class="tag-chip">${t}</span>`).join('')}
-                      </div>
-                      <span class="btn-abrir-historia">Leer Lámina ↗</span>
-                    </div>
-                  </div>
-                </article>
-              `;
-            }).join('')}
           </div>
         </section>
 

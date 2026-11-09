@@ -1,11 +1,11 @@
 {
   "_comentario": "Archivo de configuración centralizado para el Atlas de Información Geográfica Voluntaria. Permite adaptar la plataforma sin tocar el código JavaScript.",
   "organizacion": {
-    "nombre": "Atlas de Información Geográfica Voluntaria",
-    "subtitulo": "Plataforma VGI para la Gestión Territorial",
-    "descripcion_corta": "Consulta, calidad y metadatos VGI | Barrio Brasil, Santiago",
+    "nombre": "Atlas para la Gestión Territorial",
+    "subtitulo": "Análisis y Exploración | Municipio de Santiago y Barrio Brasil",
+    "descripcion_corta": "Análisis y Exploración | Municipio de Santiago y Barrio Brasil",
     "contacto": "tucorreoelectronico@gmail.com",
-    "area_de_interes_nombre": "Barrio Brasil, Santiago Centro, Chile"
+    "area_de_interes_nombre": "Municipio de Santiago y Barrio Brasil, Chile"
   },
   "area_por_defecto": {
     "_comentario": "Bounding box en formato [oeste, sur, este, norte], grados decimales (WGS84 / EPSG:4326). Foco territorial: Barrio Brasil Completo.",

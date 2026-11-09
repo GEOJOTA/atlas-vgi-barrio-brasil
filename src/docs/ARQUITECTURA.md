@@ -2,7 +2,7 @@
 
 * Plataforma Web en Producción (CDN Primario): [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * Repositorio Espejo (GitHub Pages): [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* Alcance Arquitectónico: 134 Capas Operativas (`124` Oficiales + `10` VGI) · 140 Descriptores ISO 19110:2016 · 5 Dimensiones Analíticas · 4 guiones visuales (83 Cartografías) · 10 Módulos (`01` al `10`) · 21 Módulos JS ES6+ (IIFE) · 25 Scripts Python 3 · Esquema Relacional PostGIS.
+* Alcance Arquitectónico: 134 Capas Operativas (`124` Oficiales + `10` VGI) · 140 Descriptores ISO 19110:2016 · 5 Dimensiones Analíticas · 4 narrativas espaciales (83 Cartografías) · 10 Módulos (`01` al `10`) · 21 Módulos JS ES6+ (IIFE) · 25 Scripts Python 3 · Esquema Relacional PostGIS.
 
 ---
 
@@ -33,7 +33,7 @@ flowchart TB
     subgraph CAPA2["2. FLUJO DE PROCESAMIENTO: Núcleo Modular Client-Side (21 Scripts JS ES6+) y Suite ETL (25 Scripts Python 3)"]
         N1["Núcleo de Configuración y Red<br/>src/js/config.js + config/config.json<br/>src/js/modulos/db_client.js & app.js"]
         N2["Motor Cartográfico, Geodésico y Normativo<br/>src/js/modulos/mapa.js (Leaflet 1.9.4)<br/>geodesia.js (EPSG:32719) & evaluador_normativo.js (PRC/OGUC)"]
-        N3["Motores Analíticos y de Calidad ISO 19157<br/>src/js/modulos/indicadores_analisis.js (5 Dim / 4 guiones visuales)<br/>ohsome.js, calidad_analyst.js & evaluador_calidad_cuantitativa.js"]
+        N3["Motores Analíticos y de Calidad ISO 19157<br/>src/js/modulos/indicadores_analisis.js (5 Dim / 4 narrativas espaciales)<br/>ohsome.js, calidad_analyst.js & evaluador_calidad_cuantitativa.js"]
         N4["Motores de Estándares ISO y Gobernanza<br/>src/js/modulos/manual.js, metadatos.js (ISO 19115/19139),<br/>diccionario.js (ISO 19110) & licencias.js"]
         N5["Suite Python 3 de Ingeniería y Auditoría<br/>scripts/verificar_conteo_capas.py | verificar_integridad_despliegue.py<br/>analisis_metacalidad.py | empaquetar_base_datos_completa.py"]
     end
@@ -124,7 +124,7 @@ Cada archivo del repositorio cumple un contrato técnico explícito según su le
 
 | Lenguaje | Ruta en el Repositorio | Rol Funcional | Componentes Clave y Protocolo de Modificación |
 | :---: | :--- | :--- | :--- |
-| HTML5 | [`src/index.html`](src/index.html) | Documento maestro SPA que estructura las 5 secciones de navegación por tarea (*Explorar mapa*, *Consultar datos*, *Análisis y relatos*, *Evaluar calidad*, *Documentación y descargas*), migas de pan, visor 2D en primer plano, acordeones de las 124 capas oficiales, modales de guiones visuales, Lightbox, Glosario de siglas y descarga de la Geodatabase. | Contiene las secciones `<section class="panel" id="panel-...">`, los botones `.chip-oficial[data-capa]`, íconos SVG de línea uniformes y la carga secuencial de los 21 scripts. |
+| HTML5 | [`src/index.html`](src/index.html) | Documento maestro SPA que estructura las 5 secciones de navegación por tarea (*Explorar mapa*, *Consultar datos*, *Análisis*, *Evaluar calidad*, *Documentación y descargas*), migas de pan, visor 2D en primer plano, acordeones de las 124 capas oficiales, modales de narrativas espaciales, Lightbox, Glosario de siglas y descarga de la Geodatabase. | Contiene las secciones `<section class="panel" id="panel-...">`, los botones `.chip-oficial[data-capa]`, íconos SVG de línea uniformes y la carga secuencial de los 21 scripts. |
 | CSS3 | [`src/css/estilos.css`](src/css/estilos.css) | Sistema de diseño visual (`>4.800` líneas) con variables nativas en `:root`, tema claro cálido institucional por defecto (`#f7f5f0` / `#ffffff`, azul profundo `#1e3a5f` y acento ocre `#b45309` / terracota `#b91c1c`) y modo oscuro opcional (`html[data-tema="oscuro"]`), tipografía editorial (`Fraunces`, `Plus Jakarta Sans` y `JetBrains Mono` para código), auditado bajo WCAG 2.1 (Nivel AA general en componentes e indicadores [4,58:1 a 8,87:1] y Nivel AAA en todo el texto de lectura [8,60:1 a 19,00:1]), grillas con índice lateral y paginación para módulos extensos. | Define tokens cromáticos (`--fondo-app`, `--papel`, `--papel-tarjeta`, `--tinta`, `--tinta-suave`, `--tinta-tenue`, `--musgo`, `--agua`, `--esmeralda`, `--ocre`), clases `.layout-modulo-dividido`, `.barra-paginacion-institucional` y reglas `@media` para escritorio, tablet y móvil. |
 
 ### 4.2. Capa de lógica de aplicación client-side (`21 Scripts JavaScript ES6+ IIFE`)
@@ -145,7 +145,7 @@ Cada archivo del repositorio cumple un contrato técnico explícito según su le
 | `12` | [`src/js/modulos/importador_capas.js`](src/js/modulos/importador_capas.js) | `window.ImportadorCapas` | Analizador sintáctico local (*Drag & Drop*) para archivos `.geojson`, `.kml`, `.kmz`, `.gpx` y `.csv` georreferenciados. |
 | `13` | [`src/js/modulos/ide_chile.js`](src/js/modulos/ide_chile.js) | `window.ModuloIDEChile` | Catálogo maestro y cargador asíncrono de las 124 coberturas oficiales del Estado de Chile (`CAPAS_OFICIALES`), con soporte GeoJSON local y servicios WMS OGC. |
 | `14` | [`src/js/modulos/evaluador_normativo.js`](src/js/modulos/evaluador_normativo.js) | `window.ModuloEvaluadorNormativo` | Motor del Inspector Normativo PRC/PRMS/OGUC (algoritmo *Ray-Casting*), generador del Certificado CIN-VGI y repositorio de los 10 hitos históricos del PRC en Barrio Brasil (1990–2024). |
-| `15` | [`src/js/modulos/indicadores_analisis.js`](src/js/modulos/indicadores_analisis.js) | `window.ModuloIndicadoresAnalisis` | Motor del Módulo 05: estructura las 5 Dimensiones Analíticas (134 capas) y renderiza los 4 guiones visuales Territoriales (83 cartografías), diagramas SVG y el visor Lightbox. |
+| `15` | [`src/js/modulos/indicadores_analisis.js`](src/js/modulos/indicadores_analisis.js) | `window.ModuloIndicadoresAnalisis` | Motor del Módulo 05: estructura las 5 Dimensiones Analíticas (134 capas) y renderiza los 4 narrativas espaciales Territoriales (83 cartografías), diagramas SVG y el visor Lightbox. |
 | `16` | [`src/js/modulos/manual.js`](src/js/modulos/manual.js) | `window.ModuloManual` | Motor del Módulo 07: renderiza interactivamente el Manual de Uso (`USO · 01` a `04` con tabla filtrable de las 134 capas) y el Manual de Actualización Técnica (`ACT · 01` a `05`). |
 | `17` | [`src/js/modulos/metadatos.js`](src/js/modulos/metadatos.js) | `window.ModuloMetadatos` | Motor del Módulo 08: autocompletado de fichas para las 134 capas y exportación conforme a ISO 19115 (`.json`) e ISO 19139 / Perfil Nacional IDE Chile (`.xml`). |
 | `18` | [`src/js/modulos/diccionario.js`](src/js/modulos/diccionario.js) | `window.ModuloDiccionario` | Motor del Módulo 09: catálogo de 140 descriptores normativos ISO 19110:2016, homologación institucional e identificación de las 86 brechas temáticas VGI. |

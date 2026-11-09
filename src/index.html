@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Atlas de Información Geográfica Voluntaria — Gestión Territorial</title>
-<meta name="description" content="Atlas y plataforma de Información Geográfica Voluntaria (VGI) para la gestión territorial en Barrio Brasil y la Comuna de Santiago.">
+<title>Atlas para la Gestión Territorial — Análisis y Exploración | Municipio de Santiago y Barrio Brasil</title>
+<meta name="description" content="Atlas para la Gestión Territorial: Análisis y Exploración del Municipio de Santiago y Barrio Brasil.">
   <!-- Preconexión y carga de fuentes web para paridad métrica cross-platform exacta (Windows, macOS, iOS, Android) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261107_v41">
+  <link rel="stylesheet" href="css/estilos.css?v=20261109_v42">
 </head>
 <body>
 
@@ -27,10 +27,10 @@
       <div class="cabecera-fila-marca">
         <div class="marca">
           <div class="marca-header">
-            <img src="img/logo_atlas_vgi.jpg" alt="Logotipo Atlas VGI Territorial" class="marca-logo">
+            <img src="img/logo_atlas_vgi.jpg" alt="Logotipo Atlas para la Gestión Territorial" class="marca-logo">
             <div class="marca-texto">
-              <h1>Atlas VGI Territorial</h1>
-              <p id="nombre-organizacion">Consulta, calidad y metadatos VGI | Gestión Territorial en Barrio Brasil y Santiago</p>
+              <h1>Atlas para la Gestión Territorial</h1>
+              <p id="nombre-organizacion">Análisis y Exploración | Municipio de Santiago y Barrio Brasil</p>
             </div>
           </div>
         </div>
@@ -55,69 +55,58 @@
       </div>
     </div>
 
-    <!-- Fila 2: Navegación Principal Agrupada en 5 Secciones por Tarea -->
-    <div class="barra-grupos-tarea" role="navigation" aria-label="Secciones principales por tarea">
-      <button type="button" class="btn-grupo-tarea activo" data-grupo-tarea="explorar" data-panel-defecto="inicio" aria-expanded="true">
+    <!-- Fila 2: Navegación Principal del Prototipo 02 (3 Módulos Funcionales) -->
+    <div class="barra-grupos-tarea" role="navigation" aria-label="Módulos principales del Atlas">
+      <button type="button" class="btn-grupo-tarea activo" data-grupo-tarea="analisis" data-panel-defecto="indicadores" aria-expanded="true">
+        <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Análisis</span>
+      </button>
+      <button type="button" class="btn-grupo-tarea" data-grupo-tarea="explorar" data-panel-defecto="inicio" aria-expanded="false">
         <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
         <span>Explorar mapa</span>
       </button>
-      <button type="button" class="btn-grupo-tarea" data-grupo-tarea="consultar" data-panel-defecto="explorador-osm" aria-expanded="false">
-        <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <span>Consultar datos</span>
-      </button>
-      <button type="button" class="btn-grupo-tarea" data-grupo-tarea="analisis" data-panel-defecto="indicadores" aria-expanded="false">
-        <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        <span>Análisis y relatos</span>
-      </button>
-      <button type="button" class="btn-grupo-tarea" data-grupo-tarea="calidad" data-panel-defecto="calidad-ohsome" aria-expanded="false">
-        <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-        <span>Evaluar calidad</span>
-      </button>
       <button type="button" class="btn-grupo-tarea" data-grupo-tarea="documentacion" data-panel-defecto="manual" aria-expanded="false">
         <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        <span>Documentación y descargas</span>
+        <span>Documentación</span>
       </button>
     </div>
 
     <!-- Fila 3: Migas de pan en línea y Subpestañas de la Sección Activa -->
     <div class="barra-migas-subnavegacion">
       <div class="migas-pan" aria-label="Ubicación actual">
-        <a href="#panel-inicio" class="miga-raiz" onclick="event.preventDefault(); if(window.activarPanel) window.activarPanel('inicio');">Inicio</a>
+        <a href="#panel-indicadores" class="miga-raiz" onclick="event.preventDefault(); if(window.activarPanel) window.activarPanel('indicadores');">Inicio</a>
         <span class="miga-separador" aria-hidden="true">›</span>
-        <span class="miga-item" id="miga-grupo-actual">Explorar mapa</span>
+        <span class="miga-item" id="miga-grupo-actual">Análisis</span>
         <span class="miga-separador" aria-hidden="true">›</span>
-        <span class="miga-actual" id="miga-vista-actual" aria-current="page">Visor y catálogo</span>
+        <span class="miga-actual" id="miga-vista-actual" aria-current="page">Narrativas espaciales (83 mapas)</span>
       </div>
 
       <nav class="barra-pestanas-profundidad" id="lista-navegacion" aria-label="Vistas de la sección activa">
-        <button type="button" class="pestana-nodo activa" data-grupo="explorar" data-panel="inicio" aria-current="true">
+        <!-- Vistas Grupo 01: Análisis (activo al inicio) -->
+        <button type="button" class="pestana-nodo activa" data-grupo="analisis" data-panel="indicadores" aria-current="true">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>Narrativas espaciales (83 mapas)</span>
+        </button>
+
+        <!-- Vistas Grupo 02: Explorar mapa -->
+        <button type="button" class="pestana-nodo" data-grupo="explorar" data-panel="inicio" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
           <span>Visor y catálogo</span>
         </button>
-        <button type="button" class="pestana-nodo" data-grupo="consultar" data-panel="explorador-osm" style="display:none;">
+        <button type="button" class="pestana-nodo" data-grupo="explorar" data-panel="explorador-osm" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <span>Consultas Overpass (OSM)</span>
         </button>
-        <button type="button" class="pestana-nodo" data-grupo="consultar" data-panel="biodiversidad-gbif" style="display:none;">
+        <button type="button" class="pestana-nodo" data-grupo="explorar" data-panel="biodiversidad-gbif" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
           <span>Biodiversidad (GBIF)</span>
         </button>
-        <button type="button" class="pestana-nodo" data-grupo="consultar" data-panel="proyectos-umap" style="display:none;">
+        <button type="button" class="pestana-nodo" data-grupo="explorar" data-panel="proyectos-umap" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
           <span>Mapas comunitarios (uMap)</span>
         </button>
-        <button type="button" class="pestana-nodo" data-grupo="analisis" data-panel="indicadores" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          <span>Indicadores y relatos (83 mapas)</span>
-        </button>
-        <button type="button" class="pestana-nodo" data-grupo="calidad" data-panel="calidad-ohsome" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <span>Calidad de datos (ISO 19157)</span>
-        </button>
-        <button type="button" class="pestana-nodo" data-grupo="calidad" data-panel="metadatos-iso" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          <span>Catálogo y generador de metadatos</span>
-        </button>
+
+        <!-- Vistas Grupo 03: Documentación -->
         <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="manual" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
           <span>Manual del sistema</span>
@@ -125,6 +114,14 @@
         <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="diccionario" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           <span>Diccionario de datos (133 capas)</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="metadatos-iso" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Catálogo y generador de metadatos</span>
+        </button>
+        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="calidad-ohsome" style="display:none;">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Calidad de datos (ISO 19157)</span>
         </button>
         <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="licencias" style="display:none;">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -146,16 +143,16 @@
   <!-- ============ CONTENIDO PRINCIPAL ============ -->
   <main class="contenido">
 
-    <!-- ---------- 01. VISOR Y ATLAS VGI (LEAFLET) ---------- -->
-    <section class="panel activo" id="panel-inicio">
+    <!-- ---------- 02. EXPLORAR MAPA: VISOR Y ATLAS (LEAFLET) ---------- -->
+    <section class="panel" id="panel-inicio">
       <header class="hero-introduccion-atlas" id="sec-inicio-hero">
         <div class="insignia-institucional">
           <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          <span>INFRAESTRUCTURA DE DATOS ESPACIALES Y GESTIÓN TERRITORIAL</span>
+          <span>MÓDULO 02 · EXPLORAR MAPA // INFRAESTRUCTURA DE DATOS ESPACIALES</span>
         </div>
-        <h1 class="titulo-hero">Atlas de Información Geográfica Voluntaria para la Gestión Territorial</h1>
+        <h1 class="titulo-hero">Exploración Territorial y Visor Cartográfico</h1>
         <p class="subtitulo-hero" id="badge-perfil-info">
-          Caso de Estudio: Barrio Brasil y Comuna de Santiago (Santiago Centro, Chile)
+          Análisis y Exploración | Municipio de Santiago y Barrio Brasil
         </p>
 
         <div class="grilla-resumen-introduccion">
@@ -1095,24 +1092,145 @@
       </div>
     </section>
 
-    <!-- ---------- 05. INDICADORES DE ANÁLISIS & STORYBOARDS ---------- -->
-    <section class="panel" id="panel-indicadores">
+    <!-- ---------- 01. ANÁLISIS TERRITORIAL & NARRATIVAS ESPACIALES (MÓDULO 01) ---------- -->
+    <section class="panel activo" id="panel-indicadores">
       <div id="contenedor-indicadores-analisis">
 <div class="modulo-indicadores-analisis-wrapper">
 
-        <!-- Encabezado del Módulo -->
+        <!-- Encabezado del Módulo 01 -->
         <header class="header-modulo-indicadores" id="sec-ind-cabecera">
-          <h2 class="titulo-modulo-indicadores">Indicadores territoriales y relatos cartográficos</h2>
+          <div class="insignia-indicadores" style="display:inline-flex; align-items:center; gap:6px; font-family:var(--fuente-datos); font-size:0.75rem; color:var(--esmeralda); font-weight:700; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:6px;">
+            <span class="punto-pulso"></span>
+            MÓDULO 01 · ANÁLISIS
+          </div>
+          <h2 class="titulo-modulo-indicadores">Análisis</h2>
           <p class="bajada-modulo-indicadores">
-            Organiza las <strong>133 coberturas del Atlas</strong> en <strong>5 dimensiones de análisis</strong> y <strong>4 relatos cartográficos (83 mapas)</strong> sobre densidad de servicios (<abbr title="Estimación de Densidad de Núcleo (Kernel Density Estimation)">KDE</abbr>), agrupaciones espaciales (<abbr title="Indicadores Locales de Asociación Espacial (autocorrelación de Moran)">LISA</abbr>), Censo 2024 y medio ambiente en Santiago y el Barrio Brasil.
+            Síntesis territorial elaborada a partir de 83 cartografías temáticas que representan patrones de concentración, segregación espacial, estructura demográfica, habitabilidad, movilidad y metabolismo urbano en la Comuna de Santiago y el Barrio Brasil.
           </p>
         </header>
 
         <!-- ===================================================================== -->
         <!-- GRILLA DE LAS 5 GRANDES DIMENSIONES ANALÍTICAS                         -->
         <!-- ===================================================================== -->
+        <section class="seccion-storyboards-barrio-brasil" id="seccion-storyboards" aria-label="Relatos cartográficos y análisis territorial de Santiago">
+        <header class="header-seccion-storyboards">
+          <h3 class="titulo-storyboards">Narrativas espaciales basadas en datos</h3>
+          <p class="bajada-storyboards">
+            Síntesis territorial elaborada a partir de 83 cartografías temáticas que representan patrones de concentración, segregación espacial, estructura demográfica, habitabilidad, movilidad y metabolismo urbano en la Comuna de Santiago y el Barrio Brasil.
+          </p>
+        </header>
+
+        <div class="grilla-storyboards-cuadrados">
+
+          <!-- STORYBOARD 1: RESULTADOS KDE -->
+          <article class="tarjeta-storyboard-cuadrada"
+                   data-storyboard-id="storyboard-densidad-kernel-kde"
+                   role="button"
+                   tabindex="0"
+                   aria-label="Abrir relato: Concentración de servicios y equipamiento en Santiago (KDE)"
+                   onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-densidad-kernel-kde')">
+            <div class="imagen-cuadrada-wrapper">
+              <img src="img/storyboards/portada_analisis_kde.svg" width="800" height="800" alt="Concentración de servicios y equipamiento en Santiago (KDE)" loading="lazy" class="img-storyboard-cuadro">
+              <div class="overlay-gradiente-storyboard"></div>
+              <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-densidad-kernel-kde')" title="Ampliar portada">Ampliar</button>
+              <span class="badge-dimension-tag">Densidad KDE (14 mapas)</span>
+            </div>
+            <div class="cuerpo-tarjeta-storyboard">
+              <h4 class="titulo-tarjeta-storyboard">1. Concentración Territorial de Actividad IGV en Santiago:</h4>
+              <p class="bajada-tarjeta-storyboard">Análisis espacial de las 14 cartografís de densidad continua (KDE) sobre la geodatabase comunitaria consolidada del Atlas IGV (79.841 entidades geométricas directas y 112.264 nodos muestreados en malla regular de 20 m), la red de semáforos UOCT y las dinámicas oficiales de Permisos de Edificación y Certificados de Recepción Final (CRF). Polarización entre la concentración del eje Alameda, Barrio Brasil, Santa Ana, Parque Almagro y Ejército frente a los vacíos en el arco periférico sur y suroriente de la comuna (Bogotá, Sierra Bella, Matta Sur, Diez de Julio y San Vicente).</p>
+              <div class="footer-tarjeta-storyboard">
+                <div class="tags-storyboard">
+                  <span class="tag-chip">79.841 entidades</span>
+                  <span class="tag-chip">14 mapas de densidad</span>
+                </div>
+                <span class="btn-abrir-historia">Leer relato →</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STORYBOARD 2: RESULTADOS LISA -->
+          <article class="tarjeta-storyboard-cuadrada"
+                   data-storyboard-id="storyboard-autocorrelacion-lisa"
+                   role="button"
+                   tabindex="0"
+                   aria-label="Abrir relato: Zonas de alta concentración y áreas de rezago en Santiago (LISA)"
+                   onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-autocorrelacion-lisa')">
+            <div class="imagen-cuadrada-wrapper">
+              <img src="img/storyboards/portada_analisis_lisa.svg" width="800" height="800" alt="Zonas de alta concentración y áreas de rezago en Santiago (LISA)" loading="lazy" class="img-storyboard-cuadro">
+              <div class="overlay-gradiente-storyboard"></div>
+              <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-autocorrelacion-lisa')" title="Ampliar portada">Ampliar</button>
+              <span class="badge-dimension-tag">Agrupación LISA (11 mapas)</span>
+            </div>
+            <div class="cuerpo-tarjeta-storyboard">
+              <h4 class="titulo-tarjeta-storyboard">2. Segregación Espacial, Hotspots y Áreas de Rezago en Santiago:</h4>
+              <p class="bajada-tarjeta-storyboard">Análisis espacial de las 11 cartografías de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas censales (unidades territoriales básicas del INE) de Santiago: dónde se agrupan estadísticamente los núcleos Alto-Alto (HH), qué barrios conforman bolsones Bajo-Bajo (LL) y cómo la cobertura colaborativa exhibe un desajuste inverso frente a la densidad residencial comunal..</p>
+              <div class="footer-tarjeta-storyboard">
+                <div class="tags-storyboard">
+                  <span class="tag-chip">Alta vs. baja dotación</span>
+                  <span class="tag-chip">11 mapas LISA</span>
+                </div>
+                <span class="btn-abrir-historia">Leer relato →</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STORYBOARD 3: RESULTADOS SOCIODEMOGRÁFICOS Y HABITABILIDAD -->
+          <article class="tarjeta-storyboard-cuadrada"
+                   data-storyboard-id="storyboard-demografia-habitabilidad-sociourbana"
+                   role="button"
+                   tabindex="0"
+                   aria-label="Abrir relato: Demografía, vivienda y morfología urbana (Censo 2024 y RSH)"
+                   onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-demografia-habitabilidad-sociourbana')">
+            <div class="imagen-cuadrada-wrapper">
+              <img src="img/storyboards/portada_analisis_sociourbano.svg" width="800" height="800" alt="Demografía, vivienda y morfología urbana (Censo 2024 y RSH)" loading="lazy" class="img-storyboard-cuadro">
+              <div class="overlay-gradiente-storyboard"></div>
+              <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-demografia-habitabilidad-sociourbana')" title="Ampliar portada">Ampliar</button>
+              <span class="badge-dimension-tag">Demografía y vivienda (34 mapas)</span>
+            </div>
+            <div class="cuerpo-tarjeta-storyboard">
+              <h4 class="titulo-tarjeta-storyboard">3. Estructura Sociodemográfica, Habitabilidad y Morfología Urbana en Santiago:</h4>
+              <p class="bajada-tarjeta-storyboard">Análisis espacial de las 34 cartografías sociodemográficas, habitacionales y de morfología predial de la comuna: dónde se concentran los 432.081 habitantes, la hegemonía del departamento (92,7%) y del arriendo (72,1%), las alturas autorizadas de edificación, el Coeficiente de Ocupación del Suelo (COS medio de 0,47) en conjuntos habitacionales con Certificados de Recepción Final (CRF), la persistencia de cités en el sur y la conservación en Barrio Brasil y Yungay.</p>
+              <div class="footer-tarjeta-storyboard">
+                <div class="tags-storyboard">
+                  <span class="tag-chip">432.081 habitantes</span>
+                  <span class="tag-chip">34 mapas</span>
+                </div>
+                <span class="btn-abrir-historia">Leer relato →</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STORYBOARD 4: RESULTADOS SOCIOAMBIENTALES Y PROXIMIDAD -->
+          <article class="tarjeta-storyboard-cuadrada"
+                   data-storyboard-id="storyboard-socioambiental-movilidad-servicios"
+                   role="button"
+                   tabindex="0"
+                   aria-label="Abrir relato: Medio ambiente, proximidad peatonal y movilidad"
+                   onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-socioambiental-movilidad-servicios')">
+            <div class="imagen-cuadrada-wrapper">
+              <img src="img/storyboards/portada_analisis_socioambiental.svg" width="800" height="800" alt="Medio ambiente, proximidad peatonal y movilidad" loading="lazy" class="img-storyboard-cuadro">
+              <div class="overlay-gradiente-storyboard"></div>
+              <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-socioambiental-movilidad-servicios')" title="Ampliar portada">Ampliar</button>
+              <span class="badge-dimension-tag">Medio ambiente y movilidad (24 mapas)</span>
+            </div>
+            <div class="cuerpo-tarjeta-storyboard">
+              <h4 class="titulo-tarjeta-storyboard">4. Metabolismo Urbano de Santiago:</h4>
+              <p class="bajada-tarjeta-storyboard">Análisis espacial de las 24 cartografías socioambientales y operativas: el 84,6% de viajes en modos sustentables, las brechas de distancia a áreas verdes y salud en el borde sur, la exposición a ruido (>68 dBA) en corredores viales y la asimetría de contenedores entre las 5 zonas de aseo municipal.</p>
+              <div class="footer-tarjeta-storyboard">
+                <div class="tags-storyboard">
+                  <span class="tag-chip">84,6 % movilidad sustentable</span>
+                  <span class="tag-chip">24 mapas</span>
+                </div>
+                <span class="btn-abrir-historia">Leer relato →</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
         <section class="seccion-dimensiones-analisis" id="sec-ind-dimensiones" aria-label="Dimensiones de Análisis">
-          <h3 class="subtitulo-centrado-seccion">Dimensiones de análisis y capas asociadas</h3>
+          <h3 class="subtitulo-centrado-seccion">Dimensiones Analíticas</h3>
           
           <div class="grilla-dimensiones-indicadores" id="grilla-tarjetas-dimensiones">
             
@@ -1243,127 +1361,6 @@
             <!-- Contenido inyectado dinámicamente al seleccionar dimensión -->
           </div>
         </section>
-
-        
-        <!-- ===================================================================== -->
-        <!-- SECCIÓN STORYBOARDS: NARRATIVAS DE DATOS EN SANTIAGO Y BARRIO BRASIL  -->
-        <!-- ===================================================================== -->
-        <section class="seccion-storyboards-barrio-brasil" id="seccion-storyboards" aria-label="Relatos cartográficos y análisis territorial de Santiago">
-        <header class="header-seccion-storyboards">
-          <h3 class="titulo-storyboards">Relatos cartográficos de resultados (83 mapas)</h3>
-          <p class="bajada-storyboards">
-            Síntesis visual y explicativa sobre los 27 barrios y las 1.711 manzanas de la Comuna de Santiago: concentración de servicios (<abbr title="Estimación de Densidad de Núcleo">KDE</abbr>), zonas de alta y baja concentración (<abbr title="Indicadores Locales de Asociación Espacial">LISA</abbr>), habitabilidad del Censo 2024 y medio ambiente urbano.
-          </p>
-        </header>
-
-        <div class="grilla-storyboards-cuadrados">
-
-          <!-- STORYBOARD 1: RESULTADOS KDE -->
-          <article class="tarjeta-storyboard-cuadrada"
-                   data-storyboard-id="storyboard-densidad-kernel-kde"
-                   role="button"
-                   tabindex="0"
-                   aria-label="Abrir relato: Concentración de servicios y equipamiento en Santiago (KDE)"
-                   onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-densidad-kernel-kde')">
-            <div class="imagen-cuadrada-wrapper">
-              <img src="img/storyboards/portada_analisis_kde.svg" width="800" height="800" alt="Concentración de servicios y equipamiento en Santiago (KDE)" loading="lazy" class="img-storyboard-cuadro">
-              <div class="overlay-gradiente-storyboard"></div>
-              <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-densidad-kernel-kde')" title="Ampliar portada">Ampliar</button>
-              <span class="badge-dimension-tag">Densidad KDE (14 mapas)</span>
-            </div>
-            <div class="cuerpo-tarjeta-storyboard">
-              <h4 class="titulo-tarjeta-storyboard">1. Concentración de servicios y equipamiento en Santiago (<abbr title="Estimación de Densidad de Núcleo">KDE</abbr>)</h4>
-              <p class="bajada-tarjeta-storyboard">Qué muestran los 14 mapas de densidad (79.841 entidades ciudadanas consolidadas, 3.483 semáforos y permisos de edificación) en los 27 barrios de Santiago: alta concentración en Barrio Brasil (6.924,1 entidades/km²) y Santa Ana frente a los déficits del sector sur en Sierra Bella y Bogotá.</p>
-              <div class="footer-tarjeta-storyboard">
-                <div class="tags-storyboard">
-                  <span class="tag-chip">79.841 entidades</span>
-                  <span class="tag-chip">14 mapas de densidad</span>
-                </div>
-                <span class="btn-abrir-historia">Leer relato →</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- STORYBOARD 2: RESULTADOS LISA -->
-          <article class="tarjeta-storyboard-cuadrada"
-                   data-storyboard-id="storyboard-autocorrelacion-lisa"
-                   role="button"
-                   tabindex="0"
-                   aria-label="Abrir relato: Zonas de alta concentración y áreas de rezago en Santiago (LISA)"
-                   onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-autocorrelacion-lisa')">
-            <div class="imagen-cuadrada-wrapper">
-              <img src="img/storyboards/portada_analisis_lisa.svg" width="800" height="800" alt="Zonas de alta concentración y áreas de rezago en Santiago (LISA)" loading="lazy" class="img-storyboard-cuadro">
-              <div class="overlay-gradiente-storyboard"></div>
-              <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-autocorrelacion-lisa')" title="Ampliar portada">Ampliar</button>
-              <span class="badge-dimension-tag">Agrupación LISA (11 mapas)</span>
-            </div>
-            <div class="cuerpo-tarjeta-storyboard">
-              <h4 class="titulo-tarjeta-storyboard">2. Zonas de alta concentración y áreas de rezago en Santiago (<abbr title="Indicadores Locales de Asociación Espacial">LISA</abbr>)</h4>
-              <p class="bajada-tarjeta-storyboard">Resultados en las 1.711 manzanas comunales: 140 manzanas de alta concentración de servicios encabezadas por Barrio Brasil (63 manzanas), Santa Ana (23) y Yungay (17), frente a 615 manzanas de baja dotación en Sierra Bella (90) y Bogotá (87).</p>
-              <div class="footer-tarjeta-storyboard">
-                <div class="tags-storyboard">
-                  <span class="tag-chip">Alta vs. baja dotación</span>
-                  <span class="tag-chip">11 mapas LISA</span>
-                </div>
-                <span class="btn-abrir-historia">Leer relato →</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- STORYBOARD 3: RESULTADOS SOCIODEMOGRÁFICOS Y HABITABILIDAD -->
-          <article class="tarjeta-storyboard-cuadrada"
-                   data-storyboard-id="storyboard-demografia-habitabilidad-sociourbana"
-                   role="button"
-                   tabindex="0"
-                   aria-label="Abrir relato: Demografía, vivienda y morfología urbana (Censo 2024 y RSH)"
-                   onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-demografia-habitabilidad-sociourbana')">
-            <div class="imagen-cuadrada-wrapper">
-              <img src="img/storyboards/portada_analisis_sociourbano.svg" width="800" height="800" alt="Demografía, vivienda y morfología urbana (Censo 2024 y RSH)" loading="lazy" class="img-storyboard-cuadro">
-              <div class="overlay-gradiente-storyboard"></div>
-              <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-demografia-habitabilidad-sociourbana')" title="Ampliar portada">Ampliar</button>
-              <span class="badge-dimension-tag">Demografía y vivienda (34 mapas)</span>
-            </div>
-            <div class="cuerpo-tarjeta-storyboard">
-              <h4 class="titulo-tarjeta-storyboard">3. Demografía, vivienda y morfología urbana: Censo 2024 y <abbr title="Registro Social de Hogares">RSH</abbr></h4>
-              <p class="bajada-tarjeta-storyboard">Síntesis de 34 mapas sobre los 432.081 habitantes y 203.830 hogares de Santiago: densificación en altura en Santa Isabel y Santa Ana (92,7 % de departamentos), predominio del arriendo (72,1 %), conservación histórica en Barrio Brasil y Yungay, y vulnerabilidad habitacional en el sur.</p>
-              <div class="footer-tarjeta-storyboard">
-                <div class="tags-storyboard">
-                  <span class="tag-chip">432.081 habitantes</span>
-                  <span class="tag-chip">34 mapas</span>
-                </div>
-                <span class="btn-abrir-historia">Leer relato →</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- STORYBOARD 4: RESULTADOS SOCIOAMBIENTALES Y PROXIMIDAD -->
-          <article class="tarjeta-storyboard-cuadrada"
-                   data-storyboard-id="storyboard-socioambiental-movilidad-servicios"
-                   role="button"
-                   tabindex="0"
-                   aria-label="Abrir relato: Medio ambiente, proximidad peatonal y movilidad"
-                   onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-socioambiental-movilidad-servicios')">
-            <div class="imagen-cuadrada-wrapper">
-              <img src="img/storyboards/portada_analisis_socioambiental.svg" width="800" height="800" alt="Medio ambiente, proximidad peatonal y movilidad" loading="lazy" class="img-storyboard-cuadro">
-              <div class="overlay-gradiente-storyboard"></div>
-              <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-socioambiental-movilidad-servicios')" title="Ampliar portada">Ampliar</button>
-              <span class="badge-dimension-tag">Medio ambiente y movilidad (24 mapas)</span>
-            </div>
-            <div class="cuerpo-tarjeta-storyboard">
-              <h4 class="titulo-tarjeta-storyboard">4. Medio ambiente, proximidad peatonal, movilidad y gestión de residuos</h4>
-              <p class="bajada-tarjeta-storyboard">Diagnóstico de 24 mapas socioambientales en los 27 barrios comunales: 84,6 % de viajes en modos sustentables, acceso peatonal a áreas verdes en Parque Almagro y Barrio Brasil, niveles de ruido vial (media de 62,7 dBA) y cobertura de contenedores municipales.</p>
-              <div class="footer-tarjeta-storyboard">
-                <div class="tags-storyboard">
-                  <span class="tag-chip">84,6 % movilidad sustentable</span>
-                  <span class="tag-chip">24 mapas</span>
-                </div>
-                <span class="btn-abrir-historia">Leer relato →</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </section>
 
       </div>
 
@@ -1813,9 +1810,11 @@
 
 
     <footer class="pie-datos">
-      Atlas de Información Geográfica Voluntaria — Caso Barrio Brasil, Santiago Centro, Chile.
+      Atlas para la Gestión Territorial — Análisis y Exploración | Municipio de Santiago y Barrio Brasil.
       Datos de OpenStreetMap (© colaboradores de OpenStreetMap, ODbL 1.0), ohsome (HeiGIT), GBIF.org y proyectos UMap.
     </footer>
+  </main>
+</div> <!-- Fin .envoltorio -->
 
   <!-- Modal Informativo de Descarga de Base de Datos Completa -->
   <div class="modal-bd-overlay" id="modal-descarga-bd-overlay" style="display:none;" aria-hidden="true" role="dialog" aria-modal="true">
@@ -1947,27 +1946,27 @@
 <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261107_v41"></script>
-<script src="js/modulos/db_client.js?v=20261107_v41"></script>
-<script src="js/modulos/geodesia.js?v=20261107_v41"></script>
-<script src="js/modulos/mapa.js?v=20261107_v41"></script>
-<script src="js/modulos/importador_capas.js?v=20261107_v41"></script>
-<script src="js/modulos/ide_chile.js?v=20261107_v41"></script>
-<script src="js/modulos/evaluador_normativo.js?v=20261107_v41"></script>
-<script src="js/modulos/osm.js?v=20261107_v41"></script>
-<script src="js/modulos/ohsome.js?v=20261107_v41"></script>
-<script src="js/modulos/gbif.js?v=20261107_v41"></script>
-<script src="js/modulos/umap.js?v=20261107_v41"></script>
-<script src="js/modulos/metadatos.js?v=20261107_v41"></script>
-<script src="js/modulos/licencias.js?v=20261107_v41"></script>
-<script src="js/modulos/manual.js?v=20261107_v41"></script>
-<script src="js/modulos/indicadores_analisis.js?v=20261107_v41"></script>
-<script src="js/modulos/taginfo.js?v=20261107_v41"></script>
-<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261107_v41"></script>
-<script src="js/modulos/calidad_analyst.js?v=20261107_v41"></script>
-<script src="js/modulos/diccionario.js?v=20261107_v41"></script>
-<script src="js/modulos/manifold_canvas.js?v=20261107_v41"></script>
-<script src="js/modulos/leyenda_atajos.js?v=20261107_v41"></script>
-<script src="js/app.js?v=20261107_v41"></script>
+<script src="js/config.js?v=20261109_v42"></script>
+<script src="js/modulos/db_client.js?v=20261109_v42"></script>
+<script src="js/modulos/geodesia.js?v=20261109_v42"></script>
+<script src="js/modulos/mapa.js?v=20261109_v42"></script>
+<script src="js/modulos/importador_capas.js?v=20261109_v42"></script>
+<script src="js/modulos/ide_chile.js?v=20261109_v42"></script>
+<script src="js/modulos/evaluador_normativo.js?v=20261109_v42"></script>
+<script src="js/modulos/osm.js?v=20261109_v42"></script>
+<script src="js/modulos/ohsome.js?v=20261109_v42"></script>
+<script src="js/modulos/gbif.js?v=20261109_v42"></script>
+<script src="js/modulos/umap.js?v=20261109_v42"></script>
+<script src="js/modulos/metadatos.js?v=20261109_v42"></script>
+<script src="js/modulos/licencias.js?v=20261109_v42"></script>
+<script src="js/modulos/manual.js?v=20261109_v42"></script>
+<script src="js/modulos/indicadores_analisis.js?v=20261109_v42"></script>
+<script src="js/modulos/taginfo.js?v=20261109_v42"></script>
+<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v42"></script>
+<script src="js/modulos/calidad_analyst.js?v=20261109_v42"></script>
+<script src="js/modulos/diccionario.js?v=20261109_v42"></script>
+<script src="js/modulos/manifold_canvas.js?v=20261109_v42"></script>
+<script src="js/modulos/leyenda_atajos.js?v=20261109_v42"></script>
+<script src="js/app.js?v=20261109_v42"></script>
 </body>
 </html>
