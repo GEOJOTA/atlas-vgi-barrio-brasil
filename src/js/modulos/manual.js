@@ -252,8 +252,8 @@ const ModuloManual = (() => {
         id: 'cap-uso-03',
         numero: 'USO · 03',
         icono: '🗺️',
-        titulo: 'Operación del Módulo 02: Explorar Mapa (Visor y Catálogo de 257 Capas)',
-        subtitulo: 'Visor cartográfico Leaflet inmediato, consola de 257 coberturas en 5 dimensiones, búsqueda en español e Inspector Normativo.',
+        titulo: 'Operación del Módulo 02: Explorar Mapa (Visor y Consulta Espacial)',
+        subtitulo: 'Visor cartográfico Leaflet inmediato, áreas de enfoque, panel de detalles a todo lo ancho y exportación GeoJSON con estilos.',
         html: `
           <div style="display:flex; flex-direction:column; gap:14px;">
             <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:15px;">
@@ -262,22 +262,20 @@ const ModuloManual = (() => {
                 <button type="button" class="accion" onclick="ModuloManual.irAPanel('inicio')" style="font-size:0.8rem; padding:6px 12px;">Abrir Visor (Módulo 02) ↗</button>
               </div>
               <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                <li><strong>Acceso inmediato:</strong> Al ingresar al Módulo 02, el visor cartográfico se presenta en primer plano de forma directa sin pantallas intermedias ni tarjetas hero obstructivas.</li>
-                <li><strong>Encuadre territorial:</strong> Permite alternar entre el polígono de la <em>Comuna de Santiago / Barrio Brasil</em> (223,75 ha), el <em>Sector Patrimonial</em> (136,10 ha) o trazar un rectángulo personalizado mediante <strong>⛶ Dibujar Bbox</strong> (con cálculo métrico en m² y hectáreas reproyectado al vuelo a <code>EPSG:32719</code>).</li>
-                <li><strong>Inspección puntual:</strong> Al hacer clic sobre cualquier entidad geométrica, el sistema despliega su ficha de atributos normalizada, su custodio institucional y el enlace de descarga individual en <code>GeoJSON</code>.</li>
+                <li><strong>Acceso inmediato:</strong> Al ingresar al Módulo 02, el visor cartográfico se presenta en primer plano de forma directa sin pantallas intermedias ni elementos obstructivos.</li>
+                <li><strong>Áreas de enfoque:</strong> Selector rápido entre dos polígonos territoriales calibrados: a) <strong>Barrio Brasil Completo</strong> (escala barrial) y b) <strong>Comuna de Santiago</strong> (visión comunal integral).</li>
+                <li><strong>Botón "Ver Atlas de Análisis":</strong> Permite regresar en un clic al Módulo 01 para examinar las 4 láminas territoriales y explorar las 257 capas desde sus 5 dimensiones analíticas.</li>
               </ul>
             </div>
 
             <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:15px;">
-              <h4 style="margin:0 0 6px 0; color:#34d399;">2. Catálogo Cartográfico y Explorador de 257 Coberturas</h4>
+              <h4 style="margin:0 0 6px 0; color:#34d399;">2. Activación de Capas desde Módulo 01 y Panel Inferior de Detalles</h4>
               <p style="margin:0 0 8px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                Ubicado inmediatamente bajo el visor, el <strong>Catálogo Cartográfico</strong> sistematiza las <strong>257 coberturas</strong> del Atlas agrupadas en las <strong>5 Dimensiones de Análisis</strong>:
+                Para una experiencia de navegación limpia y enfocada, la exploración y activación de las <strong>257 coberturas espaciales</strong> (123 oficiales + 134 IGV descentralizadas) se realiza desde el <strong>Módulo 01 (Análisis)</strong> a través de sus 5 Dimensiones Analíticas. Al activar cualquier capa, el sistema conmuta automáticamente al visor:
               </p>
               <ul style="margin:0 0 10px 0; padding-left:20px; color:var(--tinta-suave); font-size:0.87rem; line-height:1.6;">
-                <li><strong>Descentralización IGV (134 capas):</strong> Cada descriptor de OpenStreetMap y GBIF (farmacias, árboles urbanos, cesfam, escuelas, cruces peatonales, ferias libres, etc.) opera como una capa independiente con su propio archivo <code>.geojson</code> descargable.</li>
-                <li><strong>100% en Español:</strong> La nomenclatura, etiquetas, descriptores e instituciones están expresadas con total naturalidad en español, facilitando el uso para vecinos, funcionarios y analistas.</li>
-                <li><strong>Buscador en tiempo real:</strong> La barra de búsqueda inteligente filtra instantáneamente entre las 257 coberturas por nombre en español, código institucional o etiquetas.</li>
-                <li><strong>Chips de filtrado temático:</strong> Permite aislar rápidamente las capas por dimensión analítica, solo coberturas oficiales (123) o solo colaborativas IGV (134).</li>
+                <li><strong>Panel inferior "Detalles del elemento":</strong> Situado justo debajo del mapa a todo lo ancho, ofrece máxima amplitud para examinar atributos, indicadores, columnas de datos, metadatos y enlaces de descarga de cada entidad seleccionada.</li>
+                <li><strong>Exportación GeoJSON con Simbología Aplicada:</strong> El botón <em>Exportar vista (GeoJSON)</em> descarga la totalidad de elementos visibles incorporando en sus propiedades los estilos gráficos configurados (colores, contornos, rellenos, opacidades y rampas temáticas), listos para interoperar con QGIS u otros SIG.</li>
               </ul>
             </div>
 
@@ -291,13 +289,6 @@ const ModuloManual = (() => {
                 <li>Restricciones por riesgo (Art. 2.1.17 OGUC), áreas verdes normadas y afectación patrimonial (Zonas Típicas, ZCH, ICH y Monumentos Nacionales).</li>
                 <li>Permisos de edificación DOM y recepciones finales CRF del INE (densidad neta residencial y ocupación del suelo).</li>
               </ul>
-            </div>
-
-            <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:15px;">
-              <h4 style="margin:0 0 6px 0; color:#c084fc;">4. Importador de Capas Locales</h4>
-              <p style="margin:0; color:var(--tinta-suave); font-size:0.88rem; line-height:1.6;">
-                Permite arrastrar y soltar archivos espaciales locales en formatos <strong>.kmz</strong>, <strong>.kml</strong>, <strong>.geojson</strong>, <strong>.gpx</strong> y <strong>.csv</strong>. El procesamiento ocurre de forma 100% segura en la memoria del navegador del usuario sin enviar datos a servidores externos.
-              </p>
             </div>
           </div>
         `

@@ -1601,8 +1601,29 @@ const ModuloMapa = (() => {
           metaCapa = ModuloMetadatos.resolverMetadatosCapa(id);
         }
 
+        const reg = registroCapasTematicas[id];
         gj.features.forEach(f => {
           f.properties = f.properties || {};
+
+          // Inyectar simbología y estilo visual aplicado
+          let colorSimbologia = '#06b6d4';
+          try {
+            colorSimbologia = resolverColorFeature(f, id, reg?.opciones?.color);
+          } catch (_) {}
+
+          f.properties['marker-color'] = colorSimbologia;
+          f.properties['stroke'] = colorSimbologia;
+          f.properties['fill'] = colorSimbologia;
+          f.properties['fill-opacity'] = 0.85;
+          f.properties['stroke-width'] = 2;
+          f.properties['simbologia_color'] = colorSimbologia;
+          if (reg && reg.config) {
+            f.properties['simbologia_modo'] = reg.config.modo || 'automatico';
+            if (reg.config.columna) f.properties['simbologia_columna'] = reg.config.columna;
+            if (reg.config.rampa) f.properties['simbologia_rampa'] = reg.config.rampa;
+            if (reg.config.paleta) f.properties['simbologia_paleta'] = reg.config.paleta;
+          }
+
           f.properties.categoria_capa = id;
           f.properties.meta_capa_id = metaCapa.id || id;
           f.properties.meta_titulo = metaCapa.titulo || id;
@@ -2416,8 +2437,13 @@ const ModuloMapa = (() => {
       descHtml ? seccion('📖 Descripción de la Capa', descHtml) : ''
     ].join('');
 
-    // Abrir sidebar
+    // Abrir panel debajo del mapa y desplazamiento suave
     sidebar.classList.add('abierto');
+    setTimeout(() => {
+      try {
+        sidebar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (_) {}
+    }, 80);
   }
 
   function cerrarSidebarDetalle() {
@@ -2428,6 +2454,28 @@ const ModuloMapa = (() => {
   function exportarCapaPorId(idCapa) {
     if (capasTematicasActivas[idCapa]) {
       const gj = capasTematicasActivas[idCapa].toGeoJSON();
+      const reg = registroCapasTematicas[idCapa];
+      if (gj && gj.features) {
+        gj.features.forEach(f => {
+          f.properties = f.properties || {};
+          let colorSimbologia = '#06b6d4';
+          try {
+            colorSimbologia = resolverColorFeature(f, idCapa, reg?.opciones?.color);
+          } catch (_) {}
+          f.properties['marker-color'] = colorSimbologia;
+          f.properties['stroke'] = colorSimbologia;
+          f.properties['fill'] = colorSimbologia;
+          f.properties['fill-opacity'] = 0.85;
+          f.properties['stroke-width'] = 2;
+          f.properties['simbologia_color'] = colorSimbologia;
+          if (reg && reg.config) {
+            f.properties['simbologia_modo'] = reg.config.modo || 'automatico';
+            if (reg.config.columna) f.properties['simbologia_columna'] = reg.config.columna;
+            if (reg.config.rampa) f.properties['simbologia_rampa'] = reg.config.rampa;
+            if (reg.config.paleta) f.properties['simbologia_paleta'] = reg.config.paleta;
+          }
+        });
+      }
       if (typeof ModuloMetadatos !== 'undefined' && ModuloMetadatos.descargarGeoJSONEnriquecido) {
         ModuloMetadatos.descargarGeoJSONEnriquecido(gj, { id: idCapa }, `capa_${idCapa}_con_metadatos.geojson`);
         return true;

@@ -622,18 +622,18 @@ const ModuloIndicadoresAnalisis = (() => {
     },
 
     // -----------------------------------------------------------------------
-    // STORYBOARD 2: RESULTADOS DE AUTOCORRELACIÓN ESPACIAL Y CLUSTERS LISA (11 MAPAS)
+    // STORYBOARD 2: RESULTADOS DE AUTOCORRELACIÓN ESPACIAL Y CLUSTERS LOCALES (11 MAPAS)
     // -----------------------------------------------------------------------
     {
       id: 'storyboard-autocorrelacion-lisa',
       dimensionId: 'metodologica',
-      dimensionNombre: 'Resultados Espaciales · Clusters y Outliers LISA',
+      dimensionNombre: 'Resultados Espaciales · Autocorrelación Espacial Local',
       titulo: 'Segregación Espacial, Hotspots y Áreas de Rezago en Santiago:',
-      bajada: 'Análisis espacial de las 11 cartografías de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas censales (unidades territoriales básicas del INE) de Santiago: dónde se agrupan estadísticamente los núcleos Alto-Alto (HH), qué barrios conforman bolsones Bajo-Bajo (LL) y cómo la cobertura colaborativa exhibe un desajuste inverso frente a la densidad residencial comunal..',
+      bajada: 'Análisis espacial de las 11 cartografías de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas censales (unidades territoriales básicas del INE) de Santiago: dónde se agrupan estadísticamente los núcleos Alto-Alto (HH), qué barrios conforman bolsones Bajo-Bajo (LL) y cómo la cobertura colaborativa exhibe un desajuste inverso frente a la densidad residencial comunal.',
       imagen: 'img/storyboards/portada_analisis_lisa.svg',
       imagenDestacada: 'img/storyboards/portada_analisis_lisa.svg',
       piePortada: 'Ilustración conceptual de la polarización territorial entre conglomerados Alto-Alto (Hotspots), Bajo-Bajo (Coldspots) y anomalías espaciales en la trama de Santiago.',
-      tags: ['Resultados LISA', 'Hotspots Alto-Alto', 'Coldspots Bajo-Bajo', 'Outliers Territoriales', '11 Cartografías'],
+      tags: ['Autocorrelación espacial local', 'Hotspots Alto-Alto', 'Coldspots Bajo-Bajo', 'Outliers Territoriales', '11 Cartografías'],
       capasRelevantes: ['cat01_educacion', 'cat02_servicios', 'cat03_transporte', 'cat04_movilidad_activa', 'cat05_espacio_publico', 'censo2024_manzanas', 'minvu_ipt_prc_santiago'],
       contenido: {
         introduccion: `El análisis de los Indicadores Locales de Asociación Espacial (LISA) sobre las 1.711 manzanas censales (unidades territoriales mínimas delimitadas por el INE, abreviadas comúnmente como mz) y los 27 barrios oficiales de la Comuna de Santiago demuestra que los atributos urbanos y colaborativos presentan una fuerte segregación territorial estadísticamente significativa. En el consolidado comunal, el 44,1% de las manzanas pertenece a conglomerados extremos: 140 manzanas (8,2%) conforman un núcleo compacto de alta concentración (Hotspot Alto-Alto) anclado en Barrio Brasil (63 manzanas), Santa Ana (23 manzanas), Yungay (17 manzanas), Parque Almagro (13 manzanas), Ejército (12 manzanas) y Barrio Universitario (9 manzanas), mientras 615 manzanas (35,9%) integran extensos bolsones de rezago (Coldspot Bajo-Bajo) en el sur, oriente y norponiente comunal, encabezados por Sierra Bella (90 manzanas), Bogotá (87 manzanas), Matta Sur (58 manzanas), Diez de Julio (52 manzanas), Matta Norte (50 manzanas), Santa Isabel (46 manzanas), San Eugenio (44 manzanas), Viel (39 manzanas) y Balmaceda (37 manzanas).`,
@@ -1610,6 +1610,26 @@ const ModuloIndicadoresAnalisis = (() => {
    * para asegurar paridad 100% con el Módulo "00. Visor y Atlas VGI"
    */
   function resolverDefinicionCapa(capaId) {
+    // 0. Capas VGI Descentralizadas (134 coberturas independientes 100% en español)
+    const catalogoVGI = (typeof window !== 'undefined' && window.CATALOGO_VGI_DESCENTRALIZADO)
+      ? window.CATALOGO_VGI_DESCENTRALIZADO
+      : [];
+    const vgiFound = catalogoVGI.find(c => c.id === capaId || c.archivoLocal.includes(capaId) || c.id === `vgi_${capaId}`);
+    if (vgiFound) {
+      return {
+        id: vgiFound.id,
+        tipo: 'vgi',
+        codigo: (vgiFound.id || '').replace('vgi_', '').toUpperCase(),
+        nombre: vgiFound.nombre,
+        institucion: vgiFound.institucion || 'Comunidad OSM / GBIF',
+        sigla: 'IGV',
+        geometria: vgiFound.geometria || 'Vectorial',
+        descripcion: vgiFound.descripcion || `Catastro colaborativo VGI de ${vgiFound.nombre.toLowerCase()}.`,
+        archivoLocal: vgiFound.archivoLocal,
+        nombreDescarga: vgiFound.archivoLocal.split('/').pop()
+      };
+    }
+
     // 1. Capas VGI Comunitarias (OpenStreetMap / GBIF)
     if (capaId.startsWith('cat0') || capaId.startsWith('cat1')) {
       const catKey = capaId.replace(/^cat\d\d_/, '');
@@ -1729,16 +1749,9 @@ const ModuloIndicadoresAnalisis = (() => {
         </header>
 
         <!-- ===================================================================== -->
-        <!-- LÁMINAS DEL ATLAS: NARRATIVAS ESPACIALES BASADAS EN DATOS             -->
+        <!-- LÁMINAS DEL ATLAS TERRITORIAL                                         -->
         <!-- ===================================================================== -->
         <section class="seccion-storyboards-barrio-brasil" id="seccion-storyboards" aria-label="Narrativas espaciales y análisis territorial de Santiago">
-          <header class="header-seccion-storyboards">
-            <h3 class="titulo-storyboards">Narrativas espaciales basadas en datos</h3>
-            <p class="bajada-storyboards">
-              Síntesis territorial elaborada a partir de 83 cartografías temáticas que representan patrones de concentración, segregación espacial, estructura demográfica, habitabilidad, movilidad y metabolismo urbano en la Comuna de Santiago y el Barrio Brasil.
-            </p>
-          </header>
-
           <div class="grilla-storyboards-cuadrados">
             ${STORYBOARDS.map((sb) => {
               return `
@@ -1752,7 +1765,6 @@ const ModuloIndicadoresAnalisis = (() => {
                     <img src="${sb.imagen}" alt="${sb.titulo}" decoding="async" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src=this.src.startsWith('src/')?this.src.slice(4):'src/'+this.src;}" class="img-storyboard-cuadro">
                     <div class="overlay-gradiente-storyboard"></div>
                     <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('${sb.id}')" title="Ampliar imagen / cartografía">🔍</button>
-                    <span class="badge-dimension-tag">${sb.dimensionNombre.split('&')[0]}</span>
                   </div>
                   <div class="cuerpo-tarjeta-storyboard">
                     <h4 class="titulo-tarjeta-storyboard">${sb.titulo}</h4>
@@ -1778,7 +1790,10 @@ const ModuloIndicadoresAnalisis = (() => {
           
           <div class="grilla-dimensiones-indicadores" id="grilla-tarjetas-dimensiones">
             ${DIMENSIONES.map(dim => {
-              const conteo = dim.capasIds.length;
+              const catalogoVGI = (typeof window !== 'undefined' && window.CATALOGO_VGI_DESCENTRALIZADO) ? window.CATALOGO_VGI_DESCENTRALIZADO : [];
+              const vgiDim = catalogoVGI.filter(c => c.dimension === dim.id);
+              const oficialesBase = dim.capasIds.filter(id => !id.startsWith('cat0') && !id.startsWith('cat1') && !id.startsWith('vgi_'));
+              const conteo = oficialesBase.length + vgiDim.length;
               return `
                 <div class="tarjeta-dimension-grande" 
                      id="tarjeta-dim-${dim.id}" 
@@ -1880,12 +1895,18 @@ const ModuloIndicadoresAnalisis = (() => {
       t.setAttribute('aria-expanded', coincide ? 'true' : 'false');
     });
 
-    // Conteos por origen para los botones de filtro
-    const conteoOficiales = dim.capasIds.filter(id => !id.startsWith('cat0') && !id.startsWith('cat1')).length;
-    const conteoVGI = dim.capasIds.filter(id => id.startsWith('cat0') || id.startsWith('cat1')).length;
+    // Conteos por origen para los botones de filtro y consolidación total
+    const catalogoVGI = (typeof window !== 'undefined' && window.CATALOGO_VGI_DESCENTRALIZADO) ? window.CATALOGO_VGI_DESCENTRALIZADO : [];
+    const vgiDimIds = catalogoVGI.filter(c => c.dimension === dimId).map(c => c.id);
+    const oficialesBase = dim.capasIds.filter(id => !id.startsWith('cat0') && !id.startsWith('cat1') && !id.startsWith('vgi_'));
+    const listaCapasTotal = [...oficialesBase, ...vgiDimIds];
+
+    const conteoOficiales = oficialesBase.length;
+    const conteoVGI = vgiDimIds.length;
+    const totalCapasDim = listaCapasTotal.length;
 
     // Generar tarjetas de capas con nombres EXACTOS de Módulo 01 y estética Atlas VGI
-    const htmlCapas = dim.capasIds.map(capaId => {
+    const htmlCapas = listaCapasTotal.map(capaId => {
       const info = resolverDefinicionCapa(capaId);
       const geomIcon = info.geometria.includes('POL') ? '⬡' : (info.geometria.includes('PUN') ? '●' : (info.geometria.includes('LÍN') ? '〰' : '◆'));
       const origenIcon = info.tipo === 'oficial' ? '🏛️' : '👥';
@@ -1927,7 +1948,7 @@ const ModuloIndicadoresAnalisis = (() => {
           </div>
           <div class="acciones-cabecera-acordeon">
             <span class="badge-contador-capas-filtro" id="badge-contador-capas-dim">
-              Mostrando ${dim.capasIds.length} de ${dim.capasIds.length} capas
+              Mostrando ${totalCapasDim} de ${totalCapasDim} capas
             </span>
             <button type="button" class="btn-cerrar-acordeon" onclick="ModuloIndicadoresAnalisis.colapsarAcordeon()" aria-label="Cerrar acordeón">✕ Cerrar</button>
           </div>
@@ -1944,7 +1965,7 @@ const ModuloIndicadoresAnalisis = (() => {
                    oninput="ModuloIndicadoresAnalisis.filtrarCapasAcordeon(this.value)">
           </div>
           <div class="filtros-tipo-acordeon">
-            <button type="button" class="btn-filtro-tipo activo" data-filtro="todos" onclick="ModuloIndicadoresAnalisis.filtrarPorTipo('todos')">Todas (${dim.capasIds.length})</button>
+            <button type="button" class="btn-filtro-tipo activo" data-filtro="todos" onclick="ModuloIndicadoresAnalisis.filtrarPorTipo('todos')">Todas (${totalCapasDim})</button>
             <button type="button" class="btn-filtro-tipo" data-filtro="oficial" onclick="ModuloIndicadoresAnalisis.filtrarPorTipo('oficial')">🏛️ Oficiales Estado (${conteoOficiales})</button>
             <button type="button" class="btn-filtro-tipo" data-filtro="vgi" onclick="ModuloIndicadoresAnalisis.filtrarPorTipo('vgi')">👥 VGI Comunitario (${conteoVGI})</button>
           </div>
@@ -2075,7 +2096,6 @@ const ModuloIndicadoresAnalisis = (() => {
         <!-- Encabezado de la Lámina -->
         <header class="header-articulo-blog">
           <div class="meta-superior-blog">
-            <span class="badge-dim-storyboard">${sb.dimensionNombre}</span>
             <span class="tiempo-lectura-blog">🗺️ ${totalCartos} Cartografías Integradas</span>
           </div>
           <h1 class="titulo-articulo-blog">${sb.titulo}</h1>
@@ -2748,33 +2768,44 @@ const ModuloIndicadoresAnalisis = (() => {
   function activarCapaEnMapa(capaId, tipo = 'oficial') {
     cerrarLaminaStoryboard();
     
-    // Activar pestaña del visor 'inicio'
+    // Activar pestaña del visor 'inicio' (Módulo 02)
     if (window.activarPanel) {
       window.activarPanel('inicio');
     }
 
     setTimeout(() => {
-      if (tipo === 'vgi') {
-        const btnCat = document.getElementById(`btn-cat-${capaId}`);
-        if (btnCat) {
-          btnCat.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          if (!btnCat.classList.contains('activo')) {
-            btnCat.click();
-          }
+      if (tipo === 'vgi' || (typeof capaId === 'string' && (capaId.startsWith('vgi_') || capaId.startsWith('capa_vgi_')))) {
+        if (typeof window.alternarCapaVGIDescentralizada === 'function') {
+          window.alternarCapaVGIDescentralizada(capaId);
+        } else if (window.ModuloMapa) {
+          const catalogo = window.CATALOGO_VGI_DESCENTRALIZADO || [];
+          const def = catalogo.find(c => c.id === capaId || c.archivoLocal.includes(capaId)) || {
+            id: capaId,
+            nombre: capaId,
+            archivoLocal: `data/${capaId}.geojson`
+          };
+          const ruta = def.archivoLocal;
+          fetch(ruta).catch(() => fetch(`src/${ruta}`)).then(r => r.json()).then(gj => {
+            ModuloMapa.cargarCapaGeoJSON(def.id, gj, {
+              id: def.id,
+              nombre: def.nombre,
+              color: '#06b6d4',
+              icono: def.icono || '📍',
+              archivoLocal: def.archivoLocal
+            });
+          }).catch(e => console.error('Error cargando capa VGI:', e));
         }
       } else {
-        const btnOficial = document.getElementById(`btn-oficial-${capaId}`);
-        if (btnOficial) {
-          // Asegurar que el acordeón temático oficial de IDE Chile esté abierto
-          const detailsParent = btnOficial.closest('details');
-          if (detailsParent) detailsParent.open = true;
-          btnOficial.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          if (!btnOficial.classList.contains('activo')) {
+        if (window.ModuloIDEChile && typeof window.ModuloIDEChile.alternarCapaOficial === 'function') {
+          window.ModuloIDEChile.alternarCapaOficial(capaId);
+        } else {
+          const btnOficial = document.getElementById(`btn-oficial-${capaId}`);
+          if (btnOficial && !btnOficial.classList.contains('activo')) {
             btnOficial.click();
           }
         }
       }
-    }, 300);
+    }, 200);
   }
 
   /**

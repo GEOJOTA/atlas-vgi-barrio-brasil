@@ -23,19 +23,19 @@ const CONFIG_PREDETERMINADA = {
   territorios_predefinidos: [
     {
       id: 'barrio-brasil-ampliado',
-      nombre: 'Barrio Brasil Completo (hasta Plaza Brasil)',
+      nombre: 'Barrio Brasil Completo',
       bbox: [-70.6720, -33.4505, -70.6580, -33.4350],
       centro: [-33.4425, -70.6650],
       zoom: 15,
-      descripcion: 'Zona Típica Barrio Brasil, Plaza Brasil, Huérfanos, Compañía, Av. Brasil y Alameda'
+      descripcion: 'Área delimitada de Barrio Brasil (Plaza Brasil, Huérfanos, Compañía, Av. Brasil y Alameda)'
     },
     {
-      id: 'uah-manzana',
-      nombre: 'Barrio Brasil — Sector Patrimonial',
-      bbox: [-70.6675, -33.4505, -70.6565, -33.4385],
-      centro: [-33.4445, -70.6620],
-      zoom: 16,
-      descripcion: 'Sector patrimonial (Almirante Barroso, Erasmo Escala, Cienfuegos, Los Héroes)'
+      id: 'comuna-santiago',
+      nombre: 'Comuna de Santiago',
+      bbox: [-70.6923, -33.4785, -70.6251, -33.4257],
+      centro: [-33.4521, -70.6587],
+      zoom: 13,
+      descripcion: 'Territorio comunal completo de Santiago (27 barrios oficiales y 1.711 manzanas censales)'
     }
   ],
   endpoints: {

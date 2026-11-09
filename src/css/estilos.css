@@ -473,25 +473,27 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 
 .cabecera-fila-marca {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  position: relative;
   gap: 24px;
+  width: 100%;
 }
 
 .marca {
   padding: 0;
   border-bottom: none;
-  margin-bottom: 0;
+  margin: 0 auto;
   background: transparent;
-  flex: 1 1 auto;
-  min-width: 0;
+  text-align: center;
 }
 
 .marca-header {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
+  text-align: center;
 }
 
 .marca-logo {
@@ -513,8 +515,7 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 }
 
 .marca-texto {
-  flex: 1;
-  min-width: 0;
+  text-align: center;
 }
 
 .marca h1,
@@ -735,28 +736,32 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   scrollbar-width: thin;
 }
 
-/* ── Sidebar de Detalles BIDAT (slide-in desde la derecha del mapa) ─── */
+/* ── Panel de Detalles del Elemento (Ubicado debajo del mapa con máxima amplitud) ─── */
 #sidebar-detalle-bidat {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 480px;
-  max-width: 92%;
-  height: 100%;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: auto;
+  max-height: 0;
   background: rgba(8, 14, 30, 0.97);
   backdrop-filter: blur(28px);
-  border-left: 2px solid var(--musgo);
-  border-radius: 0 var(--radio-borde) var(--radio-borde) 0;
-  z-index: 1200;
+  border: 2px solid transparent;
+  border-radius: var(--radio-borde);
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: -8px 0 40px rgba(6, 182, 212, 0.25);
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s, opacity 0.25s, margin 0.25s;
+  box-shadow: var(--sombra-md);
   overflow: hidden;
+  opacity: 0;
+  margin-top: 0;
 }
 #sidebar-detalle-bidat.abierto {
-  transform: translateX(0);
+  max-height: 1200px;
+  border-color: var(--musgo);
+  opacity: 1;
+  margin-top: 18px;
+  margin-bottom: 24px;
 }
 #sidebar-detalle-header {
   display: flex;
@@ -809,7 +814,10 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 #sidebar-detalle-cuerpo {
   flex: 1;
   overflow-y: auto;
-  padding: 16px 18px;
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 20px;
   scrollbar-width: thin;
   scrollbar-color: var(--musgo-oscuro) transparent;
 }
@@ -4782,20 +4790,7 @@ table.tabla-datos-institucional td {
 }
 
 .badge-dimension-tag {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  font-family: var(--fuente-datos);
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: #ffffff;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 4px 10px;
-  border-radius: 6px;
-  text-transform: uppercase;
+  display: none !important;
 }
 
 .badge-tiempo-lectura {
@@ -7101,7 +7096,8 @@ table.tabla-datos-institucional td {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
+  position: absolute;
+  right: 20px;
 }
 
 .control-perfil-cabecera {
@@ -7816,7 +7812,9 @@ table.tabla-datos {
   }
   .cabecera-acciones-utilidad {
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+    position: static;
+    margin-top: 8px;
     gap: 8px;
   }
   .control-perfil-cabecera {

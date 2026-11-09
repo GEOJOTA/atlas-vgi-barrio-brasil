@@ -76,65 +76,52 @@ flowchart LR
     I4 --> P4 --> O4
 ```
 
-### 2.2. Flujo de procesamiento de articulación de los 10 Módulos de la plataforma web (`src/index.html`)
+### 2.2. Flujo de procesamiento de articulación de los 3 Módulos de la plataforma web (`src/index.html`)
 
 ```mermaid
 flowchart TD
     subgraph NUCLEO["Núcleo de Configuración y Motor Geodésico"]
-        CFG["src/js/config.js + config/config.json<br/>(window.NODO_CONFIG: caja delimitadora y CAT-01 a CAT-10)"]
+        CFG["src/js/config.js + config/config.json<br/>(Áreas de enfoque: Barrio Brasil y Comuna de Santiago)"]
         GEO["src/js/modulos/geodesia.js<br/>(EPSG:4326 ↔ EPSG:32719 UTM 19S)"]
-        DB["src/js/modulos/db_client.js<br/>(Conmutación por falla: PostGIS RPC → CDN → Caché Local)"]
+        CAT["src/js/modulos/catalogo_vgi_descentralizado.js<br/>(134 capas IGV descentralizadas)"]
     end
 
-    subgraph VISOR["Módulo 01: Visor Territorial y Subpaneles"]
-        M01["01. Visor Territorial<br/>src/js/modulos/mapa.js & ide_chile.js<br/>(133 Capas: 123 Oficiales + 10 VGI)"]
-        ICV["Subpanel Métricas: ICV Dinámico<br/>src/js/app.js"]
-        CIN["Subpanel Inspector Normativo PRC/OGUC<br/>src/js/modulos/evaluador_normativo.js"]
+    subgraph M01["Módulo 01: Análisis Territorial"]
+        STORY["4 Láminas del Atlas (83 Cartografías)<br/>KDE · Autocorrelación Espacial Local · Demografía · Metabolismo"]
+        DIM["5 Dimensiones Analíticas & Catálogo de 257 Capas<br/>(123 Oficiales + 134 IGV con buscador en español)"]
     end
 
-    subgraph INGESTA["Módulos 02, 03 y 04: Captura y Cartografía Colaborativa"]
-        M02["02. Consultas Overpass (OSM) & Taginfo<br/>src/js/modulos/osm.js & taginfo.js"]
-        M03["03. Biodiversidad GBIF (Darwin Core)<br/>src/js/modulos/gbif.js"]
-        M04["04. Cartografía uMap & Importador Local<br/>src/js/modulos/umap.js & importador_capas.js"]
+    subgraph M02["Módulo 02: Explorar Mapa"]
+        VISOR["Visor Cartográfico Leaflet Inmediato<br/>Áreas de enfoque: Barrio Brasil / Comuna de Santiago"]
+        CIN["Inspector Normativo PRC Santiago / OGUC<br/>src/js/modulos/evaluador_normativo.js"]
+        EXP["Exportación GeoJSON con Simbología Aplicada<br/>(marker-color, fill, stroke, rampas temáticas)"]
+        DET["Detalles del Elemento (Panel Inferior Ancho Completo)<br/>Atributos, columnas, indicadores y metadatos"]
     end
 
-    subgraph ANALISIS["Módulos 05 y 06: Síntesis Territorial y Auditoría de Calidad"]
-        M05["05. Indicadores & 4 Narrativas Espaciales (83 Mapas)<br/>src/js/modulos/indicadores_analisis.js"]
-        M06["06. Calidad & ICV (WLC v2.0 / ohsome / OSMCha)<br/>src/js/modulos/ohsome.js & calidad_analyst.js"]
+    subgraph M03["Módulo 03: Documentación"]
+        MAN["Manual de Uso del Sistema<br/>src/js/modulos/manual.js"]
+        DICC["Diccionario de Descriptores (134 Capas IGV)<br/>src/js/modulos/diccionario.js (ISO 19110)"]
+        LIC["Licencias y Descarga Integral de Geodatabase<br/>src/js/modulos/licencias.js (.zip / .xlsx)"]
     end
 
-    subgraph GOBERNANZA["Módulos 07, 08, 09 y 10: Documentación, Normas ISO y Licencias"]
-        M07["07. Manual de Uso y Actualización<br/>src/js/modulos/manual.js"]
-        M08["08. Metadatos ISO 19115 / ISO 19139 XML<br/>src/js/modulos/metadatos.js"]
-        M09["09. Diccionario ISO 19110 (140 Descriptores)<br/>src/js/modulos/diccionario.js"]
-        M10["10. Licencias & Catálogos (.xlsx / .zip)<br/>src/js/modulos/licencias.js"]
-    end
-
-    CFG --> M01 & M02 & M03 & M05 & M06
-    GEO --> M01 & M05 & M06
-    DB --> M01 & M08
-    M01 --> ICV & CIN
-    M02 & M03 & M04 --> M01
-    M01 --> M05 & M06
-    M05 & M06 --> M07 & M08 & M09 & M10
+    CFG --> M01 & M02
+    GEO --> M01 & M02
+    CAT --> DIM
+    M01 -->|"Activar capa"| VISOR
+    VISOR --> DET & EXP & CIN
+    VISOR -->|"Ver Atlas de Análisis"| M01
+    M02 --> M03
 ```
 
 ---
 
-## 3. Estructura de los 10 Módulos de la plataforma web
+## 3. Estructura de los 3 Módulos de la plataforma web (Prototipo 02)
 
-| N° | Pestaña en la Interfaz (`src/index.html`) | ID del Panel DOM | Controladores JavaScript (`src/js/`) | Función Principal y Salidas Verificables |
+| N° | Sección en la Interfaz (`src/index.html`) | ID del Panel DOM | Controladores JavaScript (`src/js/`) | Función Principal y Salidas Verificables |
 | :---: | :--- | :--- | :--- | :--- |
-| `01` | Visor para la gestión territorial | `#panel-inicio` | `app.js`, `modulos/mapa.js`, `modulos/ide_chile.js`, `modulos/evaluador_normativo.js`, `modulos/geodesia.js` | Superposición interactiva de las 133 capas (`123` oficiales + `10` VGI), cálculo del ICV Dinámico, dibujo de caja delimitadora con área en `EPSG:32719` y emisión del Certificado CIN-VGI (con los 10 hitos históricos del PRC 1990–2024). |
-| `02` | Consultas Overpass (OSM) | `#panel-explorador-osm` | `modulos/osm.js`, `modulos/taginfo.js` | Consultas en vivo mediante Overpass QL con conmutación por falla entre 3 servidores, reconstrucción topológica de nodos/vías, normalización al esquema de 14 atributos y auditoría semántica Taginfo API v4. |
-| `03` | Biodiversidad GBIF | `#panel-biodiversidad-gbif` | `modulos/gbif.js` | Consulta a GBIF API v1 bajo estándar Darwin Core (DwC) para registros de flora, arbolado y fauna urbana georreferenciada (`data/capa_biodiversidad.geojson`). |
-| `04` | Cartografía uMap | `#panel-proyectos-umap` | `modulos/umap.js`, `modulos/importador_capas.js` | Integración de proyectos comunitarios uMap e importador local *client-side* para archivos `.geojson`, `.kml`, `.kmz`, `.gpx` y `.csv`. |
-| `05` | Indicadores & Narrativas Espaciales | `#panel-indicadores` | `modulos/indicadores_analisis.js` | Sistematización de las 133 capas en 5 Dimensiones Analíticas y 4 Narrativas Espaciales Territoriales con 83 cartografías temáticas (`01`: 14 mapas KDE; `02`: 11 mapas LISA; `03`: 34 mapas Censo 2024/RSH; `04`: 24 mapas Socioambiente/Movilidad/Residuos). |
-| `06` | Calidad & ICV | `#panel-calidad-ohsome` | `modulos/ohsome.js`, `modulos/calidad_analyst.js`, `modulos/evaluador_calidad_cuantitativa.js` | Submódulo A: Evaluador Universal WLC v2.0 (ISO 19157/19115). Submódulo B: Series históricas ohsome API v1/v2 con Índice de Saturación y Maduración Territorial (Herfort et al., 2023 / ISO 19157). Submódulo C: Auditoría de changesets con OSMCha. |
-| `07` | Manual de Uso | `#panel-manual` | `modulos/manual.js` | Documentación interactiva integrada: Parte I (Manual de Uso) con inventario filtrable de las 133 capas, y Parte II (Manual de Actualización Técnica) con catálogo multi-lenguaje y flujos de procesamiento de datos. |
-| `08` | Metadatos ISO 19115 | `#panel-metadatos-iso` | `modulos/metadatos.js` | Generador de fichas de metadatos conformes al Perfil Nacional de IDE Chile (ISO 19115:2003 / ISO 19115-1:2014) con exportación directa en JSON y XML (ISO 19139:2007). |
-| `09` | Diccionario (133 Capas) | `#panel-diccionario` | `modulos/diccionario.js` | Catálogo de Objetos Geográficos (ISO 19110:2016) con 140 descriptores normativos, homologación con IDE Chile e identificación de 86 brechas temáticas cubiertas por VGI. |
-| `10` | Licencias & Catálogos (.xlsx) | `#panel-licencias` | `modulos/licencias.js` | Marco jurídico de datos abiertos y descarga directa de `docs/geodatabase_completa_atlas_vgi.zip` y de los 3 libros maestros `.xlsx`. |
+| `01` | Análisis | `#panel-indicadores` | `modulos/indicadores_analisis.js`, `modulos/catalogo_vgi_descentralizado.js` | Síntesis territorial basada en 83 cartografías temáticas estructuradas en 4 láminas (KDE, autocorrelación espacial local, demografía y habitabilidad, metabolismo urbano) y catálogo de 257 coberturas (123 oficiales + 134 IGV descentralizadas) organizadas en 5 dimensiones con buscador interactivo en español y activación directa. |
+| `02` | Explorar Mapa | `#panel-inicio` | `app.js`, `modulos/mapa.js`, `modulos/ide_chile.js`, `modulos/evaluador_normativo.js`, `modulos/geodesia.js` | Visor Leaflet en primer plano con selector de áreas de enfoque ("Barrio Brasil Completo" y "Comuna de Santiago"), inspector normativo PRC/OGUC, botón "Ver Atlas de Análisis", panel inferior de "Detalles del elemento" a todo lo ancho y exportación GeoJSON con simbología temática embebida. |
+| `03` | Documentación | `#panel-manual`, `#panel-diccionario`, `#panel-licencias` | `modulos/manual.js`, `modulos/diccionario.js`, `modulos/licencias.js` | Manual de uso interactivo con inventario de 257 capas, diccionario de descriptores territoriales ISO 19110 (134 capas IGV), marco legal de datos abiertos y descarga directa de `docs/geodatabase_completa_atlas_vgi.zip` y catálogos Excel. |
 
 ---
 
@@ -145,7 +132,7 @@ El repositorio mantiene paridad simétrica entre los directorios de raíz (`data
 ```text
 nodo-geoabierto/
 ├── src/                                      # Directorio de publicación web (publish = "src" en netlify.toml)
-│   ├── index.html                            # Documento maestro SPA (10 módulos, modales y Lightbox)
+│   ├── index.html                            # Documento maestro SPA (3 módulos operacionales y visor Leaflet)
 │   ├── css/estilos.css                       # Sistema de diseño CSS3 con variables nativas (:root)
 │   ├── js/                                   # 21 scripts JavaScript ES6+ (Patrón IIFE modular)
 │   │   ├── config.js                         # Configuración global síncrona (window.NODO_CONFIG)
@@ -179,7 +166,7 @@ nodo-geoabierto/
 
 Toda la documentación se encuentra sincronizada en la raíz del proyecto, en `docs/` y en `src/docs/`:
 
-1. [`MANUAL_USO.md`](MANUAL_USO.md) (`docs/MANUAL_USO.md` / `src/docs/MANUAL_USO.md`): Manual operativo de los 10 módulos de la plataforma web, flujos de trabajo con diagramas flujo de procesamiento, uso del Inspector Normativo Plan Regulador Comunal (PRC, véase el glosario)/Ordenanza General de Urbanismo y Construcciones (OGUC, véase el glosario), los 4 Narrativas Espaciales (83 cartografías) y los 3 submódulos de Calidad Espacial.
+1. [`MANUAL_USO.md`](MANUAL_USO.md) (`docs/MANUAL_USO.md` / `src/docs/MANUAL_USO.md`): Manual operativo de los 3 módulos de la plataforma web, catálogo de 257 capas agrupadas en 5 dimensiones de análisis, uso del Inspector Normativo PRC/OGUC, las 4 Láminas del Atlas (83 cartografías) y panel de detalles al pie del visor.
 2. [`MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md) (`docs/MANUAL_ACTUALIZACION_ATLAS.md` / `src/docs/MANUAL_ACTUALIZACION_ATLAS.md`): Manual de ingeniería de software, arquitectura, catálogo estandarizado multi-lenguaje, flujos de procesamiento de datos y guía paso a paso para adaptar el Atlas a cualquier territorio.
 3. [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) y [`PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md`](PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md): Especificación de la arquitectura cliente-servidor, motor geodésico `EPSG:4326` ↔ `EPSG:32719`, protocolo de 8 bancos de pruebas pre-despliegue y despliegue continuo en Netlify y GitHub Pages.
 4. [`docs/ANALISIS_METACALIDAD.md`](docs/ANALISIS_METACALIDAD.md): Reporte técnico del modelo de Combinación Lineal Ponderada (WLC) bajo las normas ISO 19115:2014 e ISO 19157:2013 sobre el repositorio cartográfico.

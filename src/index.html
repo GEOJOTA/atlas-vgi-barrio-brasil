@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261109_v44">
+  <link rel="stylesheet" href="css/estilos.css?v=20261109_v45">
 </head>
 <body>
 
@@ -36,17 +36,6 @@
         </div>
 
         <div class="cabecera-acciones-utilidad">
-          <div class="control-perfil-cabecera" title="Adapta las herramientas y capas sugeridas según tu perfil">
-            <label for="sel-perfil-usuario" class="etiqueta-perfil-cabecera">Perfil:</label>
-            <select id="sel-perfil-usuario" aria-label="Seleccionar perfil de usuario">
-              <option value="todos" selected>Vista general</option>
-              <option value="comunidad">Comunidad y vecinos</option>
-              <option value="institucion">Instituciones públicas (Municipio / IDE)</option>
-              <option value="voluntario">Mapeadores voluntarios (OSM)</option>
-              <option value="ong">ONG e investigación</option>
-            </select>
-          </div>
-
           <button type="button" class="btn-utilidad-cabecera" id="btn-abrir-glosario-rapido" title="Consultar glosario de siglas (VGI, IGV, KDE, LISA, PRC, OGUC)">
             <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <span>Glosario de siglas</span>
@@ -126,8 +115,8 @@
         <div class="grupo-control-territorio">
           <label for="sel-territorio">Área de enfoque:</label>
           <select id="sel-territorio">
-            <option value="barrio-brasil-ampliado">Barrio Brasil completo (223,75 ha)</option>
-            <option value="uah-manzana">Sector patrimonial (136,10 ha)</option>
+            <option value="barrio-brasil-ampliado" selected>Barrio Brasil Completo</option>
+            <option value="comuna-santiago">Comuna de Santiago</option>
           </select>
         </div>
 
@@ -143,13 +132,9 @@
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v18M5 8l7-5 7 5M5 8v8a7 7 0 0 0 14 0V8"/></svg>
           <span>Inspector normativo (PRC)</span>
         </button>
-        <button type="button" class="accion secundaria" id="btn-abrir-importador" title="Cargar archivos espaciales desde tu computador (.kmz, .kml, .geojson, .gpx, .csv)">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <span>Importar archivo local</span>
-        </button>
-        <button type="button" class="accion secundaria" id="btn-abrir-indicadores-directo" data-panel="indicadores" title="Ir a la sección de indicadores y relatos cartográficos">
+        <button type="button" class="accion secundaria" id="btn-abrir-indicadores-directo" data-panel="indicadores" title="Ir al Módulo 01: Atlas de Análisis Territorial">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          <span>Ver relatos cartográficos</span>
+          <span>Ver Atlas de Análisis</span>
         </button>
 
         <div style="margin-left:auto; display:flex; gap:8px;">
@@ -356,22 +341,6 @@
             </div>
           </div>
 
-          <!-- Sidebar de Más Detalles (slide-in sobre el mapa) -->
-          <div id="sidebar-detalle-bidat" role="complementary" aria-label="Panel de detalles del elemento seleccionado">
-            <div id="sidebar-detalle-header">
-              <h4>
-                Detalles del elemento
-                <span class="badge-capa" id="sidebar-detalle-badge">—</span>
-              </h4>
-              <button id="btn-cerrar-detalle" title="Cerrar panel de detalles" aria-label="Cerrar">✕</button>
-            </div>
-            <div id="sidebar-detalle-cuerpo">
-              <p style="color:var(--tinta-tenue); font-size:0.86rem; text-align:center; padding-top:40px;">
-                Haz clic en un elemento del mapa y luego en <strong style="color:var(--musgo)">Más detalles →</strong>
-              </p>
-            </div>
-          </div>
-
         </div>
 
 
@@ -386,7 +355,6 @@
             <button type="button" class="btn-subpanel activa" data-target="subpanel-metricas">Resumen</button>
             <button type="button" class="btn-subpanel" data-target="subpanel-ide">Catálogo</button>
             <button type="button" class="btn-subpanel" data-target="subpanel-normativa">Normativa</button>
-            <button type="button" class="btn-subpanel" data-target="subpanel-importador">Importar</button>
             <button type="button" class="btn-subpanel" data-target="subpanel-bd">Base PostGIS</button>
           </div>
 
@@ -448,15 +416,6 @@
             </div>
           </div>
 
-          <!-- Subpanel 4: Importador Espacial -->
-          <div class="subpanel-profundidad" id="subpanel-importador">
-            <h4 style="margin: 0 0 8px 0; font-size: 0.92rem; color: var(--agua);">Carga de archivos locales</h4>
-            <p style="font-size: 0.84rem; color: var(--tinta-suave); margin-bottom: 10px;">Visualiza tus propios archivos (.GeoJSON, .KML, .KMZ, .CSV) directamente en el navegador.</p>
-            <div style="border: 1px dashed var(--linea-fuerte); padding: 14px; border-radius: 8px; text-align: center; font-size: 0.85rem; color: var(--tinta-suave);">
-              Haz clic en <strong>"Importar archivo local"</strong> en la barra del mapa para subir una capa desde tu computador.
-            </div>
-          </div>
-
           <!-- Subpanel 5: Base de Datos Espacial Supabase PostGIS -->
           <div class="subpanel-profundidad" id="subpanel-bd">
             <h4 style="margin: 0 0 8px 0; font-size: 0.9rem; color: var(--esmeralda);">⚡ Base de Datos PostGIS:</h4>
@@ -497,124 +456,20 @@
       <!-- Contenedor flotante del Inspector Normativo IPT -->
       <div id="contenedor-inspector-normativo" style="display:none; margin-top:10px;"></div>
 
-      <!-- ========================================================================= -->
-      <!-- CONSOLA CARTOGRÁFICA Y CONTROL DE CAPAS (GIS-GRADE WORKBENCH)            -->
-      <!-- ========================================================================= -->
-      <section class="consola-capas-gis" id="consola-capas-gis" aria-label="Consola Cartográfica de Capas">
-        <!-- Encabezado de la Consola -->
-        <header class="consola-header">
-          <div class="consola-header-info">
-            <div class="consola-insignia">CATÁLOGO MAESTRO CARTOGRÁFICO // 5 DIMENSIONES DE ANÁLISIS</div>
-            <h3 class="consola-titulo">Catálogo Cartográfico y Explorador de Coberturas</h3>
-            <p class="consola-subtitulo">
-              Sistematización de las 257 coberturas espaciales del Atlas agrupadas en 5 Dimensiones de Análisis, articulando 123 fuentes oficiales del Estado de Chile y 134 capas de información geográfica voluntaria (VGI) descentralizada.
-            </p>
-          </div>
-          <div class="consola-header-metricas">
-            <div class="kpi-consola">
-              <span class="kpi-valor" id="kpi-total-capas">257</span>
-              <span class="kpi-etiqueta">Capas Totales</span>
-            </div>
-            <div class="kpi-consola">
-              <span class="kpi-valor" id="kpi-activas-capas">0</span>
-              <span class="kpi-etiqueta">En Mapa</span>
-            </div>
-            <button type="button" class="accion btn-descarga-coleccion" id="btn-descargar-todo-ide" title="Descargar toda la base de datos y colección del Atlas en una carpeta comprimida (.zip): VGI, Geofabrik, Capas Oficiales, Catálogos Excel y Metadatos">
-              📦 Descargar Colección Completa (.zip)
-            </button>
-          </div>
-        </header>
-
-        <!-- Barra de Búsqueda y Filtro Reactivo -->
-        <div class="consola-toolbar">
-          <div class="buscador-capas-contenedor">
-            <span class="buscador-icono">⌕</span>
-            <input type="search" id="busqueda-capas-atlas" class="input-busqueda-capas" placeholder="Buscar capa por nombre en español (farmacias, árboles, cesfam, escuelas, censo, metro...), institución o código..." autocomplete="off">
-            <button type="button" id="btn-limpiar-busqueda-capas" class="btn-limpiar-busqueda" style="display:none;" title="Limpiar filtro">✕</button>
-          </div>
-          <div class="consola-toolbar-acciones">
-            <button type="button" class="btn-gis-accion" id="btn-desactivar-todas-capas" title="Desactivar todas las capas actualmente visibles en el mapa">
-              Desactivar Todas
-            </button>
-          </div>
+      <!-- Panel de Detalles del Elemento (Ubicado debajo del mapa con máxima amplitud horizontal) -->
+      <div id="sidebar-detalle-bidat" role="region" aria-label="Panel de detalles del elemento seleccionado">
+        <div id="sidebar-detalle-header">
+          <h4>
+            Detalles del elemento
+            <span class="badge-capa" id="sidebar-detalle-badge">—</span>
+          </h4>
+          <button id="btn-cerrar-detalle" title="Cerrar panel de detalles" aria-label="Cerrar">✕</button>
         </div>
-
-        <!-- Chips de Filtrado Temático Rápido por las 5 Dimensiones -->
-        <div class="consola-chips-filtro" id="contenedor-chips-filtro">
-          <button type="button" class="chip-filtro activo" data-filtro="todos">Todas las Capas (257)</button>
-          <button type="button" class="chip-filtro" data-filtro="sociodemografica">👥 1. Sociodemográfica</button>
-          <button type="button" class="chip-filtro" data-filtro="socioeconomica">📈 2. Socioeconómica</button>
-          <button type="button" class="chip-filtro" data-filtro="socioambiental">🌿 3. Socioambiental</button>
-          <button type="button" class="chip-filtro" data-filtro="sociosanitaria">🏥 4. Sociosanitaria</button>
-          <button type="button" class="chip-filtro" data-filtro="sociourbana">🏛️ 5. Sociourbana</button>
-          <button type="button" class="chip-filtro" data-filtro="oficial">🏛️ Solo Oficiales (123)</button>
-          <button type="button" class="chip-filtro" data-filtro="vgi">👥 Solo IGV (134)</button>
+        <div id="sidebar-detalle-cuerpo">
+          <p style="color:var(--tinta-tenue); font-size:0.86rem; text-align:center; padding:30px 10px; grid-column:1/-1;">
+            Haz clic en un elemento del mapa y luego en <strong style="color:var(--musgo)">Más detalles →</strong> para explorar todos sus atributos, columnas y metadatos.
+          </p>
         </div>
-
-        <!-- Navegación por Pestañas Segmentadas -->
-        <div class="consola-pestanas-nav">
-          <button type="button" class="pestana-capas activa" data-seccion="seccion-capas-dimensiones">
-            Capas Agrupadas por Dimensión <span class="badge-tab-conteo">257</span>
-          </button>
-          <button type="button" class="pestana-capas" data-seccion="seccion-capas-activas">
-            Capas Activas en Mapa <span class="badge-tab-conteo" id="badge-conteo-activas">0</span>
-          </button>
-        </div>
-
-        <!-- SECCIÓN 1: Capas Agrupadas por las 5 Dimensiones de Análisis -->
-        <div class="seccion-panel-capas activa" id="seccion-capas-dimensiones">
-          <div class="contenedor-acordeones-dimensiones" id="contenedor-acordeones-dimensiones">
-            <!-- Renderizado dinámico desde app.js -->
-          </div>
-          <div id="estado-carga-capas-oficiales" class="descripcion estado-telemetria-carga"></div>
-        </div>
-
-        <!-- SECCIÓN 2: Capas Activas en Sesión -->
-        <div class="seccion-panel-capas" id="seccion-capas-activas" style="display:none;">
-          <div id="contenedor-resumen-capas-activas" class="grilla-capas-activas">
-            <!-- Se actualiza dinámicamente cuando se enciende/apaga una capa -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Bloque de Importación de Capas Personalizadas del Usuario -->
-      <div class="bloque bloque-importador" id="seccion-importador-capas" style="border:1px dashed #7A7045; background:var(--papel-alto); padding:16px; margin-top:16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-          <h3 style="margin:0; color:var(--musgo-oscuro); font-size:1.05rem;">📂 Importador de Capas Locales (.KMZ, .KML, .GeoJSON, .GPX, .CSV)</h3>
-          <div style="display:flex; gap:6px; align-items:center;">
-            <span style="font-size:0.72rem; background:#7A7045; color:#FFFFFF; padding:2px 8px; border-radius:2px; font-family:'IBM Plex Mono',monospace; letter-spacing:0.04em;">FORMATOS ESTÁNDAR</span>
-          </div>
-        </div>
-        <p class="descripcion" style="margin-bottom:12px;">Carga tus propias capas espaciales directamente desde tu equipo sin necesidad de descargarlas en el servidor ni almacenarlas en el repositorio. Soporta archivos <strong>.kmz</strong> (descomprimidos en memoria del navegador vía JSZip), <strong>.kml</strong>, <strong>.geojson / .json</strong>, <strong>.gpx</strong> y <strong>.csv</strong> con coordenadas. Las capas importadas se visualizan en el mapa interactivo y pueden auditarse mediante el Módulo de Evaluación Normativa.</p>
-        
-        <!-- Zona Dropzone Drag & Drop -->
-        <div id="zona-drop-importacion" class="zona-drop-importacion">
-          <div class="zona-drop-icono">📁 ➔ 🗺️</div>
-          <div class="zona-drop-titulo">Arrastra y suelta aquí tus archivos espaciales</div>
-          <div class="zona-drop-subtitulo">Soporta .kmz, .kml, .geojson, .json, .gpx, .csv, .tsv (procesamiento 100% en navegador)</div>
-          <label for="input-archivo-capa" class="accion secundaria btn-seleccionar-archivo">
-            Seleccionar Archivo Local
-          </label>
-          <input type="file" id="input-archivo-capa" accept=".kmz,.kml,.geojson,.json,.gpx,.csv,.tsv" multiple style="display:none;">
-        </div>
-
-        <div id="estado-importacion-capas" class="descripcion" style="font-size:0.82rem; font-style:italic; margin-top:8px;"></div>
-
-        <!-- Lista / Grilla de capas importadas -->
-        <div id="contenedor-capas-importadas" style="margin-top:14px; display:none;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <h4 style="margin:0; font-size:0.88rem; color:var(--musgo-oscuro); text-transform:uppercase; letter-spacing:0.04em;">Capas Cargadas en Sesión (<span id="contador-capas-importadas">0</span>):</h4>
-            <button type="button" class="accion secundaria" id="btn-limpiar-capas-importadas" style="font-size:0.75rem; padding:3px 8px;" title="Remover todas las capas importadas de la sesión">🗑️ Limpiar Todo</button>
-          </div>
-          <div id="grilla-capas-importadas" class="grilla-capas-importadas">
-            <!-- Renderizado dinámico de tarjetas de capa importada -->
-          </div>
-        </div>
-      </div>
-
-      <div class="bloque" id="sec-inicio-territorio">
-        <h3>Ficha del Territorio de Estudio</h3>
-        <p id="resumen-area-defecto">Cargando configuración territorial…</p>
       </div>
     </section>
 
@@ -636,15 +491,9 @@
         </header>
 
         <!-- ===================================================================== -->
-        <!-- GRILLA DE LAS 5 GRANDES DIMENSIONES ANALÍTICAS                         -->
+        <!-- GRILLA DE LAS 4 LÁMINAS DEL ATLAS (STORYBOARDS)                        -->
         <!-- ===================================================================== -->
         <section class="seccion-storyboards-barrio-brasil" id="seccion-storyboards" aria-label="Relatos cartográficos y análisis territorial de Santiago">
-        <header class="header-seccion-storyboards">
-          <h3 class="titulo-storyboards">Narrativas espaciales basadas en datos</h3>
-          <p class="bajada-storyboards">
-            Síntesis territorial elaborada a partir de 83 cartografías temáticas que representan patrones de concentración, segregación espacial, estructura demográfica, habitabilidad, movilidad y metabolismo urbano en la Comuna de Santiago y el Barrio Brasil.
-          </p>
-        </header>
 
         <div class="grilla-storyboards-cuadrados">
 
@@ -653,13 +502,12 @@
                    data-storyboard-id="storyboard-densidad-kernel-kde"
                    role="button"
                    tabindex="0"
-                   aria-label="Abrir relato: Concentración de servicios y equipamiento en Santiago (KDE)"
+                   aria-label="Abrir relato: Concentración Territorial de Actividad IGV en Santiago"
                    onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-densidad-kernel-kde')">
             <div class="imagen-cuadrada-wrapper">
-              <img src="img/storyboards/portada_analisis_kde.svg" width="800" height="800" alt="Concentración de servicios y equipamiento en Santiago (KDE)" loading="lazy" class="img-storyboard-cuadro">
+              <img src="img/storyboards/portada_analisis_kde.svg" width="800" height="800" alt="Concentración Territorial de Actividad IGV en Santiago" loading="lazy" class="img-storyboard-cuadro">
               <div class="overlay-gradiente-storyboard"></div>
               <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-densidad-kernel-kde')" title="Ampliar portada">Ampliar</button>
-              <span class="badge-dimension-tag">Densidad KDE (14 mapas)</span>
             </div>
             <div class="cuerpo-tarjeta-storyboard">
               <h4 class="titulo-tarjeta-storyboard">1. Concentración Territorial de Actividad IGV en Santiago:</h4>
@@ -674,18 +522,17 @@
             </div>
           </article>
 
-          <!-- STORYBOARD 2: RESULTADOS LISA -->
+          <!-- STORYBOARD 2: RESULTADOS AUTOCORRELACIÓN ESPACIAL LOCAL -->
           <article class="tarjeta-storyboard-cuadrada"
                    data-storyboard-id="storyboard-autocorrelacion-lisa"
                    role="button"
                    tabindex="0"
-                   aria-label="Abrir relato: Zonas de alta concentración y áreas de rezago en Santiago (LISA)"
+                   aria-label="Abrir relato: Zonas de alta concentración y áreas de rezago en Santiago (autocorrelación espacial local)"
                    onclick="ModuloIndicadoresAnalisis.abrirLaminaStoryboard('storyboard-autocorrelacion-lisa')">
             <div class="imagen-cuadrada-wrapper">
-              <img src="img/storyboards/portada_analisis_lisa.svg" width="800" height="800" alt="Zonas de alta concentración y áreas de rezago en Santiago (LISA)" loading="lazy" class="img-storyboard-cuadro">
+              <img src="img/storyboards/portada_analisis_lisa.svg" width="800" height="800" alt="Zonas de alta concentración y áreas de rezago en Santiago (autocorrelación espacial local)" loading="lazy" class="img-storyboard-cuadro">
               <div class="overlay-gradiente-storyboard"></div>
               <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-autocorrelacion-lisa')" title="Ampliar portada">Ampliar</button>
-              <span class="badge-dimension-tag">Agrupación LISA (11 mapas)</span>
             </div>
             <div class="cuerpo-tarjeta-storyboard">
               <h4 class="titulo-tarjeta-storyboard">2. Segregación Espacial, Hotspots y Áreas de Rezago en Santiago:</h4>
@@ -693,7 +540,7 @@
               <div class="footer-tarjeta-storyboard">
                 <div class="tags-storyboard">
                   <span class="tag-chip">Alta vs. baja dotación</span>
-                  <span class="tag-chip">11 mapas LISA</span>
+                  <span class="tag-chip">11 mapas de autocorrelación</span>
                 </div>
                 <span class="btn-abrir-historia">Leer relato →</span>
               </div>
@@ -711,7 +558,6 @@
               <img src="img/storyboards/portada_analisis_sociourbano.svg" width="800" height="800" alt="Demografía, vivienda y morfología urbana (Censo 2024 y RSH)" loading="lazy" class="img-storyboard-cuadro">
               <div class="overlay-gradiente-storyboard"></div>
               <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-demografia-habitabilidad-sociourbana')" title="Ampliar portada">Ampliar</button>
-              <span class="badge-dimension-tag">Demografía y vivienda (34 mapas)</span>
             </div>
             <div class="cuerpo-tarjeta-storyboard">
               <h4 class="titulo-tarjeta-storyboard">3. Estructura Sociodemográfica, Habitabilidad y Morfología Urbana en Santiago:</h4>
@@ -737,7 +583,6 @@
               <img src="img/storyboards/portada_analisis_socioambiental.svg" width="800" height="800" alt="Medio ambiente, proximidad peatonal y movilidad" loading="lazy" class="img-storyboard-cuadro">
               <div class="overlay-gradiente-storyboard"></div>
               <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('storyboard-socioambiental-movilidad-servicios')" title="Ampliar portada">Ampliar</button>
-              <span class="badge-dimension-tag">Medio ambiente y movilidad (24 mapas)</span>
             </div>
             <div class="cuerpo-tarjeta-storyboard">
               <h4 class="titulo-tarjeta-storyboard">4. Metabolismo Urbano de Santiago:</h4>
@@ -1120,28 +965,28 @@
 <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261109_v44"></script>
-<script src="js/modulos/db_client.js?v=20261109_v44"></script>
-<script src="js/modulos/geodesia.js?v=20261109_v44"></script>
-<script src="js/modulos/mapa.js?v=20261109_v44"></script>
-<script src="js/modulos/importador_capas.js?v=20261109_v44"></script>
-<script src="js/modulos/ide_chile.js?v=20261109_v44"></script>
-<script src="js/modulos/evaluador_normativo.js?v=20261109_v44"></script>
-<script src="js/modulos/osm.js?v=20261109_v44"></script>
-<script src="js/modulos/ohsome.js?v=20261109_v44"></script>
-<script src="js/modulos/gbif.js?v=20261109_v44"></script>
-<script src="js/modulos/umap.js?v=20261109_v44"></script>
-<script src="js/modulos/metadatos.js?v=20261109_v44"></script>
-<script src="js/modulos/licencias.js?v=20261109_v44"></script>
-<script src="js/modulos/manual.js?v=20261109_v44"></script>
-<script src="js/modulos/indicadores_analisis.js?v=20261109_v44"></script>
-<script src="js/modulos/taginfo.js?v=20261109_v44"></script>
-<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v44"></script>
-<script src="js/modulos/calidad_analyst.js?v=20261109_v44"></script>
-<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261109_v44"></script>
-<script src="js/modulos/diccionario.js?v=20261109_v44"></script>
-<script src="js/modulos/manifold_canvas.js?v=20261109_v44"></script>
-<script src="js/modulos/leyenda_atajos.js?v=20261109_v44"></script>
-<script src="js/app.js?v=20261109_v44"></script>
+<script src="js/config.js?v=20261109_v45"></script>
+<script src="js/modulos/db_client.js?v=20261109_v45"></script>
+<script src="js/modulos/geodesia.js?v=20261109_v45"></script>
+<script src="js/modulos/mapa.js?v=20261109_v45"></script>
+<script src="js/modulos/importador_capas.js?v=20261109_v45"></script>
+<script src="js/modulos/ide_chile.js?v=20261109_v45"></script>
+<script src="js/modulos/evaluador_normativo.js?v=20261109_v45"></script>
+<script src="js/modulos/osm.js?v=20261109_v45"></script>
+<script src="js/modulos/ohsome.js?v=20261109_v45"></script>
+<script src="js/modulos/gbif.js?v=20261109_v45"></script>
+<script src="js/modulos/umap.js?v=20261109_v45"></script>
+<script src="js/modulos/metadatos.js?v=20261109_v45"></script>
+<script src="js/modulos/licencias.js?v=20261109_v45"></script>
+<script src="js/modulos/manual.js?v=20261109_v45"></script>
+<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261109_v45"></script>
+<script src="js/modulos/indicadores_analisis.js?v=20261109_v45"></script>
+<script src="js/modulos/taginfo.js?v=20261109_v45"></script>
+<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v45"></script>
+<script src="js/modulos/calidad_analyst.js?v=20261109_v45"></script>
+<script src="js/modulos/diccionario.js?v=20261109_v45"></script>
+<script src="js/modulos/manifold_canvas.js?v=20261109_v45"></script>
+<script src="js/modulos/leyenda_atajos.js?v=20261109_v45"></script>
+<script src="js/app.js?v=20261109_v45"></script>
 </body>
 </html>

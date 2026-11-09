@@ -22,15 +22,15 @@ La plataforma articula dos regímenes de producción cartográfica complementari
 ```mermaid
 flowchart TD
     subgraph M01["MÓDULO 01 · ANÁLISIS"]
-        N1["Narrativas Espaciales (4 Láminas · 83 Mapas)<br/>KDE | LISA | Demografía | Metabolismo"]
-        D1["5 Dimensiones Analíticas<br/>Sociodemográfica · Socioeconómica · Socioambiental · Sociosanitaria · Sociourbana"]
+        N1["Narrativas Espaciales (4 Láminas · 83 Mapas)<br/>KDE | Autocorrelación Espacial Local | Demografía | Metabolismo"]
+        D1["5 Dimensiones Analíticas y Catálogo de 257 Capas<br/>123 Oficiales + 134 IGV Descentralizadas con Búsqueda en Español"]
     end
 
     subgraph M02["MÓDULO 02 · EXPLORAR MAPA"]
-        V1["Visor Cartográfico Leaflet Inmediato<br/>Encuadre Comunal / BBox Métrico EPSG:32719"]
-        C1["Catálogo de 257 Capas en 5 Dimensiones<br/>123 Oficiales + 134 IGV Descentralizadas"]
+        V1["Visor Cartográfico Leaflet Inmediato<br/>Áreas: Barrio Brasil Completo / Comuna de Santiago"]
+        P1["Detalles del Elemento (Panel Inferior Ancho Completo)<br/>Inspección Exhaustiva de Columnas, Indicadores y Metadatos"]
+        EXP["Exportación GeoJSON con Simbología Aplicada<br/>marker-color, fill, stroke y rampas temáticas"]
         I1["Inspector Normativo PRC/OGUC<br/>Cálculo Geodésico y Certificado CIN-VGI"]
-        IMP["Importador de Capas Locales<br/>.kmz / .kml / .geojson / .gpx / .csv"]
     end
 
     subgraph M03["MÓDULO 03 · DOCUMENTACIÓN"]
@@ -40,7 +40,8 @@ flowchart TD
         DOC4["Manual de Actualización Técnica (Git)<br/>docs/MANUAL_ACTUALIZACION_ATLAS.md"]
     end
 
-    M01 --> M02
+    M01 -->|"Activar capa"| M02
+    M02 -->|"Ver Atlas de Análisis"| M01
     M02 --> M03
 ```
 
@@ -55,47 +56,45 @@ El primer módulo al entrar a la plataforma presenta la síntesis interpretativa
 #### 1. Narrativas Espaciales Basadas en Datos (4 Láminas Temáticas)
 Elaboradas a partir de **83 cartografías temáticas** que representan patrones de concentración, segregación espacial, estructura demográfica, habitabilidad, movilidad y metabolismo urbano:
 * **Lámina 01 · Concentración Territorial de Actividad IGV en Santiago (14 mapas KDE):** Análisis espacial de densidad continua sobre la geodatabase comunitaria (79.841 entidades directas y 112.264 nodos en malla de 20 m), semáforos UOCT y dinámica de edificación. Visibiliza la polarización entre el eje Alameda, Barrio Brasil, Santa Ana y Parque Almagro frente al arco sur y suroriente de la comuna.
-* **Lámina 02 · Segregación Espacial, Hotspots y Áreas de Rezago en Santiago (11 mapas LISA):** Análisis de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas censales de Santiago: núcleos estadísticos Alto-Alto (HH), bolsones Bajo-Bajo (LL) y desajustes de cobertura colaborativa.
+* **Lámina 02 · Segregación Espacial, Hotspots y Áreas de Rezago en Santiago (11 mapas de autocorrelación espacial local):** Análisis de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas censales de Santiago: núcleos estadísticos Alto-Alto (HH), bolsones Bajo-Bajo (LL) y desajustes de cobertura colaborativa.
 * **Lámina 03 · Estructura Sociodemográfica, Habitabilidad y Morfología Urbana en Santiago (34 mapas):** Distribución de los 432.081 habitantes según Censo 2024, prevalencia del departamento (92,7%) y arriendo (72,1%), alturas de edificación, Coeficiente de Ocupación del Suelo (COS) y persistencia de cités.
 * **Lámina 04 · Metabolismo Urbano de Santiago (24 mapas):** Dinámica de movilidad sustentable (84,6% de viajes en modos activos/públicos), brechas de acceso a áreas verdes y salud en bordes comunales, exposición a ruido (>68 dBA) y gestión de residuos sólidos en las 5 zonas de aseo municipal.
 
-#### 2. Dimensiones Analíticas
-Las 257 coberturas espaciales del Atlas se integran conceptual y operativamente en 5 dimensiones estratégicas:
-1. **Sociodemográfica y Habitacional:** Censo 2024, vulnerabilidad social (RSH), tipologías habitacionales y unidades vecinales.
-2. **Socioeconómica y Comercial:** Inversión pública (BIP/MOP), comercio barrial, ferias libres, empleo y redes energéticas.
-3. **Socioambiental y Espacio Público:** Infraestructura verde, arbolado urbano, biodiversidad ciudadana (GBIF) y residuos sólidos.
-4. **Sociosanitaria y Salud:** Red asistencial de salud (CESFAM y hospitales), farmacias de barrio y cobertura territorial.
-5. **Sociourbana, Movilidad y Normativa:** Zonificación PRC Santiago, patrimonio protegido, Metro, ciclovías y accesibilidad universal.
+#### 2. Dimensiones Analíticas y Catálogo de 257 Coberturas
+Las **257 coberturas espaciales** del Atlas se exploran y activan directamente desde este apartado mediante acordeones interactivos estructurados en 5 dimensiones estratégicas:
+1. **Sociodemográfica y Habitacional:** Censo 2024, vulnerabilidad social (RSH), tipologías habitacionales y unidades vecinales (31 capas: 19 oficiales + 12 IGV).
+2. **Socioeconómica y Comercial:** Inversión pública (BIP/MOP), comercio barrial, ferias libres, empleo y redes energéticas (43 capas: 17 oficiales + 26 IGV).
+3. **Socioambiental y Espacio Público:** Infraestructura verde, arbolado urbano, biodiversidad ciudadana (GBIF) y residuos sólidos (74 capas: 35 oficiales + 39 IGV).
+4. **Sociosanitaria y Salud:** Red asistencial de salud (CESFAM y hospitales), farmacias de barrio y cobertura territorial (13 capas: 5 oficiales + 8 IGV).
+5. **Sociourbana, Movilidad y Normativa:** Zonificación PRC Santiago, patrimonio protegido, Metro, ciclovías y accesibilidad universal (96 capas: 47 oficiales + 49 IGV).
+
+* **Interacción directa:** Cada capa dispone de un interruptor para activarla/desactivarla en el mapa, un botón para enfocarla en el visor y un enlace de descarga directa en GeoJSON.
+* **Búsqueda y filtros:** Incluye buscador en tiempo real 100% en español y selector por tipo de origen (Oficiales vs. IGV Descentralizado).
 
 ---
 
 ### 2.2. Módulo 02: Explorar Mapa
 
-El segundo módulo entrega acceso directo e interactivo al visor espacial y al catálogo completo de datos:
+El segundo módulo entrega acceso directo e interactivo al visor espacial y al panel de detalles de elementos:
 
 #### 1. Visor Cartográfico Leaflet Inmediato
-* **Visualización directa:** Sin pantallas intermedias ni tarjetas de resumen obstructivas. El mapa aparece listo para operar.
-* **Encuadre territorial y BBox:** Permite alternar entre el polígono comunal/barrial o trazar un rectángulo personalizado mediante **⛶ Dibujar Bbox**, con cálculo instantáneo de superficie en m² y hectáreas reproyectado a `EPSG:32719`.
-* **Inspector puntual de atributos:** Al hacer clic sobre cualquier punto, línea o polígono, se despliegan sus atributos estandarizados y custodio formal.
+* **Visualización directa:** Sin pantallas intermedias ni elementos obstructivos. El mapa aparece listo para operar.
+* **Áreas de Enfoque:** Selector rápido con dos escalas territoriales calibradas:
+  * **Barrio Brasil Completo:** Encuadre al polígono barrial y su área de influencia directa.
+  * **Comuna de Santiago:** Visión comunal integral (BBox: `[-70.6923, -33.4785, -70.6251, -33.4257]`).
+* **Botón "Ver Atlas de Análisis":** Permite conmutar al instante al Módulo 01 para examinar las láminas analíticas o seleccionar nuevas capas.
+* **Exportar vista (GeoJSON) con Simbología Aplicada:** Descarga la totalidad de las entidades visibles, incorporando directamente en las propiedades de cada feature los estilos gráficos configurados (`marker-color`, `stroke`, `fill`, `fill-opacity`, `simbologia_color`, `simbologia_modo`, etc.) para asegurar idéntica representación en QGIS u otros SIG.
 
-#### 2. Catálogo Cartográfico y Explorador de Coberturas (257 Capas)
-Sistematización de las 257 capas del Atlas agrupadas en las 5 Dimensiones de Análisis:
-* **Separación clara:** Cada dimensión presenta dos bloques claramente diferenciados:
-  * 🏛️ *Coberturas Oficiales del Estado de Chile* (123 capas).
-  * 👥 *Coberturas de Información Geográfica Voluntaria — IGV Descentralizado* (134 capas).
-* **Descentralización VGI:** Cada uno de los 134 descriptores comunitarios cuenta con su archivo `.geojson` descargable de forma independiente.
-* **100% en Español:** Toda la nomenclatura, nombres de capas y descriptores están redactados en español.
-* **Búsqueda en vivo:** La barra `#busqueda-capas-atlas` filtra de forma instantánea cualquier cobertura por nombre en español (ej: farmacias, árboles, cesfam, escuelas, censo, metro...), código o institución.
-* **Chips de filtro:** Permite filtrar con un clic entre dimensiones o aislar solo coberturas oficiales o solo IGV.
+#### 2. Panel Inferior "Detalles del Elemento" (Ancho Completo)
+Ubicado inmediatamente debajo del visor cartográfico, este panel se despliega aprovechando el 100% del ancho de la pantalla al hacer clic sobre cualquier elemento del mapa:
+* **Amplitud visual:** Máximo espacio para inspeccionar tablas de atributos extensas, valores censales, normativas urbanas y campos descriptivos.
+* **Columnas e indicadores:** Organización clara de metadatos, custodio de origen, coordenadas y botón de descarga individual en GeoJSON.
 
 #### 3. Inspector Normativo PRC Santiago / PRMS / OGUC
 Permite auditar cualquier coordenada del territorio comunal haciendo clic sobre el mapa para generar el **Certificado de Informaciones Normativas VGI (CIN-VGI)**:
 * Zonificación del PRC Santiago y PRMS con usos permitidos y prohibidos (Art. 2.1.24 OGUC).
 * Restricciones por áreas de riesgo (Art. 2.1.17 OGUC), áreas verdes normadas y afectación patrimonial.
 * Dinámica histórica de permisos de edificación DOM (2010–2025) y recepciones finales CRF (2011–2025 del INE).
-
-#### 4. Importador de Capas Locales
-Permite arrastrar y soltar archivos `.kmz`, `.kml`, `.geojson`, `.gpx` y `.csv`. El procesamiento se realiza 100% en la memoria del navegador sin transmitir datos a servidores externos.
 
 ---
 
