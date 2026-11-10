@@ -50,6 +50,18 @@ Si es la primera vez que ingresa al Atlas, le recomendamos pulsar el botón **Tu
 En la planificación urbana y en las bases de datos públicas es habitual encontrar siglas técnicas (`IGV`, `IDE`, `PRC`, `OGUC`, `ZCH`, `ICH`, `KDE`, `LISA`, `RSH`, `BIP`, `SUBDERE`, `CESFAM`, `ODbL`).
 * **¿Para qué sirve?** Al pulsar el botón **Glosario de siglas** a la derecha del título, se despliega un recuadro con buscador instantáneo donde cada sigla está explicada en lenguaje claro y directo, sin necesidad de salir de la vista en la que esté trabajando.
 
+```mermaid
+flowchart LR
+    subgraph TUT_BLOQUES["Estructura de los 18 Pasos del Tutorial Interactivo (4 Bloques Navegables)"]
+        B_GEN["Bloque 1 · Visión General\n(Pasos 1 a 3)\nPropósito del Atlas, navegación\nen 3 módulos y uso del Glosario"]
+        B_M01["Bloque 2 · Módulo 01 Análisis\n(Pasos 4 a 8)\nPresenta el Módulo 01 completo,\n4 láminas (83 mapas) y 5 Dimensiones"]
+        B_M02["Bloque 3 · Módulo 02 Mapa\n(Pasos 9 a 14)\nPresenta el Módulo 02 completo, barra\nsuperior, 5 mapas base, Jenks, PRC y Detalles"]
+        B_M03["Bloque 4 · Módulo 03 Documentación\n(Pasos 15 a 18)\nPresenta el Módulo 03 completo, 6 capítulos,\ndescargas Excel/ZIP e inventario de 294 capas"]
+    end
+
+    B_GEN --> B_M01 --> B_M02 --> B_M03
+```
+
 ---
 
 ## 3. Guía paso a paso del Módulo 01: `Análisis`
@@ -78,6 +90,18 @@ Debajo de las cuatro láminas geoestadísticas, el Módulo 01 organiza la totali
 **¿Cómo activar cualquier capa desde el Módulo 01?**
 * Puede abrir cualquiera de los 5 acordeones temáticos o escribir una palabra clave en el buscador en español (por ejemplo, *"farmacias"*, *"cités"*, *"arbolado"*, *"censo"* o *"prc"*).
 * Al pulsar el botón **"Activar en el mapa"** junto al nombre de una capa, el Atlas cambia automáticamente al **Módulo 02 (Explorar Mapa)**, enciende esa cobertura sobre el territorio y despliega su simbología.
+
+```mermaid
+flowchart TD
+    subgraph M01_FLUJO["Flujo de Exploración en el Módulo 01 · Análisis (#panel-indicadores)"]
+        EJE["1. Cuatro Ejes Geoestadísticos\n83 Cartografías Temáticas en Visor Lightbox\n(KDE · LISA · Censo 2024/RSH · Metabolismo Urbano)"]
+        DIM["2. Cinco Dimensiones Analíticas\n1. Sociodemográfica · 2. Socioeconómica · 3. Socioambiental\n4. Sociosanitaria · 5. Sociourbana y Normativa"]
+        ACO["3. Acordeón Buscador de las 294 Capas\n123 Oficiales (id_ig) + 171 IGV (id_igv)"]
+    end
+
+    EJE --> DIM --> ACO
+    ACO -->|"Clic en 'Activar en el mapa'"| VIS["Salto automático al Módulo 02 (Explorar Mapa)\ncon la capa encendida y centrada"]
+```
 
 ---
 
@@ -155,7 +179,27 @@ Debajo del lienzo cuadrado del mapa se ubica el panel de ancho completo llamado 
 * **¿Cuál es la diferencia entre `id_ig` e `id_igv`?**
   * Si el primer atributo del elemento es **`id_ig`**, usted está consultando un registro perteneciente a una de las **123 capas oficiales del Estado de Chile** (Información Geográfica oficial).
   * Si el primer atributo del elemento es **`id_igv`**, usted está consultando un registro perteneciente a una de las **171 capas descentralizadas de Información Geográfica Voluntaria** (levantado por la comunidad en OpenStreetMap o GBIF).
-* **¿Qué informan los otros 16 atributos?** Indican en español claro el nombre del elemento, su dimensión analítica, subtipo, institución o comunidad custodia, licencia abierta aplicable, escala de captura, sistema de referencia (`EPSG:4326` / `EPSG:32719`), superficie o longitud métrica, fecha de actualización y las métricas de calidad ISO 19157 (exactitud posicional, consistencia topológica, completitud de datos, exactitud temática y linaje de procesamiento).
+* **¿Qué informan los otros 16 atributos?** Indican en español claro el nombre del elemento, su dimensión analítica, subtipo, institución o comunidad custodia, licencia abierta aplicable, escala de captura, sistema de referencia (`EPSG:4326` / `EPSG:32719`), superficie o longitud métrica, fecha de actualización y las métricas de calidad ISO 19157 (exactitud posicional, consistencia topológica, completitud de datos, exactitud temática y linaje de procesamiento):
+
+| N° | Atributo en el Panel `Detalles` | Estándar ISO | ¿Qué informa en lenguaje claro? |
+| :---: | :--- | :---: | :--- |
+| `01` | **`id_ig` / `id_igv`** | ISO 19115 | Código único del registro: **`id_ig`** si pertenece a una de las 123 capas oficiales del Estado o **`id_igv`** si pertenece a una de las 171 capas colaborativas de IGV. |
+| `02` | `nombre_capa` | ISO 19115 | Nombre oficial en español de la cobertura cartográfica dentro de las 294 capas del Atlas. |
+| `03` | `dimension_analitica` | ISO 19115 | A cuál de las 5 Dimensiones Analíticas del territorio pertenece la capa. |
+| `04` | `tipo_fuente` | ISO 19115 | Distingue entre `Información Geográfica Oficial (Estado de Chile)` e `Información Geográfica Voluntaria (IGV Descentralizada)`. |
+| `05` | `institucion_custodia` | ISO 19115 | Organismo público responsable (INE, MINVU, MDSF, SUBDERE, SII, CMN, MuniStgo) o comunidad colaborativa (`OpenStreetMap Chile` / `GBIF`). |
+| `06` | `sistema_referencia` | ISO 19115 | Coordenadas geográficas `EPSG:4326 (WGS 84)` para el visor web y proyección métrica `EPSG:32719 (SIRGAS-Chile UTM 19S)` para mediciones en metros. |
+| `07` | `escala_referencia` | ISO 19115 | Nivel de detalle cartográfico de levantamiento (`1:1.000` a `1:5.000` barrial; `1:10.000` a `1:25.000` comunal). |
+| `08` | `fecha_actualizacion` | ISO 19115 | Fecha verificada de última actualización o corte de extracción de los datos (`AAAA-MM-DD`). |
+| `09` | `licencia_uso` | ISO 19115 | Régimen jurídico abierto: `Datos Abiertos del Estado (Ley N.° 20.285)`, `ODbL 1.0 (OpenStreetMap)` o `CC BY 4.0 (GBIF)`. |
+| `10` | `exactitud_posicional` | ISO 19157 | Precisión de la ubicación geométrica respecto de la cartografía catastral y ortofotografías satelitales. |
+| `11` | `consistencia_topologica` | ISO 19157 | Validez geométrica OGC Simple Features / RFC 7946 (polígonos cerrados y sin auto-intersecciones). |
+| `12` | `completitud` | ISO 19157 | Nivel de presencia de atributos descriptivos completos dentro del área de estudio. |
+| `13` | `exactitud_tematica` | ISO 19157 | Verificación de que la clasificación o categoría temática asignada al objeto es correcta. |
+| `14` | `consistencia_temporal` | ISO 19157 | Vigencia temporal del registro dentro del periodo operativo del Atlas (`2024–2026`). |
+| `15` | `linaje_fuente` | ISO 19157 | Trazabilidad del proceso de captura, reproyección, limpieza topológica y homologación de atributos. |
+| `16` | `cobertura_territorial` | ISO 19115 | Alcance espacial de la capa (`Barrio Brasil`, `Comuna de Santiago` o `Región Metropolitana`). |
+| `17` | `archivo_origen` | ISO 19115 | Ruta exacta del archivo `.geojson` en el repositorio (`data/<archivo>.geojson`). |
 
 ---
 
@@ -170,5 +214,19 @@ El **Módulo 03 · Documentación** (`#panel-manual`) integra dentro de la misma
 | **`DOC · 03`** | **Guía en Profundidad del Módulo 02 (Explorar Mapa)** | Detalla cada botón de la barra superior, las características de los **5 mapas base sin API**, los métodos de clasificación de la **Simbología Dinámica (Jenks, Cuantiles, Intervalos)** y el diccionario completo de los **17 atributos homologados (`id_ig` / `id_igv`)** del panel **Detalles**. |
 | **`DOC · 04`** | **Licencias Abiertas, Descarga de Geodatabase (.zip) y Catálogos en Excel** | Permite descargar con un clic el paquete completo `geodatabase_completa_atlas_vgi.zip` (`542,35 MB`), los 3 libros maestros en formato Excel (`categorias_tematicas_osm.xlsx`, `perfil_metadatos_vgi.xlsx` y `catalogo_fuentes_vgi.xlsx`), la bibliografía APA 7ª ed., y explica qué permite hacer cada licencia abierta (`CC BY 4.0`, `ODbL 1.0`, `Ley N.° 20.285` y `GNU AGPLv3`). |
 | **`DOC · 05`** | **Inventario General Filtrable de las 294 Coberturas** | Tabla interactiva con filtro en vivo donde se listan las **123 capas oficiales (`id_ig`)** y las **171 capas colaborativas de IGV (`id_igv`)**, indicando su código, archivo `.geojson`, organismo o comunidad custodia y descripción temática. |
-| **`DOC · 06`** | **Arquitectura del Sistema, Flujos de Trabajo y Guía de Actualización Técnica** | Describe cómo están programados los 3 módulos del Atlas, cómo fluyen los datos desde las fuentes hasta el navegador y ofrece el paso a paso para agregar nuevas capas, actualizar el Plan Regulador o adaptar el Atlas a otra comuna. |
+| **`DOC · 06`** | **Arquitectura del Sistema, Diagramas de Flujo y Manual Exhaustivo de Actualización Técnica** | Describe cómo están programados los 3 módulos del Atlas, cómo fluyen los datos desde las fuentes hasta el navegador y ofrece los 12 procedimientos paso a paso para agregar nuevas capas, actualizar el Plan Regulador o adaptar el Atlas a otra comuna. |
+
+```mermaid
+flowchart LR
+    M03["Módulo 03 · Documentación\n(#panel-manual)"]
+
+    C1["DOC · 01\nObjetivos, 9 Hitos (E1-E9)\ny 4 Perfiles de Uso"]
+    C2["DOC · 02\nGuía Módulo 01:\n83 Mapas (KDE/LISA) y\n5 Dimensiones"]
+    C3["DOC · 03\nGuía Módulo 02:\n5 Mapas Base, Jenks,\nPRC y 17 Atributos"]
+    C4["DOC · 04\nLicencias Abiertas,\n3 Libros Excel (.xlsx) y\nGeodatabase (.zip 542 MB)"]
+    C5["DOC · 05\nInventario Filtrable de\nlas 294 Capas\n(123 id_ig + 171 id_igv)"]
+    C6["DOC · 06\nArquitectura, Flujos y\n12 Procedimientos de\nActualización Técnica"]
+
+    M03 --> C1 & C2 & C3 & C4 & C5 & C6
+```
 
