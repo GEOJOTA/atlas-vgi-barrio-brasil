@@ -42,6 +42,22 @@ Desarrollar un Atlas para la Gestión Territorial reproducible, interoperable y 
 | Inducción guiada y terminología | Tutorial interactivo navegable de 18 pasos y Glosario | Cabecera superior (`src/js/modulos/tutorial_interactivo.js` y `#modal-glosario-siglas`) |
 | Arquitectura de software | 3 Módulos operacionales (`Análisis`, `Explorar Mapa`, `Documentación`) | Aplicación en `src/` (`publish = "src"` en `netlify.toml`) y scripts en `scripts/` |
 
+### 1.4. Matriz de Hitos con entregable verificado asociado (`Hito 1 / E1` a `Hito 9 / E9`)
+
+En coherencia con la Carta Gantt del proyecto (`Carta_Gantt_Atlas_VGI.pdf`), únicamente se mantienen los **9 hitos que cuentan con un entregable verificado asociado**:
+
+| Hito | Fecha ($\blacklozenge$) | OE | Entregable verificado asociado (`E1` a `E9`) | Localización verificable en el repositorio |
+| :---: | :---: | :---: | :--- | :--- |
+| **Hito 1** | `03 sep 2026` | `OE 1` | **E1 ·** Arquitectura y catálogo inicial de fuentes | `docs/ARQUITECTURA.md` y `docs/catalogo_fuentes_vgi.xlsx` (`src/docs/`) |
+| **Hito 2** | `09 sep 2026` | `OE 1` | **E2 ·** Cinco dimensiones analíticas, etiquetas IGV y configuración | `docs/categorias_tematicas_osm.xlsx` (`src/docs/`) y `src/js/config.js` |
+| **Hito 3** | `16 sep 2026` | `OE 1` | **E3 ·** Inventario consolidado de 294 fuentes y matriz de brechas | `docs/catalogo_fuentes_vgi.xlsx` y `docs/TRAZABILIDAD.md` (`src/docs/`) |
+| **Hito 4** | `08 oct 2026` | `OE 2` | **E4 ·** Geodatabase de 294 capas GeoJSON, PostGIS y perfil de 17 atributos ISO (`id_ig` / `id_igv`) | `src/data/*.geojson`, `data/*.geojson`, `docs/perfil_metadatos_vgi.xlsx` y `scripts/db/` |
+| **Hito 5** | `19 oct 2026` | `OE 2` | **E5 ·** Matriz de síntesis barrial, catastro IGV e inversiones BIP | `data/matriz_sintesis_barrio_brasil_manzanas.geojson`, `data/resumen_catastro_vgi.csv` y `data/bip_inversiones_santiago.csv` |
+| **Hito 6** | `27 oct 2026` | `OE 3` | **E6 ·** Plataforma sintetizada en 3 módulos (*Análisis*, *Explorar mapa*, *Documentación*) y visor | `src/index.html`, `src/css/estilos.css`, `src/js/app.js` y `src/js/modulos/mapa.js` |
+| **Hito 7** | `04 nov 2026` | `OE 3` | **E7 ·** Inspector normativo PRC, simbología Jenks, panel *Detalles*, 83 mapas y despliegue | `src/js/modulos/evaluador_normativo.js`, `src/js/modulos/indicadores_analisis.js` y `netlify.toml` |
+| **Hito 8** | `09 nov 2026` | `OE 4` | **E8 ·** Evaluación de usabilidad, trazabilidad y Módulo 03 navegable | `docs/TRAZABILIDAD.md`, `MANUAL_USO.md` (`src/docs/`) y `src/js/modulos/manual.js` |
+| **Hito 9** | `12 nov 2026` | `OE 4` | **E9 ·** Manual de actualización técnica, paquete ZIP (542,35 MB) y verificación de integridad | `MANUAL_ACTUALIZACION_ATLAS.md`, `docs/geodatabase_completa_atlas_vgi.zip` y `scripts/verificar_integridad_despliegue.py` |
+
 ---
 
 ## 2. Diagramas de arquitectura y flujos de trabajo

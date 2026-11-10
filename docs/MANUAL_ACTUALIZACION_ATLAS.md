@@ -337,32 +337,43 @@ flowchart LR
 
 ---
 
-## 4. Flujo de trabajo integral de los entregables verificados del proyecto
+## 4. Matriz de cumplimiento de los 9 Hitos con entregables verificados asociados
 
-El siguiente diagrama representa la articulación secuencial de los 10 entregables verificados (`E-01` a `E-10`) a través de los cuatro objetivos específicos del proyecto:
+En coherencia con la Carta Gantt del proyecto (`Carta_Gantt_Atlas_VGI.pdf`), únicamente se mantienen los **9 hitos que cuentan con un entregable verificado asociado (`E1` a `E9`)**, habiendo eliminado los hitos que correspondían a componentes descartados (como el índice de calidad WLC o el generador de metadatos ISO 19139) o metas sin entregable directo:
 
 ```mermaid
 flowchart TD
-    subgraph OE1_G["OE 1 · Caracterización y Diseño"]
-        E01["E-01 · Arquitectura y organización\nen 5 dimensiones analíticas"] --> E02["E-02 · Catálogo de fuentes e inventario\nde brechas territoriales (.xlsx)"]
+    subgraph OE1_G["Fase I · OE 1: Caracterización y Diseño"]
+        H1["Hito 1 (03 sep) → E1\nArquitectura y catálogo inicial de fuentes"] --> H2["Hito 2 (09 sep) → E2\nCinco dimensiones analíticas y etiquetas IGV"]
+        H2 --> H3["Hito 3 (16 sep) → E3\nInventario de 294 fuentes y matriz de brechas"]
     end
 
-    subgraph OE2_G["OE 2 · Geodatabase y Calidad ISO 19157"]
-        E03["E-03 · Geodatabase de 294 capas GeoJSON\n(123 oficiales id_ig + 171 IGV id_igv)"] --> E04["E-04 · Clúster espacial PostGIS 3.3\nen Supabase Cloud"]
-        E04 --> E05["E-05 · Perfil homologado de 17 atributos\nISO 19115 / ISO 19157 por entidad"]
+    subgraph OE2_G["Fase II · OE 2: Geodatabase y Calidad ISO 19157"]
+        H4["Hito 4 (08 oct) → E4\nGeodatabase de 294 capas y perfil de 17 atributos ISO"] --> H5["Hito 5 (19 oct) → E5\nMatriz de síntesis barrial, catastro IGV e inversiones BIP"]
     end
 
-    subgraph OE3_G["OE 3 · Plataforma Sintetizada en 3 Módulos"]
-        E06["E-06 · Interfaz en 3 módulos (01, 02 y 03)\ncon Tutorial (14 pasos) y Glosario"] --> E07["E-07 · Visor cuadrado Leaflet, 4 mapas base,\nsimbología Jenks y panel Detalles"]
-        E07 --> E08["E-08 · Inspector normativo PRC/OGUC y\n83 cartografías en Módulo 01"]
+    subgraph OE3_G["Fase III · OE 3: Plataforma Sintetizada en 3 Módulos"]
+        H6["Hito 6 (27 oct) → E6\nPlataforma en 3 módulos (01, 02, 03) y visor cuadrado"] --> H7["Hito 7 (04 nov) → E7\nInspector PRC, Detalles, 83 mapas y despliegue en Netlify"]
     end
 
-    subgraph OE4_G["OE 4 · Usabilidad y Transferibilidad"]
-        E09["E-09 · Documentación navegable en Módulo 03\n(DOC · 01 a DOC · 06) y trazabilidad T1-T8"] --> E10["E-10 · Manual de actualización técnica y\ngeodatabase completa en ZIP (542,35 MB)"]
+    subgraph OE4_G["Fase IV · OE 4: Usabilidad y Transferibilidad"]
+        H8["Hito 8 (09 nov) → E8\nTrazabilidad de usabilidad, tutorial (14 pasos) y Módulo 03"] --> H9["Hito 9 (12 nov) → E9\nManual técnico, geodatabase ZIP (542,35 MB) y verificación"]
     end
 
     OE1_G --> OE2_G --> OE3_G --> OE4_G
 ```
+
+| Hito | Fecha de hito ($\blacklozenge$) | OE asociado | Entregable verificado asociado (`E1` a `E9`) | Estado | Ruta verificable en el repositorio y plataforma |
+|:---:|:---:|:---:|:---|:---:|:---|
+| **Hito 1** | `03 sep 2026` | `OE 1` | **E1 ·** Documento de arquitectura y catálogo inicial de fuentes | 100 % cerrado | `docs/ARQUITECTURA.md` y `docs/catalogo_fuentes_vgi.xlsx` (`src/docs/`) |
+| **Hito 2** | `09 sep 2026` | `OE 1` | **E2 ·** Organización en 5 dimensiones analíticas, etiquetas IGV y configuración | 100 % cerrado | `docs/categorias_tematicas_osm.xlsx` (`src/docs/`) y `src/js/config.js` |
+| **Hito 3** | `16 sep 2026` | `OE 1` | **E3 ·** Inventario consolidado de 294 fuentes (123 oficiales + 171 IGV) y matriz de brechas | 100 % cerrado | `docs/catalogo_fuentes_vgi.xlsx` y `docs/TRAZABILIDAD.md` (`src/docs/`) |
+| **Hito 4** | `08 oct 2026` | `OE 2` | **E4 ·** Geodatabase de 294 capas GeoJSON, base PostGIS y perfil de 17 atributos ISO (`id_ig` / `id_igv`) | 100 % cerrado | `src/data/*.geojson`, `data/*.geojson`, `docs/perfil_metadatos_vgi.xlsx` y `scripts/db/` |
+| **Hito 5** | `19 oct 2026` | `OE 2` | **E5 ·** Matriz de síntesis barrial por manzana, catastro IGV e inversiones BIP | 100 % cerrado | `data/matriz_sintesis_barrio_brasil_manzanas.geojson`, `data/resumen_catastro_vgi.csv` y `data/bip_inversiones_santiago.csv` |
+| **Hito 6** | `27 oct 2026` | `OE 3` | **E6 ·** Plataforma web sintetizada en 3 módulos (*Análisis*, *Explorar mapa*, *Documentación*) y visor cuadrado | 100 % cerrado | `src/index.html`, `src/css/estilos.css`, `src/js/app.js` y `src/js/modulos/mapa.js` |
+| **Hito 7** | `04 nov 2026` | `OE 3` | **E7 ·** Inspector normativo PRC, simbología Jenks, panel *Detalles*, 83 cartografías y despliegue | 100 % cerrado | `src/js/modulos/evaluador_normativo.js`, `src/js/modulos/indicadores_analisis.js` y `netlify.toml` |
+| **Hito 8** | `09 nov 2026` | `OE 4` | **E8 ·** Evaluación de usabilidad, matriz de trazabilidad y Módulo 03 navegable | 100 % cerrado | `docs/TRAZABILIDAD.md`, `MANUAL_USO.md` (`src/docs/`) y `src/js/modulos/manual.js` |
+| **Hito 9** | `12 nov 2026` | `OE 4` | **E9 ·** Manual de actualización técnica, paquete ZIP (542,35 MB) y verificación de integridad | 100 % cerrado | `MANUAL_ACTUALIZACION_ATLAS.md`, `docs/geodatabase_completa_atlas_vgi.zip` y `scripts/verificar_integridad_despliegue.py` |
 
 ---
 

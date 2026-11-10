@@ -159,6 +159,37 @@ const ModuloManual = (() => {
             </div>
           </div>
 
+          <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:16px; margin-bottom:16px;">
+            <h4 style="margin:0 0 10px 0; color:#38bdf8;">Hitos del Proyecto con Entregable Verificado Asociado (Hito 1 / E1 a Hito 9 / E9)</h4>
+            <p style="font-size:0.84rem; color:var(--tinta-suave); margin:0 0 10px 0;">
+              En coherencia con la Carta Gantt del proyecto, se registran exclusivamente los <strong>9 hitos que cuentan con un entregable verificado asociado</strong> en el repositorio y en la plataforma:
+            </p>
+            <div style="overflow-x:auto;">
+              <table class="tabla-metadatos" style="width:100%; border-collapse:collapse; font-size:0.82rem;">
+                <thead>
+                  <tr style="background:rgba(15,23,42,0.85); color:#38bdf8;">
+                    <th style="padding:8px; text-align:left;">Hito</th>
+                    <th style="padding:8px; text-align:left;">Fecha (♦)</th>
+                    <th style="padding:8px; text-align:left;">OE</th>
+                    <th style="padding:8px; text-align:left;">Entregable verificado asociado</th>
+                    <th style="padding:8px; text-align:left;">Localización en repositorio y web</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td style="padding:6px 8px;"><strong>Hito 1</strong></td><td style="padding:6px 8px;">03 sep 2026 ♦</td><td style="padding:6px 8px;">OE 1</td><td style="padding:6px 8px;"><strong>E1 ·</strong> Arquitectura y catálogo inicial de fuentes</td><td style="padding:6px 8px;"><code>docs/ARQUITECTURA.md</code>, <code>docs/catalogo_fuentes_vgi.xlsx</code></td></tr>
+                  <tr><td style="padding:6px 8px;"><strong>Hito 2</strong></td><td style="padding:6px 8px;">09 sep 2026 ♦</td><td style="padding:6px 8px;">OE 1</td><td style="padding:6px 8px;"><strong>E2 ·</strong> Cinco dimensiones analíticas y etiquetas IGV</td><td style="padding:6px 8px;"><code>docs/categorias_tematicas_osm.xlsx</code>, <code>src/js/config.js</code></td></tr>
+                  <tr><td style="padding:6px 8px;"><strong>Hito 3</strong></td><td style="padding:6px 8px;">16 sep 2026 ♦</td><td style="padding:6px 8px;">OE 1</td><td style="padding:6px 8px;"><strong>E3 ·</strong> Inventario de 294 fuentes y matriz de brechas</td><td style="padding:6px 8px;"><code>docs/catalogo_fuentes_vgi.xlsx</code>, <code>docs/TRAZABILIDAD.md</code></td></tr>
+                  <tr><td style="padding:6px 8px;"><strong>Hito 4</strong></td><td style="padding:6px 8px;">08 oct 2026 ♦</td><td style="padding:6px 8px;">OE 2</td><td style="padding:6px 8px;"><strong>E4 ·</strong> Geodatabase de 294 capas y 17 atributos ISO (<code>id_ig</code> / <code>id_igv</code>)</td><td style="padding:6px 8px;"><code>src/data/*.geojson</code>, <code>docs/perfil_metadatos_vgi.xlsx</code></td></tr>
+                  <tr><td style="padding:6px 8px;"><strong>Hito 5</strong></td><td style="padding:6px 8px;">19 oct 2026 ♦</td><td style="padding:6px 8px;">OE 2</td><td style="padding:6px 8px;"><strong>E5 ·</strong> Matriz de síntesis barrial, catastro IGV e inversiones BIP</td><td style="padding:6px 8px;"><code>data/matriz_sintesis_barrio_brasil_manzanas.geojson</code></td></tr>
+                  <tr><td style="padding:6px 8px;"><strong>Hito 6</strong></td><td style="padding:6px 8px;">27 oct 2026 ♦</td><td style="padding:6px 8px;">OE 3</td><td style="padding:6px 8px;"><strong>E6 ·</strong> Plataforma en 3 módulos y visor cartográfico cuadrado</td><td style="padding:6px 8px;"><code>src/index.html</code>, <code>src/css/estilos.css</code>, <code>src/js/modulos/mapa.js</code></td></tr>
+                  <tr><td style="padding:6px 8px;"><strong>Hito 7</strong></td><td style="padding:6px 8px;">04 nov 2026 ♦</td><td style="padding:6px 8px;">OE 3</td><td style="padding:6px 8px;"><strong>E7 ·</strong> Inspector PRC, Detalles, 83 mapas y despliegue en Netlify</td><td style="padding:6px 8px;"><code>evaluador_normativo.js</code>, <code>indicadores_analisis.js</code>, <code>netlify.toml</code></td></tr>
+                  <tr><td style="padding:6px 8px;"><strong>Hito 8</strong></td><td style="padding:6px 8px;">09 nov 2026 ♦</td><td style="padding:6px 8px;">OE 4</td><td style="padding:6px 8px;"><strong>E8 ·</strong> Trazabilidad de usabilidad y Módulo 03 navegable</td><td style="padding:6px 8px;"><code>docs/TRAZABILIDAD.md</code>, <code>MANUAL_USO.md</code>, <code>src/js/modulos/manual.js</code></td></tr>
+                  <tr><td style="padding:6px 8px;"><strong>Hito 9</strong></td><td style="padding:6px 8px;">12 nov 2026 ♦</td><td style="padding:6px 8px;">OE 4</td><td style="padding:6px 8px;"><strong>E9 ·</strong> Manual técnico, paquete ZIP (542,35 MB) y verificación</td><td style="padding:6px 8px;"><code>MANUAL_ACTUALIZACION_ATLAS.md</code>, <code>docs/geodatabase_completa_atlas_vgi.zip</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:14px; margin:16px 0;">
             <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:14px;">
               <div style="font-size:1.35rem; font-weight:800; color:#38bdf8;">294 capas espaciales</div>
