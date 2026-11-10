@@ -7230,12 +7230,26 @@ table.tabla-datos-institucional td {
   mask-image: url('../img/iconos/icono_localizacion.png');
 }
 
-.cabecera-acciones-utilidad {
+.cabecera-accion-izq {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.cabecera-acciones-utilidad,
+.cabecera-accion-der {
   display: flex;
   align-items: center;
   gap: 12px;
   position: absolute;
-  right: 20px;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
 }
 
 .control-perfil-cabecera {
@@ -7959,11 +7973,19 @@ table.tabla-datos {
     min-height: 44px;
     touch-action: manipulation;
   }
-  .cabecera-acciones-utilidad {
-    width: 100%;
+  .cabecera-fila-marca {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .cabecera-accion-izq,
+  .cabecera-acciones-utilidad,
+  .cabecera-accion-der {
+    width: auto;
     justify-content: center;
     position: static;
-    margin-top: 8px;
+    transform: none;
+    margin-top: 4px;
     gap: 8px;
   }
   .control-perfil-cabecera {
