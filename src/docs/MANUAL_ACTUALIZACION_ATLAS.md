@@ -21,11 +21,11 @@
 
 ### [PARTE II: Ingeniería de datos, dimensiones analíticas y normalización cartográfica](#parte-ii-ingeniería-de-datos-dimensiones-analíticas-y-normalización-cartográfica)
 * [6. Organización taxonómica en 5 dimensiones analíticas territoriales](#6-organización-taxonómica-en-5-dimensiones-analíticas-territoriales)
-  * [6.1. Dimensión 01: Educación, Cultura y Patrimonio](#61-dimensión-01-educación-cultura-y-patrimonio)
-  * [6.2. Dimensión 02: Servicios, Comercio y Habitabilidad](#62-dimensión-02-servicios-comercio-y-habitabilidad)
-  * [6.3. Dimensión 03: Movilidad, Transporte y Accesibilidad](#63-dimensión-03-movilidad-transporte-y-accesibilidad)
-  * [6.4. Dimensión 04: Áreas Verdes, Ambiente y Biodiversidad](#64-dimensión-04-áreas-verdes-ambiente-y-biodiversidad)
-  * [6.5. Dimensión 05: Normativa, Suelo y Morfología Urbana](#65-dimensión-05-normativa-suelo-y-morfología-urbana)
+  * [6.1. Dimensión 01: Sociodemográfica y Habitacional](#61-dimensión-01-sociodemográfica-y-habitacional)
+  * [6.2. Dimensión 02: Socioeconómica y Comercial](#62-dimensión-02-socioeconómica-y-comercial)
+  * [6.3. Dimensión 03: Socioambiental y Espacio Público](#63-dimensión-03-socioambiental-y-espacio-público)
+  * [6.4. Dimensión 04: Sociosanitaria y Salud](#64-dimensión-04-sociosanitaria-y-salud)
+  * [6.5. Dimensión 05: Sociourbana, Movilidad y Normativa](#65-dimensión-05-sociourbana-movilidad-y-normativa)
 * [7. Ingesta y normalización de las 171 coberturas descentralizadas de IGV (OpenStreetMap y GBIF)](#7-ingesta-y-normalización-de-las-171-coberturas-descentralizadas-de-igv-openstreetmap-y-gbif)
   * [7.1. Coberturas granulares de OpenStreetMap por equipamiento y servicio](#71-coberturas-granulares-de-openstreetmap-por-equipamiento-y-servicio)
   * [7.2. Ocurrencias de ciencia ciudadana y biodiversidad urbana (GBIF / Darwin Core)](#72-ocurrencias-de-ciencia-ciudadana-y-biodiversidad-urbana-gbif--darwin-core)
@@ -43,11 +43,11 @@
 
 ### [PARTE III: Ingeniería de software, interfaz de 3 módulos y visualización interactiva](#parte-iii-ingeniería-de-software-interfaz-de-3-módulos-y-visualización-interactiva)
 * [10. Arquitectura frontend sin compilación previa: Vanilla JavaScript ES6+ y patrón IIFE](#10-arquitectura-frontend-sin-compilación-previa-vanilla-javascript-es6-y-patrón-iife)
-  * [10.1.Estructura modular de los 3 módulos principales y la cabecera global](#101-estructura-modular-de-los-3-módulos-principales-y-la-cabecera-global)
-  * [10.2. Tutorial interactivo de 14 pasos y Glosario de siglas en cabecera](#102-tutorial-interactivo-de-14-pasos-y-glosario-de-siglas-en-cabecera)
+  * [10.1. Estructura modular de los 3 módulos principales y la cabecera global](#101-estructura-modular-de-los-3-módulos-principales-y-la-cabecera-global)
+  * [10.2. Tutorial interactivo de 18 pasos y Glosario de siglas en cabecera](#102-tutorial-interactivo-de-18-pasos-y-glosario-de-siglas-en-cabecera)
 * [11. Motor cartográfico en el Módulo 02 (`Explorar mapa`): Leaflet 1.9.4 y mapas base sin clave API](#11-motor-cartográfico-en-el-módulo-02-explorar-mapa-leaflet-194-y-mapas-base-sin-clave-api)
   * [11.1. Lienzo cartográfico de proporción cuadrada y proyección EPSG:4326 / EPSG:32719](#111-lienzo-cartográfico-de-proporción-cuadrada-y-proyección-epsg4326--epsg32719)
-  * [11.2. Los 4 mapas base operativos (OpenStreetMap, HOT, Bing/Microsoft y Esri)](#112-los-4-mapas-base-operativos-openstreetmap-hot-bingmicrosoft-y-esri)
+  * [11.2. Los 5 mapas base operativos (OpenStreetMap, HOT, Bing/Microsoft Satelital e Híbrido y Esri)](#112-los-5-mapas-base-operativos-openstreetmap-hot-bingmicrosoft-satelital-e-híbrido-y-esri)
   * [11.3. Motor de Simbología dinámica (cortes naturales de Jenks y 6 paletas cromáticas)](#113-motor-de-simbología-dinámica-cortes-naturales-de-jenks-y-6-paletas-cromáticas)
   * [11.4. Panel inferior de `Detalles` y exportación dinámica (GeoJSON / CSV)](#114-panel-inferior-de-detalles-y-exportación-dinámica-geojson--csv)
 * [12. Inspector normativo del Plan Regulador Comunal de Santiago (PRC / OGUC)](#12-inspector-normativo-del-plan-regulador-comunal-de-santiago-prc--oguc)
@@ -91,11 +91,11 @@ El sistema articula estándares del Open Geospatial Consortium (OGC) y de la Org
 | Indicador o componente | Valor verificado | Definición operativa y alcance |
 | :--- | :---: | :--- |
 | **Coberturas cartográficas totales** | **294 capas** | **123 capas oficiales del Estado de Chile (`id_ig`) + 171 coberturas descentralizadas de Información Geográfica Voluntaria (`id_igv`)** de OpenStreetMap y GBIF. |
-| **Dimensiones analíticas territoriales** | **5 dimensiones** | Agrupación transversal temática en los Módulos 01 y 02: Educación, Cultura y Patrimonio; Servicios, Comercio y Habitabilidad; Movilidad, Transporte y Accesibilidad; Áreas Verdes, Ambiente y Biodiversidad; y Normativa, Suelo y Morfología Urbana. |
+| **Dimensiones analíticas territoriales** | **5 dimensiones** | Agrupación transversal temática en los Módulos 01 y 02: (1) Sociodemográfica y Habitacional; (2) Socioeconómica y Comercial; (3) Socioambiental y Espacio Público; (4) Sociosanitaria y Salud; y (5) Sociourbana, Movilidad y Normativa. |
 | **Cartografías temáticas e indicadores** | **83 cartografías** | Distribuidas en 4 guiones visuales territoriales (densidad de Kernel KDE, autocorrelación espacial LISA, Censo 2024/RSH y metabolismo urbano) y 5 dimensiones de análisis urbano en el Módulo 01 (`Análisis`). |
 | **Perfil homologado de metadatos y calidad** | **17 atributos ISO 19157** | Esquema estandarizado embebido en cada entidad geográfica (`id_ig` para fuentes estatales e `id_igv` para fuentes de IGV), consultable en el panel inferior de **Detalles** del Módulo 02. |
-| **Arquitectura de navegación** | **3 módulos + 2 apoyos en cabecera** | Módulos `01 Análisis`, `02 Explorar mapa` y `03 Documentación` (con 6 capítulos navegables `DOC · 01` a `DOC · 06`), acompañados por el **Tutorial interactivo** (14 pasos) y el **Glosario de siglas**. |
-| **Mapas base operativos** | **4 mosaicos sin API key** | OpenStreetMap Estándar, OpenStreetMap Humanitario (HOT), Imágenes Satelitales Bing / Microsoft e Imágenes Satelitales Esri World Imagery. |
+| **Arquitectura de navegación** | **3 módulos + 2 apoyos en cabecera** | Módulos `01 Análisis`, `02 Explorar mapa` y `03 Documentación` (con 6 capítulos navegables `DOC · 01` a `DOC · 06`), acompañados por el **Tutorial interactivo** (18 pasos en 4 bloques) y el **Glosario de siglas**. |
+| **Mapas base operativos** | **5 mosaicos sin API key** | OpenStreetMap Estándar, OpenStreetMap Humanitario (HOT), Imagen Satelital (Bing / Microsoft), Satelital Híbrido con Calles (Bing / Microsoft) e Imagen Satelital (Esri World Imagery). |
 | **Volumen y paquete de datos abiertos** | **542,35 MB en ZIP** | Geodatabase completa descargable en `docs/geodatabase_completa_atlas_vgi.zip` y 3 catálogos maestros en formato OpenXML (`.xlsx`). |
 
 ### 1.1. Propósito y misión operativa
@@ -157,7 +157,7 @@ flowchart LR
   > Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales.
 * **Componentes ejecutados:**
   - Revisión de fuentes de geodatos abiertos institucionales (IDE Chile, INE, MINVU, SUBDERE, SII, Municipalidad de Santiago) y de Información Geográfica Voluntaria (IGV) en OpenStreetMap y GBIF.
-  - Organización taxonómica de las coberturas territoriales en las **5 dimensiones analíticas** del Atlas: (1) *Educación, Cultura y Patrimonio*, (2) *Servicios, Comercio y Habitabilidad*, (3) *Movilidad, Transporte y Accesibilidad*, (4) *Áreas Verdes, Ambiente y Biodiversidad*, y (5) *Normativa, Suelo y Morfología Urbana*.
+  - Organización taxonómica de las coberturas territoriales en las **5 dimensiones analíticas** del Atlas: (1) *Sociodemográfica y Habitacional*, (2) *Socioeconómica y Comercial*, (3) *Socioambiental y Espacio Público*, (4) *Sociosanitaria y Salud*, y (5) *Sociourbana, Movilidad y Normativa*.
   - Caracterización de los perfiles de actores territoriales (instituciones públicas, comunidad y vecinos, mapeadores voluntarios y ONG/academia) mediante criterios de diseño centrado en el usuario.
 
 ```mermaid
@@ -249,7 +249,7 @@ flowchart LR
   > Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.
 * **Componentes ejecutados:**
   - **Definición de un prototipo sintetizado para usuarios no técnicos:** prototipo más sintetizado que permita a usuarios sin experiencia técnica poder interactuar de forma más simple con la plataforma, articulado en tres módulos principales (`Módulo 01 Análisis`, `Módulo 02 Explorar mapa` y `Módulo 03 Documentación`) y complementado en la cabecera por el **Tutorial interactivo** (a la izquierda del título) y el **Glosario de siglas** (a la derecha del título).
-  - Configuración del visor cartográfico de proporción cuadrada en el **Módulo 02 (`Explorar mapa`)** sobre Leaflet 1.9.4, con selector de 4 mapas base sin requerimiento de clave API (**OpenStreetMap Estándar**, **OpenStreetMap Humanitario (HOT)**, **Imágenes Satelitales Bing / Microsoft** e **Imágenes Satelitales Esri World Imagery**), catálogo de las 294 capas agrupadas en las 5 dimensiones analíticas, buscador instantáneo, motor de **Simbología dinámica** (cortes naturales de Jenks) y panel inferior de **Detalles** con exportación directa en GeoJSON y CSV.
+  - Configuración del visor cartográfico de proporción cuadrada en el **Módulo 02 (`Explorar mapa`)** sobre Leaflet 1.9.4, con selector de 5 mapas base sin requerimiento de clave API (**OpenStreetMap Estándar**, **OpenStreetMap Humanitario (HOT)**, **Imagen Satelital (Bing / Microsoft)**, **Satelital Híbrido con Calles (Bing / Microsoft)** e **Imagen Satelital (Esri World Imagery)**), catálogo de las 294 capas agrupadas en las 5 dimensiones analíticas, buscador instantáneo, motor de **Simbología dinámica** (cortes naturales de Jenks) y panel inferior de **Detalles** con exportación directa en GeoJSON y CSV.
   - Implementación del **Inspector normativo (PRC)** del Plan Regulador Comunal de Santiago y de la Ordenanza General de Urbanismo y Construcciones (OGUC) en el panel lateral del Módulo 02, que ejecuta intersección punto en polígono en el navegador y emite el Certificado de Informaciones Normativas descargable.
   - Integración en el **Módulo 01 (`Análisis`)** de las 5 dimensiones analíticas territoriales y los 4 guiones visuales con 83 cartografías temáticas e indicadores espaciales (KDE, LISA, Censo 2024 y metabolismo urbano), con publicación continua en Netlify (`https://atlasvgiuah.netlify.app/`).
 
@@ -267,7 +267,7 @@ flowchart LR
     end
 
     subgraph PROD3["3. Entregables verificados"]
-        PR3_1["E6 · Plataforma web en 3 módulos con\nTutorial (14 pasos) y Glosario"]
+        PR3_1["E6 · Plataforma web en 3 módulos con\nTutorial (18 pasos) y Glosario"]
         PR3_2["E7 · Visor interactivo de 294 capas,\nsimbología Jenks y panel Detalles"]
         PR3_3["E8 · Inspector normativo PRC y\n83 cartografías en Módulo 01"]
     end
@@ -287,8 +287,8 @@ flowchart LR
 
 | N° | Entregable verificado | Tipo de producto | Fuente y localización oficial en el proyecto |
 |:---:|:---|:---:|:---|
-| **E-06** | Plataforma web sintetizada en tres módulos (`01 Análisis`, `02 Explorar mapa` y `03 Documentación`) con Tutorial interactivo de 14 pasos y Glosario de siglas. | Plataforma web | `src/index.html`, `src/js/app.js` y `https://atlasvgiuah.netlify.app/` |
-| **E-07** | Visor cartográfico de gran formato con 4 mapas base (OSM, HOT, Bing/Microsoft y Esri), 294 capas por dimensión, simbología dinámica Jenks y panel **Detalles**. | Motor cartográfico | `src/js/modulos/mapa.js`, `src/js/modulos/ide_chile.js` y `src/css/estilos.css` |
+| **E-06** | Plataforma web sintetizada en tres módulos (`01 Análisis`, `02 Explorar mapa` y `03 Documentación`) con Tutorial interactivo de 18 pasos y Glosario de siglas. | Plataforma web | `src/index.html`, `src/js/app.js`, `src/js/modulos/tutorial_interactivo.js` y `https://atlasvgiuah.netlify.app/` |
+| **E-07** | Visor cartográfico de gran formato con 5 mapas base (OSM Estándar, HOT, Bing/Microsoft Satelital e Híbrido y Esri), 294 capas por dimensión, simbología dinámica Jenks y panel **Detalles**. | Motor cartográfico | `src/js/modulos/mapa.js`, `src/js/modulos/ide_chile.js` y `src/css/estilos.css` |
 | **E-08** | Inspector normativo territorial del PRC de Santiago y 4 guiones visuales con 83 cartografías temáticas en el Módulo 01. | Módulos analíticos | `src/js/modulos/evaluador_normativo.js`, `src/js/modulos/indicadores_analisis.js` y `src/img/cartografias/` |
 
 ---
@@ -357,7 +357,7 @@ flowchart TD
     end
 
     subgraph OE4_G["Fase IV · OE 4: Usabilidad y Transferibilidad"]
-        H8["Hito 8 (09 nov) → E8\nTrazabilidad de usabilidad, tutorial (14 pasos) y Módulo 03"] --> H9["Hito 9 (12 nov) → E9\nManual técnico, geodatabase ZIP (542,35 MB) y verificación"]
+        H8["Hito 8 (09 nov) → E8\nTrazabilidad de usabilidad, tutorial (18 pasos) y Módulo 03"] --> H9["Hito 9 (12 nov) → E9\nManual técnico, geodatabase ZIP (542,35 MB) y verificación"]
     end
 
     OE1_G --> OE2_G --> OE3_G --> OE4_G
@@ -391,7 +391,7 @@ La estructura sintetizada en tres módulos (`01 Análisis`, `02 Explorar mapa` y
 ### 5.2. Perfil 2: Comunidad y vecinos
 * **Usuarios destinatarios:** Juntas de vecinos del Barrio Brasil y de la comuna de Santiago, comités de vivienda y patrimonio, comerciantes locales y residentes.
 * **Recorrido principal en la plataforma:**
-  1. Iniciar con el **Tutorial interactivo** de 14 pasos ubicado a la izquierda del título principal y consultar el **Glosario de siglas** a la derecha del título cuando aparezcan abreviaturas técnicas.
+  1. Iniciar con el **Tutorial interactivo** de 18 pasos ubicado a la izquierda del título principal y consultar el **Glosario de siglas** a la derecha del título cuando aparezcan abreviaturas técnicas.
   2. En el **Módulo 02 (`Explorar mapa`)**, activar capas cotidianas dentro de las 5 dimensiones (centros de salud, farmacias, comercio barrial, puntos de reciclaje, áreas verdes, cruces peatonales y cités) sobre los mapas base de OpenStreetMap o las imágenes satelitales de Bing/Microsoft y Esri.
   3. Consultar los atributos de cualquier equipamiento en el panel **Detalles** con un solo clic en el mapa.
 
@@ -423,29 +423,29 @@ En lugar de separar rígidamente las fuentes estatales de las comunitarias en pe
 flowchart TD
     CAT["Catálogo Unificado del Atlas\n294 Coberturas Vectoriales (EPSG:4326)\n123 Oficiales (id_ig) + 171 IGV Descentralizadas (id_igv)"]
 
-    D1["1. Educación, Cultura y Patrimonio\nEstablecimientos educacionales, bibliotecas, museos,\ninmuebles de conservación histórica (ICH), zonas típicas\ny monumentos nacionales"]
-    D2["2. Servicios, Comercio y Habitabilidad\nRed de salud pública y privada, farmacias, comercio barrial,\nsupermercados, ferias libres, seguridad, cités,\nCenso 2024 y Registro Social de Hogares (RSH)"]
-    D3["3. Movilidad, Transporte y Accesibilidad\nLíneas y estaciones de Metro, paraderos RED, ciclovías,\nbicicleteros, semáforos UOCT, cruces peatonales,\nrebajes PMR y jerarquía vial"]
-    D4["4. Áreas Verdes, Ambiente y Biodiversidad\nParques urbanos, plazas, arbolado, avistamientos de\nbiodiversidad urbana (GBIF), puntos limpios, catastro\nSUBDERE RSD 2024 e islas de calor / ruido MMA"]
-    D5["5. Normativa, Suelo y Morfología Urbana\nZonificación del Plan Regulador Comunal (PRC),\nlímites administrativos, manzanas censales, huella de\nedificaciones, usos de suelo, catastro SII e inversiones BIP"]
+    D1["1. Dimensión Sociodemográfica y Habitacional\nCenso 2024 (INE), vulnerabilidad RSH 2026, tipologías de vivienda,\nhacinamiento, arriendo, cités, catastro SII y permisos de edificación"]
+    D2["2. Dimensión Socioeconómica y Comercial\nInversión pública (BIP y MOP), comercio barrial y gastronomía (IGV),\nferias libres, supermercados, bancos, servicios y telecomunicaciones"]
+    D3["3. Dimensión Socioambiental y Espacio Público\nParques y áreas verdes (MINVU/INE), arbolado urbano, 52 especies de\nbiodiversidad ciudadana (GBIF), ruido (>68 dBA) y residuos SUBDERE RSD 2024"]
+    D4["4. Dimensión Sociosanitaria y Salud\nRed asistencial pública (hospitales, CESFAM, COSAM), clínicas,\nfarmacias, desfibriladores (DEA), grifos y recintos deportivos"]
+    D5["5. Dimensión Sociourbana, Movilidad y Normativa\nZonificación del Plan Regulador Comunal (PRC Santiago), patrimonio\nprotegido (ZCH/ICH/CMN), Metro, paraderos Red, ciclovías y luminarias"]
 
     CAT --> D1 & D2 & D3 & D4 & D5
 ```
 
-### 6.1. Dimensión 01: Educación, Cultura y Patrimonio
-Integra la infraestructura educativa (jardines infantiles JUNJI/Integra, establecimientos escolares MINEDUC, educación superior) con el equipamiento cultural (bibliotecas, museos, centros culturales, teatros, cines, galerías de arte) y los polígonos y monumentos de protección patrimonial del Consejo de Monumentos Nacionales (CMN) y del Plan Regulador Comunal (Zonas Típicas, Monumentos Históricos, Zonas e Inmuebles de Conservación Histórica).
+### 6.1. Dimensión 01: Sociodemográfica y Habitacional
+Integra los indicadores demográficos y habitacionales por manzana y unidad vecinal del **Censo de Población y Vivienda 2024 (INE)** y los tramos de vulnerabilidad del **Registro Social de Hogares (RSH 2026 / MDSF)** con el catastro de **cités y pasajes históricos**, las estadísticas constructivas y de avalúo fiscal del **Servicio de Impuestos Internos (SII)** y los permisos de edificación y recepciones definitivas.
 
-### 6.2. Dimensión 02: Servicios, Comercio y Habitabilidad
-Reúne los equipamientos de salud (hospitales, CESFAM, clínicas, centros médicos, farmacias), abastecimiento y comercio cotidiano (supermercados, almacenes de barrio, panaderías, ferias libres, bancos, correos), seguridad y emergencias (Carabineros, PDI, compañías de Bomberos, grifos), junto con las variables demográficas y habitacionales del Censo 2024 (INE), el Registro Social de Hogares (MDSF) y el catastro barrial de cités y pasajes.
+### 6.2. Dimensión 02: Socioeconómica y Comercial
+Reúne la cartera georreferenciada de proyectos de inversión pública del **Banco Integrado de Proyectos (BIP)** y del Ministerio de Obras Públicas (MOP) junto con la red de abastecimiento y comercio cotidiano levantada mediante IGV en OpenStreetMap (almacenes de barrio, panaderías, supermercados, ferias libres, mercados, restaurantes, cafés, bancos, cajeros automáticos y oficinas de servicios) y la infraestructura de telecomunicaciones (SUBTEL).
 
-### 6.3. Dimensión 03: Movilidad, Transporte y Accesibilidad
-Articula las redes de transporte público metropolitano (trazados y estaciones del Metro de Santiago, paraderos y recorridos del sistema RED), la infraestructura de movilidad activa (ciclovías existentes y proyectadas, estacionamientos de bicicletas, talleres), la gestión de tránsito (semáforos UOCT, reductores de velocidad) y la micro-infraestructura de accesibilidad universal levantada mediante IGV (cruces peatonales cebrados, semáforos sonoros, pavimento podotáctil y rebajes de vereda para personas con movilidad reducida).
+### 6.3. Dimensión 03: Socioambiental y Espacio Público
+Consolida el catastro de parques urbanos, plazas y áreas verdes (MINVU/INE y municipal), el censo colaborativo de arbolado viario, las **52 coberturas de ciencia ciudadana de flora y fauna urbana provenientes de GBIF** bajo estándar Darwin Core, las 13 coberturas del Catastro Nacional de Residuos Sólidos Domiciliarios (**SUBDERE RSD 2024**), los puntos limpios de reciclaje, las islas de calor y los mapas acústicos de ruido ambiental (`>68 dBA`, MMA).
 
-### 6.4. Dimensión 04: Áreas Verdes, Ambiente y Biodiversidad
-Consolida el sistema de espacios públicos vegetados (parques urbanos, plazas, bandejones, jardines comunitarios y arbolado viario), los registros de ciencia ciudadana de flora, fauna y funga urbana provenientes de **GBIF** bajo estándar Darwin Core, las 13 coberturas del Catastro Nacional de Residuos Sólidos Domiciliarios (**SUBDERE RSD 2024**), los puntos de reciclaje y contenedores barriales, y las mediciones ambientales de ruido (MMA).
+### 6.4. Dimensión 04: Sociosanitaria y Salud
+Articula la red asistencial pública y privada (hospitales, CESFAM, centros comunitarios de salud mental, postas y clínicas), las farmacias, los **desfibriladores externos automáticos (DEA)**, los grifos contra incendios, los cuarteles de Bomberos y el equipamiento deportivo y de cuidado comunitario.
 
-### 6.5. Dimensión 05: Normativa, Suelo y Morfología Urbana
-Agrupa los instrumentos de planificación territorial vigentes —zonificación comunal y seccional del **Plan Regulador Comunal (PRC) de Santiago** e hitos de modificación normativa—, la división político-administrativa y censal (comuna, distritos, unidades vecinales y manzanas), la huella de edificaciones y alturas constructivas, el catastro predial y de avalúos del **Servicio de Impuestos Internos (SII)** y la cartera georreferenciada del **Banco Integrado de Proyectos (BIP)**.
+### 6.5. Dimensión 05: Sociourbana, Movilidad y Normativa
+Agrupa los instrumentos de planificación territorial vigentes —zonificación comunal y seccional del **Plan Regulador Comunal (PRC) de Santiago**, **Zonas e Inmuebles de Conservación Histórica (`ZCH`/`ICH`)** y **Monumentos Nacionales (CMN)**— junto con las redes de transporte público metropolitano (líneas y estaciones de Metro, paraderos y recorridos Red), ciclovías, bicicleteros, semáforos UOCT, cruces peatonales, rebajes de accesibilidad universal y luminarias.
 
 ---
 
@@ -559,9 +559,9 @@ La plataforma web está construida en **HTML5 semántico, CSS3 nativo y Vanilla 
 ```mermaid
 flowchart TD
     subgraph HEADER["Cabecera Global Fija (src/index.html + src/js/app.js)"]
-        TUT["Botón Izquierdo:\nTutorial interactivo (14 pasos navegables)\n#btn-abrir-tutorial"]
+        TUT["Botón Izquierdo:\nTutorial interactivo (18 pasos navegables)\n#btn-abrir-tutorial"]
         TIT["Bloque Central:\nAtlas para la Gestión Territorial\nAnálisis y Exploración | Municipio de Santiago y Barrio Brasil"]
-        GLO["Botón Derecho:\nGlosario de siglas (buscador instantáneo)\n#btn-abrir-glosario"]
+        GLO["Botón Derecho:\nGlosario de siglas (buscador instantáneo)\n#btn-abrir-glosario-header"]
     end
 
     subgraph NAV["Barra de Navegación Principal (3 Módulos)"]
@@ -577,27 +577,28 @@ flowchart TD
     HEADER --> NAV --> FOOTER
 ```
 
-### 10.2. Tutorial interactivo de 14 pasos y Glosario de siglas en cabecera
+### 10.2. Tutorial interactivo de 18 pasos y Glosario de siglas en cabecera
 Para evitar cualquier superposición visual en pantallas de escritorio o portátiles, los dos recursos de apoyo transversal se ubican en extremos opuestos del bloque del título principal:
-* **A la izquierda del título (`#btn-abrir-tutorial`):** Abre el **Tutorial interactivo de 14 pasos**, que recorre de forma guiada y auto-navegable cada uno de los tres módulos de la plataforma (cambiando automáticamente de módulo cuando el usuario avanza entre las etapas del Módulo 01, Módulo 02 y Módulo 03) y explica con lenguaje claro para qué sirve cada herramienta y cómo aprovecharla en la toma de decisiones territoriales.
-* **A la derecha del título (`#btn-abrir-glosario`):** Despliega el recuadro del **Glosario de siglas** con buscador instantáneo para consultar el significado de acrónimos institucionales, urbanísticos y geomáticos (`IGV`, `IDE`, `PRC`, `OGUC`, `ZCH`, `ICH`, `KDE`, `LISA`, `RSH`, `BIP`, `SUBDERE`, `SII`, `ODbL`, etc.).
+* **A la izquierda del título (`#btn-abrir-tutorial`):** Abre el **Tutorial interactivo de 18 pasos distribuidos en 4 bloques navegables** (`src/js/modulos/tutorial_interactivo.js`), que presenta primero qué es y para qué sirve cada uno de los tres módulos de la plataforma antes de recorrer sus herramientas internas (cambiando automáticamente de módulo cuando el usuario avanza entre las etapas del Módulo 01, Módulo 02 y Módulo 03) con un lenguaje claro y accesible.
+* **A la derecha del título (`#btn-abrir-glosario-header`):** Despliega el recuadro del **Glosario de siglas** con buscador instantáneo para consultar el significado de acrónimos institucionales, urbanísticos y geomáticos (`IGV`, `IDE`, `PRC`, `OGUC`, `ZCH`, `ICH`, `KDE`, `LISA`, `RSH`, `BIP`, `SUBDERE`, `SII`, `ODbL`, etc.).
 
 ---
 
 ## 11. Motor cartográfico en el Módulo 02 (`Explorar mapa`): Leaflet 1.9.4 y mapas base sin clave API
 
 ### 11.1. Lienzo cartográfico de proporción cuadrada y proyección EPSG:4326 / EPSG:32719
-El contenedor `#mapa-principal` en el Módulo 02 se dimensiona con una proporción amplia y equilibrada de formato cuadrado (`min-height: 760px` y relación de aspecto controlada en `src/css/estilos.css`), facilitando la lectura simultánea de la estructura urbana norte-sur y oriente-poniente del Barrio Brasil y de la comuna de Santiago.
+El contenedor `#mapa` en el Módulo 02 se dimensiona con una proporción amplia y equilibrada de formato cuadrado en `src/css/estilos.css`, facilitando la lectura simultánea de la estructura urbana norte-sur y oriente-poniente del Barrio Brasil y de la comuna de Santiago.
 
-### 11.2. Los 4 mapas base operativos (OpenStreetMap, HOT, Bing/Microsoft y Esri)
-En `src/js/modulos/mapa.js` y `src/index.html`, el selector `#sel-mapa-base` ofrece exclusivamente **4 mosaicos globales abiertos que no requieren clave API de terceros** (habiendo eliminado los antiguos mosaicos de Carto):
+### 11.2. Los 5 mapas base operativos (OpenStreetMap, HOT, Bing/Microsoft Satelital e Híbrido y Esri)
+En `src/js/modulos/mapa.js`, el selector de capas base ofrece exclusivamente **5 mosaicos globales abiertos y satelitales que no requieren clave API de terceros** (habiendo eliminado los antiguos mosaicos de Carto):
 
 | Clave en `mapa.js` | Nombre en el selector | Proveedor de teselas | Uso recomendado |
 |:---:|:---|:---|:---|
 | `osm` | **OpenStreetMap Estándar** | OpenStreetMap Foundation (`tile.openstreetmap.org`) | Lectura detallada de vialidad, numeración postal, topónimos y equipamiento barrial. |
-| `hot` | **OpenStreetMap Humanitario (HOT)** | Humanitarian OpenStreetMap Team (`tile.openstreetmap.fr/hot`) | Contraste suave para destacar capas vectoriales superpuestas y servicios públicos. |
-| `bing_sat` | **Satélite Bing / Microsoft** | Microsoft Corporation VirtualEarth (`ecn.t{0-3}.tiles.virtualearth.net` con *quadkeys*) | Fotointerpretación de techumbres, patios interiores, cités y cobertura arbórea de alta resolución. |
-| `esri_sat` | **Satélite Esri World Imagery** | Esri / Maxar / Earthstar Geographics (`server.arcgisonline.com`) | Comparación multitemporal de ortofotografías satelitales y morfología de manzanas. |
+| `osm_hot` | **OpenStreetMap Humanitario (HOT)** | Humanitarian OpenStreetMap Team (`tile.openstreetmap.fr/hot`) | Contraste suave para destacar capas vectoriales superpuestas y servicios públicos. |
+| `bing_sat` | **Imagen Satelital (Bing / Microsoft)** | Microsoft Corporation VirtualEarth (`ecn.t{0-3}.tiles.virtualearth.net` con *quadkeys*) | Fotointerpretación de techumbres, patios interiores, cités y cobertura arbórea de alta resolución. |
+| `bing_hibrido` | **Satelital Híbrido con Calles (Bing / Microsoft)** | Microsoft Corporation VirtualEarth (`quadkeys` híbridos con etiquetas viales) | Fotointerpretación satelital manteniendo la referencia de nombres de calles y avenidas en español. |
+| `esri_sat` | **Imagen Satelital (Esri World Imagery)** | Esri / Maxar / Earthstar Geographics (`server.arcgisonline.com`) | Comparación multitemporal de ortofotografías satelitales y morfología de manzanas. |
 
 ### 11.3. Motor de Simbología dinámica (cortes naturales de Jenks y 6 paletas cromáticas)
 Ubicado en el panel lateral izquierdo del Módulo 02, el bloque de **Simbología dinámica** inspecciona automáticamente las propiedades de las capas activas en el visor y permite:
@@ -653,7 +654,7 @@ flowchart LR
 
     C1["DOC · 01\nProyecto y Objetivos\nObjetivo general, OE 1 a OE 4 y\n10 entregables verificados"]
     C2["DOC · 02\nGuía Módulo 01 (Análisis)\n5 dimensiones, 4 guiones visuales,\nKDE, LISA y visor de 83 mapas"]
-    C3["DOC · 03\nGuía Módulo 02 (Explorar mapa)\nVisor cuadrado, 4 mapas base,\nInspector PRC, Jenks y Detalles"]
+    C3["DOC · 03\nGuía Módulo 02 (Explorar mapa)\nVisor cuadrado, 5 mapas base,\nInspector PRC, Jenks y Detalles"]
     C4["DOC · 04\nDescargas y Licencias\nPaquete ZIP (542,35 MB), 3 libros\n.xlsx y marco legal (ODbL / Ley 20.285)"]
     C5["DOC · 05\nCatálogo de 294 Capas\nBuscador y filtro en vivo de las\n123 capas id_ig y 171 capas id_igv"]
     C6["DOC · 06\nArquitectura y Actualización\nFlujo ETL, perfil de 17 atributos ISO\ny protocolo de despliegue"]
@@ -691,10 +692,11 @@ nodo-geoabierto/
     │   └── estilos.css                   # Sistema de diseño visual, grilla del visor cuadrado y componentes
     ├── js/
     │   ├── config.js                     # Configuración global, coordenadas BBox y parámetros de versión
-    │   ├── app.js                        # Orquestador de los 3 módulos, Tutorial de 14 pasos y Glosario de siglas
+    │   ├── app.js                        # Orquestador de los 3 módulos y Glosario de siglas
     │   └── modulos/
+    │       ├── tutorial_interactivo.js   # Tutorial interactivo navegable de 18 pasos en 4 bloques
     │       ├── indicadores_analisis.js   # Módulo 01 (Análisis): 5 dimensiones y 4 guiones visuales (83 mapas)
-    │       ├── mapa.js                   # Módulo 02 (Explorar mapa): Leaflet 1.9.4, 4 mapas base, Jenks y Detalles
+    │       ├── mapa.js                   # Módulo 02 (Explorar mapa): Leaflet 1.9.4, 5 mapas base, Jenks y Detalles
     │       ├── ide_chile.js              # Catálogo unificado y carga bajo demanda de las 294 coberturas
     │       ├── evaluador_normativo.js    # Inspector normativo del PRC de Santiago y emisor del certificado CIN
     │       └── manual.js                 # Módulo 03 (Documentación): 6 capítulos navegables (DOC · 01 a DOC · 06)
@@ -782,9 +784,9 @@ En total coherencia con el pie de página (`footer`) del **Atlas para la Gestió
 3. Si añade un nuevo proveedor de teselas, agregue su `<option value="clave">` en el selector `#sel-mapa-base` dentro de `src/index.html` y actualice la atribución en el pie de página (`footer`).
 
 ### 20.3. Procedimiento 03: Modificar los pasos del Tutorial interactivo o el Glosario de siglas
-1. Abra `src/js/app.js` y localice el arreglo `PASOS_TUTORIAL` (compuesto por los 14 pasos navegables que recorren la plataforma, el Módulo 01, el Módulo 02 y el Módulo 03).
-2. Cada paso define las propiedades `modulo` (`'indicadores'`, `'inicio'` o `'manual'`), `selector` (elemento CSS a destacar), `titulo` y `texto` (explicación funcional de para qué sirve el componente).
-3. Para añadir o editar términos en el **Glosario de siglas**, modifique los ítems dentro del modal `#modal-glosario` en `src/index.html`.
+1. Abra `src/js/modulos/tutorial_interactivo.js` y localice el arreglo `PASOS_TUTORIAL` (compuesto por los 18 pasos navegables en 4 bloques que presentan cada módulo antes de recorrer sus componentes).
+2. Cada paso define el bloque/módulo asociado, el selector CSS a destacar, el título, la descripción funcional en lenguaje claro y el consejo práctico de uso.
+3. Para añadir o editar términos en el **Glosario de siglas**, modifique los ítems dentro del modal `#modal-glosario-siglas` en `src/index.html`.
 
 ### 20.4. Procedimiento 04: Actualizar la zonificación o hitos del Inspector normativo (PRC)
 1. Si se aprueba una nueva modificación al Plan Regulador Comunal de Santiago, actualice los polígonos en `data/ide_minvu_ipt_prc_santiago.geojson` y `src/data/ide_minvu_ipt_prc_santiago.geojson`.

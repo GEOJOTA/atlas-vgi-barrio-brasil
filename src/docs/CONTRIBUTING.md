@@ -40,7 +40,7 @@ flowchart LR
 2. **Etapa 2 — Copia simétrica en `data/` y `src/data/`:**
    Guarde el archivo simultáneamente en `data/<id_capa>.geojson` y `src/data/<id_capa>.geojson`.
 3. **Etapa 3 — Registro en `src/js/modulos/ide_chile.js` y `src/js/modulos/indicadores_analisis.js`:**
-   Agregue la definición de la cobertura dentro del catálogo en `src/js/modulos/ide_chile.js` y asóciela a una de las **5 dimensiones analíticas** (`Educación, Cultura y Patrimonio`, `Servicios, Comercio y Habitabilidad`, `Movilidad, Transporte y Accesibilidad`, `Áreas Verdes, Ambiente y Biodiversidad` o `Normativa, Suelo y Morfología Urbana`):
+   Agregue la definición de la cobertura dentro del catálogo en `src/js/modulos/ide_chile.js` (o en `src/js/modulos/catalogo_vgi_descentralizado.js` si corresponde a una capa colaborativa de IGV) y asóciela a una de las **5 dimensiones analíticas** (*1. Dimensión Sociodemográfica y Habitacional*, *2. Dimensión Socioeconómica y Comercial*, *3. Dimensión Socioambiental y Espacio Público*, *4. Dimensión Sociosanitaria y Salud* o *5. Dimensión Sociourbana, Movilidad y Normativa*):
    ```javascript
    nueva_capa: {
      id: 'nueva_capa',
@@ -72,7 +72,7 @@ flowchart TD
     end
 
     subgraph MOD02["Módulo 02 · Explorar mapa (mapa.js y evaluador_normativo.js)"]
-        MP1["Mantener los 4 mapas base sin clave API\n(OSM, HOT, Bing/Microsoft y Esri)"]
+        MP1["Mantener los 5 mapas base sin clave API\n(OSM Estándar, OSM HOT, Bing/Microsoft Satelital e Híbrido y Esri)"]
         MP2["Actualizar reglas del Inspector normativo (PRC),\nsimbología dinámica Jenks o panel Detalles"]
     end
 

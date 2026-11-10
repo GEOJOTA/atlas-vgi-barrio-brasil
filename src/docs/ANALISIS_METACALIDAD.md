@@ -42,7 +42,7 @@ flowchart LR
 |:---:|:---|:---:|:---|
 | **01** | `id_ig` / `id_igv` | ISO 19115 | Identificador único del elemento: **`id_ig`** para registros oficiales del Estado de Chile e **`id_igv`** para registros de Información Geográfica Voluntaria. |
 | **02** | `nombre_capa` | ISO 19115 | Nombre oficial de la cobertura cartográfica dentro de las 294 capas del Atlas. |
-| **03** | `dimension_analitica` | ISO 19115 | Adscripción a una de las 5 dimensiones analíticas: (1) *Educación, Cultura y Patrimonio*, (2) *Servicios, Comercio y Habitabilidad*, (3) *Movilidad, Transporte y Accesibilidad*, (4) *Áreas Verdes, Ambiente y Biodiversidad*, o (5) *Normativa, Suelo y Morfología Urbana*. |
+| **03** | `dimension_analitica` | ISO 19115 | Adscripción a una de las 5 dimensiones analíticas: (1) *Sociodemográfica y Habitacional*, (2) *Socioeconómica y Comercial*, (3) *Socioambiental y Espacio Público*, (4) *Sociosanitaria y Salud*, o (5) *Sociourbana, Movilidad y Normativa*. |
 | **04** | `tipo_fuente` | ISO 19115 | Clasificación del origen: `Información Geográfica Oficial (Estado de Chile)` o `Información Geográfica Voluntaria (IGV Descentralizada)`. |
 | **05** | `institucion_custodia` | ISO 19115 | Organismo público responsable o comunidad colaborativa custodia (`OpenStreetMap Chile` / `GBIF`). |
 | **06** | `sistema_referencia` | ISO 19115 | Sistema geodésico de referencia: `EPSG:4326 (WGS 84)` para visualización web y `EPSG:32719 (SIRGAS-Chile UTM 19S)` para cálculos métricos. |
