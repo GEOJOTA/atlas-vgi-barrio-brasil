@@ -172,23 +172,3 @@ El **Módulo 03 · Documentación** (`#panel-manual`) integra dentro de la misma
 | **`DOC · 05`** | **Inventario General Filtrable de las 294 Coberturas** | Tabla interactiva con filtro en vivo donde se listan las **123 capas oficiales (`id_ig`)** y las **171 capas colaborativas de IGV (`id_igv`)**, indicando su código, archivo `.geojson`, organismo o comunidad custodia y descripción temática. |
 | **`DOC · 06`** | **Arquitectura del Sistema, Flujos de Trabajo y Guía de Actualización Técnica** | Describe cómo están programados los 3 módulos del Atlas, cómo fluyen los datos desde las fuentes hasta el navegador y ofrece el paso a paso para agregar nuevas capas, actualizar el Plan Regulador o adaptar el Atlas a otra comuna. |
 
----
-
-## 6. Ejemplos prácticos de uso cotidiano según tu objetivo
-
-Para ilustrar cómo se combinan los tres módulos en situaciones reales, aquí tienes tres recorridos breves paso a paso:
-
-### Caso práctico A: Soy vecino o dirigente barrial y quiero fundamentar una solicitud de mejora de áreas verdes o luminarias en mi sector
-1. Ingrese al **Módulo 01 · Análisis** y abra la **Lámina 04 (Metabolismo Urbano, Movilidad y Espacio Público)** para revisar el mapa de accesibilidad caminable a áreas verdes y cobertura arbórea en su cuadra, descargando la lámina en `.jpg` como respaldo gráfico.
-2. En el mismo Módulo 01, despliegue el acordeón de la **Dimensión 3 (Socioambiental y Espacio Público)** o la **Dimensión 5 (Sociourbana, Movilidad y Normativa)** y pulse *"Activar en el mapa"* sobre las capas de *Áreas Verdes*, *Arbolado Urbano* y *Luminarias*.
-3. En el **Módulo 02 · Explorar Mapa**, cambie el mapa base a **Satelital Híbrido con Calles (Bing / Microsoft)** para ver las copas de los árboles y las calles reales, use el botón **Delimitar área** sobre su manzana o plaza para obtener su superficie exacta en `m²` y pulse **Exportar vista (GeoJSON)** para guardar el recorte.
-
-### Caso práctico B: Trabajo en planificación municipal (SECPLAN / DOM / DIDECO) y necesito priorizar inversión pública en manzanas con vulnerabilidad social
-1. En el **Módulo 01 · Análisis**, revise la **Lámina 02 (Autocorrelación Espacial LISA)** para ubicar los clústeres **Bajo-Bajo (azules)** que concentran simultáneamente déficit de equipamiento y vulnerabilidad en el **Registro Social de Hogares (RSH)**.
-2. Pase al **Módulo 02 · Explorar Mapa**, active la capa de *Manzanas Censo 2024 / Síntesis Barrial* y la capa de *Inversiones Públicas BIP*, y utilice el panel de **Simbología Dinámica** con el método **Cortes Naturales de Jenks** para clasificar las manzanas en 5 rangos.
-3. Active el **Inspector normativo (PRC)** y haga clic sobre el terreno donde se evalúa emplazar el proyecto para verificar en el panel inferior **Detalles** si el uso de suelo está permitido por el Plan Regulador Comunal y si existen restricciones de Conservación Histórica (`ZCH`/`ICH`).
-
-### Caso práctico C: Soy estudiante, investigador o docente y necesito trabajar con las bases de datos en QGIS, R o Excel
-1. Diríjase al **Módulo 03 · Documentación** y seleccione el capítulo **`DOC · 04` (Licencias Abiertas, Descarga de Geodatabase y Catálogos en Excel)**.
-2. Descargue los tres libros Excel (`.xlsx`) para explorar el diccionario de las 5 dimensiones analíticas, el inventario de las 294 fuentes y el esquema de los 17 atributos ISO 19115 / ISO 19157 (`id_ig` e `id_igv`).
-3. Pulse el botón verde **Descargar Geodatabase Completa (`.zip` · 542,35 MB)** para obtener las 294 capas en formato `.geojson` listas para abrir en cualquier software SIG, junto con las matrices censales y la bibliografía en norma APA 7ª edición.
