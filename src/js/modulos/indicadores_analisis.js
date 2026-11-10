@@ -1764,7 +1764,6 @@ const ModuloIndicadoresAnalisis = (() => {
                   <div class="imagen-cuadrada-wrapper">
                     <img src="${sb.imagen}" alt="${sb.titulo}" decoding="async" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src=this.src.startsWith('src/')?this.src.slice(4):'src/'+this.src;}" class="img-storyboard-cuadro">
                     <div class="overlay-gradiente-storyboard"></div>
-                    <button type="button" class="btn-zoom-miniatura" onclick="event.stopPropagation(); ModuloIndicadoresAnalisis.abrirLightboxImagenDeStoryboard('${sb.id}')" title="Ampliar imagen / cartografía">🔍</button>
                   </div>
                   <div class="cuerpo-tarjeta-storyboard">
                     <h4 class="titulo-tarjeta-storyboard">${sb.titulo}</h4>
@@ -2095,9 +2094,6 @@ const ModuloIndicadoresAnalisis = (() => {
 
         <!-- Encabezado de la Lámina -->
         <header class="header-articulo-blog">
-          <div class="meta-superior-blog">
-            <span class="tiempo-lectura-blog">🗺️ ${totalCartos} Cartografías Integradas</span>
-          </div>
           <h1 class="titulo-articulo-blog">${sb.titulo}</h1>
           <p class="bajada-articulo-blog">${sb.bajada}</p>
           <div class="tags-articulo-blog">
