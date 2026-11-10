@@ -3487,15 +3487,30 @@ async function alternarCapaVGIDescentralizada(idCapa, btn) {
 
   try {
     let geojson = null;
-    const ruta = def.archivoLocal || `data/${idCapa}.geojson`;
-    let resp = await fetch(ruta);
-    if (!resp.ok) {
-      resp = await fetch(`src/${ruta}`);
+    const rutas = [
+      def.archivoLocal,
+      `src/${def.archivoLocal}`,
+      `data/${idCapa}.geojson`,
+      `src/data/${idCapa}.geojson`,
+      `data/capa_${idCapa}.geojson`,
+      `src/data/capa_${idCapa}.geojson`
+    ];
+    for (const r of rutas) {
+      if (!r) continue;
+      try {
+        const resp = await fetch(r);
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && data.type === 'FeatureCollection' && Array.isArray(data.features)) {
+            geojson = data;
+            break;
+          }
+        }
+      } catch (_) {}
     }
-    if (!resp.ok) {
-      throw new Error(`HTTP ${resp.status} al leer ${ruta}`);
+    if (!geojson) {
+      throw new Error(`No fue posible leer el archivo GeoJSON para "${def.nombre}" en ninguna ruta local.`);
     }
-    geojson = await resp.json();
 
     if (window.ModuloMapa) {
       ModuloMapa.cargarCapaGeoJSON(idCapa, geojson, {
@@ -3528,11 +3543,13 @@ async function alternarCapaVGIDescentralizada(idCapa, btn) {
       `;
     }
     actualizarTelemetriaCapasActivas();
+    return true;
   } catch (err) {
     if (btn) btn.classList.remove('cargando');
     if (card) card.classList.remove('cargando');
     console.error(`Error al cargar capa VGI ${idCapa}:`, err);
     if (estadoTexto) estadoTexto.textContent = `No se pudo cargar la cobertura "${def.nombre}". ${err.message}`;
+    return false;
   }
 }
 
@@ -4175,6 +4192,7 @@ async function alternarCapaOficialIDE(idCapa, btn) {
       `;
     }
     actualizarTelemetriaCapasActivas();
+    return true;
   } catch (err) {
     if (btn) btn.classList.remove('cargando');
     if (card) card.classList.remove('cargando');
@@ -4183,7 +4201,140 @@ async function alternarCapaOficialIDE(idCapa, btn) {
     }
     console.error(`Error al cargar capa oficial ${idCapa}:`, err);
     if (estadoTexto) estadoTexto.textContent = `No se pudo cargar la capa "${nombrePrevio}". Revisa tu conexión o inténtalo nuevamente (${err.message}).`;
+    return false;
   }
+}
+
+/**
+ * Notificación flotante / Toast en el visor cartográfico
+ */
+window.mostrarNotificacionAtlas = function(mensaje, tipo = 'info', duracion = 4200) {
+  let toast = document.getElementById('toast-notificacion-atlas');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast-notificacion-atlas';
+    toast.className = 'toast-notificacion-atlas';
+    const area = document.querySelector('.area-mapa-principal') || document.getElementById('panel-inicio') || document.body;
+    area.appendChild(toast);
+  }
+  toast.className = `toast-notificacion-atlas visible ${tipo}`;
+  toast.innerHTML = mensaje;
+  if (window._toastTimeoutAtlas) clearTimeout(window._toastTimeoutAtlas);
+  window._toastTimeoutAtlas = setTimeout(() => {
+    toast.classList.remove('visible');
+  }, duracion);
+};
+
+/**
+ * Conmuta inmediatamente al Módulo 02 (Explorar Mapa), descarga la capa especificada (oficial o VGI)
+ * y la proyecta sobre el mapa Leaflet, recalculando encuadre y dimensiones reales.
+ */
+async function cargarYMostrarCapaEnVisor(idCapa, tipo = 'auto', opciones = {}) {
+  if (!idCapa) return false;
+
+  // 1. Conmutar a pestaña 'inicio' (Módulo 02)
+  if (typeof window.activarPanel === 'function') {
+    window.activarPanel('inicio');
+  }
+
+  // 2. Si la capa ya se encuentra cargada en el mapa, reencuadrar y notificar
+  const yaEnOficial = Boolean(capasOficialesCargadas && capasOficialesCargadas[idCapa]);
+  const yaEnVGI = Boolean(capasCargadasPorCategoria && capasCargadasPorCategoria[idCapa]);
+  const regMapa = (window.ModuloMapa && typeof window.ModuloMapa.obtenerRegistroCapas === 'function')
+    ? window.ModuloMapa.obtenerRegistroCapas()[idCapa]
+    : null;
+
+  if ((yaEnOficial || yaEnVGI || regMapa) && regMapa && regMapa.capaLeaflet) {
+    if (window.ModuloMapa) {
+      window.ModuloMapa.invalidarTamano();
+      const mapInst = window.ModuloMapa.obtenerInstanciaMapa ? window.ModuloMapa.obtenerInstanciaMapa() : null;
+      if (mapInst && regMapa.capaLeaflet.getBounds && regMapa.capaLeaflet.getBounds().isValid()) {
+        try {
+          mapInst.fitBounds(regMapa.capaLeaflet.getBounds(), { padding: [40, 40], maxZoom: 16 });
+        } catch (_) {}
+      }
+    }
+    const nomb = regMapa.opciones?.nombre || idCapa;
+    if (typeof window.mostrarNotificacionAtlas === 'function') {
+      window.mostrarNotificacionAtlas(`La capa <strong>${nomb}</strong> ya está activa en el visor. Vista reencuadrada.`, 'info');
+    }
+    return true;
+  }
+
+  // 3. Forzar invalidación inicial de dimensiones del lienzo Leaflet
+  if (window.ModuloMapa) {
+    window.ModuloMapa.invalidarTamano();
+  }
+
+  // 4. Determinar si es oficial o VGI
+  let esOficial = (tipo === 'oficial');
+  let esVGI = (tipo === 'vgi');
+
+  if (!esOficial && !esVGI) {
+    if (typeof idCapa === 'string' && (idCapa.startsWith('vgi_') || idCapa.startsWith('capa_vgi_') || idCapa.startsWith('cat0') || idCapa.startsWith('cat1'))) {
+      esVGI = true;
+    } else if (window.ModuloIDEChile && typeof window.ModuloIDEChile.obtenerDefinicion === 'function' && window.ModuloIDEChile.obtenerDefinicion(idCapa)) {
+      esOficial = true;
+    } else {
+      const vgiCats = window.CATALOGO_VGI_DESCENTRALIZADO || [];
+      const match = vgiCats.find(c => c.id === idCapa || (c.archivoLocal && c.archivoLocal.includes(idCapa)));
+      if (match) esVGI = true;
+      else esOficial = true;
+    }
+  }
+
+  // 5. Cargar la capa
+  let exito = false;
+  if (esOficial) {
+    const btn = document.getElementById(`btn-oficial-${idCapa}`);
+    exito = await alternarCapaOficialIDE(idCapa, btn);
+  } else {
+    const btn = document.getElementById(`btn-vgi-${idCapa}`);
+    exito = await alternarCapaVGIDescentralizada(idCapa, btn);
+  }
+
+  // 6. Recalcular tamaño y reencuadre en el mapa con retardos
+  setTimeout(() => {
+    if (window.ModuloMapa) {
+      window.ModuloMapa.invalidarTamano();
+      const registro = window.ModuloMapa.obtenerRegistroCapas ? window.ModuloMapa.obtenerRegistroCapas()[idCapa] : null;
+      const mapInst = window.ModuloMapa.obtenerInstanciaMapa ? window.ModuloMapa.obtenerInstanciaMapa() : null;
+      if (mapInst && registro && registro.capaLeaflet && registro.capaLeaflet.getBounds && registro.capaLeaflet.getBounds().isValid()) {
+        try {
+          mapInst.fitBounds(registro.capaLeaflet.getBounds(), { padding: [40, 40], maxZoom: 16 });
+        } catch (_) {}
+      }
+    }
+  }, 120);
+
+  setTimeout(() => {
+    if (window.ModuloMapa) window.ModuloMapa.invalidarTamano();
+  }, 350);
+
+  // 7. Notificación visual al usuario
+  const regFinal = window.ModuloMapa?.obtenerRegistroCapas ? window.ModuloMapa.obtenerRegistroCapas()[idCapa] : null;
+  const nombreFinal = regFinal?.opciones?.nombre || (window.ModuloIDEChile?.obtenerDefinicion ? window.ModuloIDEChile.obtenerDefinicion(idCapa)?.nombre : null) || idCapa;
+  const cantFinal = (regFinal?.geojson?.features && regFinal.geojson.features.length) ? regFinal.geojson.features.length : 0;
+  const iconoTipo = esOficial ? '🏛️' : '👥';
+
+  if (typeof window.mostrarNotificacionAtlas === 'function') {
+    if (exito !== false && cantFinal > 0) {
+      window.mostrarNotificacionAtlas(`
+        <span style="font-size:1.15rem; margin-right:4px;">${iconoTipo}</span>
+        <span>Capa <strong>${nombreFinal}</strong> activada en el visor con <strong>${cantFinal.toLocaleString('es-CL')}</strong> entidades.</span>
+      `, 'exito');
+    }
+  }
+
+  return exito;
+}
+
+// Exposición global en window
+window.alternarCapaOficialIDE = alternarCapaOficialIDE;
+window.alternarCapaVGIDescentralizada = alternarCapaVGIDescentralizada;
+window.cargarYMostrarCapaEnVisor = cargarYMostrarCapaEnVisor;
+if (window.ModuloIDEChile) {
+  window.ModuloIDEChile.alternarCapaOficial = alternarCapaOficialIDE;
 }
 
 function alternarCapaWMSOficial(idCapa, btn) {

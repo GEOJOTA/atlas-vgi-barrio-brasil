@@ -2774,43 +2774,58 @@ const ModuloIndicadoresAnalisis = (() => {
     cerrarLaminaStoryboard();
     
     // Activar pestaña del visor 'inicio' (Módulo 02)
-    if (window.activarPanel) {
+    if (typeof window.activarPanel === 'function') {
       window.activarPanel('inicio');
     }
 
-    setTimeout(() => {
-      if (tipo === 'vgi' || (typeof capaId === 'string' && (capaId.startsWith('vgi_') || capaId.startsWith('capa_vgi_')))) {
-        if (typeof window.alternarCapaVGIDescentralizada === 'function') {
-          window.alternarCapaVGIDescentralizada(capaId);
-        } else if (window.ModuloMapa) {
-          const catalogo = window.CATALOGO_VGI_DESCENTRALIZADO || [];
-          const def = catalogo.find(c => c.id === capaId || c.archivoLocal.includes(capaId)) || {
-            id: capaId,
-            nombre: capaId,
-            archivoLocal: `data/${capaId}.geojson`
-          };
-          const ruta = def.archivoLocal;
-          fetch(ruta).catch(() => fetch(`src/${ruta}`)).then(r => r.json()).then(gj => {
-            ModuloMapa.cargarCapaGeoJSON(def.id, gj, {
-              id: def.id,
-              nombre: def.nombre,
-              color: '#06b6d4',
-              icono: def.icono || '📍',
-              archivoLocal: def.archivoLocal
-            });
-          }).catch(e => console.error('Error cargando capa VGI:', e));
-        }
-      } else {
-        if (window.ModuloIDEChile && typeof window.ModuloIDEChile.alternarCapaOficial === 'function') {
-          window.ModuloIDEChile.alternarCapaOficial(capaId);
+    if (typeof window.cargarYMostrarCapaEnVisor === 'function') {
+      window.cargarYMostrarCapaEnVisor(capaId, tipo);
+    } else {
+      setTimeout(() => {
+        if (typeof window.cargarYMostrarCapaEnVisor === 'function') {
+          window.cargarYMostrarCapaEnVisor(capaId, tipo);
+        } else if (tipo === 'vgi' || (typeof capaId === 'string' && (capaId.startsWith('vgi_') || capaId.startsWith('capa_vgi_')))) {
+          if (typeof window.alternarCapaVGIDescentralizada === 'function') {
+            window.alternarCapaVGIDescentralizada(capaId);
+          } else if (window.ModuloMapa) {
+            const catalogo = window.CATALOGO_VGI_DESCENTRALIZADO || [];
+            const def = catalogo.find(c => c.id === capaId || c.archivoLocal.includes(capaId)) || {
+              id: capaId,
+              nombre: capaId,
+              archivoLocal: `data/${capaId}.geojson`
+            };
+            const rutas = [def.archivoLocal, `src/${def.archivoLocal}`, `data/${def.id}.geojson`, `src/data/${def.id}.geojson`];
+            let encontrada = null;
+            (async () => {
+              for (const r of rutas) {
+                try {
+                  const resp = await fetch(r);
+                  if (resp.ok) {
+                    const gj = await resp.json();
+                    if (gj && gj.type === 'FeatureCollection') { encontrada = gj; break; }
+                  }
+                } catch (_) {}
+              }
+              if (encontrada && window.ModuloMapa) {
+                ModuloMapa.cargarCapaGeoJSON(def.id, encontrada, {
+                  id: def.id,
+                  nombre: def.nombre,
+                  color: '#06b6d4',
+                  icono: def.icono || '📍',
+                  archivoLocal: def.archivoLocal
+                });
+              }
+            })();
+          }
         } else {
-          const btnOficial = document.getElementById(`btn-oficial-${capaId}`);
-          if (btnOficial && !btnOficial.classList.contains('activo')) {
-            btnOficial.click();
+          if (window.ModuloIDEChile && typeof window.ModuloIDEChile.alternarCapaOficial === 'function') {
+            window.ModuloIDEChile.alternarCapaOficial(capaId);
+          } else if (typeof window.alternarCapaOficialIDE === 'function') {
+            window.alternarCapaOficialIDE(capaId);
           }
         }
-      }
-    }, 200);
+      }, 120);
+    }
   }
 
   /**
@@ -2822,31 +2837,20 @@ const ModuloIndicadoresAnalisis = (() => {
 
     cerrarLaminaStoryboard();
 
-    if (window.activarPanel) {
+    if (typeof window.activarPanel === 'function') {
       window.activarPanel('inicio');
     }
 
-    setTimeout(() => {
-      // Activar las primeras 2 capas relevantes para no saturar el visor
-      sb.capasRelevantes.slice(0, 2).forEach(cId => {
-        if (cId.startsWith('cat0') || cId.startsWith('cat1')) {
-          const catKey = cId.replace(/^cat\d\d_/, '');
-          const btn = document.getElementById(`btn-cat-${catKey}`);
-          if (btn && !btn.classList.contains('activo')) btn.click();
+    // Activar las 2 primeras capas representativas directamente en el visor
+    sb.capasRelevantes.slice(0, 2).forEach((cId, idx) => {
+      setTimeout(() => {
+        if (typeof window.cargarYMostrarCapaEnVisor === 'function') {
+          window.cargarYMostrarCapaEnVisor(cId);
         } else {
-          const btn = document.getElementById(`btn-oficial-${cId}`);
-          if (btn) {
-            const detailsParent = btn.closest('details');
-            if (detailsParent) detailsParent.open = true;
-            if (!btn.classList.contains('activo')) btn.click();
-          }
+          activarCapaEnMapa(cId);
         }
-      });
-
-      // Reencuadrar mapa si existe el botón
-      const btnReencuadrar = document.getElementById('btn-reencuadrar-mapa');
-      if (btnReencuadrar) btnReencuadrar.click();
-    }, 350);
+      }, idx * 250);
+    });
   }
 
   return {

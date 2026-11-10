@@ -2815,6 +2815,14 @@ const ModuloIDEChile = (() => {
     CAPAS_OFICIALES,
     SERVICIOS_IPT_CHILE,
     consultarCapaOficial,
+    alternarCapaOficial: (idCapa, btn) => {
+      if (typeof window !== 'undefined' && typeof window.cargarYMostrarCapaEnVisor === 'function') {
+        return window.cargarYMostrarCapaEnVisor(idCapa, 'oficial');
+      } else if (typeof window !== 'undefined' && typeof window.alternarCapaOficialIDE === 'function') {
+        return window.alternarCapaOficialIDE(idCapa, btn);
+      }
+      return null;
+    },
     crearCapaWMSLeaflet,
     obtenerCapasDisponibles,
     obtenerDefinicion,
