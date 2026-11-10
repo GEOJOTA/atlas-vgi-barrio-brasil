@@ -6,8 +6,8 @@
 
   Estructura:
   - Módulo 01 · Análisis: Narrativas espaciales (4 láminas) y 5 Dimensiones Analíticas.
-  - Módulo 02 · Explorar Mapa: Visor cartográfico Leaflet inmediato y catálogo de 257 capas
-    (123 oficiales + 134 IGV descentralizadas) agrupadas en las 5 dimensiones con buscador en español.
+  - Módulo 02 · Explorar Mapa: Visor cartográfico Leaflet inmediato y catálogo de 294 capas
+    (123 oficiales + 171 IGV descentralizadas) agrupadas en las 5 dimensiones con buscador en español.
   - Módulo 03 · Documentación: Diccionario de descriptores, licencias y descarga integral de geodatabase.
   * Nota: El Manual de Actualización Técnica para desarrolladores se mantiene en el repositorio Git
     (docs/MANUAL_ACTUALIZACION_ATLAS.md).
@@ -20,13 +20,13 @@ const ModuloManual = (() => {
   let textoBusquedaManual = '';
 
   /**
-   * Construye dinámicamente el inventario de las 257 capas
-   * (134 IGV descentralizadas + 123 Oficiales del Estado)
+   * Construye dinámicamente el inventario de las 294 capas
+   * (171 IGV descentralizadas + 123 Oficiales del Estado)
    */
   function construirInventarioDinamicoCapas() {
     const lista = [];
 
-    // 1. 134 Capas IGV Descentralizadas
+    // 1. 171 Capas IGV Descentralizadas
     const catalogoVGI = (typeof window !== 'undefined' && Array.isArray(window.CATALOGO_VGI_DESCENTRALIZADO))
       ? window.CATALOGO_VGI_DESCENTRALIZADO
       : [];
@@ -123,9 +123,9 @@ const ModuloManual = (() => {
 
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:14px; margin:16px 0;">
             <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:14px;">
-              <div style="font-size:1.35rem; font-weight:800; color:#38bdf8;">257 capas espaciales</div>
+              <div style="font-size:1.35rem; font-weight:800; color:#38bdf8;">294 capas espaciales</div>
               <div style="font-size:0.85rem; color:var(--tinta-suave); margin-top:4px;">
-                123 coberturas oficiales del Estado de Chile y 134 coberturas de Información Geográfica Voluntaria (IGV) descentralizadas y traducidas 100% al español.
+                123 coberturas oficiales del Estado de Chile y 171 coberturas de Información Geográfica Voluntaria (IGV) descentralizadas y traducidas 100% al español.
               </div>
             </div>
             <div style="background:rgba(168,85,247,0.08); border:1px solid rgba(168,85,247,0.3); border-radius:10px; padding:14px;">
@@ -231,7 +231,7 @@ const ModuloManual = (() => {
             <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:16px;">
               <h4 style="margin:0 0 8px 0; color:#34d399; font-size:1.05rem;">2. Dimensiones Analíticas</h4>
               <p style="margin:0 0 10px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                El Atlas articula las 257 coberturas espaciales en <strong>5 Dimensiones Analíticas</strong> continuas entre el análisis interpretativo del Módulo 01 y la exploración cartográfica del Módulo 02:
+                El Atlas articula las 294 coberturas espaciales en <strong>5 Dimensiones Analíticas</strong> continuas entre el análisis interpretativo del Módulo 01 y la exploración cartográfica del Módulo 02:
               </p>
               <ul style="margin:0 0 14px 0; padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
                 <li><strong>1. Dimensión Sociodemográfica y Habitacional:</strong> Caracterización poblacional del Censo 2024, vulnerabilidad social (RSH), tipologías de vivienda, hacinamiento, arriendo y permisos/recepciones habitacionales del INE.</li>
@@ -275,7 +275,7 @@ const ModuloManual = (() => {
             <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(16,185,129,0.4); border-radius:10px; padding:16px;">
               <h4 style="margin:0 0 8px 0; color:#34d399; font-size:1.05rem;">2. Simbología Inteligente Predeterminada al Cargar Capas</h4>
               <p style="margin:0 0 10px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                Cada una de las <strong>257 coberturas</strong> (123 oficiales + 134 IGV descentralizadas) se carga con una parametrización gráfica adaptada a sus atributos intrínsecos y dimensión analítica:
+                Cada una de las <strong>294 coberturas</strong> (123 oficiales + 171 IGV descentralizadas) se carga con una parametrización gráfica adaptada a sus atributos intrínsecos y dimensión analítica:
               </p>
               <ul style="margin:0 0 12px 0; padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
                 <li><strong>Capas cuantitativas / índices:</strong> Clasificación matemática automática mediante <strong>Natural Breaks (Jenks)</strong> en 5 clases, minimizando la varianza intraclase y maximizando la diferenciación espacial real (población Censo, superficies en m², montos de inversión, tasas de arbolado).</li>
@@ -314,7 +314,7 @@ const ModuloManual = (() => {
         id: 'cap-uso-04',
         numero: 'USO · 04',
         icono: '⚖️',
-        titulo: 'Marco Jurídico de Licencias Abiertas y Descarga Directa de Catálogos y Geodatabase (257 Coberturas)',
+        titulo: 'Marco Jurídico de Licencias Abiertas y Descarga Directa de Catálogos y Geodatabase (294 Coberturas)',
         subtitulo: 'Régimen tripartito de bienes comunes digitales (CC BY-SA 4.0 / ODbL 1.0 / GNU AGPLv3 / Ley 20.285), archivo maestro .zip y hojas maestras en Excel.',
         html: `
           <div style="display:flex; flex-direction:column; gap:18px;">
@@ -326,7 +326,7 @@ const ModuloManual = (() => {
                   <span style="font-size:0.75rem; font-weight:800; color:#34d399; text-transform:uppercase; letter-spacing:0.05em;">ACCESO ABIERTO // DESCARGA INTEGRAL</span>
                   <h3 style="margin:4px 0 6px 0; color:#ffffff; font-size:1.25rem;">📦 Geodatabase Completa del Atlas para la Gestión Territorial (.zip)</h3>
                   <p class="descripcion" style="margin:0; font-size:0.89rem; color:var(--tinta-suave); line-height:1.6;">
-                    El paquete consolidado incluye las <strong>257 coberturas espaciales operativas</strong> (134 capas colaborativas IGV descentralizadas + 123 capas oficiales del Estado de Chile), los libros maestros en Excel, las matrices de metacalidad y los esquemas PostGIS (<strong>542,35 MB comprimido / ~3,33 GB descomprimido</strong>).
+                    El paquete consolidado incluye las <strong>294 coberturas espaciales operativas</strong> (171 capas colaborativas IGV descentralizadas + 123 capas oficiales del Estado de Chile), los libros maestros en Excel, las matrices de metacalidad y los esquemas PostGIS (<strong>542,35 MB comprimido / ~3,33 GB descomprimido</strong>).
                   </p>
                 </div>
                 <div>
@@ -360,8 +360,8 @@ const ModuloManual = (() => {
                       <td><a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion secundaria" style="font-size:0.78rem; padding:5px 10px; display:inline-block;">Descargar Excel</a></td>
                     </tr>
                     <tr>
-                      <td><strong>Perfil de Metadatos y Calidad</strong><br><code class="codigo-licencia">docs/perfil_metadatos_vgi.xlsx</code></td>
-                      <td>Matriz de evaluación multicriterio (WLC v2.0, IGV medio 95,4 %) y homologación con ISO 19115 / IDE Chile.</td>
+                      <td><strong>Perfil de Metadatos y Estándares</strong><br><code class="codigo-licencia">docs/perfil_metadatos_vgi.xlsx</code></td>
+                      <td>Matriz técnica de homologación de atributos con ISO 19115 / IDE Chile SNIT y catálogo de variables territoriales.</td>
                       <td>Excel (<code>.xlsx</code>) · ~31 KB</td>
                       <td><a href="docs/perfil_metadatos_vgi.xlsx" download="perfil_metadatos_vgi.xlsx" class="accion secundaria" style="font-size:0.78rem; padding:5px 10px; display:inline-block;">Descargar Excel</a></td>
                     </tr>
@@ -452,7 +452,7 @@ const ModuloManual = (() => {
         id: 'cap-uso-05',
         numero: 'USO · 05',
         icono: '🗂️',
-        titulo: `Inventario General de las ${totalCapas} Coberturas Integradas (123 Oficiales + 134 IGV)`,
+        titulo: `Inventario General de las ${totalCapas} Coberturas Integradas (123 Oficiales + 171 IGV)`,
         subtitulo: 'Registro completo de capas operativas con filtrado dinámico en tiempo real por código, custodio o temática.',
         html: `
           <div style="margin-bottom:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">

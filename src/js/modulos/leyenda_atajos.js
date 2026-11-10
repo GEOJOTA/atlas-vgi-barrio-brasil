@@ -41,7 +41,7 @@ const ModuloAtajosLeyenda = (() => {
       apartados: [
         { id: 'sec-manual-cabecera', titulo: 'Documentación del Atlas', abajo: false },
         { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true },
-        { id: 'sec-lic-descargas-maestras', titulo: 'Licencias y descargas (257 capas)', abajo: true }
+        { id: 'sec-lic-descargas-maestras', titulo: 'Licencias y descargas (294 capas)', abajo: true }
       ]
     },
     'diccionario': {
@@ -51,7 +51,7 @@ const ModuloAtajosLeyenda = (() => {
       apartados: [
         { id: 'sec-manual-cabecera', titulo: 'Documentación del Atlas', abajo: false },
         { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true },
-        { id: 'sec-lic-descargas-maestras', titulo: 'Licencias y descargas (257 capas)', abajo: true }
+        { id: 'sec-lic-descargas-maestras', titulo: 'Licencias y descargas (294 capas)', abajo: true }
       ]
     },
     'licencias': {
@@ -61,7 +61,7 @@ const ModuloAtajosLeyenda = (() => {
       apartados: [
         { id: 'sec-manual-cabecera', titulo: 'Documentación del Atlas', abajo: false },
         { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true },
-        { id: 'sec-lic-descargas-maestras', titulo: 'Licencias y descargas (257 capas)', abajo: true }
+        { id: 'sec-lic-descargas-maestras', titulo: 'Licencias y descargas (294 capas)', abajo: true }
       ]
     }
   };

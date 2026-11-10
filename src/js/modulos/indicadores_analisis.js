@@ -1612,7 +1612,7 @@ const ModuloIndicadoresAnalisis = (() => {
    * para asegurar paridad 100% con el Módulo "00. Visor y Atlas VGI"
    */
   function resolverDefinicionCapa(capaId) {
-    // 0. Capas VGI Descentralizadas (134 coberturas independientes 100% en español)
+    // 0. Capas VGI Descentralizadas (coberturas independientes 100% en español)
     const catalogoVGI = (typeof window !== 'undefined' && window.CATALOGO_VGI_DESCENTRALIZADO)
       ? window.CATALOGO_VGI_DESCENTRALIZADO
       : [];
@@ -1623,6 +1623,7 @@ const ModuloIndicadoresAnalisis = (() => {
         tipo: 'vgi',
         codigo: (vgiFound.id || '').replace('vgi_', '').toUpperCase(),
         nombre: vgiFound.nombre,
+        subtipo: vgiFound.subtipo || '',
         institucion: vgiFound.institucion || 'Comunidad OSM / GBIF',
         sigla: 'IGV',
         geometria: vgiFound.geometria || 'Vectorial',
@@ -1915,9 +1916,11 @@ const ModuloIndicadoresAnalisis = (() => {
       return `
         <div class="tarjeta-capa-dimension ${info.tipo}" 
              data-tipo="${info.tipo}" 
-             data-nombre="${info.nombre.toLowerCase()}" 
-             data-institucion="${info.institucion.toLowerCase()}"
-             data-codigo="${info.codigo.toLowerCase()}">
+             data-nombre="${(info.nombre || '').toLowerCase()}" 
+             data-subtipo="${(info.subtipo || '').toLowerCase()}"
+             data-descripcion="${(info.descripcion || '').toLowerCase()}"
+             data-institucion="${(info.institucion || '').toLowerCase()}"
+             data-codigo="${(info.codigo || '').toLowerCase()}">
           <div class="tarjeta-capa-dim-header">
             <span class="pill-dim-codigo">${info.codigo}</span>
             <span class="pill-dim-origen ${info.tipo}">${origenIcon} ${info.sigla}</span>
@@ -2038,12 +2041,16 @@ const ModuloIndicadoresAnalisis = (() => {
     items.forEach(el => {
       const tipo = el.dataset.tipo;
       const nombre = el.dataset.nombre || '';
+      const subtipo = el.dataset.subtipo || '';
+      const descripcion = el.dataset.descripcion || '';
       const institucion = el.dataset.institucion || '';
       const codigo = el.dataset.codigo || '';
 
       const coincideTipo = (filtroTipoActivo === 'todos') || (tipo === filtroTipoActivo);
       const coincideTexto = !queryFiltroActual || 
                             nombre.includes(queryFiltroActual) || 
+                            subtipo.includes(queryFiltroActual) ||
+                            descripcion.includes(queryFiltroActual) ||
                             institucion.includes(queryFiltroActual) || 
                             codigo.includes(queryFiltroActual);
 

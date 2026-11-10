@@ -102,8 +102,8 @@ const ModuloLicencias = (() => {
                 <td><a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar Excel</a></td>
               </tr>
               <tr>
-                <td><strong>Perfil de metadatos y calidad (132 capas)</strong><br><code class="codigo-licencia">docs/perfil_metadatos_vgi.xlsx</code></td>
-                <td>Matriz de evaluación multicriterio (WLC v2.0, IGV medio 95,4 %, 90 capas A+ y 42 A) y mapeo a ISO 19115 / IDE Chile.</td>
+                <td><strong>Perfil de metadatos y estándares (ISO 19115)</strong><br><code class="codigo-licencia">docs/perfil_metadatos_vgi.xlsx</code></td>
+                <td>Matriz técnica de homologación semántica y mapeo a ISO 19115 / IDE Chile SNIT para la totalidad de las coberturas.</td>
                 <td>Excel (<code>.xlsx</code>) · ~65 KB</td>
                 <td><a href="docs/perfil_metadatos_vgi.xlsx" download="perfil_metadatos_vgi.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar Excel</a></td>
               </tr>

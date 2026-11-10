@@ -17,13 +17,13 @@ El **Atlas para la Gestión Territorial** es una infraestructura de información
 La plataforma articula dos regímenes de producción cartográfica complementarios:
 
 1. **Cartografía Oficial del Estado de Chile (123 coberturas):** Datos espaciales emitidos por ministerios y organismos públicos (IDE Chile / SNIT, MINVU, INE, MDSF, SUBDERE, MTT, UOCT, CMN, MMA, SII y Municipalidad de Santiago).
-2. **Información Geográfica Voluntaria — IGV Descentralizado (134 coberturas):** Cada descriptor de la comunidad (farmacias, árboles urbanos, cesfam, escuelas, paraderos, zonas de calma, cruces peatonales, ferias libres, etc.) opera como una **capa independiente por separado**, con su propio archivo `.geojson` descargable, traducida 100% al español y buscable en tiempo real.
+2. **Información Geográfica Voluntaria — IGV Descentralizado (171 coberturas, incluyendo 52 especies biológicas individualizadas):** Cada descriptor de la comunidad (farmacias, árboles urbanos, cesfam, escuelas, paraderos, zonas de calma, cruces peatonales, ferias libres, etc.) opera como una **capa independiente por separado**, con su propio archivo `.geojson` descargable, traducida 100% al español y buscable en tiempo real.
 
 ```mermaid
 flowchart TD
     subgraph M01["MÓDULO 01 · ANÁLISIS"]
         N1["Narrativas Espaciales (4 Láminas · 83 Mapas)<br/>KDE | Autocorrelación Espacial Local | Demografía | Metabolismo"]
-        D1["5 Dimensiones Analíticas y Catálogo de 257 Capas<br/>123 Oficiales + 134 IGV Descentralizadas con Búsqueda en Español"]
+        D1["5 Dimensiones Analíticas y Catálogo de 257 Capas<br/>123 Oficiales + 171 IGV Descentralizadas (52 especies individualizadas) con Búsqueda en Español"]
     end
 
     subgraph M02["MÓDULO 02 · EXPLORAR MAPA"]
@@ -34,8 +34,8 @@ flowchart TD
     end
 
     subgraph M03["MÓDULO 03 · DOCUMENTACIÓN"]
-        DOC1["Manual de Uso del Sistema<br/>Navegación e inventario de 257 capas"]
-        DOC2["Diccionario de Descriptores (134 Capas IGV)<br/>Esquema ISO 19110 y homologación semántica"]
+        DOC1["Manual de Uso del Sistema<br/>Navegación e inventario de 294 capas"]
+        DOC2["Diccionario de Descriptores y Especies (171 Capas IGV)<br/>Esquema ISO 19110 y homologación semántica"]
         DOC3["Licencias Abiertas y Descargas Maestras<br/>Geodatabase completa (.zip) y Libros Excel (.xlsx)"]
         DOC4["Manual de Actualización Técnica (Git)<br/>docs/MANUAL_ACTUALIZACION_ATLAS.md"]
     end
@@ -60,8 +60,8 @@ Elaboradas a partir de **83 cartografías temáticas** que representan patrones 
 * **Lámina 03 · Estructura Sociodemográfica, Habitabilidad y Morfología Urbana en Santiago (34 mapas):** Distribución de los 432.081 habitantes según Censo 2024, prevalencia del departamento (92,7%) y arriendo (72,1%), alturas de edificación, Coeficiente de Ocupación del Suelo (COS) y persistencia de cités.
 * **Lámina 04 · Metabolismo Urbano de Santiago (24 mapas):** Dinámica de movilidad sustentable (84,6% de viajes en modos activos/públicos), brechas de acceso a áreas verdes y salud en bordes comunales, exposición a ruido (>68 dBA) y gestión de residuos sólidos en las 5 zonas de aseo municipal.
 
-#### 2. Dimensiones Analíticas y Catálogo de 257 Coberturas
-Las **257 coberturas espaciales** del Atlas se exploran y activan directamente desde este apartado mediante acordeones interactivos estructurados en 5 dimensiones estratégicas:
+#### 2. Dimensiones Analíticas y Catálogo de 294 Coberturas
+Las **294 coberturas espaciales** del Atlas se exploran y activan directamente desde este apartado mediante acordeones interactivos estructurados en 5 dimensiones estratégicas:
 1. **Sociodemográfica y Habitacional:** Censo 2024, vulnerabilidad social (RSH), tipologías habitacionales y unidades vecinales (31 capas: 19 oficiales + 12 IGV).
 2. **Socioeconómica y Comercial:** Inversión pública (BIP/MOP), comercio barrial, ferias libres, empleo y redes energéticas (43 capas: 17 oficiales + 26 IGV).
 3. **Socioambiental y Espacio Público:** Infraestructura verde, arbolado urbano, biodiversidad ciudadana (GBIF) y residuos sólidos (74 capas: 35 oficiales + 39 IGV).
@@ -102,8 +102,8 @@ Permite auditar cualquier coordenada del territorio comunal haciendo clic sobre 
 
 El tercer módulo consolida el respaldo metodológico, técnico y legal de la plataforma:
 
-1. **Manual de Uso del Sistema:** Guía interactiva paso a paso con inventario dinámico de las 257 coberturas.
-2. **Diccionario de Descriptores (134 Capas IGV):** Catálogo formal de atributos según ISO 19110 y su homologación semántica con los estándares del Estado de Chile (IDE Chile - SNIT).
+1. **Manual de Uso del Sistema:** Guía interactiva paso a paso con inventario dinámico de las 294 coberturas.
+2. **Diccionario de Descriptores y Especies (171 Capas IGV):** Catálogo formal de atributos según ISO 19110 y su homologación semántica con los estándares del Estado de Chile (IDE Chile - SNIT).
 3. **Licencias Abiertas y Descarga Integral:** Marco jurídico de datos abiertos (Open Database License ODbL 1.0, Creative Commons CC BY-SA 4.0, Ley N° 20.285 de Transparencia) y enlace de descarga de la Geodatabase Completa en archivo comprimido (`.zip`) y catálogos en Excel (`.xlsx`).
 4. **Manual de Actualización Técnica para Desarrolladores:** Disponible directamente en el repositorio Git (`docs/MANUAL_ACTUALIZACION_ATLAS.md`) con las instrucciones para el mantenimiento del stack tecnológico, pipelines de sincronización y adición de coberturas.
 
@@ -113,8 +113,8 @@ El tercer módulo consolida el respaldo metodológico, técnico y legal de la pl
 
 | Recurso | Formato | Contenido |
 | :--- | :--- | :--- |
-| **Geodatabase Completa del Atlas** | `.zip` | Colección completa de las 257 coberturas en GeoJSON + GeoPackage + metadatos |
-| **Catálogo de Fuentes y Brechas** | `.xlsx` | Matriz de 257 capas con homologación IDE Chile vs IGV |
+| **Geodatabase Completa del Atlas** | `.zip` | Colección completa de las 294 coberturas en GeoJSON + GeoPackage + metadatos |
+| **Catálogo de Fuentes y Brechas** | `.xlsx` | Matriz de 294 capas con homologación IDE Chile vs IGV |
 | **Categorías Temáticas OSM** | `.xlsx` | Clasificación de descriptores y etiquetas territoriales |
 | **Manual de Uso del Atlas** | `.md` | Manual de navegación y operación de la interfaz web |
 | **Manual de Actualización Técnica** | `.md` | Documentación de ingeniería y mantenimiento en Git |
