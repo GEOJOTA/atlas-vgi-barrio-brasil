@@ -4190,6 +4190,112 @@ table.tabla-datos-institucional td {
   border: 2px solid;
   margin: 4px 0;
   transition: transform 0.25s ease;
+  user-select: none;
+}
+
+.icono-dimension-gigante svg,
+.icono-dimension-gigante .ico-svg {
+  width: 38px;
+  height: 38px;
+  stroke: currentColor;
+  stroke-width: 2;
+  display: block;
+}
+
+.icono-dimension-gigante .emoji-dimension {
+  font-size: 2.4rem;
+  line-height: 1;
+  display: inline-block;
+  user-select: none;
+}
+
+/* ========================================================================= */
+/* ESTILOS CROMÁTICOS POR DIMENSIÓN ANALÍTICA (PROTOTIPO 02)                 */
+/* ========================================================================= */
+
+.tarjeta-dimension-grande[data-dimension="sociodemografica"] .icono-dimension-gigante {
+  background: rgba(6, 182, 212, 0.16) !important;
+  border-color: #06b6d4 !important;
+  color: #38bdf8 !important;
+  box-shadow: 0 0 18px rgba(6, 182, 212, 0.3) !important;
+}
+.tarjeta-dimension-grande[data-dimension="sociodemografica"] .badge-numero-dimension {
+  background: rgba(6, 182, 212, 0.14) !important;
+  border-color: rgba(6, 182, 212, 0.5) !important;
+  color: #38bdf8 !important;
+}
+.tarjeta-dimension-grande[data-dimension="sociodemografica"] .badge-conteo-dimension {
+  background: rgba(6, 182, 212, 0.14) !important;
+  color: #38bdf8 !important;
+  border: 1px solid rgba(6, 182, 212, 0.4) !important;
+}
+
+.tarjeta-dimension-grande[data-dimension="socioeconomica"] .icono-dimension-gigante {
+  background: rgba(245, 158, 11, 0.16) !important;
+  border-color: #f59e0b !important;
+  color: #fbbf24 !important;
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.3) !important;
+}
+.tarjeta-dimension-grande[data-dimension="socioeconomica"] .badge-numero-dimension {
+  background: rgba(245, 158, 11, 0.14) !important;
+  border-color: rgba(245, 158, 11, 0.5) !important;
+  color: #fbbf24 !important;
+}
+.tarjeta-dimension-grande[data-dimension="socioeconomica"] .badge-conteo-dimension {
+  background: rgba(245, 158, 11, 0.14) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+}
+
+.tarjeta-dimension-grande[data-dimension="socioambiental"] .icono-dimension-gigante {
+  background: rgba(16, 185, 129, 0.16) !important;
+  border-color: #10b981 !important;
+  color: #34d399 !important;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.3) !important;
+}
+.tarjeta-dimension-grande[data-dimension="socioambiental"] .badge-numero-dimension {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  color: #34d399 !important;
+}
+.tarjeta-dimension-grande[data-dimension="socioambiental"] .badge-conteo-dimension {
+  background: rgba(16, 185, 129, 0.14) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+}
+
+.tarjeta-dimension-grande[data-dimension="sociosanitaria"] .icono-dimension-gigante {
+  background: rgba(236, 72, 153, 0.16) !important;
+  border-color: #ec4899 !important;
+  color: #f472b6 !important;
+  box-shadow: 0 0 18px rgba(236, 72, 153, 0.3) !important;
+}
+.tarjeta-dimension-grande[data-dimension="sociosanitaria"] .badge-numero-dimension {
+  background: rgba(236, 72, 153, 0.14) !important;
+  border-color: rgba(236, 72, 153, 0.5) !important;
+  color: #f472b6 !important;
+}
+.tarjeta-dimension-grande[data-dimension="sociosanitaria"] .badge-conteo-dimension {
+  background: rgba(236, 72, 153, 0.14) !important;
+  color: #f472b6 !important;
+  border: 1px solid rgba(236, 72, 153, 0.4) !important;
+}
+
+.tarjeta-dimension-grande[data-dimension="sociourbana"] .icono-dimension-gigante {
+  background: rgba(139, 92, 246, 0.16) !important;
+  border-color: #8b5cf6 !important;
+  color: #a78bfa !important;
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.3) !important;
+}
+.tarjeta-dimension-grande[data-dimension="sociourbana"] .badge-numero-dimension {
+  background: rgba(139, 92, 246, 0.14) !important;
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  color: #a78bfa !important;
+}
+.tarjeta-dimension-grande[data-dimension="sociourbana"] .badge-conteo-dimension {
+  background: rgba(139, 92, 246, 0.14) !important;
+  color: #a78bfa !important;
+  border: 1px solid rgba(139, 92, 246, 0.4) !important;
 }
 
 .tarjeta-dimension-grande:hover .icono-dimension-gigante {

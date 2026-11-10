@@ -61,61 +61,59 @@ const ModuloMapa = (() => {
     const centro = cfg.area_por_defecto?.centro || [-33.4445, -70.6620];
     const zoom = cfg.area_por_defecto?.zoom || 16;
 
-    // Capas base de libre acceso sin llave API
+    // Capas base 100% abiertas, de alta disponibilidad y sin requerir clave API
+    const cartoDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores, &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20
+    });
+
     const osmEstandar = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores',
       maxZoom: 19
     });
 
-    const openTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data: &copy; OSM contributors, SRTM | Map style: &copy; OpenTopoMap (CC-BY-SA)',
-      maxZoom: 17
+    const cartoLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores, &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20
     });
 
     // Capa Satelital Esri World Imagery (abierta, de alta resolución global y sin requerir clave API)
     const satelitalEsri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a> &mdash; DigitalGlobe, GeoEye, Earthstar, CNES/Airbus, USDA, USGS, AeroGRID, IGN y Comunidad SIG',
-      maxZoom: 19
-    });
-
-    // Capa Satelital Bing Aerial (gratuita, directa por Quadkey sin requerir clave API)
-    const BingLayer = L.TileLayer.extend({
-      getTileUrl: function (coords) {
-        let quadkey = '';
-        for (let i = coords.z; i > 0; i--) {
-          let digit = 0;
-          const mask = 1 << (i - 1);
-          if ((coords.x & mask) !== 0) digit += 1;
-          if ((coords.y & mask) !== 0) digit += 2;
-          quadkey += digit;
-        }
-        const sub = (coords.x + coords.y) % 4;
-        return `https://ecn.t${sub}.tiles.virtualearth.net/tiles/a${quadkey}.jpeg?g=1`;
-      }
-    });
-
-    const satelitalBing = new BingLayer('', {
-      attribution: '&copy; <a href="https://www.bing.com/maps" target="_blank" rel="noopener">Microsoft Bing</a> Earthstar Geographics',
+      attribution: 'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a> &mdash; DigitalGlobe, Earthstar, CNES/Airbus, USDA, USGS, IGN y Comunidad SIG',
       maxZoom: 19
     });
 
     mapa = L.map(idContenedor, {
       center: centro,
       zoom: zoom,
-      layers: [osmEstandar],
+      layers: [cartoDark],
       zoomControl: true,
       preferCanvas: true
     });
 
     const mapasBase = {
+      'CartoDB Dark Matter (Recomendado)': cartoDark,
       'OpenStreetMap Estándar': osmEstandar,
-      'Relieve Topográfico (OpenTopo)': openTopo,
-      'Imagen Satelital (Esri)': satelitalEsri,
-      'Imagen Satelital (Bing)': satelitalBing
+      'CartoDB Positron (Claro)': cartoLight,
+      'Imagen Satelital (Esri World Imagery)': satelitalEsri
     };
 
     L.control.layers(mapasBase, null, { position: 'topright' }).addTo(mapa);
     L.control.scale({ imperial: false, metric: true, position: 'bottomleft' }).addTo(mapa);
+
+    // Observador reactivo de redimensionamiento del contenedor del visor Leaflet
+    if (window.ResizeObserver && el) {
+      try {
+        const ro = new ResizeObserver(() => {
+          if (mapa && el.clientWidth > 0 && el.clientHeight > 0) {
+            mapa.invalidateSize({ pan: false });
+          }
+        });
+        ro.observe(el);
+      } catch (_) {}
+    }
 
     grupoCapasTematicas = L.featureGroup().addTo(mapa);
 
@@ -569,6 +567,151 @@ const ModuloMapa = (() => {
     });
 
     return { numericas, categoricas, todas };
+  }
+
+  /**
+   * Determina de manera inteligente la simbología predeterminada según las
+   * características intrínsecas del conjunto de datos y su dimensión analítica.
+   * - Datos cuantitativos (índices, censos, áreas, inversiones, conteos): Graduado Jenks Natural Breaks (5 clases).
+   * - Datos cualitativos o de entidades (PRC, equipamientos, usos): Categorizado armónico diferenciado.
+   */
+  function determinarSimbologiaPredeterminada(idCapa, geojson, opciones = {}) {
+    const cols = inspeccionarColumnasGeoJSON(geojson);
+    const features = (geojson && Array.isArray(geojson.features)) ? geojson.features : [];
+
+    // 1. Deducir la dimensión territorial
+    let dimension = opciones.dimension;
+    const idStr = String(idCapa || '').toLowerCase();
+
+    if (!dimension && typeof window !== 'undefined' && Array.isArray(window.CATALOGO_VGI_DESCENTRALIZADO)) {
+      const vgi = window.CATALOGO_VGI_DESCENTRALIZADO.find(c => c.id === idCapa);
+      if (vgi && vgi.dimension) dimension = vgi.dimension;
+    }
+    if (!dimension && typeof window !== 'undefined' && window.ModuloIndicadoresAnalisis?.DIMENSIONES) {
+      for (const d of window.ModuloIndicadoresAnalisis.DIMENSIONES) {
+        if (d.capasIds && d.capasIds.includes(idCapa)) {
+          dimension = d.id;
+          break;
+        }
+      }
+    }
+    if (!dimension) {
+      if (idStr.includes('censo') || idStr.includes('poblacion') || idStr.includes('edad') || idStr.includes('hogar')) dimension = 'sociodemografica';
+      else if (idStr.includes('comercio') || idStr.includes('inversion') || idStr.includes('predial') || idStr.includes('uf')) dimension = 'socioeconomica';
+      else if (idStr.includes('arbol') || idStr.includes('verde') || idStr.includes('calor') || idStr.includes('ruido') || idStr.includes('gbif')) dimension = 'socioambiental';
+      else if (idStr.includes('salud') || idStr.includes('farmacia') || idStr.includes('hospital') || idStr.includes('cesfam')) dimension = 'sociosanitaria';
+      else dimension = 'sociourbana';
+    }
+
+    // Rampas de color asociadas a la dimensión territorial
+    const RAMPAS_DIMENSION = {
+      sociodemografica: 'viridis',
+      socioeconomica: 'ylorrd',
+      socioambiental: 'greens',
+      sociosanitaria: 'magma',
+      sociourbana: 'purples'
+    };
+    const rampaPredeterminada = RAMPAS_DIMENSION[dimension] || 'viridis';
+
+    // 2. Columnas prohibidas / identificadores que NUNCA deben usarse para clasificar
+    const COLUMNAS_IGNORADAS = new Set([
+      'fid', 'id', 'cartodb_id', 'objectid', 'gid', 'latitude', 'longitude', 'lat', 'lon', 'x', 'y',
+      'osm_id', 'node_id', 'way_id', 'cut', 'cut_reg', 'cut_prov', 'cut_com', 'codigo', 'cod_comuna',
+      'comuna', 'region', 'shape_leng', 'shape_area', 'shape_length', 'shape_len', 'st_length', 'st_area',
+      'meta_capa_id', 'meta_cita_apa', 'meta_contacto', 'meta_url_servicio', '_idoficial', '_fuente',
+      'version', 'timestamp', 'fecha', 'fecha_act', 'fecha_corte', 'ano', 'mes', 'dia'
+    ]);
+
+    // 3. Prioridad semántica para columnas cuantitativas
+    const PATRONES_CUANTITATIVOS = [
+      /^(valor_indice|indice|indicador|puntaje|score|igvust)$/i,
+      /^(personas|poblacion|habitantes|hogares|viviendas|total_viv)$/i,
+      /^(monto|inversion|costo|presupuesto|valor_uf|avaluo)$/i,
+      /^(superficie_m2|superficie|area_m2|area|m2|ha)$/i,
+      /^(arboles|n_arboles|densidad|tasa|porcentaje|pct)$/i,
+      /^(frecuencia|flujo|n_reclamos|capacidad|volumen|decibeles|temperatura|co2)$/i
+    ];
+
+    let mejorColumnaCuant = null;
+    for (const pat of PATRONES_CUANTITATIVOS) {
+      const enc = cols.numericas.find(c => pat.test(c.trim()) && !COLUMNAS_IGNORADAS.has(c.toLowerCase()));
+      if (enc) {
+        mejorColumnaCuant = enc;
+        break;
+      }
+    }
+
+    if (!mejorColumnaCuant && cols.numericas.length > 0) {
+      for (const c of cols.numericas) {
+        if (COLUMNAS_IGNORADAS.has(c.toLowerCase())) continue;
+        const vals = new Set();
+        for (const f of features.slice(0, 80)) {
+          const v = f.properties?.[c];
+          if (v !== undefined && v !== null && !isNaN(Number(v))) vals.add(Number(v));
+        }
+        if (vals.size >= 3) {
+          mejorColumnaCuant = c;
+          break;
+        }
+      }
+    }
+
+    // 4. Prioridad semántica para columnas categóricas / cualitativas
+    const PATRONES_CATEGORICOS = [
+      /^(subtipo|tipo_equipamiento|tipo_uso|tipo|tipologia)$/i,
+      /^(categoria|category|amenity|shop|landuse|leisure|building)$/i,
+      /^(zonificacion|zona|uso|destino|clase|jerarquia)$/i,
+      /^(nombre|nombre_equipamiento|nombre_est|denominacion)$/i,
+      /^(estado|gestion|administracion|organismo)$/i
+    ];
+
+    let mejorColumnaCat = null;
+    for (const pat of PATRONES_CATEGORICOS) {
+      const enc = cols.categoricas.find(c => pat.test(c.trim()) && !COLUMNAS_IGNORADAS.has(c.toLowerCase()));
+      if (enc) {
+        mejorColumnaCat = enc;
+        break;
+      }
+    }
+    if (!mejorColumnaCat && cols.categoricas.length > 0) {
+      mejorColumnaCat = cols.categoricas.find(c => !COLUMNAS_IGNORADAS.has(c.toLowerCase())) || cols.categoricas[0];
+    }
+
+    // Si encontramos una métrica cuantitativa real, aplicamos Natural Breaks (Jenks) de 5 clases
+    if (mejorColumnaCuant) {
+      return {
+        modo: 'graduado',
+        columna: mejorColumnaCuant,
+        metodoCuant: 'jenks',
+        numClases: 5,
+        rampa: rampaPredeterminada,
+        orden: 'normal',
+        paletaCat: 'armonica'
+      };
+    }
+
+    // Si es una cobertura de entidades o cualitativa, aplicamos categorizado
+    if (mejorColumnaCat) {
+      return {
+        modo: 'categorizado',
+        columna: mejorColumnaCat,
+        metodoCuant: 'jenks',
+        numClases: 5,
+        rampa: rampaPredeterminada,
+        orden: 'normal',
+        paletaCat: 'armonica'
+      };
+    }
+
+    return {
+      modo: cols.numericas.length > 0 ? 'graduado' : 'categorizado',
+      columna: cols.numericas[0] || cols.categoricas[0] || 'subtipo',
+      metodoCuant: 'jenks',
+      numClases: 5,
+      rampa: rampaPredeterminada,
+      orden: 'normal',
+      paletaCat: 'armonica'
+    };
   }
 
   function calcularClasificacionCapa(reg) {
@@ -1346,25 +1489,17 @@ const ModuloMapa = (() => {
     const color = opciones.color || COLORES_CATEGORIA[idCapa] || COLORES_CATEGORIA.defecto;
     const icono = opciones.icono || '📍';
 
-    // Registrar o actualizar metadatos y configuración de simbología
+    // Registrar o actualizar metadatos y configuración de simbología predeterminada inteligente
     if (!registroCapasTematicas[idCapa]) {
       const cols = inspeccionarColumnasGeoJSON(geojson);
-      const colInicial = cols.numericas[0] || cols.categoricas[0] || 'subtipo';
+      const configPredeterminada = determinarSimbologiaPredeterminada(idCapa, geojson, opciones);
       registroCapasTematicas[idCapa] = {
         idCapa,
         geojson,
         opciones,
         capaLeaflet: null,
         cols,
-        config: {
-          modo: 'automatico',
-          columna: colInicial,
-          metodoCuant: 'cuartiles',
-          numClases: 4,
-          rampa: 'ylorrd',
-          orden: 'normal',
-          paletaCat: 'armonica'
-        },
+        config: configPredeterminada,
         clasificacion: null
       };
       registroCapasTematicas[idCapa].clasificacion = calcularClasificacionCapa(registroCapasTematicas[idCapa]);
@@ -1372,6 +1507,9 @@ const ModuloMapa = (() => {
       registroCapasTematicas[idCapa].geojson = geojson;
       registroCapasTematicas[idCapa].opciones = opciones;
       registroCapasTematicas[idCapa].cols = inspeccionarColumnasGeoJSON(geojson);
+      if (!registroCapasTematicas[idCapa].config || registroCapasTematicas[idCapa].config.modo === 'automatico') {
+        registroCapasTematicas[idCapa].config = determinarSimbologiaPredeterminada(idCapa, geojson, opciones);
+      }
       registroCapasTematicas[idCapa].clasificacion = calcularClasificacionCapa(registroCapasTematicas[idCapa]);
     }
 
@@ -1689,16 +1827,19 @@ const ModuloMapa = (() => {
   }
 
   function invalidarTamano(bounds) {
-    if (mapa) {
-      setTimeout(() => {
-        try {
-          mapa.invalidateSize();
-          if (bounds && bounds.isValid && bounds.isValid()) {
-            mapa.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
-          }
-        } catch (_) {}
-      }, 60);
-    }
+    if (!mapa) return;
+    const refrescar = () => {
+      try {
+        mapa.invalidateSize({ pan: false });
+        if (bounds && bounds.isValid && bounds.isValid()) {
+          mapa.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
+        }
+      } catch (_) {}
+    };
+    refrescar();
+    setTimeout(refrescar, 60);
+    setTimeout(refrescar, 200);
+    setTimeout(refrescar, 500);
   }
 
   function alternarCapaWMS(idCapa, capaWMS) {

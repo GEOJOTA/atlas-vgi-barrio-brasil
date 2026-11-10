@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261109_v47">
+  <link rel="stylesheet" href="css/estilos.css?v=20261109_v48">
 </head>
 <body>
 
@@ -73,17 +73,9 @@
 
       <nav class="barra-pestanas-profundidad" id="lista-navegacion" aria-label="Vistas de la sección activa">
         <!-- Vistas Grupo 03: Documentación -->
-        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="manual" style="display:none;">
+        <button type="button" class="pestana-nodo activa" data-grupo="documentacion" data-panel="manual" style="display:none;" onclick="if(window.activarPanel) window.activarPanel('manual');">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          <span>Manual del sistema</span>
-        </button>
-        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="diccionario" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          <span>Diccionario de datos (133 capas)</span>
-        </button>
-        <button type="button" class="pestana-nodo" data-grupo="documentacion" data-panel="licencias" style="display:none;">
-          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Licencias y descargas</span>
+          <span>Documentación</span>
         </button>
       </nav>
     </div>
@@ -614,7 +606,7 @@
                     Dimensión 1
                   </div>
                   <div class="icono-dimension-gigante">
-                    <svg class="ico-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span class="emoji-dimension" aria-hidden="true">👥</span>
                   </div>
                   <h4 class="nombre-dimension">Sociodemográfica</h4>
                   <p class="desc-dimension">Población, estructura por edades, hogares, migración y vulnerabilidad social (Censo 2024 y Registro Social de Hogares).</p>
@@ -638,7 +630,7 @@
                     Dimensión 2
                   </div>
                   <div class="icono-dimension-gigante">
-                    <svg class="ico-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    <span class="emoji-dimension" aria-hidden="true">📈</span>
                   </div>
                   <h4 class="nombre-dimension">Socioeconómica</h4>
                   <p class="desc-dimension">Inversión pública, comercio formal y barrial, catastro predial, telecomunicaciones y red energética.</p>
@@ -662,7 +654,7 @@
                     Dimensión 3
                   </div>
                   <div class="icono-dimension-gigante">
-                    <svg class="ico-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22v-7"/><path d="M9 15c-3 0-5-2.5-5-5.5S6.5 4 12 2c5.5 2 8 4.5 8 7.5S18 15 15 15H9z"/></svg>
+                    <span class="emoji-dimension" aria-hidden="true">🌿</span>
                   </div>
                   <h4 class="nombre-dimension">Socioambiental</h4>
                   <p class="desc-dimension">Áreas verdes, arbolado urbano, islas de calor, ruido ambiental, biodiversidad y gestión de residuos.</p>
@@ -686,7 +678,7 @@
                     Dimensión 4
                   </div>
                   <div class="icono-dimension-gigante">
-                    <svg class="ico-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    <span class="emoji-dimension" aria-hidden="true">🏥</span>
                   </div>
                   <h4 class="nombre-dimension">Sociosanitaria</h4>
                   <p class="desc-dimension">Establecimientos de salud pública, servicios de urgencia, farmacias y población con dependencia funcional.</p>
@@ -710,7 +702,7 @@
                     Dimensión 5
                   </div>
                   <div class="icono-dimension-gigante">
-                    <svg class="ico-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+                    <span class="emoji-dimension" aria-hidden="true">🏛️</span>
                   </div>
                   <h4 class="nombre-dimension">Sociourbana y habitabilidad</h4>
                   <p class="desc-dimension">Edificación, Plan Regulador Comunal (<abbr title="Plan Regulador Comunal">PRC</abbr>), equipamiento educativo y cultural, transporte público, ciclovías y patrimonio.</p>
@@ -779,49 +771,19 @@
       </div>
     </section>
 
-    <!-- ---------- 07. MANUAL DE USO Y ACTUALIZACIÓN TÉCNICA ---------- -->
+    <!-- ---------- MÓDULO 03. DOCUMENTACIÓN ---------- -->
     <section class="panel" id="panel-manual">
-      <header class="cabecera-modulo-limpia" id="sec-manual-cabecera">
-        <h2>Manual de uso y actualización</h2>
-        <p class="descripcion">Guía práctica por capítulos para utilizar el visor, interpretar los indicadores e incorporar nuevas capas a la plataforma.</p>
+      <header class="header-modulo-indicadores" id="sec-manual-cabecera">
+        <div class="insignia-indicadores" style="display:inline-flex; align-items:center; gap:6px; font-family:var(--fuente-datos); font-size:0.75rem; color:var(--esmeralda); font-weight:700; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:6px;">
+          <span class="punto-pulso"></span>
+          MÓDULO 03 · DOCUMENTACIÓN
+        </div>
+        <h2 class="titulo-modulo-indicadores">Documentación</h2>
+        <p class="bajada-modulo-indicadores">
+          Manual de uso del sistema, metodologías operativas, marco jurídico de licencias abiertas (CC BY-SA 4.0 / ODbL 1.0 / GNU AGPLv3) y descarga directa de catálogos y geodatabase comunitaria (257 coberturas espaciales).
+        </p>
       </header>
       <div id="contenido-manual"></div>
-    </section>
-
-    <!-- ---------- 09. DICCIONARIO TERRITORIAL (133 CAPAS) ---------- -->
-    <section class="panel" id="panel-diccionario">
-      <header class="cabecera-modulo-limpia" id="sec-dicc-cabecera">
-        <h2>Diccionario de datos y atributos (133 capas)</h2>
-        <p class="descripcion">Consulta el significado de cada atributo, su equivalencia con los catálogos oficiales de IDE Chile y los 86 descriptores barriales aportados por el mapeo ciudadano (norma ISO 19110).</p>
-      </header>
-
-      <div class="bloque" style="margin-bottom:14px;">
-        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;" id="contenedor-filtros-diccionario">
-          <button type="button" class="filtro-dicc-btn activo" data-grupo="todos">Todos los descriptores (140)</button>
-          <button type="button" class="filtro-dicc-btn" data-grupo="brechas">Brechas cubiertas por VGI (86)</button>
-          <button type="button" class="filtro-dicc-btn" data-grupo="oficiales">Capas oficiales del Estado (123)</button>
-          <button type="button" class="filtro-dicc-btn" data-grupo="esquema">Esquema normalizado (17 atributos)</button>
-          <button type="button" class="filtro-dicc-btn" data-grupo="educacion_servicios">Educación y servicios (CAT 1–2)</button>
-          <button type="button" class="filtro-dicc-btn" data-grupo="movilidad">Movilidad y transporte (CAT 3–4)</button>
-          <button type="button" class="filtro-dicc-btn" data-grupo="patrimonio_verde">Plazas y patrimonio (CAT 5–6)</button>
-          <button type="button" class="filtro-dicc-btn" data-grupo="accesibilidad_biodiv">Accesibilidad y biodiversidad (CAT 7–8)</button>
-          <button type="button" class="filtro-dicc-btn" data-grupo="edificaciones_suelo">Edificaciones y suelo (CAT 9–10)</button>
-        </div>
-        <input type="text" id="filtro-diccionario" placeholder="Buscar por término, institución, código o etiqueta (ej: accesibilidad, PRC, Censo, universidad)..." style="width:100%; padding:10px 14px; font-size:0.95rem; border:1px solid var(--linea); border-radius:8px; background:var(--papel); color:var(--tinta);">
-      </div>
-
-      <div id="contenido-diccionario">
-        <!-- Renderizado dinámico paginado y con índice lateral desde ModuloDiccionario -->
-      </div>
-    </section>
-
-    <!-- ---------- 10. LICENCIAS Y CATÁLOGOS ---------- -->
-    <section class="panel" id="panel-licencias">
-      <header class="cabecera-modulo-limpia" id="sec-lic-cabecera">
-        <h2>Licencias abiertas y descarga de catálogos</h2>
-        <p class="descripcion">Condiciones legales de uso y atribución (ODbL 1.0, Creative Commons y Ley N° 20.285 de Transparencia) junto con las tablas maestras en Excel y la base de datos completa.</p>
-      </header>
-      <div class="bloque resultado" id="contenido-licencias"></div>
     </section>
 
 
@@ -962,28 +924,28 @@
 <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261109_v47"></script>
-<script src="js/modulos/db_client.js?v=20261109_v47"></script>
-<script src="js/modulos/geodesia.js?v=20261109_v47"></script>
-<script src="js/modulos/mapa.js?v=20261109_v47"></script>
-<script src="js/modulos/importador_capas.js?v=20261109_v47"></script>
-<script src="js/modulos/ide_chile.js?v=20261109_v47"></script>
-<script src="js/modulos/evaluador_normativo.js?v=20261109_v47"></script>
-<script src="js/modulos/osm.js?v=20261109_v47"></script>
-<script src="js/modulos/ohsome.js?v=20261109_v47"></script>
-<script src="js/modulos/gbif.js?v=20261109_v47"></script>
-<script src="js/modulos/umap.js?v=20261109_v47"></script>
-<script src="js/modulos/metadatos.js?v=20261109_v47"></script>
-<script src="js/modulos/licencias.js?v=20261109_v47"></script>
-<script src="js/modulos/manual.js?v=20261109_v47"></script>
-<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261109_v47"></script>
-<script src="js/modulos/indicadores_analisis.js?v=20261109_v47"></script>
-<script src="js/modulos/taginfo.js?v=20261109_v47"></script>
-<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v47"></script>
-<script src="js/modulos/calidad_analyst.js?v=20261109_v47"></script>
-<script src="js/modulos/diccionario.js?v=20261109_v47"></script>
-<script src="js/modulos/manifold_canvas.js?v=20261109_v47"></script>
-<script src="js/modulos/leyenda_atajos.js?v=20261109_v47"></script>
-<script src="js/app.js?v=20261109_v47"></script>
+<script src="js/config.js?v=20261109_v48"></script>
+<script src="js/modulos/db_client.js?v=20261109_v48"></script>
+<script src="js/modulos/geodesia.js?v=20261109_v48"></script>
+<script src="js/modulos/mapa.js?v=20261109_v48"></script>
+<script src="js/modulos/importador_capas.js?v=20261109_v48"></script>
+<script src="js/modulos/ide_chile.js?v=20261109_v48"></script>
+<script src="js/modulos/evaluador_normativo.js?v=20261109_v48"></script>
+<script src="js/modulos/osm.js?v=20261109_v48"></script>
+<script src="js/modulos/ohsome.js?v=20261109_v48"></script>
+<script src="js/modulos/gbif.js?v=20261109_v48"></script>
+<script src="js/modulos/umap.js?v=20261109_v48"></script>
+<script src="js/modulos/metadatos.js?v=20261109_v48"></script>
+<script src="js/modulos/licencias.js?v=20261109_v48"></script>
+<script src="js/modulos/manual.js?v=20261109_v48"></script>
+<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261109_v48"></script>
+<script src="js/modulos/indicadores_analisis.js?v=20261109_v48"></script>
+<script src="js/modulos/taginfo.js?v=20261109_v48"></script>
+<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v48"></script>
+<script src="js/modulos/calidad_analyst.js?v=20261109_v48"></script>
+<script src="js/modulos/diccionario.js?v=20261109_v48"></script>
+<script src="js/modulos/manifold_canvas.js?v=20261109_v48"></script>
+<script src="js/modulos/leyenda_atajos.js?v=20261109_v48"></script>
+<script src="js/app.js?v=20261109_v48"></script>
 </body>
 </html>

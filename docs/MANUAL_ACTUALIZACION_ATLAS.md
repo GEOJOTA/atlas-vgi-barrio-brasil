@@ -2068,53 +2068,41 @@ El Atlas ofrece cuatro capas base de referencia cartográfica gratuitas y sin re
 
 ```javascript
 // 1. OpenStreetMap Estándar
+// 1. CartoDB Dark Matter (Predeterminado, tema táctico oscuro de alto contraste)
+const cartoDark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+  maxZoom: 20,
+  subdomains: 'abcd',
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores, &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+});
+
+// 2. OpenStreetMap Estándar (Cartografía colaborativa mundial)
 const osmEstandar = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores'
 });
 
-// 2. Relieve Topográfico OpenTopoMap
-const openTopo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
-  maxZoom: 17,
-  attribution: 'Map data: &copy; OSM contributors, SRTM | Map style: &copy; OpenTopoMap (CC-BY-SA)'
+// 3. CartoDB Positron (Tema claro minimalista diurno)
+const cartoLight = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+  maxZoom: 20,
+  subdomains: 'abcd',
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores, &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
 });
 
-// 3. Imagen Satelital Esri World Imagery (abierta, alta resolución global sin clave API)
+// 4. Imagen Satelital Esri World Imagery (abierta, alta resolución global sin clave API)
 const satelitalEsri = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
   maxZoom: 19,
-  attribution: 'Tiles &copy; Esri &mdash; DigitalGlobe, GeoEye, Earthstar, CNES/Airbus, USDA, USGS, AeroGRID, IGN y Comunidad SIG'
-});
-
-// 4. Imagen Satelital Bing Aerial (gratuita por Quadkey dinámico sin clave API)
-const BingLayer = L.TileLayer.extend({
-  getTileUrl: function (coords) {
-    let quadkey = '';
-    for (let i = coords.z; i > 0; i--) {
-      let digit = 0;
-      const mask = 1 << (i - 1);
-      if ((coords.x & mask) !== 0) digit += 1;
-      if ((coords.y & mask) !== 0) digit += 2;
-      quadkey += digit;
-    }
-    const sub = (coords.x + coords.y) % 4;
-    return `https://ecn.t${sub}.tiles.virtualearth.net/tiles/a${quadkey}.jpeg?g=1`;
-  }
-});
-
-const satelitalBing = new BingLayer('', {
-  maxZoom: 19,
-  attribution: '&copy; <a href="https://www.bing.com/maps" target="_blank" rel="noopener">Microsoft Bing</a> Earthstar Geographics'
+  attribution: 'Tiles &copy; Esri &mdash; DigitalGlobe, Earthstar, CNES/Airbus, USDA, USGS, IGN y Comunidad SIG'
 });
 
 const mapasBase = {
+  'CartoDB Dark Matter (Recomendado)': cartoDark,
   'OpenStreetMap Estándar': osmEstandar,
-  'Relieve Topográfico (OpenTopo)': openTopo,
-  'Imagen Satelital (Esri)': satelitalEsri,
-  'Imagen Satelital (Bing)': satelitalBing
+  'CartoDB Positron (Claro)': cartoLight,
+  'Imagen Satelital (Esri World Imagery)': satelitalEsri
 };
 
-// Carga por defecto: OpenStreetMap Estándar
-osmEstandar.addTo(mapa);
+// Carga por defecto: CartoDB Dark Matter
+cartoDark.addTo(mapa);
 ```
 
 ### 21.3. Generador de marcadores vectoriales SVG con efecto pulso

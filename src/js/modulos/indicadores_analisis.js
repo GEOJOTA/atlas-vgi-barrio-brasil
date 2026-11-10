@@ -1808,7 +1808,7 @@ const ModuloIndicadoresAnalisis = (() => {
                     DIMENSIÓN 0${dim.numero}
                   </div>
                   <div class="icono-dimension-gigante" style="background:${dim.colorFondo}; border-color:${dim.colorBorde};">
-                    <span>${dim.icono}</span>
+                    <span class="emoji-dimension" aria-hidden="true">${dim.icono}</span>
                   </div>
                   <h4 class="nombre-dimension" style="color:#ffffff;">${dim.nombre}</h4>
                   <p class="desc-dimension">${dim.descripcion}</p>

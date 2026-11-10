@@ -252,42 +252,59 @@ const ModuloManual = (() => {
         id: 'cap-uso-03',
         numero: 'USO · 03',
         icono: '🗺️',
-        titulo: 'Operación del Módulo 02: Explorar Mapa (Visor y Consulta Espacial)',
-        subtitulo: 'Visor cartográfico Leaflet inmediato, áreas de enfoque, panel de detalles a todo lo ancho y exportación GeoJSON con estilos.',
+        titulo: 'Operación del Módulo 02: Explorar Mapa (Visor Inmediato y Simbología Inteligente)',
+        subtitulo: 'Visor cartográfico Leaflet sin requerimiento de API, mapas base abiertos, simbología automática con Natural Breaks (Jenks) y panel inferior de inspección.',
         html: `
-          <div style="display:flex; flex-direction:column; gap:14px;">
-            <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:15px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
-                <h4 style="margin:0; color:#38bdf8;">1. Visor Territorial Leaflet Directo</h4>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+                <h4 style="margin:0; color:#38bdf8; font-size:1.05rem;">1. Visor Inmediato y Mapas Base 100% Abiertos (Sin API Keys)</h4>
                 <button type="button" class="accion" onclick="ModuloManual.irAPanel('inicio')" style="font-size:0.8rem; padding:6px 12px;">Abrir Visor (Módulo 02) ↗</button>
               </div>
-              <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                <li><strong>Acceso inmediato:</strong> Al ingresar al Módulo 02, el visor cartográfico se presenta en primer plano de forma directa sin pantallas intermedias ni elementos obstructivos.</li>
-                <li><strong>Áreas de enfoque:</strong> Selector rápido entre dos polígonos territoriales calibrados: a) <strong>Barrio Brasil Completo</strong> (escala barrial) y b) <strong>Comuna de Santiago</strong> (visión comunal integral).</li>
-                <li><strong>Botón "Ver Atlas de Análisis":</strong> Permite regresar en un clic al Módulo 01 para examinar las 4 láminas territoriales y explorar las 257 capas desde sus 5 dimensiones analíticas.</li>
+              <p style="margin:0 0 10px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
+                El visor cartográfico Leaflet se despliega de forma instantánea al ingresar al Módulo 02. La plataforma erradica por completo la dependencia de proveedores que exigen tokens o credenciales comerciales (como Bing Maps o Google Maps), integrando 4 servidores cartográficos abiertos de alta disponibilidad mundial:
+              </p>
+              <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
+                <li><strong>CartoDB Dark Matter (Predeterminado):</strong> Base cartográfica oscura táctica de alto contraste, calibrada para resaltar las geometrías y análisis espaciales del Atlas.</li>
+                <li><strong>OpenStreetMap Estándar:</strong> Cartografía colaborativa mundial con toponimia barrial completa, ciclofaixas y numeración predial.</li>
+                <li><strong>CartoDB Positron:</strong> Base clara minimalista, óptima para revisión diurna e impresión de informes técnicos.</li>
+                <li><strong>Imagen Satelital (Esri World Imagery):</strong> Ortoimágenes satelitales globales de alta resolución sin requerimiento de clave API.</li>
               </ul>
             </div>
 
-            <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:15px;">
-              <h4 style="margin:0 0 6px 0; color:#34d399;">2. Activación de Capas desde Módulo 01 y Panel Inferior de Detalles</h4>
-              <p style="margin:0 0 8px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                Para una experiencia de navegación limpia y enfocada, la exploración y activación de las <strong>257 coberturas espaciales</strong> (123 oficiales + 134 IGV descentralizadas) se realiza desde el <strong>Módulo 01 (Análisis)</strong> a través de sus 5 Dimensiones Analíticas. Al activar cualquier capa, el sistema conmuta automáticamente al visor:
+            <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(16,185,129,0.4); border-radius:10px; padding:16px;">
+              <h4 style="margin:0 0 8px 0; color:#34d399; font-size:1.05rem;">2. Simbología Inteligente Predeterminada al Cargar Capas</h4>
+              <p style="margin:0 0 10px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
+                Cada una de las <strong>257 coberturas</strong> (123 oficiales + 134 IGV descentralizadas) se carga con una parametrización gráfica adaptada a sus atributos intrínsecos y dimensión analítica:
               </p>
-              <ul style="margin:0 0 10px 0; padding-left:20px; color:var(--tinta-suave); font-size:0.87rem; line-height:1.6;">
-                <li><strong>Panel inferior "Detalles del elemento":</strong> Situado justo debajo del mapa a todo lo ancho, ofrece máxima amplitud para examinar atributos, indicadores, columnas de datos, metadatos y enlaces de descarga de cada entidad seleccionada.</li>
-                <li><strong>Exportación GeoJSON con Simbología Aplicada:</strong> El botón <em>Exportar vista (GeoJSON)</em> descarga la totalidad de elementos visibles incorporando en sus propiedades los estilos gráficos configurados (colores, contornos, rellenos, opacidades y rampas temáticas), listos para interoperar con QGIS u otros SIG.</li>
+              <ul style="margin:0 0 12px 0; padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
+                <li><strong>Capas cuantitativas / índices:</strong> Clasificación matemática automática mediante <strong>Natural Breaks (Jenks)</strong> en 5 clases, minimizando la varianza intraclase y maximizando la diferenciación espacial real (población Censo, superficies en m², montos de inversión, tasas de arbolado).</li>
+                <li><strong>Capas de entidades / cualitativas:</strong> Simbología <strong>categorizada</strong> que asigna colores contrastantes armónicos a valores discretos (zonificación PRC, tipos de equipamiento, jerarquía vial, usos de suelo).</li>
+                <li><strong>Rampas cromáticas por dimensión:</strong> Sociodemográfica (Cian/Viridis), Socioeconómica (Ámbar/YlOrRd), Socioambiental (Verde/Greens), Sociosanitaria (Magenta/Magma) y Sociourbana (Violeta/Purples).</li>
               </ul>
+              <div style="background:rgba(15,23,42,0.7); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:12px;">
+                <p style="margin:0; font-size:0.85rem; color:var(--tinta-suave); line-height:1.55;">
+                  💡 <strong>Personalización dinámica:</strong> A través del panel desplegable <em>Simbología Dinámica</em> sobre el mapa, el analista puede modificar manualmente el método de corte (Jenks, Cuantiles, Intervalos Iguales, Desviación Estándar), la columna analítica, la rampa de color o invertir el gradiente según las necesidades del informe.
+                </p>
+              </div>
             </div>
 
-            <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(245,158,11,0.4); border-radius:10px; padding:15px;">
-              <h4 style="margin:0 0 6px 0; color:#fbbf24;">3. Inspector Normativo PRC/OGUC</h4>
+            <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:16px;">
+              <h4 style="margin:0 0 8px 0; color:#38bdf8; font-size:1.05rem;">3. Panel Inferior de Detalles a Todo lo Ancho</h4>
               <p style="margin:0 0 8px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                Al activar <strong>⚖ Inspector Normativo</strong> y hacer clic en cualquier punto del mapa, el sistema ejecuta una intersección espacial geodésica y analiza automáticamente:
+                Situado inmediatamente debajo del mapa, el panel <em>Detalles del elemento</em> proporciona lectura cómoda y exhaustiva de todas las columnas, indicadores calculados (como superficies métricas en EPSG:32719 UTM 19S) y trazabilidad del custodio institucional o fuente colaborativa de la entidad seleccionada.
               </p>
-              <ul style="margin:0 0 10px 0; padding-left:20px; color:var(--tinta-suave); font-size:0.87rem; line-height:1.6;">
-                <li>Zonificación del Plan Regulador Comunal (PRC Santiago) y Plan Regulador Metropolitano (PRMS), evaluando usos permitidos y prohibidos bajo el <strong>Art. 2.1.24 OGUC</strong>.</li>
-                <li>Restricciones por riesgo (Art. 2.1.17 OGUC), áreas verdes normadas y afectación patrimonial (Zonas Típicas, ZCH, ICH y Monumentos Nacionales).</li>
-                <li>Permisos de edificación DOM y recepciones finales CRF del INE (densidad neta residencial y ocupación del suelo).</li>
+            </div>
+
+            <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(245,158,11,0.4); border-radius:10px; padding:16px;">
+              <h4 style="margin:0 0 8px 0; color:#fbbf24; font-size:1.05rem;">4. Inspector Normativo PRC/OGUC y Delimitación Espacial</h4>
+              <p style="margin:0 0 8px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
+                Al activar el <strong>⚖ Inspector Normativo</strong> y cliquear sobre cualquier manzana o predio, el motor intersecta las capas oficiales del Plan Regulador Comunal de Santiago y la Ordenanza General de Urbanismo y Construcciones (OGUC):
+              </p>
+              <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.6;">
+                <li>Zonificación PRC (usos permitidos y prohibidos según el Art. 2.1.24 OGUC).</li>
+                <li>Afectaciones patrimoniales (Zonas Típicas, ZCH, Inmuebles de Conservación Histórica y Monumentos Nacionales).</li>
+                <li>Dinámicas edificatorias oficiales (Permisos DOM y Recepciones Finales CRF del INE).</li>
               </ul>
             </div>
           </div>
@@ -296,58 +313,138 @@ const ModuloManual = (() => {
       {
         id: 'cap-uso-04',
         numero: 'USO · 04',
-        icono: '📚',
-        titulo: 'Operación del Módulo 03: Documentación, Diccionario y Licencias Abiertas',
-        subtitulo: 'Diccionario de descriptores barriales, licencias abiertas, descarga de geodatabase completa y manuales técnicos.',
+        icono: '⚖️',
+        titulo: 'Marco Jurídico de Licencias Abiertas y Descarga Directa de Catálogos y Geodatabase (257 Coberturas)',
+        subtitulo: 'Régimen tripartito de bienes comunes digitales (CC BY-SA 4.0 / ODbL 1.0 / GNU AGPLv3 / Ley 20.285), archivo maestro .zip y hojas maestras en Excel.',
         html: `
-          <div style="display:flex; flex-direction:column; gap:14px;">
-            <p style="margin:0; font-size:0.9rem; color:var(--tinta-suave); line-height:1.65;">
-              El <strong>Módulo 03 · Documentación</strong> garantiza la certeza técnica, metodológica y jurídica del Atlas, integrando herramientas especializadas de metadatos, diccionario semántico y descarga de datos:
-            </p>
-
-            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(290px, 1fr)); gap:12px;">
-              <div style="background:rgba(15,23,42,0.6); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
-                <div>
-                  <span style="font-size:0.74rem; font-weight:800; color:#38bdf8;">CATÁLOGO SEMÁNTICO</span>
-                  <h4 style="margin:4px 0 6px 0;">Diccionario de descriptores (134 Capas IGV)</h4>
-                  <p style="font-size:0.84rem; color:var(--tinta-suave); line-height:1.55;">Catálogo de objetos y atributos conforme a ISO 19110, homologación semántica con IDE Chile y categorización temática exhaustiva en español.</p>
+          <div style="display:flex; flex-direction:column; gap:18px;">
+            
+            <!-- Descarga de la Geodatabase Completa -->
+            <div class="bloque" id="sec-lic-descargas-maestras" style="border-left:4px solid #10b981; background:rgba(16,185,129,0.06); padding:18px; border-radius:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px; margin-bottom:12px;">
+                <div style="flex:1; min-width:280px;">
+                  <span style="font-size:0.75rem; font-weight:800; color:#34d399; text-transform:uppercase; letter-spacing:0.05em;">ACCESO ABIERTO // DESCARGA INTEGRAL</span>
+                  <h3 style="margin:4px 0 6px 0; color:#ffffff; font-size:1.25rem;">📦 Geodatabase Completa del Atlas para la Gestión Territorial (.zip)</h3>
+                  <p class="descripcion" style="margin:0; font-size:0.89rem; color:var(--tinta-suave); line-height:1.6;">
+                    El paquete consolidado incluye las <strong>257 coberturas espaciales operativas</strong> (134 capas colaborativas IGV descentralizadas + 123 capas oficiales del Estado de Chile), los libros maestros en Excel, las matrices de metacalidad y los esquemas PostGIS (<strong>542,35 MB comprimido / ~3,33 GB descomprimido</strong>).
+                  </p>
                 </div>
-                <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('diccionario')" style="margin-top:10px; font-size:0.8rem;">Abrir Diccionario de descriptores ↗</button>
-              </div>
-
-              <div style="background:rgba(15,23,42,0.6); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
                 <div>
-                  <span style="font-size:0.74rem; font-weight:800; color:#c084fc;">RÉGIMEN JURÍDICO</span>
-                  <h4 style="margin:4px 0 6px 0;">Licencias y descargas (.xlsx / ZIP)</h4>
-                  <p style="font-size:0.84rem; color:var(--tinta-suave); line-height:1.55;">Marco jurídico de datos abiertos (ODbL 1.0, CC BY-SA 4.0, Ley N° 20.285 de Transparencia, Ley N° 19.628 de Protección de Datos) y catálogos en Excel.</p>
+                  <a href="docs/geodatabase_completa_atlas_vgi.zip" download="geodatabase_completa_atlas_vgi.zip" class="accion primaria-cta" style="background:linear-gradient(135deg, #10b981, #059669); color:#ffffff; font-weight:800; padding:10px 20px; border-radius:8px; display:inline-flex; align-items:center; gap:8px; text-decoration:none; box-shadow:0 4px 14px rgba(16,185,129,0.35);">
+                    ⬇️ Descargar Geodatabase Completa (.zip · 542 MB)
+                  </a>
                 </div>
-                <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('licencias')" style="margin-top:10px; font-size:0.8rem;">Abrir Licencias y descargas ↗</button>
-              </div>
-
-              <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.35); border-radius:10px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
-                <div>
-                  <span style="font-size:0.74rem; font-weight:800; color:#34d399;">ACCESO ABIERTO // DESCARGA INTEGRAL</span>
-                  <h4 style="margin:4px 0 6px 0;">Geodatabase Completa del Atlas (.zip)</h4>
-                  <p style="font-size:0.84rem; color:var(--tinta-suave); line-height:1.55;">Descarga en un clic del paquete completo de capas en formato dual (GeoJSON + GeoPackage) junto con las fichas de metadatos estandarizadas.</p>
-                </div>
-                <button type="button" class="accion" onclick="document.getElementById('btn-descargar-todo-ide').click()" style="margin-top:10px; font-size:0.8rem; background:linear-gradient(135deg, #10b981, #059669); color:#ffffff; font-weight:700;">📦 Descargar BBDD Completa (.zip) ↗</button>
               </div>
             </div>
 
-            <div style="background:rgba(15,23,42,0.45); border:1px solid rgba(245,158,11,0.3); border-radius:10px; padding:14px; margin-top:8px;">
-              <h4 style="margin:0 0 6px 0; color:#fbbf24; font-size:0.95rem;">🛠️ Manual de Actualización y Mantención Técnica (Git)</h4>
-              <p style="margin:0 0 10px 0; font-size:0.86rem; color:var(--tinta-suave); line-height:1.6;">
-                Para garantizar la simplicidad y claridad de la interfaz web, el <strong>Manual de Actualización y Mantención Técnica</strong> se encuentra documentado y mantenido directamente en el repositorio de Git del proyecto. Contiene la arquitectura del stack tecnológico, la sincronización simétrica entre <code>data/</code> y <code>src/data/</code>, el protocolo de 6 etapas para la incorporación de nuevas coberturas y los scripts de geoprocesamiento:
+            <!-- Tabla de Catálogos y Libros Maestros en Excel -->
+            <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:18px;">
+              <h4 style="margin:0 0 6px 0; color:#38bdf8; font-size:1.05rem;">Catálogos Estructurados y Libros de Datos Disponibles para Descarga</h4>
+              <p style="margin:0 0 12px 0; font-size:0.86rem; color:var(--tinta-suave);">Tablas maestras con el esquema formal de atributos, metadatos ISO 19115 y matrices de evaluación multicriterio:</p>
+              
+              <div class="contenedor-tabla-responsiva">
+                <table class="tabla-datos" style="width:100%; font-size:0.86rem; min-width:680px;">
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px;">Catálogo / Documento</th>
+                      <th style="min-width:260px;">Contenido y Estructura</th>
+                      <th style="min-width:130px;">Formato y Peso</th>
+                      <th style="min-width:110px;">Descarga</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Taxonomía y Diccionario de Capas</strong><br><code class="codigo-licencia">docs/categorias_tematicas_osm.xlsx</code></td>
+                      <td>4 hojas: 10 categorías maestras (CAT-01 a CAT-10), descriptores barriales, esquema de atributos normalizados y referencias APA 7ª ed.</td>
+                      <td>Excel (<code>.xlsx</code>) · ~52 KB</td>
+                      <td><a href="docs/categorias_tematicas_osm.xlsx" download="categorias_tematicas_osm.xlsx" class="accion secundaria" style="font-size:0.78rem; padding:5px 10px; display:inline-block;">Descargar Excel</a></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Perfil de Metadatos y Calidad</strong><br><code class="codigo-licencia">docs/perfil_metadatos_vgi.xlsx</code></td>
+                      <td>Matriz de evaluación multicriterio (WLC v2.0, IGV medio 95,4 %) y homologación con ISO 19115 / IDE Chile.</td>
+                      <td>Excel (<code>.xlsx</code>) · ~31 KB</td>
+                      <td><a href="docs/perfil_metadatos_vgi.xlsx" download="perfil_metadatos_vgi.xlsx" class="accion secundaria" style="font-size:0.78rem; padding:5px 10px; display:inline-block;">Descargar Excel</a></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Catálogo Sistemático de Fuentes</strong><br><code class="codigo-licencia">docs/catalogo_fuentes_vgi.xlsx</code></td>
+                      <td>Inventario exhaustivo de fuentes oficiales y colaborativas con escala, cobertura, licenciamiento y aplicación.</td>
+                      <td>Excel (<code>.xlsx</code>) · ~39 KB</td>
+                      <td><a href="docs/catalogo_fuentes_vgi.xlsx" download="catalogo_fuentes_vgi.xlsx" class="accion secundaria" style="font-size:0.78rem; padding:5px 10px; display:inline-block;">Descargar Excel</a></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Ranking Consolidado de Calidad</strong><br><code class="codigo-licencia">docs/wlc_metacalidad_ranking.csv</code></td>
+                      <td>Tabla plana tabular con puntajes cuantitativos, cualitativos, índice IGV y clasificación de idoneidad territorial.</td>
+                      <td>CSV (<code>.csv</code>) · ~34 KB</td>
+                      <td><a href="docs/wlc_metacalidad_ranking.csv" download="wlc_metacalidad_ranking.csv" class="accion secundaria" style="font-size:0.78rem; padding:5px 10px; display:inline-block;">Descargar CSV</a></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Bibliografía y Estado del Arte</strong><br><code class="codigo-licencia">docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md</code></td>
+                      <td>125 referencias bibliográficas estructuradas bajo norma APA 7ª edición sobre VGI, ordenamiento territorial y SIG.</td>
+                      <td>Markdown (<code>.md</code>) · ~81 KB</td>
+                      <td><a href="docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md" download="BIBLIOGRAFIA_SEMINARIO_Y_ATLAS_APA7.md" class="accion secundaria" style="font-size:0.78rem; padding:5px 10px; display:inline-block;">Descargar .md</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Marco Tripartito de Licenciamiento Abierto -->
+            <div class="bloque" id="sec-lic-marco-tripartito" style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:18px;">
+              <h4 style="margin:0 0 6px 0; color:#fbbf24; font-size:1.05rem;">Marco Tripartito de Licenciamiento Abierto (Atlas VGI Territorial)</h4>
+              <p class="descripcion" style="margin:0 0 12px 0; font-size:0.87rem; color:var(--tinta-suave); line-height:1.6;">
+                Se descarta expresamente la licencia permisiva MIT para el proyecto. En el contexto de los datos públicos y la Información Geográfica Voluntaria en Chile, MIT permite que actores privados cierren el código y monopolicen la cartografía comunitaria. En su lugar, se adopta un marco de <strong>copyleft y reciprocidad obligatoria</strong> fundamentado en la Ley N° 17.336 de Propiedad Intelectual y la Ley N° 20.285 de Transparencia y Acceso a la Información Pública:
               </p>
-              <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <a href="docs/MANUAL_ACTUALIZACION_ATLAS.md" download="MANUAL_ACTUALIZACION_ATLAS.md" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px;">
-                  📄 Descargar Manual de Actualización (Markdown)
-                </a>
-                <a href="docs/MANUAL_USO.md" download="MANUAL_USO_ATLAS.md" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px;">
-                  📄 Descargar Manual de Uso (Markdown)
-                </a>
+
+              <div class="contenedor-tabla-responsiva">
+                <table class="tabla-datos" style="width:100%; font-size:0.86rem; min-width:720px;">
+                  <thead>
+                    <tr>
+                      <th style="min-width:180px;">Ámbito del Proyecto</th>
+                      <th style="min-width:210px;">Licencia Abierta Aplicada</th>
+                      <th style="min-width:280px;">Términos de Reciprocidad y Uso</th>
+                      <th style="min-width:110px;">Texto Legal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Documentación, Manuales y Cartografías</strong></td>
+                      <td><span class="badge-licencia cc">CC BY-SA 4.0</span><br><small>Creative Commons Atribución-CompartirIgual 4.0</small></td>
+                      <td>Permite compartir y adaptar las obras siempre que se reconozca la autoría y las obras derivadas se distribuyan bajo la misma licencia idéntica (Share-Alike).</td>
+                      <td><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" target="_blank" rel="noopener" class="enlace-externo">Ver licencia ↗</a></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Bases de Datos Espaciales y Capas IGV</strong></td>
+                      <td><span class="badge-licencia odbl">ODbL 1.0</span><br><small>Open Database License v1.0</small></td>
+                      <td>Compatibilidad nativa con la OpenStreetMap Foundation (OSMF). Cualquier base geográfica enriquecida debe compartirse bajo ODbL manteniendo atribución colectiva.</td>
+                      <td><a href="https://opendatacommons.org/licenses/odbl/" target="_blank" rel="noopener" class="enlace-externo">Ver licencia ↗</a></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Código Fuente del Visor y Procesamiento</strong></td>
+                      <td><span class="badge-licencia agpl">GNU AGPLv3</span><br><small>GNU Affero General Public License v3.0</small></td>
+                      <td>Diseñada para software de red y plataformas web. Si se aloja una versión modificada del visor en un servidor, existe la obligación legal de liberar el código modificado a la comunidad.</td>
+                      <td><a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener" class="enlace-externo">Ver licencia ↗</a></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
+
+            <!-- Navegación entre módulos de la plataforma -->
+            <div style="background:rgba(15,23,42,0.4); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <div>
+                <h5 style="margin:0 0 4px 0; color:#ffffff; font-size:0.95rem;">Explorar otras secciones del Atlas</h5>
+                <p style="margin:0; font-size:0.83rem; color:var(--tinta-suave);">Navegue fluidamente entre las dimensiones analíticas y el visor interactivo:</p>
+              </div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button type="button" class="accion" onclick="ModuloManual.irAPanel('indicadores')" style="font-size:0.82rem; padding:8px 14px;">
+                  📊 Abrir Módulo 01: Análisis
+                </button>
+                <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('inicio')" style="font-size:0.82rem; padding:8px 14px;">
+                  🗺️ Abrir Módulo 02: Explorar Mapa
+                </button>
+              </div>
+            </div>
+
           </div>
         `
       },
@@ -535,8 +632,9 @@ const ModuloManual = (() => {
       'explorar': 'inicio',
       'mapa': 'inicio',
       'visor': 'inicio',
-      'diccionario': 'diccionario',
-      'licencias': 'licencias',
+      'diccionario': 'manual',
+      'licencias': 'manual',
+      'documentacion': 'manual',
       'manual': 'manual',
       'indicadores': 'indicadores',
       'analisis': 'indicadores'

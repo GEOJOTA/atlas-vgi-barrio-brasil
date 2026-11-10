@@ -36,30 +36,32 @@ const ModuloAtajosLeyenda = (() => {
     },
     'manual': {
       id: 'manual',
-      nombre: 'Manual de uso',
-      badge: 'Documentación',
+      nombre: 'Documentación',
+      badge: 'Módulo 03',
       apartados: [
-        { id: 'sec-manual-cabecera', titulo: 'Introducción al Atlas', abajo: false },
-        { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true }
+        { id: 'sec-manual-cabecera', titulo: 'Documentación del Atlas', abajo: false },
+        { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true },
+        { id: 'sec-lic-descargas-maestras', titulo: 'Licencias y descargas (257 capas)', abajo: true }
       ]
     },
     'diccionario': {
-      id: 'diccionario',
-      nombre: 'Diccionario de descriptores',
-      badge: 'Documentación',
+      id: 'manual',
+      nombre: 'Documentación',
+      badge: 'Módulo 03',
       apartados: [
-        { id: 'sec-dicc-cabecera', titulo: 'Marco del diccionario territorial', abajo: false },
-        { id: 'contenido-diccionario', titulo: 'Catálogo de descriptores', abajo: true }
+        { id: 'sec-manual-cabecera', titulo: 'Documentación del Atlas', abajo: false },
+        { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true },
+        { id: 'sec-lic-descargas-maestras', titulo: 'Licencias y descargas (257 capas)', abajo: true }
       ]
     },
     'licencias': {
-      id: 'licencias',
-      nombre: 'Licencias y descargas',
-      badge: 'Documentación',
+      id: 'manual',
+      nombre: 'Documentación',
+      badge: 'Módulo 03',
       apartados: [
-        { id: 'sec-lic-cabecera', titulo: 'Marco jurídico y reciprocidad', abajo: false },
-        { id: 'sec-lic-descargas-maestras', titulo: 'Descargas de datos', abajo: false },
-        { id: 'sec-lic-marco-tripartito', titulo: 'Marco de licencias abiertas', abajo: true }
+        { id: 'sec-manual-cabecera', titulo: 'Documentación del Atlas', abajo: false },
+        { id: 'lista-capitulos-manual', titulo: 'Capítulos del manual de uso', abajo: true },
+        { id: 'sec-lic-descargas-maestras', titulo: 'Licencias y descargas (257 capas)', abajo: true }
       ]
     }
   };

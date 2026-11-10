@@ -1130,9 +1130,9 @@ function inicializarAplicacion() {
 const METADATOS_PANELES_NAVEGACION = {
   'indicadores':        { grupo: 'analisis',      grupoNombre: 'Análisis',         vistaNombre: 'Narrativas espaciales (4 láminas)' },
   'inicio':             { grupo: 'explorar',      grupoNombre: 'Explorar mapa',    vistaNombre: 'Exploración territorial y visor' },
-  'manual':             { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Manual de uso' },
-  'diccionario':        { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Diccionario de descriptores' },
-  'licencias':          { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Licencias y descargas' }
+  'manual':             { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Documentación' },
+  'diccionario':        { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Documentación' },
+  'licencias':          { grupo: 'documentacion', grupoNombre: 'Documentación',    vistaNombre: 'Documentación' }
 };
 
 function configurarNavegacion() {
@@ -1165,6 +1165,9 @@ function configurarNavegacion() {
 
   const activarPanel = (panelId) => {
     if (!panelId) return;
+    if (panelId === 'diccionario' || panelId === 'licencias') {
+      panelId = 'manual';
+    }
     const infoNav = METADATOS_PANELES_NAVEGACION[panelId] || {
       grupo: 'explorar',
       grupoNombre: 'Explorar mapa',
@@ -2949,7 +2952,9 @@ function cargarResumenMetodologia() {
   const contenedor = document.getElementById('contenido-manual');
   if (!contenedor) return;
   const mm = window.ModuloManual || (typeof ModuloManual !== 'undefined' ? ModuloManual : null);
-  if (mm && typeof mm.render === 'function') {
+  if (mm && typeof mm.renderizarManual === 'function') {
+    mm.renderizarManual();
+  } else if (mm && typeof mm.render === 'function') {
     contenedor.innerHTML = mm.render();
   }
 }
