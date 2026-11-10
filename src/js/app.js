@@ -1441,7 +1441,20 @@ function actualizarFichaTerritorio(nombre, bbox) {
 
 function precargarCamposDesdeConfig() {
   const cfg = window.NODO_CONFIG;
-  const elOrg = document.getElementById('nombre-organizacion'); if (elOrg) elOrg.textContent = cfg.organizacion.subtitulo || cfg.organizacion.descripcion_corta || 'Análisis y Exploración | Municipio de Santiago y Barrio Brasil';
+  const SUBTITULO_CANONICO_ATLAS = 'Análisis y Exploración | Municipio de Santiago y Barrio Brasil';
+  const elOrg = document.getElementById('nombre-organizacion');
+  if (elOrg) {
+    elOrg.textContent = SUBTITULO_CANONICO_ATLAS;
+    if (!elOrg.__protegidoInmutable) {
+      elOrg.__protegidoInmutable = true;
+      const observadorSubtitulo = new MutationObserver(() => {
+        if (elOrg.textContent !== SUBTITULO_CANONICO_ATLAS) {
+          elOrg.textContent = SUBTITULO_CANONICO_ATLAS;
+        }
+      });
+      observadorSubtitulo.observe(elOrg, { childList: true, characterData: true, subtree: true });
+    }
+  }
   
   const terrDefecto = cfg.territorios_predefinidos?.find(t => t.id === cfg.area_por_defecto.id) || cfg.territorios_predefinidos?.[0];
   actualizarFichaTerritorio(terrDefecto ? terrDefecto.nombre : cfg.organizacion.area_de_interes_nombre, cfg.area_por_defecto.bbox);

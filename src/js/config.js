@@ -193,16 +193,17 @@ const CONFIG_PREDETERMINADA = {
 window.NODO_CONFIG = JSON.parse(JSON.stringify(CONFIG_PREDETERMINADA));
 
 async function cargarConfiguracion() {
+  const version = '20261110_v57';
   const rutasPosibles = [
-    'config/config.json',
-    './config/config.json',
-    '../config/config.json',
-    '/config/config.json'
+    `config/config.json?v=${version}`,
+    `./config/config.json?v=${version}`,
+    `../config/config.json?v=${version}`,
+    `/config/config.json?v=${version}`
   ];
 
   for (const ruta of rutasPosibles) {
     try {
-      const respuesta = await fetch(ruta);
+      const respuesta = await fetch(ruta, { cache: 'no-store' });
       if (respuesta.ok) {
         const datos = await respuesta.json();
         window.NODO_CONFIG = Object.assign({}, CONFIG_PREDETERMINADA, datos);
@@ -213,6 +214,23 @@ async function cargarConfiguracion() {
       // Intenta siguiente ruta o mantiene la configuración predeterminada completa
     }
   }
+
+  // Blindaje institucional inmutable para el Atlas para la Gestión Territorial
+  const CANONICAL_NOMBRE = 'Atlas para la Gestión Territorial';
+  const CANONICAL_SUBTITULO = 'Análisis y Exploración | Municipio de Santiago y Barrio Brasil';
+
+  if (!window.NODO_CONFIG) {
+    window.NODO_CONFIG = JSON.parse(JSON.stringify(CONFIG_PREDETERMINADA));
+  }
+  if (!window.NODO_CONFIG.organizacion) {
+    window.NODO_CONFIG.organizacion = {};
+  }
+  window.NODO_CONFIG.organizacion.nombre = CANONICAL_NOMBRE;
+  window.NODO_CONFIG.organizacion.subtitulo = CANONICAL_SUBTITULO;
+  window.NODO_CONFIG.organizacion.descripcion_corta = CANONICAL_SUBTITULO;
+  try {
+    Object.freeze(window.NODO_CONFIG.organizacion);
+  } catch (e) {}
 
   document.dispatchEvent(new CustomEvent('nodo:config-lista'));
 }
