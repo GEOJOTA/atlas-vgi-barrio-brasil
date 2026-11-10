@@ -2589,7 +2589,19 @@ const ModuloMapa = (() => {
 
   function cerrarSidebarDetalle() {
     const sidebar = document.getElementById('sidebar-detalle-bidat') || document.getElementById('sidebar-detalle');
-    if (sidebar) sidebar.classList.remove('abierto');
+    if (sidebar) {
+      sidebar.classList.remove('abierto');
+      const badge = document.getElementById('sidebar-detalle-badge');
+      if (badge) badge.textContent = '—';
+      const cuerpo = document.getElementById('sidebar-detalle-cuerpo');
+      if (cuerpo) {
+        cuerpo.innerHTML = `
+          <p style="color:var(--tinta-suave); font-size:0.88rem; text-align:center; padding:28px 16px; grid-column:1/-1; line-height:1.6;">
+            Haz clic en cualquier elemento cartográfico en el mapa y luego pulsa en <strong style="color:var(--musgo)">Más detalles →</strong> dentro de la ventana emergente para inspeccionar todas sus variables, atributos, tipologías y metadatos con máxima amplitud horizontal.
+          </p>
+        `;
+      }
+    }
   }
 
   function exportarCapaPorId(idCapa) {

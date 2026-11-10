@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261109_v51">
+  <link rel="stylesheet" href="css/estilos.css?v=20261109_v52">
 </head>
 <body>
 
@@ -99,12 +99,12 @@
 
     <!-- ---------- 02. EXPLORAR MAPA: VISOR Y ATLAS (LEAFLET) ---------- -->
     <section class="panel" id="panel-inicio">
-      <header class="hero-introduccion-atlas" id="sec-inicio-hero" style="padding:14px 18px 10px 18px; margin-bottom:10px;">
+      <header class="hero-introduccion-atlas" id="sec-inicio-hero" style="padding:14px 18px 10px 18px; margin-bottom:14px;">
         <div class="insignia-institucional">
           <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          <span>Modulo 02 | Explorar Mapa</span>
+          <span>Módulo 02 | Explorar Mapa</span>
         </div>
-        <h1 class="titulo-hero" style="margin:4px 0 0 0; font-size:1.45rem;">Exploración Territorial y Visor Cartográfico</h1>
+        <h1 class="titulo-hero" style="margin:4px 0 0 0; font-size:1.45rem; color:#ffffff; font-weight:700;">Explorar Mapa</h1>
       </header>
 
       <!-- Barra de herramientas del mapa -->
@@ -117,11 +117,11 @@
           </select>
         </div>
 
-        <button class="accion secundaria" id="btn-dibujar-bbox" title="Haz clic y arrastra en el mapa para delimitar un recuadro de búsqueda personalizado">
+        <button type="button" class="accion secundaria" id="btn-dibujar-bbox" title="Haz clic y arrastra en el mapa para delimitar un recuadro de búsqueda personalizado">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="4 2"/></svg>
           <span>Delimitar área</span>
         </button>
-        <button class="accion secundaria" id="btn-reencuadrar-mapa" title="Volver al encuadre inicial del área seleccionada">
+        <button type="button" class="accion secundaria" id="btn-reencuadrar-mapa" title="Volver al encuadre inicial del área seleccionada">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
           <span>Reencuadrar</span>
         </button>
@@ -133,17 +133,14 @@
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
           <span>Ver Atlas de Análisis</span>
         </button>
-
-        <div style="margin-left:auto; display:flex; gap:8px;">
-          <button class="accion secundaria" id="btn-exportar-geojson-mapa" title="Descargar las capas actualmente visibles en el mapa en formato GeoJSON">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            <span>Exportar vista (GeoJSON)</span>
-          </button>
-          <button type="button" class="accion primaria-cta" id="btn-descargar-bd-mapa" title="Descargar la base de datos completa del proyecto (.zip de 542 MB)">
-            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>Descargar base de datos (.zip)</span>
-          </button>
-        </div>
+        <button type="button" class="accion secundaria" id="btn-exportar-geojson-mapa" title="Descargar las capas actualmente visibles en el mapa en formato GeoJSON">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Exportar vista (GeoJSON)</span>
+        </button>
+        <button type="button" class="accion primaria-cta" id="btn-descargar-bd-mapa" title="Descargar la base de datos completa del proyecto (.zip de 542 MB)">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Descargar base de datos (.zip)</span>
+        </button>
       </div>
 
       <!-- Contenedor del mapa Leaflet -->
@@ -341,130 +338,28 @@
         </div>
 
 
-        <!-- Columna Lateral Derecha: Panel de Control Contextual -->
-        <aside class="panel-profundidad-derecha" id="sec-inicio-inspector">
-          <div style="border-bottom: 1px solid var(--linea); padding-bottom: 8px;">
-            <h3 style="margin: 0 0 4px 0; font-size: 1.05rem; color: var(--musgo);">Panel de inspección</h3>
-            <p style="margin: 0; font-size: 0.84rem; color: var(--tinta-suave);">Resumen de capas activas, catálogo rápido y consulta normativa.</p>
-          </div>
+              </div> <!-- Fin .disposicion-visor-comando -->
 
-          <div class="pestanas-profundidad-derecha">
-            <button type="button" class="btn-subpanel activa" data-target="subpanel-metricas">Resumen</button>
-            <button type="button" class="btn-subpanel" data-target="subpanel-ide">Catálogo</button>
-            <button type="button" class="btn-subpanel" data-target="subpanel-normativa">Normativa</button>
-            <button type="button" class="btn-subpanel" data-target="subpanel-bd">Base PostGIS</button>
-          </div>
+      <!-- Contenedor flotante del Inspector Normativo IPT (se despliega al consultar con el Inspector normativo PRC) -->
+      <div id="contenedor-inspector-normativo" style="display:none; margin-top:14px;"></div>
 
-          <!-- Subpanel 1: Métricas & Resumen VGI -->
-          <div class="subpanel-profundidad activo" id="subpanel-metricas">
-            <h4 style="margin: 0 0 8px 0; font-size: 0.92rem; color: var(--tinta);">Capas activas en el visor</h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
-              <div class="caja-metrica-lateral">
-                <span class="etiqueta-metrica-lateral">Capas encendidas</span>
-                <div id="sidebar-stat-capas" style="font-family: var(--fuente-datos); font-size: 1.3rem; font-weight: 700; color: var(--musgo);">0</div>
-              </div>
-              <div class="caja-metrica-lateral">
-                <span class="etiqueta-metrica-lateral">Elementos visibles</span>
-                <div id="sidebar-stat-objetos" style="font-family: var(--fuente-datos); font-size: 1.3rem; font-weight: 700; color: var(--esmeralda);">0</div>
-              </div>
-            </div>
-
-            <h4 style="margin: 12px 0 6px 0; font-size: 0.88rem; color: var(--tinta-suave);" title="Evalúa completitud de atributos, vigencia temporal y fuente de las capas encendidas">
-              Integridad de las capas activas:
-            </h4>
-            <div class="caja-icv-lateral">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <span>Datos completos:</span>
-                <strong id="sidebar-icv-completitud" style="color: var(--musgo);">—</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <span>Vigencia temporal:</span>
-                <strong id="sidebar-icv-actualidad" style="color: var(--esmeralda);">—</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <span>Fuente documentada:</span>
-                <strong id="sidebar-icv-atribucion" style="color: var(--ocre);">—</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--linea);">
-                <span>Calidad estimada:</span>
-                <strong id="sidebar-icv-global" style="color: var(--agua);">—</strong>
-              </div>
-            </div>
-            <div id="sidebar-icv-nota" style="margin-top: 8px; font-size: 0.82rem; color: var(--tinta-tenue); line-height: 1.45;">
-              Activa una o más capas en el mapa para ver qué proporción de sus registros tiene datos completos y fuente verificada.
-            </div>
-          </div>
-
-          <!-- Subpanel 2: Capas Oficiales IDE Chile -->
-          <div class="subpanel-profundidad" id="subpanel-ide">
-            <h4 style="margin: 0 0 8px 0; font-size: 0.92rem; color: var(--musgo);">123 coberturas oficiales del Estado</h4>
-            <p style="font-size: 0.84rem; color: var(--tinta-suave); margin-bottom: 10px;">Acceso directo a capas de MINVU, INE Censo 2024, SUBDERE, UOCT y Municipalidad de Santiago.</p>
-            <div id="sidebar-lista-ide-rapida" style="display: flex; flex-direction: column; gap: 6px; max-height: 480px; overflow-y: auto;">
-              <!-- Se puebla dinámicamente -->
-            </div>
-          </div>
-
-          <!-- Subpanel 3: Inspector Normativo -->
-          <div class="subpanel-profundidad" id="subpanel-normativa">
-            <h4 style="margin: 0 0 8px 0; font-size: 0.92rem; color: var(--ocre);">Consulta del Plan Regulador (<abbr title="Plan Regulador Comunal">PRC</abbr>)</h4>
-            <p style="font-size: 0.84rem; color: var(--tinta-suave); margin-bottom: 10px;">Consulta usos permitidos, restricciones de altura, conservación histórica y permisos de edificación.</p>
-            <div class="caja-metrica-lateral" style="font-size: 0.85rem; line-height: 1.5;">
-              Activa el botón <strong>"Inspector normativo (PRC)"</strong> sobre el mapa y haz clic en cualquier predio o manzana para generar su ficha normativa.
-            </div>
-          </div>
-
-          <!-- Subpanel 5: Base de Datos Espacial Supabase PostGIS -->
-          <div class="subpanel-profundidad" id="subpanel-bd">
-            <h4 style="margin: 0 0 8px 0; font-size: 0.9rem; color: var(--esmeralda);">⚡ Base de Datos PostGIS:</h4>
-            <p style="font-size: 0.78rem; color: var(--tinta-suave); margin-bottom: 10px;">PostgreSQL 15+ con extensión PostGIS en Supabase (Open Source & Gratuito).</p>
-            
-            <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid var(--linea); border-radius: 6px; padding: 10px; margin-bottom: 10px; font-size: 0.8rem;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span>Estado del Motor:</span>
-                <strong id="sidebar-bd-estado" style="color: var(--ocre); font-size: 0.75rem;">📁 Modo Local (Fallback)</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--tinta-tenue);">
-                <span>Capacidad Almacenamiento:</span>
-                <strong style="color: var(--musgo);">500 MB DB + 1 GB CDN</strong>
-              </div>
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div>
-                <label for="input-supabase-url" style="font-size: 0.72rem; color: var(--tinta-tenue); display: block; margin-bottom: 2px;">Supabase URL:</label>
-                <input type="text" id="input-supabase-url" placeholder="https://xyz.supabase.co" style="width: 100%; font-size: 0.75rem; padding: 4px 6px; background: var(--papel); border: 1px solid var(--linea); color: var(--tinta); border-radius: 4px;">
-              </div>
-              <div>
-                <label for="input-supabase-anon-key" style="font-size: 0.72rem; color: var(--tinta-tenue); display: block; margin-bottom: 2px;">Supabase Anon Key:</label>
-                <input type="password" id="input-supabase-anon-key" placeholder="eyJhbGciOi..." style="width: 100%; font-size: 0.75rem; padding: 4px 6px; background: var(--papel); border: 1px solid var(--linea); color: var(--tinta); border-radius: 4px;">
-              </div>
-              <div style="display: flex; gap: 6px; margin-top: 4px;">
-                <button type="button" class="accion" id="btn-conectar-bd" style="flex: 1; font-size: 0.75rem; padding: 6px;">Conectar BD</button>
-                <button type="button" class="accion secundaria" id="btn-probar-bd" style="font-size: 0.75rem; padding: 6px;">Probar Ping</button>
-              </div>
-              <div id="sidebar-bd-mensaje" style="font-size: 0.72rem; margin-top: 4px; color: var(--tinta-suave); font-style: italic;"></div>
-            </div>
-          </div>
-
-        </aside>
-
-      </div>
-
-      <!-- Contenedor flotante del Inspector Normativo IPT -->
-      <div id="contenedor-inspector-normativo" style="display:none; margin-top:10px;"></div>
-
-      <!-- Panel de Detalles del Elemento (Ubicado debajo del mapa con máxima amplitud horizontal) -->
-      <div id="sidebar-detalle-bidat" role="region" aria-label="Panel de detalles del elemento seleccionado">
+      <!-- Panel de Inspección y Detalles del Elemento (Ubicado debajo del mapa con máxima amplitud horizontal) -->
+      <div id="sidebar-detalle-bidat" class="abierto" role="region" aria-label="Panel de inspección y detalles del elemento seleccionado">
         <div id="sidebar-detalle-header">
           <h4>
-            Detalles del elemento
+            <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Panel de inspección y detalles del elemento</span>
             <span class="badge-capa" id="sidebar-detalle-badge">—</span>
           </h4>
-          <button id="btn-cerrar-detalle" title="Cerrar panel de detalles" aria-label="Cerrar">✕</button>
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span style="font-size:0.78rem; color:var(--tinta-suave);"><span style="color:var(--tinta-tenue);">Capas activas:</span> <strong id="sidebar-stat-capas" style="color:var(--musgo); font-family:var(--fuente-datos);">0</strong></span>
+            <span style="font-size:0.78rem; color:var(--tinta-suave);"><span style="color:var(--tinta-tenue);">Elementos visibles:</span> <strong id="sidebar-stat-objetos" style="color:var(--esmeralda); font-family:var(--fuente-datos);">0</strong></span>
+            <button id="btn-cerrar-detalle" title="Cerrar panel de detalles" aria-label="Cerrar">✕</button>
+          </div>
         </div>
         <div id="sidebar-detalle-cuerpo">
-          <p style="color:var(--tinta-tenue); font-size:0.86rem; text-align:center; padding:30px 10px; grid-column:1/-1;">
-            Haz clic en un elemento del mapa y luego en <strong style="color:var(--musgo)">Más detalles →</strong> para explorar todos sus atributos, columnas y metadatos.
+          <p style="color:var(--tinta-suave); font-size:0.88rem; text-align:center; padding:28px 16px; grid-column:1/-1; line-height:1.6;">
+            Haz clic en cualquier elemento cartográfico en el mapa y luego pulsa en <strong style="color:var(--musgo)">Más detalles →</strong> dentro de la ventana emergente para inspeccionar todas sus variables, atributos, tipologías y metadatos con máxima amplitud horizontal.
           </p>
         </div>
       </div>
@@ -777,15 +672,12 @@
 
     <!-- ---------- MÓDULO 03. DOCUMENTACIÓN ---------- -->
     <section class="panel" id="panel-manual">
-      <header class="header-modulo-indicadores" id="sec-manual-cabecera">
-        <div class="insignia-indicadores" style="display:inline-flex; align-items:center; gap:6px; font-family:var(--fuente-datos); font-size:0.75rem; color:var(--esmeralda); font-weight:700; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:6px;">
+      <header class="hero-introduccion-atlas" id="sec-manual-cabecera" style="padding:14px 18px 10px 18px; margin-bottom:16px;">
+        <div class="insignia-institucional">
           <span class="punto-pulso"></span>
-          MÓDULO 03 · DOCUMENTACIÓN
+          <span>Módulo 03 | Documentación</span>
         </div>
-        <h2 class="titulo-modulo-indicadores">Documentación</h2>
-        <p class="bajada-modulo-indicadores">
-          Manual de uso del sistema, metodologías operativas, marco jurídico de licencias abiertas (CC BY-SA 4.0 / ODbL 1.0 / GNU AGPLv3) y descarga directa de catálogos y geodatabase comunitaria (294 coberturas espaciales).
-        </p>
+        <h2 class="titulo-hero" style="margin:4px 0 0 0; font-size:1.45rem; color:#ffffff; font-weight:700;">Documentación</h2>
       </header>
       <div id="contenido-manual"></div>
     </section>
@@ -927,29 +819,29 @@
 <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261109_v51"></script>
-<script src="js/modulos/db_client.js?v=20261109_v51"></script>
-<script src="js/modulos/geodesia.js?v=20261109_v51"></script>
-<script src="js/modulos/mapa.js?v=20261109_v51"></script>
-<script src="js/modulos/importador_capas.js?v=20261109_v51"></script>
-<script src="js/modulos/ide_chile.js?v=20261109_v51"></script>
-<script src="js/modulos/evaluador_normativo.js?v=20261109_v51"></script>
-<script src="js/modulos/osm.js?v=20261109_v51"></script>
-<script src="js/modulos/ohsome.js?v=20261109_v51"></script>
-<script src="js/modulos/gbif.js?v=20261109_v51"></script>
-<script src="js/modulos/umap.js?v=20261109_v51"></script>
-<script src="js/modulos/metadatos.js?v=20261109_v51"></script>
-<script src="js/modulos/licencias.js?v=20261109_v51"></script>
-<script src="js/modulos/manual.js?v=20261109_v51"></script>
-<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261109_v51"></script>
-<script src="js/modulos/indicadores_analisis.js?v=20261109_v51"></script>
-<script src="js/modulos/taginfo.js?v=20261109_v51"></script>
-<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v51"></script>
-<script src="js/modulos/calidad_analyst.js?v=20261109_v51"></script>
-<script src="js/modulos/diccionario.js?v=20261109_v51"></script>
-<script src="js/modulos/manifold_canvas.js?v=20261109_v51"></script>
-<script src="js/modulos/leyenda_atajos.js?v=20261109_v51"></script>
-<script src="js/modulos/tutorial_interactivo.js?v=20261109_v51"></script>
-<script src="js/app.js?v=20261109_v51"></script>
+<script src="js/config.js?v=20261109_v52"></script>
+<script src="js/modulos/db_client.js?v=20261109_v52"></script>
+<script src="js/modulos/geodesia.js?v=20261109_v52"></script>
+<script src="js/modulos/mapa.js?v=20261109_v52"></script>
+<script src="js/modulos/importador_capas.js?v=20261109_v52"></script>
+<script src="js/modulos/ide_chile.js?v=20261109_v52"></script>
+<script src="js/modulos/evaluador_normativo.js?v=20261109_v52"></script>
+<script src="js/modulos/osm.js?v=20261109_v52"></script>
+<script src="js/modulos/ohsome.js?v=20261109_v52"></script>
+<script src="js/modulos/gbif.js?v=20261109_v52"></script>
+<script src="js/modulos/umap.js?v=20261109_v52"></script>
+<script src="js/modulos/metadatos.js?v=20261109_v52"></script>
+<script src="js/modulos/licencias.js?v=20261109_v52"></script>
+<script src="js/modulos/manual.js?v=20261109_v52"></script>
+<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261109_v52"></script>
+<script src="js/modulos/indicadores_analisis.js?v=20261109_v52"></script>
+<script src="js/modulos/taginfo.js?v=20261109_v52"></script>
+<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v52"></script>
+<script src="js/modulos/calidad_analyst.js?v=20261109_v52"></script>
+<script src="js/modulos/diccionario.js?v=20261109_v52"></script>
+<script src="js/modulos/manifold_canvas.js?v=20261109_v52"></script>
+<script src="js/modulos/leyenda_atajos.js?v=20261109_v52"></script>
+<script src="js/modulos/tutorial_interactivo.js?v=20261109_v52"></script>
+<script src="js/app.js?v=20261109_v52"></script>
 </body>
 </html>

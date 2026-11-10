@@ -702,28 +702,16 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
    ========================================================================== */
 
 .disposicion-visor-comando {
-  display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-@media (max-width: 1360px) {
-  .disposicion-visor-comando {
-    grid-template-columns: 1fr 360px;
-    gap: 20px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .disposicion-visor-comando {
-    grid-template-columns: 1fr;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .area-mapa-principal {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 18px;
 }
 
@@ -760,26 +748,23 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   width: 100%;
   max-width: 100%;
   min-height: auto;
-  max-height: 0;
   background: rgba(8, 14, 30, 0.97);
   backdrop-filter: blur(28px);
-  border: 2px solid transparent;
+  -webkit-backdrop-filter: blur(28px);
+  border: 1.5px solid var(--linea-fuerte);
   border-radius: var(--radio-borde);
   z-index: 100;
   display: flex;
   flex-direction: column;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s, opacity 0.25s, margin 0.25s;
   box-shadow: var(--sombra-md);
   overflow: hidden;
-  opacity: 0;
-  margin-top: 0;
-}
-#sidebar-detalle-bidat.abierto {
-  max-height: 1200px;
-  border-color: var(--musgo);
-  opacity: 1;
   margin-top: 18px;
   margin-bottom: 24px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+#sidebar-detalle-bidat.abierto {
+  border-color: var(--musgo);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.25);
 }
 #sidebar-detalle-header {
   display: flex;
@@ -1011,21 +996,38 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 .barra-herramientas-mapa {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+  gap: 12px;
   flex-wrap: wrap;
-  padding: 16px 22px;
+  padding: 14px 20px;
   background: rgba(22, 36, 64, 0.94);
   backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
   border: 2px solid rgba(255, 255, 255, 0.40);
   border-radius: var(--radio-borde);
   margin-bottom: 20px;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 
 .grupo-control-territorio {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.grupo-control-territorio label {
+  white-space: nowrap;
+}
+
+.barra-herramientas-mapa button.accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
 }
 
 .grupo-control-territorio label {
@@ -8182,12 +8184,14 @@ table.tabla-datos-institucional,
   max-width: none !important;
 }
 
-/* Ajustes fluidos de controles y barras de herramientas */
+/* Ajustes fluidos y centrados de controles y barras de herramientas */
 .barra-herramientas-mapa {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
+  text-align: center;
 }
 
 .barra-herramientas-mapa select,
@@ -8199,39 +8203,48 @@ table.tabla-datos-institucional,
   .barra-herramientas-mapa {
     padding: 12px 14px;
     gap: 10px;
-  }
-  .barra-herramientas-mapa > div[style*="margin-left:auto"],
-  .barra-herramientas-mapa > div:last-child {
-    margin-left: 0 !important;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    justify-content: center;
   }
   .barra-herramientas-mapa button.accion,
   .grupo-control-territorio {
     flex: 1 1 auto;
     min-width: 140px;
+    justify-content: center;
   }
 }
 
 @media (max-width: 768px) {
   .barra-herramientas-mapa {
-    flex-direction: column;
-    align-items: stretch;
+    padding: 12px 10px;
+    gap: 8px;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
   .grupo-control-territorio {
     width: 100%;
+    justify-content: center;
   }
   .grupo-control-territorio select {
     width: 100%;
+    max-width: 100%;
+    text-align: center;
   }
   .barra-herramientas-mapa button.accion {
-    width: 100%;
+    flex: 1 1 calc(50% - 8px);
+    min-width: 130px;
     justify-content: center;
-    padding: 10px 14px;
-    font-size: 0.84rem;
+    padding: 10px 12px;
+    font-size: 0.82rem;
   }
+}
+
+@media (max-width: 480px) {
+  .barra-herramientas-mapa button.accion {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
   .area-mapa-principal {
     min-width: 0;
   }
