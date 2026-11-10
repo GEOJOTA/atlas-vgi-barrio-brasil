@@ -60,7 +60,6 @@ nodo-geoabierto/
 │   ├── geodatabase_completa_atlas_vgi.zip  # Paquete comprimido oficial de 542.9 MB con 256 archivos
 │   ├── matriz_metacalidad.json             # Resultados cuantitativos de la evaluación de las 131 capas
 │   ├── perfil_metadatos_vgi.xlsx           # Libro Excel con el perfil de metadatos ISO 19115 y auditoría de calidad
-│   ├── wlc_metacalidad_ranking.csv         # Ranking ordenado de capas según su puntuación WLC
 │   └── wlc_metacalidad_resultado.json      # Estructura JSON de pesos y puntajes del modelo WLC
 ├── img/                                    # Recursos de imagen para documentación y marketing
 │   └── cartografias/                       # Láminas cartográficas oficiales en alta resolución (Censo 2024, morfología)

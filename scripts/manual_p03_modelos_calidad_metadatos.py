@@ -115,7 +115,7 @@ flowchart LR
     end
 
     subgraph OUT_WLC["3. OUTPUT"]
-        RANK_CSV["docs/wlc_metacalidad_ranking.csv & docs/wlc_metacalidad_resultado.json"]
+        RANK_CSV["docs/wlc_metacalidad_resultado.json"]
         CERT_GRADE["docs/matriz_metacalidad.json (Grado A+ ≥ 95 %, Grado A ≥ 90 %)"]
         DOC_REP["docs/ANALISIS_METACALIDAD.md (sincronizados en src/docs/)"]
     end
@@ -261,7 +261,7 @@ flowchart LR
 
     subgraph OUT_CORR["3. OUTPUT"]
         CSV_CORR["docs/correlacion_dimensiones_calidad.csv & docs/correlacion_dimensiones_calidad.png"]
-        DICT_IGV["docs/wlc_metacalidad_resultado.json & wlc_metacalidad_ranking.csv (IGV: 95.4% Grado A+)"]
+        DICT_IGV["docs/wlc_metacalidad_resultado.json  (IGV: 95.4% Grado A+)"]
     end
 
     IN_CORR --> PROC_CORR --> OUT_CORR
@@ -458,7 +458,7 @@ flowchart LR
 
     subgraph OUT_CATS["3. OUTPUT"]
         THREE_XLSX["3 Libros Maestros .xlsx (docs/categorias_tematicas_osm.xlsx, docs/catalogo_fuentes_vgi.xlsx, docs/perfil_metadatos_vgi.xlsx)"]
-        FOUR_CSV["4 Consolidados .csv (docs/wlc_metacalidad_ranking.csv, docs/correlacion_dimensiones_calidad.csv, data/resumen_catastro_vgi.csv, data/bip_inversiones_santiago.csv)"]
+        FOUR_CSV["Consolidados .csv (docs/correlacion_dimensiones_calidad.csv, data/resumen_catastro_vgi.csv, data/bip_inversiones_santiago.csv)"]
         SYNC_DOCS["Sincronización Espejo en docs/, src/docs/, data/ y src/data/"]
     end
 
@@ -475,7 +475,7 @@ El Atlas desacopla de forma absoluta las bases de datos espaciales de los catál
 ### 18.2. Los Archivos Consolidados CSV y JSON de Calidad (`data/`, `src/data/`, `docs/` y `src/docs/`)
 * **`data/bip_inversiones_santiago.csv` (`src/data/bip_inversiones_santiago.csv`, 3.73 MB):** Catálogo masivo de iniciativas del Banco Integrado de Proyectos (BIP) del MIDESO para Santiago Centro, con montos de inversión, etapas (Diseño, Ejecución, Operación) y georreferenciación.
 * **`docs/correlacion_dimensiones_calidad.csv` (`src/docs/correlacion_dimensiones_calidad.csv`, 837 bytes) y `docs/correlacion_dimensiones_calidad.png`:** Matriz simétrica 10 × 10 de coeficientes de correlación de Pearson del modelo WLC v2.0 y su representación gráfica.
-* **`docs/wlc_metacalidad_ranking.csv` (`src/docs/wlc_metacalidad_ranking.csv`, 29.5 KB), `docs/wlc_metacalidad_resultado.json` y `docs/matriz_metacalidad.json`:** Tabla ordenada y matrices JSON de las 134 capas con puntajes cuantitativos, cualitativos y grado asignado (A+, A, B o C).
+* **`docs/wlc_metacalidad_resultado.json` y `docs/matriz_metacalidad.json`:** Tabla ordenada y matrices JSON de las 134 capas con puntajes cuantitativos, cualitativos y grado asignado (A+, A, B o C).
 * **`data/resumen_catastro_vgi.csv` (`src/data/resumen_catastro_vgi.csv`, 168 KB):** Conteo agregado de nodos, vías y relaciones activas por categoría en Barrio Brasil.
 
 ---

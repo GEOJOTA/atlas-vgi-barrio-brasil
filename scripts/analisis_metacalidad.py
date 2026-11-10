@@ -1361,7 +1361,7 @@ def generar_informe_markdown(datos, ruta_salida):
     md.append("    end")
     md.append("    subgraph OUT[\"3. OUTPUT / ENTREGABLES VERIFICABLES EN GIT Y PLATAFORMA WEB\"]")
     md.append("        O1[\"docs/ANALISIS_METACALIDAD.md (src/docs/)<br/>docs/matriz_metacalidad.json (src/docs/)\"]")
-    md.append("        O2[\"docs/wlc_metacalidad_ranking.csv & wlc_metacalidad_resultado.json<br/>docs/correlacion_dimensiones_calidad.csv & .png\"]")
+    md.append("        O2[\"wlc_metacalidad_resultado.json<br/>docs/correlacion_dimensiones_calidad.csv & .png\"]")
     md.append("        O3[\"docs/perfil_metadatos_vgi.xlsx (src/docs/)<br/>+ Visualización Interactiva en Módulo 06\"]")
     md.append("    end")
     md.append("    I1 --> P1 & P2")

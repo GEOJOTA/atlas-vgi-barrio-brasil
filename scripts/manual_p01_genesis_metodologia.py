@@ -170,7 +170,7 @@ flowchart LR
 |:---:|:---|:---:|:---|
 | **E-03** | Geodatabase espacial de 134 coberturas vectoriales GeoJSON (EPSG:4326). | Geodatabase vectorial | `src/data/*.geojson` y `data/*.geojson` (véase la Tabla 1.1) |
 | **E-04** | Base de datos espacial PostgreSQL 17 + PostGIS 3.3 desplegada en la nube con funciones RPC. | Base relacional espacial | `scripts/db/01_schema_postgis.sql`, `scripts/db/02_seed_metadata.sql` y `docs/GUIA_BASE_DATOS_SUPABASE.md` (`src/docs/`) |
-| **E-05** | Reporte y matrices de calidad espacial ISO 19157:2013 (IGV 95,4 %). | Evaluación de calidad | `docs/ANALISIS_METACALIDAD.md`, `docs/matriz_metacalidad.json`, `docs/wlc_metacalidad_resultado.json`, `docs/wlc_metacalidad_ranking.csv` y `docs/correlacion_dimensiones_calidad.csv` (`src/docs/`) |
+| **E-05** | Reporte y matrices de calidad espacial ISO 19157:2013 (IGV 95,4 %). | Evaluación de calidad | `docs/ANALISIS_METACALIDAD.md`, `docs/matriz_metacalidad.json`, `docs/wlc_metacalidad_resultado.json` y `docs/correlacion_dimensiones_calidad.csv` (`src/docs/`) |
 | **E-06** | Catálogo tabular en formato OpenXML (.xlsx) con esquema de 14 atributos normalizados ISO. | Catálogo tabular OGC | `docs/categorias_tematicas_osm.xlsx` y `docs/perfil_metadatos_vgi.xlsx` (`src/docs/`) |
 
 ---

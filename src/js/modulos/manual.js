@@ -373,12 +373,6 @@ const ModuloManual = (() => {
                       <td><a href="docs/catalogo_fuentes_vgi.xlsx" download="catalogo_fuentes_vgi.xlsx" class="accion secundaria" style="font-size:0.78rem; padding:5px 10px; display:inline-block;">Descargar Excel</a></td>
                     </tr>
                     <tr>
-                      <td><strong>Ranking Consolidado de Calidad</strong><br><code class="codigo-licencia">docs/wlc_metacalidad_ranking.csv</code></td>
-                      <td>Tabla plana tabular con puntajes cuantitativos, cualitativos, índice IGV y clasificación de idoneidad territorial.</td>
-                      <td>CSV (<code>.csv</code>) · ~34 KB</td>
-                      <td><a href="docs/wlc_metacalidad_ranking.csv" download="wlc_metacalidad_ranking.csv" class="accion secundaria" style="font-size:0.78rem; padding:5px 10px; display:inline-block;">Descargar CSV</a></td>
-                    </tr>
-                    <tr>
                       <td><strong>Bibliografía y Estado del Arte</strong><br><code class="codigo-licencia">docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md</code></td>
                       <td>125 referencias bibliográficas estructuradas bajo norma APA 7ª edición sobre VGI, ordenamiento territorial y SIG.</td>
                       <td>Markdown (<code>.md</code>) · ~81 KB</td>

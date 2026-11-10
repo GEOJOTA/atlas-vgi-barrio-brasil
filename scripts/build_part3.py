@@ -397,7 +397,6 @@ El Atlas desacopla de forma absoluta las bases de datos espaciales de los catál
 ### 18.2. Los Archivos Consolidados CSV UTF-8
 * **`data/bip_inversiones_santiago.csv` (3.73 MB):** Catálogo masivo de iniciativas del Banco Integrado de Proyectos (BIP) del MIDESO para Santiago Centro, con montos de inversión, etapas (Diseño, Ejecución, Operación) y georreferenciación.
 * **`docs/correlacion_dimensiones_calidad.csv` (837 bytes):** Matriz simétrica $10 \times 10$ de coeficientes de correlación de Pearson del modelo WLC v2.0.
-* **`docs/wlc_metacalidad_ranking.csv` (29.5 KB):** Tabla ordenada de las 134 capas con puntajes cuantitativos, cualitativos y grado asignado (A+, A, B o C).
 * **`data/resumen_catastro_vgi.csv` (168 KB):** Conteo agregado de nodos, vías y relaciones activas por categoría en Barrio Brasil.
 
 ---

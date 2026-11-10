@@ -118,7 +118,7 @@ El tercer módulo consolida en una experiencia unificada y explorable el respald
    * **CC BY-SA 4.0** para la documentación, manuales y cartografía.
    * **ODbL 1.0** para las bases de datos espaciales y capas IGV (compatibilidad nativa con OpenStreetMap Foundation).
    * **GNU AGPLv3** para el código fuente de la plataforma web y scripts.
-3. **Descarga Directa de Catálogos y Geodatabase:** Acceso directo a la descarga de la Geodatabase Completa comprimida (`geodatabase_completa_atlas_vgi.zip`, 542 MB) y los libros estructurados en Excel (`categorias_tematicas_osm.xlsx`, `perfil_metadatos_vgi.xlsx`, `catalogo_fuentes_vgi.xlsx`, `wlc_metacalidad_ranking.csv`).
+3. **Descarga Directa de Catálogos y Geodatabase:** Acceso directo a la descarga de la Geodatabase Completa comprimida (`geodatabase_completa_atlas_vgi.zip`, 542 MB) y los libros estructurados en Excel (`categorias_tematicas_osm.xlsx`, `perfil_metadatos_vgi.xlsx`, `catalogo_fuentes_vgi.xlsx`).
 4. **Manual de Actualización Técnica para Desarrolladores:** Se preserva y mantiene en el repositorio Git (`docs/MANUAL_ACTUALIZACION_ATLAS.md`) para consultar la ingeniería del stack, sincronización simétrica `data/` y `src/data/`, y protocolos de actualización de coberturas a 6 meses.
 
 ---

@@ -264,7 +264,7 @@ flowchart LR
      ```bash
      python3 scripts/analisis_metacalidad.py
      ```
-  5. Sincronice los archivos generados (`docs/wlc_metacalidad_resultado.json`, `docs/wlc_metacalidad_ranking.csv` y `docs/ANALISIS_METACALIDAD.md`) con `src/docs/`.
+  5. Sincronice los archivos generados (`docs/wlc_metacalidad_resultado.json` y `docs/ANALISIS_METACALIDAD.md`) con `src/docs/`.
 * **Verificación:** Revise la salida en terminal de `scripts/analisis_metacalidad.py` y confirme que los archivos JSON y CSV en `docs/` y `src/docs/` tengan la nueva marca temporal y que el promedio coincida con lo mostrado en la vista *Evaluar calidad*.
 
 > [!WARNING]

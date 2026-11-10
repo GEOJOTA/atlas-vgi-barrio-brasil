@@ -37,7 +37,6 @@ Estructura exhaustiva del paquete (geodatabase_completa_atlas_vgi.zip):
 │   ├── bip_inversiones_santiago.csv
 │   ├── resumen_catastro_vgi.csv
 │   ├── correlacion_dimensiones_calidad.csv
-│   └── wlc_metacalidad_ranking.csv
 └── 07_metadatos_y_gobernanza/ (12 documentos de calidad, metadatos y gobernanza)
     ├── metadatos_iso19139_atlas_vgi.xml
     ├── metadatos_iso19115_atlas_vgi.json
@@ -187,7 +186,6 @@ CSV_FILES = [
     ('bip_inversiones_santiago.csv', os.path.join(DATA_DIR, 'bip_inversiones_santiago.csv')),
     ('resumen_catastro_vgi.csv', os.path.join(DATA_DIR, 'resumen_catastro_vgi.csv')),
     ('correlacion_dimensiones_calidad.csv', os.path.join(DOCS_DIR, 'correlacion_dimensiones_calidad.csv')),
-    ('wlc_metacalidad_ranking.csv', os.path.join(DOCS_DIR, 'wlc_metacalidad_ranking.csv'))
 ]
 
 # -----------------------------------------------------------------------------
@@ -486,7 +484,6 @@ datos vectoriales y tabulares descomprimidos en más de 240 archivos).
    - bip_inversiones_santiago.csv: Registro detallado de iniciativas BIP
    - resumen_catastro_vgi.csv: Resumen cuantitativo por categoría y polígono
    - correlacion_dimensiones_calidad.csv: Matriz de correlación ISO 19157
-   - wlc_metacalidad_ranking.csv: Ranking de calidad ponderada (WLC)
 
 07_metadatos_y_gobernanza/ (12 documentos técnicos y legales)
    - metadatos_iso19139_atlas_vgi.xml: Ficha XML oficial para GeoNetwork / GeoNode

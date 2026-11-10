@@ -65,7 +65,7 @@ flowchart LR
     subgraph OUT["3. OUTPUT / ENTREGABLES VERIFICABLES EN GIT Y WEB"]
         O1["Exportación JSON (ISO 19115) y XML (ISO 19139)<br/>docs/perfil_metadatos_vgi.xlsx (src/docs/)"]
         O2["docs/categorias_tematicas_osm.xlsx &<br/>docs/catalogo_fuentes_vgi.xlsx (src/docs/)"]
-        O3["docs/ANALISIS_METACALIDAD.md &<br/>docs/wlc_metacalidad_ranking.csv / .json"]
+        O3["docs/ANALISIS_METACALIDAD.md &<br/>docs/wlc_metacalidad_resultado.json"]
     end
 
     N1 & N2 --> M1 & M2 & M3
@@ -196,7 +196,7 @@ Donde:
   S_cualitativo(i)  = 0,30 * MC(i)     + 0,20 * CC(i)     + 0,25 * LL(i)    + 0,15 * RG(i)       + 0,10 * AI(i)
 ```
 
-### Resultados consolidados de la auditoría (`docs/ANALISIS_METACALIDAD.md` y `docs/wlc_metacalidad_ranking.csv`):
+### Resultados consolidados de la auditoría (`docs/ANALISIS_METACALIDAD.md`):
 * Total de coberturas evaluadas: `134` capas (`124` Oficiales + `10` VGI).
 * Índice Global de Calidad y MetaCalidad (`IGV` / `IGMC`): `95,4 %` (`95,40 %`, `Grado A+ Excelente`).
   * Pilar Cuantitativo Espacial (`50 %`): `96,7 %` (`96,68 %`: `Topología OGC = 99,9 %`, `Completitud Tabular = 97,1 %`, `Integridad Posicional = 99,8 %`, `Estructura y Esquema = 86,5 %`, `Granularidad Geométrica = 95,1 %`).
@@ -206,7 +206,7 @@ Donde:
 * Entregables verificables generados en `docs/` y `src/docs/`:
   * [`docs/ANALISIS_METACALIDAD.md`](docs/ANALISIS_METACALIDAD.md)
   * [`docs/matriz_metacalidad.json`](docs/matriz_metacalidad.json)
-  * [`docs/wlc_metacalidad_ranking.csv`](docs/wlc_metacalidad_ranking.csv) y [`docs/wlc_metacalidad_resultado.json`](docs/wlc_metacalidad_resultado.json)
+  * [`docs/wlc_metacalidad_resultado.json`](docs/wlc_metacalidad_resultado.json)
   * [`docs/correlacion_dimensiones_calidad.csv`](docs/correlacion_dimensiones_calidad.csv) y [`docs/correlacion_dimensiones_calidad.png`](docs/correlacion_dimensiones_calidad.png)
   * [`docs/perfil_metadatos_vgi.xlsx`](docs/perfil_metadatos_vgi.xlsx)
 

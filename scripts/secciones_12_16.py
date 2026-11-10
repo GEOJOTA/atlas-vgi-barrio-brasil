@@ -80,7 +80,6 @@ En la carpeta `data/`, `src/data/` y `docs/` se mantienen archivos CSV optimizad
 
 * **`data/bip_inversiones_santiago.csv` (3.73 MB):** Catálogo de proyectos del Banco Integrado de Proyectos (BIP) del Ministerio de Desarrollo Social y Familia (MIDESO) para la comuna de Santiago. Contiene: código BIP, nombre de la iniciativa, etapa del ciclo de vida (Diseño, Ejecución, Operación), monto en miles de pesos (M$), coordenadas de georreferenciación, sector (Vialidad, Espacios Públicos, Salud, Educación) y fecha de postulación.
 * **`docs/correlacion_dimensiones_calidad.csv`:** Matriz simétrica de correlación lineal de Pearson ($r$) entre las 5 dimensiones cuantitativas y las 5 dimensiones cualitativas del modelo de calidad WLC v2.0 para las 131 capas del Atlas.
-* **`docs/wlc_metacalidad_ranking.csv`:** Tabla ordenada de capas cartográficas con sus puntajes individuales por dimensión, puntaje ponderado global ($IGV$) y categoría de certificación asignada (Grados A+, A, B o C).
 * **`data/resumen_catastro_vgi.csv`:** Resumen tabular agregado por categoría temática comunitaria con conteo de nodos, vías y relaciones activas en Barrio Brasil.
 
 ### 12.5. Procedimiento para Actualizar los Catálogos Tabulares
@@ -160,7 +159,6 @@ geodatabase_completa_atlas_vgi/
 │   ├── perfil_metadatos_vgi.xlsx             # Paquetes normativos ISO 19115
 │   ├── bip_inversiones_santiago.csv          # Proyectos de inversión pública BIP (MIDESO)
 │   ├── correlacion_dimensiones_calidad.csv   # Matriz de Pearson del modelo WLC
-│   └── wlc_metacalidad_ranking.csv           # Ranking de calidad de capas
 └── 06_metadatos_xml_iso19139/                # Fichas XML para importación directa en GeoNetwork / SNIT
     └── ficha_metadatos_atlas_vgi.xml
 ```
@@ -430,7 +428,7 @@ El proyecto cuenta con un conjunto de **49 scripts en Python** ubicados en el di
 17. **`scripts/analisis_metacalidad.py`:**
     * *Comando:* `python3 scripts/analisis_metacalidad.py`
     * *Propósito:* Audita la coherencia geométrica (OGC), completitud de atributos y linaje legal de las capas, generando la matriz de metacalidad.
-    * *Salida:* `docs/ANALISIS_METACALIDAD.md` y `docs/wlc_metacalidad_ranking.csv`.
+    * *Salida:* `docs/ANALISIS_METACALIDAD.md`.
 18. **`scripts/enriquecer_base_datos_metadatos.py`:**
     * *Comando:* `python3 scripts/enriquecer_base_datos_metadatos.py`
     * *Propósito:* Inyecta los 14 atributos maestros obligatorios en cualquier archivo GeoJSON que carezca de estandarización formal.

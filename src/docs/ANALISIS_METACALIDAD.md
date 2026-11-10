@@ -118,7 +118,7 @@ flowchart LR
     end
     subgraph OUT["3. OUTPUT / ENTREGABLES VERIFICABLES EN GIT Y PLATAFORMA WEB"]
         O1["docs/ANALISIS_METACALIDAD.md (src/docs/)<br/>docs/matriz_metacalidad.json (src/docs/)"]
-        O2["docs/wlc_metacalidad_ranking.csv & wlc_metacalidad_resultado.json<br/>docs/correlacion_dimensiones_calidad.csv & .png"]
+        O2["wlc_metacalidad_resultado.json<br/>docs/correlacion_dimensiones_calidad.csv & .png"]
         O3["docs/perfil_metadatos_vgi.xlsx (src/docs/)<br/>+ Visualización Interactiva en Módulo 06"]
     end
     I1 --> P1 & P2

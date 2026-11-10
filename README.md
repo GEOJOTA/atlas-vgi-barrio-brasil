@@ -66,7 +66,7 @@ flowchart LR
     subgraph OUT["3. OUTPUT / ENTREGABLES VERIFICABLES (Rutas en Git y Web)"]
         O1["data/capa_*.geojson (10 barriales + 10 RM)<br/>data/atlas_vgi_barrio_brasil_uah_completo.geojson<br/>docs/categorias_tematicas_osm.xlsx"]
         O2["Certificado CIN-VGI Interactivo (.txt / .html)<br/>10 Hitos PRC (1990-2024) en Módulo 01<br/>docs/catalogo_fuentes_vgi.xlsx"]
-        O3["docs/ANALISIS_METACALIDAD.md<br/>docs/wlc_metacalidad_ranking.csv & .json<br/>docs/matriz_metacalidad.json & perfil_metadatos_vgi.xlsx"]
+        O3["docs/ANALISIS_METACALIDAD.md<br/>.json<br/>docs/matriz_metacalidad.json & perfil_metadatos_vgi.xlsx"]
         O4["4 Narrativas Espaciales (83 Mapas) en Módulo 05<br/>data/matriz_sintesis_barrio_brasil_manzanas.geojson<br/>docs/geodatabase_completa_atlas_vgi.zip (542,35 MB)"]
     end
 
@@ -157,7 +157,7 @@ nodo-geoabierto/
 | [`docs/categorias_tematicas_osm.xlsx`](docs/categorias_tematicas_osm.xlsx) | `.xlsx` | Libro Excel de 4 hojas con la taxonomía de las 10 macrocategorías VGI (`CAT-01` a `CAT-10`), etiquetas OSM y homologación ISO 19110. |
 | [`docs/catalogo_fuentes_vgi.xlsx`](docs/catalogo_fuentes_vgi.xlsx) | `.xlsx` | Libro Excel de 4 hojas con el inventario de las 133 coberturas operativas, instituciones custodias, escalas y licencias. |
 | [`docs/perfil_metadatos_vgi.xlsx`](docs/perfil_metadatos_vgi.xlsx) | `.xlsx` | Libro Excel de 4 hojas con el perfil de metadatos ISO 19115 / IDE Chile y la matriz de evaluación WLC ISO 19157. |
-| [`docs/wlc_metacalidad_ranking.csv`](docs/wlc_metacalidad_ranking.csv) y [`.json`](docs/wlc_metacalidad_resultado.json) | `.csv` / `.json` | Ranking multicriterio WLC y resultados por dimensión (`C1` Linaje, `C2` Completitud, `C3` Consistencia Lógica, `C4` Exactitud Posicional, `C5` Actualidad). |
+| [`docs/wlc_metacalidad_resultado.json`](docs/wlc_metacalidad_resultado.json) | `.json` | Ranking multicriterio WLC y resultados por dimensión (`C1` Linaje, `C2` Completitud, `C3` Consistencia Lógica, `C4` Exactitud Posicional, `C5` Actualidad). |
 | [`docs/matriz_metacalidad.json`](docs/matriz_metacalidad.json) y [`correlacion_dimensiones_calidad.csv`](docs/correlacion_dimensiones_calidad.csv) | `.json` / `.csv` | Matriz detallada de metacalidad por archivo GeoJSON y matriz de correlación de Pearson entre dimensiones de calidad. |
 
 ---

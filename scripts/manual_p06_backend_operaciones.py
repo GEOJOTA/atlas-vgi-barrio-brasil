@@ -629,7 +629,7 @@ La lógica interactiva del cliente web se compone de **21 archivos JavaScript ES
 | **CFG-01** | **JSON** (ECMA-404) | `config/config.json` y `src/js/config.js` | **Manifiesto de Configuración Territorial:** Define los parámetros del área de estudio, límites geográficos (`bbox`), proyección métrica, endpoints y las 10 macrocategorías VGI (`categoriasVGI`) compartidas entre el backend Python y el frontend web. | Bloques `proyecto`, `bbox`, `centroMapa`, `apis` y `categoriasVGI`. | Mantenga ambos archivos sincronizados al cambiar el polígono de estudio o las rutas de las capas VGI. |
 | **CFG-02** | **TOML** v1.0.0 | `netlify.toml` | **Configuración Perimetral y Despliegue CDN:** Gobierna el directorio de publicación (`publish = "src"`), la expansión de binarios Git LFS (`GIT_LFS_SKIP_SMUDGE = "0"`), las cabeceras de seguridad/CORS y las redirecciones canónicas (`/geodatabase` → `/docs/geodatabase_completa_atlas_vgi.zip`). | Bloques `[build]`, `[build.environment]`, `[[headers]]` y `[[redirects]]`. | Añada nuevas reglas `[[headers]]` si incorpora nuevos formatos binarios (ej. `.pmtiles` o `.tif`). |
 | **DAT-01** | **GeoJSON** (IETF RFC 7946) | `data/*.geojson` y `src/data/*.geojson` | **Almacén Vectorial Estático:** Contiene las **134 coberturas espaciales del visor** (10 macrocategorías VGI `capa_educacion.geojson` .. `capa_cobertura_suelo.geojson` + 124 capas oficiales `ide_*.geojson`, `bbdd_*_santiago.geojson`, `subdere_rsd_*.geojson`) y las 10 capas regionales RM (`capa_osm_rm_cat01_*.geojson` .. `cat10_*.geojson`) en `EPSG:4326`. | Objeto `FeatureCollection` con arreglo `features` (`geometry` + `properties`). | Valide siempre todo archivo editado con `scripts/verificar_integridad_despliegue.py` y mantenga espejo exacto entre `data/` y `src/data/`. |
-| **DAT-02** | **JSON / CSV / XLSX Analítico** | `docs/wlc_metacalidad_resultado.json`, `docs/matriz_metacalidad.json`, `docs/wlc_metacalidad_ranking.csv`, `docs/correlacion_dimensiones_calidad.csv`, `data/resumen_catastro_vgi.csv`, `docs/*.xlsx` (y réplicas en `src/docs/` y `src/data/`) | **Reportes de Metacalidad y Catálogos Tabulares:** Almacenan los resultados de las evaluaciones ISO 19157 (WLC v2.0), correlaciones de Pearson y los 3 libros maestros OpenXML (`categorias_tematicas_osm.xlsx`, `catalogo_fuentes_vgi.xlsx`, `perfil_metadatos_vgi.xlsx`). | Matrices de 134 capas × 10 dimensiones de calidad y hojas estructuradas OpenXML. | Se regeneran automáticamente al ejecutar `scripts/modelo_indice_lineal_wlc.py`, `scripts/analisis_metacalidad.py` y `scripts/generar_entregables_excel.py`. |
+| **DAT-02** | **JSON / CSV / XLSX Analítico** | `docs/wlc_metacalidad_resultado.json`, `docs/matriz_metacalidad.json`, `docs/correlacion_dimensiones_calidad.csv`, `data/resumen_catastro_vgi.csv`, `docs/*.xlsx` (y réplicas en `src/docs/` y `src/data/`) | **Reportes de Metacalidad y Catálogos Tabulares:** Almacenan los resultados de las evaluaciones ISO 19157 (WLC v2.0), correlaciones de Pearson y los 3 libros maestros OpenXML (`categorias_tematicas_osm.xlsx`, `catalogo_fuentes_vgi.xlsx`, `perfil_metadatos_vgi.xlsx`). | Matrices de 134 capas × 10 dimensiones de calidad y hojas estructuradas OpenXML. | Se regeneran automáticamente al ejecutar `scripts/modelo_indice_lineal_wlc.py`, `scripts/analisis_metacalidad.py` y `scripts/generar_entregables_excel.py`. |
 
 ---
 
@@ -787,7 +787,7 @@ A continuación se documentan los **25 scripts operativos en Python 3** ubicados
   ```text
   IGV = 0.50 × P_cuant + 0.50 × P_cual
   ```
-- **Salidas:** `docs/wlc_metacalidad_ranking.csv`, `docs/wlc_metacalidad_resultado.json` y `docs/matriz_metacalidad.json` (y sus réplicas en `src/docs/`).
+- **Salidas:** `docs/wlc_metacalidad_resultado.json` y `docs/matriz_metacalidad.json` (y sus réplicas en `src/docs/`).
 
 ---
 
@@ -963,7 +963,7 @@ def clasificar_archivo_geojson(filename):
 | `04_observatorio_urbano_stgo/` | `.geojson`, `.csv` | Series comunales `bbdd_01_santiago.geojson` a `bbdd_91_santiago.geojson`, `barrios_santiago_19_27.geojson` y `bip_inversiones_santiago.csv`. |
 | `05_medioambiente_residuos_subdere/` | `.geojson` | Catastro SUBDERE RSD (`subdere_rsd_*.geojson`), `zonas_aseo_contenedores_papeleros_santiago.geojson`, `mma_ruido_ambiental_santiago.geojson`, `ide_areas_verdes.geojson`. |
 | `06_transporte_y_telecomunicaciones/` | `.geojson` | `semaforos_rm_uoct_2026.geojson`, `ide_mtt_semaforos_uoct.geojson`, `ide_estaciones_metro.geojson`, `ide_paradas_transporte.geojson`, `subtel_antenas_rm_2026.geojson`. |
-| `07_metadatos_y_gobernanza/` | `.xlsx`, `.csv`, `.json`, `.md`, `.sql` | Libros Excel (`categorias_tematicas_osm.xlsx`, `catalogo_fuentes_vgi.xlsx`, `perfil_metadatos_vgi.xlsx`), reportes WLC (`wlc_metacalidad_ranking.csv`, `wlc_metacalidad_resultado.json`, `matriz_metacalidad.json`, `correlacion_dimensiones_calidad.csv`), manuales (`MANUAL_ACTUALIZACION_ATLAS.md`, `MANUAL_USO.md`, `ANALISIS_METACALIDAD.md`, `BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`) y esquemas SQL (`01_schema_postgis.sql`, `02_seed_metadata.sql`). |
+| `07_metadatos_y_gobernanza/` | `.xlsx`, `.csv`, `.json`, `.md`, `.sql` | Libros Excel (`categorias_tematicas_osm.xlsx`, `catalogo_fuentes_vgi.xlsx`, `perfil_metadatos_vgi.xlsx`), reportes WLC (`wlc_metacalidad_resultado.json`, `matriz_metacalidad.json`, `correlacion_dimensiones_calidad.csv`), manuales (`MANUAL_ACTUALIZACION_ATLAS.md`, `MANUAL_USO.md`, `ANALISIS_METACALIDAD.md`, `BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`) y esquemas SQL (`01_schema_postgis.sql`, `02_seed_metadata.sql`). |
 | **TOTAL GENERAL** | **257 archivos** | **Geodatabase Completa del Atlas VGI (`docs/geodatabase_completa_atlas_vgi.zip` — 542,35 MB ZIP / ~3,33 GB descomprimidos).** |
 
 ---
@@ -1023,7 +1023,7 @@ Este script evalúa **8 bancos de pruebas de integridad exhaustivas** de manera 
 - **Criterio de Aprobación:** Todas las entidades cumplen con el esquema unificado.
 
 #### Banco 4: Normalización Matemática del Índice WLC
-- **Metodología:** Valida que los resultados de metacalidad en `docs/wlc_metacalidad_resultado.json` y `docs/wlc_metacalidad_ranking.csv` satisfagan los intervalos normativos (`[0, 100]` en porcentaje o `[0.0, 1.0]` normalizado).
+- **Metodología:** Valida que los resultados de metacalidad en `docs/wlc_metacalidad_resultado.json` satisfagan los intervalos normativos (`[0, 100]` en porcentaje o `[0.0, 1.0]` normalizado).
 - **Criterio de Aprobación:** Cero valores negativos, nulos (`NaN`) o fuera de rango.
 
 #### Banco 5: Coherencia Referencial Cruzada (Excel vs GeoJSON)

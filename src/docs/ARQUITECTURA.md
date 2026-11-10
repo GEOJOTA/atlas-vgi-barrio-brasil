@@ -89,7 +89,7 @@ flowchart LR
     end
 
     subgraph OUT["3. OUTPUT / RUTAS EN GIT Y PLATAFORMA WEB"]
-        C5["docs/ANALISIS_METACALIDAD.md (src/docs/)<br/>docs/wlc_metacalidad_ranking.csv & wlc_metacalidad_resultado.json<br/>docs/matriz_metacalidad.json & correlacion_dimensiones_calidad.csv<br/>docs/perfil_metadatos_vgi.xlsx + Gráficos en Módulo 06"]
+        C5["docs/ANALISIS_METACALIDAD.md (src/docs/)<br/>wlc_metacalidad_resultado.json<br/>docs/matriz_metacalidad.json & correlacion_dimensiones_calidad.csv<br/>docs/perfil_metadatos_vgi.xlsx + Gráficos en Módulo 06"]
     end
 
     C1 --> C2 & C3 & C4 --> C5
@@ -166,6 +166,6 @@ Cada archivo del repositorio cumple un contrato técnico explícito según su le
 | Grupo Funcional | Scripts Principales en `scripts/` | Entregables Generados / Verificados |
 | :--- | :--- | :--- |
 | 1. Auditoría y Verificación Pre-Deploy | `verificar_conteo_capas.py`, `verificar_integridad_despliegue.py`, `auditoria_exhaustiva_capas.py` | Validan la paridad exacta de las 134 capas (`124` oficiales + `10` VGI), los 140 descriptores ISO 19110, la ausencia de punteros Git LFS y la sincronización `data/` ↔ `src/data/`. |
-| 2. Modelamiento de Calidad WLC (ISO 19157/19115) | `analisis_metacalidad.py`, `modelo_indice_lineal_wlc.py` | Calculan las 5 dimensiones de calidad y generan `docs/ANALISIS_METACALIDAD.md`, `docs/wlc_metacalidad_ranking.csv`, `docs/wlc_metacalidad_resultado.json`, `docs/matriz_metacalidad.json` y `docs/correlacion_dimensiones_calidad.csv` (`.png`). |
+| 2. Modelamiento de Calidad WLC (ISO 19157/19115) | `analisis_metacalidad.py`, `modelo_indice_lineal_wlc.py` | Calculan las 5 dimensiones de calidad y generan `docs/ANALISIS_METACALIDAD.md`, `docs/wlc_metacalidad_resultado.json`, `docs/matriz_metacalidad.json` y `docs/correlacion_dimensiones_calidad.csv` (`.png`). |
 | 3. Ingesta VGI, IDE y Reproyección | `descargar_todas_las_categorias_osm.py`, `procesar_geofabrik_rm.py`, `integrar_nuevas_capas_2026.py`, `integrar_subdere_rsd_2024.py`, `reproyectar_capas_stgo.py` | Extraen, normalizan y reproyectan a `EPSG:4326` las capas barriales y regionales en `data/` y `src/data/`. |
 | 4. Generación de Libros Excel, Manuales y Geodatabase | `generar_catalogos_excel.py`, `empaquetar_base_datos_completa.py`, `construir_manual_actualizacion_maestro.py` (`manual_p01` a `manual_p08`) | Generan los 3 libros `.xlsx` en `docs/` y `src/docs/`, el paquete `docs/geodatabase_completa_atlas_vgi.zip` (`542,35 MB`) y el `MANUAL_ACTUALIZACION_ATLAS.md`. |

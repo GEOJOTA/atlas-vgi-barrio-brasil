@@ -485,13 +485,11 @@ def ejecutar_auditoria_completa_base_datos():
                   [f"norm_{c['id']}" for c in CRITERIOS_IGV] + [f"contrib_{c['id']}" for c in CRITERIOS_IGV]
     cols_export = [c for c in cols_export if c in df_wlc.columns]
 
-    out_csv = os.path.join(DOCS_DIR, "wlc_metacalidad_ranking.csv")
     out_json = os.path.join(DOCS_DIR, "wlc_metacalidad_resultado.json")
 
     df_wlc[cols_export].to_csv(out_csv, index=False, encoding="utf-8-sig")
     df_wlc[cols_export].to_json(out_json, orient="records", indent=2, force_ascii=False)
 
-    df_wlc[cols_export].to_csv(os.path.join(SRC_DOCS_DIR, "wlc_metacalidad_ranking.csv"), index=False, encoding="utf-8-sig")
     df_wlc[cols_export].to_json(os.path.join(SRC_DOCS_DIR, "wlc_metacalidad_resultado.json"), orient="records", indent=2, force_ascii=False)
 
     print(f"  [✓] Ranking WLC y desglose de metacalidad exportados en:")

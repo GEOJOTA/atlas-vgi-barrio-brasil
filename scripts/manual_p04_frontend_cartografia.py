@@ -555,7 +555,6 @@ nodo-geoabierto/
 │   ├── categorias_tematicas_osm.xlsx       # Libro Excel de las 10 macrocategorías OSM
 │   ├── catalogo_fuentes_vgi.xlsx           # Matriz Excel de las 134 fuentes y capas
 │   ├── perfil_metadatos_vgi.xlsx           # Matriz Excel de los 7 paquetes ISO 19115-1:2014
-│   ├── wlc_metacalidad_ranking.csv         # Ranking WLC v2.0 de las 134 capas
 │   ├── wlc_metacalidad_resultado.json      # Resultados detallados WLC v2.0 en JSON
 │   ├── matriz_metacalidad.json             # Matriz multicriterio de las 10 dimensiones
 │   └── correlacion_dimensiones_calidad.csv # Matriz de correlación de Pearson 10x10 (+ .png)

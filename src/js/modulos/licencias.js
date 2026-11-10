@@ -113,12 +113,6 @@ const ModuloLicencias = (() => {
                 <td>Excel (<code>.xlsx</code>) · ~45 KB</td>
                 <td><a href="docs/catalogo_fuentes_vgi.xlsx" download="catalogo_fuentes_vgi.xlsx" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar Excel</a></td>
               </tr>
-              <tr>
-                <td><strong>Ranking consolidado de calidad (CSV)</strong><br><code class="codigo-licencia">docs/wlc_metacalidad_ranking.csv</code></td>
-                <td>Tabla plana con las 132 capas, puntajes cuantitativos, cualitativos, índice IGV y clasificación de calidad.</td>
-                <td>CSV (<code>.csv</code>) · ~28 KB</td>
-                <td><a href="docs/wlc_metacalidad_ranking.csv" download="wlc_metacalidad_ranking.csv" class="accion secundaria" style="font-size:0.8rem; padding:6px 12px; display:inline-block; text-align:center;">Descargar CSV</a></td>
-              </tr>
             </tbody>
           </table>
         </div>
