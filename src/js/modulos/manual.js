@@ -156,7 +156,7 @@ const ModuloManual = (() => {
               <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('inicio')" style="font-size:0.82rem; padding:7px 12px;">🗺️ Módulo 02 · Explorar Mapa (294 Capas)</button>
               <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('diccionario')" style="font-size:0.82rem; padding:7px 12px;">🗂️ Módulo 03 · Diccionario de Descriptores</button>
               <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('licencias')" style="font-size:0.82rem; padding:7px 12px;">⚖️ Licencias y Marco Legal</button>
-              <button type="button" class="accion" onclick="document.getElementById('btn-descargar-todo-ide').click()" style="font-size:0.82rem; padding:7px 12px; background:linear-gradient(135deg, #10b981, #059669); color:#ffffff;">📦 Descargar Base de Datos (.zip)</button>
+              <button type="button" class="accion" onclick="if(document.getElementById('btn-descargar-todo-ide')){document.getElementById('btn-descargar-todo-ide').click();}else if(document.getElementById('btn-descargar-bd-mapa')){document.getElementById('btn-descargar-bd-mapa').click();}" style="font-size:0.82rem; padding:7px 12px; background:linear-gradient(135deg, #10b981, #059669); color:#ffffff;">📦 Descargar Base de Datos (.zip)</button>
             </div>
           </div>
         `

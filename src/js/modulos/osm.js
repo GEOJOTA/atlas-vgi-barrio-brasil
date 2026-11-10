@@ -382,7 +382,7 @@ let infoSuperficie = null;
         id: `${el.type}/${el.id}`,
         geometry: geometria,
         properties: {
-          id_vgi: `OSM/${el.type}/${el.id}`,
+          id_igv: `OSM/${el.type}/${el.id}`, id_vgi: `OSM/${el.type}/${el.id}`,
           categoria: categoriaId,
           subtipo: subtipo,
           nombre: nombre,
@@ -610,9 +610,9 @@ let infoSuperficie = null;
           const str = JSON.stringify(f.properties).toLowerCase();
           return (str.includes('universi') || str.includes('barroso 10') || str.includes('erasmo escala 1822')) && geometriaIntersecaBbox(f.geometry, bbox, f.bbox);
         });
-        const existingIds = new Set(featuresFiltradas.map(f => f.properties?.id_vgi || f.id));
+        const existingIds = new Set(featuresFiltradas.map(f => f.properties?.id_igv || f.properties?.id_vgi || f.id));
         univEdif.forEach(feat => {
-          const id = feat.properties?.id_vgi || feat.id;
+          const id = feat.properties?.id_igv || feat.properties?.id_vgi || feat.id;
           if (!existingIds.has(id)) {
             const fClone = JSON.parse(JSON.stringify(feat));
             fClone.properties.categoria = 'educacion';

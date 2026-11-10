@@ -10,13 +10,13 @@
 const ModuloLicencias = (() => {
 
   const LICENCIA_ATLAS = {
-    titulo: 'Marco Tripartito de Licenciamiento Abierto (Atlas VGI Territorial)',
-    justificacion: 'Se descarta expresamente la licencia permisiva MIT para el proyecto. En el contexto de la Información Geográfica Voluntaria y los datos públicos en Chile, MIT permite que actores comerciales privaticen la cartografía y cierren el código sin compartir mejoras. En su reemplazo, se adopta un marco de copyleft y reciprocidad obligatoria fundamentado en la Ley N° 17.336 de Propiedad Intelectual y la Ley N° 20.285 de Transparencia y Acceso a la Información Pública:',
+    titulo: 'Marco Tripartito de Licenciamiento Abierto (Atlas para la Gestión Territorial)',
+    justificacion: 'Se descarta expresamente la licencia permisiva MIT para el proyecto. En el contexto de los datos públicos y colaborativos en Chile, MIT permite que actores comerciales privaticen la cartografía y cierren el código sin compartir mejoras. En su reemplazo, se adopta un marco de copyleft y reciprocidad obligatoria fundamentado en la Ley N° 17.336 de Propiedad Intelectual y la Ley N° 20.285 de Transparencia y Acceso a la Información Pública:',
     pilares: [
       {
         ambito: 'Documentación, Metodología, Cartografía y Manual de Uso',
         licencia: 'Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)',
-        implicancia: 'Permite compartir y adaptar libremente los contenidos siempre que se otorgue crédito al Atlas VGI Territorial y se distribuyan las obras derivadas bajo la misma licencia idéntica (cláusula Share-Alike). Impide el cercamiento comercial.',
+        implicancia: 'Permite compartir y adaptar libremente los contenidos siempre que se otorgue crédito al Atlas para la Gestión Territorial y se distribuyan las obras derivadas bajo la misma licencia idéntica (cláusula Share-Alike). Impide el cercamiento comercial.',
         url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.es'
       },
       {

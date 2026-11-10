@@ -703,7 +703,7 @@ const ModuloGBIF = (() => {
       const nomComun = p.nombreComun || NOMBRES_COMUNES_CHILE[spLower] || null;
 
       return {
-        id: p.gbifID || p.id_vgi || f.id || Math.floor(Math.random() * 1000000),
+        id: p.gbifID || p.id_igv || p.id_vgi || f.id || Math.floor(Math.random() * 1000000),
         especie: sp,
         scientificName: p.scientificName || sp,
         nombreComun: nomComun,
@@ -1174,7 +1174,7 @@ const ModuloGBIF = (() => {
           coordinates: [r.lon, r.lat]
         },
         properties: {
-          id_vgi: `GBIF/${r.id}`,
+          id_igv: `GBIF/${r.id}`, id_vgi: `GBIF/${r.id}`,
           categoria: 'CAT-08 (Biodiversidad Urbana)',
           subtipo: 'Registro Biológico (GBIF/iNat)',
           nombre: r.nombreComun ? `${r.nombreComun} (${r.especie})` : r.especie,

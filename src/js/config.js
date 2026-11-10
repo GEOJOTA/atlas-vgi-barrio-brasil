@@ -9,11 +9,11 @@
 
 const CONFIG_PREDETERMINADA = {
   organizacion: {
-    nombre: 'Atlas de Información Geográfica Voluntaria',
-    subtitulo: 'Plataforma VGI para la Gestión Territorial',
-    descripcion_corta: 'Consulta, calidad y metadatos VGI | Barrio Brasil, Santiago',
+    nombre: 'Atlas para la Gestión Territorial',
+    subtitulo: 'Análisis y Exploración | Municipio de Santiago y Barrio Brasil',
+    descripcion_corta: 'Análisis y Exploración | Municipio de Santiago y Barrio Brasil',
     contacto: 'tucorreoelectronico@gmail.com',
-    area_de_interes_nombre: 'Barrio Brasil, Santiago Centro, Chile'
+    area_de_interes_nombre: 'Municipio de Santiago y Barrio Brasil'
   },
   area_por_defecto: {
     bbox: [-70.6720, -33.4505, -70.6580, -33.4350],

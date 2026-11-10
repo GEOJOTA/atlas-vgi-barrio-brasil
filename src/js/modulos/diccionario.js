@@ -11,13 +11,22 @@ const ModuloDiccionario = (() => {
 
   const ATRIBUTOS_NORMALIZADOS = [
     {
-      campo: 'id_vgi',
-      nombre: 'Identificador Único VGI',
+      campo: 'id_igv',
+      nombre: 'Identificador Único IGV (Información Geográfica Voluntaria)',
       tipo: 'Texto (Alfanumérico)',
-      definicion: 'Identificador global persistente formado por la fuente, el tipo de geometría y el ID numérico (ej: OSM/node/906429642).',
-      ejemplo: 'OSM/node/906429642',
-      equivalenciaIDE: 'Código Identificador de Objeto Geográfico (ID_OBJETO / gmd:identifier)',
-      importancia: 'Permite evitar duplicados y referenciar unívocamente la entidad en auditorías y cruces en QGIS.'
+      definicion: 'Identificador global persistente formado por la fuente, el tipo de geometría y el ID numérico (ej: OSM/node/906429642, GBIF/occ/45678912).',
+      ejemplo: 'OSM/node/906429642, GBIF/occ/45678912',
+      equivalenciaIDE: 'Código Identificador de Objeto Geográfico Voluntario (ID_IGV / gmd:identifier)',
+      importancia: 'Permite evitar duplicados y referenciar unívocamente la entidad en auditorías y cruces espaciales en SIG.'
+    },
+    {
+      campo: 'id_ig',
+      nombre: 'Identificador Único Oficial (Información Geográfica del Estado)',
+      tipo: 'Texto (Alfanumérico)',
+      definicion: 'Identificador geográfico oficial provisto por los organismos del Estado de Chile a través de IDE Chile (ej: IDE/censo2024_manzanas/1711, IDE/minvu_ipt_prc_santiago/24).',
+      ejemplo: 'IDE/censo2024_manzanas/1711, IDE/minvu_ipt_prc_santiago/24',
+      equivalenciaIDE: 'Identificador de Objeto Geográfico Oficial del Estado (ID_IG / IDE Chile SNIT)',
+      importancia: 'Permite vincular directamente los registros censales, normativos y ministeriales con las coberturas del Atlas.'
     },
     {
       campo: 'categoria',

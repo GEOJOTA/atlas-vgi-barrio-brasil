@@ -473,13 +473,13 @@ function inicializarAplicacion() {
   if (!cfg) return;
 
   if (window.ManifoldCanvas) {
-    window.ManifoldCanvas.init('manifold-bg-container');
+    try { window.ManifoldCanvas.init('manifold-bg-container'); } catch (_) {}
   }
 
   configurarNavegacion();
   configurarSubpanelesDerecha();
+  try { ModuloMapa.inicializar('mapa-atlas'); } catch (err) { console.error('[Error al inicializar ModuloMapa]:', err); }
   precargarCamposDesdeConfig();
-  ModuloMapa.inicializar('mapa-atlas');
   crearBotonesCategorias();
   configurarEventosMapa();
   configurarCapasOficialesIDE();
@@ -554,12 +554,12 @@ function inicializarAplicacion() {
 
       const selClave = document.getElementById('custom-clave-select');
       if (selClave) selClave.value = 'otra';
-      document.getElementById('custom-clave-manual').value = '';
-      document.getElementById('custom-valor').value = '';
-      document.getElementById('custom-operador').value = operador;
-      document.getElementById('custom-nombre-capa').value = nombre;
-      document.getElementById('custom-color-capa').value = color;
-      document.getElementById('custom-entidad').value = entidad;
+      const elClaveMan = document.getElementById('custom-clave-manual'); if (elClaveMan) elClaveMan.value = '';
+      const elCustomVal = document.getElementById('custom-valor'); if (elCustomVal) elCustomVal.value = '';
+      const elCustomOp = document.getElementById('custom-operador'); if (elCustomOp) elCustomOp.value = operador;
+      const elCustomNom = document.getElementById('custom-nombre-capa'); if (elCustomNom) elCustomNom.value = nombre;
+      const elCustomCol = document.getElementById('custom-color-capa'); if (elCustomCol) elCustomCol.value = color;
+      const elCustomEnt = document.getElementById('custom-entidad'); if (elCustomEnt) elCustomEnt.value = entidad;
       const selValor = document.getElementById('custom-valor-select');
       if (selValor) selValor.value = 'custom';
 
@@ -572,11 +572,12 @@ function inicializarAplicacion() {
 
   // Preset geométrico de ohsome API v1 e intervalo temporal
   document.getElementById('oh-preset-selector')?.addEventListener('change', (e) => {
+    const elFiltro = document.getElementById('oh-filtro');
     if (e.target.value !== 'custom') {
-      document.getElementById('oh-filtro').value = e.target.value;
+      if (elFiltro) elFiltro.value = e.target.value;
       sincronizarCoherenciaDesdeOhsome(e.target.value);
     } else {
-      document.getElementById('oh-filtro').focus();
+      if (elFiltro) elFiltro.focus();
     }
   });
 
@@ -604,7 +605,7 @@ function inicializarAplicacion() {
   }
 
   // Eventos de paneles
-  document.getElementById('btn-consultar-osm').addEventListener('click', () => manejarConsultaOSM(false, 'bbox'));
+  document.getElementById('btn-consultar-osm')?.addEventListener('click', () => manejarConsultaOSM(false, 'bbox'));
   const btnCoords = document.getElementById('btn-consultar-osm-coords');
   if (btnCoords) {
     btnCoords.addEventListener('click', () => {
@@ -627,9 +628,9 @@ function inicializarAplicacion() {
       manejarConsultaOSM(false, 'rm_completa');
     });
   }
-  document.getElementById('btn-cargar-osm-al-mapa').addEventListener('click', () => manejarConsultaOSM(true, 'mapa'));
-  document.getElementById('btn-usar-area-config').addEventListener('click', aplicarAreaConfigAlExplorador);
-  document.getElementById('osm-categoria-preset').addEventListener('change', manejarCambioPresetOSM);
+  document.getElementById('btn-cargar-osm-al-mapa')?.addEventListener('click', () => manejarConsultaOSM(true, 'mapa'));
+  document.getElementById('btn-usar-area-config')?.addEventListener('click', aplicarAreaConfigAlExplorador);
+  document.getElementById('osm-categoria-preset')?.addEventListener('change', manejarCambioPresetOSM);
 
 
   // Constructor de Consultas Personalizadas: sincronización dual selectores y campos manuales
@@ -713,7 +714,7 @@ function inicializarAplicacion() {
 
   cargarConsultasGuardadas();
 
-  document.getElementById('btn-consultar-ohsome').addEventListener('click', manejarConsultaOhsome);
+  document.getElementById('btn-consultar-ohsome')?.addEventListener('click', manejarConsultaOhsome);
 
   // Control de Cambios y Validación de Ediciones con OSMCha (Changesets API v0.6)
   const selModoOSMCha = document.getElementById('osmcha-filtro-modo');
@@ -765,9 +766,9 @@ function inicializarAplicacion() {
     });
   }
 
-  document.getElementById('btn-consultar-gbif').addEventListener('click', () => manejarConsultaGBIF(false));
-  document.getElementById('btn-cargar-gbif-al-mapa').addEventListener('click', () => manejarConsultaGBIF(true));
-  document.getElementById('btn-cargar-umap').addEventListener('click', manejarCargaUMap);
+  document.getElementById('btn-consultar-gbif')?.addEventListener('click', () => manejarConsultaGBIF(false));
+  document.getElementById('btn-cargar-gbif-al-mapa')?.addEventListener('click', () => manejarConsultaGBIF(true));
+  document.getElementById('btn-cargar-umap')?.addEventListener('click', manejarCargaUMap);
 
   // Botones de selección rápida de ámbito espacial para GBIF
   const btnGbifRm = document.getElementById('btn-gbif-ambito-rm');
@@ -929,7 +930,8 @@ function inicializarAplicacion() {
 
   // Selector de SRS de metadatos
   document.getElementById('md-srs-select')?.addEventListener('change', (e) => {
-    document.getElementById('md-srs').value = e.target.value;
+    const el = document.getElementById('md-srs');
+    if (el) el.value = e.target.value;
   });
 
   // Selector de Marco Jurídico de Licenciamiento en Metadatos ISO
@@ -941,13 +943,14 @@ function inicializarAplicacion() {
       vgi_mixta: 'Licencia Mixta VGI: Open Database License (ODbL 1.0) para geometrías OSM + Creative Commons CC-BY 4.0 para observaciones biológicas de GBIF.'
     };
     const texto = mapaLicencias[e.target.value] || e.target.value;
-    document.getElementById('md-restricciones').value = texto;
+    const el = document.getElementById('md-restricciones');
+    if (el) el.value = texto;
   });
 
-  document.getElementById('form-metadatos').addEventListener('submit', manejarGenerarMetadatos);
-  document.getElementById('btn-prellenar-metadatos').addEventListener('click', prellenarMetadatosDesdeUltimaConsulta);
-  document.getElementById('btn-exportar-json').addEventListener('click', exportarMetadatosJSON);
-  document.getElementById('btn-exportar-xml').addEventListener('click', exportarMetadatosXML);
+  document.getElementById('form-metadatos')?.addEventListener('submit', manejarGenerarMetadatos);
+  document.getElementById('btn-prellenar-metadatos')?.addEventListener('click', prellenarMetadatosDesdeUltimaConsulta);
+  document.getElementById('btn-exportar-json')?.addEventListener('click', exportarMetadatosJSON);
+  document.getElementById('btn-exportar-xml')?.addEventListener('click', exportarMetadatosXML);
 
   function configurarInterceptoresDescargasMetadatos() {
     document.addEventListener('click', async (e) => {
@@ -1438,7 +1441,7 @@ function actualizarFichaTerritorio(nombre, bbox) {
 
 function precargarCamposDesdeConfig() {
   const cfg = window.NODO_CONFIG;
-  document.getElementById('nombre-organizacion').textContent = cfg.organizacion.descripcion_corta || cfg.organizacion.nombre;
+  const elOrg = document.getElementById('nombre-organizacion'); if (elOrg) elOrg.textContent = cfg.organizacion.subtitulo || cfg.organizacion.descripcion_corta || 'Análisis y Exploración | Municipio de Santiago y Barrio Brasil';
   
   const terrDefecto = cfg.territorios_predefinidos?.find(t => t.id === cfg.area_por_defecto.id) || cfg.territorios_predefinidos?.[0];
   actualizarFichaTerritorio(terrDefecto ? terrDefecto.nombre : cfg.organizacion.area_de_interes_nombre, cfg.area_por_defecto.bbox);
@@ -1447,9 +1450,12 @@ function precargarCamposDesdeConfig() {
   aplicarAreaConfigAlExplorador();
 
   const md = cfg.metadatos_iso_defecto || {};
-  if (md.sistema_referencia) document.getElementById('md-srs').value = `${md.sistema_referencia} / Compatible con ${md.sistema_referencia_nacional || 'EPSG:5361'}`;
-  if (md.punto_de_contacto_organizacion) document.getElementById('md-contacto-org').value = md.punto_de_contacto_organizacion;
-  if (md.punto_de_contacto_correo) document.getElementById('md-contacto-correo').value = md.punto_de_contacto_correo;
+  const elMdSrs = document.getElementById('md-srs');
+  if (elMdSrs && md.sistema_referencia) elMdSrs.value = `${md.sistema_referencia} / Compatible con ${md.sistema_referencia_nacional || 'EPSG:5361'}`;
+  const elMdOrg = document.getElementById('md-contacto-org');
+  if (elMdOrg && md.punto_de_contacto_organizacion) elMdOrg.value = md.punto_de_contacto_organizacion;
+  const elMdCorreo = document.getElementById('md-contacto-correo');
+  if (elMdCorreo && md.punto_de_contacto_correo) elMdCorreo.value = md.punto_de_contacto_correo;
 }
 
 function pintarEstadoConexion() {
@@ -1527,11 +1533,20 @@ window.ocultarProgresoCargaCapa = function() {
 /* ---------------------- HELPERS DE BBOX ---------------------- */
 
 function leerBbox(prefijo) {
-  const oeste = parseFloat(document.getElementById(`${prefijo}-oeste`).value);
-  const sur = parseFloat(document.getElementById(`${prefijo}-sur`).value);
-  const este = parseFloat(document.getElementById(`${prefijo}-este`).value);
-  const norte = parseFloat(document.getElementById(`${prefijo}-norte`).value);
-  if ([oeste, sur, este, norte].some(Number.isNaN)) return null;
+  const elO = document.getElementById(`${prefijo}-oeste`);
+  const elS = document.getElementById(`${prefijo}-sur`);
+  const elE = document.getElementById(`${prefijo}-este`);
+  const elN = document.getElementById(`${prefijo}-norte`);
+  if (!elO || !elS || !elE || !elN) {
+    return window.NODO_CONFIG?.area_por_defecto?.bbox || [-70.6720, -33.4505, -70.6580, -33.4350];
+  }
+  const oeste = parseFloat(elO.value);
+  const sur = parseFloat(elS.value);
+  const este = parseFloat(elE.value);
+  const norte = parseFloat(elN.value);
+  if ([oeste, sur, este, norte].some(Number.isNaN)) {
+    return window.NODO_CONFIG?.area_por_defecto?.bbox || null;
+  }
   return [oeste, sur, este, norte];
 }
 
@@ -1933,7 +1948,7 @@ async function manejarConsultaPersonalizada() {
       const p = f.properties;
       return `
         <tr>
-          <td><code>${p.id_vgi || f.id}</code></td>
+          <td><code>${p.id_ig || p.id_igv || p.id_vgi || f.id}</code></td>
           <td><strong>${p.nombre || '—'}</strong></td>
           <td>${p.subtipo || '—'}</td>
           <td>${p.superficie_m2 ? `<strong>${p.superficie_m2.toLocaleString('es-CL')} m²</strong> <small style="color:var(--tinta-suave);">(${p.superficie_ha} ha)</small>` : '—'}</td>
@@ -1962,7 +1977,7 @@ async function manejarConsultaPersonalizada() {
 
     // Convertir a CSV plano incluyendo columnas canónicas de metadatos del catálogo
     const encabezadosCsv = [
-      'id_vgi', 'nombre', 'subtipo', 'superficie_m2', 'superficie_ha', 'srs_superficie',
+      'id_identificador', 'nombre', 'subtipo', 'superficie_m2', 'superficie_ha', 'srs_superficie',
       'direccion', 'accesibilidad', 'fuente', 'licencia', 'latitud', 'longitud',
       'meta_capa_id', 'meta_titulo', 'meta_institucion', 'meta_ministerio', 'meta_grupo',
       'meta_tipo_fuente', 'meta_temporalidad', 'meta_licencia', 'meta_cita_apa', 'meta_crs', 'meta_igv', 'meta_grado_calidad'
@@ -1974,7 +1989,7 @@ async function manejarConsultaPersonalizada() {
       const lat = f.geometry?.type === 'Point' ? coords[1] : (coords[0] && coords[0][0] ? coords[0][0][1] : '');
       const lon = f.geometry?.type === 'Point' ? coords[0] : (coords[0] && coords[0][0] ? coords[0][0][0] : '');
       lineasCsv.push([
-        `"${p.id_vgi || ''}"`,
+        `"${p.id_ig || p.id_igv || p.id_vgi || ''}"`,
         `"${(p.nombre || '').replace(/"/g, '""')}"`,
         `"${p.subtipo || ''}"`,
         p.superficie_m2 || '',
@@ -2230,7 +2245,7 @@ async function manejarConsultaOSM(cargarAlMapa = false, modo = 'bbox') {
       const p = f.properties;
       return `
         <tr>
-          <td><code>${p.id_vgi || f.id}</code></td>
+          <td><code>${p.id_ig || p.id_igv || p.id_vgi || f.id}</code></td>
           <td><strong>${p.nombre || '—'}</strong></td>
           <td>${p.subtipo || '—'}</td>
           <td>${p.superficie_m2 ? `<strong>${p.superficie_m2.toLocaleString('es-CL')} m²</strong> <small style="color:var(--tinta-suave);">(${p.superficie_ha} ha)</small>` : '—'}</td>

@@ -333,7 +333,7 @@ const ModuloImportadorCapas = (() => {
       props._subtipo = props.tipo || props.type || props.category || props.categoria || (geom ? geom.type : 'Elemento');
 
       // Garantizar presencia del esquema canónico de 17 atributos VGI
-      if (!props.id_vgi) props.id_vgi = `${idCapa}_${idx + 1}`;
+      if (!props.id_igv && !props.id_vgi) { props.id_igv = `${idCapa}_${idx + 1}`; props.id_vgi = props.id_igv; }
       if (!props.categoria) props.categoria = 'Capa de Usuario / Externa';
       if (!props.subtipo) props.subtipo = props._subtipo;
       if (!props.nombre) props.nombre = props._nombre;

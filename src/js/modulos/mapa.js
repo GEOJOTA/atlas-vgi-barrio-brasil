@@ -124,6 +124,23 @@ const ModuloMapa = (() => {
 
     configurarEventosDibujoBbox();
     inicializarControlSimbologia();
+
+    let timerResizeGlobal;
+    window.addEventListener('resize', () => {
+      clearTimeout(timerResizeGlobal);
+      timerResizeGlobal = setTimeout(() => {
+        if (mapa) {
+          try { mapa.invalidateSize({ pan: false }); } catch (_) {}
+        }
+      }, 100);
+    });
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        if (mapa) {
+          try { mapa.invalidateSize({ pan: false }); } catch (_) {}
+        }
+      }, 200);
+    });
   }
 
   function actualizarRectanguloBbox(bbox) {
@@ -1625,6 +1642,8 @@ const ModuloMapa = (() => {
             </h4>
             <table style="width:100%; font-size:0.78rem; border-collapse:collapse;">
               ${esOficial ? `<tr><td colspan="2" style="background:#1B4D3E; color:#FFF; font-size:0.68rem; font-family:'IBM Plex Mono',monospace; padding:2px 6px; font-weight:bold; letter-spacing:0.04em; margin-bottom:4px; display:block;">🏛️ CAPA OFICIAL DEL ESTADO DE CHILE</td></tr>` : ''}
+              ${props.id_ig ? `<tr><td style="color:#4B5142; width:38%;">ID IG:</td><td><code style="font-size:0.7rem; color:#06b6d4; font-family:'IBM Plex Mono',monospace; font-weight:700;">${props.id_ig}</code></td></tr>` : ''}
+              ${(props.id_igv || props.id_vgi) ? `<tr><td style="color:#4B5142; width:38%;">ID IGV:</td><td><code style="font-size:0.7rem; color:#06b6d4; font-family:'IBM Plex Mono',monospace; font-weight:700;">${props.id_igv || props.id_vgi}</code></td></tr>` : ''}
               <tr><td style="color:#4B5142; width:38%;">Clasificación:</td><td><strong>${subtipo}</strong></td></tr>
               ${filasExtraInfo}
               ${props.operador ? `<tr><td style="color:#4B5142;">Operador:</td><td>${props.operador}</td></tr>` : ''}
@@ -2437,6 +2456,8 @@ const ModuloMapa = (() => {
     const subtipo = props._subtipo || props.subtipo || props.EBI_ETAPA_POSTULA || props.amenity || props.shop || props.highway || props.historic || (defOficial ? defOficial.nombre : '—');
 
     let s1 = '';
+    if (props.id_ig) s1 += fila('Identificador Oficial (ID IG)', `<code style="color:var(--musgo); font-family:var(--fuente-datos); font-weight:700;">${props.id_ig}</code>`);
+    if (props.id_igv || props.id_vgi) s1 += fila('Identificador IGV', `<code style="color:var(--musgo); font-family:var(--fuente-datos); font-weight:700;">${props.id_igv || props.id_vgi}</code>`);
     s1 += fila('Nombre / Denominación', nombre);
     s1 += fila('Subtipo / Clasificación', subtipo);
     if (props.codigo_junction) s1 += fila('Código Junction (UOCT)', props.codigo_junction);
@@ -2506,6 +2527,7 @@ const ModuloMapa = (() => {
 
     if (esCapaOficial) {
       tituloSeccion4 = '📂 Metadatos de Origen y Trazabilidad Oficial (IDE Chile)';
+      if (props.id_ig) s4 += fila('Identificador Oficial (ID IG)', props.id_ig);
       s4 += fila('Institución Oficial', meta.fuente || props._fuente || 'Estado de Chile');
       if (meta.ministerio) s4 += fila('Ministerio / Cartera', meta.ministerio);
       s4 += fila('Archivo de Origen', meta.archivo_origen || meta.archivo_geojson || '—');
@@ -2543,8 +2565,8 @@ const ModuloMapa = (() => {
       s4 += fila('Fuente Específica', meta.fuente);
       s4 += fila('Método de Descarga', meta.metodo_adquisicion);
       s4 += fila('Comunidad / Proveedor', meta.comunidad);
-      const idVgiVal = props.id_vgi || (props.osm_type && props.osm_id ? `OSM/${props.osm_type}/${props.osm_id}` : (props.osm_id ? `OSM/${props.osm_id}` : (props.id || '—')));
-      s4 += fila('Identificador VGI (OSM ID)', idVgiVal);
+      const idIgvVal = props.id_igv || props.id_vgi || (props.osm_type && props.osm_id ? `OSM/${props.osm_type}/${props.osm_id}` : (props.osm_id ? `OSM/${props.osm_id}` : (props.id || '—')));
+      s4 += fila('Identificador IGV (OSM ID)', idIgvVal);
       if (props.osm_type && props.osm_id) {
         s4 += fila('Ficha en OpenStreetMap', `<a href="https://www.openstreetmap.org/${props.osm_type}/${props.osm_id}" target="_blank" rel="noopener" style="color:var(--musgo,#06b6d4); text-decoration:underline;">Ver elemento en openstreetmap.org ↗</a>`);
       }
@@ -2703,6 +2725,7 @@ const ModuloMapa = (() => {
     removerCapaWMS,
     obtenerCapasWMSActivas,
     obtenerInstanciaMapa: () => mapa,
+    invalidarTamano,
     aplicarSimbologiaACapa,
     restablecerSimbologia: (id) => {
       if (registroCapasTematicas[id]) {
