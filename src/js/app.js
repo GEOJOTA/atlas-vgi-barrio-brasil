@@ -1,3 +1,24 @@
+// Fallbacks globales inmediatos para navegación y glosario
+if (typeof window !== 'undefined') {
+  window.activarPanel = window.activarPanel || function(panelId) {
+    if (!panelId) return;
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('activo'));
+    const p = document.getElementById('panel-' + panelId);
+    if (p) {
+      p.classList.add('activo');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+  window.abrirGlosarioSiglas = window.abrirGlosarioSiglas || function() {
+    const m = document.getElementById('modal-glosario-siglas');
+    if (m) { m.style.display = 'flex'; m.setAttribute('aria-hidden', 'false'); }
+  };
+  window.cerrarGlosarioSiglas = window.cerrarGlosarioSiglas || function() {
+    const m = document.getElementById('modal-glosario-siglas');
+    if (m) { m.style.display = 'none'; m.setAttribute('aria-hidden', 'true'); }
+  };
+}
+
 /*
   app.js
   ------
@@ -1133,6 +1154,8 @@ function configurarNavegacion() {
       modalGlosario.setAttribute('aria-hidden', 'true');
     }
   };
+  window.abrirGlosarioSiglas = abrirGlosario;
+  window.cerrarGlosarioSiglas = cerrarGlosario;
   document.getElementById('btn-abrir-glosario-rapido')?.addEventListener('click', abrirGlosario);
   document.getElementById('btn-cerrar-glosario-siglas')?.addEventListener('click', cerrarGlosario);
   document.getElementById('btn-cerrar-glosario-pie')?.addEventListener('click', cerrarGlosario);
@@ -1264,7 +1287,7 @@ function configurarNavegacion() {
   document.querySelectorAll('.btn-grupo-tarea').forEach(btnGrupo => {
     btnGrupo.addEventListener('click', (e) => {
       e.stopPropagation();
-      const panelDef = btnGrupo.dataset.panelDefecto || 'indicadores';
+      const panelDef = btnGrupo.dataset.panel || btnGrupo.dataset.panelDefecto || 'indicadores';
       activarPanel(panelDef);
     });
   });
@@ -1277,11 +1300,14 @@ function configurarNavegacion() {
     });
   });
 
-  // Delegación global para botones con data-panel
+  // Delegación global para botones con data-panel o data-panel-defecto
   document.addEventListener('click', (e) => {
-    const btn = e.target.closest('#lista-navegacion button, .barra-pestanas-profundidad button, button[data-panel]');
-    if (btn && btn.dataset.panel) {
-      activarPanel(btn.dataset.panel);
+    const btn = e.target.closest('#lista-navegacion button, .barra-pestanas-profundidad button, .btn-grupo-tarea, button[data-panel], [data-panel-defecto]');
+    if (btn) {
+      const panel = btn.dataset.panel || btn.dataset.panelDefecto;
+      if (panel) {
+        activarPanel(panel);
+      }
     }
   });
 
@@ -3863,19 +3889,6 @@ function configurarCapasOficialesIDE() {
       contSidebar.appendChild(item);
     });
   }
-
-  document.getElementById('btn-descargar-todo-ide')?.addEventListener('click', descargarColeccionOficialCompleta);
-  document.getElementById('btn-descargar-bd-mapa')?.addEventListener('click', descargarColeccionOficialCompleta);
-  document.getElementById('btn-cerrar-modal-bd')?.addEventListener('click', cerrarModalDescargaBaseDatos);
-  document.getElementById('btn-cerrar-modal-bd-pie')?.addEventListener('click', cerrarModalDescargaBaseDatos);
-  document.getElementById('modal-descarga-bd-overlay')?.addEventListener('click', (e) => {
-    if (e.target.id === 'modal-descarga-bd-overlay') cerrarModalDescargaBaseDatos();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') cerrarModalDescargaBaseDatos();
-  });
-  inicializarInspectorNormativo();
-}
 
   document.getElementById('btn-descargar-todo-ide')?.addEventListener('click', descargarColeccionOficialCompleta);
   document.getElementById('btn-descargar-bd-mapa')?.addEventListener('click', descargarColeccionOficialCompleta);

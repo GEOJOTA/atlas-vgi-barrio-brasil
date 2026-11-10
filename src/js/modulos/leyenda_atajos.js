@@ -31,7 +31,7 @@ const ModuloAtajosLeyenda = (() => {
       badge: 'Explorar mapa',
       apartados: [
         { id: 'mapa-atlas', titulo: 'Explorar mapa', abajo: false },
-        { id: 'sidebar-detalle-bidat', titulo: 'Detalles del elemento', abajo: true }
+        { id: 'sidebar-detalle-bidat', titulo: 'Explorar capas', abajo: true }
       ]
     },
     'manual': {

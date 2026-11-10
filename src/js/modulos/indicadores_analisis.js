@@ -176,7 +176,7 @@ const ModuloIndicadoresAnalisis = (() => {
       numero: '1',
       nombre: 'Sociodemográfica',
       icono: '👥',
-      color: '#06B6D4', // Cian
+      color: '#06B6D4',
       colorFondo: 'rgba(6, 182, 212, 0.12)',
       colorBorde: 'rgba(6, 182, 212, 0.45)',
       descripcion: 'Caracterización de la estructura poblacional, composición demográfica, distribución de hogares y estratificación socioeconómica en la Comuna de Santiago y el Barrio Brasil.',
@@ -188,18 +188,19 @@ const ModuloIndicadoresAnalisis = (() => {
         'censo2024_zonal',
         'censo2024_manzanas',
         'ide_minvu_campamentos',
-        'bbdd_66', // Unidades Vecinales 2026
-        'bbdd_08', // Municipios
-        'bbdd_15', // Centros de SERNAM
-        'bbdd_44', // Municipios con certificación ambiental (SCAM)
-        'bbdd_50', // Oficinas de Protección de Derechos (ODP)
-        'bbdd_64', // Índice Global de Vulnerabilidad Socioterritorial (IGVUST)
-        'bbdd_68', // Personas en RSH según CSE y sexo
-        'bbdd_69', // NNA en RSH adscritas a Fonasa o Isapre
-        'bbdd_70', // Mujeres en RSH adscritas a Fonasa o Isapre
-        'bbdd_71', // Jóvenes en RSH adscritos a Fonasa o Isapre
-        'bbdd_72', // Hombres en RSH adscritos a Fonasa o Isapre
-        'bbdd_73'  // Personas mayores en RSH adscritos a Fonasa o Isapre
+        'bbdd_08',
+        'bbdd_15',
+        'bbdd_44',
+        'bbdd_50',
+        'bbdd_64',
+        'bbdd_66',
+        'bbdd_68',
+        'bbdd_69',
+        'bbdd_70',
+        'bbdd_71',
+        'bbdd_72',
+        'bbdd_73',
+        'ine_crf_conjuntos_santiago'
       ]
     },
     {
@@ -207,30 +208,29 @@ const ModuloIndicadoresAnalisis = (() => {
       numero: '2',
       nombre: 'Socioeconómica',
       icono: '📈',
-      color: '#F59E0B', // Ámbar / Dorado
+      color: '#F59E0B',
       colorFondo: 'rgba(245, 158, 11, 0.12)',
       colorBorde: 'rgba(245, 158, 11, 0.45)',
       descripcion: 'Evaluación de la inversión pública, dinámica laboral, localización comercial barrial e infraestructura de telecomunicaciones y energía a escala metropolitana y local.',
       enfoque: 'Iniciativas de inversión pública, contratos de infraestructura estatal, comercio barrial colaborativo y redes energéticas y de conectividad.',
       capasIds: [
-        'bbdd_65', // Iniciativas de inversión BIP MDSF
-        'bbdd_01', // Proyectos Mandatados - GEOMOP
-        'bbdd_04', // Contratos Concesionados - GEOMOP
-        'bbdd_05', // Contratos MOP - GEOMOP
-        'bbdd_74', // Personas en RSH ocupadas y cotizando
-        'cat02_servicios', // VGI Servicios y Comercio Barrial
-        'bbdd_35', // Antenas en Servicio Ley de Torres
-        'bbdd_53', // Industria Forestal Primeria (INFOR)
-        'bbdd_54', // Mercados Mayoristas (ODEPA)
-        'energia_electrolineras_rm',
-        'energia_lineas_transmision_rm',
-        'energia_hidroelectricas_rm',
-        'energia_termoelectricas_rm',
-        'energia_solares_rm',
-        'energia_bioenergia_rm',
+        'bbdd_01',
+        'bbdd_04',
+        'bbdd_05',
         'energia_almacenamiento_rm',
+        'energia_bioenergia_rm',
+        'energia_electrolineras_rm',
         'energia_gasoducto_rm',
-        'energia_oleoducto_rm'
+        'energia_hidroelectricas_rm',
+        'energia_lineas_transmision_rm',
+        'energia_oleoducto_rm',
+        'energia_solares_rm',
+        'energia_termoelectricas_rm',
+        'bbdd_35',
+        'bbdd_53',
+        'bbdd_54',
+        'bbdd_65',
+        'bbdd_74'
       ]
     },
     {
@@ -238,35 +238,32 @@ const ModuloIndicadoresAnalisis = (() => {
       numero: '3',
       nombre: 'Socioambiental',
       icono: '🌿',
-      color: '#10B981', // Esmeralda
+      color: '#10B981',
       colorFondo: 'rgba(16, 185, 129, 0.12)',
       colorBorde: 'rgba(16, 185, 129, 0.45)',
       descripcion: 'Análisis de la infraestructura verde urbana, biodiversidad, condiciones ambientales, recursos hídricos y sistemas de gestión de residuos domiciliarios.',
       enfoque: 'Áreas verdes públicas, arbolado y biodiversidad colaborativa, monitoreo hidrometeorológico y metabolismo de residuos sólidos municipales.',
       capasIds: [
         'minvu_ipt_areas_verdes',
-        'cat05_espacio_publico', // VGI Áreas Verdes y Espacio Público
-        'cat08_biodiversidad', // VGI Biodiversidad Urbana
-        'cat10_cobertura_suelo', // VGI Coberturas y Usos de Suelo
-        'bbdd_03', // Red Hidrométrica - GEOMOP
-        'bbdd_23', // Sitios BIO-Prioritarios
-        'bbdd_25', // Estaciones Meteorológicas
-        'bbdd_26', // Estaciones Sedimentométricas
-        'bbdd_27', // Estaciones de Calidad de Aguas
-        'bbdd_29', // Cuencas Banco Nacional de Aguas
-        'bbdd_30', // Indice Calidad de Aguas
-        'bbdd_32', // Vertederos Ilegales
-        'bbdd_34', // Zonas climáticas de Chile según Köppen-Geiger
-        'bbdd_39', // Estaciones de monitoreo de calidad de aire (Red Pública)
-        'bbdd_42', // Pisos vegetacionales de Luebert y Pliscoff 2017
-        'bbdd_49', // Estaciones Fluviométricas
-        'bbdd_51', // Localización de viveros en Chile continental
-        'bbdd_52', // Estaciones Meteorológicas Automáticas (FIA)
-        'bbdd_55', // Sistema Nacional de Áreas Silvestres Protegidas del Estado
-        'bbdd_59', // Cobertura de canales a nivel nacional
-        'bbdd_60', // Catastro y Actualización de Recursos Vegetacionales RM
-        'bbdd_62', // Cobertura de polígonos representativos de huertos frutales RM
-        'bbdd_63', // Inventario de Biomasa y Carbono RM
+        'bbdd_03',
+        'bbdd_23',
+        'bbdd_25',
+        'bbdd_26',
+        'bbdd_27',
+        'bbdd_29',
+        'bbdd_30',
+        'bbdd_32',
+        'bbdd_34',
+        'bbdd_39',
+        'bbdd_42',
+        'bbdd_49',
+        'bbdd_51',
+        'bbdd_52',
+        'bbdd_55',
+        'bbdd_59',
+        'bbdd_60',
+        'bbdd_62',
+        'bbdd_63',
         'subdere_rsd_analisis_costos_comuna_rm',
         'subdere_rsd_poblacion_atendida_pta_puntos_rm',
         'subdere_rsd_poblacion_comunal_pta_poligonos_rm',
@@ -288,15 +285,17 @@ const ModuloIndicadoresAnalisis = (() => {
       numero: '4',
       nombre: 'Sociosanitaria',
       icono: '🏥',
-      color: '#EC4899', // Rosa
+      color: '#EC4899',
       colorFondo: 'rgba(236, 72, 153, 0.12)',
       colorBorde: 'rgba(236, 72, 153, 0.45)',
       descripcion: 'Cobertura territorial de la red asistencial de salud pública, distribución de población con dependencia funcional y jurisdicciones sanitarias.',
       enfoque: 'Establecimientos de atención primaria y hospitalaria, requerimientos de cuidado sociosanitario y territorios de servicios de salud.',
       capasIds: [
         'establecimientos_salud',
-        'bbdd_67', // Personas en RSH en situación de dependencia funcional
-        'bbdd_38'  // Territorios de los Servicios de Salud
+        'bomberos',
+        'bbdd_11',
+        'bbdd_38',
+        'bbdd_67'
       ]
     },
     {
@@ -304,57 +303,60 @@ const ModuloIndicadoresAnalisis = (() => {
       numero: '5',
       nombre: 'Sociourbana o Habitabilidad',
       icono: '🏛️',
-      color: '#8B5CF6', // Violeta
+      color: '#8B5CF6',
       colorFondo: 'rgba(139, 92, 246, 0.12)',
       colorBorde: 'rgba(139, 92, 246, 0.45)',
       descripcion: 'Configuración morfológica, regulación urbana, equipamiento comunitario, redes de movilidad multimodal, accesibilidad universal y patrimonio construido.',
       enfoque: 'Instrumentos de planificación territorial, catastro predial, sistemas de transporte público y activo, zonas de conservación histórica y servicios urbanos.',
       capasIds: [
+        'minvu_patrimonio',
+        'educacion_parvularia',
+        'carabineros',
+        'estaciones_metro',
+        'red_ferroviaria',
+        'cmn_sitios_memoria',
         'minvu_ipt_prc_santiago',
         'minvu_ipt_prms_usosuelo',
         'minvu_ipt_areas_riesgo',
         'minvu_ipt_resguardo_infraestructura',
         'minvu_ipt_limite_urbano',
         'ide_minvu_ipt_prms_riesgo',
-        'catastro_predial_sii',
-        'bbdd_17', // Áreas Funcionales de las ciudades (2026)
-        'bbdd_19', // Cité
-        'bbdd_20', // SEREMI MINVU Región Metropolitana
-        'bbdd_21', // Oficinas Serviu
-        'bbdd_43', // División Política Administrativa 2023
-        'bbdd_46', // Predios Urbanos (Comuna de Santiago)
-        'bbdd_47', // Zona Fronteriza
-        'bbdd_48', // Pasos Fronterizos
+        'bbdd_02',
+        'bbdd_06',
+        'bbdd_07',
+        'bbdd_10',
+        'bbdd_12',
+        'bbdd_13',
+        'bbdd_14',
+        'bbdd_17',
+        'bbdd_19',
+        'bbdd_20',
+        'bbdd_21',
+        'bbdd_24',
+        'bbdd_31',
+        'bbdd_33',
+        'bbdd_37',
+        'bbdd_40',
+        'ccu_rm_1993',
+        'ccu_rm_2002',
+        'ccu_rm_2006',
+        'ccu_rm_2011',
+        'ccu_rm_2017',
+        'ccu_rm_2018',
+        'ccu_rm_2019',
+        'ccu_rm_2020',
+        'ccu_rm_2021',
+        'ccu_rm_2022',
+        'ccu_rm_2023',
+        'ccu_rm_2024',
+        'bbdd_43',
+        'bbdd_46',
+        'bbdd_47',
+        'bbdd_48',
         'semaforos_rm_uoct_2026',
-        'estaciones_metro',
-        'red_ferroviaria',
-        'bbdd_02', // Red Vial Nacional - GEOMOP
-        'bbdd_31', // Ciclovías
-        'bbdd_37', // Red de Interconexión
-        'cat03_transporte', // VGI Movilidad y Transporte
-        'cat04_movilidad_activa', // VGI Movilidad Activa y Ciclovías
-        'cat07_accesibilidad', // VGI Accesibilidad Universal
-        'cat09_edificaciones', // VGI Edificaciones y Huella Urbana
-        'minvu_patrimonio',
-        'cmn_sitios_memoria',
-        'cat06_patrimonio', // VGI Patrimonio y Cultura
-        'educacion_parvularia',
-        'bbdd_06', // Jardines Infantiles JUNJI
-        'bbdd_10', // Jardines Infantiles Fundación Integra
-        'bbdd_12', // Establecimientos Educación Escolar
-        'bbdd_13', // Establecimientos Educación Parvularia
-        'bbdd_14', // Establecimientos de Educación Superior
-        'cat01_educacion', // VGI Educación y Universidad
-        'bbdd_07', // Infraestructura Deportiva
-        'bbdd_40', // Circuitos Turísticos
-        'bomberos',
-        'bbdd_11', // Cuerpos de Bomberos
-        'carabineros',
-        'bbdd_33', // Plan Cuadrante Carabineros
-        'bbdd_24', // Juzgados de Familia
-        'ccu_rm_1993', 'ccu_rm_2002', 'ccu_rm_2006', 'ccu_rm_2011',
-        'ccu_rm_2017', 'ccu_rm_2018', 'ccu_rm_2019', 'ccu_rm_2020',
-        'ccu_rm_2021', 'ccu_rm_2022', 'ccu_rm_2023', 'ccu_rm_2024'
+        'catastro_predial_sii',
+        'ine_permisos_edificacion_santiago',
+        'barrios_santiago_con_zonas_aseo'
       ]
     }
   ];

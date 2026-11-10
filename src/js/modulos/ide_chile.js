@@ -2162,6 +2162,24 @@ const ModuloIDEChile = (() => {
       descripcion: 'Catastro comunal oficial de infraestructura de residuos sólidos domiciliarios y mobiliario urbano de aseo: 5 macro-zonas de aseo (Oriente, Centro Oriente, Centro Poniente, Centro Plaza, Poniente), desagregación por volumen (240L, 360L, 770L), papeleros peatonales, tasas de operatividad, deterioro físico y pérdida.',
       declaracion: 'Información pública oficial de la Municipalidad de Santiago provista conforme a la Ley N° 20.285 sobre Acceso a la Información Pública (Oficio N° E-1528/2026, MU-18117 / Memorando N° 204). Licencia de Datos Abiertos.',
       citaAPA: 'Municipalidad de Santiago. (2026). Catastro de contenedores y papeleros por zonas de aseo comunal (Memorando N° 204 / Oficio N° E-1528/2026, MU-18117). Subdirección de Aseo y Gestión Integral de Residuos, Dirección de Asesoría Jurídica. Santiago, Chile.'
+    },
+    barrios_santiago_con_zonas_aseo: {
+      id: 'barrios_santiago_con_zonas_aseo',
+      num_bbdd: 'ASEO-02',
+      nombre: 'MuniSTGO - Barrios con Catastro de Zonas de Aseo y Residuos',
+      institucion: 'Ilustre Municipalidad de Santiago (Subdirección de Aseo y Gestión Integral de Residuos)',
+      ministerio: 'Municipalidad de Santiago / Ley N° 20.285 Transparencia',
+      tipoServicio: 'Vectorial GeoPackage / GeoJSON WGS84 / Cobertura Comunal Santiago',
+      urlServicio: 'https://www.municipalidaddesantiago.cl',
+      archivoLocal: 'data/barrios_santiago_con_zonas_aseo.geojson',
+      archivoGpkg: 'data/barrios_santiago_con_zonas_aseo.gpkg',
+      color: '#10b981',
+      icono: '🏘️',
+      geometria: 'Polígonos (27 Barrios Santiago)',
+      grupo: 'medio_ambiente',
+      descripcion: 'Intersección espacial de los 27 barrios tradicionales de la Comuna de Santiago con las 5 macro-zonas de aseo, métricas de contenedores por barrio y dotación de papeleros.',
+      declaracion: 'Información pública oficial de la Municipalidad de Santiago provista conforme a la Ley N° 20.285 sobre Acceso a la Información Pública (Oficio N° E-1528/2026, MU-18117). Licencia de Datos Abiertos.',
+      citaAPA: 'Municipalidad de Santiago. (2026). Catastro de barrios con zonas de aseo comunal (Oficio N° E-1528/2026, MU-18117). Subdirección de Aseo y Gestión Integral de Residuos. Santiago, Chile.'
     }
   };
 

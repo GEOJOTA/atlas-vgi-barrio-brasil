@@ -514,33 +514,51 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65), 0 0 16px rgba(255, 255, 255, 0.6);
 }
 
-.marca-texto {
+.marca-texto,
+.marca-texto-lineal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
   text-align: center;
 }
 
 .marca h1,
-.marca-texto h1 {
-  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
-  font-weight: 900;
-  margin: 0 0 4px 0;
+.marca-texto h1,
+.marca-texto-lineal h1,
+.titulo-atlas {
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 800;
+  margin: 0;
   color: #ffffff;
   background: linear-gradient(180deg, #ffffff 40%, #e2e8f0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.01em;
   line-height: 1.25;
-  overflow-wrap: break-word;
-  word-break: normal;
+  white-space: nowrap;
+}
+
+.separador-titulo-subtitulo {
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 300;
+  font-size: 1.15rem;
+  line-height: 1;
+  user-select: none;
+  display: inline-block;
 }
 
 .marca p,
-.marca-texto p {
-  font-size: 0.82rem;
-  line-height: 1.35;
+.marca-texto p,
+.marca-texto-lineal p,
+.subtitulo-atlas {
+  font-size: clamp(0.78rem, 1.15vw, 0.88rem);
+  line-height: 1.3;
   margin: 0;
   color: var(--tinta-suave);
   font-weight: 500;
-  word-break: break-word;
+  white-space: nowrap;
 }
 
 /* Crédito institucional sobrio en cabecera */
@@ -7790,23 +7808,34 @@ table.tabla-datos {
     padding: 4px;
   }
   .marca h1,
-.marca-texto h1 {
-  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
-  font-weight: 900;
-  margin: 0 0 4px 0;
+.marca-texto h1,
+.marca-texto-lineal h1,
+.titulo-atlas {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0 0 2px 0;
   color: #ffffff;
   background: linear-gradient(180deg, #ffffff 40%, #e2e8f0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.01em;
   line-height: 1.25;
-  overflow-wrap: break-word;
-  word-break: normal;
+  white-space: normal;
 }
+  .separador-titulo-subtitulo {
+    display: none;
+  }
   .marca p,
-  .marca-texto p {
+  .marca-texto p,
+  .marca-texto-lineal p,
+  .subtitulo-atlas {
     font-size: 0.76rem;
     line-height: 1.35;
+    white-space: normal;
+  }
+  .btn-grupo-tarea {
+    min-height: 44px;
+    touch-action: manipulation;
   }
   .cabecera-acciones-utilidad {
     width: 100%;
