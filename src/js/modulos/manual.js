@@ -833,6 +833,66 @@ const ModuloManual = (() => {
                 <a href="docs/PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md" download="PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md" class="accion secundaria" style="font-size:0.82rem; padding:7px 14px;">⬇️ Protocolo de Integridad y Despliegue (.md)</a>
               </div>
             </div>
+
+            <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(56,189,248,0.35); border-radius:10px; padding:18px;">
+              <h4 style="margin:0 0 8px 0; color:#38bdf8; font-size:1.05rem;">3. Catálogo de Archivos del Repositorio y la Plataforma</h4>
+              <p style="margin:0 0 12px 0; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
+                Para facilitar la comprensión integral del sistema a cualquier persona o equipo municipal, a continuación se resumen los archivos principales del repositorio y su función en lenguaje directo:
+              </p>
+              <div style="overflow-x:auto;">
+                <table class="tabla-datos" style="width:100%; font-size:0.83rem; min-width:680px;">
+                  <thead>
+                    <tr>
+                      <th style="width:220px;">Componente o Archivo</th>
+                      <th style="width:160px;">Ubicación</th>
+                      <th>Función en Lenguaje Claro</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong><code>index.html</code></strong></td>
+                      <td><code>src/index.html</code></td>
+                      <td>Página principal única que reúne la cabecera (tutorial y glosario), los 3 módulos funcionales y el pie de página de licencias.</td>
+                    </tr>
+                    <tr>
+                      <td><strong><code>estilos.css</code></strong></td>
+                      <td><code>src/css/estilos.css</code></td>
+                      <td>Diseño visual adaptable para que la plataforma se visualice correctamente en computadores, tablets y celulares.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Módulos JavaScript</strong></td>
+                      <td><code>src/js/modulos/*.js</code></td>
+                      <td>Archivos individuales que controlan el visor (<code>mapa.js</code>), los análisis (<code>indicadores_analisis.js</code>), el Inspector PRC (<code>evaluador_normativo.js</code>), las capas (<code>ide_chile.js</code> y <code>catalogo_vgi_descentralizado.js</code>), la simbología (<code>simbologia_dinamica.js</code>), la medición métrica (<code>geodesia.js</code>) y los manuales (<code>manual.js</code>).</td>
+                    </tr>
+                    <tr>
+                      <td><strong>294 Coberturas GeoJSON</strong></td>
+                      <td><code>data/</code> y <code>src/data/</code></td>
+                      <td>123 capas oficiales del Estado (<code>id_ig</code>) y 171 capas colaborativas de IGV (<code>id_igv</code>), con sus 17 atributos de calidad ISO 19157.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>83 Cartografías (.jpg)</strong></td>
+                      <td><code>src/img/cartografias/</code></td>
+                      <td>Mapas temáticos de alta resolución organizados en las 4 láminas diagnósticas del Módulo 01 (KDE, LISA, Censo/RSH y Metabolismo).</td>
+                    </tr>
+                    <tr>
+                      <td><strong>3 Libros Maestros (.xlsx)</strong></td>
+                      <td><code>docs/</code> y <code>src/docs/</code></td>
+                      <td>Planillas Excel descargables con las 5 dimensiones (<code>categorias_tematicas_osm.xlsx</code>), el inventario (<code>catalogo_fuentes_vgi.xlsx</code>) y los metadatos (<code>perfil_metadatos_vgi.xlsx</code>).</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Geodatabase ZIP (542,35 MB)</strong></td>
+                      <td><code>docs/geodatabase_completa_atlas_vgi.zip</code></td>
+                      <td>Paquete integral descargable para trabajar sin conexión a internet en programas SIG de escritorio (QGIS, ArcGIS).</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Scripts de Soporte (Python 3)</strong></td>
+                      <td><code>scripts/*.py</code></td>
+                      <td>Programas para comprobar que existan las 294 capas (<code>verificar_conteo_capas.py</code>), auditar la integridad de datos (<code>verificar_integridad_despliegue.py</code>) y generar planillas y empaquetados.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         `
       }
