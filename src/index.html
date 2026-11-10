@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261109_v50">
+  <link rel="stylesheet" href="css/estilos.css?v=20261109_v51">
 </head>
 <body>
 
@@ -37,6 +37,10 @@
         </div>
 
         <div class="cabecera-acciones-utilidad">
+          <button type="button" class="btn-utilidad-cabecera" id="btn-iniciar-tutorial-interactivo" title="Iniciar tutorial interactivo guiado por toda la plataforma" onclick="if(window.iniciarTutorialInteractivo){window.iniciarTutorialInteractivo();}">
+            <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            <span>Tutorial interactivo</span>
+          </button>
           <button type="button" class="btn-utilidad-cabecera" id="btn-abrir-glosario-rapido" title="Consultar glosario de siglas (VGI, IGV, KDE, LISA, PRC, OGUC)" onclick="if(window.abrirGlosarioSiglas){window.abrirGlosarioSiglas();}else{var m=document.getElementById('modal-glosario-siglas');if(m)m.style.display='flex';}">
             <svg class="icono-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <span>Glosario de siglas</span>
@@ -923,28 +927,29 @@
 <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261109_v50"></script>
-<script src="js/modulos/db_client.js?v=20261109_v50"></script>
-<script src="js/modulos/geodesia.js?v=20261109_v50"></script>
-<script src="js/modulos/mapa.js?v=20261109_v50"></script>
-<script src="js/modulos/importador_capas.js?v=20261109_v50"></script>
-<script src="js/modulos/ide_chile.js?v=20261109_v50"></script>
-<script src="js/modulos/evaluador_normativo.js?v=20261109_v50"></script>
-<script src="js/modulos/osm.js?v=20261109_v50"></script>
-<script src="js/modulos/ohsome.js?v=20261109_v50"></script>
-<script src="js/modulos/gbif.js?v=20261109_v50"></script>
-<script src="js/modulos/umap.js?v=20261109_v50"></script>
-<script src="js/modulos/metadatos.js?v=20261109_v50"></script>
-<script src="js/modulos/licencias.js?v=20261109_v50"></script>
-<script src="js/modulos/manual.js?v=20261109_v50"></script>
-<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261109_v50"></script>
-<script src="js/modulos/indicadores_analisis.js?v=20261109_v50"></script>
-<script src="js/modulos/taginfo.js?v=20261109_v50"></script>
-<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v50"></script>
-<script src="js/modulos/calidad_analyst.js?v=20261109_v50"></script>
-<script src="js/modulos/diccionario.js?v=20261109_v50"></script>
-<script src="js/modulos/manifold_canvas.js?v=20261109_v50"></script>
-<script src="js/modulos/leyenda_atajos.js?v=20261109_v50"></script>
-<script src="js/app.js?v=20261109_v50"></script>
+<script src="js/config.js?v=20261109_v51"></script>
+<script src="js/modulos/db_client.js?v=20261109_v51"></script>
+<script src="js/modulos/geodesia.js?v=20261109_v51"></script>
+<script src="js/modulos/mapa.js?v=20261109_v51"></script>
+<script src="js/modulos/importador_capas.js?v=20261109_v51"></script>
+<script src="js/modulos/ide_chile.js?v=20261109_v51"></script>
+<script src="js/modulos/evaluador_normativo.js?v=20261109_v51"></script>
+<script src="js/modulos/osm.js?v=20261109_v51"></script>
+<script src="js/modulos/ohsome.js?v=20261109_v51"></script>
+<script src="js/modulos/gbif.js?v=20261109_v51"></script>
+<script src="js/modulos/umap.js?v=20261109_v51"></script>
+<script src="js/modulos/metadatos.js?v=20261109_v51"></script>
+<script src="js/modulos/licencias.js?v=20261109_v51"></script>
+<script src="js/modulos/manual.js?v=20261109_v51"></script>
+<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261109_v51"></script>
+<script src="js/modulos/indicadores_analisis.js?v=20261109_v51"></script>
+<script src="js/modulos/taginfo.js?v=20261109_v51"></script>
+<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261109_v51"></script>
+<script src="js/modulos/calidad_analyst.js?v=20261109_v51"></script>
+<script src="js/modulos/diccionario.js?v=20261109_v51"></script>
+<script src="js/modulos/manifold_canvas.js?v=20261109_v51"></script>
+<script src="js/modulos/leyenda_atajos.js?v=20261109_v51"></script>
+<script src="js/modulos/tutorial_interactivo.js?v=20261109_v51"></script>
+<script src="js/app.js?v=20261109_v51"></script>
 </body>
 </html>

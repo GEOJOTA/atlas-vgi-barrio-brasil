@@ -8718,3 +8718,188 @@ table.tabla-datos-institucional,
     max-height: calc(72vh - 95px);
   }
 }
+
+/* ==========================================================================
+   TUTORIAL INTERACTIVO PASO A PASO (SPOTLIGHT & TOOLTIP CARD)
+   ========================================================================== */
+
+.tutorial-interactivo-spotlight {
+  position: fixed;
+  z-index: 99998;
+  pointer-events: none;
+  box-shadow: 0 0 0 9999px rgba(8, 14, 26, 0.82), 0 0 24px 4px rgba(56, 189, 248, 0.85), inset 0 0 14px rgba(56, 189, 248, 0.25);
+  border: 2px solid #38bdf8;
+  border-radius: 10px;
+  transition: top 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              left 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              height 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: tutorialPulsoLuz 2.8s infinite ease-in-out;
+}
+
+@keyframes tutorialPulsoLuz {
+  0%, 100% {
+    box-shadow: 0 0 0 9999px rgba(8, 14, 26, 0.82), 0 0 20px 3px rgba(56, 189, 248, 0.85), inset 0 0 10px rgba(56, 189, 248, 0.25);
+    border-color: #38bdf8;
+  }
+  50% {
+    box-shadow: 0 0 0 9999px rgba(8, 14, 26, 0.82), 0 0 32px 6px rgba(56, 189, 248, 1), inset 0 0 18px rgba(56, 189, 248, 0.45);
+    border-color: #7dd3fc;
+  }
+}
+
+.tutorial-card-tooltip {
+  position: fixed;
+  z-index: 99999;
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(26, 43, 75, 0.98));
+  border: 1.5px solid rgba(56, 189, 248, 0.55);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(56, 189, 248, 0.25);
+  padding: 18px 20px 16px 20px;
+  max-width: 440px;
+  width: calc(100vw - 32px);
+  color: #ffffff;
+  font-family: var(--fuente-lectura, system-ui, sans-serif);
+  backdrop-filter: blur(12px);
+  transition: top 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              left 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.2s ease;
+}
+
+.tutorial-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.tutorial-badge-modulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--fuente-datos, monospace);
+}
+
+.tutorial-contador-pasos {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--tinta-suave, #94a3b8);
+  font-family: var(--fuente-datos, monospace);
+}
+
+.tutorial-btn-cerrar {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.tutorial-btn-cerrar:hover {
+  color: #ffffff;
+}
+
+.tutorial-card-titulo {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  line-height: 1.35;
+}
+
+.tutorial-card-texto {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0 0 16px 0;
+}
+
+.tutorial-card-barra-progreso {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.tutorial-card-barra-relleno {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #10b981);
+  transition: width 0.3s ease;
+}
+
+.tutorial-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tutorial-btn-accion {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.tutorial-btn-accion.secundario {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.tutorial-btn-accion.secundario:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.tutorial-btn-accion.secundario:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.tutorial-btn-accion.primario {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.4);
+}
+
+.tutorial-btn-accion.primario:hover {
+  background: linear-gradient(135deg, #0369a1, #075985);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
+  transform: translateY(-1px);
+}
+
+.tutorial-btn-saltar {
+  background: none;
+  border: none;
+  color: var(--tinta-suave, #94a3b8);
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 4px 6px;
+}
+
+.tutorial-btn-saltar:hover {
+  color: #ffffff;
+}

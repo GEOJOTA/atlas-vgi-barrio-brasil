@@ -18,6 +18,7 @@ La plataforma articula dos regímenes de producción cartográfica complementari
 
 1. **Cartografía Oficial del Estado de Chile (123 coberturas):** Datos espaciales emitidos por ministerios y organismos públicos (IDE Chile / SNIT, MINVU, INE, MDSF, SUBDERE, MTT, UOCT, CMN, MMA, SII y Municipalidad de Santiago).
 2. **Información Geográfica Voluntaria — IGV Descentralizado (171 coberturas, incluyendo 52 especies biológicas individualizadas):** Cada descriptor de la comunidad (farmacias, árboles urbanos, cesfam, escuelas, paraderos, zonas de calma, cruces peatonales, ferias libres, etc.) opera como una **capa independiente por separado**, con su propio archivo `.geojson` descargable, traducida 100% al español y buscable en tiempo real.
+3. **Inducción Interactiva Guiada (Tutorial Interactivo):** Ubicado en la cabecera superior junto al glosario de siglas, ofrece un recorrido guiado en 12 pasos navegables que resalta con un foco de luz dinámico (*spotlight*) cada módulo, panel y herramienta del sistema, oscureciendo el entorno para facilitar la comprensión inmediata de cada funcionalidad.
 
 ```mermaid
 flowchart TD

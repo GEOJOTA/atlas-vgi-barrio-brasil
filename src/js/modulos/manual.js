@@ -151,6 +151,7 @@ const ModuloManual = (() => {
           <div style="background:rgba(15,23,42,0.4); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:14px; margin-top:16px;">
             <h4 style="margin:0 0 10px 0; color:#ffffff; font-size:0.95rem;">🧭 Navegación Rápida por la Plataforma</h4>
             <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <button type="button" class="accion" onclick="if(window.iniciarTutorialInteractivo) window.iniciarTutorialInteractivo();" style="font-size:0.82rem; padding:7px 12px; background:linear-gradient(135deg, #0284c7, #0369a1); color:#ffffff;">🎓 Iniciar Tutorial Interactivo</button>
               <button type="button" class="accion" onclick="ModuloManual.irAPanel('indicadores')" style="font-size:0.82rem; padding:7px 12px;">📊 Módulo 01 · Análisis Territorial</button>
               <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('inicio')" style="font-size:0.82rem; padding:7px 12px;">🗺️ Módulo 02 · Explorar Mapa (294 Capas)</button>
               <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('diccionario')" style="font-size:0.82rem; padding:7px 12px;">🗂️ Módulo 03 · Diccionario de Descriptores</button>

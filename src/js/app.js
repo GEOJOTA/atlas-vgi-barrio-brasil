@@ -1157,6 +1157,11 @@ function configurarNavegacion() {
   window.abrirGlosarioSiglas = abrirGlosario;
   window.cerrarGlosarioSiglas = cerrarGlosario;
   document.getElementById('btn-abrir-glosario-rapido')?.addEventListener('click', abrirGlosario);
+  document.getElementById('btn-iniciar-tutorial-interactivo')?.addEventListener('click', () => {
+    if (window.iniciarTutorialInteractivo) {
+      window.iniciarTutorialInteractivo();
+    }
+  });
   document.getElementById('btn-cerrar-glosario-siglas')?.addEventListener('click', cerrarGlosario);
   document.getElementById('btn-cerrar-glosario-pie')?.addEventListener('click', cerrarGlosario);
   modalGlosario?.addEventListener('click', (e) => {
