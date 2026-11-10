@@ -88,7 +88,7 @@
       selector: '#sidebar-detalle-bidat',
       modulo: 'inicio',
       insignia: 'Módulo 02 · Explorar Mapa',
-      titulo: 'Panel de Detalles e Inspección de Atributos',
+      titulo: 'Detalles',
       texto: 'Ubicado debajo del mapa a ancho completo, visualiza el esquema canónico completo de 17 atributos (nombre, operador, categoría, coordenadas, superficie y método de adquisición: Geofabrik, Overpass o GBIF) de la entidad seleccionada.'
     },
     {

@@ -720,12 +720,17 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
   gap: 18px;
+  position: relative;
 }
 
 #mapa-atlas {
-  height: 900px;
   width: 100%;
+  aspect-ratio: 1.08 / 1;
+  min-height: 600px;
+  max-height: 1080px;
   border-radius: var(--radio-borde);
   border: 2px solid var(--linea-fuerte);
   box-shadow: var(--sombra-lg);
@@ -750,11 +755,12 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   scrollbar-width: thin;
 }
 
-/* ── Panel de Detalles del Elemento (Ubicado debajo del mapa con máxima amplitud) ─── */
+/* ── Panel de Detalles (Ubicado debajo del mapa con máxima amplitud horizontal) ─── */
 #sidebar-detalle-bidat {
   position: relative;
   width: 100%;
-  max-width: 100%;
+  max-width: 1240px;
+  margin: 18px auto 24px auto;
   min-height: auto;
   background: rgba(8, 14, 30, 0.97);
   backdrop-filter: blur(28px);
@@ -766,8 +772,6 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   flex-direction: column;
   box-shadow: var(--sombra-md);
   overflow: hidden;
-  margin-top: 18px;
-  margin-bottom: 24px;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 #sidebar-detalle-bidat.abierto {
@@ -1629,7 +1633,9 @@ table.tabla-datos-institucional td {
   }
 
   #mapa-atlas {
-    height: 480px;
+    aspect-ratio: 1.05 / 1;
+    min-height: 480px;
+    max-height: 700px;
   }
 
   .panel-profundidad-derecha {
@@ -8039,7 +8045,9 @@ table.tabla-datos {
     border-radius: 10px;
   }
   #mapa-atlas {
-    height: clamp(360px, 55vh, 480px);
+    aspect-ratio: 1.05 / 1;
+    min-height: 440px;
+    max-height: 720px;
     border-radius: 10px;
   }
   .panel-profundidad-derecha {
@@ -8210,6 +8218,8 @@ table.tabla-datos-institucional,
   gap: 12px;
   flex-wrap: wrap;
   text-align: center;
+  max-width: 1240px;
+  margin: 0 auto 16px auto;
 }
 
 .barra-herramientas-mapa select,
@@ -8255,14 +8265,6 @@ table.tabla-datos-institucional,
     padding: 10px 12px;
     font-size: 0.82rem;
   }
-}
-
-@media (max-width: 480px) {
-  .barra-herramientas-mapa button.accion {
-    flex: 1 1 100%;
-    width: 100%;
-  }
-}
   .area-mapa-principal {
     min-width: 0;
   }
@@ -8291,7 +8293,9 @@ table.tabla-datos-institucional,
     max-height: 160px;
   }
   #mapa-atlas {
-    height: clamp(380px, 56vh, 520px) !important;
+    aspect-ratio: 1 / 1;
+    min-height: 380px;
+    max-height: 600px;
   }
   .panel-profundidad-derecha {
     height: auto !important;
@@ -8301,6 +8305,18 @@ table.tabla-datos-institucional,
   .marca-credito-institucional {
     width: 100%;
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .barra-herramientas-mapa button.accion {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+  #mapa-atlas {
+    aspect-ratio: 1 / 1;
+    min-height: 320px;
+    max-height: 440px;
   }
 }
 
