@@ -80,11 +80,11 @@ El segundo módulo entrega acceso directo e interactivo al visor espacial y al p
 
 #### 1. Visor Cartográfico Leaflet Inmediato
 * **Visualización directa:** Sin pantallas intermedias ni elementos obstructivos. El mapa aparece listo para operar.
-* **Mapas Base 100% Abiertos (Sin API Keys):** Erradica dependencias comerciales que exijan credenciales o cobros por uso. Cuenta con 4 capas base de alta disponibilidad:
-  * **CartoDB Dark Matter (Predeterminado):** Tema táctico oscuro que maximiza el contraste de las geometrías y análisis espaciales.
-  * **OpenStreetMap Estándar:** Cartografía comunitaria mundial con toponimia barrial completa.
-  * **CartoDB Positron:** Base clara minimalista para trabajo diurno e informes impresos.
-  * **Imagen Satelital (Esri World Imagery):** Ortoimágenes globales de alta resolución sin clave API.
+* **Mapas Base Abiertos y Satelitales (Sin API Keys):** Erradica los mapas de Carto que exigen credenciales de API, integrando capas base abiertas de OpenStreetMap e imágenes satelitales de Bing, Microsoft y Esri:
+  * **OpenStreetMap Estándar (Predeterminado):** Cartografía comunitaria mundial con toponimia barrial completa, equipamiento y numeración predial.
+  * **OpenStreetMap Humanitario (HOT):** Estilo cartográfico de alto contraste orientado a equipamiento comunitario y servicios críticos.
+  * **Imagen Satelital y Satelital Híbrido (Bing / Microsoft):** Ortoimágenes globales y vista híbrida con etiquetas viales servidas mediante teselas QuadKey de Microsoft VirtualEarth.
+  * **Imagen Satelital (Esri World Imagery):** Ortoimágenes globales de alta resolución provistas por Esri, Maxar y Earthstar Geographics.
 * **Simbología Inteligente Predeterminada al Cargar Capas:**
   * **Datos cuantitativos (índices, censos, áreas, montos):** Clasificación automática mediante **Natural Breaks (Jenks)** en 5 clases, minimizando la varianza intraclase y reflejando cortes naturales del territorio.
   * **Datos cualitativos o de entidades (PRC, equipamientos, usos):** Clasificación **categorizada** con paletas armónicas contrastantes por entidad.

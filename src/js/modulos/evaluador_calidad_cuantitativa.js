@@ -2453,8 +2453,8 @@ print(f"✓ Procesadas {len(gdf)} entidades saneadas exitosamente.")</pre>
       scrollWheelZoom: false
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap, &copy; CartoDB',
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap colaboradores',
       maxZoom: 19
     }).addTo(mapaDiagnosticoInstancia);
 

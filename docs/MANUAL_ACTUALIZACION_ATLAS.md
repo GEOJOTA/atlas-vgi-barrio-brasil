@@ -2024,8 +2024,8 @@ window.ModuloEjemploVGI = ModuloEjemploVGI;
 ```mermaid
 flowchart LR
     subgraph IN_LEAF["1. INPUT"]
-        CAPAS_132["134 Capas GeoJSON Homologadas (EPSG:4326)"]
-        TILES_XYZ["Mosaicos Base XYZ (OSM, Carto Positron/Dark, Esri)"]
+        CAPAS_132["294 Capas GeoJSON Homologadas (EPSG:4326)"]
+        TILES_XYZ["Mosaicos Base XYZ y QuadKey (OpenStreetMap, Bing/Microsoft, Esri)"]
         STYLE_DEF["Diccionario de Estilos y Paletas Temáticas"]
     end
 
@@ -2065,26 +2065,19 @@ L.control.scale({ imperial: false, metric: true, position: "bottomleft" }).addTo
 ```
 
 ### 21.2. Mosaicos base (base maps) y conmutación dinámica
-El Atlas ofrece tres capas base de referencia cartográfica:
+El Atlas ofrece capas base de OpenStreetMap e imágenes satelitales de Bing, Microsoft y Esri sin requerir clave API:
 
 ```javascript
 const mapasBase = {
-  osm_estandar: L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> colaboradores'
-  }),
-  carto_positron: L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-    maxZoom: 19,
-    attribution: '&copy; CartoDB &copy; OpenStreetMap'
-  }),
-  carto_dark: L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-    maxZoom: 19,
-    attribution: '&copy; CartoDB &copy; OpenStreetMap'
-  })
+  'OpenStreetMap Estándar (Predeterminado)': osmEstandar,
+  'OpenStreetMap Humanitario (HOT)': osmHumanitario,
+  'Imagen Satelital (Bing / Microsoft)': satelitalBingMicrosoft,
+  'Satelital Híbrido con Calles (Bing / Microsoft)': satelitalBingHibrido,
+  'Imagen Satelital (Esri World Imagery)': satelitalEsri
 };
 
 // Carga por defecto: OpenStreetMap Estándar
-mapasBase.osm_estandar.addTo(mapa);
+osmEstandar.addTo(mapa);
 ```
 
 ### 21.3. Generador de marcadores vectoriales SVG con efecto pulso

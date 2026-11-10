@@ -263,13 +263,13 @@ const ModuloManual = (() => {
                 <button type="button" class="accion" onclick="ModuloManual.irAPanel('inicio')" style="font-size:0.8rem; padding:6px 12px;">Abrir Visor (Módulo 02) ↗</button>
               </div>
               <p style="margin:0 0 10px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                El visor cartográfico Leaflet se despliega de forma instantánea al ingresar al Módulo 02. La plataforma erradica por completo la dependencia de proveedores que exigen tokens o credenciales comerciales (como Bing Maps o Google Maps), integrando 4 servidores cartográficos abiertos de alta disponibilidad mundial:
+                El visor cartográfico Leaflet se despliega de forma instantánea al ingresar al Módulo 02. La plataforma erradica los servicios que exigen tokens privados (como Carto), integrando mapas base de OpenStreetMap e imágenes satelitales de Bing, Microsoft y Esri de alta disponibilidad mundial:
               </p>
               <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
-                <li><strong>CartoDB Dark Matter (Predeterminado):</strong> Base cartográfica oscura táctica de alto contraste, calibrada para resaltar las geometrías y análisis espaciales del Atlas.</li>
-                <li><strong>OpenStreetMap Estándar:</strong> Cartografía colaborativa mundial con toponimia barrial completa, ciclofaixas y numeración predial.</li>
-                <li><strong>CartoDB Positron:</strong> Base clara minimalista, óptima para revisión diurna e impresión de informes técnicos.</li>
-                <li><strong>Imagen Satelital (Esri World Imagery):</strong> Ortoimágenes satelitales globales de alta resolución sin requerimiento de clave API.</li>
+                <li><strong>OpenStreetMap Estándar (Predeterminado):</strong> Cartografía colaborativa mundial con toponimia barrial completa, equipamiento urbano, ciclovías y numeración predial.</li>
+                <li><strong>OpenStreetMap Humanitario (HOT):</strong> Estilo cartográfico de alto contraste orientado a equipamiento comunitario, servicios críticos y gestión territorial.</li>
+                <li><strong>Imagen Satelital y Satelital Híbrido (Bing / Microsoft):</strong> Ortoimágenes satelitales globales y vista híbrida con etiquetas viales servidas mediante teselas QuadKey de Microsoft VirtualEarth.</li>
+                <li><strong>Imagen Satelital (Esri World Imagery):</strong> Mosaico satelital multiescalar de alta resolución global provisto por Esri, Maxar y Earthstar Geographics.</li>
               </ul>
             </div>
 

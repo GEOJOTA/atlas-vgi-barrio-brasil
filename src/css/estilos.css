@@ -8824,8 +8824,8 @@ table.tabla-datos-institucional,
   border: 1.5px solid rgba(56, 189, 248, 0.55);
   border-radius: 12px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(56, 189, 248, 0.25);
-  padding: 18px 20px 16px 20px;
-  max-width: 440px;
+  padding: 16px 18px 15px 18px;
+  max-width: 500px;
   width: calc(100vw - 32px);
   color: #ffffff;
   font-family: var(--fuente-lectura, system-ui, sans-serif);
@@ -8839,7 +8839,7 @@ table.tabla-datos-institucional,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   gap: 10px;
 }
 
@@ -8850,13 +8850,100 @@ table.tabla-datos-institucional,
   background: rgba(56, 189, 248, 0.15);
   border: 1px solid rgba(56, 189, 248, 0.4);
   color: #38bdf8;
-  font-size: 0.72rem;
+  font-size: 0.71rem;
   font-weight: 800;
   padding: 3px 9px;
   border-radius: 99px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-family: var(--fuente-datos, monospace);
+}
+
+.tutorial-badge-modulo.badge-presentacion {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(52, 211, 153, 0.65);
+  color: #34d399;
+}
+
+.tutorial-nav-modulos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  margin-bottom: 7px;
+}
+
+.tutorial-tab-modulo {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.18s ease;
+}
+
+.tutorial-tab-modulo:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #ffffff;
+}
+
+.tutorial-tab-modulo.activo {
+  background: rgba(2, 132, 199, 0.35);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+}
+
+.tutorial-nav-pasos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 9px;
+}
+
+.tutorial-pill-paso {
+  min-width: 22px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  font-size: 0.67rem;
+  font-weight: 700;
+  font-family: var(--fuente-datos, monospace);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.tutorial-pill-paso.presentacion-modulo {
+  border-color: rgba(52, 211, 153, 0.5);
+}
+
+.tutorial-pill-paso.completado {
+  background: rgba(16, 185, 129, 0.15);
+  color: #cbd5e1;
+}
+
+.tutorial-pill-paso:hover {
+  background: rgba(56, 189, 248, 0.25);
+  color: #ffffff;
+}
+
+.tutorial-pill-paso.activo {
+  background: #0284c7;
+  border-color: #7dd3fc;
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.55);
 }
 
 .tutorial-contador-pasos {

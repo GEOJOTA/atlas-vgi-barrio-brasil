@@ -61,42 +61,67 @@ const ModuloMapa = (() => {
     const centro = cfg.area_por_defecto?.centro || [-33.4445, -70.6620];
     const zoom = cfg.area_por_defecto?.zoom || 16;
 
-    // Capas base 100% abiertas, de alta disponibilidad y sin requerir clave API
-    const cartoDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores, &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 20
-    });
-
+    // Capas base 100% abiertas y satelitales sin requerir clave API (OpenStreetMap, Bing/Microsoft y Esri)
     const osmEstandar = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores (ODbL)',
       maxZoom: 19
     });
 
-    const cartoLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores, &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 20
+    const osmHumanitario = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> colaboradores, Estilo <a href="https://www.hotosm.org/" target="_blank" rel="noopener">HOT</a>',
+      maxZoom: 19
+    });
+
+    // Conector nativo QuadKey para imágenes satelitales de Bing / Microsoft VirtualEarth sin clave API
+    const CapaBingMicrosoft = L.TileLayer.extend({
+      getTileUrl: function (coords) {
+        const z = this._getZoomForUrl();
+        let quadKey = '';
+        for (let i = z; i > 0; i--) {
+          let digit = 0;
+          const mask = 1 << (i - 1);
+          if ((coords.x & mask) !== 0) digit += 1;
+          if ((coords.y & mask) !== 0) digit += 2;
+          quadKey += digit.toString();
+        }
+        return L.Util.template(this._url, {
+          s: this._getSubdomain(coords),
+          q: quadKey
+        });
+      }
+    });
+
+    const satelitalBingMicrosoft = new CapaBingMicrosoft('https://ecn.t{s}.tiles.virtualearth.net/tiles/a{q}.jpeg?g=14000', {
+      attribution: 'Imágenes satelitales &copy; <a href="https://www.bing.com/maps" target="_blank" rel="noopener">Bing / Microsoft</a> VirtualEarth',
+      subdomains: ['0', '1', '2', '3'],
+      maxZoom: 19
+    });
+
+    const satelitalBingHibrido = new CapaBingMicrosoft('https://ecn.t{s}.tiles.virtualearth.net/tiles/h{q}.jpeg?g=14000&mkt=es-CL', {
+      attribution: 'Imágenes satelitales y vialidad &copy; <a href="https://www.bing.com/maps" target="_blank" rel="noopener">Bing / Microsoft</a> VirtualEarth',
+      subdomains: ['0', '1', '2', '3'],
+      maxZoom: 19
     });
 
     // Capa Satelital Esri World Imagery (abierta, de alta resolución global y sin requerir clave API)
     const satelitalEsri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a> &mdash; DigitalGlobe, Earthstar, CNES/Airbus, USDA, USGS, IGN y Comunidad SIG',
+      attribution: 'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a> &mdash; Maxar, Earthstar Geographics, CNES/Airbus, USDA, USGS, IGN y Comunidad SIG',
       maxZoom: 19
     });
 
     mapa = L.map(idContenedor, {
       center: centro,
       zoom: zoom,
-      layers: [cartoDark],
+      layers: [osmEstandar],
       zoomControl: true,
       preferCanvas: true
     });
 
     const mapasBase = {
-      'CartoDB Dark Matter (Recomendado)': cartoDark,
-      'OpenStreetMap Estándar': osmEstandar,
-      'CartoDB Positron (Claro)': cartoLight,
+      'OpenStreetMap Estándar (Predeterminado)': osmEstandar,
+      'OpenStreetMap Humanitario (HOT)': osmHumanitario,
+      'Imagen Satelital (Bing / Microsoft)': satelitalBingMicrosoft,
+      'Satelital Híbrido con Calles (Bing / Microsoft)': satelitalBingHibrido,
       'Imagen Satelital (Esri World Imagery)': satelitalEsri
     };
 
