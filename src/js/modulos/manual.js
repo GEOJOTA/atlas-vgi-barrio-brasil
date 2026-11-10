@@ -1,7 +1,7 @@
 /*
   manual.js
   ---------
-  Módulo 03: Manual de Uso del Atlas para la Gestión Territorial (Prototipo 02).
+  Módulo 03: Manual de Uso del Atlas para la Gestión Territorial.
   Redactado en tercera persona con rigor metodológico, lenguaje institucional y acceso directo.
 
   Estructura:
@@ -78,11 +78,11 @@ const ModuloManual = (() => {
   }
 
   /**
-   * Retorna los capítulos del Manual de Uso del Atlas (Prototipo 02)
+   * Retorna los capítulos del Manual de Uso del Atlas para la Gestión Territorial
    */
   function obtenerCapitulosManual() {
     const inventarioCapas = construirInventarioDinamicoCapas();
-    const totalCapas = inventarioCapas.length || 257;
+    const totalCapas = inventarioCapas.length || 294;
 
     const filasTablaCapas = inventarioCapas.map(c => {
       const colorBadge = c.tipo === 'Colaborativa IGV'
@@ -104,20 +104,20 @@ const ModuloManual = (() => {
         id: 'cap-uso-01',
         numero: 'USO · 01',
         icono: '🏛️',
-        titulo: 'Fundamentación, Objetivos y Cifras Clave del Atlas (Prototipo 02)',
+        titulo: 'Fundamentación, Objetivos y Cifras Clave del Atlas',
         subtitulo: 'Marco institucional, modelo de datos y arquitectura operacional del Atlas para la Gestión Territorial.',
         html: `
           <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:16px; margin-bottom:16px;">
             <h4 style="margin:0 0 8px 0; color:#38bdf8;">Objetivo general</h4>
             <p style="font-size:0.94rem; line-height:1.7; color:var(--tinta-suave); margin:0 0 14px 0;">
-              Desarrollar un atlas territorial reproducible, interoperable y centrado en la toma de decisiones espaciales, que integre geodatos abiertos oficiales del Estado de Chile, información geográfica voluntaria (IGV/VGI) y herramientas analíticas multicriterio para subsanar vacíos de información, visibilizar patrones socioterritoriales y apoyar la gestión local en el Municipio de Santiago y el Barrio Brasil.
+              Desarrollar un Atlas para la Gestión Territorial reproducible, interoperable y centrado en el usuario, que integre geodatos abiertos, cartografía participativa y herramientas analíticas para subsanar vacíos de información territorial y apoyar la gestión local y la investigación en la Comuna de Santiago y Barrio Brasil.
             </p>
             <h4 style="margin:0 0 8px 0; color:#34d399;">Objetivos específicos</h4>
             <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.9rem; line-height:1.65;">
-              <li><strong>OE 1.</strong> Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, definiendo una taxonomía espacial estandarizada que armonice fuentes comunitarias e institucionales.</li>
-              <li><strong>OE 2.</strong> Consolidar una geodatabase comunitaria y municipal multipropósito bajo estándares internacionales de calidad y catalogación de metadatos.</li>
-              <li><strong>OE 3.</strong> Implementar el <strong>Prototipo 02</strong>: un geoportal interactivo estructurado en tres componentes operacionales (Módulo 01 Análisis, Módulo 02 Explorar Mapa y Módulo 03 Documentación).</li>
-              <li><strong>OE 4.</strong> Evaluar la usabilidad y la pertinencia de la plataforma con actores territoriales, garantizando su total auditabilidad, trazabilidad técnica y continuidad operativa.</li>
+              <li><strong>OE 1.</strong> Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales.</li>
+              <li><strong>OE 2.</strong> Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos.</li>
+              <li><strong>OE 3.</strong> Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.</li>
+              <li><strong>OE 4.</strong> Evaluar la usabilidad y la pertinencia de la plataforma con distintos perfiles de actores territoriales y asegurar su transferibilidad técnica, metodológica y documental.</li>
             </ul>
           </div>
 
@@ -149,10 +149,10 @@ const ModuloManual = (() => {
           </div>
 
           <div style="background:rgba(15,23,42,0.4); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:14px; margin-top:16px;">
-            <h4 style="margin:0 0 10px 0; color:#ffffff; font-size:0.95rem;">🧭 Navegación Rápida por la Plataforma (Prototipo 02)</h4>
+            <h4 style="margin:0 0 10px 0; color:#ffffff; font-size:0.95rem;">🧭 Navegación Rápida por la Plataforma</h4>
             <div style="display:flex; flex-wrap:wrap; gap:8px;">
               <button type="button" class="accion" onclick="ModuloManual.irAPanel('indicadores')" style="font-size:0.82rem; padding:7px 12px;">📊 Módulo 01 · Análisis Territorial</button>
-              <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('inicio')" style="font-size:0.82rem; padding:7px 12px;">🗺️ Módulo 02 · Explorar Mapa (257 Capas)</button>
+              <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('inicio')" style="font-size:0.82rem; padding:7px 12px;">🗺️ Módulo 02 · Explorar Mapa (294 Capas)</button>
               <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('diccionario')" style="font-size:0.82rem; padding:7px 12px;">🗂️ Módulo 03 · Diccionario de Descriptores</button>
               <button type="button" class="accion secundaria" onclick="ModuloManual.irAPanel('licencias')" style="font-size:0.82rem; padding:7px 12px;">⚖️ Licencias y Marco Legal</button>
               <button type="button" class="accion" onclick="document.getElementById('btn-descargar-todo-ide').click()" style="font-size:0.82rem; padding:7px 12px; background:linear-gradient(135deg, #10b981, #059669); color:#ffffff;">📦 Descargar Base de Datos (.zip)</button>

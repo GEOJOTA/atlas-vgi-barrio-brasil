@@ -1,16 +1,16 @@
-# Manual de Uso del Atlas para la Gestión Territorial (Prototipo 02)
+# Manual de Uso del Atlas para la Gestión Territorial
 ### Análisis y Exploración | Municipio de Santiago y Barrio Brasil
 
 * **Plataforma Web Interactiva:** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * **Repositorio Espejo (GitHub Pages):** [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* **Cobertura Cartográfica:** 257 Capas Espaciales Operativas (123 Oficiales del Estado de Chile + 134 Coberturas Descentralizadas de Información Geográfica Voluntaria IGV 100% en español).
+* **Cobertura Cartográfica:** 294 Capas Espaciales Operativas (123 Oficiales del Estado de Chile + 171 Coberturas Descentralizadas de Información Geográfica Voluntaria IGV 100% en español).
 * **Dimensiones de Análisis:** 5 Dimensiones Estratégicas (Sociodemográfica, Socioeconómica, Socioambiental, Sociosanitaria, Sociourbana).
 * **Síntesis Territorial:** 83 Cartografías Temáticas organizadas en 4 Narrativas Espaciales Basadas en Datos.
 * **Arquitectura de Navegación:** 3 Módulos Operacionales Principales (Módulo 01 · Análisis, Módulo 02 · Explorar Mapa y Módulo 03 · Documentación).
 
 ---
 
-## 1. Propósito general y estructura operativa del Prototipo 02
+## 1. Propósito general y estructura operativa de la plataforma
 
 El **Atlas para la Gestión Territorial** es una infraestructura de información geográfica abierta y reproducible, diseñada para el análisis espacial, la toma de decisiones informadas y la planificación comunal en el Municipio de Santiago y el Barrio Brasil.
 
@@ -79,6 +79,16 @@ El segundo módulo entrega acceso directo e interactivo al visor espacial y al p
 
 #### 1. Visor Cartográfico Leaflet Inmediato
 * **Visualización directa:** Sin pantallas intermedias ni elementos obstructivos. El mapa aparece listo para operar.
+* **Mapas Base 100% Abiertos (Sin API Keys):** Erradica dependencias comerciales que exijan credenciales o cobros por uso. Cuenta con 4 capas base de alta disponibilidad:
+  * **CartoDB Dark Matter (Predeterminado):** Tema táctico oscuro que maximiza el contraste de las geometrías y análisis espaciales.
+  * **OpenStreetMap Estándar:** Cartografía comunitaria mundial con toponimia barrial completa.
+  * **CartoDB Positron:** Base clara minimalista para trabajo diurno e informes impresos.
+  * **Imagen Satelital (Esri World Imagery):** Ortoimágenes globales de alta resolución sin clave API.
+* **Simbología Inteligente Predeterminada al Cargar Capas:**
+  * **Datos cuantitativos (índices, censos, áreas, montos):** Clasificación automática mediante **Natural Breaks (Jenks)** en 5 clases, minimizando la varianza intraclase y reflejando cortes naturales del territorio.
+  * **Datos cualitativos o de entidades (PRC, equipamientos, usos):** Clasificación **categorizada** con paletas armónicas contrastantes por entidad.
+  * **Rampas temáticas por dimensión:** Sociodemográfica (Cian/Viridis), Socioeconómica (Ámbar/YlOrRd), Socioambiental (Verde/Greens), Sociosanitaria (Magenta/Magma) y Sociourbana (Violeta/Purples).
+  * **Panel de personalización:** El analista puede ajustar libremente métodos estadísticos (Jenks, cuartiles, intervalos iguales, desviación estándar), número de clases y rampas en el panel flotante *Simbología Dinámica*.
 * **Áreas de Enfoque:** Selector rápido con dos escalas territoriales calibradas:
   * **Barrio Brasil Completo:** Encuadre al polígono barrial y su área de influencia directa.
   * **Comuna de Santiago:** Visión comunal integral (BBox: `[-70.6923, -33.4785, -70.6251, -33.4257]`).
@@ -100,12 +110,15 @@ Permite auditar cualquier coordenada del territorio comunal haciendo clic sobre 
 
 ### 2.3. Módulo 03: Documentación
 
-El tercer módulo consolida el respaldo metodológico, técnico y legal de la plataforma:
+El tercer módulo consolida en una experiencia unificada y explorable el respaldo metodológico, técnico y legal de la plataforma:
 
-1. **Manual de Uso del Sistema:** Guía interactiva paso a paso con inventario dinámico de las 294 coberturas.
-2. **Diccionario de Descriptores y Especies (171 Capas IGV):** Catálogo formal de atributos según ISO 19110 y su homologación semántica con los estándares del Estado de Chile (IDE Chile - SNIT).
-3. **Licencias Abiertas y Descarga Integral:** Marco jurídico de datos abiertos (Open Database License ODbL 1.0, Creative Commons CC BY-SA 4.0, Ley N° 20.285 de Transparencia) y enlace de descarga de la Geodatabase Completa en archivo comprimido (`.zip`) y catálogos en Excel (`.xlsx`).
-4. **Manual de Actualización Técnica para Desarrolladores:** Disponible directamente en el repositorio Git (`docs/MANUAL_ACTUALIZACION_ATLAS.md`) con las instrucciones para el mantenimiento del stack tecnológico, pipelines de sincronización y adición de coberturas.
+1. **Manual de Uso del Sistema:** Guía interactiva estructurada por capítulos con buscador en tiempo real, tabla de contenidos lateral e inventario dinámico de las 294 coberturas espaciales (123 oficiales + 134 IGV descentralizadas).
+2. **Marco Jurídico de Licencias Abiertas Integrado:** Adopta un régimen tripartito de bienes comunes digitales que garantiza la reciprocidad comunitaria (Ley N° 17.336 de Propiedad Intelectual y Ley N° 20.285 de Transparencia):
+   * **CC BY-SA 4.0** para la documentación, manuales y cartografía.
+   * **ODbL 1.0** para las bases de datos espaciales y capas IGV (compatibilidad nativa con OpenStreetMap Foundation).
+   * **GNU AGPLv3** para el código fuente de la plataforma web y scripts.
+3. **Descarga Directa de Catálogos y Geodatabase:** Acceso directo a la descarga de la Geodatabase Completa comprimida (`geodatabase_completa_atlas_vgi.zip`, 542 MB) y los libros estructurados en Excel (`categorias_tematicas_osm.xlsx`, `perfil_metadatos_vgi.xlsx`, `catalogo_fuentes_vgi.xlsx`, `wlc_metacalidad_ranking.csv`).
+4. **Manual de Actualización Técnica para Desarrolladores:** Se preserva y mantiene en el repositorio Git (`docs/MANUAL_ACTUALIZACION_ATLAS.md`) para consultar la ingeniería del stack, sincronización simétrica `data/` y `src/data/`, y protocolos de actualización de coberturas a 6 meses.
 
 ---
 

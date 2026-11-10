@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-scripts/normalizar_prototipo02_especies_y_metadatos.py
+scripts/normalizar_especies_y_metadatos.py
 -----------------------------------------------------
-Implementa las directrices de Prototipo 02:
+Implementa las directrices de Atlas para la Gestión Territorial:
 1. Elimina las 8 capas abstractas de calidad/metadatos de Darwin Core en GBIF.
 2. Agrega 52 capas biológicas individualizadas con presencia en la Comuna de Santiago y Barrio Brasil:
    - Nombre formal: Nombre científico taxonómico (ej. Peumus boldus, Turdus falcklandii).
    - Bajada / Subtipo: Nombre común cotidiano en Chile (ej. Boldo, Zorzal patagónico).
-3. Inyecta el perfil completo de metadatos y calidad de datos de Prototipo 01 (los 17 atributos canónicos
+3. Inyecta el perfil completo de metadatos y calidad de datos de Esquema Canónico VGI (los 17 atributos canónicos
    más las propiedades meta_*), especificando explícitamente el método de adquisición:
    - "Descarga Geofabrik OSM Dump (Región Metropolitana)" o "Consulta directa Overpass API (OSM)" para OSM.
    - "Consulta directa GBIF Occurrence API / Ciencia Comunitaria (iNaturalist)" para GBIF.
-4. Cumple la RESTRICCIÓN ESTRICTA de Prototipo 02: CERO mención a "Índice de Calidad (95.4%)" o WLC.
+4. Cumple la RESTRICCIÓN ESTRICTA de Atlas para la Gestión Territorial: CERO mención a "Índice de Calidad (95.4%)" o WLC.
 5. Sincroniza simétricamente data/ y src/data/, y actualiza catalogo_vgi_descentralizado.js.
 """
 
@@ -629,7 +629,7 @@ SPECIES_CATALOG = [
 
 def main():
     print("═" * 78)
-    print("  NORMALIZACIÓN PROTOTIPO 02: ESPECIES GBIF INDIVIDUALIZADAS Y PERFIL VGI")
+    print("  NORMALIZACIÓN ATLAS PARA LA GESTIÓN TERRITORIAL: ESPECIES GBIF INDIVIDUALIZADAS Y PERFIL VGI")
     print("═" * 78)
 
     # 1. Eliminar archivos GeoJSON de las 8 capas abstractas de calidad
@@ -726,7 +726,7 @@ def main():
 
             fecha_reg = raw_p.get('fecha_registro') or raw_p.get('fecha') or "2026-03-15"
 
-            # Esquema de 17 atributos canónicos de Prototipo 01
+            # Esquema de 17 atributos canónicos de Esquema Canónico VGI
             props_canonicas = {
                 'id_vgi': id_vgi,
                 'categoria': 'CAT-08 (Biodiversidad Urbana)',
@@ -1000,7 +1000,7 @@ def main():
  *   (Geofabrik OSM Dump RM vs. Overpass API en vivo).
  * - Perfil canónico de 17 atributos y metadatos espaciales (ISO 19115 / IDE Chile).
  *
- * Prototipo 02: Atlas para la Gestión Territorial | Municipio de Santiago y Barrio Brasil.
+ * Atlas para la Gestión Territorial: Atlas para la Gestión Territorial | Municipio de Santiago y Barrio Brasil.
  */
 
 const CATALOGO_VGI_DESCENTRALIZADO = {json.dumps(catalogo_final, indent=2, ensure_ascii=False)};

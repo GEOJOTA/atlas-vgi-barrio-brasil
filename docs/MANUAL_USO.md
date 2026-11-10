@@ -1,16 +1,16 @@
-# Manual de Uso del Atlas para la Gestión Territorial (Prototipo 02)
+# Manual de Uso del Atlas para la Gestión Territorial
 ### Análisis y Exploración | Municipio de Santiago y Barrio Brasil
 
 * **Plataforma Web Interactiva:** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * **Repositorio Espejo (GitHub Pages):** [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* **Cobertura Cartográfica:** 257 Capas Espaciales Operativas (123 Oficiales del Estado de Chile + 134 Coberturas Descentralizadas de Información Geográfica Voluntaria IGV 100% en español).
+* **Cobertura Cartográfica:** 294 Capas Espaciales Operativas (123 Oficiales del Estado de Chile + 171 Coberturas Descentralizadas de Información Geográfica Voluntaria IGV 100% en español).
 * **Dimensiones de Análisis:** 5 Dimensiones Estratégicas (Sociodemográfica, Socioeconómica, Socioambiental, Sociosanitaria, Sociourbana).
 * **Síntesis Territorial:** 83 Cartografías Temáticas organizadas en 4 Narrativas Espaciales Basadas en Datos.
 * **Arquitectura de Navegación:** 3 Módulos Operacionales Principales (Módulo 01 · Análisis, Módulo 02 · Explorar Mapa y Módulo 03 · Documentación).
 
 ---
 
-## 1. Propósito general y estructura operativa del Prototipo 02
+## 1. Propósito general y estructura operativa de la plataforma
 
 El **Atlas para la Gestión Territorial** es una infraestructura de información geográfica abierta y reproducible, diseñada para el análisis espacial, la toma de decisiones informadas y la planificación comunal en el Municipio de Santiago y el Barrio Brasil.
 

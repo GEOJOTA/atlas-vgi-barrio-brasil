@@ -5,7 +5,7 @@ PARTE_01 = r"""# PARTE I: ALCANCE OPERATIVO, FORMULACIÓN ESTRATÉGICA Y PERFILE
 
 ## 1. Identificación y alcance operativo del proyecto
 
-El **Atlas de Información Geográfica Voluntaria (VGI) para la gestión territorial (Nodo GeoAbierto)** es una plataforma web abierta que reúne mapas oficiales y colaborativos para el diagnóstico urbano, la consulta normativa y la descarga de datos espaciales en el sector poniente de la comuna de Santiago, con foco en el Barrio Brasil y el entorno del Campus Universidad Alberto Hurtado (UAH).
+El **Atlas para la Gestión Territorial** es una plataforma web abierta que reúne mapas oficiales y colaborativos para el diagnóstico urbano, la consulta normativa y la descarga de datos espaciales en la Comuna de Santiago y Barrio Brasil.
 
 El sistema articula estándares del Open Geospatial Consortium (OGC) y de la Organización Internacional de Normalización (ISO 19115 para metadatos, ISO 19157 para calidad espacial e ISO 19110 para catalogación de objetos geográficos). Para evitar la repetición de conteos a lo largo del documento, la Tabla 1.1 concentra las cifras clave del proyecto que sirven de referencia para los capítulos siguientes.
 
@@ -61,7 +61,7 @@ El proyecto se organiza en un objetivo general y cuatro objetivos específicos (
 ```
 
 ### 3.1. Objetivo general
-> Desarrollar un atlas de información geográfica voluntaria (VGI) reproducible, interoperable y centrado en el usuario, que integre geodatos abiertos, cartografía participativa y herramientas analíticas para subsanar vacíos de información territorial y apoyar la gestión local y la investigación en el Barrio Brasil y la comuna de Santiago.
+> Desarrollar un Atlas para la Gestión Territorial reproducible, interoperable y centrado en el usuario, que integre geodatos abiertos, cartografía participativa y herramientas analíticas para subsanar vacíos de información territorial y apoyar la gestión local y la investigación en la Comuna de Santiago y Barrio Brasil.
 
 ---
 
@@ -181,6 +181,7 @@ flowchart LR
   > Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.
 * **Componentes ejecutados:**
   - Construcción de la interfaz web con conformidad WCAG 2.1 (nivel AA general en componentes interactivos y nivel AAA en todo el texto de lectura) y navegación agrupada en 5 secciones por tarea.
+  - Definición de un prototipo sintetizado para usuarios no técnicos: Durante el desarrollo del Objetivo Específico 3 (OE 3), se definió un prototipo más sintetizado que permita a usuarios sin experiencia técnica poder interactuar de forma más simple con la plataforma. Esta síntesis responde a la evaluación de usabilidad, simplificando la navegación hacia una estructura modular intuitiva y directa compuesta por tres componentes funcionales (Módulo 01 Análisis, Módulo 02 Explorar Mapa y Módulo 03 Documentación), lo que reduce la sobrecarga cognitiva y facilita que tomadores de decisiones locales y actores comunitarios exploren y aprovechen los datos territoriales sin requerir conocimientos técnicos avanzados en SIG.
   - Configuración del visor cartográfico (Leaflet 1.9.4) con árbol de capas por categoría, selector de mapas base, carga bajo demanda con indicador de peso y herramientas de medición geodésica.
   - Implementación del inspector normativo del Plan Regulador Comunal (PRC) de Santiago y de la Ordenanza General de Urbanismo y Construcciones (OGUC), que ejecuta intersección punto en polígono en el navegador y emite el Certificado de Informaciones Normativas VGI (CIN-VGI).
   - Conexión dinámica en tiempo real con los servicios de Overpass QL API (con conmutación por falla entre servidores espejo), ohsome API v1/v2 y GBIF Occurrence API v1.

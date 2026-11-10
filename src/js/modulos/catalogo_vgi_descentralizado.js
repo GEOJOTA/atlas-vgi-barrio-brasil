@@ -11,7 +11,7 @@
  *   (Geofabrik OSM Dump RM vs. Overpass API en vivo).
  * - Perfil canónico de 17 atributos y metadatos espaciales (ISO 19115 / IDE Chile).
  *
- * Prototipo 02: Atlas para la Gestión Territorial | Municipio de Santiago y Barrio Brasil.
+ * Atlas para la Gestión Territorial | Municipio de Santiago y Barrio Brasil.
  */
 
 const CATALOGO_VGI_DESCENTRALIZADO = [

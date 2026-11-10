@@ -47,8 +47,9 @@ partes = [
 ]
 
 
-INDICE_GENERAL = r"""# ATLAS DE INFORMACIÓN GEOGRÁFICA VOLUNTARIA (VGI) PARA LA GESTIÓN TERRITORIAL
+INDICE_GENERAL = r"""# ATLAS PARA LA GESTIÓN TERRITORIAL
 ## Manual Maestro de Actualización Técnica, Transferibilidad Metodológica y Arquitectura Operativa
+### Análisis y Exploración | Municipio de Santiago y Barrio Brasil
 
 ---
 

@@ -36,7 +36,7 @@ def contar_capas():
     total_cartografia = total_oficiales + total_vgi
     
     print("==================================================")
-    print("AUDITORÍA DE CONTEO DE CAPAS — PROTOTIPO 02")
+    print("AUDITORÍA DE CONTEO DE CAPAS — ATLAS PARA LA GESTIÓN TERRITORIAL")
     print("==================================================")
     print(f"Capas Oficiales del Estado (IDE Chile/BBDD): {total_oficiales} (Meta: 123)")
     print(f"Capas VGI Descentralizadas (OSM/GBIF):       {total_vgi} (Meta: 171)")

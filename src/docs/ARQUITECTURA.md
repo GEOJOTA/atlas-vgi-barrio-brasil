@@ -1,14 +1,14 @@
-# Arquitectura de software, flujos de procesamiento de datos y catálogo multi-lenguaje — Atlas VGI
+# Arquitectura de software, flujos de procesamiento de datos y catálogo multi-lenguaje — Atlas para la Gestión Territorial
 
 * Plataforma Web en Producción (CDN Primario): [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * Repositorio Espejo (GitHub Pages): [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* Alcance Arquitectónico: 134 Capas Operativas (`124` Oficiales + `10` VGI) · 140 Descriptores ISO 19110:2016 · 5 Dimensiones Analíticas · 4 narrativas espaciales (83 Cartografías) · 10 Módulos (`01` al `10`) · 21 Módulos JS ES6+ (IIFE) · 25 Scripts Python 3 · Esquema Relacional PostGIS.
+* Alcance Arquitectónico: 294 Capas Operativas (`123` Oficiales + `171` VGI Descentralizadas) · 171 Descriptores ISO 19110:2016 · 5 Dimensiones Analíticas · 4 narrativas espaciales (83 Cartografías) · 3 Módulos Principales · 21 Módulos JS ES6+ (IIFE) · Scripts de automatización Python 3.
 
 ---
 
 ## 1. Principios de diseño y arquitectura general del sistema
 
-El Atlas de Información Geográfica Voluntaria (VGI) implementa una **arquitectura web estática, modular y autónoma (*sin compilación previa Client-Side GIS*) articulada con un backend relacional opcional en PostgreSQL 17 / PostGIS 3.3 (Supabase)** y un repositorio local espejo de alta disponibilidad (`data/` ↔ `src/data/` y `docs/` ↔ `src/docs/`).
+El Atlas para la Gestión Territorial implementa una **arquitectura web estática, modular y autónoma (*sin compilación previa Client-Side GIS*) articulada con un backend relacional opcional en PostgreSQL 17 / PostGIS 3.3 (Supabase)** y un repositorio local espejo de alta disponibilidad (`data/` ↔ `src/data/` y `docs/` ↔ `src/docs/`).
 
 ### Principios rectores de ingeniería:
 1. **Ejecución Nativa sin Empaquetadores Complejos (*No-Bundle ES6+ IIFE*): El código cliente se estructura en 21 módulos JavaScript ES6+ bajo el Patrón de Módulo Revelador (*Immediately Invoked Function Expression*, IIFE)** expuestos en el espacio de nombres `window.Modulo*`. Esto elimina vulnerabilidades por obsolescencia de dependencias `node_modules` y permite auditar o modificar cualquier archivo directamente en un editor de texto.

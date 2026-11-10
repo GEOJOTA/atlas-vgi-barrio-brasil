@@ -1,10 +1,10 @@
 # Atlas para la Gestión Territorial
 ### Análisis y Exploración | Municipio de Santiago y Barrio Brasil
-> **Prototipo 02** · Infraestructura de Datos Espaciales, Narrativas Espaciales y Geodatos Abiertos.
+> Infraestructura de Datos Espaciales, Narrativas Espaciales y Geodatos Abiertos.
 
 [![Estado de Producción](https://img.shields.io/badge/Estado-En_Producci%C3%B3n-10b981?style=for-the-badge)](https://atlasvgiuah.netlify.app)
-[![Coberturas Espaciales](https://img.shields.io/badge/Capas_Operativas-257_(123_Oficiales_+_134_IGV)-0284c7?style=for-the-badge)](#13-tabla-11-cifras-clave-del-proyecto-referencia-única)
-[![Narrativas Espaciales Territoriales](https://img.shields.io/badge/Narrativas_Espaciales-4_Ejes_(83_Cartograf%C3%ADas)-9333ea?style=for-the-badge)](#2-arquitectura-de-los-3-módulos-operacionales-del-prototipo-02)
+[![Coberturas Espaciales](https://img.shields.io/badge/Capas_Operativas-294_(123_Oficiales_+_171_IGV)-0284c7?style=for-the-badge)](#13-tabla-11-cifras-clave-del-proyecto-referencia-única)
+[![Narrativas Espaciales Territoriales](https://img.shields.io/badge/Narrativas_Espaciales-4_Ejes_(83_Cartograf%C3%ADas)-9333ea?style=for-the-badge)](#3-estructura-de-los-3-módulos-de-la-plataforma-web)
 [![Estándares ISO/OGC](https://img.shields.io/badge/Normas-ISO_19110_%7C_19115_%7C_19139_%7C_19157-d97706?style=for-the-badge)](#5-documentación-técnica-del-proyecto)
 [![Licencia de Datos](https://img.shields.io/badge/Licencias-ODbL_1.0_%7C_CC_BY--SA_4.0_%7C_AGPLv3-dc2626?style=for-the-badge)](#6-licenciamiento-y-gobernanza-de-datos-abiertos)
 
@@ -12,27 +12,27 @@ Plataforma web abierta que reúne mapas oficiales del Estado de Chile e informac
 
 * Plataforma web en producción (CDN primario): [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * Repositorio espejo (GitHub Pages): [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* Geodatabase consolidada descargable (`.zip`): `docs/geodatabase_completa_atlas_vgi.zip` (`542,35 MB` comprimidos / `3,33 GB` descomprimidos; `257` capas cartográficas independientes).
+* Geodatabase consolidada descargable (`.zip`): `docs/geodatabase_completa_atlas_vgi.zip` (`542,35 MB` comprimidos / `3,33 GB` descomprimidos; `294` capas cartográficas independientes).
 
 ---
 
 ## 1. Objetivos y tabla de cifras clave del proyecto
 
 ### 1.1. Objetivo general
-Desarrollar un atlas territorial reproducible, interoperable y centrado en la toma de decisiones espaciales, que integre geodatos abiertos oficiales del Estado de Chile, información geográfica voluntaria (VGI/IGV) y herramientas analíticas multicriterio para subsanar vacíos de información, visibilizar patrones socioterritoriales y apoyar la gestión local en el Municipio de Santiago y el Barrio Brasil.
+Desarrollar un Atlas para la Gestión Territorial reproducible, interoperable y centrado en el usuario, que integre geodatos abiertos, cartografía participativa y herramientas analíticas para subsanar vacíos de información territorial y apoyar la gestión local y la investigación en la Comuna de Santiago y Barrio Brasil.
 
 ### 1.2. Objetivos específicos
 * **OE 1.** Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales.
 * **OE 2.** Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos.
-* **OE 3.** Implementar el **Prototipo 02**: un geoportal interactivo estructurado en tres componentes operacionales (Módulo 01 Análisis, Módulo 02 Explorar Mapa y Módulo 03 Documentación).
+* **OE 3.** Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.
 * **OE 4.** Evaluar la usabilidad y la pertinencia de la plataforma con distintos perfiles de actores territoriales y asegurar su transferibilidad técnica, metodológica y documental.
 
 ### 1.3. Tabla 1.1: Cifras clave del proyecto (referencia única)
 
 | Componente del sistema | Cifra o especificación | Definición y rutas asociadas |
 | :--- | :--- | :--- |
-| Coberturas geográficas operativas | 257 capas (123 oficiales + 134 IGV descentralizadas) | `src/js/modulos/catalogo_vgi_descentralizado.js`, `src/js/modulos/ide_chile.js`, `data/capa_vgi_*.geojson` |
-| Descriptores del diccionario de datos | 134 descriptores bajo ISO 19110:2016 (100% en español) | Módulo `03` (`src/js/modulos/diccionario.js`), `docs/categorias_tematicas_osm.xlsx` |
+| Coberturas geográficas operativas | 294 capas (123 oficiales + 171 IGV descentralizadas) | `src/js/modulos/catalogo_vgi_descentralizado.js`, `src/js/modulos/ide_chile.js`, `data/capa_vgi_*.geojson` |
+| Descriptores del diccionario de datos | 171 descriptores bajo ISO 19110:2016 (100% en español) | Módulo `03` (`src/js/modulos/diccionario.js`), `docs/categorias_tematicas_osm.xlsx` |
 | Dimensiones y Narrativas Espaciales | 5 dimensiones y 4 Narrativas Espaciales con 83 cartografías | Módulo `01` (`src/js/modulos/indicadores_analisis.js`), `src/img/cartografias/` |
 | Índice Global de Calidad VGI (IGV) | 95,4 % (91 capas A+ y 43 A de las capas evaluadas) | Calidad espacial multicriterio WLC v2.0 (ISO 19157) y `docs/ANALISIS_METACALIDAD.md` |
 | Índice Global de Metacalidad Documental (IGMC) | 96,55 % | Cumplimiento de campos obligatorios de metadatos ISO 19115 / IDE Chile en perfil de metadatos |
@@ -115,13 +115,13 @@ flowchart TD
 
 ---
 
-## 3. Estructura de los 3 Módulos de la plataforma web (Prototipo 02)
+## 3. Estructura de los 3 Módulos de la plataforma web
 
 | N° | Sección en la Interfaz (`src/index.html`) | ID del Panel DOM | Controladores JavaScript (`src/js/`) | Función Principal y Salidas Verificables |
 | :---: | :--- | :--- | :--- | :--- |
-| `01` | Análisis | `#panel-indicadores` | `modulos/indicadores_analisis.js`, `modulos/catalogo_vgi_descentralizado.js` | Síntesis territorial basada en 83 cartografías temáticas estructuradas en 4 láminas (KDE, autocorrelación espacial local, demografía y habitabilidad, metabolismo urbano) y catálogo de 257 coberturas (123 oficiales + 134 IGV descentralizadas) organizadas en 5 dimensiones con buscador interactivo en español y activación directa. |
+| `01` | Análisis | `#panel-indicadores` | `modulos/indicadores_analisis.js`, `modulos/catalogo_vgi_descentralizado.js` | Síntesis territorial basada en 83 cartografías temáticas estructuradas en 4 láminas (KDE, autocorrelación espacial local, demografía y habitabilidad, metabolismo urbano) y catálogo de 294 coberturas (123 oficiales + 171 IGV descentralizadas) organizadas en 5 dimensiones con buscador interactivo en español y activación directa. |
 | `02` | Explorar Mapa | `#panel-inicio` | `app.js`, `modulos/mapa.js`, `modulos/ide_chile.js`, `modulos/evaluador_normativo.js`, `modulos/geodesia.js` | Visor Leaflet en primer plano con selector de áreas de enfoque ("Barrio Brasil Completo" y "Comuna de Santiago"), inspector normativo PRC/OGUC, botón "Ver Atlas de Análisis", panel inferior de "Detalles del elemento" a todo lo ancho y exportación GeoJSON con simbología temática embebida. |
-| `03` | Documentación | `#panel-manual`, `#panel-diccionario`, `#panel-licencias` | `modulos/manual.js`, `modulos/diccionario.js`, `modulos/licencias.js` | Manual de uso interactivo con inventario de 257 capas, diccionario de descriptores territoriales ISO 19110 (134 capas IGV), marco legal de datos abiertos y descarga directa de `docs/geodatabase_completa_atlas_vgi.zip` y catálogos Excel. |
+| `03` | Documentación | `#panel-manual`, `#panel-diccionario`, `#panel-licencias` | `modulos/manual.js`, `modulos/diccionario.js`, `modulos/licencias.js` | Manual de uso interactivo con inventario de 294 capas, diccionario de descriptores territoriales ISO 19110 (171 capas IGV), marco legal de datos abiertos y descarga directa de `docs/geodatabase_completa_atlas_vgi.zip` y catálogos Excel. |
 
 ---
 

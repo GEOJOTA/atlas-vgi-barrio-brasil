@@ -1125,7 +1125,7 @@ function inicializarAplicacion() {
   }
 }
 
-/* ---------------------- NAVEGACIÓN POR TAREA, MIGAS DE PAN, TEMA Y GLOSARIO (PROTOTIPO 02) ---------------------- */
+/* ---------------------- NAVEGACIÓN POR TAREA, MIGAS DE PAN, TEMA Y GLOSARIO ---------------------- */
 
 const METADATOS_PANELES_NAVEGACION = {
   'indicadores':        { grupo: 'analisis',      grupoNombre: 'Análisis',         vistaNombre: 'Narrativas espaciales (4 láminas)' },
@@ -1236,7 +1236,7 @@ function configurarNavegacion() {
   window.navegarAModulo = function(moduloId) {
     if (!moduloId) return;
     const mapaModulos = {
-      // Prototipo 02: 3 Módulos Principales
+      // 3 Módulos Principales
       '01': 'indicadores',
       '1': 'indicadores',
       'analisis': 'indicadores',
@@ -1286,7 +1286,7 @@ function configurarNavegacion() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Clic en los botones principales de tarea (Prototipo 02: Análisis, Explorar mapa, Documentación)
+  // Clic en los botones principales de tarea (Módulo 01 Análisis, Módulo 02 Explorar mapa, Módulo 03 Documentación)
   document.querySelectorAll('.btn-grupo-tarea').forEach(btnGrupo => {
     btnGrupo.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -1314,7 +1314,7 @@ function configurarNavegacion() {
     }
   });
 
-  // Prototipo 02: Módulo 01 (Análisis) activo al entrar a la página
+  // Módulo 01 (Análisis) activo al entrar a la página
   const panelInicialHash = window.location.hash ? window.location.hash.replace('#panel-', '').replace('#', '') : null;
   const panelApertura = (panelInicialHash && METADATOS_PANELES_NAVEGACION[panelInicialHash]) ? panelInicialHash : 'indicadores';
   activarPanel(panelApertura);

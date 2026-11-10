@@ -1,16 +1,16 @@
 # Trazabilidad metodológica y marco conceptual del sistema
-### Atlas de información geográfica voluntaria (VGI) para la gestión territorial — Nodo geoabierto
+### Atlas para la Gestión Territorial — Análisis y Exploración | Municipio de Santiago y Barrio Brasil
 
 * Plataforma web en producción (CDN primario): [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * Repositorio espejo (GitHub Pages): [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* Cifras clave del sistema: Para el desglose consolidado de coberturas, descriptores, cartografías, módulos e índices de calidad (Índice Global de Calidad VGI (IGV, promedio multicriterio ISO 19157 de las 133 capas; véase el glosario) de 95,4 % para calidad espacial ISO 19157 e Índice Global de Metacalidad Documental (IGMC, cumplimiento de campos ISO 19115; véase el glosario) de 96,55 % para completitud de metadatos ISO 19115), véase la Tabla 1.1 del manual de actualización (`docs/MANUAL_ACTUALIZACION_ATLAS.md`) o del `README.md` principal.
+* Cifras clave del sistema: Para el desglose consolidado de coberturas, descriptores, cartografías, módulos e índices de calidad, véase la Tabla 1.1 del manual de actualización (`docs/MANUAL_ACTUALIZACION_ATLAS.md`) o del `README.md` principal.
 
 ---
 
 ## Objetivos del proyecto
 
 ### Objetivo general
-Desarrollar un atlas de información geográfica voluntaria (VGI) reproducible, interoperable y centrado en el usuario, que integre geodatos abiertos, cartografía participativa y herramientas analíticas para subsanar vacíos de información territorial y apoyar la gestión local y la investigación en el Barrio Brasil y la comuna de Santiago.
+Desarrollar un Atlas para la Gestión Territorial reproducible, interoperable y centrado en el usuario, que integre geodatos abiertos, cartografía participativa y herramientas analíticas para subsanar vacíos de información territorial y apoyar la gestión local y la investigación en la Comuna de Santiago y Barrio Brasil.
 
 ### Objetivos específicos
 * **OE 1.** Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales.
