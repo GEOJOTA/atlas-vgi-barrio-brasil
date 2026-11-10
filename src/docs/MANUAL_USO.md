@@ -3,133 +3,118 @@
 
 * **Plataforma Web Interactiva:** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
 * **Repositorio Espejo (GitHub Pages):** [https://geojota.github.io/atlas-vgi-barrio-brasil/](https://geojota.github.io/atlas-vgi-barrio-brasil/)
-* **Cobertura Cartográfica:** 294 Capas Espaciales Operativas (123 Oficiales del Estado de Chile + 171 Coberturas Descentralizadas de Información Geográfica Voluntaria IGV 100% en español).
-* **Dimensiones de Análisis:** 5 Dimensiones Estratégicas (Sociodemográfica, Socioeconómica, Socioambiental, Sociosanitaria, Sociourbana).
-* **Síntesis Territorial:** 83 Cartografías Temáticas organizadas en 4 Narrativas Espaciales Basadas en Datos.
-* **Arquitectura de Navegación:** 3 Módulos Operacionales Principales (Módulo 01 · Análisis, Módulo 02 · Explorar Mapa y Módulo 03 · Documentación).
+* **Cobertura Cartográfica:** 294 Capas Espaciales Operativas (123 Oficiales del Estado de Chile con identificador `id_ig` + 171 Coberturas Descentralizadas de Información Geográfica Voluntaria, IGV, con identificador `id_igv`, 100 % en español).
+* **Dimensiones de Análisis:** 5 Dimensiones Analíticas (Sociodemográfica, Socioeconómica, Socioambiental, Sociosanitaria y Sociourbana).
+* **Diagnóstico Geoestadístico:** 83 Cartografías Temáticas organizadas en 4 Ejes de Evidencia Espacial.
+* **Arquitectura de Navegación:** 3 Módulos Operacionales Principales (*Módulo 01 · Análisis*, *Módulo 02 · Explorar Mapa* y *Módulo 03 · Documentación*), acompañados en la cabecera por el **Tutorial Interactivo de 18 pasos** y el **Glosario de siglas**.
 
 ---
 
-## 1. Propósito general y estructura operativa de la plataforma
+## 1. Propósito general y estructura navegable de la plataforma
 
-El **Atlas para la Gestión Territorial** es una infraestructura de información geográfica abierta y reproducible, diseñada para el análisis espacial, la toma de decisiones informadas y la planificación comunal en el Municipio de Santiago y el Barrio Brasil.
+El **Atlas para la Gestión Territorial** es una plataforma de información geográfica abierta, dinámica y adaptable a cualquier dispositivo o tamaño de ventana, diseñada para el diagnóstico espacial, la consulta normativa y la toma de decisiones en el Municipio de Santiago y el Barrio Brasil.
 
-La plataforma articula dos regímenes de producción cartográfica complementarios:
+La plataforma articula dos regímenes complementarios de producción cartográfica bajo un perfil homologado de **17 atributos y métricas de calidad ISO 19157**:
 
-1. **Cartografía Oficial del Estado de Chile (123 coberturas):** Datos espaciales emitidos por ministerios y organismos públicos (IDE Chile / SNIT, MINVU, INE, MDSF, SUBDERE, MTT, UOCT, CMN, MMA, SII y Municipalidad de Santiago).
-2. **Información Geográfica Voluntaria — IGV Descentralizado (171 coberturas, incluyendo 52 especies biológicas individualizadas):** Cada descriptor de la comunidad (farmacias, árboles urbanos, cesfam, escuelas, paraderos, zonas de calma, cruces peatonales, ferias libres, etc.) opera como una **capa independiente por separado**, con su propio archivo `.geojson` descargable, traducida 100% al español y buscable en tiempo real.
-3. **Inducción Interactiva Guiada (Tutorial Interactivo):** Ubicado en la cabecera superior junto al glosario de siglas, ofrece un recorrido guiado en 12 pasos navegables que resalta con un foco de luz dinámico (*spotlight*) cada módulo, panel y herramienta del sistema, oscureciendo el entorno para facilitar la comprensión inmediata de cada funcionalidad.
+1. **Información Geográfica Oficial del Estado de Chile (123 coberturas · clave primaria `id_ig`):** Coberturas emitidas por ministerios y organismos públicos (IDE Chile / SNIT, MINVU, INE Censo 2024, MDSF / RSH, SUBDERE, MTT / UOCT, CMN, MMA, SII y Municipalidad de Santiago).
+2. **Información Geográfica Voluntaria Descentralizada (171 coberturas · clave primaria `id_igv`):** Cada descriptor levantado por la comunidad en OpenStreetMap y GBIF (farmacias, árboles urbanos, centros de salud, escuelas, paraderos, ciclovías, rebajes peatonales, ferias libres y 52 especies biológicas individualizadas) opera como una **capa independiente**, traducida al español y lista para visualizarse o descargarse.
 
 ```mermaid
 flowchart TD
+    subgraph CAB["CABECERA TRANSVERSAL"]
+        T1["Tutorial Interactivo Navegable (18 Pasos)<br/>Situado a la izquierda del título institucional"]
+        T2["Atlas para la Gestión Territorial<br/>Análisis y Exploración | Municipio de Santiago y Barrio Brasil"]
+        T3["Glosario de Siglas<br/>Situado a la derecha del título institucional"]
+    end
+
     subgraph M01["MÓDULO 01 · ANÁLISIS"]
-        N1["Narrativas Espaciales (4 Láminas · 83 Mapas)<br/>KDE | Autocorrelación Espacial Local | Demografía | Metabolismo"]
-        D1["5 Dimensiones Analíticas y Catálogo de 257 Capas<br/>123 Oficiales + 171 IGV Descentralizadas (52 especies individualizadas) con Búsqueda en Español"]
+        N1["4 Ejes de Diagnóstico Geoestadístico (83 Cartografías)<br/>KDE | Autocorrelación LISA | Demografía y Vivienda | Metabolismo Urbano"]
+        D1["5 Dimensiones Analíticas y Acordeón Explorador de 294 Capas<br/>123 Oficiales (id_ig) + 171 IGV Descentralizadas (id_igv) con Buscador"]
     end
 
     subgraph M02["MÓDULO 02 · EXPLORAR MAPA"]
-        V1["Visor Cartográfico Leaflet Inmediato<br/>Áreas: Barrio Brasil Completo / Comuna de Santiago"]
-        P1["Detalles del Elemento (Panel Inferior Ancho Completo)<br/>Inspección Exhaustiva de Columnas, Indicadores y Metadatos"]
-        EXP["Exportación GeoJSON con Simbología Aplicada<br/>marker-color, fill, stroke y rampas temáticas"]
-        I1["Inspector Normativo PRC/OGUC<br/>Cálculo Geodésico y Certificado CIN-VGI"]
+        B1["Barra Centrada de Herramientas<br/>Área de enfoque | Delimitar área | Reencuadrar | Inspector PRC | Ver Atlas | Exportar GeoJSON | Descargar .zip"]
+        V1["Visor Cartográfico Cuadrado (Leaflet 1.9.4)<br/>Mapas Base: OpenStreetMap (Estándar y HOT), Bing/Microsoft (Satelital e Híbrido) y Esri"]
+        S1["Motor de Simbología Dinámica<br/>Natural Breaks (Jenks), Cuantiles, Intervalos Iguales y Rampas Cromáticas"]
+        P1["Panel Inferior: Detalles (Ancho Completo debajo del Mapa)<br/>Perfil Homologado de 17 Atributos (id_ig / id_igv), Calidad ISO 19157 y Normativa PRC"]
     end
 
     subgraph M03["MÓDULO 03 · DOCUMENTACIÓN"]
-        DOC1["Manual de Uso del Sistema<br/>Navegación e inventario de 294 capas"]
-        DOC2["Diccionario de Descriptores y Especies (171 Capas IGV)<br/>Esquema ISO 19110 y homologación semántica"]
-        DOC3["Licencias Abiertas y Descargas Maestras<br/>Geodatabase completa (.zip) y Libros Excel (.xlsx)"]
-        DOC4["Manual de Actualización Técnica (Git)<br/>docs/MANUAL_ACTUALIZACION_ATLAS.md"]
+        DOC1["6 Capítulos Navegables con Buscador en Tiempo Real<br/>Objetivos y Entregables · Guía M01 · Guía M02 · Licencias · Inventario 294 Capas · Arquitectura"]
+        DOC2["Descargas Directas<br/>Geodatabase Completa (.zip), Catálogos Excel (.xlsx) y Manuales (.md / .docx)"]
     end
 
-    M01 -->|"Activar capa"| M02
-    M02 -->|"Ver Atlas de Análisis"| M01
-    M02 --> M03
+    CAB --> M01 & M02 & M03
+    D1 -->|"Activar y ver en el mapa"| V1
+    B1 -->|"Ver Atlas de Análisis"| M01
+    V1 --> S1 & P1
 ```
 
 ---
 
-## 2. Guía de uso de los 3 Módulos Operacionales
+## 2. Inducción guiada: Tutorial Interactivo Navegable (18 pasos) y Glosario de Siglas
 
-### 2.1. Módulo 01: Análisis Territorial
+En la franja superior de la cabecera se disponen dos utilidades permanentes en flancos opuestos del título para evitar cualquier superposición visual:
 
-El primer módulo al entrar a la plataforma presenta la síntesis interpretativa del territorio comunal y barrial. Se organiza en dos componentes fundamentales:
-
-#### 1. Narrativas Espaciales Basadas en Datos (4 Láminas Temáticas)
-Elaboradas a partir de **83 cartografías temáticas** que representan patrones de concentración, segregación espacial, estructura demográfica, habitabilidad, movilidad y metabolismo urbano:
-* **Lámina 01 · Concentración Territorial de Actividad IGV en Santiago (14 mapas KDE):** Análisis espacial de densidad continua sobre la geodatabase comunitaria (79.841 entidades directas y 112.264 nodos en malla de 20 m), semáforos UOCT y dinámica de edificación. Visibiliza la polarización entre el eje Alameda, Barrio Brasil, Santa Ana y Parque Almagro frente al arco sur y suroriente de la comuna.
-* **Lámina 02 · Segregación Espacial, Hotspots y Áreas de Rezago en Santiago (11 mapas de autocorrelación espacial local):** Análisis de autocorrelación espacial local (Anselin, 1995) sobre las 1.711 manzanas censales de Santiago: núcleos estadísticos Alto-Alto (HH), bolsones Bajo-Bajo (LL) y desajustes de cobertura colaborativa.
-* **Lámina 03 · Estructura Sociodemográfica, Habitabilidad y Morfología Urbana en Santiago (34 mapas):** Distribución de los 432.081 habitantes según Censo 2024, prevalencia del departamento (92,7%) y arriendo (72,1%), alturas de edificación, Coeficiente de Ocupación del Suelo (COS) y persistencia de cités.
-* **Lámina 04 · Metabolismo Urbano de Santiago (24 mapas):** Dinámica de movilidad sustentable (84,6% de viajes en modos activos/públicos), brechas de acceso a áreas verdes y salud en bordes comunales, exposición a ruido (>68 dBA) y gestión de residuos sólidos en las 5 zonas de aseo municipal.
-
-#### 2. Dimensiones Analíticas y Catálogo de 294 Coberturas
-Las **294 coberturas espaciales** del Atlas se exploran y activan directamente desde este apartado mediante acordeones interactivos estructurados en 5 dimensiones estratégicas:
-1. **Sociodemográfica y Habitacional:** Censo 2024, vulnerabilidad social (RSH), tipologías habitacionales y unidades vecinales (31 capas: 19 oficiales + 12 IGV).
-2. **Socioeconómica y Comercial:** Inversión pública (BIP/MOP), comercio barrial, ferias libres, empleo y redes energéticas (43 capas: 17 oficiales + 26 IGV).
-3. **Socioambiental y Espacio Público:** Infraestructura verde, arbolado urbano, biodiversidad ciudadana (GBIF) y residuos sólidos (74 capas: 35 oficiales + 39 IGV).
-4. **Sociosanitaria y Salud:** Red asistencial de salud (CESFAM y hospitales), farmacias de barrio y cobertura territorial (13 capas: 5 oficiales + 8 IGV).
-5. **Sociourbana, Movilidad y Normativa:** Zonificación PRC Santiago, patrimonio protegido, Metro, ciclovías y accesibilidad universal (96 capas: 47 oficiales + 49 IGV).
-
-* **Interacción directa:** Cada capa dispone de un interruptor para activarla/desactivarla en el mapa, un botón para enfocarla en el visor y un enlace de descarga directa en GeoJSON.
-* **Búsqueda y filtros:** Incluye buscador en tiempo real 100% en español y selector por tipo de origen (Oficiales vs. IGV Descentralizado).
+1. **Tutorial Interactivo (a la izquierda del título):** Recorrido pedagógico de **18 pasos** estructurado en 4 bloques navegables (*Visión General*, *Módulo 01 · Análisis*, *Módulo 02 · Mapa* y *Módulo 03 · Documentación*). Incluye una barra de pestañas por módulo y 18 botones numéricos directos que presentan primero el propósito de cada módulo antes de explicar para qué sirve cada uno de sus componentes.
+2. **Glosario de Siglas (a la derecha del título):** Ventana de consulta rápida con la definición en lenguaje claro de todas las siglas utilizadas en la plataforma (`IGV`, `KDE`, `LISA`, `PRC`, `OGUC`, `IDE`, `RSH`, `BIP`, entre otras).
 
 ---
 
-### 2.2. Módulo 02: Explorar Mapa
+## 3. Guía operativa de los 3 Módulos de la plataforma
 
-El segundo módulo entrega acceso directo e interactivo al visor espacial y al panel de detalles de elementos:
+### 3.1. Módulo 01: Análisis
 
-#### 1. Visor Cartográfico Leaflet Inmediato
-* **Visualización directa:** Sin pantallas intermedias ni elementos obstructivos. El mapa aparece listo para operar.
-* **Mapas Base Abiertos y Satelitales (Sin API Keys):** Erradica los mapas de Carto que exigen credenciales de API, integrando capas base abiertas de OpenStreetMap e imágenes satelitales de Bing, Microsoft y Esri:
-  * **OpenStreetMap Estándar (Predeterminado):** Cartografía comunitaria mundial con toponimia barrial completa, equipamiento y numeración predial.
-  * **OpenStreetMap Humanitario (HOT):** Estilo cartográfico de alto contraste orientado a equipamiento comunitario y servicios críticos.
-  * **Imagen Satelital y Satelital Híbrido (Bing / Microsoft):** Ortoimágenes globales y vista híbrida con etiquetas viales servidas mediante teselas QuadKey de Microsoft VirtualEarth.
-  * **Imagen Satelital (Esri World Imagery):** Ortoimágenes globales de alta resolución provistas por Esri, Maxar y Earthstar Geographics.
-* **Simbología Inteligente Predeterminada al Cargar Capas:**
-  * **Datos cuantitativos (índices, censos, áreas, montos):** Clasificación automática mediante **Natural Breaks (Jenks)** en 5 clases, minimizando la varianza intraclase y reflejando cortes naturales del territorio.
-  * **Datos cualitativos o de entidades (PRC, equipamientos, usos):** Clasificación **categorizada** con paletas armónicas contrastantes por entidad.
-  * **Rampas temáticas por dimensión:** Sociodemográfica (Cian/Viridis), Socioeconómica (Ámbar/YlOrRd), Socioambiental (Verde/Greens), Sociosanitaria (Magenta/Magma) y Sociourbana (Violeta/Purples).
-  * **Panel de personalización:** El analista puede ajustar libremente métodos estadísticos (Jenks, cuartiles, intervalos iguales, desviación estándar), número de clases y rampas en el panel flotante *Simbología Dinámica*.
-* **Áreas de Enfoque:** Selector rápido con dos escalas territoriales calibradas:
-  * **Barrio Brasil Completo:** Encuadre al polígono barrial y su área de influencia directa.
-  * **Comuna de Santiago:** Visión comunal integral (BBox: `[-70.6923, -33.4785, -70.6251, -33.4257]`).
-* **Botón "Ver Atlas de Análisis":** Permite conmutar al instante al Módulo 01 para examinar las láminas analíticas o seleccionar nuevas capas.
-* **Exportar vista (GeoJSON) con Simbología Aplicada:** Descarga la totalidad de las entidades visibles, incorporando directamente en las propiedades de cada feature los estilos gráficos configurados (`marker-color`, `stroke`, `fill`, `fill-opacity`, `simbologia_color`, `simbologia_modo`, etc.) para asegurar idéntica representación en QGIS u otros SIG.
+Presenta el diagnóstico geoestadístico del territorio y la organización temática del catálogo antes de pasar a la exploración libre en el visor:
 
-#### 2. Panel Inferior "Detalles del Elemento" (Ancho Completo)
-Ubicado inmediatamente debajo del visor cartográfico, este panel se despliega aprovechando el 100% del ancho de la pantalla al hacer clic sobre cualquier elemento del mapa:
-* **Amplitud visual:** Máximo espacio para inspeccionar tablas de atributos extensas, valores censales, normativas urbanas y campos descriptivos.
-* **Columnas e indicadores:** Organización clara de metadatos, custodio de origen, coordenadas y botón de descarga individual en GeoJSON.
-
-#### 3. Inspector Normativo PRC Santiago / PRMS / OGUC
-Permite auditar cualquier coordenada del territorio comunal haciendo clic sobre el mapa para generar el **Certificado de Informaciones Normativas VGI (CIN-VGI)**:
-* Zonificación del PRC Santiago y PRMS con usos permitidos y prohibidos (Art. 2.1.24 OGUC).
-* Restricciones por áreas de riesgo (Art. 2.1.17 OGUC), áreas verdes normadas y afectación patrimonial.
-* Dinámica histórica de permisos de edificación DOM (2010–2025) y recepciones finales CRF (2011–2025 del INE).
+1. **Cuatro Ejes de Diagnóstico Geoestadístico (83 Cartografías Temáticas):**
+   * **Eje 01 · Concentración Territorial de Actividad IGV en Santiago (14 mapas KDE):** Estimación de densidad por núcleo sobre 79.841 entidades geométricas y 112.264 nodos en malla regular de 20 m, evidenciando la concentración en el eje Alameda y Barrio Brasil frente al sector sur de la comuna.
+   * **Eje 02 · Segregación Espacial, Hotspots y Áreas de Rezago (11 mapas LISA):** Indicadores locales de asociación espacial (Anselin, 1995) sobre las 1.711 manzanas censales de Santiago (clústeres Alto-Alto `HH` y bolsones Bajo-Bajo `LL`).
+   * **Eje 03 · Estructura Sociodemográfica, Habitabilidad y Morfología Urbana (34 mapas):** Distribución poblacional del Censo 2024, vulnerabilidad del Registro Social de Hogares (RSH), tipologías de vivienda, arriendo, cités y conservación histórica.
+   * **Eje 04 · Metabolismo Urbano, Movilidad y Espacio Público (24 mapas):** Accesibilidad caminable a áreas verdes y salud, arbolado urbano, ruido ambiental (>68 dBA) y gestión de residuos sólidos en las 5 zonas de aseo municipal.
+2. **Las 5 Dimensiones Analíticas y el Explorador de 294 Coberturas:**
+   * **Dimensión 1 · Sociodemográfica y Habitacional:** Censo 2024, vulnerabilidad RSH, vivienda y unidades vecinales.
+   * **Dimensión 2 · Socioeconómica y Comercial:** Inversión pública BIP/MOP, comercio barrial, ferias libres y telecomunicaciones.
+   * **Dimensión 3 · Socioambiental y Espacio Público:** Áreas verdes, arbolado urbano, biodiversidad ciudadana (GBIF) y residuos sólidos.
+   * **Dimensión 4 · Sociosanitaria y Salud:** Red asistencial (CESFAM y hospitales), farmacias y cobertura sanitaria.
+   * **Dimensión 5 · Sociourbana, Movilidad y Normativa:** Zonificación PRC Santiago, patrimonio protegido, Metro, ciclovías y accesibilidad universal.
+   * Desde el acordeón inferior, el usuario puede filtrar las 294 capas por palabra clave o fuente (Oficiales vs. IGV) y pulsar **Ver en el mapa** para encenderlas automáticamente en el Módulo 02.
 
 ---
 
-### 2.3. Módulo 03: Documentación
+### 3.2. Módulo 02: Explorar Mapa
 
-El tercer módulo consolida en una experiencia unificada y explorable el respaldo metodológico, técnico y legal de la plataforma:
+Reúne el visor cartográfico interactivo, las herramientas de análisis espacial en vivo y el panel inferior de inspección:
 
-1. **Manual de Uso del Sistema:** Guía interactiva estructurada por capítulos con buscador en tiempo real, tabla de contenidos lateral e inventario dinámico de las 294 coberturas espaciales (123 oficiales + 134 IGV descentralizadas).
-2. **Marco Jurídico de Licencias Abiertas Integrado:** Adopta un régimen tripartito de bienes comunes digitales que garantiza la reciprocidad comunitaria (Ley N° 17.336 de Propiedad Intelectual y Ley N° 20.285 de Transparencia):
-   * **CC BY-SA 4.0** para la documentación, manuales y cartografía.
-   * **ODbL 1.0** para las bases de datos espaciales y capas IGV (compatibilidad nativa con OpenStreetMap Foundation).
-   * **GNU AGPLv3** para el código fuente de la plataforma web y scripts.
-3. **Descarga Directa de Catálogos y Geodatabase:** Acceso directo a la descarga de la Geodatabase Completa comprimida (`geodatabase_completa_atlas_vgi.zip`, 542 MB) y los libros estructurados en Excel (`categorias_tematicas_osm.xlsx`, `perfil_metadatos_vgi.xlsx`, `catalogo_fuentes_vgi.xlsx`).
-4. **Manual de Actualización Técnica para Desarrolladores:** Se preserva y mantiene en el repositorio Git (`docs/MANUAL_ACTUALIZACION_ATLAS.md`) para consultar la ingeniería del stack, sincronización simétrica `data/` y `src/data/`, y protocolos de actualización de coberturas a 6 meses.
+1. **Barra de Herramientas Centrada y Adaptable:**
+   * **Área de enfoque:** Conmuta el encuadre entre *Barrio Brasil Completo* y *Comuna de Santiago*.
+   * **Delimitar área:** Dibuja un rectángulo sobre el mapa y calcula su superficie exacta en hectáreas (`ha`) y metros cuadrados (`m²`) proyectados en `EPSG:32719` (UTM Huso 19 Sur).
+   * **Reencuadrar:** Restablece la vista al encuadre territorial activo.
+   * **Inspector normativo (PRC):** Al activarlo y hacer clic sobre un predio o manzana, intersecta las capas del Plan Regulador Comunal de Santiago y la OGUC, desplegando la normativa edificatoria exclusivamente cuando es consultada.
+   * **Ver Atlas de Análisis:** Regresa al Módulo 01 conservando el estado de trabajo.
+   * **Exportar vista (GeoJSON):** Descarga las entidades activas en pantalla con su simbología cromática embebida.
+   * **Descargar base de datos (.zip):** Abre el acceso directo al paquete maestro comprimido con las 294 capas.
+2. **Visor Cartográfico Cuadrado y 5 Mapas Base (Sin Claves de API):**
+   * El lienzo posee una proporción amplia y cuadrada para maximizar el área visual de exploración e incorpora 5 mapas base en la esquina superior derecha:
+     1. **OpenStreetMap Estándar (Predeterminado)**
+     2. **OpenStreetMap Humanitario (HOT)**
+     3. **Imagen Satelital (Bing / Microsoft)**
+     4. **Satelital Híbrido con Calles (Bing / Microsoft)**
+     5. **Imagen Satelital (Esri World Imagery)**
+3. **Motor de Simbología Dinámica (*Natural Breaks* / Jenks):**
+   * Permite clasificar cualquier variable numérica mediante Cortes Naturales de Jenks, Cuantiles, Intervalos Iguales o Desviación Estándar, o categorizar variables nominales con paletas cromáticas adaptadas a cada dimensión.
+4. **Panel Inferior "Detalles" (Debajo del Mapa):**
+   * Ubicado inmediatamente debajo del visor cartográfico a todo lo ancho, presenta la ficha técnica de la entidad seleccionada con su **perfil homologado de 17 atributos** (`id_ig` para las 123 capas oficiales e `id_igv` para las 171 capas de IGV), indicadores de calidad ISO 19157, linaje institucional o comunitario y botón de descarga individual en GeoJSON.
 
 ---
 
-## 3. Descargas de Datos y Archivos Maestros
+### 3.3. Módulo 03: Documentación
 
-| Recurso | Formato | Contenido |
-| :--- | :--- | :--- |
-| **Geodatabase Completa del Atlas** | `.zip` | Colección completa de las 294 coberturas en GeoJSON + GeoPackage + metadatos |
-| **Catálogo de Fuentes y Brechas** | `.xlsx` | Matriz de 294 capas con homologación IDE Chile vs IGV |
-| **Categorías Temáticas OSM** | `.xlsx` | Clasificación de descriptores y etiquetas territoriales |
-| **Manual de Uso del Atlas** | `.md` | Manual de navegación y operación de la interfaz web |
-| **Manual de Actualización Técnica** | `.md` | Documentación de ingeniería y mantenimiento en Git |
-| **Bibliografía Seminario y Atlas** | `.md` | Referencias teóricas y metodológicas en norma APA 7ma ed. |
+Integra en 6 capítulos navegables con buscador en tiempo real toda la documentación de uso, arquitectura, licencias y descargas:
+
+* **DOC · 01:** Fundamentación, Objetivos, Entregables Verificados y Cifras Clave.
+* **DOC · 02:** Guía del Módulo 01 (Análisis Territorial, 4 Ejes Geoestadísticos y 5 Dimensiones).
+* **DOC · 03:** Guía del Módulo 02 (Explorar Mapa, Simbología Dinámica y Panel de Detalles).
+* **DOC · 04:** Licencias Abiertas (`CC BY 4.0`, `CC BY-SA 4.0`, `ODbL 1.0`, `GNU AGPLv3`, Ley N° 20.285 / Ley N° 21.180), Descarga de Geodatabase (`.zip`) y Catálogos en Excel (`.xlsx`).
+* **DOC · 05:** Inventario General filtrable de las 294 Coberturas Integradas (123 Oficiales `id_ig` + 171 IGV `id_igv`).
+* **DOC · 06:** Arquitectura del Sistema, Flujos de Trabajo y Guía de Actualización Técnica.

@@ -1,13 +1,13 @@
-# Aparato bibliográfico consolidado — Corpus científico & Atlas VGI Barrio Brasil
-### Compendio de referencias científicas, institucionales y normativas (APA 7ª edición)
+# Aparato bibliográfico consolidado — Atlas para la Gestión Territorial
+### Análisis y Exploración | Municipio de Santiago y Barrio Brasil — Compendio de referencias científicas, institucionales y normativas (APA 7.ª edición)
 
-Este documento reúne las 125 referencias formales estandarizadas en norma APA 7ª edición, integrando la totalidad del corpus científico fundacional (51 obras seminales de investigación + 8 obras epistemológicas e hispanoamericanas de pensamiento geográfico) con las normas técnicas internacionales, fuentes institucionales y marcos jurídicos del Estado de Chile aplicados en el Atlas de Información Geográfica Voluntaria (VGI).
+Este documento reúne las 125 referencias formales estandarizadas en norma APA 7.ª edición, integrando la totalidad del corpus científico fundacional (51 obras seminales de investigación + 8 obras epistemológicas e hispanoamericanas de pensamiento geográfico) con las normas técnicas internacionales, fuentes institucionales y marcos jurídicos del Estado de Chile aplicados en el **Atlas para la Gestión Territorial** y sus coberturas de Información Geográfica Oficial (`id_ig`) e Información Geográfica Voluntaria (`id_igv`).
 
 ---
 
-##  Índice de contenidos
+## Índice de contenidos
 
-1. [Métricas de Cobertura Documental y flujo de procesamiento de Trazabilidad](#1-métricas-de-cobertura-documental-y-pipeline-de-trazabilidad)
+1. [Métricas de Cobertura Documental y flujo de trazabilidad](#1-métricas-de-cobertura-documental-y-pipeline-de-trazabilidad)
 2. [Corpus Científico de Literatura Seminal (51 Obras Fundacionales)](#2-corpus-científico-de-literatura-seminal-51-obras-fundacionales)
 3. [Fuentes Hispanoamericanas y de Pensamiento Geográfico](#3-fuentes-hispanoamericanas-y-de-pensamiento-geográfico)
 4. [Marco Normativo, Institucional y Estándares Técnicos del Atlas Territorial](#4-marco-normativo-institucional-y-estándares-técnicos-del-atlas-territorial)
@@ -18,62 +18,62 @@ Este documento reúne las 125 referencias formales estandarizadas en norma APA 7
 
 | Dimensión | Cantidad | Descripción y Rutas Vinculadas |
 |---|---|---|
-| Total Obras Registradas | 125 referencias | 100 % depuradas en norma APA 7ª ed. con enlaces activos y DOIs verificados |
-| Corpus Científico de Literatura Seminal | 51 referencias | Obras seminales de VGI, ciencia ciudadana, calidad espacial, GBIF, Cell2Fire y modelos territoriales |
+| Total Obras Registradas | 125 referencias | 100 % depuradas en norma APA 7.ª ed. con enlaces activos y DOIs verificados |
+| Corpus Científico de Literatura Seminal | 51 referencias | Obras seminales de IGV, ciencia ciudadana, calidad espacial, GBIF y modelos territoriales |
 | Fuentes Hispanoamericanas y Pensamiento Geográfico | 8 referencias | Aportes clave de Buzai, Mateos, Orellana & Ballari, Fuenzalida, López-Aliste (Ecology/GBIF), Castells, Pickles y Anselin |
 | Marco Normativo y Estándares Atlas Territorial | 66 referencias | Leyes de Chile, decretos, normas ISO/TC 211, estándares OGC, guías IDE Chile y especificaciones web |
 | Autocitaciones | 0 | Rigor metodológico preciso: cero distorsión por autocitación |
 
-### Flujo de procesamiento de articulación bibliográfica en los módulos y entregables del Atlas
+### Flujo de trabajo de articulación bibliográfica en los 3 módulos y entregables del Atlas
 
 ```mermaid
 flowchart LR
-    subgraph IN["1. INPUT / CORPUS DOCUMENTAL (125 Referencias APA 7ª Ed.)"]
-        B1["51 Obras Seminales VGI / GIScience<br/>Goodchild (2007), Haklay (2010),<br/>Senaratne et al. (2017), Herfort et al. (2023)"]
-        B2["8 Obras Hispanoamericanas y Espaciales<br/>Anselin (1995), Buzai (2014),<br/>Fuenzalida (2025), Orellana & Ballari"]
-        B3["66 Normas ISO/OGC y Leyes de Chile<br/>ISO 19110/19115/19139/19157, RFC 7946,<br/>Ley 20.285, Ley 19.628, OGUC, IDE Chile"]
+    subgraph IN["1. CORPUS DOCUMENTAL (125 Referencias APA 7.ª Ed.)"]
+        B1["51 Obras Seminales IGV / GIScience\nGoodchild (2007), Haklay (2010),\nSenaratne et al. (2017), Herfort et al. (2023)"]
+        B2["8 Obras Hispanoamericanas y Espaciales\nAnselin (1995), Buzai (2014),\nFuenzalida (2025), Orellana & Ballari"]
+        B3["66 Normas ISO/OGC y Leyes de Chile\nISO 19115/19157, RFC 7946,\nLey 20.285, Ley 19.628, OGUC, IDE Chile"]
     end
 
-    subgraph PROC["2. PROCESAMIENTO Y VINCULACIÓN EN CÓDIGO (JS ES6+ y Python 3)"]
-        M1["Módulos Web (src/js/modulos/)<br/>ide_chile.js (citaAPA en 124 capas)<br/>indicadores_analisis.js (4 guiones visuales)<br/>ohsome.js, diccionario.js, metadatos.js"]
-        M2["Generadores Tabulares y de Calidad (scripts/)<br/>generar_catalogos_excel.py<br/>analisis_metacalidad.py<br/>construir_manual_actualizacion_maestro.py"]
+    subgraph PROC["2. VINCULACIÓN EN LOS 3 MÓDULOS Y SCRIPTS"]
+        M1["Módulos Web (src/js/modulos/)\nMódulo 01: indicadores_analisis.js (5 dimensiones y 4 guiones visuales)\nMódulo 02: ide_chile.js (294 capas) y evaluador_normativo.js (PRC)\nMódulo 03: manual.js (DOC · 01 a DOC · 06)"]
+        M2["Generadores Tabulares y Perfil ISO 19157 (scripts/)\ngenerar_catalogos_excel.py\nenriquecer_base_datos_metadatos.py"]
     end
 
-    subgraph OUT["3. OUTPUT / ENTREGABLES VERIFICABLES EN GIT Y PLATAFORMA WEB"]
-        E1["docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md (src/docs/)<br/>docs/TRAZABILIDAD_ACADEMICA.md (src/docs/)<br/>MANUAL_ACTUALIZACION_ATLAS.md"]
-        E2["docs/categorias_tematicas_osm.xlsx (Hoja 4)<br/>docs/catalogo_fuentes_vgi.xlsx<br/>docs/perfil_metadatos_vgi.xlsx"]
-        E3["Fichas XML ISO 19139 / JSON ISO 19115 (Módulo 08)<br/>y Apartados Bibliográficos en guiones visuales (Módulo 05)"]
+    subgraph OUT["3. ENTREGABLES VERIFICADOS EN GIT Y PLATAFORMA WEB"]
+        E1["docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md (src/docs/)\ndocs/TRAZABILIDAD.md (src/docs/)\nMANUAL_ACTUALIZACION_ATLAS.md"]
+        E2["docs/categorias_tematicas_osm.xlsx\ndocs/catalogo_fuentes_vgi.xlsx\ndocs/perfil_metadatos_vgi.xlsx"]
+        E3["Panel inferior Detalles (17 atributos ISO 19157)\ny 83 Cartografías en el Módulo 01"]
     end
 
     B1 & B2 & B3 --> M1 & M2
     M1 & M2 --> E1 & E2 & E3
 ```
 
-### Flujo de procesamiento de vinculación por dimensión analítica y norma técnica (`D1`–`D5`)
+### Flujo de vinculación por dimensión analítica y norma técnica (`D1`–`D5`)
 
 ```mermaid
 flowchart TD
-    subgraph DIM["1. DIMENSIONES ANALÍTICAS DEL CORPUS (125 Obras)"]
-        D1["D1 · Teoría VGI y Ciencia Ciudadana<br/>Goodchild (2007), Haklay (2013), See et al. (2016)"]
-        D2["D2 · Calidad Espacial y Saturación VGI<br/>ISO 19157, Senaratne et al. (2017), Herfort et al. (2023)"]
-        D3["D3 · Econometría Espacial y Territorio<br/>Anselin (1995), Silverman (1986), Buzai (2014)"]
-        D4["D4 · Estándares OGC/ISO e IDE Chile<br/>ISO 19110/19115/19139, RFC 7946, SNIT"]
-        D5["D5 · Marco Legal y Regulatorio Chileno<br/>Ley 20.285, Ley 19.628, LGUC/OGUC, Ley REP 20.920"]
+    subgraph DIM["1. EJES TEMÁTICOS DEL CORPUS (125 Obras)"]
+        D1["D1 · Teoría IGV y Ciencia Ciudadana\nGoodchild (2007), Haklay (2013), See et al. (2016)"]
+        D2["D2 · Calidad Espacial ISO 19157\nISO 19157, Senaratne et al. (2017), Herfort et al. (2023)"]
+        D3["D3 · Econometría Espacial y Territorio\nAnselin (1995), Silverman (1986), Buzai (2014)"]
+        D4["D4 · Estándares OGC/ISO e IDE Chile\nISO 19115/19157, RFC 7946, SNIT"]
+        D5["D5 · Marco Legal y Regulatorio Chileno\nLey 20.285, Ley 19.628, LGUC/OGUC, Ley REP 20.920"]
     end
 
-    subgraph MOD["2. IMPLEMENTACIÓN EN MÓDULOS OPERATIVOS (01–10)"]
-        M_A["Módulos 01, 02 y 09<br/>Catálogo 134 Capas, Inspector PRC/OGUC,<br/>Overpass QL y 140 Descriptores ISO 19110"]
-        M_B["Módulos 05 y 06<br/>4 guiones visuales (83 Mapas: KDE, LISA, Censo, RSD)<br/>y Auditoría WLC v2.0 + ohsome + OSMCha"]
-        M_C["Módulos 07, 08 y 10<br/>Gobernanza ODbL/CC-BY, XML ISO 19139<br/>y Manual Interactivo + Geodatabase ZIP"]
+    subgraph MOD["2. IMPLEMENTACIÓN EN LOS 3 MÓDULOS DE LA PLATAFORMA"]
+        M_A["Módulo 01 · Análisis\n5 Dimensiones Analíticas y 4 Guiones Visuales\n(83 Cartografías: KDE, LISA, Censo 2024, RSD)"]
+        M_B["Módulo 02 · Explorar mapa\nCatálogo de 294 Capas (123 id_ig + 171 id_igv),\nInspector Normativo PRC/OGUC, Simbología Jenks y Detalles"]
+        M_C["Módulo 03 · Documentación\n6 Capítulos Navegables (DOC · 01 a DOC · 06),\nLicencias ODbL/CC-BY/Ley 20.285 y Geodatabase ZIP"]
     end
 
     subgraph ENT["3. RUTAS VERIFICABLES EN GIT Y PLATAFORMA WEB"]
-        R1["src/js/modulos/ide_chile.js (citaAPA por capa)<br/>src/js/modulos/indicadores_analisis.js"]
-        R2["docs/categorias_tematicas_osm.xlsx (src/docs/)<br/>docs/TRAZABILIDAD_ACADEMICA.md (src/docs/)"]
+        R1["src/js/modulos/ide_chile.js\nsrc/js/modulos/indicadores_analisis.js"]
+        R2["docs/categorias_tematicas_osm.xlsx (src/docs/)\ndocs/TRAZABILIDAD.md (src/docs/)"]
     end
 
-    D1 & D4 --> M_A --> R1 & R2
-    D2 & D3 --> M_B --> R1 & R2
+    D1 & D3 --> M_A --> R1 & R2
+    D2 & D4 --> M_B --> R1 & R2
     D5 --> M_C --> R2
 ```
 

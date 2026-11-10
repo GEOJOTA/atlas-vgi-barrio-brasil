@@ -1,96 +1,59 @@
-# Bitácora de continuidad, hoja de ruta y trazabilidad de entregas
-### Proyecto: Atlas de información geográfica voluntaria para la gestión territorial (`nodo-geoabierto`)
+# Bitácora de continuidad, hoja de ruta y trazabilidad de entregables verificados
+## Proyecto: Atlas para la Gestión Territorial (`nodo-geoabierto`)
+### Análisis y Exploración | Municipio de Santiago y Barrio Brasil
 
-* Plataforma Web en Producción: [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
-* Documentación Maestra Vinculada: [`MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md) · [`MANUAL_USO.md`](MANUAL_USO.md) · [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) · [`docs/ANALISIS_METACALIDAD.md`](docs/ANALISIS_METACALIDAD.md).
+* **Plataforma Web en Producción:** [https://atlasvgiuah.netlify.app](https://atlasvgiuah.netlify.app)
+* **Documentación Maestra Vinculada:** [`README.md`](README.md) · [`MANUAL_USO.md`](MANUAL_USO.md) · [`MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md) · [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) · [`docs/TRAZABILIDAD.md`](docs/TRAZABILIDAD.md).
 
 ---
 
-## 1. Flujo de procesamiento de evolución arquitectónica y mantenimiento continuo del Atlas VGI
+## 1. Flujo de trabajo de la arquitectura sintetizada y entregables verificados
 
 ```mermaid
 flowchart LR
-    subgraph FASE1["1. INPUT: Consolidación de Datos y Catálogos (Completado)"]
-        A1["134 Capas Operativas en data/ y src/data/<br/>(124 Oficiales del Estado + 10 VGI CAT-01 a CAT-10)"]
-        A2["140 Descriptores Normativos ISO 19110<br/>(54 con Homólogo Estatal + 86 Brechas VGI)"]
-        A3["125 Referencias Bibliográficas APA 7ª Ed.<br/>docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md"]
+    subgraph FASE1["1. DATOS Y TAXONOMÍA (Completado)"]
+        A1["294 Capas Cartográficas en data/ y src/data/\n(123 Oficiales id_ig + 171 IGV id_igv)"]
+        A2["5 Dimensiones Analíticas Transversales\ny Perfil de 17 Atributos ISO 19157"]
+        A3["125 Referencias Bibliográficas APA 7.ª Ed.\ndocs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md"]
     end
 
-    subgraph FASE2["2. PROCESAMIENTO: Motores Analíticos y Documentales (Completado)"]
-        B1["Módulos 01 al 10 en src/index.html<br/>21 Scripts JS ES6+ IIFE + Motor Geodésico EPSG:32719"]
-        B2["Módulo 05: 5 Dimensiones Analíticas y<br/>4 guiones visuales con 75 Cartografías Temáticas"]
-        B3["Módulo 06: Modelo WLC v2.0 (IGV 95,38 %) +<br/>Índice de Saturación y Maduración Territorial (ohsome)"]
-        B4["Módulo 01: Inspector Normativo PRC/OGUC (CIN-VGI)<br/>+ 10 Hitos Históricos PRC (1990-2024)"]
+    subgraph FASE2["2. PLATAFORMA EN 3 MÓDULOS (Completado)"]
+        B1["Cabecera Global: Tutorial Interactivo (14 pasos)\na la izquierda y Glosario de Siglas a la derecha"]
+        B2["Módulo 01 · Análisis: 5 Dimensiones Analíticas\ny 4 Guiones Visuales (83 Cartografías)"]
+        B3["Módulo 02 · Explorar mapa: Visor Cuadrado, 4 Mapas Base\n(OSM, HOT, Bing/Microsoft, Esri), PRC, Jenks y Detalles"]
+        B4["Módulo 03 · Documentación: 6 Capítulos Navegables\n(DOC · 01 a DOC · 06) en la plataforma"]
     end
 
-    subgraph FASE3["3. OUTPUT: Entregables Verificables y Continuidad Operativa"]
-        C1["Paquete Consolidado docs/geodatabase_completa_atlas_vgi.zip<br/>(542,35 MB / 257 archivos en 7 subcarpetas)"]
-        C2["3 Libros Excel (.xlsx) + Matrices WLC (.csv/.json)<br/>sincronizados en docs/ y src/docs/"]
-        C3["Despliegue Continuo en Netlify y GitHub Pages<br/>+ Keep-Alive PostGIS (.github/workflows/supabase_keepalive.yml)"]
+    subgraph FASE3["3. ENTREGABLES Y DESPLIEGUE CONTINUO"]
+        C1["Paquete Consolidado docs/geodatabase_completa_atlas_vgi.zip\n(542,35 MB) + 3 Libros Maestros .xlsx"]
+        C2["Publicación Instantánea en Netlify (publish = 'src')\ny Respaldo en GitHub Pages"]
     end
 
     A1 & A2 & A3 --> B1 & B2 & B3 & B4
-    B1 & B2 & B3 & B4 --> C1 & C2 & C3
+    B1 & B2 & B3 & B4 --> C1 & C2
 ```
 
 ---
 
-## 2. Estado consolidado de entregas técnicas (octubre 2026)
+## 2. Estado consolidado de los entregables verificados
 
-### 2.1. Estandarización integral de documentación, flujos de procesamiento y rutas verificables (octubre 2026)
-1. Alineación Precisa entre Plataforma Web, Repositorio Git y Documentación Técnica:
-   * Sincronización de métricas y rutas en todos los documentos del proyecto (`README.md`, `MANUAL_USO.md`, `MANUAL_ACTUALIZACION_ATLAS.md`, `docs/ARQUITECTURA.md`, `PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md`, `CONTRIBUTING.md`, `docs/GUIA_BASE_DATOS_SUPABASE.md`, `docs/ANALISIS_METACALIDAD.md`, `docs/TRAZABILIDAD_ACADEMICA.md` y `docs/BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md`) y sus réplicas en `docs/` y `src/docs/`.
-   * Integración de diagramas tipo flujo de procesamiento (`1. INPUT / ENTRADA` → `2. PIPELINE DE PROCESAMIENTO / MÓDULO` → `3. OUTPUT / RUTAS EN GIT Y PLATAFORMA WEB`) en toda la documentación técnica.
-   * Normalización de todas las expresiones matemáticas a bloques limpios en notación Unicode/ASCII, eliminando comandos LaTeX crudos para asegurar legibilidad directa en cualquier visor Markdown.
-2. Denominación Metodológica en el Módulo 06 (`ohsome.js`, `calidad_analyst.js` y `index.html`):
-   * Formalización del indicador histórico de completitud y actividad comunitaria bajo la denominación Índice de Saturación y Maduración Territorial (Herfort et al., 2023 / ISO 19157), ponderando la Asíntota de Completitud Geométrica (`60%`) y la Diversidad de Contribuyentes Activos (`40%`).
-3. Catálogo Estandarizado Multi-Lenguaje:
-   * Documentación sistemática de los archivos de la plataforma según su lenguaje (`HTML5`, `CSS3`, `21 scripts JavaScript ES6+ IIFE`, `SQL/PostGIS`, `Overpass QL`, `JSON/GeoJSON/TOML` y `25 scripts Python 3`), incorporada tanto en el Módulo 07 (`src/js/modulos/manual.js`) como en `MANUAL_ACTUALIZACION_ATLAS.md` y `docs/ARQUITECTURA.md`.
-
----
-
-### 2.2. Consolidación de las 134 Capas operativas, 4 Guiones visuales (75 Mapas) e inspector PRC
-1. Inventario de 134 Coberturas Geográficas (`124` Oficiales + `10` VGI):
-   * Integración del Censo de Población y Vivienda 2024 (INE) en 5 escalas territoriales (incluyendo `data/ide_censo2024_manzanas.geojson` con `1.711` manzanas y `216` variables para la comuna de Santiago).
-   * Integración de las 13 capas del Catastro Nacional de Residuos Sólidos Domiciliarios (SUBDERE RSD 2024) en `data/subdere_rsd_*.geojson` con diccionarios de columnas embebidos (`126` descriptores).
-   * Integración de las series comunales de Santiago (`bbdd_01_santiago.geojson` a `bbdd_91_santiago.geojson`), Registro Social de Hogares 2026 (`data/RSH_*_UV_2026_*.geojson`), Banco Integrado de Proyectos (`data/bip_inversiones_santiago.csv`), semáforos UOCT 2026 (`data/semaforos_rm_uoct_2026.geojson`), antenas SUBTEL (`data/subtel_antenas_rm_2026.geojson`) y ruido ambiental MMA (`data/mma_ruido_ambiental_santiago.geojson`).
-2. Articulación de los 4 guiones visuales Territoriales con 75 Cartografías Temáticas (`Módulo 05`):
-   * guion visual 01 (`11` mapas): Análisis de concentración espacial mediante Densidad de Kernel (`KDE`).
-   * guion visual 02 (`11` mapas): Autocorrelación espacial local bivariada (`LISA` / `I de Moran`).
-   * guion visual 03 (`29` mapas): Demografía y habitabilidad Censo 2024, vulnerabilidad RSH e inversión pública BIP.
-   * guion visual 04 (`24` mapas): Metabolismo urbano, socioambiente, movilidad sustentable y gestión de residuos SUBDERE RSD.
-3. Inspector Normativo Plan Regulador Comunal (PRC, véase el glosario)/Ordenanza General de Urbanismo y Construcciones (OGUC, véase el glosario) y Expediente Histórico (`1990–2024`) en el Módulo 01:
-   * Evaluación espacial *Point-in-Polygon* sobre la zonificación del Plan Regulador Comunal de Santiago, reglas de los Arts. 2.1.24 y 2.1.17 de la OGUC, protección patrimonial (`ZCH`, `ICH`, Monumentos Nacionales), línea de tiempo de las 10 modificaciones históricas al PRC en el Barrio Brasil (1990–2024) y descarga del Certificado Certificado de Informaciones Normativas VGI (CIN-VGI, véase el glosario) (`.txt`).
+1. **Prototipo sintetizado para usuarios no técnicos (`OE 3`):**
+   * Interfaz estructurada en **3 módulos principales** (`01 Análisis`, `02 Explorar mapa` y `03 Documentación`), acompañada en la cabecera por el **Tutorial interactivo de 14 pasos** (ubicado a la izquierda del título principal) y el **Glosario de siglas** (ubicado a la derecha del título principal, evitando cualquier superposición visual).
+2. **Catálogo unificado de 294 coberturas cartográficas (`OE 1` y `OE 2`):**
+   * **123 capas oficiales del Estado de Chile (`id_ig`)** provenientes de IDE Chile, INE (Censo 2024), MINVU, SUBDERE (Catastro RSD 2024), UOCT/MTT, SUBTEL, MDSF (RSH y BIP), CMN, SII y Municipalidad de Santiago.
+   * **171 coberturas descentralizadas de Información Geográfica Voluntaria (`id_igv`)** provenientes de OpenStreetMap y GBIF, agrupadas junto con las capas estatales en las **5 dimensiones analíticas**.
+   * **Perfil homologado de 17 atributos ISO 19115 / ISO 19157** embebido en cada entidad y consultable en el panel inferior de **Detalles** del Módulo 02.
+3. **Visor cartográfico cuadrado y mapas base sin clave API (`OE 3`):**
+   * Lienzo de proporción cuadrada amplia en el Módulo 02 con 4 mapas base abiertos (**OpenStreetMap Estándar**, **OpenStreetMap Humanitario (HOT)**, **Satélite Bing / Microsoft** y **Satélite Esri World Imagery**), motor de **Simbología dinámica** (cortes naturales de Jenks) e **Inspector normativo (PRC)** del Plan Regulador Comunal de Santiago.
+4. **Documentación navegable y transferibilidad (`OE 4`):**
+   * Documentación integrada en el **Módulo 03 (`Documentación`)** a través de 6 capítulos interactivos (`DOC · 01` a `DOC · 06`) y sincronizada con los archivos Markdown y catálogos Excel (`.xlsx`) del repositorio.
 
 ---
 
-## 3. Flujo de procesamiento de mantenimiento periódico y próximos ciclos de actualización
+## 3. Lista de verificación permanente para mantenedores
 
-```mermaid
-flowchart TD
-    subgraph TRIMESTRAL["Ciclo Trimestral: Actualización de Capas Colaborativas VGI"]
-        T1["Ejecutar python3 scripts/descargar_todas_las_categorias_osm.py<br/>Actualiza data/capa_*.geojson y src/data/capa_*.geojson"]
-        T2["Consultar curvas actualizadas en Módulo 06 (ohsome API v1/v2)<br/>y auditar changesets recientes en OSMCha"]
-    end
-
-    subgraph SEMESTRAL["Ciclo Semestral: Catastros Oficiales e Instrumentos Normativos"]
-        S1["Incorporar nuevas coberturas IDE Chile / Munistgo<br/>siguiendo el Protocolo de 6 Etapas (CONTRIBUTING.md)"]
-        S2["Actualizar enmiendas al PRC en HITOS_HISTORICOS_PRC_BRASIL<br/>(src/js/modulos/evaluador_normativo.js)"]
-    end
-
-    subgraph AUDITORIA["Validación Pre-Deploy y Empaquetado"]
-        V1["python3 scripts/verificar_conteo_capas.py<br/>python3 scripts/verificar_integridad_despliegue.py<br/>python3 scripts/analisis_metacalidad.py"]
-        V2["python3 scripts/generar_catalogos_excel.py<br/>python3 scripts/empaquetar_base_datos_completa.py<br/>git push origin main"]
-    end
-
-    T1 --> T2 --> V1
-    S1 --> S2 --> V1
-    V1 --> V2
-```
-
-### Lista de verificación permanente para mantenedores:
-* [x] Paridad de Capas (`134`): `124` capas oficiales en `src/js/modulos/ide_chile.js` + `10` macrocategorías VGI en `src/js/config.js`.
-* [x] Paridad de Descriptores (`140`): `54` con homólogo oficial en IDE Chile + `86` brechas VGI en `src/js/modulos/diccionario.js`.
-* [x] Paridad de guiones visuales (`4` ejes / `75` mapas): Cartografías PNG verificadas en `src/assets/mapas_storyboards/`.
-* [x] Paridad Simétrica de Directorios: `data/` ↔ `src/data/` y `docs/` ↔ `src/docs/` sin punteros Git LFS.
-* [x] Auditoría de MetaCalidad combinación lineal ponderada (WLC, véase el glosario) v2.0: Índice Global `IGV = 95,38%` (`Grado A+ Excelente`).
+* [x] **Paridad de Capas (`294`):** `123` capas oficiales (`id_ig`) + `171` coberturas descentralizadas de IGV (`id_igv`) verificadas con `python3 scripts/verificar_conteo_capas.py`.
+* [x] **Organización en 5 Dimensiones:** Coherencia entre el Módulo 01 (`Análisis`), el árbol de capas del Módulo 02 (`Explorar mapa`) y el catálogo filtrable `DOC · 05` del Módulo 03 (`Documentación`).
+* [x] **Mapas Base Operativos (`4`):** OpenStreetMap Estándar, OpenStreetMap Humanitario, Satélite Bing/Microsoft y Satélite Esri (sin mosaicos de Carto).
+* [x] **Paridad Simétrica de Directorios:** `data/` ↔ `src/data/` y `docs/` ↔ `src/docs/` sin punteros Git LFS.
+* [x] **Build Rápido en Netlify:** Auditorías ejecutadas en pre-commit local para mantener despliegues instantáneos en producción.

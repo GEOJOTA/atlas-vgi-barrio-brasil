@@ -193,7 +193,7 @@ const CONFIG_PREDETERMINADA = {
 window.NODO_CONFIG = JSON.parse(JSON.stringify(CONFIG_PREDETERMINADA));
 
 async function cargarConfiguracion() {
-  const version = '20261110_v60';
+  const version = '20261110_v61';
   const rutasPosibles = [
     `config/config.json?v=${version}`,
     `./config/config.json?v=${version}`,
