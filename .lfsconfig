@@ -1,0 +1,3 @@
+[lfs]
+	fetchinclude = src/data/**,src/docs/**
+	fetchexclude = data/**,docs/**,docs.zip
