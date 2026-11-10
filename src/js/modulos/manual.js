@@ -424,8 +424,8 @@ const ModuloManual = (() => {
                       <td>Al pasar de un análisis barrial detallado (cités, árboles, comercios) a una comparación comunal completa.</td>
                     </tr>
                     <tr>
-                      <td><strong>Delimitar área</strong><br><small>(Cálculo geodésico <code>EPSG:32719</code>)</small></td>
-                      <td>Permite dibujar un rectángulo o polígono sobre el mapa para medir su superficie y filtrar elementos. Internamente transforma las coordenadas geográficas (<code>EPSG:4326</code>) a coordenadas métricas planas <strong>SIRGAS-Chile / UTM Huso 19 Sur (<code>EPSG:32719</code>)</strong> mediante las ecuaciones de Redfearn, entregando el área exacta en metros cuadrados (m²) y hectáreas (ha).</td>
+                      <td><strong>Delimitar área</strong><br><small>(Cálculo métrico <code>EPSG:32719</code>)</small></td>
+                      <td>Permite dibujar un rectángulo o polígono sobre el mapa para medir su superficie y filtrar elementos. Transforma las coordenadas geográficas (<code>EPSG:4326</code>) al sistema métrico plano oficial de Chile <strong>SIRGAS-Chile / UTM Huso 19 Sur (<code>EPSG:32719</code>)</strong>, entregando el área en metros cuadrados (m²) y hectáreas (ha).</td>
                       <td>Cuando necesite medir la superficie de un sector de intervención, una plaza, un conjunto de manzanas o un polígono de estudio.</td>
                     </tr>
                     <tr>
@@ -691,47 +691,47 @@ const ModuloManual = (() => {
         id: 'cap-uso-06',
         numero: 'DOC · 06',
         icono: '⚙️',
-        titulo: 'Arquitectura del Sistema, Diagramas de Flujo y Manual Exhaustivo de Actualización Técnica',
-        subtitulo: 'Diseño interno del Prototipo 02 en 3 módulos, flujos de datos y motores algorítmicos, los 12 procedimientos paso a paso de actualización/replicabilidad y resolución de problemas.',
+        titulo: 'Arquitectura del Sistema, Flujo de Datos y Guía de Actualización del Atlas',
+        subtitulo: 'Diseño del Prototipo 02 en 3 módulos, flujo de integración de las 294 coberturas y criterios generales para mantener actualizada la plataforma.',
         html: `
           <div style="display:flex; flex-direction:column; gap:18px;">
             <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:18px;">
-              <h4 style="margin:0 0 8px 0; color:#38bdf8; font-size:1.05rem;">1. Arquitectura Modular de Tres Componentes Funcionales (Prototipo 02)</h4>
+              <h4 style="margin:0 0 8px 0; color:#38bdf8; font-size:1.05rem;">1. Estructura Modular de Tres Componentes Funcionales (Prototipo 02)</h4>
               <p style="margin:0 0 12px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.68;">
-                El <strong>Atlas para la Gestión Territorial</strong> está construido sobre una arquitectura web estática en <strong>HTML5 semántico, CSS3 adaptable y JavaScript modular (ES6+ con patrón IIFE)</strong> que funciona directamente en el navegador sin requerir compiladores complejos ni servidores propietarios. Esta decisión técnica permite que la plataforma cargue en pocos segundos, no sufra caídas por límites de tiempo de compilación (<em>timeout</em>) en Netlify y pueda ser mantenida o replicada con facilidad por equipos municipales, académicos o comunitarios:
+                El <strong>Atlas para la Gestión Territorial</strong> está construido sobre una estructura web estática en <strong>HTML5 semántico, CSS3 adaptable y JavaScript modular</strong> que funciona directamente en el navegador sin requerir instalaciones complejas ni servidores propietarios. Esta organización permite que la plataforma cargue con rapidez, opere de manera estable en producción y pueda ser consultada o mantenida con facilidad por equipos municipales, académicos o comunitarios:
               </p>
 
-              <!-- Diagrama Visual de Arquitectura de 4 Capas -->
+              <!-- Diagrama Visual de Arquitectura de 4 Etapas -->
               <div style="background:rgba(2,6,23,0.65); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:16px; margin-bottom:14px;">
                 <div style="font-size:0.78rem; font-weight:800; color:#38bdf8; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">
-                  📐 Diagrama de Arquitectura y Flujo de Datos del Prototipo 02 (Entrada → Procesamiento → Motores → Interfaz)
+                  📐 Flujo General de Datos del Prototipo 02 (Fuentes → Homologación → Herramientas del Visor → 3 Módulos)
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px; align-items:stretch;">
                   <div style="background:rgba(15,23,42,0.85); border-left:4px solid #34d399; border-radius:6px; padding:12px;">
-                    <div style="font-size:0.75rem; font-weight:800; color:#34d399;">1. ENTRADA · 294 FUENTES</div>
+                    <div style="font-size:0.75rem; font-weight:800; color:#34d399;">1. FUENTES · 294 CAPAS</div>
                     <p style="font-size:0.8rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.5;">
                       • <strong>123 Capas Oficiales (<code>id_ig</code>):</strong> IDE Chile, INE Censo 2024, MINVU PRC, RSH 2026, SUBDERE RSD, SII, CMN, MuniStgo.<br>
                       • <strong>171 Capas IGV (<code>id_igv</code>):</strong> OpenStreetMap (ODbL 1.0) y GBIF (52 especies).
                     </p>
                   </div>
                   <div style="background:rgba(15,23,42,0.85); border-left:4px solid #fbbf24; border-radius:6px; padding:12px;">
-                    <div style="font-size:0.75rem; font-weight:800; color:#fbbf24;">2. HOMOLOGACIÓN ETL (Python 3)</div>
+                    <div style="font-size:0.75rem; font-weight:800; color:#fbbf24;">2. HOMOLOGACIÓN DE DATOS</div>
                     <p style="font-size:0.8rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.5;">
-                      • Normalización a <code>EPSG:4326</code>.<br>
-                      • Inyección de los <strong>17 atributos ISO 19115 / 19157</strong> (<code>enriquecer_base_datos_metadatos.py</code>).<br>
-                      • Generación de 3 libros <code>.xlsx</code> y paquete <code>.zip</code> (542,35 MB).
+                      • Coordenadas en <code>EPSG:4326</code> y <code>EPSG:32719</code>.<br>
+                      • Estandarización de los <strong>17 atributos ISO 19115 / 19157</strong>.<br>
+                      • Organización en 3 libros <code>.xlsx</code> y paquete <code>.zip</code> (542,35 MB).
                     </p>
                   </div>
                   <div style="background:rgba(15,23,42,0.85); border-left:4px solid #c084fc; border-radius:6px; padding:12px;">
-                    <div style="font-size:0.75rem; font-weight:800; color:#c084fc;">3. MOTORES EN NAVEGADOR (JS)</div>
+                    <div style="font-size:0.75rem; font-weight:800; color:#c084fc;">3. FUNCIONES DEL VISOR</div>
                     <p style="font-size:0.8rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.5;">
-                      • <strong>Geodesia Redfearn:</strong> <code>EPSG:4326</code> ↔ <code>EPSG:32719</code> (UTM 19S).<br>
-                      • <strong>Simbología:</strong> Fisher-Jenks, Cuantiles, Intervalos.<br>
-                      • <strong>Inspector PRC:</strong> Intersección <em>Ray-Casting</em> bajo demanda.
+                      • <strong>Medición métrica:</strong> Superficies en <code>m²</code> y <code>ha</code>.<br>
+                      • <strong>Simbología:</strong> Jenks, Cuantiles e Intervalos.<br>
+                      • <strong>Inspector PRC:</strong> Consulta urbanística por predio.
                     </p>
                   </div>
                   <div style="background:rgba(15,23,42,0.85); border-left:4px solid #38bdf8; border-radius:6px; padding:12px;">
-                    <div style="font-size:0.75rem; font-weight:800; color:#38bdf8;">4. SALIDA · 3 MÓDULOS WEB</div>
+                    <div style="font-size:0.75rem; font-weight:800; color:#38bdf8;">4. NAVEGACIÓN · 3 MÓDULOS</div>
                     <p style="font-size:0.8rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.5;">
                       • <strong>Cabecera:</strong> Tutorial (18 pasos) + Glosario.<br>
                       • <strong>Módulo 01:</strong> 83 mapas (KDE/LISA) + 5 Dimensiones.<br>
@@ -749,7 +749,7 @@ const ModuloManual = (() => {
                       <th style="width:170px;">Componente</th>
                       <th style="width:155px;">Contenedor en <code>index.html</code></th>
                       <th style="width:220px;">Módulos JavaScript (<code>src/js/</code>)</th>
-                      <th>Responsabilidad técnica y funcional</th>
+                      <th>Función dentro de la plataforma</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -757,19 +757,19 @@ const ModuloManual = (() => {
                       <td><strong>Cabecera Transversal</strong></td>
                       <td><code>#cabecera-atlas</code></td>
                       <td><code>config.js</code>, <code>app.js</code>, <code>modulos/tutorial_interactivo.js</code></td>
-                      <td>Mantiene inmutable el título y subtítulo oficial y ubica en extremos opuestos el <strong>Tutorial Interactivo</strong> de 18 pasos en 4 bloques (a la izquierda del título) y el <strong>Glosario de siglas</strong> con buscador (a la derecha del título) para impedir cualquier superposición.</td>
+                      <td>Mantiene visible el título y subtítulo oficial y ubica en extremos opuestos el <strong>Tutorial Interactivo</strong> de 18 pasos en 4 bloques (a la izquierda del título) y el <strong>Glosario de siglas</strong> con buscador (a la derecha del título) para evitar cualquier superposición.</td>
                     </tr>
                     <tr>
                       <td><strong>Módulo 01 · Análisis</strong></td>
                       <td><code>#panel-indicadores</code></td>
                       <td><code>modulos/indicadores_analisis.js</code>, <code>modulos/catalogo_vgi_descentralizado.js</code></td>
-                      <td>Renderiza las 4 láminas geoestadísticas con las 83 cartografías (KDE, LISA, Demografía Censo 2024 y Metabolismo Urbano), las tarjetas de las 5 Dimensiones Analíticas y el acordeón buscador de las 294 coberturas con salto directo al visor.</td>
+                      <td>Presenta las 4 láminas geoestadísticas con las 83 cartografías (KDE, LISA, Demografía Censo 2024 y Metabolismo Urbano), las tarjetas de las 5 Dimensiones Analíticas y el acordeón buscador de las 294 coberturas con activación directa en el visor.</td>
                     </tr>
                     <tr>
                       <td><strong>Módulo 02 · Explorar Mapa</strong></td>
                       <td><code>#panel-inicio</code></td>
                       <td><code>modulos/mapa.js</code>, <code>modulos/ide_chile.js</code>, <code>modulos/simbologia_dinamica.js</code>, <code>modulos/evaluador_normativo.js</code>, <code>modulos/geodesia.js</code></td>
-                      <td>Gestiona el visor cuadrado Leaflet 1.9.4, los 5 mapas base sin API (OSM Estándar, OSM HOT, Bing/Microsoft Satelital e Híbrido vía QuadKey, Esri World Imagery), la barra superior centrada, la delimitación métrica UTM 19S, el Inspector PRC bajo demanda, la simbología Jenks y el panel inferior <strong>Detalles</strong> (17 atributos con <code>id_ig</code> / <code>id_igv</code>).</td>
+                      <td>Gestiona el visor cuadrado Leaflet 1.9.4, los 5 mapas base sin requerimiento de API (OpenStreetMap Estándar y HOT, Bing/Microsoft Satelital e Híbrido y Esri World Imagery), la barra superior centrada, la medición de áreas, el Inspector PRC bajo demanda, la simbología Jenks y el panel inferior <strong>Detalles</strong> (17 atributos con <code>id_ig</code> / <code>id_igv</code>).</td>
                     </tr>
                     <tr>
                       <td><strong>Módulo 03 · Documentación</strong></td>
@@ -782,133 +782,52 @@ const ModuloManual = (() => {
               </div>
             </div>
 
-            <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(52,211,153,0.35); border-radius:10px; padding:18px;">
-              <h4 style="margin:0 0 8px 0; color:#34d399; font-size:1.05rem;">2. Motores Matemáticos y Algorítmicos en el Navegador (Explicación Clara)</h4>
-              <p style="margin:0 0 12px 0; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
-                Para no depender de servidores externos lentos, el Prototipo 02 ejecuta cuatro motores matemáticos directamente en el navegador del usuario:
-              </p>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
-                <div style="background:rgba(2,6,23,0.55); border:1px solid rgba(56,189,248,0.25); border-radius:8px; padding:14px;">
-                  <strong style="color:#38bdf8; font-size:0.88rem;">🌐 A. Transformación Geodésica Redfearn y Áreas de Gauss (<code>geodesia.js</code>)</strong>
-                  <p style="font-size:0.82rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.58;">
-                    Los archivos GeoJSON se guardan en grados de latitud y longitud (<code>EPSG:4326</code>). Cuando usted usa <strong>Delimitar área</strong>, el motor aplica las ecuaciones de Redfearn sobre el elipsoide GRS80/WGS84 (meridiano central -69°, factor de escala 0,9996) para proyectar los vértices a metros planos en <strong>SIRGAS-Chile / UTM Huso 19 Sur (<code>EPSG:32719</code>)</strong> y calcula la superficie exacta en <code>m²</code> y <code>ha</code> mediante la fórmula del agrimensor de Gauss.
-                  </p>
-                </div>
-                <div style="background:rgba(2,6,23,0.55); border:1px solid rgba(52,211,153,0.25); border-radius:8px; padding:14px;">
-                  <strong style="color:#34d399; font-size:0.88rem;">📊 B. Programación Dinámica de Fisher-Jenks (<code>simbologia_dinamica.js</code>)</strong>
-                  <p style="font-size:0.82rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.58;">
-                    Al clasificar una capa por un atributo numérico, el algoritmo de <strong>Cortes Naturales de Jenks</strong> ordena los valores y evalúa matrices de varianza para encontrar los cortes ($3 \\le k \\le 7$) que minimizan las diferencias dentro de cada grupo y maximizan el contraste entre grupos distintos, complementado por Cuantiles, Intervalos Iguales y Desviación Estándar.
-                  </p>
-                </div>
-                <div style="background:rgba(2,6,23,0.55); border:1px solid rgba(245,158,11,0.25); border-radius:8px; padding:14px;">
-                  <strong style="color:#fbbf24; font-size:0.88rem;">🏛️ C. Intersección Punto en Polígono Ray-Casting (<code>evaluador_normativo.js</code>)</strong>
-                  <p style="font-size:0.82rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.58;">
-                    Cuando el usuario activa el <strong>Inspector normativo (PRC)</strong> y hace clic en un predio, se traza un rayo horizontal desde las coordenadas del clic y se cuenta la paridad de intersecciones con los anillos de los polígonos de zonificación del PRC de Santiago y de conservación histórica (<code>ZCH</code>/<code>ICH</code>/CMN), generando al instante el Certificado de Informaciones Normativas.
-                  </p>
-                </div>
-                <div style="background:rgba(2,6,23,0.55); border:1px solid rgba(168,85,247,0.25); border-radius:8px; padding:14px;">
-                  <strong style="color:#c084fc; font-size:0.88rem;">🛰️ D. Codificación de Teselas Satelitales QuadKey (<code>mapa.js</code>)</strong>
-                  <p style="font-size:0.82rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.58;">
-                    Para ofrecer las imágenes satelitales e híbridas de <strong>Bing / Microsoft</strong> sin requerir claves de API, el visor convierte en tiempo real las coordenadas de celda $(x, y, z)$ de Leaflet al código jerárquico en base 4 (<em>QuadKey</em>) que utilizan los servidores de Microsoft VirtualEarth.
-                  </p>
-                </div>
-              </div>
-            </div>
-
             <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(245,158,11,0.35); border-radius:10px; padding:18px;">
-              <h4 style="margin:0 0 8px 0; color:#fbbf24; font-size:1.05rem;">3. Recetario Exhaustivo de Actualización y Mantenimiento (12 Procedimientos Paso a Paso)</h4>
+              <h4 style="margin:0 0 8px 0; color:#fbbf24; font-size:1.05rem;">2. Criterios Generales para la Actualización y Mantención del Atlas</h4>
               <p style="margin:0 0 12px 0; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
-                A continuación se resumen los <strong>12 procedimientos operativos</strong> documentados en detalle en el <em>Manual de Actualización Técnica</em> para mantener, ampliar o replicar el Atlas:
+                Para mantener actualizadas las coberturas espaciales, las cartografías temáticas y los documentos del <strong>Prototipo 02</strong>, el proyecto contempla cuatro pasos ordenados y verificables:
               </p>
               <div style="overflow-x:auto;">
-                <table class="tabla-datos" style="width:100%; font-size:0.83rem; min-width:700px;">
+                <table class="tabla-datos" style="width:100%; font-size:0.83rem; min-width:680px;">
                   <thead>
                     <tr>
-                      <th style="width:65px;">Proc.</th>
-                      <th style="width:220px;">Tarea de Actualización o Mantención</th>
-                      <th style="width:210px;">Archivos o Scripts Involucrados</th>
-                      <th>Pasos Clave a Ejecutar</th>
+                      <th style="width:75px;">Etapa</th>
+                      <th style="width:230px;">Actividad de Actualización</th>
+                      <th style="width:210px;">Ubicación en el Repositorio</th>
+                      <th>Descripción Clara del Proceso</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><strong>P-01</strong></td>
-                      <td><strong>Incorporar o actualizar una capa oficial del Estado (<code>id_ig</code>)</strong></td>
-                      <td><code>data/</code>, <code>src/data/</code>, <code>src/js/modulos/ide_chile.js</code></td>
-                      <td>Exportar GeoJSON en <code>EPSG:4326</code> (UTF-8), copiar en <code>data/</code> y <code>src/data/</code>, registrar en <code>CAPAS_OFICIALES</code> asignada a una de las 5 dimensiones y correr <code>enriquecer_base_datos_metadatos.py</code>.</td>
+                      <td><strong>Paso 01</strong></td>
+                      <td><strong>Incorporación o actualización de coberturas GeoJSON</strong></td>
+                      <td><code>data/</code> y <code>src/data/</code><br><code>ide_chile.js</code> / <code>catalogo_vgi_descentralizado.js</code></td>
+                      <td>Guardar el archivo <code>.geojson</code> en coordenadas <code>EPSG:4326</code> (codificación UTF-8) tanto en <code>data/</code> como en <code>src/data/</code>, registrarlo en una de las <strong>5 Dimensiones Analíticas</strong> y completar sus <strong>17 atributos homologados</strong> (<code>id_ig</code> para fuentes estatales o <code>id_igv</code> para fuentes colaborativas de IGV).</td>
                     </tr>
                     <tr>
-                      <td><strong>P-02</strong></td>
-                      <td><strong>Incorporar o actualizar una capa colaborativa de IGV (<code>id_igv</code>)</strong></td>
-                      <td><code>scripts/descargar_todas_las_categorias_osm.py</code>, <code>catalogo_vgi_descentralizado.js</code></td>
-                      <td>Extraer o copiar <code>data/capa_*.geojson</code> en <code>data/</code> y <code>src/data/</code>, registrar en <code>CATALOGO_VGI_DESCENTRALIZADO</code> con nombre en español y adscribir a su dimensión analítica.</td>
+                      <td><strong>Paso 02</strong></td>
+                      <td><strong>Actualización de cartografías temáticas o reglas normativas PRC</strong></td>
+                      <td><code>src/img/cartografias/</code><br><code>indicadores_analisis.js</code> / <code>evaluador_normativo.js</code></td>
+                      <td>Las láminas del <strong>Módulo 01</strong> se actualizan incorporando las imágenes <code>.jpg</code> en <code>src/img/cartografias/</code> y su descripción en <code>indicadores_analisis.js</code>. Las reglas urbanísticas del <strong>Módulo 02</strong> se actualizan en el diccionario de zonas del Plan Regulador en <code>evaluador_normativo.js</code>.</td>
                     </tr>
                     <tr>
-                      <td><strong>P-03</strong></td>
-                      <td><strong>Inyectar el perfil homologado de 17 atributos ISO 19157</strong></td>
-                      <td><code>scripts/enriquecer_base_datos_metadatos.py</code></td>
-                      <td>Ejecutar <code>python3 scripts/enriquecer_base_datos_metadatos.py</code> para garantizar que cada entidad tenga sus 17 atributos encabezados por <code>id_ig</code> o <code>id_igv</code> en el panel <strong>Detalles</strong>.</td>
+                      <td><strong>Paso 03</strong></td>
+                      <td><strong>Sincronización de catálogos Excel, paquete ZIP y manuales</strong></td>
+                      <td><code>docs/</code> y <code>src/docs/</code><br><code>src/js/modulos/manual.js</code></td>
+                      <td>Mantener sincronizados los archivos de documentación (<code>MANUAL_USO.md</code>, <code>MANUAL_ACTUALIZACION_ATLAS.md</code>, <code>ARQUITECTURA.md</code> y <code>TRAZABILIDAD.md</code>), los 3 libros Excel (<code>.xlsx</code>) y el paquete descargable <code>geodatabase_completa_atlas_vgi.zip</code> con los 6 capítulos de este módulo.</td>
                     </tr>
                     <tr>
-                      <td><strong>P-04</strong></td>
-                      <td><strong>Configurar o añadir un mapa base sin clave de API</strong></td>
-                      <td><code>src/js/modulos/mapa.js</code>, <code>src/index.html</code></td>
-                      <td>Mantener los 5 mapas base libres (OSM Estándar, OSM HOT, Bing Satelital, Bing Híbrido y Esri World Imagery) y declarar siempre su atribución en el pie de página.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>P-05</strong></td>
-                      <td><strong>Modificar el Tutorial Interactivo (18 pasos) o el Glosario</strong></td>
-                      <td><code>src/js/modulos/tutorial_interactivo.js</code>, <code>src/index.html</code></td>
-                      <td>Editar <code>PASOS_TUTORIAL</code> asegurando que el primer paso de cada bloque presente al módulo antes que sus controles; editar <code>#modal-glosario-siglas</code> para nuevas siglas.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>P-06</strong></td>
-                      <td><strong>Actualizar polígonos o reglas del Inspector Normativo (PRC)</strong></td>
-                      <td><code>ide_minvu_ipt_prc_santiago.geojson</code>, <code>evaluador_normativo.js</code></td>
-                      <td>Actualizar geometrías en <code>data/</code> y <code>src/data/</code> y ajustar alturas máximas, constructibilidad y usos permitidos en <code>REGLAS_ZONAS_PRC</code> e <code>HITOS_HISTORICOS_PRC_BRASIL</code>.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>P-07</strong></td>
-                      <td><strong>Agregar nuevas cartografías (<code>.jpg</code>) en el Módulo 01</strong></td>
-                      <td><code>src/img/cartografias/</code>, <code>indicadores_analisis.js</code></td>
-                      <td>Guardar la imagen en <code>src/img/cartografias/</code> y añadir su ficha descriptiva dentro de la lámina correspondiente en <code>STORYBOARDS_GEOESTADISTICOS</code>.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>P-08</strong></td>
-                      <td><strong>Personalizar clasificaciones y paletas en Simbología Dinámica</strong></td>
-                      <td><code>src/js/modulos/simbologia_dinamica.js</code></td>
-                      <td>Ajustar las rampas cromáticas en <code>PALETAS_CROMATICAS</code> o los métodos estadísticos (Jenks, Cuantiles, Intervalos Iguales, Desviación Estándar, Categorizado).</td>
-                    </tr>
-                    <tr>
-                      <td><strong>P-09</strong></td>
-                      <td><strong>Actualizar los 6 capítulos del Módulo 03 y sincronizar Markdown</strong></td>
-                      <td><code>src/js/modulos/manual.js</code>, <code>src/docs/*.md</code>, <code>docs/*.md</code></td>
-                      <td>Editar el capítulo en <code>manual.js</code> y copiar simétricamente los archivos Markdown actualizados entre <code>src/docs/</code>, <code>docs/</code> y la raíz del repositorio.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>P-10</strong></td>
-                      <td><strong>Regenerar los 3 libros Excel (<code>.xlsx</code>) y el paquete <code>.zip</code></strong></td>
-                      <td><code>generar_catalogos_excel.py</code>, <code>empaquetar_base_datos_completa.py</code></td>
-                      <td>Ejecutar ambos scripts en Python 3 para actualizar los 3 catálogos OpenXML y el archivo <code>geodatabase_completa_atlas_vgi.zip</code> (542,35 MB).</td>
-                    </tr>
-                    <tr>
-                      <td><strong>P-11</strong></td>
-                      <td><strong>Adaptar y replicar el Atlas en otra comuna o barrio</strong></td>
-                      <td><code>src/js/config.js</code>, <code>geodesia.js</code>, <code>ide_chile.js</code></td>
-                      <td>Cambiar <code>bbox</code>, centroides y título en <code>config.js</code>, ajustar huso UTM en <code>geodesia.js</code> si corresponde, extraer capas IGV del nuevo territorio y cargar su PRC local.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>P-12</strong></td>
-                      <td><strong>Auditoría pre-despliegue, versión <code>?v=...</code> y subida sin timeout</strong></td>
-                      <td><code>verificar_conteo_capas.py</code>, <code>verificar_integridad_despliegue.py</code>, <code>netlify.toml</code></td>
-                      <td>Ejecutar las auditorías en local antes del commit, incrementar <code>?v=YYYYMMDD_vNN</code> en <code>index.html</code> y <code>config.js</code>, y publicar con <code>git push</code> (despliegue en &lt;30 s en Netlify).</td>
+                      <td><strong>Paso 04</strong></td>
+                      <td><strong>Verificación de las 294 capas y publicación web</strong></td>
+                      <td><code>scripts/verificar_conteo_capas.py</code><br><code>src/index.html</code> y <code>netlify.toml</code></td>
+                      <td>Comprobar que las 294 capas (123 oficiales + 171 IGV) estén completas, actualizar el identificador de versión en <code>src/index.html</code> y <code>src/js/config.js</code> y publicar los cambios hacia el repositorio principal en producción.</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
               <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-                <a href="docs/MANUAL_ACTUALIZACION_ATLAS.md" download="MANUAL_ACTUALIZACION_ATLAS.md" class="accion" style="font-size:0.82rem; padding:7px 14px;">⬇️ Descargar Manual Exhaustivo de Actualización (.md)</a>
+                <a href="docs/MANUAL_ACTUALIZACION_ATLAS.md" download="MANUAL_ACTUALIZACION_ATLAS.md" class="accion" style="font-size:0.82rem; padding:7px 14px;">⬇️ Descargar Manual de Actualización (.md)</a>
                 <a href="docs/ARQUITECTURA.md" download="ARQUITECTURA_ATLAS.md" class="accion secundaria" style="font-size:0.82rem; padding:7px 14px;">⬇️ Descargar Documento de Arquitectura (.md)</a>
                 <a href="docs/TRAZABILIDAD.md" download="TRAZABILIDAD_ATLAS.md" class="accion secundaria" style="font-size:0.82rem; padding:7px 14px;">⬇️ Descargar Documento de Trazabilidad (.md)</a>
                 <a href="docs/PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md" download="PROTOCOL_INTEGRIDAD_Y_DESPLIEGUE.md" class="accion secundaria" style="font-size:0.82rem; padding:7px 14px;">⬇️ Protocolo de Integridad y Despliegue (.md)</a>

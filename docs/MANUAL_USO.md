@@ -148,7 +148,7 @@ En la esquina del visor (o en el selector de mapa base) puede elegir en cualquie
 | :---: | :--- | :--- | :--- |
 | `01` | **OpenStreetMap Estándar** *(Predeterminado)* | OpenStreetMap Foundation | Lectura detallada de nombres de calles, sentido de circulación vehicular, numeración predial, pasajes, plazas y comercio de barrio. |
 | `02` | **OpenStreetMap Humanitario (HOT)** | Humanitarian OpenStreetMap Team | Ofrece un fondo claro y de tonos suaves que hace resaltar con gran nitidez los colores de las capas temáticas superpuestas y los servicios de emergencia o salud. |
-| `03` | **Imagen Satelital (Bing / Microsoft)** | Microsoft VirtualEarth (QuadKey) | Fotografía aérea y satelital de alta resolución para observar techumbres, patios interiores de cités, estacionamientos, sitios eriazos y copas reales de árboles. |
+| `03` | **Imagen Satelital (Bing / Microsoft)** | Microsoft VirtualEarth | Fotografía aérea y satelital de alta resolución para observar techumbres, patios interiores de cités, estacionamientos, sitios eriazos y copas reales de árboles. |
 | `04` | **Satelital Híbrido con Calles (Bing / Microsoft)** | Microsoft VirtualEarth | Combina la imagen satelital de alta resolución de Bing/Microsoft con los nombres de las calles y avenidas superpuestos en español para no perder la orientación. |
 | `05` | **Imagen Satelital (Esri World Imagery)** | Esri / Maxar / Earthstar Geographics | Mosaico satelital alternativo de alta definición, muy útil para comparar el estado de las edificaciones y áreas verdes entre distintas tomas satelitales. |
 
@@ -214,7 +214,7 @@ El **Módulo 03 · Documentación** (`#panel-manual`) integra dentro de la misma
 | **`DOC · 03`** | **Guía en Profundidad del Módulo 02 (Explorar Mapa)** | Detalla cada botón de la barra superior, las características de los **5 mapas base sin API**, los métodos de clasificación de la **Simbología Dinámica (Jenks, Cuantiles, Intervalos)** y el diccionario completo de los **17 atributos homologados (`id_ig` / `id_igv`)** del panel **Detalles**. |
 | **`DOC · 04`** | **Licencias Abiertas, Descarga de Geodatabase (.zip) y Catálogos en Excel** | Permite descargar con un clic el paquete completo `geodatabase_completa_atlas_vgi.zip` (`542,35 MB`), los 3 libros maestros en formato Excel (`categorias_tematicas_osm.xlsx`, `perfil_metadatos_vgi.xlsx` y `catalogo_fuentes_vgi.xlsx`), la bibliografía APA 7ª ed., y explica qué permite hacer cada licencia abierta (`CC BY 4.0`, `ODbL 1.0`, `Ley N.° 20.285` y `GNU AGPLv3`). |
 | **`DOC · 05`** | **Inventario General Filtrable de las 294 Coberturas** | Tabla interactiva con filtro en vivo donde se listan las **123 capas oficiales (`id_ig`)** y las **171 capas colaborativas de IGV (`id_igv`)**, indicando su código, archivo `.geojson`, organismo o comunidad custodia y descripción temática. |
-| **`DOC · 06`** | **Arquitectura del Sistema, Diagramas de Flujo y Manual Exhaustivo de Actualización Técnica** | Describe cómo están programados los 3 módulos del Atlas, cómo fluyen los datos desde las fuentes hasta el navegador y ofrece los 12 procedimientos paso a paso para agregar nuevas capas, actualizar el Plan Regulador o adaptar el Atlas a otra comuna. |
+| **`DOC · 06`** | **Arquitectura del Sistema, Flujo de Datos y Guía de Actualización del Atlas** | Describe cómo están organizados los 3 módulos del Atlas, cómo fluyen los datos desde las fuentes hasta el navegador y resume los criterios generales para mantener actualizada la plataforma. |
 
 ```mermaid
 flowchart LR
@@ -225,7 +225,7 @@ flowchart LR
     C3["DOC · 03\nGuía Módulo 02:\n5 Mapas Base, Jenks,\nPRC y 17 Atributos"]
     C4["DOC · 04\nLicencias Abiertas,\n3 Libros Excel (.xlsx) y\nGeodatabase (.zip 542 MB)"]
     C5["DOC · 05\nInventario Filtrable de\nlas 294 Capas\n(123 id_ig + 171 id_igv)"]
-    C6["DOC · 06\nArquitectura, Flujos y\n12 Procedimientos de\nActualización Técnica"]
+    C6["DOC · 06\nArquitectura, Flujos y\nGuía de Actualización"]
 
     M03 --> C1 & C2 & C3 & C4 & C5 & C6
 ```

@@ -89,11 +89,11 @@ flowchart TD
 
 ---
 
-## 4. Convenciones de código y estilo documental
+## 4. Convenciones de organización y estilo documental
 
-1. **JavaScript ES6+ Modular (IIFE):**
-   * Mantener el encapsulamiento mediante funciones inmediatamente invocadas (`const ModuloX = (() => { ... return { ... }; })();`).
-   * Manejar siempre posibles errores de red en peticiones `fetch()` implementando bloques `try / catch` con lectura desde `src/data/`.
+1. **JavaScript Modular:**
+   * Mantener cada componente funcional separado en su archivo correspondiente dentro de `src/js/modulos/`.
+   * Manejar posibles errores de red en peticiones de carga de capas leyendo desde `src/data/`.
 2. **Coherencia terminológica en español:**
    * Utilizar el título oficial único **Atlas para la Gestión Territorial** y el subtítulo **Análisis y Exploración | Municipio de Santiago y Barrio Brasil**.
    * Emplear la sigla en español **IGV** (Información Geográfica Voluntaria) para referirse a las 171 coberturas colaborativas descentralizadas (`id_igv`) e **IG** para las 123 coberturas oficiales del Estado (`id_ig`).
