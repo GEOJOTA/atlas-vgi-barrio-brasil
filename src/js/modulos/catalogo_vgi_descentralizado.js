@@ -25,9 +25,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINEDUC / CRUCH",
     "archivoLocal": "data/capa_vgi_campus_universitario.geojson",
     "icono": "🎓",
-    "geometria": "Puntos",
-    "totalEntidades": 186,
-    "descripcion": "Catastro colaborativo VGI de campus universitario levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 222,
+    "descripcion": "Catastro colaborativo IGV de Campus Universitario (OpenStreetMap (Geofabrik + Overpass RM)): 222 entidades en la Región Metropolitana (56 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -40,9 +40,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINEDUC / Subsecretaría de Educación Superior",
     "archivoLocal": "data/capa_vgi_instituto_profesional_ip.geojson",
     "icono": "🏫",
-    "geometria": "Puntos",
-    "totalEntidades": 46,
-    "descripcion": "Catastro colaborativo VGI de instituto profesional (ip) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 106,
+    "descripcion": "Catastro colaborativo IGV de Instituto Profesional (IP) (OpenStreetMap (Geofabrik + Overpass RM)): 106 entidades en la Región Metropolitana (15 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -55,9 +55,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINEDUC / SLEP Santiago",
     "archivoLocal": "data/capa_vgi_colegio.geojson",
     "icono": "🎒",
-    "geometria": "Puntos",
-    "totalEntidades": 869,
-    "descripcion": "Catastro colaborativo VGI de colegio levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 3544,
+    "descripcion": "Catastro colaborativo IGV de Colegio (OpenStreetMap (Geofabrik + Overpass RM)): 3.544 entidades en la Región Metropolitana (64 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -71,8 +71,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_jardin_infantil.geojson",
     "icono": "🧸",
     "geometria": "Puntos",
-    "totalEntidades": 400,
-    "descripcion": "Catastro colaborativo VGI de jardín infantil levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 1328,
+    "descripcion": "Catastro colaborativo IGV de Jardín Infantil (OpenStreetMap (Geofabrik + Overpass RM)): 1.328 entidades en la Región Metropolitana (14 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -86,8 +86,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_biblioteca_publica_o_universitaria.geojson",
     "icono": "📚",
     "geometria": "Puntos",
-    "totalEntidades": 71,
-    "descripcion": "Catastro colaborativo VGI de biblioteca pública o universitaria levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 124,
+    "descripcion": "Catastro colaborativo IGV de Biblioteca Pública o Universitaria (OpenStreetMap (Geofabrik + Overpass RM)): 124 entidades en la Región Metropolitana (7 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -100,9 +100,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINEDUC / Instituciones Universitarias",
     "archivoLocal": "data/capa_vgi_residencia_universitaria.geojson",
     "icono": "👥",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de residencia universitaria levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 1,
+    "descripcion": "Catastro colaborativo IGV de Residencia Universitaria (OpenStreetMap (Geofabrik + Overpass RM)): 1 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -116,8 +116,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_centro_de_investigacion.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de centro de investigación levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 61,
+    "descripcion": "Catastro colaborativo IGV de Centro de Investigación (OpenStreetMap (Geofabrik + Overpass RM)): 61 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -130,9 +130,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINCAP / MINEDUC",
     "archivoLocal": "data/capa_vgi_conservatorio.geojson",
     "icono": "🎒",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de conservatorio levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 5,
+    "descripcion": "Catastro colaborativo IGV de Conservatorio (OpenStreetMap (Geofabrik + Overpass RM)): 5 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -145,9 +145,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINSAL / FONASA (Modelo Salud Familiar)",
     "archivoLocal": "data/capa_vgi_cesfam.geojson",
     "icono": "🩺",
-    "geometria": "Puntos",
-    "totalEntidades": 207,
-    "descripcion": "Catastro colaborativo VGI de cesfam levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 472,
+    "descripcion": "Catastro colaborativo IGV de CESFAM (OpenStreetMap (Geofabrik + Overpass RM)): 472 entidades en la Región Metropolitana (7 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -160,9 +160,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINSAL / Red Asistencial Pública",
     "archivoLocal": "data/capa_vgi_hospital_publico.geojson",
     "icono": "🏥",
-    "geometria": "Puntos",
-    "totalEntidades": 36,
-    "descripcion": "Catastro colaborativo VGI de hospital público levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 73,
+    "descripcion": "Catastro colaborativo IGV de Hospital Público (OpenStreetMap (Geofabrik + Overpass RM)): 73 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -176,8 +176,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_farmacia_de_barrio.geojson",
     "icono": "💊",
     "geometria": "Puntos",
-    "totalEntidades": 671,
-    "descripcion": "Catastro colaborativo VGI de farmacia de barrio levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 1309,
+    "descripcion": "Catastro colaborativo IGV de Farmacia de Barrio (OpenStreetMap (Geofabrik + Overpass RM)): 1.309 entidades en la Región Metropolitana (25 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -191,8 +191,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_consulta_odontologica.geojson",
     "icono": "🦷",
     "geometria": "Puntos",
-    "totalEntidades": 127,
-    "descripcion": "Catastro colaborativo VGI de consulta odontológica levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 298,
+    "descripcion": "Catastro colaborativo IGV de Consulta Odontológica (OpenStreetMap (Geofabrik + Overpass RM)): 298 entidades en la Región Metropolitana (4 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -206,8 +206,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_clinica_veterinaria.geojson",
     "icono": "🐾",
     "geometria": "Puntos",
-    "totalEntidades": 3,
-    "descripcion": "Catastro colaborativo VGI de clínica veterinaria levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 332,
+    "descripcion": "Catastro colaborativo IGV de Clínica Veterinaria (OpenStreetMap (Geofabrik + Overpass RM)): 332 entidades en la Región Metropolitana (7 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -220,9 +220,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINSAL / SAMU Metropolitano",
     "archivoLocal": "data/capa_vgi_base_de_ambulancias_samu_131.geojson",
     "icono": "🚇",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de base de ambulancias samu (131) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 10,
+    "descripcion": "Catastro colaborativo IGV de Base de Ambulancias SAMU (131) (OpenStreetMap (Geofabrik + Overpass RM)): 10 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -236,8 +236,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_desfibrilador_externo_automatico_dea.geojson",
     "icono": "🏥",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de desfibrilador externo automático (dea) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 49,
+    "descripcion": "Catastro colaborativo IGV de Desfibrilador Externo Automático (DEA) (OpenStreetMap (Geofabrik + Overpass RM)): 49 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -251,8 +251,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_grifo_de_incendio_urbano.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de grifo de incendio urbano levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 2652,
+    "descripcion": "Catastro colaborativo IGV de Grifo de Incendio Urbano (OpenStreetMap (Geofabrik + Overpass RM)): 2.652 entidades en la Región Metropolitana (51 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -266,8 +266,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_comisaria_de_carabineros.geojson",
     "icono": "👮",
     "geometria": "Puntos",
-    "totalEntidades": 66,
-    "descripcion": "Catastro colaborativo VGI de comisaría de carabineros levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 174,
+    "descripcion": "Catastro colaborativo IGV de Comisaría de Carabineros (OpenStreetMap (Geofabrik + Overpass RM)): 174 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -280,9 +280,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Junta Nacional de Cuerpos de Bomberos (Ley 20.564)",
     "archivoLocal": "data/capa_vgi_compania_del_cuerpo_de_bomberos_de_chile.geojson",
     "icono": "🚒",
-    "geometria": "Puntos",
-    "totalEntidades": 53,
-    "descripcion": "Catastro colaborativo VGI de compañía del cuerpo de bomberos de chile levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 193,
+    "descripcion": "Catastro colaborativo IGV de Compañía del Cuerpo de Bomberos de Chile (OpenStreetMap (Geofabrik + Overpass RM)): 193 entidades en la Región Metropolitana (4 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -296,8 +296,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_camara_de_televigilancia_municipal.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 1,
-    "descripcion": "Catastro colaborativo VGI de cámara de televigilancia municipal levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 847,
+    "descripcion": "Catastro colaborativo IGV de Cámara de Televigilancia Municipal (OpenStreetMap (Geofabrik + Overpass RM)): 847 entidades en la Región Metropolitana (21 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -310,9 +310,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "SUBDERE / Municipalidad de Santiago",
     "archivoLocal": "data/capa_vgi_municipalidad.geojson",
     "icono": "🏪",
-    "geometria": "Puntos",
-    "totalEntidades": 25,
-    "descripcion": "Catastro colaborativo VGI de municipalidad levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 65,
+    "descripcion": "Catastro colaborativo IGV de Municipalidad (OpenStreetMap (Geofabrik + Overpass RM)): 65 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -326,8 +326,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_oficina_publica_estatal_registro_civil_sii_chileatiende.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 17,
-    "descripcion": "Catastro colaborativo VGI de oficina pública estatal (registro civil, sii, chileatiende) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 530,
+    "descripcion": "Catastro colaborativo IGV de Oficina Pública Estatal (Registro Civil. SII. ChileAtiende) (OpenStreetMap (Geofabrik + Overpass RM)): 530 entidades en la Región Metropolitana (19 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -340,9 +340,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "SUBDERE / Municipalidad de Santiago",
     "archivoLocal": "data/capa_vgi_sede_social.geojson",
     "icono": "🤝",
-    "geometria": "Puntos",
-    "totalEntidades": 85,
-    "descripcion": "Catastro colaborativo VGI de sede social levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 262,
+    "descripcion": "Catastro colaborativo IGV de Sede Social (OpenStreetMap (Geofabrik + Overpass RM)): 262 entidades en la Región Metropolitana (8 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -356,8 +356,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_sucursal_postal_correoschile_chilexpress_starken.geojson",
     "icono": "📮",
     "geometria": "Puntos",
-    "totalEntidades": 98,
-    "descripcion": "Catastro colaborativo VGI de sucursal postal (correoschile, chilexpress, starken) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 202,
+    "descripcion": "Catastro colaborativo IGV de Sucursal Postal (CorreosChile. Chilexpress. Starken) (OpenStreetMap (Geofabrik + Overpass RM)): 202 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -371,8 +371,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_panaderia.geojson",
     "icono": "🥖",
     "geometria": "Puntos",
-    "totalEntidades": 12,
-    "descripcion": "Catastro colaborativo VGI de panadería levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 739,
+    "descripcion": "Catastro colaborativo IGV de Panadería (OpenStreetMap (Geofabrik + Overpass RM)): 739 entidades en la Región Metropolitana (15 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -386,8 +386,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_almacen_de_barrio.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 40,
-    "descripcion": "Catastro colaborativo VGI de almacén de barrio levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 2258,
+    "descripcion": "Catastro colaborativo IGV de Almacén de Barrio (OpenStreetMap (Geofabrik + Overpass RM)): 2.258 entidades en la Región Metropolitana (65 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -400,9 +400,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Ministerio de Economía / INE",
     "archivoLocal": "data/capa_vgi_supermercado_de_cadena.geojson",
     "icono": "🛒",
-    "geometria": "Puntos",
-    "totalEntidades": 14,
-    "descripcion": "Catastro colaborativo VGI de supermercado de cadena levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 605,
+    "descripcion": "Catastro colaborativo IGV de Supermercado de Cadena (OpenStreetMap (Geofabrik + Overpass RM)): 605 entidades en la Región Metropolitana (10 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -415,9 +415,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "ASOF Chile / I. Municipalidad de Santiago",
     "archivoLocal": "data/capa_vgi_feria_libre_regulada.geojson",
     "icono": "🏪",
-    "geometria": "Puntos",
-    "totalEntidades": 2,
-    "descripcion": "Catastro colaborativo VGI de feria libre regulada levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 102,
+    "descripcion": "Catastro colaborativo IGV de Feria Libre Regulada (OpenStreetMap (Geofabrik + Overpass RM)): 102 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -431,8 +431,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_botilleria_tradicional_con_patente_de_alcoholes.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 8,
-    "descripcion": "Catastro colaborativo VGI de botillería tradicional con patente de alcoholes levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 884,
+    "descripcion": "Catastro colaborativo IGV de Botillería Tradicional con Patente de Alcoholes (OpenStreetMap (Geofabrik + Overpass RM)): 884 entidades en la Región Metropolitana (24 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -446,8 +446,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_verduleria.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 3,
-    "descripcion": "Catastro colaborativo VGI de verdulería levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 181,
+    "descripcion": "Catastro colaborativo IGV de Verdulería (OpenStreetMap (Geofabrik + Overpass RM)): 181 entidades en la Región Metropolitana (7 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -461,8 +461,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_carniceria_de_barrio.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de carnicería de barrio levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 457,
+    "descripcion": "Catastro colaborativo IGV de Carnicería de Barrio (OpenStreetMap (Geofabrik + Overpass RM)): 457 entidades en la Región Metropolitana (4 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -476,8 +476,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_ferreteria_de_barrio.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 6,
-    "descripcion": "Catastro colaborativo VGI de ferretería de barrio levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 405,
+    "descripcion": "Catastro colaborativo IGV de Ferretería de Barrio (OpenStreetMap (Geofabrik + Overpass RM)): 405 entidades en la Región Metropolitana (5 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -491,8 +491,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_quiosco_de_diarios_revistas_y_confites.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 18,
-    "descripcion": "Catastro colaborativo VGI de quiosco de diarios, revistas y confites levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 309,
+    "descripcion": "Catastro colaborativo IGV de Quiosco de Diarios. Revistas y Confites (OpenStreetMap (Geofabrik + Overpass RM)): 309 entidades en la Región Metropolitana (12 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -506,8 +506,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_sucursal_bancaria_bancoestado_santander_etc.geojson",
     "icono": "🏦",
     "geometria": "Puntos",
-    "totalEntidades": 396,
-    "descripcion": "Catastro colaborativo VGI de sucursal bancaria (bancoestado, santander, etc.) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 700,
+    "descripcion": "Catastro colaborativo IGV de Sucursal Bancaria (BancoEstado. Santander. etc.) (OpenStreetMap (Geofabrik + Overpass RM)): 700 entidades en la Región Metropolitana (21 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -521,8 +521,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cajero_automatico_redbanc.geojson",
     "icono": "🏧",
     "geometria": "Puntos",
-    "totalEntidades": 6,
-    "descripcion": "Catastro colaborativo VGI de cajero automático (redbanc) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 418,
+    "descripcion": "Catastro colaborativo IGV de Cajero Automático (Redbanc) (OpenStreetMap (Geofabrik + Overpass RM)): 418 entidades en la Región Metropolitana (8 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -536,8 +536,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cafeteria.geojson",
     "icono": "☕",
     "geometria": "Puntos",
-    "totalEntidades": 53,
-    "descripcion": "Catastro colaborativo VGI de cafetería levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 1026,
+    "descripcion": "Catastro colaborativo IGV de Cafetería (OpenStreetMap (Geofabrik + Overpass RM)): 1.026 entidades en la Región Metropolitana (34 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -551,8 +551,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_restaurante.geojson",
     "icono": "🍽️",
     "geometria": "Puntos",
-    "totalEntidades": 96,
-    "descripcion": "Catastro colaborativo VGI de restaurante levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 3329,
+    "descripcion": "Catastro colaborativo IGV de Restaurante (OpenStreetMap (Geofabrik + Overpass RM)): 3.329 entidades en la Región Metropolitana (112 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -566,8 +566,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_punto_limpio.geojson",
     "icono": "♻️",
     "geometria": "Puntos",
-    "totalEntidades": 6,
-    "descripcion": "Catastro colaborativo VGI de punto limpio levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 258,
+    "descripcion": "Catastro colaborativo IGV de Punto Limpio (OpenStreetMap (Geofabrik + Overpass RM)): 258 entidades en la Región Metropolitana (3 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -581,8 +581,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_basurero_peatonal_urbano_de_vereda.geojson",
     "icono": "🗑️",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de basurero peatonal urbano de vereda levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 824,
+    "descripcion": "Catastro colaborativo IGV de Basurero Peatonal Urbano de Vereda (OpenStreetMap (Geofabrik + Overpass RM)): 824 entidades en la Región Metropolitana (98 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -595,9 +595,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Municipalidad de Santiago / Enel",
     "archivoLocal": "data/capa_vgi_luminaria_publica.geojson",
     "icono": "🌳",
-    "geometria": "Líneas",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de luminaria pública levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Puntos",
+    "totalEntidades": 1872,
+    "descripcion": "Catastro colaborativo IGV de Luminaria Pública (OpenStreetMap (Geofabrik + Overpass RM)): 1.872 entidades en la Región Metropolitana (154 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -611,8 +611,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_estacion_de_metro_de_santiago.geojson",
     "icono": "🚇",
     "geometria": "Puntos",
-    "totalEntidades": 56,
-    "descripcion": "Catastro colaborativo VGI de estación de metro de santiago levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 162,
+    "descripcion": "Catastro colaborativo IGV de Estación de Metro de Santiago (OpenStreetMap (Geofabrik + Overpass RM)): 162 entidades en la Región Metropolitana (5 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -626,8 +626,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_acceso.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 200,
-    "descripcion": "Catastro colaborativo VGI de acceso levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 343,
+    "descripcion": "Catastro colaborativo IGV de Acceso (OpenStreetMap (Geofabrik + Overpass RM)): 343 entidades en la Región Metropolitana (18 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -640,9 +640,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Directorio de Transporte Público Metropolitano (DTPM)",
     "archivoLocal": "data/capa_vgi_paradero_de_buses_red_movilidad.geojson",
     "icono": "🚏",
-    "geometria": "Líneas",
-    "totalEntidades": 580,
-    "descripcion": "Catastro colaborativo VGI de paradero de buses red movilidad levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Puntos",
+    "totalEntidades": 13113,
+    "descripcion": "Catastro colaborativo IGV de Paradero de Buses Red Movilidad (OpenStreetMap (Geofabrik + Overpass RM)): 13.113 entidades en la Región Metropolitana (97 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -656,8 +656,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_anden.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 534,
-    "descripcion": "Catastro colaborativo VGI de andén levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 12191,
+    "descripcion": "Catastro colaborativo IGV de Andén (OpenStreetMap (Geofabrik + Overpass RM)): 12.191 entidades en la Región Metropolitana (103 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -671,8 +671,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_terminal_de_buses_interurbanos.geojson",
     "icono": "🚇",
     "geometria": "Puntos",
-    "totalEntidades": 2,
-    "descripcion": "Catastro colaborativo VGI de terminal de buses interurbanos levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 26,
+    "descripcion": "Catastro colaborativo IGV de Terminal de Buses Interurbanos (OpenStreetMap (Geofabrik + Overpass RM)): 26 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -686,8 +686,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_totem.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 1,
-    "descripcion": "Catastro colaborativo VGI de tótem levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 15,
+    "descripcion": "Catastro colaborativo IGV de Tótem (OpenStreetMap (Geofabrik + Overpass RM)): 15 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -700,9 +700,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Metro S.A.",
     "archivoLocal": "data/capa_vgi_trazado_subterraneo_de_linea_de_metro.geojson",
     "icono": "📍",
-    "geometria": "Puntos",
-    "totalEntidades": 200,
-    "descripcion": "Catastro colaborativo VGI de trazado subterráneo de línea de metro levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Líneas",
+    "totalEntidades": 496,
+    "descripcion": "Catastro colaborativo IGV de Trazado Subterráneo de Línea de Metro (OpenStreetMap (Geofabrik + Overpass RM)): 496 entidades en la Región Metropolitana (17 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -716,8 +716,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_parada_de_taxis_basicos.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de parada de taxis básicos levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 104,
+    "descripcion": "Catastro colaborativo IGV de Parada de Taxis Básicos (OpenStreetMap (Geofabrik + Overpass RM)): 104 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -731,8 +731,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_ciclovia_segregada_en_calzada.geojson",
     "icono": "🚲",
     "geometria": "Líneas",
-    "totalEntidades": 42,
-    "descripcion": "Catastro colaborativo VGI de ciclovía segregada en calzada levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 1087,
+    "descripcion": "Catastro colaborativo IGV de Ciclovía Segregada en Calzada (OpenStreetMap (Geofabrik + Overpass RM)): 1.087 entidades en la Región Metropolitana (5 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -746,8 +746,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_ciclobanda_demarcada_en_calzada.geojson",
     "icono": "🚲",
     "geometria": "Líneas",
-    "totalEntidades": 57,
-    "descripcion": "Catastro colaborativo VGI de ciclobanda demarcada en calzada levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 475,
+    "descripcion": "Catastro colaborativo IGV de Ciclobanda Demarcada en Calzada (OpenStreetMap (Geofabrik + Overpass RM)): 475 entidades en la Región Metropolitana (64 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -760,9 +760,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINVU / DTPM / VGI",
     "archivoLocal": "data/capa_vgi_biciestacionamiento.geojson",
     "icono": "🌲",
-    "geometria": "Polígonos",
-    "totalEntidades": 429,
-    "descripcion": "Catastro colaborativo VGI de biciestacionamiento levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Puntos",
+    "totalEntidades": 571,
+    "descripcion": "Catastro colaborativo IGV de Biciestacionamiento (OpenStreetMap (Geofabrik + Overpass RM)): 571 entidades en la Región Metropolitana (14 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -776,8 +776,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_estacion_de_bicicletas_publicas_compartidas.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 142,
-    "descripcion": "Catastro colaborativo VGI de estación de bicicletas públicas compartidas levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 215,
+    "descripcion": "Catastro colaborativo IGV de Estación de Bicicletas Públicas Compartidas (OpenStreetMap (Geofabrik + Overpass RM)): 215 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -791,8 +791,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_totem_de_reparacion_e_inflado_de_bicis.geojson",
     "icono": "🚇",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de tótem de reparación e inflado de bicis levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 38,
+    "descripcion": "Catastro colaborativo IGV de Tótem de Reparación e Inflado de Bicis (OpenStreetMap (Geofabrik + Overpass RM)): 38 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -806,8 +806,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_estacion_de_carga_de_vehiculos_electricos.geojson",
     "icono": "🚇",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de estación de carga de vehículos eléctricos levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 117,
+    "descripcion": "Catastro colaborativo IGV de Estación de Carga de Vehículos Eléctricos (OpenStreetMap (Geofabrik + Overpass RM)): 117 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -821,8 +821,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_zona_calma.geojson",
     "icono": "🌳",
     "geometria": "Líneas",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de zona calma levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 59494,
+    "descripcion": "Catastro colaborativo IGV de Zona Calma (OpenStreetMap (Geofabrik + Overpass RM)): 59.494 entidades en la Región Metropolitana (52 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -835,9 +835,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "CONASET / Dirección de Tránsito",
     "archivoLocal": "data/capa_vgi_radar_pedagogico_de_velocidad_vial.geojson",
     "icono": "📍",
-    "geometria": "Líneas",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de radar pedagógico de velocidad vial levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Puntos",
+    "totalEntidades": 1,
+    "descripcion": "Catastro colaborativo IGV de Radar Pedagógico de Velocidad Vial (OpenStreetMap (Geofabrik + Overpass RM)): 1 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -851,8 +851,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_parque_urbano_publico.geojson",
     "icono": "🌲",
     "geometria": "Polígonos",
-    "totalEntidades": 72,
-    "descripcion": "Catastro colaborativo VGI de parque urbano público levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 5472,
+    "descripcion": "Catastro colaborativo IGV de Parque Urbano Público (OpenStreetMap (Geofabrik + Overpass RM)): 5.472 entidades en la Región Metropolitana (24 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -865,9 +865,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINVU / Municipalidad de Santiago",
     "archivoLocal": "data/capa_vgi_area_de_juegos_infantiles_modulares.geojson",
     "icono": "🛝",
-    "geometria": "Polígonos",
-    "totalEntidades": 356,
-    "descripcion": "Catastro colaborativo VGI de área de juegos infantiles modulares levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Puntos",
+    "totalEntidades": 1475,
+    "descripcion": "Catastro colaborativo IGV de Área de Juegos Infantiles Modulares (OpenStreetMap (Geofabrik + Overpass RM)): 1.475 entidades en la Región Metropolitana (9 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -881,8 +881,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cancha_de_baby_futbol.geojson",
     "icono": "🌿",
     "geometria": "Polígonos",
-    "totalEntidades": 66,
-    "descripcion": "Catastro colaborativo VGI de cancha de baby fútbol levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 7879,
+    "descripcion": "Catastro colaborativo IGV de Cancha de Baby Fútbol (OpenStreetMap (Geofabrik + Overpass RM)): 7.879 entidades en la Región Metropolitana (21 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -895,9 +895,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "IND / I. Municipalidad de Santiago",
     "archivoLocal": "data/capa_vgi_polideportivo_municipal.geojson",
     "icono": "🌿",
-    "geometria": "Puntos",
-    "totalEntidades": 1,
-    "descripcion": "Catastro colaborativo VGI de polideportivo municipal levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 534,
+    "descripcion": "Catastro colaborativo IGV de Polideportivo Municipal (OpenStreetMap (Geofabrik + Overpass RM)): 534 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -911,8 +911,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_plaza_activa.geojson",
     "icono": "🚇",
     "geometria": "Puntos",
-    "totalEntidades": 5,
-    "descripcion": "Catastro colaborativo VGI de plaza activa levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 240,
+    "descripcion": "Catastro colaborativo IGV de Plaza Activa (OpenStreetMap (Geofabrik + Overpass RM)): 240 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -926,8 +926,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_banca.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 2130,
-    "descripcion": "Catastro colaborativo VGI de banca levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 3662,
+    "descripcion": "Catastro colaborativo IGV de Banca (OpenStreetMap (Geofabrik + Overpass RM)): 3.662 entidades en la Región Metropolitana (242 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -941,8 +941,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_bebedero_publico_de_agua_potable.geojson",
     "icono": "💧",
     "geometria": "Puntos",
-    "totalEntidades": 71,
-    "descripcion": "Catastro colaborativo VGI de bebedero público de agua potable levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 103,
+    "descripcion": "Catastro colaborativo IGV de Bebedero Público de Agua Potable (OpenStreetMap (Geofabrik + Overpass RM)): 103 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -956,8 +956,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_zona_canina.geojson",
     "icono": "🌲",
     "geometria": "Polígonos",
-    "totalEntidades": 10,
-    "descripcion": "Catastro colaborativo VGI de zona canina levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 36,
+    "descripcion": "Catastro colaborativo IGV de Zona Canina (OpenStreetMap (Geofabrik + Overpass RM)): 36 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -971,8 +971,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cesped_urbano.geojson",
     "icono": "🌿",
     "geometria": "Polígonos",
-    "totalEntidades": 198,
-    "descripcion": "Catastro colaborativo VGI de césped urbano levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 14598,
+    "descripcion": "Catastro colaborativo IGV de Césped Urbano (OpenStreetMap (Geofabrik + Overpass RM)): 14.598 entidades en la Región Metropolitana (53 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -986,8 +986,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_inmueble_de_conservacion_historica_ich.geojson",
     "icono": "📍",
     "geometria": "Polígonos",
-    "totalEntidades": 20,
-    "descripcion": "Catastro colaborativo VGI de inmueble de conservación histórica (ich) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 80,
+    "descripcion": "Catastro colaborativo IGV de Inmueble de Conservación Histórica (ICH) (OpenStreetMap (Geofabrik + Overpass RM)): 80 entidades en la Región Metropolitana (14 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1001,8 +1001,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_monumento_publico.geojson",
     "icono": "🏛️",
     "geometria": "Puntos",
-    "totalEntidades": 4,
-    "descripcion": "Catastro colaborativo VGI de monumento público levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 33,
+    "descripcion": "Catastro colaborativo IGV de Monumento Público (OpenStreetMap (Geofabrik + Overpass RM)): 33 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1016,8 +1016,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_memorial_de_derechos_humanos.geojson",
     "icono": "🕯️",
     "geometria": "Puntos",
-    "totalEntidades": 12,
-    "descripcion": "Catastro colaborativo VGI de memorial de derechos humanos levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 342,
+    "descripcion": "Catastro colaborativo IGV de Memorial de Derechos Humanos (OpenStreetMap (Geofabrik + Overpass RM)): 342 entidades en la Región Metropolitana (10 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1030,9 +1030,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINVU / CMN / Municipalidad de Santiago",
     "archivoLocal": "data/capa_vgi_cite_patrimonial.geojson",
     "icono": "📍",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de cité patrimonial levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Líneas",
+    "totalEntidades": 10,
+    "descripcion": "Catastro colaborativo IGV de Cité Patrimonial (OpenStreetMap (Geofabrik + Overpass RM)): 10 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1045,9 +1045,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "CMN / Arzobispado de Santiago",
     "archivoLocal": "data/capa_vgi_templo_religioso.geojson",
     "icono": "📍",
-    "geometria": "Puntos",
-    "totalEntidades": 497,
-    "descripcion": "Catastro colaborativo VGI de templo religioso levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 1172,
+    "descripcion": "Catastro colaborativo IGV de Templo Religioso (OpenStreetMap (Geofabrik + Overpass RM)): 1.172 entidades en la Región Metropolitana (27 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1060,9 +1060,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Ministerio de las Culturas, las Artes y el Patrimonio",
     "archivoLocal": "data/capa_vgi_centro_cultural_comunitario.geojson",
     "icono": "📍",
-    "geometria": "Puntos",
-    "totalEntidades": 63,
-    "descripcion": "Catastro colaborativo VGI de centro cultural comunitario levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 83,
+    "descripcion": "Catastro colaborativo IGV de Centro Cultural Comunitario (OpenStreetMap (Geofabrik + Overpass RM)): 83 entidades en la Región Metropolitana (12 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1076,8 +1076,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_museo_publico.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 81,
-    "descripcion": "Catastro colaborativo VGI de museo público levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 119,
+    "descripcion": "Catastro colaborativo IGV de Museo Público (OpenStreetMap (Geofabrik + Overpass RM)): 119 entidades en la Región Metropolitana (7 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1091,8 +1091,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cine_comunitario.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 5,
-    "descripcion": "Catastro colaborativo VGI de cine comunitario levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 44,
+    "descripcion": "Catastro colaborativo IGV de Cine Comunitario (OpenStreetMap (Geofabrik + Overpass RM)): 44 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1106,8 +1106,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_sitio_de_rescate_arqueologico_colonial.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de sitio de rescate arqueológico colonial levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 5,
+    "descripcion": "Catastro colaborativo IGV de Sitio de Rescate Arqueológico Colonial (OpenStreetMap (Geofabrik + Overpass RM)): 5 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1121,8 +1121,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_rebaje_de_solera.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 579,
-    "descripcion": "Catastro colaborativo VGI de rebaje de solera levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 2153,
+    "descripcion": "Catastro colaborativo IGV de Rebaje de Solera (OpenStreetMap (Geofabrik + Overpass RM)): 2.153 entidades en la Región Metropolitana (31 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1136,8 +1136,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cordon_a_nivel_cero.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 134,
-    "descripcion": "Catastro colaborativo VGI de cordón a nivel cero levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 406,
+    "descripcion": "Catastro colaborativo IGV de Cordón a Nivel Cero (OpenStreetMap (Geofabrik + Overpass RM)): 406 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1150,9 +1150,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "CONASET (Ministerio de Transportes) / MINVU",
     "archivoLocal": "data/capa_vgi_paso_peatonal_demarcado_paso_cebra.geojson",
     "icono": "🚶",
-    "geometria": "Líneas",
-    "totalEntidades": 804,
-    "descripcion": "Catastro colaborativo VGI de paso peatonal demarcado (paso cebra levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Puntos",
+    "totalEntidades": 48630,
+    "descripcion": "Catastro colaborativo IGV de Paso Peatonal Demarcado (Paso Cebra (OpenStreetMap (Geofabrik + Overpass RM)): 48.630 entidades en la Región Metropolitana (361 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1166,8 +1166,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_pavimento_podotactil_de_alerta_o_guia_baldosa_tactil.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 1443,
-    "descripcion": "Catastro colaborativo VGI de pavimento podotáctil de alerta o guía (baldosa táctil) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 403,
+    "descripcion": "Catastro colaborativo IGV de Pavimento Podotáctil de Alerta o Guía (Baldosa Táctil) (OpenStreetMap (Geofabrik + Overpass RM)): 403 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1181,8 +1181,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_semaforo_peatonal_audible_senal_acustica.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 1165,
-    "descripcion": "Catastro colaborativo VGI de semáforo peatonal audible (señal acústica) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 35,
+    "descripcion": "Catastro colaborativo IGV de Semáforo Peatonal Audible (Señal Acústica) (OpenStreetMap (Geofabrik + Overpass RM)): 35 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1195,9 +1195,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "UOCT / MTT",
     "archivoLocal": "data/capa_vgi_interseccion_con_semaforos_sincronizados_uoct.geojson",
     "icono": "📍",
-    "geometria": "Líneas",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de intersección con semáforos sincronizados uoct levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Puntos",
+    "totalEntidades": 10143,
+    "descripcion": "Catastro colaborativo IGV de Intersección con Semáforos Sincronizados UOCT (OpenStreetMap (Geofabrik + Overpass RM)): 10.143 entidades en la Región Metropolitana (173 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1211,8 +1211,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_recinto_o_local_100_accesible_para_sillas_de_ruedas.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 2552,
-    "descripcion": "Catastro colaborativo VGI de recinto o local 100% accesible para sillas de ruedas levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 2574,
+    "descripcion": "Catastro colaborativo IGV de Recinto o Local 100% Accesible para Sillas de Ruedas (OpenStreetMap (Geofabrik + Overpass RM)): 2.574 entidades en la Región Metropolitana (32 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1226,8 +1226,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_recinto_con_accesibilidad_parcial.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 153,
-    "descripcion": "Catastro colaborativo VGI de recinto con accesibilidad parcial levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 272,
+    "descripcion": "Catastro colaborativo IGV de Recinto con Accesibilidad Parcial (OpenStreetMap (Geofabrik + Overpass RM)): 272 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1241,8 +1241,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_paseo_peatonal_exclusivo.geojson",
     "icono": "📍",
     "geometria": "Líneas",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de paseo peatonal exclusivo levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 842,
+    "descripcion": "Catastro colaborativo IGV de Paseo Peatonal Exclusivo (OpenStreetMap (Geofabrik + Overpass RM)): 842 entidades en la Región Metropolitana (23 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1256,8 +1256,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_rampa_de_acceso_peatonal_con_pendiente_normada.geojson",
     "icono": "📍",
     "geometria": "Líneas",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de rampa de acceso peatonal con pendiente normada levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 38,
+    "descripcion": "Catastro colaborativo IGV de Rampa de Acceso Peatonal con Pendiente Normada (OpenStreetMap (Geofabrik + Overpass RM)): 38 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1271,8 +1271,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_arbol_urbano_de_alineacion_en_acera_o_plaza.geojson",
     "icono": "🌳",
     "geometria": "Puntos",
-    "totalEntidades": 10,
-    "descripcion": "Catastro colaborativo VGI de árbol urbano de alineación en acera o plaza levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 84070,
+    "descripcion": "Catastro colaborativo IGV de Árbol Urbano de Alineación en Acera o Plaza (OpenStreetMap (Geofabrik + Overpass RM)): 84.070 entidades en la Región Metropolitana (1.257 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1285,9 +1285,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "CONAF / MMA",
     "archivoLocal": "data/capa_vgi_masa_arborea_continua.geojson",
     "icono": "🌿",
-    "geometria": "Puntos",
-    "totalEntidades": 1,
-    "descripcion": "Catastro colaborativo VGI de masa arbórea continua levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 579,
+    "descripcion": "Catastro colaborativo IGV de Masa Arbórea Continua (OpenStreetMap (Geofabrik + Overpass RM)): 579 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1302,7 +1302,7 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "icono": "📍",
     "geometria": "Puntos",
     "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de centro de capacitación laboral levantado por la comunidad en OpenStreetMap y GBIF.",
+    "descripcion": "Cobertura colaborativa IGV de Centro de Capacitación Laboral sin registros georreferenciados verificados en OpenStreetMap (Geofabrik + Overpass RM) dentro de la Región Metropolitana de Santiago.",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1316,8 +1316,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_posta_de_salud_rural_psr.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de posta de salud rural (psr) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 3,
+    "descripcion": "Catastro colaborativo IGV de Posta de Salud Rural (PSR) (OpenStreetMap (Geofabrik + Overpass RM)): 3 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1330,9 +1330,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Servicio Nacional del Adulto Mayor (SENAMA) / MDSF",
     "archivoLocal": "data/capa_vgi_establecimiento_de_larga_estadia_para_adultos_mayores_eleam.geojson",
     "icono": "🏥",
-    "geometria": "Puntos",
-    "totalEntidades": 1,
-    "descripcion": "Catastro colaborativo VGI de establecimiento de larga estadía para adultos mayores (eleam) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 79,
+    "descripcion": "Catastro colaborativo IGV de Establecimiento de Larga Estadía para Adultos Mayores (ELEAM) (OpenStreetMap (Geofabrik + Overpass RM)): 79 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1345,9 +1345,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Dirección de Obras Hidráulicas (DOH - MOP) / SISS",
     "archivoLocal": "data/capa_vgi_copa_de_agua_potable.geojson",
     "icono": "💧",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de copa de agua potable levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Líneas",
+    "totalEntidades": 122,
+    "descripcion": "Catastro colaborativo IGV de Copa de Agua Potable (OpenStreetMap (Geofabrik + Overpass RM)): 122 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1360,9 +1360,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Subdirección de Servicios Sanitarios Rurales (DOH - MOP, Ley N° 20.998)",
     "archivoLocal": "data/capa_vgi_planta_de_agua_potable_rural_apr.geojson",
     "icono": "💧",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de planta de agua potable rural (apr) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Líneas",
+    "totalEntidades": 48,
+    "descripcion": "Catastro colaborativo IGV de Planta de Agua Potable Rural (APR) (OpenStreetMap (Geofabrik + Overpass RM)): 48 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1377,7 +1377,7 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "icono": "🏪",
     "geometria": "Puntos",
     "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de torre de detección de incendios forestales levantado por la comunidad en OpenStreetMap y GBIF.",
+    "descripcion": "Cobertura colaborativa IGV de Torre de Detección de Incendios Forestales sin registros georreferenciados verificados en OpenStreetMap (Geofabrik + Overpass RM) dentro de la Región Metropolitana de Santiago.",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1392,7 +1392,7 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "icono": "🏪",
     "geometria": "Puntos",
     "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de capitanía de puerto levantado por la comunidad en OpenStreetMap y GBIF.",
+    "descripcion": "Cobertura colaborativa IGV de Capitanía de Puerto sin registros georreferenciados verificados en OpenStreetMap (Geofabrik + Overpass RM) dentro de la Región Metropolitana de Santiago.",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1407,7 +1407,7 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "icono": "📍",
     "geometria": "Puntos",
     "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de terminal de transbordadores levantado por la comunidad en OpenStreetMap y GBIF.",
+    "descripcion": "Cobertura colaborativa IGV de Terminal de Transbordadores sin registros georreferenciados verificados en OpenStreetMap (Geofabrik + Overpass RM) dentro de la Región Metropolitana de Santiago.",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1421,8 +1421,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cruce_ferroviario_a_nivel_con_barrera.geojson",
     "icono": "🚶",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de cruce ferroviario a nivel con barrera levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 145,
+    "descripcion": "Catastro colaborativo IGV de Cruce Ferroviario a Nivel con Barrera (OpenStreetMap (Geofabrik + Overpass RM)): 145 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1436,8 +1436,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_plaza_de_peaje_interurbano.geojson",
     "icono": "🏪",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de plaza de peaje interurbano levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 23,
+    "descripcion": "Catastro colaborativo IGV de Plaza de Peaje Interurbano (OpenStreetMap (Geofabrik + Overpass RM)): 23 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1450,9 +1450,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Dirección General de Aeronáutica Civil (DGAC)",
     "archivoLocal": "data/capa_vgi_aerodromo_comunal.geojson",
     "icono": "📍",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de aeródromo comunal levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 25,
+    "descripcion": "Catastro colaborativo IGV de Aeródromo Comunal (OpenStreetMap (Geofabrik + Overpass RM)): 25 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1466,8 +1466,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_camino_rural_no_pavimentado.geojson",
     "icono": "📍",
     "geometria": "Líneas",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de camino rural no pavimentado levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 12067,
+    "descripcion": "Catastro colaborativo IGV de Camino Rural No Pavimentado (OpenStreetMap (Geofabrik + Overpass RM)): 12.067 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1481,8 +1481,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_escalinata_peatonal_de_cerro.geojson",
     "icono": "📍",
     "geometria": "Líneas",
-    "totalEntidades": 87,
-    "descripcion": "Catastro colaborativo VGI de escalinata peatonal de cerro levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 1346,
+    "descripcion": "Catastro colaborativo IGV de Escalinata Peatonal de Cerro (OpenStreetMap (Geofabrik + Overpass RM)): 1.346 entidades en la Región Metropolitana (24 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1495,9 +1495,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Servicio Nacional de Pesca y Acuicultura (SERNAPESCA) / DOP MOP",
     "archivoLocal": "data/capa_vgi_caleta_de_pescadores_artesanales.geojson",
     "icono": "🌿",
-    "geometria": "Polígonos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de caleta de pescadores artesanales levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Puntos",
+    "totalEntidades": 3,
+    "descripcion": "Catastro colaborativo IGV de Caleta de Pescadores Artesanales (OpenStreetMap (Geofabrik + Overpass RM)): 3 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1511,8 +1511,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_animita_de_carretera.geojson",
     "icono": "📍",
     "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de animita de carretera levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 13,
+    "descripcion": "Catastro colaborativo IGV de Animita de Carretera (OpenStreetMap (Geofabrik + Overpass RM)): 13 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1525,9 +1525,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Dirección de Vialidad (MOP) / Gobiernos Regionales",
     "archivoLocal": "data/capa_vgi_refugio_peatonal_rural.geojson",
     "icono": "📍",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de refugio peatonal rural levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Polígonos",
+    "totalEntidades": 52,
+    "descripcion": "Catastro colaborativo IGV de Refugio Peatonal Rural (OpenStreetMap (Geofabrik + Overpass RM)): 52 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1540,9 +1540,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINVU / SENADIS / Municipalidades",
     "archivoLocal": "data/capa_vgi_ascensor_publico_urbano.geojson",
     "icono": "📍",
-    "geometria": "Líneas",
-    "totalEntidades": 40,
-    "descripcion": "Catastro colaborativo VGI de ascensor público urbano levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Puntos",
+    "totalEntidades": 105,
+    "descripcion": "Catastro colaborativo IGV de Ascensor Público Urbano (OpenStreetMap (Geofabrik + Overpass RM)): 105 entidades en la Región Metropolitana (5 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1556,8 +1556,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_humedal_urbano_protegido_ley_n_21_202.geojson",
     "icono": "🦆",
     "geometria": "Polígonos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de humedal urbano protegido (ley n° 21.202) levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 111,
+    "descripcion": "Catastro colaborativo IGV de Humedal Urbano Protegido (Ley N° 21.202) (OpenStreetMap (Geofabrik + Overpass RM)): 111 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1571,8 +1571,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_huella_de_edificacion_catastrada.geojson",
     "icono": "👥",
     "geometria": "Polígonos",
-    "totalEntidades": 2328,
-    "descripcion": "Catastro colaborativo VGI de huella de edificación catastrada levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 99794,
+    "descripcion": "Catastro colaborativo IGV de Huella de Edificación Catastrada (OpenStreetMap (Geofabrik + Overpass RM)): 99.794 entidades en la Región Metropolitana (1.067 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1586,8 +1586,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_inmueble_residencial.geojson",
     "icono": "🏠",
     "geometria": "Polígonos",
-    "totalEntidades": 37,
-    "descripcion": "Catastro colaborativo VGI de inmueble residencial levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 1882,
+    "descripcion": "Catastro colaborativo IGV de Inmueble Residencial (OpenStreetMap (Geofabrik + Overpass RM)): 1.882 entidades en la Región Metropolitana (17 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1601,8 +1601,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_edificio_residencial_en_altura.geojson",
     "icono": "🏢",
     "geometria": "Polígonos",
-    "totalEntidades": 224,
-    "descripcion": "Catastro colaborativo VGI de edificio residencial en altura levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 9746,
+    "descripcion": "Catastro colaborativo IGV de Edificio Residencial en Altura (OpenStreetMap (Geofabrik + Overpass RM)): 9.746 entidades en la Región Metropolitana (109 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1616,8 +1616,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_casa_habitacion_unifamiliar.geojson",
     "icono": "🏡",
     "geometria": "Polígonos",
-    "totalEntidades": 205,
-    "descripcion": "Catastro colaborativo VGI de casa habitación unifamiliar levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 173282,
+    "descripcion": "Catastro colaborativo IGV de Casa Habitación Unifamiliar (OpenStreetMap (Geofabrik + Overpass RM)): 173.282 entidades en la Región Metropolitana (189 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1631,8 +1631,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_inmueble_comercial.geojson",
     "icono": "🏪",
     "geometria": "Polígonos",
-    "totalEntidades": 42,
-    "descripcion": "Catastro colaborativo VGI de inmueble comercial levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 1826,
+    "descripcion": "Catastro colaborativo IGV de Inmueble Comercial (OpenStreetMap (Geofabrik + Overpass RM)): 1.826 entidades en la Región Metropolitana (25 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1646,8 +1646,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_edificio_civico.geojson",
     "icono": "👥",
     "geometria": "Polígonos",
-    "totalEntidades": 7,
-    "descripcion": "Catastro colaborativo VGI de edificio cívico levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 65,
+    "descripcion": "Catastro colaborativo IGV de Edificio Cívico (OpenStreetMap (Geofabrik + Overpass RM)): 65 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1661,8 +1661,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_pabellon_escolar.geojson",
     "icono": "🎒",
     "geometria": "Polígonos",
-    "totalEntidades": 83,
-    "descripcion": "Catastro colaborativo VGI de pabellón escolar levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 1137,
+    "descripcion": "Catastro colaborativo IGV de Pabellón Escolar (OpenStreetMap (Geofabrik + Overpass RM)): 1.137 entidades en la Región Metropolitana (29 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1676,8 +1676,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_pabellon_universitario.geojson",
     "icono": "🎓",
     "geometria": "Polígonos",
-    "totalEntidades": 145,
-    "descripcion": "Catastro colaborativo VGI de pabellón universitario levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 594,
+    "descripcion": "Catastro colaborativo IGV de Pabellón Universitario (OpenStreetMap (Geofabrik + Overpass RM)): 594 entidades en la Región Metropolitana (60 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1691,8 +1691,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_templo_religioso_127.geojson",
     "icono": "⛪",
     "geometria": "Polígonos",
-    "totalEntidades": 57,
-    "descripcion": "Catastro colaborativo VGI de templo religioso levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 268,
+    "descripcion": "Catastro colaborativo IGV de Templo Religioso (OpenStreetMap (Geofabrik + Overpass RM)): 268 entidades en la Región Metropolitana (7 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1706,8 +1706,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_numero_de_pisos.geojson",
     "icono": "👥",
     "geometria": "Polígonos",
-    "totalEntidades": 249,
-    "descripcion": "Catastro colaborativo VGI de número de pisos levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 22791,
+    "descripcion": "Catastro colaborativo IGV de Número de Pisos (OpenStreetMap (Geofabrik + Overpass RM)): 22.791 entidades en la Región Metropolitana (327 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1721,8 +1721,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_zona_de_uso_de_suelo_residencial.geojson",
     "icono": "🏠",
     "geometria": "Polígonos",
-    "totalEntidades": 34,
-    "descripcion": "Catastro colaborativo VGI de zona de uso de suelo residencial levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 4481,
+    "descripcion": "Catastro colaborativo IGV de Zona de Uso de Suelo Residencial (OpenStreetMap (Geofabrik + Overpass RM)): 4.481 entidades en la Región Metropolitana (5 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1736,8 +1736,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_zona_de_uso_de_suelo_comercial_y_de_servicios.geojson",
     "icono": "🏪",
     "geometria": "Polígonos",
-    "totalEntidades": 20,
-    "descripcion": "Catastro colaborativo VGI de zona de uso de suelo comercial y de servicios levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 303,
+    "descripcion": "Catastro colaborativo IGV de Zona de Uso de Suelo Comercial y de Servicios (OpenStreetMap (Geofabrik + Overpass RM)): 303 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1751,8 +1751,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_recinto_de_uso_educacional.geojson",
     "icono": "🌿",
     "geometria": "Polígonos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de recinto de uso educacional levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 12,
+    "descripcion": "Catastro colaborativo IGV de Recinto de Uso Educacional (OpenStreetMap (Geofabrik + Overpass RM)): 12 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1766,8 +1766,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_recinto_de_recreacion_y_deportes_al_aire_libre.geojson",
     "icono": "🌿",
     "geometria": "Polígonos",
-    "totalEntidades": 0,
-    "descripcion": "Catastro colaborativo VGI de recinto de recreación y deportes al aire libre levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 937,
+    "descripcion": "Catastro colaborativo IGV de Recinto de Recreación y Deportes al Aire Libre (OpenStreetMap (Geofabrik + Overpass RM)): 937 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1781,8 +1781,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_terreno_en_faena_de_construccion.geojson",
     "icono": "🌿",
     "geometria": "Polígonos",
-    "totalEntidades": 5,
-    "descripcion": "Catastro colaborativo VGI de terreno en faena de construcción levantado por la comunidad en OpenStreetMap y GBIF.",
+    "totalEntidades": 624,
+    "descripcion": "Catastro colaborativo IGV de Terreno en Faena de Construcción (OpenStreetMap (Geofabrik + Overpass RM)): 624 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1795,9 +1795,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Dirección de Vialidad (MOP) / SERVIU Metropolitano",
     "archivoLocal": "data/capa_vgi_cobertura_de_calzada_en_asfalto.geojson",
     "icono": "🌿",
-    "geometria": "Puntos",
-    "totalEntidades": 91,
-    "descripcion": "Catastro colaborativo VGI de cobertura de calzada en asfalto levantado por la comunidad en OpenStreetMap y GBIF.",
+    "geometria": "Líneas",
+    "totalEntidades": 70663,
+    "descripcion": "Catastro colaborativo IGV de Cobertura de Calzada en Asfalto (OpenStreetMap (Geofabrik + Overpass RM)): 70.663 entidades en la Región Metropolitana (310 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1812,8 +1812,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_quillay_quillaja_saponaria_flora_esclerofila.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 607,
-    "descripcion": "Quillay (Flora Esclerófila) · Cobertura biológica individualizada de Quillaja saponaria levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 1621,
+    "descripcion": "Catastro colaborativo IGV de Quillaja saponaria (Quillay) (GBIF / Ciencia Comunitaria): 1.621 entidades en la Región Metropolitana (38 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1828,8 +1828,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_boldo_peumus_boldus.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 19,
-    "descripcion": "Boldo (Árbol Nativo Medicinal) · Cobertura biológica individualizada de Peumus boldus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 261,
+    "descripcion": "Catastro colaborativo IGV de Peumus boldus (Boldo) (GBIF / Ciencia Comunitaria): 261 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1844,8 +1844,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_peumo_cryptocarya_alba_arbol_nativo_esclerofilo.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 291,
-    "descripcion": "Peumo (Árbol Nativo Esclerófilo) · Cobertura biológica individualizada de Cryptocarya alba levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 414,
+    "descripcion": "Catastro colaborativo IGV de Cryptocarya alba (Peumo) (GBIF / Ciencia Comunitaria): 414 entidades en la Región Metropolitana (7 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1860,8 +1860,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_maiten_maytenus_boaria_arbol_nativo_siempreverde.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 51,
-    "descripcion": "Maitén (Árbol Nativo Siempreverde) · Cobertura biológica individualizada de Maytenus boaria levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 361,
+    "descripcion": "Catastro colaborativo IGV de Maytenus boaria (Maitén) (GBIF / Ciencia Comunitaria): 361 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1876,8 +1876,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_litre_lithraea_caustica.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 148,
-    "descripcion": "Litre (Árbol Nativo Esclerófilo) · Cobertura biológica individualizada de Lithraea caustica levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 1462,
+    "descripcion": "Catastro colaborativo IGV de Lithraea caustica (Litre) (GBIF / Ciencia Comunitaria): 1.462 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1892,8 +1892,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_palma_chilena_jubaea_chilensis_nativa_vulnerable.geojson",
     "icono": "🌴",
     "geometria": "Puntos",
-    "totalEntidades": 117,
-    "descripcion": "Palma Chilena (Nativa Vulnerable) · Cobertura biológica individualizada de Jubaea chilensis levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 1734,
+    "descripcion": "Catastro colaborativo IGV de Jubaea chilensis (Palma Chilena) (GBIF / Ciencia Comunitaria): 1.734 entidades en la Región Metropolitana (56 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1908,8 +1908,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_pimiento.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 9,
-    "descripcion": "Pimiento / Molle (Árbol Patrimonial) · Cobertura biológica individualizada de Schinus areira levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 694,
+    "descripcion": "Catastro colaborativo IGV de Schinus areira (Pimiento / Molle) (GBIF / Ciencia Comunitaria): 694 entidades en la Región Metropolitana (5 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1924,8 +1924,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_platano_oriental_platanus_orientalis.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 1,
-    "descripcion": "Plátano Oriental (Árbol Urbano) · Cobertura biológica individualizada de Platanus orientalis levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 358,
+    "descripcion": "Catastro colaborativo IGV de Platanus orientalis (Plátano Oriental) (GBIF / Ciencia Comunitaria): 358 entidades en la Región Metropolitana (46 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1940,8 +1940,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_jacaranda_jacaranda_mimosifolia.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 2,
-    "descripcion": "Jacarandá (Árbol Ornamental) · Cobertura biológica individualizada de Jacaranda mimosifolia levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 267,
+    "descripcion": "Catastro colaborativo IGV de Jacaranda mimosifolia (Jacarandá) (GBIF / Ciencia Comunitaria): 267 entidades en la Región Metropolitana (30 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1956,8 +1956,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_tabaco_moruno_nicotiana_glauca.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 41,
-    "descripcion": "Palqui Extranjero / Tabaco Moruno · Cobertura biológica individualizada de Nicotiana glauca levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 386,
+    "descripcion": "Catastro colaborativo IGV de Nicotiana glauca (Palqui Extranjero) (GBIF / Ciencia Comunitaria): 386 entidades en la Región Metropolitana (3 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1972,8 +1972,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_arbol_del_cielo_ailanthus_altissima.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 22,
-    "descripcion": "Árbol del Cielo (Asilvestrado) · Cobertura biológica individualizada de Ailanthus altissima levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 171,
+    "descripcion": "Catastro colaborativo IGV de Ailanthus altissima (Árbol del Cielo) (GBIF / Ciencia Comunitaria): 171 entidades en la Región Metropolitana (4 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1988,8 +1988,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_espino_vachellia_caven.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 119,
-    "descripcion": "Espino / Aromo (Árbol Nativo del Espinal) · Cobertura biológica individualizada de Vachellia caven levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 2243,
+    "descripcion": "Catastro colaborativo IGV de Vachellia caven (Espino) (GBIF / Ciencia Comunitaria): 2.243 entidades en la Región Metropolitana (5 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2004,8 +2004,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_bollen_kageneckia_oblonga.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 85,
-    "descripcion": "Bollén (Árbol Nativo Esclerófilo) · Cobertura biológica individualizada de Kageneckia oblonga levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 771,
+    "descripcion": "Catastro colaborativo IGV de Kageneckia oblonga (Bollén) (GBIF / Ciencia Comunitaria): 771 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2020,8 +2020,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_colliguay_colliguaja_odorifera.geojson",
     "icono": "🌿",
     "geometria": "Puntos",
-    "totalEntidades": 100,
-    "descripcion": "Colliguay (Arbusto Nativo Resinoso) · Cobertura biológica individualizada de Colliguaja odorifera levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 1472,
+    "descripcion": "Catastro colaborativo IGV de Colliguaja odorifera (Colliguay) (GBIF / Ciencia Comunitaria): 1.472 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2036,8 +2036,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_zorzal_patagonico_turdus_falcklandii.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 207,
-    "descripcion": "Zorzal patagónico / Zorzal común · Cobertura biológica individualizada de Turdus falcklandii levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 73272,
+    "descripcion": "Catastro colaborativo IGV de Turdus falcklandii (Zorzal) (GBIF / Ciencia Comunitaria): 73.272 entidades en la Región Metropolitana (386 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2052,8 +2052,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_paloma_bravia_columba_livia.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 179,
-    "descripcion": "Paloma bravía / Paloma doméstica · Cobertura biológica individualizada de Columba livia levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 37433,
+    "descripcion": "Catastro colaborativo IGV de Columba livia (Paloma común) (GBIF / Ciencia Comunitaria): 37.433 entidades en la Región Metropolitana (524 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2068,8 +2068,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_tortola_torcaza_zenaida_auriculata.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 128,
-    "descripcion": "Tórtola torcaza / Tórtola común · Cobertura biológica individualizada de Zenaida auriculata levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 52039,
+    "descripcion": "Catastro colaborativo IGV de Zenaida auriculata (Tórtola) (GBIF / Ciencia Comunitaria): 52.039 entidades en la Región Metropolitana (348 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2084,8 +2084,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cotorra_argentina_myiopsitta_monachus.geojson",
     "icono": "🦜",
     "geometria": "Puntos",
-    "totalEntidades": 99,
-    "descripcion": "Cotorra argentina / Cata · Cobertura biológica individualizada de Myiopsitta monachus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 38512,
+    "descripcion": "Catastro colaborativo IGV de Myiopsitta monachus (Cotorra argentina) (GBIF / Ciencia Comunitaria): 38.512 entidades en la Región Metropolitana (114 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2100,8 +2100,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_tiuque_milvago_chimango.geojson",
     "icono": "🦅",
     "geometria": "Puntos",
-    "totalEntidades": 75,
-    "descripcion": "Tiuque / Chimango (Milvago chimango) · Cobertura biológica individualizada de Daptrius chimango levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 50950,
+    "descripcion": "Catastro colaborativo IGV de Daptrius chimango (Tiuque) (GBIF / Ciencia Comunitaria): 50.950 entidades en la Región Metropolitana (179 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2116,8 +2116,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_chincol_zonotrichia_capensis.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 74,
-    "descripcion": "Chincol / Gorrión americano · Cobertura biológica individualizada de Zonotrichia capensis levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 60550,
+    "descripcion": "Catastro colaborativo IGV de Zonotrichia capensis (Chincol) (GBIF / Ciencia Comunitaria): 60.550 entidades en la Región Metropolitana (190 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2132,8 +2132,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_mirlo_comun_molothrus_bonariensis.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 65,
-    "descripcion": "Mirlo común / Tordo renegrido · Cobertura biológica individualizada de Molothrus bonariensis levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 20606,
+    "descripcion": "Catastro colaborativo IGV de Molothrus bonariensis (Mirlo) (GBIF / Ciencia Comunitaria): 20.606 entidades en la Región Metropolitana (66 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2148,8 +2148,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_gorrion_comun_passer_domesticus.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 60,
-    "descripcion": "Gorrión común / Gorrión doméstico · Cobertura biológica individualizada de Passer domesticus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 29823,
+    "descripcion": "Catastro colaborativo IGV de Passer domesticus (Gorrión) (GBIF / Ciencia Comunitaria): 29.823 entidades en la Región Metropolitana (98 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2164,8 +2164,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_chercan_comun_troglodytes_musculus.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 57,
-    "descripcion": "Chercán común / Ratona común · Cobertura biológica individualizada de Troglodytes musculus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 42499,
+    "descripcion": "Catastro colaborativo IGV de Troglodytes musculus (Chercán) (GBIF / Ciencia Comunitaria): 42.499 entidades en la Región Metropolitana (122 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2180,8 +2180,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_jilguero_cordillerano_spinus_barbatus.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 50,
-    "descripcion": "Jilguero cordillerano / Jilguero · Cobertura biológica individualizada de Spinus barbatus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 17031,
+    "descripcion": "Catastro colaborativo IGV de Spinus barbatus (Jilguero) (GBIF / Ciencia Comunitaria): 17.031 entidades en la Región Metropolitana (72 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2196,8 +2196,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_tordo_comun_curaeus_curaeus.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 37,
-    "descripcion": "Tordo común / Curæu · Cobertura biológica individualizada de Curaeus curaeus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 26731,
+    "descripcion": "Catastro colaborativo IGV de Curaeus curaeus (Tordo) (GBIF / Ciencia Comunitaria): 26.731 entidades en la Región Metropolitana (52 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2212,8 +2212,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_gaviota_dominicana_larus_dominicanus.geojson",
     "icono": "🕊️",
     "geometria": "Puntos",
-    "totalEntidades": 36,
-    "descripcion": "Gaviota dominicana · Cobertura biológica individualizada de Larus dominicanus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 8823,
+    "descripcion": "Catastro colaborativo IGV de Larus dominicanus (Gaviota dominicana) (GBIF / Ciencia Comunitaria): 8.823 entidades en la Región Metropolitana (36 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2228,8 +2228,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_rara_phytotoma_rara.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 33,
-    "descripcion": "Rara / Cortarramas · Cobertura biológica individualizada de Phytotoma rara levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 16921,
+    "descripcion": "Catastro colaborativo IGV de Phytotoma rara (Rara) (GBIF / Ciencia Comunitaria): 16.921 entidades en la Región Metropolitana (172 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2244,8 +2244,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_picaflor_chico_sephanoides_sephaniodes.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 144,
-    "descripcion": "Picaflor chico / Pingüirirí · Cobertura biológica individualizada de Sephanoides sephaniodes levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 26471,
+    "descripcion": "Catastro colaborativo IGV de Sephanoides sephaniodes (Picaflor chico) (GBIF / Ciencia Comunitaria): 26.471 entidades en la Región Metropolitana (110 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2260,8 +2260,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_fio_fio_elaenia_albiceps.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 343,
-    "descripcion": "Fío-fío común / Viudita · Cobertura biológica individualizada de Elaenia albiceps levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 20451,
+    "descripcion": "Catastro colaborativo IGV de Elaenia albiceps (Fío-fío) (GBIF / Ciencia Comunitaria): 20.451 entidades en la Región Metropolitana (45 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2276,8 +2276,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cachudito_comun_anairetes_parulus.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 227,
-    "descripcion": "Cachudito común · Cobertura biológica individualizada de Anairetes parulus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 22676,
+    "descripcion": "Catastro colaborativo IGV de Anairetes parulus (Cachudito) (GBIF / Ciencia Comunitaria): 22.676 entidades en la Región Metropolitana (57 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2292,8 +2292,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_queltehue_vanellus_chilensis.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 326,
-    "descripcion": "Queltehue / Treile · Cobertura biológica individualizada de Vanellus chilensis levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 29933,
+    "descripcion": "Catastro colaborativo IGV de Vanellus chilensis (Queltehue) (GBIF / Ciencia Comunitaria): 29.933 entidades en la Región Metropolitana (36 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2308,8 +2308,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_golondrina_chilena_tachycineta_leucopyga.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 218,
-    "descripcion": "Golondrina chilena · Cobertura biológica individualizada de Tachycineta leucopyga levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 25257,
+    "descripcion": "Catastro colaborativo IGV de Tachycineta leucopyga (Golondrina chilena) (GBIF / Ciencia Comunitaria): 25.257 entidades en la Región Metropolitana (58 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2324,8 +2324,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_peuco_parabuteo_unicinctus.geojson",
     "icono": "🦅",
     "geometria": "Puntos",
-    "totalEntidades": 193,
-    "descripcion": "Peuco / Gavilán mixto · Cobertura biológica individualizada de Parabuteo unicinctus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 12219,
+    "descripcion": "Catastro colaborativo IGV de Parabuteo unicinctus (Peuco) (GBIF / Ciencia Comunitaria): 12.219 entidades en la Región Metropolitana (88 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2340,8 +2340,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_tijeral_comun_leptasthenura_aegithaloides.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 172,
-    "descripcion": "Tijeral común · Cobertura biológica individualizada de Leptasthenura aegithaloides levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 21952,
+    "descripcion": "Catastro colaborativo IGV de Leptasthenura aegithaloides (Tijeral) (GBIF / Ciencia Comunitaria): 21.952 entidades en la Región Metropolitana (41 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2356,8 +2356,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_tortolita_cuyana_columbina_picui.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 252,
-    "descripcion": "Tortolita cuyana / Torcacita · Cobertura biológica individualizada de Columbina picui levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 14664,
+    "descripcion": "Catastro colaborativo IGV de Columbina picui (Tortolita) (GBIF / Ciencia Comunitaria): 14.664 entidades en la Región Metropolitana (9 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2372,8 +2372,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_aguila_mora_geranoaetus_melanoleucus.geojson",
     "icono": "🦅",
     "geometria": "Puntos",
-    "totalEntidades": 124,
-    "descripcion": "Águila mora / Águila chilena · Cobertura biológica individualizada de Geranoaetus melanoleucus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 10502,
+    "descripcion": "Catastro colaborativo IGV de Geranoaetus melanoleucus (Águila mora) (GBIF / Ciencia Comunitaria): 10.502 entidades en la Región Metropolitana (4 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2388,8 +2388,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_tenca_mimus_thenca.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 187,
-    "descripcion": "Tenca / Mimo chileno (Endémica) · Cobertura biológica individualizada de Mimus thenca levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 25029,
+    "descripcion": "Catastro colaborativo IGV de Mimus thenca (Tenca) (GBIF / Ciencia Comunitaria): 25.029 entidades en la Región Metropolitana (11 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2404,8 +2404,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_loica_chilena_sturnella_loyca.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 195,
-    "descripcion": "Loica chilena / Pecho colorado · Cobertura biológica individualizada de Sturnella loyca levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 21136,
+    "descripcion": "Catastro colaborativo IGV de Sturnella loyca (Loica) (GBIF / Ciencia Comunitaria): 21.136 entidades en la Región Metropolitana (3 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2420,8 +2420,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_diuca_comun_diuca_diuca.geojson",
     "icono": "🐦",
     "geometria": "Puntos",
-    "totalEntidades": 138,
-    "descripcion": "Diuca común · Cobertura biológica individualizada de Diuca diuca levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 21062,
+    "descripcion": "Catastro colaborativo IGV de Diuca diuca (Diuca) (GBIF / Ciencia Comunitaria): 21.062 entidades en la Región Metropolitana (9 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2436,8 +2436,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_halcon_peregrino_falco_peregrinus.geojson",
     "icono": "🦅",
     "geometria": "Puntos",
-    "totalEntidades": 26,
-    "descripcion": "Halcón peregrino · Cobertura biológica individualizada de Falco peregrinus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 2001,
+    "descripcion": "Catastro colaborativo IGV de Falco peregrinus (Halcón peregrino) (GBIF / Ciencia Comunitaria): 2.001 entidades en la Región Metropolitana (4 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2452,8 +2452,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_cernicalo_americano_falco_sparverius.geojson",
     "icono": "🦅",
     "geometria": "Puntos",
-    "totalEntidades": 163,
-    "descripcion": "Cernícalo americano · Cobertura biológica individualizada de Falco sparverius levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 12098,
+    "descripcion": "Catastro colaborativo IGV de Falco sparverius (Cernícalo) (GBIF / Ciencia Comunitaria): 12.098 entidades en la Región Metropolitana (9 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2468,8 +2468,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_lagartija_esbelta_liolaemus_tenuis.geojson",
     "icono": "🦎",
     "geometria": "Puntos",
-    "totalEntidades": 47,
-    "descripcion": "Lagartija esbelta / Lagartija tenue · Cobertura biológica individualizada de Liolaemus tenuis levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 1194,
+    "descripcion": "Catastro colaborativo IGV de Liolaemus tenuis (Lagartija esbelta) (GBIF / Ciencia Comunitaria): 1.194 entidades en la Región Metropolitana (5 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2484,8 +2484,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_lagartija_lemniscata_liolaemus_lemniscatus.geojson",
     "icono": "🦎",
     "geometria": "Puntos",
-    "totalEntidades": 258,
-    "descripcion": "Lagartija lemniscata · Cobertura biológica individualizada de Liolaemus lemniscatus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 868,
+    "descripcion": "Catastro colaborativo IGV de Liolaemus lemniscatus (Lagartija lemniscata) (GBIF / Ciencia Comunitaria): 868 entidades en la Región Metropolitana (14 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2500,8 +2500,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_lagarto_nitido_liolaemus_nitidus.geojson",
     "icono": "🦎",
     "geometria": "Puntos",
-    "totalEntidades": 142,
-    "descripcion": "Lagarto nítido / Lagartija chilena · Cobertura biológica individualizada de Liolaemus nitidus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 407,
+    "descripcion": "Catastro colaborativo IGV de Liolaemus nitidus (Lagarto nítido) (GBIF / Ciencia Comunitaria): 407 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2516,8 +2516,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_sapo_espinoso_rhinella_spinulosa.geojson",
     "icono": "🐸",
     "geometria": "Puntos",
-    "totalEntidades": 96,
-    "descripcion": "Sapo espinoso / Sapo cordillerano · Cobertura biológica individualizada de Rhinella spinulosa levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 104,
+    "descripcion": "Catastro colaborativo IGV de Rhinella spinulosa (Sapo espinoso) (GBIF / Ciencia Comunitaria): 104 entidades en la Región Metropolitana (3 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2532,8 +2532,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_abejorro_comun_europeo_bombus_terrestris.geojson",
     "icono": "🐝",
     "geometria": "Puntos",
-    "totalEntidades": 470,
-    "descripcion": "Abejorro común europeo · Cobertura biológica individualizada de Bombus terrestris levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 471,
+    "descripcion": "Catastro colaborativo IGV de Bombus terrestris (Abejorro común) (GBIF / Ciencia Comunitaria): 471 entidades en la Región Metropolitana (1 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2548,8 +2548,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_abeja_melifera_apis_mellifera.geojson",
     "icono": "🐝",
     "geometria": "Puntos",
-    "totalEntidades": 103,
-    "descripcion": "Abeja melífera / Abeja doméstica · Cobertura biológica individualizada de Apis mellifera levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 552,
+    "descripcion": "Catastro colaborativo IGV de Apis mellifera (Abeja melífera) (GBIF / Ciencia Comunitaria): 552 entidades en la Región Metropolitana (25 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2564,8 +2564,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_chinita_arlequin_harmonia_axyridis.geojson",
     "icono": "🐞",
     "geometria": "Puntos",
-    "totalEntidades": 112,
-    "descripcion": "Chinita arlequín / Mariquita asiática · Cobertura biológica individualizada de Harmonia axyridis levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 480,
+    "descripcion": "Catastro colaborativo IGV de Harmonia axyridis (Chinita arlequín) (GBIF / Ciencia Comunitaria): 480 entidades en la Región Metropolitana (6 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2580,8 +2580,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_chinche_del_arce_boisea_trivittata.geojson",
     "icono": "🪲",
     "geometria": "Puntos",
-    "totalEntidades": 79,
-    "descripcion": "Chinche del arce · Cobertura biológica individualizada de Boisea trivittata levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 345,
+    "descripcion": "Catastro colaborativo IGV de Boisea trivittata (Chinche del arce) (GBIF / Ciencia Comunitaria): 345 entidades en la Región Metropolitana (4 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2596,8 +2596,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_arana_saltarina_gris_menemerus_semilimbatus.geojson",
     "icono": "🕷️",
     "geometria": "Puntos",
-    "totalEntidades": 31,
-    "descripcion": "Araña saltarina gris · Cobertura biológica individualizada de Menemerus semilimbatus levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 281,
+    "descripcion": "Catastro colaborativo IGV de Menemerus semilimbatus (Araña saltarina) (GBIF / Ciencia Comunitaria): 281 entidades en la Región Metropolitana (6 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2612,8 +2612,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_arana_tigre_scytodes_globula.geojson",
     "icono": "🕷️",
     "geometria": "Puntos",
-    "totalEntidades": 12,
-    "descripcion": "Araña tigre (Depredadora natural) · Cobertura biológica individualizada de Scytodes globula levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 136,
+    "descripcion": "Catastro colaborativo IGV de Scytodes globula (Araña tigre) (GBIF / Ciencia Comunitaria): 136 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -2628,8 +2628,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_arana_de_rincon_loxosceles_laeta.geojson",
     "icono": "🕷️",
     "geometria": "Puntos",
-    "totalEntidades": 23,
-    "descripcion": "Araña de rincón (Sicárida de cuidado) · Cobertura biológica individualizada de Loxosceles laeta levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
+    "totalEntidades": 189,
+    "descripcion": "Catastro colaborativo IGV de Loxosceles laeta (Araña de rincón) (GBIF / Ciencia Comunitaria): 189 entidades en la Región Metropolitana (3 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   }
 ];

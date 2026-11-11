@@ -1,50 +1,47 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-scripts/normalizar_especies_y_metadatos.py
------------------------------------------------------
-Implementa las directrices de Atlas para la Gestión Territorial:
-1. Elimina las 8 capas abstractas de calidad/metadatos de Darwin Core en GBIF.
-2. Agrega 52 capas biológicas individualizadas con presencia en la Comuna de Santiago y Barrio Brasil:
-   - Nombre formal: Nombre científico taxonómico (ej. Peumus boldus, Turdus falcklandii).
-   - Bajada / Subtipo: Nombre común cotidiano en Chile (ej. Boldo, Zorzal patagónico).
-3. Inyecta el perfil completo de metadatos y calidad de datos de Esquema Canónico VGI (los 17 atributos canónicos
-   más las propiedades meta_*), especificando explícitamente el método de adquisición:
-   - "Descarga Geofabrik OSM Dump (Región Metropolitana)" o "Consulta directa Overpass API (OSM)" para OSM.
-   - "Consulta directa GBIF Occurrence API / Ciencia Comunitaria (iNaturalist)" para GBIF.
-4. Cumple la RESTRICCIÓN ESTRICTA de Atlas para la Gestión Territorial: CERO mención a "Índice de Calidad (95.4%)" o WLC.
-5. Sincroniza simétricamente data/ y src/data/, y actualiza catalogo_vgi_descentralizado.js.
-"""
+Normaliza e integra de forma exhaustiva las 52 coberturas biológicas
+individualizadas (14 especies de flora urbana/esclerófila y 38 especies de fauna)
+para toda la Región Metropolitana (RM) y Barrio Brasil.
 
-import os
-import sys
+Fuentes integradas sin duplicados por especie:
+  1. Caché API GBIF exhaustiva RM (/tmp/gbif_rm_cache/{slug}.json), cubriendo
+     sinónimos taxonómicos verificados (Daptrius chimango filtrando D. megalopterus,
+     Troglodytes musculus/aedon, Vachellia/Acacia caven, Schinus areira/molle,
+     Platanus orientalis) y recorte estricto al polígono oficial RM.
+  2. Respaldo local verificado (`src/data/gbif_rm_fallback.geojson`).
+  3. Árboles mapeados en OpenStreetMap (`/tmp/pbf_rm_cache/points.pkl`, `natural=tree`)
+     con clasificación botánica estricta (`species` prioritario sobre `genus`/`species:es`)
+     para enriquecer las 14 especies arbóreas (en especial Platanus orientalis,
+     Jubaea chilensis, Jacaranda mimosifolia, Schinus areira y Quillaja saponaria).
+
+Garantías:
+  - Recorte estricto contra el polígono regional RM (`ide_censo2024_regional.geojson`).
+  - Esquema completo de 17 atributos + metadatos ISO (`vgi_utils`).
+  - Sincronización de `src/data/`, `data/` y `catalogo_vgi_descentralizado.js`.
+"""
+import argparse
 import json
-import re
-import math
-from datetime import datetime
+import os
+import pickle
+import sys
+import time
+from concurrent.futures import ProcessPoolExecutor
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(ROOT_DIR, 'data')
-SRC_DATA_DIR = os.path.join(ROOT_DIR, 'src', 'data')
-JS_CATALOGO = os.path.join(ROOT_DIR, 'src', 'js', 'modulos', 'catalogo_vgi_descentralizado.js')
-GBIF_FALLBACK = os.path.join(SRC_DATA_DIR, 'gbif_barrio_brasil_fallback.geojson')
+import shapely
 
-STGO_BBOX = [-70.6923, -33.4785, -70.6251, -33.4257]
-BRASIL_BBOX = [-70.6720, -33.4490, -70.6580, -33.4380]
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
 
-# 8 Capas abstractas a eliminar
-CAPAS_ABSTRACTAS_A_ELIMINAR = [
-    'vgi_nombre_cientifico_del_taxon',
-    'vgi_nombre_comun_o_vernaculo_en_chile_darwin_core',
-    'vgi_tipo_de_registro_biologico_human_observation',
-    'vgi_incertidumbre_posicional_metrica_de_coordenada_gps',
-    'vgi_observador_ciudadano',
-    'vgi_banderas_de_calidad_espacial_y_taxonomica_darwin_core_issues',
-    'vgi_identificador_persistente_del_dataset_publicador_uuid',
-    'vgi_jerarquia_taxonomica_del_especimen_especie_genero_familia'
-]
+import vgi_utils  # noqa: E402
 
-# Catálogo completo de 52 especies individualizadas
+BASE = os.path.dirname(SCRIPT_DIR)
+DATA_SRC = os.path.join(BASE, "src", "data")
+GBIF_CACHE_DIR = "/tmp/gbif_rm_cache"
+PBF_POINTS_PKL = "/tmp/pbf_rm_cache/points.pkl"
+FALLBACK_GEOJSON = os.path.join(DATA_SRC, "gbif_rm_fallback.geojson")
+
 SPECIES_CATALOG = [
     # FLORA NATIVA Y PATRIMONIAL (14 especies)
     {
@@ -627,396 +624,342 @@ SPECIES_CATALOG = [
     }
 ]
 
-def main():
-    print("═" * 78)
-    print("  NORMALIZACIÓN ATLAS PARA LA GESTIÓN TERRITORIAL: ESPECIES GBIF INDIVIDUALIZADAS Y PERFIL VGI")
-    print("═" * 78)
+# Sinónimos aceptados para el cruce en gbif_rm_fallback.geojson y GBIF
+SPECIES_SYNONYMS = {
+    "Daptrius chimango": {"daptrius chimango", "milvago chimango", "phalcoboenus chimango"},
+    "Troglodytes musculus": {"troglodytes musculus", "troglodytes aedon"},
+    "Vachellia caven": {"vachellia caven", "acacia caven"},
+    "Schinus areira": {"schinus areira", "schinus molle"},
+    "Platanus orientalis": {"platanus orientalis", "platanus × hispanica", "platanus x hispanica", "platanus x acerifolia"},
+}
 
-    # 1. Eliminar archivos GeoJSON de las 8 capas abstractas de calidad
-    print("\n[1/5] Eliminando archivos GeoJSON de capas abstractas Darwin Core...")
-    for slug in CAPAS_ABSTRACTAS_A_ELIMINAR:
-        for folder in [DATA_DIR, SRC_DATA_DIR]:
-            fpath = os.path.join(folder, f"capa_{slug}.geojson")
-            if os.path.exists(fpath):
-                os.remove(fpath)
-                print(f"  ✓ Eliminado: {fpath}")
 
-    # 2. Cargar base de datos GBIF Fallback
-    print(f"\n[2/5] Cargando fallback biológico desde {GBIF_FALLBACK}...")
-    with open(GBIF_FALLBACK, 'r', encoding='utf-8') as f:
-        gbif_raw = json.load(f)
-    features_gbif = gbif_raw.get('features', [])
-    print(f"  Total de observaciones biológicas disponibles: {len(features_gbif):,}")
+def _es_daptrius_chimango_valido(props: dict) -> bool:
+    s = " ".join([
+        str(props.get("especie") or ""),
+        str(props.get("scientificName") or ""),
+        str(props.get("nombreComun") or ""),
+        str(props.get("nombre") or ""),
+    ]).lower()
+    if "megalopterus" in s or "mountain caracara" in s or "tiuque cordillerano" in s:
+        return False
+    return True
 
-    # 3. Extraer y generar capas individualizadas para las 52 especies
-    print("\n[3/5] Extrayendo y generando capas de especies individualizadas...")
-    catalogo_especies_generadas = []
 
+def _match_osm_tree_species(tags: dict) -> list:
+    """Devuelve la(s) especie(s) científica(s) canónica(s) del catálogo correspondientes a un nodo OSM natural=tree."""
+    if tags.get("natural") != "tree":
+        return []
+    sp = str(tags.get("species") or "").strip().lower()
+    gen = str(tags.get("genus") or "").strip().lower()
+    es = str(tags.get("species:es") or "").strip().lower()
+    nm = str(tags.get("name") or "").strip().lower()
+
+    # 1) Prioridad absoluta a la etiqueta taxonómica `species` cuando existe
+    if sp:
+        if "quillaja saponaria" in sp: return ["Quillaja saponaria"]
+        if "peumus boldus" in sp: return ["Peumus boldus"]
+        if "cryptocarya alba" in sp: return ["Cryptocarya alba"]
+        if "maytenus boaria" in sp: return ["Maytenus boaria"]
+        if "lithraea caustica" in sp: return ["Lithraea caustica"]
+        if "jubaea chilensis" in sp: return ["Jubaea chilensis"]
+        if "schinus areira" in sp or "schinus molle" in sp: return ["Schinus areira"]
+        if "platanus" in sp: return ["Platanus orientalis"]
+        if "jacaranda mimosifolia" in sp: return ["Jacaranda mimosifolia"]
+        if "nicotiana glauca" in sp: return ["Nicotiana glauca"]
+        if "ailanthus altissima" in sp: return ["Ailanthus altissima"]
+        if "vachellia caven" in sp or "acacia caven" in sp: return ["Vachellia caven"]
+        if "kageneckia oblonga" in sp: return ["Kageneckia oblonga"]
+        if "colliguaja odorifera" in sp: return ["Colliguaja odorifera"]
+        # Especie explícita distinta en OSM (p.ej. Acer pseudoplatanus, Acacia dealbata, Gleditsia): no mezclar
+        return []
+
+    # 2) Sin `species`: usar `genus` cuando identifica inequívocamente al taxon o combina con nombre común
+    if gen:
+        if "quillaja" in gen: return ["Quillaja saponaria"]
+        if "peumus" in gen: return ["Peumus boldus"]
+        if "cryptocarya" in gen: return ["Cryptocarya alba"]
+        if "maytenus" in gen: return ["Maytenus boaria"]
+        if "lithraea" in gen: return ["Lithraea caustica"]
+        if "jubaea" in gen: return ["Jubaea chilensis"]
+        if "schinus" in gen and "polygam" not in es and "latifol" not in es: return ["Schinus areira"]
+        if "platanus" in gen: return ["Platanus orientalis"]
+        if "jacaranda" in gen: return ["Jacaranda mimosifolia"]
+        if "nicotiana" in gen: return ["Nicotiana glauca"]
+        if "ailanthus" in gen: return ["Ailanthus altissima"]
+        if "vachellia" in gen or ("acacia" in gen and "espino" in es): return ["Vachellia caven"]
+        if "kageneckia" in gen: return ["Kageneckia oblonga"]
+        if "colliguaja" in gen: return ["Colliguaja odorifera"]
+        return []
+
+    # 3) Respaldo solo por `species:es` / `name` cuando no hay ni `species` ni `genus`
+    txt = f"{es} | {nm}"
+    if "quillay" in txt: return ["Quillaja saponaria"]
+    if "boldo" in txt: return ["Peumus boldus"]
+    if "peumo" in txt: return ["Cryptocarya alba"]
+    if "maitén" in txt or "maiten" in txt: return ["Maytenus boaria"]
+    if "litre" in txt: return ["Lithraea caustica"]
+    if "palma chilena" in txt: return ["Jubaea chilensis"]
+    if "pimiento" in txt and "falso plátano" not in txt: return ["Schinus areira"]
+    if "plátano oriental" in txt or "platano oriental" in txt or "plátano de sombra" in txt: return ["Platanus orientalis"]
+    if "jacarand" in txt: return ["Jacaranda mimosifolia"]
+    if "tabaco moruno" in txt: return ["Nicotiana glauca"]
+    if "árbol del cielo" in txt or "arbol del cielo" in txt: return ["Ailanthus altissima"]
+    if "espino" in txt and "tres espinas" not in txt: return ["Vachellia caven"]
+    if "bollén" in txt or "bollen" in txt: return ["Kageneckia oblonga"]
+    if "colliguay" in txt: return ["Colliguaja odorifera"]
+    return []
+
+
+def _cargar_osm_trees_por_especie() -> dict:
+    por_especie = {sp["sci"]: [] for sp in SPECIES_CATALOG[:14]}
+    if not os.path.exists(PBF_POINTS_PKL):
+        return por_especie
+    pts = pickle.load(open(PBF_POINTS_PKL, "rb"))
+    for ot, clean_id, wkb, tags in pts:
+        matches = _match_osm_tree_species(tags)
+        if not matches:
+            continue
+        g = shapely.from_wkb(wkb)
+        if g.is_empty:
+            continue
+        c = g.centroid
+        for sci in matches:
+            por_especie[sci].append({
+                "id": f"OSM/{ot}/{clean_id}",
+                "lat": round(c.y, 6),
+                "lon": round(c.x, 6),
+                "tags": tags,
+            })
+    return por_especie
+
+
+def _cargar_fallback_por_especie() -> dict:
+    por_especie = {sp["sci"]: [] for sp in SPECIES_CATALOG}
+    if not os.path.exists(FALLBACK_GEOJSON):
+        return por_especie
+    syn_to_sci = {}
     for sp in SPECIES_CATALOG:
-        sci = sp['sci']
-        comun = sp['comun']
-        comun_corto = sp['comun_corto']
-        slug = sp['slug']
-        icono = sp['icono']
-        genero = sp['genero']
-        clase = sp['clase']
-        reino = sp['reino']
-        familia = sp['familia']
+        sci = sp["sci"]
+        syn_to_sci[sci.lower()] = sci
+        for syn in SPECIES_SYNONYMS.get(sci, ()):
+            syn_to_sci[syn] = sci
 
-        # Extraer entidades coincidentes
-        matches_stgo = []
-        matches_rm = []
-        sci_words = sci.lower().split()
-        genus_low = genero.lower()
-
-        for feat in features_gbif:
-            props = feat.get('properties', {})
-            f_sci = (props.get('especie') or props.get('scientificName') or '').lower()
-            f_gen = (props.get('genero') or '').lower()
-            
-            is_match = False
-            if sci.lower() in f_sci:
-                is_match = True
-            elif f_gen == genus_low and len(sci_words) > 1 and sci_words[1] in f_sci:
-                is_match = True
-            elif sci == 'Daptrius chimango' and ('daptrius' in f_sci or 'chimango' in f_sci or f_gen == 'daptrius'):
-                is_match = True
-            elif sci == 'Platanus orientalis' and ('platanus' in f_sci or f_gen == 'platanus'):
-                is_match = True
-            elif sci == 'Jacaranda mimosifolia' and ('jacaranda' in f_sci or f_gen == 'jacaranda'):
-                is_match = True
-
-            if is_match:
-                coords = feat.get('geometry', {}).get('coordinates', [])
-                if len(coords) >= 2:
-                    lon, lat = coords[0], coords[1]
-                    matches_rm.append(feat)
-                    if STGO_BBOX[0] <= lon <= STGO_BBOX[2] and STGO_BBOX[1] <= lat <= STGO_BBOX[3]:
-                        matches_stgo.append(feat)
-
-        # Usar preferentemente las entidades de Santiago; si son escasas (< 30), complementar con RM
-        if len(matches_stgo) >= 30:
-            target_feats = matches_stgo
-        else:
-            # Combinar asegurando unicidad
-            target_feats = matches_stgo + [f for f in matches_rm if f not in matches_stgo]
-
-        # Normalizar cada entidad con los 17 atributos canónicos + perfil metadatos
-        features_salida = []
-        for i, feat in enumerate(target_feats):
-            raw_p = feat.get('properties', {})
-            coords = feat.get('geometry', {}).get('coordinates', [0, 0])
-            lon, lat = coords[0], coords[1]
-            
-            en_brasil = (BRASIL_BBOX[0] <= lon <= BRASIL_BBOX[2] and BRASIL_BBOX[1] <= lat <= BRASIL_BBOX[3])
-            en_stgo = (STGO_BBOX[0] <= lon <= STGO_BBOX[2] and STGO_BBOX[1] <= lat <= STGO_BBOX[3])
-            
-            if en_brasil:
-                loc_txt = "Barrio Brasil, Comuna de Santiago, Región Metropolitana"
-            elif en_stgo:
-                loc_txt = "Comuna de Santiago, Región Metropolitana"
-            else:
-                loc_txt = "Región Metropolitana de Santiago, Chile"
-
-            occ_id = raw_p.get('gbifID') or raw_p.get('id_vgi') or f"{slug}_{i+1}"
-            if not str(occ_id).startswith('GBIF/'):
-                id_vgi = f"GBIF/occ/{occ_id}"
-            else:
-                id_vgi = str(occ_id)
-
-            fecha_reg = raw_p.get('fecha_registro') or raw_p.get('fecha') or "2026-03-15"
-
-            # Esquema de 17 atributos canónicos de Esquema Canónico VGI
-            props_canonicas = {
-                'id_vgi': id_vgi,
-                'categoria': 'CAT-08 (Biodiversidad Urbana)',
-                'subtipo': comun,
-                'nombre': sci,
-                'operador': 'iNaturalist / Red de Ciencia Comunitaria',
-                'direccion': loc_txt,
-                'accesibilidad': 'Espacio Público Abierto',
-                'fuente': 'GBIF / iNaturalist',
-                'metodo_adquisicion': 'Consulta directa GBIF Occurrence API / Ciencia Comunitaria (iNaturalist)',
-                'licencia': 'Creative Commons CC BY-NC 4.0 / ODbL 1.0',
-                'coordenadas': [lon, lat],
-                'geom_wkt': f"POINT({lon} {lat})",
-                'bbox': [lon, lat, lon, lat],
-                'fecha_registro': fecha_reg,
-                'superficie_m2': 0.0,
-                'superficie_ha': 0.0,
-                'srs_superficie': 'EPSG:32719',
-                # Atributos taxonómicos específicos
-                'especie': sci,
-                'scientificName': raw_p.get('scientificName') or f"{sci}",
-                'nombreComun': comun_corto,
-                'reino': reino,
-                'clase': clase,
-                'familia': familia,
-                'genero': genero,
-                'issues': raw_p.get('issues') or [],
-                # Perfil de metadatos/calidad (ISO 19115 / IDE Chile)
-                'meta_capa_id': slug,
-                'meta_titulo': f"{sci} ({comun_corto})",
-                'meta_institucion': 'GBIF Chile / Ministerio del Medio Ambiente (MMA)',
-                'meta_ministerio': 'Ministerio del Medio Ambiente / Infraestructura de Datos Espaciales',
-                'meta_grupo': 'socioambiental',
-                'meta_tipo_fuente': 'Colaborativa VGI',
-                'meta_temporalidad': '2026',
-                'meta_licencia': 'CC BY-NC 4.0 / ODbL 1.0',
-                'meta_cita_apa': f"Atlas para la Gestión Territorial. (2026). {sci} ({comun_corto}). GBIF / iNaturalist.",
-                'meta_crs': 'EPSG:4326 (WGS 84)',
-                'meta_contacto': 'tucorreoelectronico@gmail.com',
-                'meta_url_servicio': 'https://atlasvgiuah.netlify.app/'
-            }
-
-            features_salida.append({
-                'type': 'Feature',
-                'id': id_vgi,
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': [lon, lat]
-                },
-                'properties': props_canonicas
-            })
-
-        # GeoJSON FeatureCollection con metadatos de cabecera
-        geojson_doc = {
-            'type': 'FeatureCollection',
-            'name': f"Capa VGI: {sci} ({comun_corto})",
-            'crs': {
-                'type': 'name',
-                'properties': { 'name': 'urn:ogc:def:crs:OGC:1.3:CRS84' }
-            },
-            'metadata': {
-                'estandar': 'ISO 19115-1:2014 / Perfil IDE Chile SNIT v2.0',
-                'fileIdentifier': f"urn:uuid:vgi-cl-gbif-{slug.replace('vgi_', '')}",
-                'title': f"{sci} ({comun_corto})",
-                'organisationName': 'GBIF Chile / Ministerio del Medio Ambiente (MMA)',
-                'ministerio': 'Ministerio del Medio Ambiente',
-                'legalConstraints': 'CC BY-NC 4.0 / ODbL 1.0',
-                'citation': f"Atlas para la Gestión Territorial. (2026). {sci} ({comun_corto}).",
-                'referenceSystemIdentifier': 'EPSG:4326',
-                'contactEmail': 'tucorreoelectronico@gmail.com',
-                'serviceUrl': 'https://atlasvgiuah.netlify.app/',
-                'dateStamp': datetime.now().strftime('%Y-%m-%d'),
-                'total_entidades': len(features_salida)
-            },
-            'features': features_salida
-        }
-
-        # Guardar archivo simétricamente
-        f_rel = f"data/capa_{slug}.geojson"
-        for folder in [DATA_DIR, SRC_DATA_DIR]:
-            f_abs = os.path.join(folder, f"capa_{slug}.geojson")
-            with open(f_abs, 'w', encoding='utf-8') as out_f:
-                json.dump(geojson_doc, out_f, ensure_ascii=False)
-
-        catalogo_especies_generadas.append({
-            'id': slug,
-            'tag': f"dwc:scientificName={sci}",
-            'nombre': sci,
-            'nombreCorto': f"{sci} ({comun_corto})",
-            'subtipo': comun,
-            'categoriaVGI': 'CAT-08',
-            'dimension': 'socioambiental',
-            'institucion': 'GBIF Chile / Ministerio del Medio Ambiente (MMA)',
-            'archivoLocal': f_rel,
-            'icono': icono,
-            'geometria': 'Puntos',
-            'totalEntidades': len(features_salida),
-            'descripcion': f"{comun} · Cobertura biológica individualizada de {sci} levantada por ciencia comunitaria e iNaturalist en Santiago y Barrio Brasil.",
-            'tipo': 'Colaborativa VGI'
+    fb = json.load(open(FALLBACK_GEOJSON, encoding="utf-8"))
+    for ft in fb.get("features", []):
+        p = ft.get("properties") or {}
+        g = ft.get("geometry")
+        if not g or g.get("type") != "Point":
+            continue
+        sp_raw = str(p.get("especie") or "").strip().lower()
+        sci_raw = str(p.get("scientificName") or "").strip().lower()
+        target = syn_to_sci.get(sp_raw)
+        if not target:
+            for syn, can in syn_to_sci.items():
+                if sci_raw.startswith(syn):
+                    target = can
+                    break
+        if not target:
+            continue
+        if target == "Daptrius chimango" and not _es_daptrius_chimango_valido(p):
+            continue
+        coords = g.get("coordinates") or []
+        if len(coords) < 2:
+            continue
+        por_especie[target].append({
+            "gbifID": p.get("gbifID") or str(p.get("id_vgi") or "").replace("GBIF/", ""),
+            "lon": coords[0],
+            "lat": coords[1],
+            "eventDate": str(p.get("fecha") or p.get("fecha_registro") or "2026")[:10],
+            "datasetName": p.get("operador") or "GBIF / Ciencia Comunitaria",
+            "recordedBy": "",
+            "locality": p.get("direccion") or "",
+            "scientificName": p.get("scientificName") or target,
+            "license": p.get("licencia") or "CC BY-NC 4.0",
         })
-        print(f"  ✓ [{len(features_salida):4d} ent] {sci:26} ({comun_corto}) -> capa_{slug}.geojson")
+    return por_especie
 
-    # 4. Normalizar todas las capas VGI restantes (OSM) con los 17 atributos y metadatos
-    print("\n[4/5] Normalizando perfil canónico de 17 atributos y adquisición en capas VGI (OSM)...")
-    with open(JS_CATALOGO, 'r', encoding='utf-8') as f:
-        js_text = f.read()
 
-    js_data_str = js_text[js_text.find('['):js_text.rfind(']')+1]
-    catalogo_existente = json.loads(js_data_str)
+_REFS = None
 
-    # Filtrar capas existentes para remover las 8 abstractas y actualizar las de flora que ahora son especies
-    slugs_especies = {sp['slug'] for sp in SPECIES_CATALOG}
-    catalogo_filtrado = []
 
-    for item in catalogo_existente:
-        cid = item.get('id')
-        if cid in CAPAS_ABSTRACTAS_A_ELIMINAR:
-            continue
-        if cid in slugs_especies:
-            continue
-        catalogo_filtrado.append(item)
+def _get_refs():
+    global _REFS
+    if _REFS is None:
+        _REFS = vgi_utils.cargar_poligonos_referencia()
+    return _REFS
 
-    print(f"  Capas VGI base conservadas (no-especies): {len(catalogo_filtrado)}")
 
-    # Normalizar archivos GeoJSON de capas OSM
-    for item in catalogo_filtrado:
-        f_local = item.get('archivoLocal')
-        if not f_local:
-            continue
-        fname = os.path.basename(f_local)
-        p_src = os.path.join(SRC_DATA_DIR, fname)
-        p_data = os.path.join(DATA_DIR, fname)
+def _procesar_especie(args):
+    sp, entry, gbif_recs, fb_recs, osm_trees = args
+    refs = _get_refs()
+    sci = sp["sci"]
+    slug = sp["slug"]
+    comun = sp["comun"]
+    comun_corto = sp["comun_corto"]
+    reino = sp["reino"]
+    clase = sp["clase"]
+    familia = sp["familia"]
+    genero = sp["genero"]
 
-        if not os.path.exists(p_src):
-            continue
+    titulo = entry["nombre"]
+    cat = entry["categoriaVGI"]
+    institucion = entry.get("institucion") or "GBIF / iNaturalist / eBird"
+    grupo = entry.get("dimension") or "socioambiental"
+    filename = os.path.basename(entry["archivoLocal"])
+    cita_apa = f"Atlas para la Gestión Territorial. (2026). {titulo} ({sci}). GBIF / OpenStreetMap."
 
-        with open(p_src, 'r', encoding='utf-8') as f:
-            gj = json.load(f)
+    seen_gbif = set()
+    features = []
+    br_count = 0
 
-        feats = gj.get('features', [])
-        nombre_capa = item.get('nombre', fname)
-        categoria = item.get('categoriaVGI', 'CAT-01')
-        dimension = item.get('dimension', 'sociourbana')
-        institucion = item.get('institucion', 'Comunidad OpenStreetMap (VGI)')
-        tag = item.get('tag', 'osm')
-
-        # Determinar origen: Geofabrik dump vs Overpass live
-        es_geofabrik = any(k in tag for k in ['highway', 'building', 'landuse', 'natural', 'boundary', 'leisure', 'surface']) or 'asfalto' in fname or 'residencial' in fname
-        if es_geofabrik:
-            metodo = 'Descarga Geofabrik OSM Dump (Región Metropolitana)'
-            fuente_str = 'OpenStreetMap (Geofabrik RM)'
-        else:
-            metodo = 'Consulta directa Overpass API (OSM)'
-            fuente_str = 'OpenStreetMap (Overpass API)'
-
-        feats_normalizadas = []
-        for idx, feat in enumerate(feats):
-            props = feat.get('properties', {})
-            geom = feat.get('geometry') or {}
-            coords = geom.get('coordinates', [0, 0])
-            
-            # Extraer centroide o coordenadas representativas
-            lon, lat = 0.0, 0.0
-            if geom.get('type') == 'Point' and len(coords) >= 2:
-                lon, lat = coords[0], coords[1]
-            elif geom.get('type') in ['Polygon', 'MultiPolygon', 'LineString', 'MultiLineString']:
-                # Calcular centroide aproximado
-                all_coords = []
-                def extract_coords(c):
-                    if isinstance(c, (list, tuple)) and len(c) >= 2 and isinstance(c[0], (int, float)):
-                        all_coords.append(c)
-                    elif isinstance(c, (list, tuple)):
-                        for sub in c: extract_coords(sub)
-                extract_coords(coords)
-                if all_coords:
-                    lon = sum(c[0] for c in all_coords) / len(all_coords)
-                    lat = sum(c[1] for c in all_coords) / len(all_coords)
-
-            fid = props.get('id_vgi') or props.get('id') or props.get('osm_id') or f"OSM/{item['id']}/{idx+1}"
-            if not str(fid).startswith('OSM/'):
-                fid = f"OSM/{fid}"
-
-            nombre_ent = props.get('nombre') or props.get('name') or nombre_capa
-            subtipo_ent = props.get('subtipo') or props.get('descriptor_vgi') or item.get('nombreCorto') or nombre_capa
-            operador = props.get('operador') or props.get('operator') or institucion
-            dir_ent = props.get('direccion') or props.get('addr:street') or 'Comuna de Santiago, Región Metropolitana'
-            acc_ent = props.get('accesibilidad') or props.get('wheelchair') or 'Acceso Público'
-            lic_ent = props.get('licencia') or 'Open Database License (ODbL) 1.0'
-            fecha_reg = props.get('fecha_registro') or '2026-09-27'
-
-            clean_props = {
-                'id_vgi': str(fid),
-                'categoria': categoria,
-                'subtipo': subtipo_ent,
-                'nombre': nombre_ent,
-                'operador': operador,
-                'direccion': dir_ent,
-                'accesibilidad': acc_ent,
-                'fuente': fuente_str,
-                'metodo_adquisicion': metodo,
-                'licencia': lic_ent,
-                'coordenadas': [lon, lat],
-                'geom_wkt': props.get('geom_wkt') or f"POINT({lon} {lat})",
-                'bbox': props.get('bbox') or [lon, lat, lon, lat],
-                'fecha_registro': fecha_reg,
-                'superficie_m2': float(props.get('superficie_m2') or 0.0),
-                'superficie_ha': float(props.get('superficie_ha') or 0.0),
-                'srs_superficie': 'EPSG:32719',
-                # Perfil metadatos (ISO 19115 / IDE Chile)
-                'meta_capa_id': item['id'],
-                'meta_titulo': nombre_capa,
-                'meta_institucion': institucion,
-                'meta_ministerio': 'Sector Público / Comunitario',
-                'meta_grupo': dimension,
-                'meta_tipo_fuente': 'Colaborativa VGI',
-                'meta_temporalidad': '2026',
-                'meta_licencia': 'ODbL 1.0 (Open Data Commons)',
-                'meta_cita_apa': f"Atlas para la Gestión Territorial. (2026). {nombre_capa}. OpenStreetMap.",
-                'meta_crs': 'EPSG:4326 (WGS 84)',
-                'meta_contacto': 'tucorreoelectronico@gmail.com',
-                'meta_url_servicio': 'https://atlasvgiuah.netlify.app/'
-            }
-
-            feats_normalizadas.append({
-                'type': 'Feature',
-                'id': str(fid),
-                'geometry': geom,
-                'properties': clean_props
-            })
-
-        gj['metadata'] = {
-            'estandar': 'ISO 19115-1:2014 / Perfil IDE Chile SNIT v2.0',
-            'fileIdentifier': f"urn:uuid:vgi-cl-osm-{item['id'].replace('vgi_', '')}",
-            'title': nombre_capa,
-            'organisationName': institucion,
-            'legalConstraints': 'Open Database License (ODbL) 1.0',
-            'citation': f"Atlas para la Gestión Territorial. (2026). {nombre_capa}.",
-            'referenceSystemIdentifier': 'EPSG:4326',
-            'contactEmail': 'tucorreoelectronico@gmail.com',
-            'serviceUrl': 'https://atlasvgiuah.netlify.app/',
-            'dateStamp': datetime.now().strftime('%Y-%m-%d'),
-            'total_entidades': len(feats_normalizadas)
+    def emit_point(id_igv, lon_f, lat_f, operador, localidad, fuente, metodo, licencia, fecha, sci_name, origen_dato, extra_tags=None):
+        nonlocal br_count
+        res = vgi_utils.procesar_geometria({"type": "Point", "coordinates": [lon_f, lat_f]}, refs)
+        if not res:
+            return
+        geom_clean, meta_g, en_br = res
+        if en_br:
+            br_count += 1
+        extras = {
+            "dwc_scientificName": sci,
+            "taxon_verbatim": sci_name,
+            "nombre_comun": comun_corto,
+            "reino": reino,
+            "clase": clase,
+            "familia": familia,
+            "genero": genero,
+            "origen_datos": origen_dato,
         }
-        gj['features'] = feats_normalizadas
+        if extra_tags:
+            for k in ("species:es", "height", "circumference", "diameter_crown", "addr:street"):
+                if extra_tags.get(k):
+                    extras[k.replace(":", "_")] = str(extra_tags[k])
+        props = vgi_utils.construir_propiedades_vgi(
+            id_igv=id_igv,
+            categoria=cat,
+            subtipo=f"{comun_corto} ({sci})",
+            nombre=f"{comun_corto} — {sci}",
+            operador=operador,
+            direccion=localidad or "Región Metropolitana de Santiago",
+            accesibilidad="Observación Ciencia Ciudadana / Abierta" if origen_dato == "GBIF" else "Arborización Urbana / Espacio Público",
+            fuente=fuente,
+            metodo_adquisicion=metodo,
+            licencia=licencia,
+            fecha_registro=fecha,
+            meta_g=meta_g,
+            capa_id=slug,
+            titulo=titulo,
+            institucion=institucion,
+            grupo=grupo,
+            cita_apa=cita_apa,
+            extras=extras,
+        )
+        features.append({"type": "Feature", "geometry": geom_clean, "properties": props})
 
-        for p_dest in [p_src, p_data]:
-            with open(p_dest, 'w', encoding='utf-8') as f:
-                json.dump(gj, f, ensure_ascii=False)
+    # 1. Registros GBIF caché exhaustiva RM + respaldo RM
+    for rec in (gbif_recs + fb_recs):
+        gid = str(rec.get("gbifID") or "").strip()
+        if not gid or gid in seen_gbif:
+            continue
+        seen_gbif.add(gid)
+        lon, lat = rec.get("lon"), rec.get("lat")
+        if lon is None or lat is None:
+            continue
+        op = str(rec.get("datasetName") or "GBIF / Ciencia Comunitaria").strip()
+        loc = str(rec.get("locality") or "").strip()
+        lic = str(rec.get("license") or "CC BY-NC 4.0").strip()
+        fec = str(rec.get("eventDate") or "2026-11-10")[:10]
+        emit_point(
+            id_igv=f"GBIF/{gid}",
+            lon_f=float(lon),
+            lat_f=float(lat),
+            operador=op,
+            localidad=loc,
+            fuente="GBIF Occurrence API (Región Metropolitana Completa)",
+            metodo="Consulta exhaustiva por cuadrantes API GBIF + Recorte RM Oficial",
+            licencia=lic,
+            fecha=fec,
+            sci_name=str(rec.get("scientificName") or sci),
+            origen_dato="GBIF",
+        )
 
-        item['totalEntidades'] = len(feats_normalizadas)
+    # 2. Árboles OSM (natural=tree) para las especies vegetales
+    seen_osm = set()
+    for t in osm_trees:
+        oid = t["id"]
+        if oid in seen_osm:
+            continue
+        seen_osm.add(oid)
+        tags = t.get("tags") or {}
+        emit_point(
+            id_igv=oid,
+            lon_f=float(t["lon"]),
+            lat_f=float(t["lat"]),
+            operador=str(tags.get("operator") or "Comunidad OpenStreetMap"),
+            localidad=str(tags.get("addr:street") or "Arborización Urbana RM"),
+            fuente="OpenStreetMap (natural=tree · Geofabrik Chile PBF)",
+            metodo="Extracción botánica OSM (species/genus) + Recorte RM Oficial",
+            licencia="ODbL 1.0 (Open Data Commons)",
+            fecha=str(tags.get("check_date") or "2026-11-10")[:10],
+            sci_name=str(tags.get("species") or sci),
+            origen_dato="OSM_natural_tree",
+            extra_tags=tags,
+        )
 
-    # 5. Consolidar el nuevo catálogo VGI descentralizado completo
-    print("\n[5/5] Escribiendo nuevo catalogo_vgi_descentralizado.js con las 52 especies...")
-    # Ensamblar: capas OSM base + especies individualizadas
-    catalogo_final = catalogo_filtrado + catalogo_especies_generadas
+    meta_header = {
+        "capa_id": slug,
+        "titulo": titulo,
+        "especie_cientifica": sci,
+        "total_rm": len(features),
+        "total_barrio_brasil": br_count,
+        "total_gbif": len(seen_gbif),
+        "total_osm_tree": len(seen_osm),
+        "generado": "2026-11-10",
+    }
+    vgi_utils.escribir_capa_geojson(filename, features, metadata=meta_header)
+    return slug, sci, len(features), br_count, len(seen_gbif), len(seen_osm)
 
-    print(f"  Total de capas en nuevo catálogo VGI: {len(catalogo_final)}")
-    print(f"  - Capas OSM comunitarias: {len(catalogo_filtrado)}")
-    print(f"  - Especies individualizadas: {len(catalogo_especies_generadas)}")
 
-    contenido_js = f"""/**
- * catalogo_vgi_descentralizado.js
- * -------------------------------------------------------------
- * Catálogo descentralizado de Información Geográfica Voluntaria (VGI).
- * Total de {len(catalogo_final)} coberturas espaciales independientes en 100% Español.
- *
- * Incluye:
- * - {len(catalogo_especies_generadas)} especies biológicas individualizadas con presencia en la Comuna de Santiago
- *   y Barrio Brasil (con nombre taxonómico y nombre común chileno cotidiano).
- * - Coberturas comunitarias de OpenStreetMap normalizadas según método de adquisición
- *   (Geofabrik OSM Dump RM vs. Overpass API en vivo).
- * - Perfil canónico de 17 atributos y metadatos espaciales (ISO 19115 / IDE Chile).
- *
- * Atlas para la Gestión Territorial: Atlas para la Gestión Territorial | Municipio de Santiago y Barrio Brasil.
- */
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--cached-only", action="store_true", help="Procesa solo especies ya presentes en /tmp/gbif_rm_cache/")
+    args = parser.parse_args()
 
-const CATALOGO_VGI_DESCENTRALIZADO = {json.dumps(catalogo_final, indent=2, ensure_ascii=False)};
+    t0 = time.time()
+    _, _, cat_entries = vgi_utils.cargar_catalogo_vgi()
+    entry_by_id = {e["id"]: e for e in cat_entries}
 
-if (typeof window !== 'undefined') {{
-  window.CATALOGO_VGI_DESCENTRALIZADO = CATALOGO_VGI_DESCENTRALIZADO;
-}}
-"""
+    osm_by_sci = _cargar_osm_trees_por_especie()
+    print(f"[OSM Trees] Cargadas 14 especies arbóreas OSM (total={sum(len(v) for v in osm_by_sci.values())})", flush=True)
+    fb_by_sci = _cargar_fallback_por_especie()
+    print(f"[Fallback] Cargado gbif_rm_fallback.geojson (total={sum(len(v) for v in fb_by_sci.values())})", flush=True)
 
-    with open(JS_CATALOGO, 'w', encoding='utf-8') as f:
-        f.write(contenido_js)
+    tasks = []
+    for sp in SPECIES_CATALOG:
+        slug = sp["slug"]
+        sci = sp["sci"]
+        cache_file = os.path.join(GBIF_CACHE_DIR, f"{slug}.json")
+        if args.cached_only and not os.path.exists(cache_file):
+            continue
+        gbif_recs = json.load(open(cache_file, encoding="utf-8")) if os.path.exists(cache_file) else []
+        tasks.append((sp, entry_by_id[slug], gbif_recs, fb_by_sci.get(sci, []), osm_by_sci.get(sci, [])))
 
-    print("  ✓ Archivo catalogo_vgi_descentralizado.js guardado exitosamente.")
-    print("═" * 78)
-    print("✨ NORMALIZACIÓN COMPLETADA CON ÉXITO.")
-    print("═" * 78)
+    print(f"[BUILD] Procesando {len(tasks)} especies en paralelo...", flush=True)
+    actualizaciones = {}
+    with ProcessPoolExecutor(max_workers=4) as pool:
+        for i, (slug, sci, n_rm, n_br, n_gbif, n_osm) in enumerate(pool.map(_procesar_especie, tasks), 1):
+            actualizaciones[slug] = {
+                "totalEntidades": n_rm,
+                "rm_count": n_rm,
+                "br_count": n_br,
+                "geometria": "Puntos",
+            }
+            print(f"[{i:02d}/{len(tasks):02d}] {sci:30s} | RM={n_rm:6d} (GBIF={n_gbif:6d} + OSM={n_osm:4d}) | BB={n_br:4d}", flush=True)
 
-if __name__ == '__main__':
+    updated = vgi_utils.actualizar_catalogo_vgi_js(actualizaciones)
+    print(f"[DONE] {len(actualizaciones)} especies actualizadas en catálogo ({updated} líneas modificadas) en {time.time()-t0:.1f}s", flush=True)
+
+
+if __name__ == "__main__":
     main()
