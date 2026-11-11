@@ -1611,6 +1611,9 @@ function configurarEventosMapa() {
       if (btnDibujar.classList.contains('activo')) {
         ModuloMapa.desactivarModoDibujoBbox();
       } else {
+        if (modoInspectorNormativoActivo && typeof alternarModoInspectorNormativo === 'function') {
+          alternarModoInspectorNormativo(false, { silencioso: true });
+        }
         ModuloMapa.activarModoDibujoBbox();
       }
     });
@@ -4023,67 +4026,49 @@ function configurarCapasOficialesIDE() {
   inicializarInspectorNormativo();
 }
 
-function inicializarInspectorNormativo() {
-  const btnInspector = document.getElementById('btn-inspector-normativo');
-  const contInspector = document.getElementById('contenedor-inspector-normativo');
-  if (!btnInspector || !contInspector) return;
+let _inspectorPinMarker = null;
+let _promesaIndicePRC = null;
+let _promesaIndiceEntorno = null;
 
-  btnInspector.addEventListener('click', () => {
-    modoInspectorNormativoActivo = !modoInspectorNormativoActivo;
-    window.__inspectorNormativoActivo = modoInspectorNormativoActivo;
-    btnInspector.classList.toggle('activo', modoInspectorNormativoActivo);
-    const mapaInst = ModuloMapa.obtenerInstanciaMapa && ModuloMapa.obtenerInstanciaMapa();
-    const mapaCont = mapaInst && mapaInst.getContainer ? mapaInst.getContainer() : null;
-    if (mapaCont) mapaCont.style.cursor = modoInspectorNormativoActivo ? 'crosshair' : '';
-
-    if (modoInspectorNormativoActivo) {
-      contInspector.style.display = 'block';
-      contInspector.innerHTML = `
-        <div class="ficha-normativa-hud">
-          <div class="ficha-normativa-header">
-            <span class="badge-alerta-normativa seguro">⚖️ MODO INSPECTOR NORMATIVO ACTIVO</span>
-            <span class="ficha-normativa-id">Haz clic en cualquier punto del mapa para auditar zonificación y riesgos</span>
-          </div>
-          <p style="font-size:0.8rem; margin:8px 0; color:var(--tinta-suave);">El inspector analizará automáticamente la zonificación PRC Santiago (usos permitidos UPERM / prohibidos UPROH), límite urbano oficial, áreas de riesgo (Art. 2.1.17 OGUC), áreas verdes normadas y afectación patrimonial.</p>
-        </div>
-      `;
-    } else {
-      contInspector.style.display = 'none';
-      contInspector.innerHTML = '';
-    }
-  });
-
-  const mapa = ModuloMapa.obtenerInstanciaMapa && ModuloMapa.obtenerInstanciaMapa();
-  if (mapa) {
-    mapa.on('click', async (e) => {
-      if (!modoInspectorNormativoActivo) return;
-      ejecutarConsultaInspector(e.latlng.lat, e.latlng.lng);
+function _cargarArchivoIndiceJSON(url) {
+  return fetch(url, { cache: 'default' }).then((resp) => {
+    if (!resp.ok) throw new Error(`HTTP ${resp.status} al cargar ${url}`);
+    return resp.json();
+  }).then((data) => {
+    const layers = (data && data.layers) ? data.layers : {};
+    Object.keys(layers).forEach((k) => {
+      if (layers[k] && Array.isArray(layers[k].features)) {
+        capasNormativasCache[k] = layers[k];
+      }
     });
-  }
+    return layers;
+  });
 }
 
-let _ultimaConsultaInspectorTs = 0;
-let _ultimaConsultaInspectorKey = '';
-async function ejecutarConsultaInspector(lat, lng) {
-  const ahora = Date.now();
-  const keyCoord = `${lat.toFixed(5)},${lng.toFixed(5)}`;
-  if (keyCoord === _ultimaConsultaInspectorKey && (ahora - _ultimaConsultaInspectorTs) < 250) {
-    return;
+async function cargarIndicesNormativosRapidos() {
+  if (!_promesaIndicePRC) {
+    _promesaIndicePRC = _cargarArchivoIndiceJSON('data/indice_inspector_prc_rm.json').catch((err) => {
+      console.warn('[Inspector] Fallo índice PRC rápido, se usará respaldo por capa:', err);
+      _promesaIndicePRC = null;
+      return null;
+    });
   }
-  _ultimaConsultaInspectorTs = ahora;
-  _ultimaConsultaInspectorKey = keyCoord;
+  if (!_promesaIndiceEntorno) {
+    _promesaIndiceEntorno = _cargarArchivoIndiceJSON('data/indice_inspector_entorno_rm.json').catch((err) => {
+      console.warn('[Inspector] Fallo índice entorno rápido, se usará respaldo por capa:', err);
+      _promesaIndiceEntorno = null;
+      return null;
+    });
+  }
 
-  const contInspector = document.getElementById('contenedor-inspector-normativo');
-  if (!contInspector || !window.ModuloEvaluadorNormativo) return;
+  await Promise.all([_promesaIndicePRC, _promesaIndiceEntorno]);
 
-  contInspector.style.display = 'block';
-  contInspector.innerHTML = `<div class="ficha-normativa-hud" style="text-align:center; padding:18px;">⏳ Auditando normativa urbanística para lat: ${lat.toFixed(5)}, lng: ${lng.toFixed(5)}...</div>`;
-
-  const capasRequeridas = [
+  const capasCriticas = [
     'bbdd_43',
     'minvu_ipt_prc_santiago',
     'minvu_ipt_prms_usosuelo',
     'minvu_ipt_limite_urbano',
+    'censo2024_limite_urbano',
     'minvu_ipt_areas_riesgo',
     'ide_minvu_ipt_prms_riesgo',
     'minvu_ipt_areas_verdes',
@@ -4095,28 +4080,113 @@ async function ejecutarConsultaInspector(lat, lng) {
     'ide_minvu_campamentos'
   ];
 
-  await Promise.all(capasRequeridas.map(async (cId) => {
-    if (!capasOficialesCargadas[cId] && !capasNormativasCache[cId] && window.ModuloIDEChile) {
+  const faltantes = capasCriticas.filter(
+    (cId) => !capasOficialesCargadas[cId] && !capasNormativasCache[cId]
+  );
+
+  if (faltantes.length > 0 && window.ModuloIDEChile) {
+    await Promise.all(faltantes.map(async (cId) => {
       try {
         const res = await ModuloIDEChile.consultarCapaOficial(cId);
         if (res && res.geojson) {
           capasNormativasCache[cId] = res.geojson;
         }
       } catch (_) {}
+    }));
+  }
+}
+
+function precargarIndicesNormativosEnSegundoPlano() {
+  cargarIndicesNormativosRapidos().catch(() => {});
+}
+
+function actualizarBannerInspector(textoHTML, { mostrarBtnFicha = false } = {}) {
+  const banner = document.getElementById('banner-inspector-normativo');
+  const spanTexto = document.getElementById('texto-banner-inspector');
+  const btnFicha = document.getElementById('btn-ver-ficha-desde-banner');
+  if (!banner) return;
+  if (!modoInspectorNormativoActivo) {
+    banner.style.display = 'none';
+    return;
+  }
+  banner.style.display = 'flex';
+  if (spanTexto && textoHTML) spanTexto.innerHTML = textoHTML;
+  if (btnFicha) btnFicha.style.display = mostrarBtnFicha ? 'inline-flex' : 'none';
+}
+
+function removerPinInspectorMapa() {
+  const mapaInst = ModuloMapa.obtenerInstanciaMapa && ModuloMapa.obtenerInstanciaMapa();
+  if (_inspectorPinMarker && mapaInst) {
+    try { mapaInst.removeLayer(_inspectorPinMarker); } catch (_) {}
+  }
+  _inspectorPinMarker = null;
+}
+
+function _conectarBotonVerFichaPopup() {
+  const btnVerFichaPopup = document.getElementById('btn-ir-ficha-inspector-popup');
+  if (!btnVerFichaPopup) return;
+  btnVerFichaPopup.onclick = () => {
+    const cont = document.getElementById('contenedor-inspector-normativo');
+    if (cont) {
+      cont.style.display = 'block';
+      cont.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }));
-
-  const todasLasCapas = {
-    ...capasNormativasCache,
-    ...capasCargadasPorCategoria,
-    ...capasOficialesCargadas
   };
+}
 
-  const resultado = ModuloEvaluadorNormativo.consultarPuntoNormativo(lat, lng, todasLasCapas);
-  contInspector.innerHTML = ModuloEvaluadorNormativo.renderizarFichaNormativaHTML(resultado);
+function actualizarPinInspectorMapa(lat, lng, htmlPopup) {
+  const mapaInst = ModuloMapa.obtenerInstanciaMapa && ModuloMapa.obtenerInstanciaMapa();
+  if (!mapaInst || typeof L === 'undefined') return;
+
+  if (_inspectorPinMarker && mapaInst.hasLayer(_inspectorPinMarker)) {
+    _inspectorPinMarker.setLatLng([lat, lng]);
+    _inspectorPinMarker.setPopupContent(htmlPopup);
+    if (!_inspectorPinMarker.isPopupOpen()) {
+      _inspectorPinMarker.openPopup();
+    } else {
+      _conectarBotonVerFichaPopup();
+    }
+    return;
+  }
+
+  const iconoPin = L.divIcon({
+    className: 'pin-inspector-normativo',
+    html: '<div class="pin-inspector-nucleo"></div>',
+    iconSize: [24, 24],
+    iconAnchor: [10, 22],
+    popupAnchor: [0, -20]
+  });
+
+  const marker = L.marker([lat, lng], {
+    icon: iconoPin,
+    keyboard: false,
+    zIndexOffset: 1200
+  });
+  marker._esPinInspectorNormativo = true;
+  marker.addTo(mapaInst);
+  marker.bindPopup(htmlPopup, {
+    maxWidth: 330,
+    minWidth: 230,
+    autoPan: true,
+    autoPanPadding: [28, 28],
+    closeButton: true
+  });
+  marker.on('popupopen', _conectarBotonVerFichaPopup);
+  marker.openPopup();
+  _inspectorPinMarker = marker;
+}
+
+function vincularEventosFichaNormativa(resultado, lat, lng, prefixArchivo = 'Certificado-Informaciones-Normativas-VGI') {
+  const contInspector = document.getElementById('contenedor-inspector-normativo');
+  if (!contInspector) return;
 
   document.getElementById('btn-cerrar-ficha-normativa')?.addEventListener('click', () => {
     contInspector.style.display = 'none';
+  });
+
+  document.getElementById('btn-volver-mapa-inspector')?.addEventListener('click', () => {
+    const areaMapa = document.querySelector('#panel-inicio .area-mapa-principal') || document.getElementById('mapa-atlas');
+    areaMapa?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   document.getElementById('btn-descargar-cin-txt')?.addEventListener('click', () => {
@@ -4125,10 +4195,182 @@ async function ejecutarConsultaInspector(lat, lng) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Certificado-Informaciones-Normativas-VGI-${lat.toFixed(4)}_${lng.toFixed(4)}.txt`;
+    a.download = `${prefixArchivo}-${lat.toFixed(4)}_${lng.toFixed(4)}.txt`;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   });
+}
+
+function alternarModoInspectorNormativo(forzarEstado = null, { silencioso = false } = {}) {
+  const btnInspector = document.getElementById('btn-inspector-normativo');
+  const contInspector = document.getElementById('contenedor-inspector-normativo');
+  if (!btnInspector || !contInspector) return;
+
+  const nuevoEstado = typeof forzarEstado === 'boolean' ? forzarEstado : !modoInspectorNormativoActivo;
+  modoInspectorNormativoActivo = nuevoEstado;
+  window.__inspectorNormativoActivo = nuevoEstado;
+  btnInspector.classList.toggle('activo', nuevoEstado);
+
+  const mapaInst = ModuloMapa.obtenerInstanciaMapa && ModuloMapa.obtenerInstanciaMapa();
+  const mapaCont = mapaInst && mapaInst.getContainer ? mapaInst.getContainer() : null;
+
+  if (nuevoEstado) {
+    if (ModuloMapa.desactivarModoDibujoBbox) {
+      try { ModuloMapa.desactivarModoDibujoBbox(); } catch (_) {}
+    }
+    if (mapaCont) {
+      mapaCont.classList.add('mapa-inspector-activo');
+      mapaCont.style.cursor = 'crosshair';
+    }
+    try { mapaInst && mapaInst.closePopup(); } catch (_) {}
+
+    actualizarBannerInspector(
+      '<strong>Modo Inspector Normativo PRC activo</strong> — haz clic sobre cualquier punto del mapa para consultar zonificación, altura, riesgos y patrimonio.',
+      { mostrarBtnFicha: false }
+    );
+    contInspector.style.display = 'block';
+    contInspector.innerHTML = `
+      <div class="ficha-normativa-hud">
+        <div class="ficha-normativa-header">
+          <span class="badge-alerta-normativa seguro">⚖️ MODO INSPECTOR NORMATIVO ACTIVO</span>
+          <span class="ficha-normativa-id">Haz clic en cualquier punto del mapa para auditar zonificación y riesgos</span>
+        </div>
+        <p style="font-size:0.86rem; margin:8px 0; color:var(--tinta-suave);">El inspector evalúa zonificación PRC, macrozonas PRMS, límite urbano oficial, áreas de riesgo (Art. 2.1.17 OGUC), áreas verdes normativas, protección patrimonial (ICH/ZCH/CMN), asentamientos MINVU y dinámica edificatoria (permisos DOM y CRF INE).</p>
+      </div>
+    `;
+    precargarIndicesNormativosEnSegundoPlano();
+    document.querySelector('#panel-inicio .area-mapa-principal')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (!silencioso && typeof window.mostrarNotificacionAtlas === 'function') {
+      window.mostrarNotificacionAtlas('⚖️ <strong>Inspector Normativo (PRC)</strong> activado. Haz clic en cualquier punto del mapa.', 'info', 3500);
+    }
+  } else {
+    if (mapaCont) {
+      mapaCont.classList.remove('mapa-inspector-activo');
+      mapaCont.style.cursor = '';
+    }
+    removerPinInspectorMapa();
+    actualizarBannerInspector('', { mostrarBtnFicha: false });
+    contInspector.style.display = 'none';
+    contInspector.innerHTML = '';
+    if (!silencioso && typeof window.mostrarNotificacionAtlas === 'function') {
+      window.mostrarNotificacionAtlas('Inspector Normativo desactivado.', 'info', 2200);
+    }
+  }
+}
+
+function inicializarInspectorNormativo() {
+  const btnInspector = document.getElementById('btn-inspector-normativo');
+  const contInspector = document.getElementById('contenedor-inspector-normativo');
+  if (!btnInspector || !contInspector) return;
+
+  btnInspector.addEventListener('click', () => {
+    alternarModoInspectorNormativo();
+  });
+
+  document.getElementById('btn-salir-inspector-banner')?.addEventListener('click', () => {
+    alternarModoInspectorNormativo(false);
+  });
+
+  document.getElementById('btn-ver-ficha-desde-banner')?.addEventListener('click', () => {
+    contInspector.style.display = 'block';
+    contInspector.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  const mapa = ModuloMapa.obtenerInstanciaMapa && ModuloMapa.obtenerInstanciaMapa();
+  if (mapa) {
+    mapa.on('click', (e) => {
+      if (!modoInspectorNormativoActivo || !e || !e.latlng) return;
+      ejecutarConsultaInspector(e.latlng.lat, e.latlng.lng);
+    });
+  }
+}
+
+let _ultimaConsultaInspectorTs = 0;
+let _ultimaConsultaInspectorKey = '';
+async function ejecutarConsultaInspector(lat, lng, opciones = {}) {
+  const ahora = Date.now();
+  const keyCoord = `${lat.toFixed(5)},${lng.toFixed(5)}`;
+  if (!opciones.forzar && keyCoord === _ultimaConsultaInspectorKey && (ahora - _ultimaConsultaInspectorTs) < 250) {
+    return null;
+  }
+  _ultimaConsultaInspectorTs = ahora;
+  _ultimaConsultaInspectorKey = keyCoord;
+
+  const contInspector = document.getElementById('contenedor-inspector-normativo');
+  if (!contInspector || !window.ModuloEvaluadorNormativo) return null;
+
+  const t0 = performance.now();
+  contInspector.style.display = 'block';
+  contInspector.innerHTML = `<div class="ficha-normativa-hud" style="text-align:center; padding:18px;">⏳ Auditando normativa urbanística para lat: ${lat.toFixed(5)}, lng: ${lng.toFixed(5)}...</div>`;
+
+  if (modoInspectorNormativoActivo) {
+    actualizarBannerInspector(
+      `⏳ Auditando normativa en <strong>${lat.toFixed(5)}, ${lng.toFixed(5)}</strong>…`,
+      { mostrarBtnFicha: false }
+    );
+    actualizarPinInspectorMapa(lat, lng, `
+      <div style="font-family:var(--fuente-lectura); min-width:210px; line-height:1.45;">
+        <strong style="color:#059669;">⚖️ Inspector Normativo PRC</strong><br>
+        <span style="font-size:0.84rem;">⏳ Auditando coberturas normativas en <code>${lat.toFixed(5)}, ${lng.toFixed(5)}</code>…</span>
+      </div>
+    `);
+  }
+
+  await cargarIndicesNormativosRapidos();
+
+  const todasLasCapas = {
+    ...capasNormativasCache,
+    ...capasCargadasPorCategoria,
+    ...capasOficialesCargadas
+  };
+
+  const resultado = ModuloEvaluadorNormativo.consultarPuntoNormativo(lat, lng, todasLasCapas);
+  const elapsedMs = Math.max(1, Math.round(performance.now() - t0));
+
+  contInspector.innerHTML = ModuloEvaluadorNormativo.renderizarFichaNormativaHTML(resultado);
+  vincularEventosFichaNormativa(resultado, lat, lng);
+
+  const comuna = resultado.comunaEspecifica || (resultado.prc ? resultado.prc.comuna : 'Región Metropolitana');
+  const zonaTexto = resultado.prc
+    ? `${resultado.prc.zona}${resultado.prc.nombreZona && resultado.prc.nombreZona !== resultado.prc.zona ? ` — ${resultado.prc.nombreZona}` : ''}`
+    : (resultado.prms ? `PRMS: ${resultado.prms.macroZona}` : 'Sin zonificación PRC local');
+  const alturaTexto = resultado.prc && resultado.prc.alturaMax ? resultado.prc.alturaMax : 'Según OGUC';
+  const riesgoBadge = resultado.areasRiesgo.length > 0
+    ? `<span style="color:#dc2626; font-weight:700;">⚠️ Riesgo: ${resultado.areasRiesgo.map(r => r.tipo).slice(0, 2).join(', ')}</span>`
+    : `<span style="color:#059669; font-weight:600;">✓ Sin área de riesgo declarada</span>`;
+  const patTexto = resultado.patrimonio.length > 0
+    ? `<div style="margin-top:3px; color:#6d28d9; font-weight:600;">🏛️ Patrimonio: ${resultado.patrimonio.slice(0, 2).map(p => p.nombre).join(' · ')}</div>`
+    : '';
+  const avTexto = resultado.areasVerdes.length > 0
+    ? `<div style="margin-top:3px; color:#047857; font-weight:600;">🌳 Área Verde: ${resultado.areasVerdes[0].nombre} (${resultado.areasVerdes[0].superficie})</div>`
+    : '';
+
+  if (modoInspectorNormativoActivo) {
+    actualizarBannerInspector(
+      `✅ <strong>${comuna}</strong> · <strong>${zonaTexto}</strong> · ${resultado.capasConsultadas.length} coberturas evaluadas (${elapsedMs} ms)`,
+      { mostrarBtnFicha: true }
+    );
+    actualizarPinInspectorMapa(lat, lng, `
+      <div style="font-family:var(--fuente-lectura); min-width:230px; line-height:1.45; color:#0f172a;">
+        <div style="font-weight:800; color:#047857; font-size:0.94rem; border-bottom:1px solid #d1d5db; padding-bottom:4px; margin-bottom:6px;">
+          ⚖️ ${comuna} · ${resultado.limiteUrbano ? 'Urbano' : 'Extensión/Rural'}
+        </div>
+        <div style="font-size:0.84rem;"><strong>Zonificación:</strong> ${zonaTexto}</div>
+        <div style="font-size:0.82rem; color:#334155;"><strong>Altura máx.:</strong> ${alturaTexto}</div>
+        ${patTexto}
+        ${avTexto}
+        <div style="font-size:0.8rem; margin-top:4px;">${riesgoBadge}</div>
+        <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+          <button type="button" class="btn-banner-inspector" id="btn-ir-ficha-inspector-popup">Ver ficha completa ↓</button>
+          <span style="font-size:0.72rem; color:#64748b;">${lat.toFixed(4)}, ${lng.toFixed(4)}</span>
+        </div>
+      </div>
+    `);
+  }
+
+  return resultado;
 }
 window.ejecutarConsultaInspector = ejecutarConsultaInspector;
 
@@ -4664,7 +4906,7 @@ function configurarImportadorCapas() {
 
     // Evento Auditar Normativa
     const btnAuditar = tarjeta.querySelector('.btn-auditar-capa');
-    btnAuditar.addEventListener('click', () => {
+    btnAuditar.addEventListener('click', async () => {
       if (!window.ModuloEvaluadorNormativo) {
         alert('El Módulo de Evaluación Normativa no está cargado.');
         return;
@@ -4693,30 +4935,12 @@ function configurarImportadorCapas() {
       }
 
       if (latTarget !== null && lngTarget !== null) {
-        const inf = ModuloEvaluadorNormativo.consultarPuntoNormativo(latTarget, lngTarget);
-        const contInspector = document.getElementById('contenedor-inspector-normativo');
-        if (contInspector) {
-          contInspector.innerHTML = ModuloEvaluadorNormativo.renderizarFichaNormativaHTML(inf);
-          contInspector.style.display = 'block';
-          contInspector.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-          // Configurar botones de la ficha
-          document.getElementById('btn-cerrar-ficha-normativa')?.addEventListener('click', () => {
-            contInspector.style.display = 'none';
-          });
-          document.getElementById('btn-descargar-cin-txt')?.addEventListener('click', () => {
-            const txt = ModuloEvaluadorNormativo.generarCertificadoTexto(inf);
-            const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const codZona = (inf.prc && (inf.prc.codigo || inf.prc.zona)) ? (inf.prc.codigo || inf.prc.zona).replace(/\s+/g, '_') : 'SANTIAGO';
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Certificado_Normativo_IGV_${codZona}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          });
+        const resultado = await ejecutarConsultaInspector(latTarget, lngTarget, { forzar: true });
+        if (resultado) {
+          const contInspector = document.getElementById('contenedor-inspector-normativo');
+          if (contInspector) {
+            contInspector.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
         }
       } else {
         alert('No se pudieron extraer coordenadas representativas de la capa.');

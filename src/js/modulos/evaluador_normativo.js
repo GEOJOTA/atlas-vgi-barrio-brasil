@@ -70,8 +70,11 @@ const ModuloEvaluadorNormativo = (() => {
     return inside;
   }
 
-  function puntoEnGeometria(lng, lat, geom) {
+  function puntoEnGeometria(lng, lat, geom, bbox) {
     if (!geom) return false;
+    if (Array.isArray(bbox) && bbox.length >= 4) {
+      if (lng < bbox[0] || lng > bbox[2] || lat < bbox[1] || lat > bbox[3]) return false;
+    }
     const pt = [lng, lat];
     if (geom.type === 'Polygon') {
       if (!puntoEnPoligono(pt, geom.coordinates[0])) return false;
@@ -181,6 +184,7 @@ const ModuloEvaluadorNormativo = (() => {
       areasRiesgo: [],
       areasVerdes: [],
       patrimonio: [],
+      campamentos: [],
       unidadVecinal: null,
       edificacion: {
         crfPredioExacto: null,
@@ -236,7 +240,7 @@ const ModuloEvaluadorNormativo = (() => {
     const capaDPA = capas['capa_bbdd_43'] || capas['bbdd_43'];
     if (capaDPA && capaDPA.features) {
       for (let f of capaDPA.features) {
-        if (puntoEnGeometria(lng, lat, f.geometry)) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
           const props = f.properties || {};
           const nomCom = props.COMUNA || props.NOM_COMUNA || props.NOM_COM || props.CUT_COM;
           if (nomCom) res.comunaEspecifica = nomCom;
@@ -246,18 +250,31 @@ const ModuloEvaluadorNormativo = (() => {
       }
     }
 
-    // 2. Zonificación PRC Comunal (Santiago)
+    // 2. Zonificación PRC Comunal (Región Metropolitana / Santiago)
     const capaPRC = capas['minvu_ipt_prc_santiago'] || capas['capa_ipt_prc_comunal'];
     if (capaPRC && capaPRC.features) {
       for (let f of capaPRC.features) {
-        if (puntoEnGeometria(lng, lat, f.geometry)) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
           const props = f.properties || {};
-          const comunaNom = props.COMUNA || props.COMUNA_ORIGEN || props.NOM_COMUNA || props.NOM_COM || res.comunaEspecifica || 'Santiago';
-          const zonaCod = (props.ZONA || props.NOM_ZONA || props.CODIGO || 'Regulada').trim().toUpperCase();
-          const zonaNombre = props.NOM_ZONA || props.NOMBRE || props.DESCRIP || `Zona Normativa ${zonaCod}`;
-          const instNom = props.INSTRUM || props.PRC || `Plan Regulador Comunal de ${comunaNom}`;
-          const fechaDO = props.P_DO || props.FECHA_DO || props.FECHA || (props.N_DOC ? `Doc. N° ${props.N_DOC}` : null);
-          const normaDec = props.N_DOC ? `Resolución / Decreto N° ${props.N_DOC}${fechaDO ? ` (D.O. ${fechaDO})` : ''}` : (fechaDO ? `Publicación D.O. ${fechaDO}` : 'Ordenanza Local Vigente');
+          const comunaNom = props.COMUNA || props.COMUNA_ORIGEN || props.NOM_COMUNA || props.NOM_COM || props.COM || res.comunaEspecifica || 'Santiago';
+          const zonaCodRaw = String(props.ZONA || props.Zonas || props.NOM_ZONA || props.CODIGO || props.NOM || 'Regulada').trim();
+          const zonaCod = zonaCodRaw.toUpperCase();
+          const zonaNombre = props.NOM_ZONA || props.NOMBRE || props.NOM || props.DESCRIP || `Zona Normativa ${zonaCod}`;
+          const instNom = props.INSTRUM || props.PRC || props.CAPA || props.Capa || `Plan Regulador Comunal de ${comunaNom}`;
+          const fechaDO = props.P_DO || props.DO || props.FECHA_DO || props.FECHA || null;
+          const normaDec = props.DECRETO
+            || (props.N_DOC ? `${props.DOC || 'Decreto / Res.'} N° ${props.N_DOC}${fechaDO ? ` (D.O. ${fechaDO})` : ''}`
+            : (fechaDO ? `Publicación D.O. ${fechaDO}` : 'Ordenanza Local Vigente'));
+
+          const alturaMaxVal = props.AMAXED != null && props.AMAXED !== '' && Number(props.AMAXED) > 0
+            ? `${props.AMAXED} m${props.OBS_AMAXED ? ` (${props.OBS_AMAXED})` : ''}`
+            : (props.ALT_MAX || props.ALTURA || props.OBS_AMAXED || props.NORMA || 'Según rasantes y distanciamientos OGUC');
+          const densidadVal = props.DEN != null && props.DEN !== '' && Number(props.DEN) > 0
+            ? `${props.DEN} viv/ha${props.OBS_DEN ? ` (${props.OBS_DEN})` : ''}`
+            : (props.OBS_DEN || props.DENSIDAD || 'Según norma de zona');
+          const cosVal = props.COS != null && props.COS !== '' && Number(props.COS) > 0
+            ? `${props.COS}${props.OBS_COS ? ` (${props.OBS_COS})` : ''}`
+            : (props.OBS_COS || null);
 
           res.prc = {
             comuna: comunaNom,
@@ -268,10 +285,15 @@ const ModuloEvaluadorNormativo = (() => {
             decreto: normaDec,
             fechaPublicacion: fechaDO || 'Consultar Diario Oficial',
             articuloOrdenanza: props.NORMA || props.ARTICULO || `Ordenanza Local del PRC de ${comunaNom}`,
-            usosPermitidos: props.UPERM || props.USO_PERM || 'Residencial y equipamiento de acuerdo al cuadro de usos de la zona.',
+            usosPermitidos: props.UPERM || props.USO_PERM || props.UPREF || 'Residencial y equipamiento de acuerdo al cuadro de usos de la zona.',
             usosProhibidos: props.UPROH || props.USO_PROH || 'Industrias molestas, acopio masivo, talleres pesados y todo uso no mencionado expresamente (Art. 2.1.24 OGUC).',
-            alturaMax: props.ALT_MAX || props.ALTURA || props.NORMA || 'Según rasantes y distanciamientos OGUC',
-            densidadMax: props.DENSIDAD || 'Según norma de zona',
+            alturaMax: alturaMaxVal,
+            densidadMax: densidadVal,
+            cos: cosVal,
+            rasante: props.RAS || null,
+            antejardin: props.ANTJ || null,
+            distanciamiento: props.DIST || null,
+            observaciones: props.OBS || null,
             propiedadesOriginales: props
           };
           if (!res.comunaEspecifica && comunaNom) res.comunaEspecifica = comunaNom;
@@ -286,7 +308,7 @@ const ModuloEvaluadorNormativo = (() => {
     const capaPRMS = capas['minvu_ipt_prms_usosuelo'] || capas['capa_ipt_prms_metropolitano'];
     if (capaPRMS && capaPRMS.features) {
       for (let f of capaPRMS.features) {
-        if (puntoEnGeometria(lng, lat, f.geometry)) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
           const props = f.properties || {};
           res.prms = {
             macroZona: props.ZONA || props.NOMBRE || props.SECTOR || 'Zona Metropolitana',
@@ -299,23 +321,27 @@ const ModuloEvaluadorNormativo = (() => {
       }
     }
 
-    // 4. Límite Urbano Oficial
-    const capaLU = capas['minvu_ipt_limite_urbano'] || capas['censo2024_limite_urbano'];
-    if (capaLU && capaLU.features) {
+    // 4. Límite Urbano Oficial (evalúa ambas fuentes disponibles sin cortocircuito falso)
+    for (const keyLU of ['minvu_ipt_limite_urbano', 'censo2024_limite_urbano']) {
+      const capaLU = capas[keyLU];
+      if (!capaLU || !capaLU.features) continue;
+      let encontroLU = false;
       for (let f of capaLU.features) {
-        if (puntoEnGeometria(lng, lat, f.geometry)) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
           res.limiteUrbano = true;
-          registrarCapaIntersecada('censo2024_limite_urbano');
+          registrarCapaIntersecada(keyLU);
+          encontroLU = true;
           break;
         }
       }
+      if (encontroLU) break;
     }
 
     // 5. Manzana Censal Oficial (Censo 2024 / Síntesis)
     const capaMZ = capas['censo2024_manzanas'] || capas['sintesis_manzanas'];
     if (capaMZ && capaMZ.features) {
       for (let f of capaMZ.features) {
-        if (puntoEnGeometria(lng, lat, f.geometry)) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
           const p = f.properties || {};
           const mCode = normMz(p.MANZENT || p.manzent || p.COD_MANZANA);
           res.manzana = {
@@ -331,18 +357,22 @@ const ModuloEvaluadorNormativo = (() => {
       }
     }
 
-    // 6. Áreas de Riesgo Normativas (Art. 2.1.17 OGUC)
-    const capaRiesgo = capas['minvu_ipt_areas_riesgo'] || capas['ide_minvu_ipt_prms_riesgo'];
-    if (capaRiesgo && capaRiesgo.features) {
+    // 6. Áreas de Riesgo Normativas (PRC y PRMS Metropolitano - Art. 2.1.17 OGUC)
+    for (const keyRiesgo of ['minvu_ipt_areas_riesgo', 'ide_minvu_ipt_prms_riesgo']) {
+      const capaRiesgo = capas[keyRiesgo];
+      if (!capaRiesgo || !capaRiesgo.features) continue;
       for (let f of capaRiesgo.features) {
-        if (puntoEnGeometria(lng, lat, f.geometry)) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
           const p = f.properties || {};
+          const catLimpia = String(p.CAT || '').trim();
           res.areasRiesgo.push({
-            tipo: p.CAT || p.NOMBRE || p.ZONA || 'Riesgo Natural',
+            tipo: catLimpia || p.NOM || p.NOMBRE || p.ZONA || 'Riesgo Natural / Metropolitano',
             norma: p.UPROH || p.NORMA || 'Restricción Art. 2.1.17 OGUC',
-            fuente: `PRC ${p.COMUNA || 'Comunal'}`
+            fuente: keyRiesgo === 'ide_minvu_ipt_prms_riesgo'
+              ? `PRMS (${p.COM || 'RM'})`
+              : `PRC ${p.COMUNA || p.COM || 'Comunal'}`
           });
-          registrarCapaIntersecada('minvu_ipt_areas_riesgo');
+          registrarCapaIntersecada(keyRiesgo);
         }
       }
     }
@@ -351,41 +381,77 @@ const ModuloEvaluadorNormativo = (() => {
     const capaAV = capas['minvu_ipt_areas_verdes'];
     if (capaAV && capaAV.features) {
       for (let f of capaAV.features) {
-        if (puntoEnGeometria(lng, lat, f.geometry)) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
           const p = f.properties || {};
+          const supHaVal = p.superficie_ha != null
+            ? Number(p.superficie_ha)
+            : (p.Ha != null
+              ? Number(p.Ha)
+              : (p.SUP_TOTAL_ != null ? Number(p.SUP_TOTAL_) / 10000 : null));
           res.areasVerdes.push({
-            nombre: p.NOMBRE || 'Área Verde Normada',
-            tipo: p.TIPO_AV || p.TIPO || 'Plaza / Parque',
-            superficie: p.Ha ? `${Number(p.Ha).toFixed(2)} ha` : '-'
+            nombre: p.NOMBRE_EP || p.NOMBRE || 'Área Verde Normada',
+            tipo: p.TIPO_EP || p.TIPO_AV || p.TIPO_TAMAN || p.TIPO || 'Plaza / Parque Público',
+            superficie: supHaVal != null && Number.isFinite(supHaVal) && supHaVal > 0 ? `${supHaVal.toFixed(2)} ha` : '-'
           });
           registrarCapaIntersecada('minvu_ipt_areas_verdes');
         }
       }
     }
 
-    // 8. Patrimonio (ZCH / ICH)
-    const capaPatrimonio = capas['minvu_patrimonio'] || capas['cmn_sitios_memoria'];
-    if (capaPatrimonio && capaPatrimonio.features) {
+    // 8. Patrimonio (ZCH / ICH / Monumentos y Sitios de Memoria CMN)
+    const vistosPat = new Set();
+    for (const keyPat of ['minvu_patrimonio', 'cmn_sitios_memoria']) {
+      const capaPatrimonio = capas[keyPat];
+      if (!capaPatrimonio || !capaPatrimonio.features) continue;
       for (let f of capaPatrimonio.features) {
         const p = f.properties || {};
-        if (f.geometry.type === 'Point') {
+        if (f.geometry && f.geometry.type === 'Point') {
           const coords = f.geometry.coordinates;
           const dist = distanciaMetros(lng, lat, coords[0], coords[1]);
           if (dist <= 100) {
-            res.patrimonio.push({
-              nombre: p.NOMBRE || p.name || 'Inmueble Patrimonial',
-              categoria: p.CATEGORIA || p.TIPO || 'ICH / Monumento',
-              distanciaMetros: Math.round(dist)
-            });
-            registrarCapaIntersecada('minvu_patrimonio');
+            const nomP = p.NOMBRE || p.NOM || p.nombre || p.name || 'Inmueble Patrimonial';
+            const catP = p.CATEGORIA || p.categoria || p.tipo_declaratoria || p.TIPO || 'ICH / Monumento';
+            const claveP = `${nomP}|${Math.round(dist)}`;
+            if (!vistosPat.has(claveP)) {
+              vistosPat.add(claveP);
+              res.patrimonio.push({
+                nombre: nomP,
+                categoria: catP,
+                distanciaMetros: Math.round(dist)
+              });
+            }
+            registrarCapaIntersecada(keyPat);
           }
-        } else if (puntoEnGeometria(lng, lat, f.geometry)) {
-          res.patrimonio.push({
-            nombre: p.NOMBRE || 'Zona de Conservación Histórica (ZCH)',
-            categoria: p.CATEGORIA || 'Zona Protegida IPT',
-            distanciaMetros: 0
+        } else if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
+          const nomP = p.NOMBRE || p.NOM || p.nombre || 'Zona de Conservación Histórica (ZCH)';
+          const catP = p.CATEGORIA || p.categoria || p.DOC || 'Zona Protegida IPT';
+          const claveP = `${nomP}|0`;
+          if (!vistosPat.has(claveP)) {
+            vistosPat.add(claveP);
+            res.patrimonio.push({
+              nombre: nomP,
+              categoria: catP,
+              distanciaMetros: 0
+            });
+          }
+          registrarCapaIntersecada(keyPat);
+        }
+      }
+    }
+
+    // 8b. Catastro Nacional de Campamentos (MINVU)
+    const capaCamp = capas['ide_minvu_campamentos'];
+    if (capaCamp && capaCamp.features) {
+      for (let f of capaCamp.features) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
+          const p = f.properties || {};
+          res.campamentos.push({
+            nombre: p.NOMBRE || 'Asentamiento catastrado MINVU',
+            comuna: p.COMUNA || res.comunaEspecifica || '',
+            hogares: p.N_HOG != null ? Number(p.N_HOG) : null,
+            catastro: p.AN_CAT || null
           });
-          registrarCapaIntersecada('minvu_patrimonio');
+          registrarCapaIntersecada('ide_minvu_campamentos');
         }
       }
     }
@@ -394,7 +460,7 @@ const ModuloEvaluadorNormativo = (() => {
     const capaUV = capas['bbdd_66'] || capas['ide_minvu_unidades_vecinales_rsh'];
     if (capaUV && capaUV.features) {
       for (let f of capaUV.features) {
-        if (puntoEnGeometria(lng, lat, f.geometry)) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
           const p = f.properties || {};
           res.unidadVecinal = {
             numero: p.uv_carto || p.t_uv_nom || p.OBJECTID || 'S/N',
@@ -425,7 +491,7 @@ const ModuloEvaluadorNormativo = (() => {
         const fZona = (p.zona_prc || '').trim().toUpperCase();
 
         // 1. ¿El punto cae dentro de este predio con CRF exacto?
-        if (puntoEnGeometria(lng, lat, f.geometry)) {
+        if (puntoEnGeometria(lng, lat, f.geometry, f.bbox)) {
           res.edificacion.crfPredioExacto = {
             viviendas: Number(p.N_VIVIENDA) || 0,
             anioEmision: p.AÑO_EMISION || p['AO_EMISION'] || '2011-2025',
@@ -584,6 +650,7 @@ ${txtCapas}
    - Instrumento Comunal (PRC): ${prc ? prc.instrumento : 'Sin zonificación comunal específica en la cobertura'}
    - Zonificación PRC: ${prc ? `${prc.zona} — ${prc.nombreZona}` : 'Sin datos de zona en el punto'}
    - Decreto / Aprobación D.O.: ${prc ? prc.decreto : 'No indicado'}
+   - Parámetros Urbanísticos PRC: ${prc ? `Altura Máx: ${prc.alturaMax} | Densidad: ${prc.densidadMax}${prc.cos ? ` | COS: ${prc.cos}` : ''}${prc.rasante ? ` | Rasante: ${prc.rasante}` : ''}${prc.antejardin ? ` | Antejardín: ${prc.antejardin}` : ''}${prc.distanciamiento ? ` | Distanciamiento: ${prc.distanciamiento}` : ''}` : 'No aplica'}
    - Macro-Zonificación Metropolitano (PRMS): ${prms ? `${prms.macroZona} (${prms.usoPreferente})` : 'Área Urbana Metropolitano'}
 
 4. 🏗️ DINÁMICA EDIFICATORIA, PERMISOS DOM Y RECEPCIONES FINALES (CRF) INE:
@@ -620,6 +687,8 @@ ${txtCapas}
      ${informe.areasVerdes.length > 0 ? informe.areasVerdes.map(a => `* ${a.nombre} (${a.tipo} - ${a.superficie})`).join('\n     ') : 'Punto no afecto a declaratoria de parque de utilidad pública.'}
    - Protección Patrimonial (ZCH / ICH / Ley N° 17.288 CMN):
      ${informe.patrimonio.length > 0 ? informe.patrimonio.map(p => `* [PATRIMONIO] ${p.nombre} [${p.categoria}] (${p.distanciaMetros === 0 ? 'En zona protegida' : `${p.distanciaMetros} m`})`).join('\n     ') : 'Fuera del perímetro inmediato de conservación histórica.'}
+   - Catastro de Campamentos (MINVU):
+     ${(informe.campamentos || []).length > 0 ? informe.campamentos.map(cm => `* [CAMPAMENTO] ${cm.nombre} (${cm.comuna}${cm.hogares != null ? `, ${cm.hogares} hogares` : ''}${cm.catastro ? `, ${cm.catastro}` : ''})`).join('\n     ') : 'Sin registro de campamento catastrado en este punto.'}
 
 7. ENLACE A EXPEDIENTES OFICIALES:
    - Repositorio Oficial Expedientes DOM (Google Drive MuniStgo): https://drive.google.com/drive/folders/1MMxFwr8G3fYCjX2NzO_0yeUIzPN-CSjz
@@ -683,6 +752,15 @@ Generado dinámicamente por: Atlas VGI Territorial — Sistema Abierto de Inform
                 ⚖️ <strong>Decreto / Publicación:</strong> ${prc.decreto}<br>
                 📑 <strong>Artículo / Norma:</strong> ${prc.articuloOrdenanza}
               </div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(185px, 1fr)); gap:8px; margin-top:10px; padding:10px; background:rgba(15,23,42,0.55); border:1px solid rgba(255,255,255,0.08); border-radius:8px; font-size:0.84rem; color:var(--tinta-suave);">
+                <div>📐 <strong>Altura máx.:</strong> ${prc.alturaMax}</div>
+                <div>🏘️ <strong>Densidad máx.:</strong> ${prc.densidadMax}</div>
+                ${prc.cos ? `<div>⬛ <strong>COS:</strong> ${prc.cos}</div>` : ''}
+                ${prc.rasante ? `<div>📏 <strong>Rasante:</strong> ${prc.rasante}</div>` : ''}
+                ${prc.antejardin ? `<div>🌿 <strong>Antejardín:</strong> ${prc.antejardin}</div>` : ''}
+                ${prc.distanciamiento ? `<div>↔️ <strong>Distanciamiento:</strong> ${prc.distanciamiento}</div>` : ''}
+              </div>
+              ${prc.observaciones ? `<div style="margin-top:8px; font-size:0.82rem; color:var(--tinta-tenue);">💬 <strong>Nota PRC:</strong> ${prc.observaciones}</div>` : ''}
             ` : `
               <div style="padding:10px; background:rgba(245, 158, 11, 0.1); border-radius:6px; font-size:0.9rem; color:var(--ocre); margin-top:6px;">
                 ⚠️ <strong>Sin zonificación comunal PRC activa registrada en este punto exacto.</strong>
@@ -705,7 +783,7 @@ Generado dinámicamente por: Atlas VGI Territorial — Sistema Abierto de Inform
 
           <!-- Tarjeta 3: DINÁMICA EDIFICATORIA, PERMISOS DOM Y RECEPCIONES FINALES (CRF) INE -->
           <div class="caja-tarjeta-normativa" style="border-left:4px solid #10b981; background:rgba(16, 185, 129, 0.04);">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:gap; gap:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
               <span class="etiqueta-normativa-card" style="color:#10b981;">🏗️ DINÁMICA EDIFICATORIA, PERMISOS DOM Y RECEPCIONES FINALES (CRF) INE:</span>
               <span style="font-size:0.78rem; background:rgba(16, 185, 129, 0.2); color:#10b981; padding:3px 8px; border-radius:4px; font-weight:700;">Métricas LGUC / OGUC</span>
             </div>
@@ -730,7 +808,7 @@ Generado dinámicamente por: Atlas VGI Territorial — Sistema Abierto de Inform
               </div>
             ` : ''}
 
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;">
+            <div class="grilla-2col-normativa" style="gap:12px; margin-top:10px;">
               <!-- Columna 1: Escala Manzana Censal -->
               <div style="background:rgba(15,23,42,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:12px;">
                 <div style="font-size:0.82rem; font-weight:700; color:var(--agua); text-transform:uppercase; margin-bottom:8px;">
@@ -830,6 +908,26 @@ Generado dinámicamente por: Atlas VGI Territorial — Sistema Abierto de Inform
             `}
           </div>
 
+          <!-- Tarjeta 7b: Áreas Verdes Normativas (Art. 59 LGUC) y Asentamientos (MINVU) -->
+          <div class="caja-tarjeta-normativa" style="border-left:4px solid #34d399;">
+            <span class="etiqueta-normativa-card" style="color:#34d399;">🌳 Áreas Verdes Normativas (Art. 59 LGUC) y Catastro MINVU:</span>
+            ${inf.areasVerdes.length > 0 ? `
+              <ul style="margin:6px 0 0 0; padding-left:20px; color:#bbf7d0; font-size:0.92rem;">
+                ${inf.areasVerdes.map(a => `<li>🌳 <strong>${a.nombre}</strong> (${a.tipo} · Sup.: ${a.superficie})</li>`).join('')}
+              </ul>
+            ` : `
+              <p style="margin:4px 0 0 0; font-size:0.92rem; color:var(--tinta-suave);">
+                Punto fuera de áreas verdes normativas o plazas catastradas MINVU.
+              </p>
+            `}
+            ${(inf.campamentos || []).length > 0 ? `
+              <div style="margin-top:10px; padding:8px 12px; background:rgba(244,63,94,0.12); border:1px solid #f43f5e; border-radius:6px; font-size:0.88rem; color:#fecdd3;">
+                🏘️ <strong>Asentamiento catastrado (MINVU):</strong>
+                ${inf.campamentos.map(cm => `${cm.nombre} (${cm.comuna}${cm.hogares != null ? `, ${cm.hogares} hogares` : ''}${cm.catastro ? ` · ${cm.catastro}` : ''})`).join('; ')}
+              </div>
+            ` : ''}
+          </div>
+
           <!-- Tarjeta 8: Disclaimer Normativo Legal -->
           <div class="caja-tarjeta-normativa caja-disclaimer">
             <span class="etiqueta-normativa-card" style="color:#cbd5e1;">⚠️ Nota Importante sobre Validez Legal:</span>
@@ -847,8 +945,9 @@ Generado dinámicamente por: Atlas VGI Territorial — Sistema Abierto de Inform
               📂 Ver Expedientes Oficiales (Google Drive MuniStgo) ↗
             </a>
           </div>
-          <div style="display:flex; gap:10px;">
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <button type="button" class="accion" id="btn-descargar-cin-txt" style="font-size:0.88rem; padding:8px 16px;">📄 Descargar Certificado CIN-VGI (.txt)</button>
+            <button type="button" class="accion secundaria" id="btn-volver-mapa-inspector" style="font-size:0.88rem; padding:8px 14px;">↑ Volver al mapa</button>
             <button type="button" class="accion secundaria" id="btn-cerrar-ficha-normativa" style="font-size:0.88rem; padding:8px 16px;">Cerrar Ficha</button>
           </div>
         </div>

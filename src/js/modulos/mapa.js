@@ -143,6 +143,20 @@ const ModuloMapa = (() => {
 
     grupoCapasTematicas = L.featureGroup().addTo(mapa);
 
+    // En Modo Inspector Normativo (PRC), evitar que los popups genéricos de otras capas
+    // oculten o reemplacen al marcador de auditoría normativa
+    mapa.on('popupopen', (ev) => {
+      const inspActivo = Boolean(window.__inspectorNormativoActivo || document.getElementById('btn-inspector-normativo')?.classList.contains('activo'));
+      const src = ev && ev.popup && ev.popup._source;
+      if (inspActivo && (!src || !src._esPinInspectorNormativo)) {
+        try {
+          mapa.closePopup(ev.popup);
+          if (typeof ev.popup.remove === 'function') ev.popup.remove();
+          if (typeof ev.popup.getElement === 'function') ev.popup.getElement()?.remove();
+        } catch (_) {}
+      }
+    });
+
     // Pintar el bbox inicial
     if (cfg.area_por_defecto?.bbox) {
       actualizarRectanguloBbox(cfg.area_por_defecto.bbox);
@@ -2041,17 +2055,29 @@ const ModuloMapa = (() => {
         layer._atlasIcono = icono;
         layer._atlasColor = colorFeature;
 
-        // Construcción perezosa (lazy) del popup al hacer clic: ahorra cientos de MB en capas de 20k–264k entidades
-        layer.bindPopup(() => construirContenidoPopupLazy(feature, layer, idCapa, opciones, color, icono));
-
-        // En Modo Inspector Normativo (PRC), reenviar el clic de entidad al evaluador sin abrir popup
+        // Construcción verdaderamente perezosa del popup al hacer clic, respetando el Modo Inspector Normativo
         layer.on('click', (ev) => {
+          if (ev) {
+            if (ev.originalEvent) {
+              try { L.DomEvent.stopPropagation(ev.originalEvent); } catch (_) {}
+            }
+            try { L.DomEvent.stopPropagation(ev); } catch (_) {}
+          }
           const inspActivo = Boolean(window.__inspectorNormativoActivo || document.getElementById('btn-inspector-normativo')?.classList.contains('activo'));
           if (inspActivo && ev && ev.latlng) {
             try { layer.closePopup(); } catch (_) {}
             if (typeof window.ejecutarConsultaInspector === 'function') {
               window.ejecutarConsultaInspector(ev.latlng.lat, ev.latlng.lng);
             }
+            return;
+          }
+          if (typeof layer.getPopup !== 'function' || !layer.getPopup()) {
+            layer.bindPopup(() => construirContenidoPopupLazy(feature, layer, idCapa, opciones, color, icono));
+          }
+          if (ev && ev.latlng) {
+            layer.openPopup(ev.latlng);
+          } else {
+            layer.openPopup();
           }
         });
 
@@ -2059,7 +2085,7 @@ const ModuloMapa = (() => {
         layer.on('popupopen', () => {
           const inspActivo = Boolean(window.__inspectorNormativoActivo || document.getElementById('btn-inspector-normativo')?.classList.contains('activo'));
           if (inspActivo) {
-            setTimeout(() => { try { layer.closePopup(); } catch (_) {} }, 0);
+            try { layer.closePopup(); } catch (_) {}
             return;
           }
           layerActivoPopup = layer;

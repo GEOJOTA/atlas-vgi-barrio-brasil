@@ -1105,6 +1105,96 @@ button.accion.secundaria:hover {
   transform: translateY(-2px);
 }
 
+button.accion.secundaria.activo,
+#btn-inspector-normativo.activo,
+#btn-dibujar-bbox.activo {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.92) 0%, rgba(5, 150, 105, 0.96) 100%);
+  border-color: #6ee7b7;
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.55);
+}
+
+.banner-inspector-normativo {
+  position: relative;
+  z-index: 650;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  background: rgba(10, 22, 42, 0.95);
+  border: 1.5px solid #10b981;
+  border-left: 5px solid #34d399;
+  border-radius: 10px;
+  color: #ecfdf5;
+  font-size: 0.88rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.banner-inspector-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 280px;
+  line-height: 1.35;
+}
+
+.banner-inspector-punto {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #34d399;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.25);
+}
+
+.banner-inspector-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-banner-inspector {
+  background: #10b981;
+  border: 1px solid #6ee7b7;
+  color: #042f2e;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 5px 11px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-banner-inspector.cerrar {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #f8fafc;
+}
+
+.pin-inspector-normativo {
+  background: transparent;
+  border: none;
+}
+
+.pin-inspector-nucleo {
+  width: 20px;
+  height: 20px;
+  border-radius: 50% 50% 50% 0;
+  background: #10b981;
+  border: 2.5px solid #ffffff;
+  transform: rotate(-45deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
+}
+
+.mapa-inspector-activo,
+.mapa-inspector-activo .leaflet-grab,
+.mapa-inspector-activo .leaflet-interactive {
+  cursor: crosshair !important;
+}
+
 /* ==========================================================================
    ESTRUCTURACIÓN POR BLOQUES Y CAJAS-CUADRADOS DE ALTA LEGIBILIDAD
    ========================================================================== */
