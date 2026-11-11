@@ -52,6 +52,7 @@ const ModuloMapa = (() => {
 
   let capasWMSActivas = {};
   let layerActivoPopup = null;
+  let _pendingBboxBounds = null;
 
   function inicializar(idContenedor = 'mapa-atlas') {
     const el = document.getElementById(idContenedor);
@@ -202,7 +203,17 @@ const ModuloMapa = (() => {
   function encuadrarBbox(bbox) {
     if (!mapa || !bbox) return;
     const [oeste, sur, este, norte] = bbox;
-    mapa.fitBounds([[sur, oeste], [norte, este]], { padding: [20, 20] });
+    const bounds = L.latLngBounds([[sur, oeste], [norte, este]]);
+    const sz = mapa.getSize ? mapa.getSize() : null;
+    if (!sz || sz.x < 50 || sz.y < 50) {
+      // Contenedor aún oculto (0x0 px): evitar fitBounds que colapsa a zoom 19
+      _pendingBboxBounds = bounds;
+      const zoomDef = (window.NODO_CONFIG && window.NODO_CONFIG.area_por_defecto && window.NODO_CONFIG.area_por_defecto.zoom) || 15;
+      mapa.setView([(sur + norte) / 2, (oeste + este) / 2], zoomDef, { animate: false });
+    } else {
+      _pendingBboxBounds = null;
+      mapa.fitBounds(bounds, { padding: [20, 20], maxZoom: 16 });
+    }
     actualizarRectanguloBbox(bbox);
   }
 
@@ -425,14 +436,46 @@ const ModuloMapa = (() => {
 
   // --- Algoritmos Estadísticos de Clasificación Cuantitativa ---
 
+  function escaparHTML(str) {
+    return String(str ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function calcularMinMax(valores) {
+    let min = Infinity;
+    let max = -Infinity;
+    for (let i = 0; i < valores.length; i++) {
+      const v = valores[i];
+      if (v < min) min = v;
+      if (v > max) max = v;
+    }
+    return min <= max ? [min, max] : [0, 1];
+  }
+
+  function muestrearEstratificadoOrdenado(dataOrdenada, maxMuestras = 600) {
+    const n = dataOrdenada.length;
+    if (n <= maxMuestras) return dataOrdenada;
+    const muestra = [dataOrdenada[0]];
+    const inner = maxMuestras - 2;
+    for (let i = 1; i <= inner; i++) {
+      const idx = Math.floor((i * (n - 1)) / (inner + 1));
+      muestra.push(dataOrdenada[idx]);
+    }
+    muestra.push(dataOrdenada[n - 1]);
+    return muestra;
+  }
+
   function calcularPrettyBreaks(valores, n = 4) {
     if (!valores || valores.length === 0) return [0, 1];
-    const min = Math.min(...valores);
-    const max = Math.max(...valores);
+    const [min, max] = calcularMinMax(valores);
     if (min === max) return [min, max + 1];
 
     const rawRange = max - min;
-    const rawInterval = rawRange / n;
+    const rawInterval = rawRange / Math.max(1, n);
     const base = Math.pow(10, Math.floor(Math.log10(rawInterval || 1)));
     const normalized = rawInterval / (base || 1);
 
@@ -446,7 +489,7 @@ const ModuloMapa = (() => {
     const end = Math.ceil(max / prettyInterval) * prettyInterval;
 
     const breaks = [];
-    for (let v = start; v <= end + (prettyInterval * 0.5); v += prettyInterval) {
+    for (let v = start; v <= end + (prettyInterval * 0.5) && breaks.length < 24; v += prettyInterval) {
       breaks.push(Math.round(v * 100) / 100);
     }
     const unicos = Array.from(new Set(breaks)).sort((a, b) => a - b);
@@ -468,7 +511,7 @@ const ModuloMapa = (() => {
       const val = sorted[base + 1] !== undefined
         ? sorted[base] + rest * (sorted[base + 1] - sorted[base])
         : sorted[base];
-      breaks.push(Math.round(val * 100) / 100);
+      breaks.push(Math.round(val * 10000) / 10000);
     }
     breaks.push(max);
     const unicos = Array.from(new Set(breaks)).sort((a, b) => a - b);
@@ -477,13 +520,12 @@ const ModuloMapa = (() => {
 
   function calcularIntervalosIguales(valores, k = 4) {
     if (!valores || valores.length === 0) return [0, 1];
-    const min = Math.min(...valores);
-    const max = Math.max(...valores);
+    const [min, max] = calcularMinMax(valores);
     if (min === max) return [min, max + 1];
-    const step = (max - min) / k;
+    const step = (max - min) / Math.max(1, k);
     const breaks = [];
     for (let i = 0; i <= k; i++) {
-      breaks.push(Math.round((min + i * step) * 100) / 100);
+      breaks.push(Math.round((min + i * step) * 10000) / 10000);
     }
     const unicos = Array.from(new Set(breaks)).sort((a, b) => a - b);
     return unicos.length >= 2 ? unicos : [min, max];
@@ -492,13 +534,18 @@ const ModuloMapa = (() => {
   function calcularDesviacionEstandar(valores) {
     if (!valores || valores.length === 0) return [0, 1];
     const n = valores.length;
-    const min = Math.min(...valores);
-    const max = Math.max(...valores);
+    const [min, max] = calcularMinMax(valores);
     if (min === max) return [min, max + 1];
 
-    const media = valores.reduce((a, b) => a + b, 0) / n;
-    const varianza = valores.reduce((acc, v) => acc + Math.pow(v - media, 2), 0) / n;
-    const std = Math.sqrt(varianza) || 1;
+    let suma = 0;
+    for (let i = 0; i < n; i++) suma += valores[i];
+    const media = suma / n;
+    let sumSq = 0;
+    for (let i = 0; i < n; i++) {
+      const d = valores[i] - media;
+      sumSq += d * d;
+    }
+    const std = Math.sqrt(sumSq / n) || 1;
 
     const b1 = Math.max(min, Math.round((media - std) * 100) / 100);
     const b2 = Math.round(media * 100) / 100;
@@ -508,22 +555,28 @@ const ModuloMapa = (() => {
     return unicos.length >= 2 ? unicos : [min, max];
   }
 
-  function calcularJenks(valores, nClasses = 4) {
+  function calcularJenks(valores, nClasses = 5) {
     if (!valores || valores.length === 0) return [0, 1];
-    const data = [...valores].sort((a, b) => a - b);
-    const numData = data.length;
-    if (numData <= nClasses) {
-      const u = Array.from(new Set(data)).sort((a, b) => a - b);
-      return u.length >= 2 ? u : [data[0], data[0] + 1];
-    }
-    const min = data[0];
-    const max = data[numData - 1];
+    const ordenados = [...valores].filter(v => typeof v === 'number' && Number.isFinite(v)).sort((a, b) => a - b);
+    if (ordenados.length === 0) return [0, 1];
+
+    const min = ordenados[0];
+    const max = ordenados[ordenados.length - 1];
     if (min === max) return [min, max + 1];
 
-    const mat1 = Array.from({ length: numData + 1 }, () => new Array(nClasses + 1).fill(0));
-    const mat2 = Array.from({ length: numData + 1 }, () => new Array(nClasses + 1).fill(0));
+    const unicosTotales = Array.from(new Set(ordenados));
+    if (unicosTotales.length < 2) return [min, max + 1];
+    if (unicosTotales.length <= nClasses) return unicosTotales;
 
-    for (let y = 1; y <= nClasses; y++) {
+    // Muestreo estratificado por cuantiles preservando extremos para garantizar O(600^2 * k) < 15ms
+    const data = muestrearEstratificadoOrdenado(ordenados, 600);
+    const numData = data.length;
+    const kEff = Math.max(2, Math.min(nClasses, numData));
+
+    const mat1 = Array.from({ length: numData + 1 }, () => new Int32Array(kEff + 1));
+    const mat2 = Array.from({ length: numData + 1 }, () => new Float64Array(kEff + 1));
+
+    for (let y = 1; y <= kEff; y++) {
       mat1[1][y] = 1;
       mat2[1][y] = 0;
       for (let t = 2; t <= numData; t++) {
@@ -542,13 +595,14 @@ const ModuloMapa = (() => {
         s2 += val * val;
         s1 += val;
         w++;
-        v = s2 - (s1 * s1) / w;
+        v = Math.max(0, s2 - (s1 * s1) / w);
         const i4 = i3 - 1;
         if (i4 !== 0) {
-          for (let j = 2; j <= nClasses; j++) {
-            if (mat2[l][j] >= v + mat2[i4][j - 1]) {
+          for (let j = 2; j <= kEff; j++) {
+            const cand = v + mat2[i4][j - 1];
+            if (mat2[l][j] >= cand) {
               mat1[l][j] = i3;
-              mat2[l][j] = v + mat2[i4][j - 1];
+              mat2[l][j] = cand;
             }
           }
         }
@@ -558,43 +612,74 @@ const ModuloMapa = (() => {
     }
 
     let k = numData;
-    const kclass = new Array(nClasses + 1);
-    kclass[nClasses] = data[numData - 1];
-    kclass[0] = data[0];
+    const kclass = new Array(kEff + 1);
+    kclass[kEff] = max;
+    kclass[0] = min;
 
-    for (let count = nClasses; count >= 2; count--) {
-      const id = mat1[k][count] - 2;
+    for (let count = kEff; count >= 2; count--) {
+      const rawId = (mat1[k] && mat1[k][count]) ? mat1[k][count] : 2;
+      const id = Math.max(0, Math.min(numData - 1, rawId - 2));
       kclass[count - 1] = data[id];
-      k = mat1[k][count] - 1;
+      k = Math.max(1, rawId - 1);
     }
-    const unicos = Array.from(new Set(kclass)).sort((a, b) => a - b);
-    return unicos.length >= 2 ? unicos : [min, max];
+
+    const unicos = Array.from(new Set(kclass.filter(x => typeof x === 'number' && Number.isFinite(x)))).sort((a, b) => a - b);
+    if (unicos.length < 2) return calcularCuantiles(ordenados, kEff);
+    return unicos;
+  }
+
+  const COLUMNAS_TECNICAS_FILTRADAS = new Set([
+    'fid', 'id', 'id1', 'oid', 'gid', 'cartodb_id', 'objectid', 'objectid_1', 'objectid_12',
+    'esri_oid', 'osm_id', 'node_id', 'way_id', 'id_ig', 'id_igv', 'id_vgi', 't_id_uv_ca',
+    'cut', 'cut_com', 'cut_prov', 'cut_reg', 'cut_2018', 'cod_com', 'cod_prov', 'cod_reg',
+    'cod_bna', 'codcom', 'codprov', 'codreg', 'manzent', 'geom_wkt', 'coordenadas', 'bbox',
+    'srs_superficie', 'srs_metrico', 'metodo_adquisicion', 'ley_aplicable', 'iso_topic_category',
+    'fecha_registro', 'fecha_ingesta', 'fecha_catastro', 'fecha_oficio', 'fuente_documento',
+    'fuente_institucion', 'cita_apa', 'fuente', 'licencia', 'accesibilidad', 'huso',
+    'shape_leng', 'shape_area', 'shape_length', 'shape_len', 'shape__area', 'shape__length',
+    'shape__are', 'shape__len', 'shape_star', 'shape_stle', 'st_area_sh', 'st_length_',
+    'st_length', 'st_area', 'shape.starea()', 'shape.stlength()', 'shape.star', 'shape.stle',
+    'bdide.owd.', 'uuid'
+  ]);
+
+  function esColumnaTecnica(nombreCol) {
+    const k = String(nombreCol || '').trim();
+    const kl = k.toLowerCase();
+    if (!k) return true;
+    if (kl.startsWith('_') || kl.startsWith('meta_') || kl.startsWith('shape') || kl.startsWith('st_')) return true;
+    return COLUMNAS_TECNICAS_FILTRADAS.has(kl);
   }
 
   function inspeccionarColumnasGeoJSON(geojson) {
-    if (!geojson || !geojson.features || geojson.features.length === 0) {
+    if (!geojson || !Array.isArray(geojson.features) || geojson.features.length === 0) {
       return { numericas: [], categoricas: [], todas: [] };
     }
     const numericCounts = {};
     const totalCounts = {};
-    const samples = geojson.features.slice(0, 100);
+    const feats = geojson.features;
+    const total = feats.length;
+    const maxSample = Math.min(total, 400);
+    const step = Math.max(1, Math.floor(total / maxSample));
 
-    samples.forEach(f => {
-      const props = f.properties || {};
+    for (let idx = 0; idx < total; idx += step) {
+      const f = feats[idx];
+      const props = (f && f.properties) ? f.properties : {};
       Object.entries(props).forEach(([k, v]) => {
-        if (k.startsWith('_atlas') || k === 'meta_capa_id' || k === 'meta_cita_apa' || k === 'meta_contacto' || k === 'meta_url_servicio') return;
+        if (esColumnaTecnica(k)) return;
         totalCounts[k] = (totalCounts[k] || 0) + 1;
-        if (typeof v === 'number' && !isNaN(v)) {
+        if (typeof v === 'number' && Number.isFinite(v)) {
           numericCounts[k] = (numericCounts[k] || 0) + 1;
         } else if (typeof v === 'string') {
           const trimmed = v.trim();
-          const parsed = Number(trimmed.replace(',', '.'));
-          if (!isNaN(parsed) && trimmed.length > 0 && !k.toLowerCase().includes('fecha') && !k.toLowerCase().includes('cut') && !k.toLowerCase().includes('codigo') && !k.toLowerCase().includes('id')) {
-            numericCounts[k] = (numericCounts[k] || 0) + 1;
+          if (trimmed.length > 0 && !/^(fecha|cut|cod|id_)/i.test(k)) {
+            const parsed = Number(trimmed.replace(',', '.'));
+            if (!isNaN(parsed) && Number.isFinite(parsed)) {
+              numericCounts[k] = (numericCounts[k] || 0) + 1;
+            }
           }
         }
       });
-    });
+    }
 
     const numericas = [];
     const categoricas = [];
@@ -602,7 +687,7 @@ const ModuloMapa = (() => {
 
     todas.forEach(k => {
       const numRatio = (numericCounts[k] || 0) / (totalCounts[k] || 1);
-      if (numRatio >= 0.5) {
+      if (numRatio >= 0.6) {
         numericas.push(k);
       } else {
         categoricas.push(k);
@@ -612,20 +697,214 @@ const ModuloMapa = (() => {
     return { numericas, categoricas, todas };
   }
 
+  // Paleta semántica por palabras clave para capas IGV (VGI) en modo Color Único coherente
+  const COLORES_VGI_SUBTIPO = [
+    { match: /(arbol|flora|bosque|humedal|parque|plaza|verde|biodiversidad|hongo|nativa)/i, color: '#16a34a' },
+    { match: /(ave|fauna|insecto|mariposa|mamifero|reptil|anfibio|especie|observacion)/i, color: '#d97706' },
+    { match: /(escuela|colegio|universidad|jardin_infantil|biblioteca|educacion|museo|conservatorio|capacitacion)/i, color: '#2563eb' },
+    { match: /(salud|hospital|clinica|farmacia|cesfam|ambulancia|desfibrilador|veterinaria|posta)/i, color: '#dc2626' },
+    { match: /(metro|paradero|bus|bici|ciclovia|calle|cruce|semaforo|ferroviario|estacion|peaje|aerodromo|taxi|movilidad|transporte)/i, color: '#0891b2' },
+    { match: /(patrimonio|monumento|iglesia|teatro|cite|arqueologico|cultura|memoria|animita)/i, color: '#b45309' },
+    { match: /(comercio|mercado|feria|banco|panaderia|carniceria|restaurante|cafe|hotel|industria)/i, color: '#7c3aed' },
+    { match: /(agua|grifo|hidrante|incendio|basurero|punto_limpio|reciclaje|energia|luminaria)/i, color: '#0d9488' }
+  ];
+
+  // Tabla experta de simbología predeterminada racional coherente con la naturaleza de cada capa
+  const SIMBOLOGIA_EXPERTA = {
+    // --- Modo PLANO (conjuntos homogéneos, límites administrativos o indicadores únicos) ---
+    censo2024_regional: { modo: 'plano', color: '#475569' },
+    establecimientos_salud: { modo: 'plano', color: '#dc2626' },
+    red_ferroviaria: { modo: 'plano', color: '#1d4ed8' },
+    cmn_sitios_memoria: { modo: 'plano', color: '#7c2d12' },
+    minvu_ipt_limite_urbano: { modo: 'plano', color: '#334155' },
+    bbdd_08: { modo: 'plano', color: '#0284c7' },
+    bbdd_11: { modo: 'plano', color: '#0284c7' },
+    bbdd_15: { modo: 'plano', color: '#0f766e' },
+    bbdd_20: { modo: 'plano', color: '#be123c' },
+    bbdd_24: { modo: 'plano', color: '#9333ea' },
+    bbdd_27: { modo: 'plano', color: '#0369a1' },
+    bbdd_32: { modo: 'plano', color: '#4f46e5' },
+    bbdd_39: { modo: 'plano', color: '#0891b2' },
+    bbdd_43: { modo: 'plano', color: '#64748b' },
+    bbdd_46: { modo: 'plano', color: '#475569' },
+    bbdd_47: { modo: 'plano', color: '#0369a1' },
+    bbdd_50: { modo: 'plano', color: '#e11d48' },
+    bbdd_54: { modo: 'plano', color: '#ea580c' },
+    bbdd_66: { modo: 'plano', color: '#64748b' },
+    ccu_rm_2024: { modo: 'plano', color: '#7c3aed' },
+    subdere_rsd_sitios_intermedios_transferencia_rm: { modo: 'plano', color: '#b45309' },
+
+    // --- Modo CATEGORIZADO (atributos nominales u ordinales discretos, máx. 9 + Otras) ---
+    bomberos: { modo: 'categorizado', columnas: ['TIPO_DE_UN', 'PREFECTURA'], paletaCat: 'set1' },
+    carabineros: { modo: 'categorizado', columnas: ['TIPO_DE_UN', 'PREFECTURA'], paletaCat: 'set1' },
+    estaciones_metro: { modo: 'categorizado', columnas: ['linea'], paletaCat: 'vibrante' },
+    minvu_patrimonio: { modo: 'categorizado', columnas: ['layer', 'EST_CONS', 'CAL_JURID'], paletaCat: 'tierra' },
+    minvu_ipt_prc_santiago: { modo: 'categorizado', columnas: ['ZONA', 'NOM'], paletaCat: 'tableau' },
+    minvu_ipt_prms_usosuelo: { modo: 'categorizado', columnas: ['UPREF', 'ZONA'], paletaCat: 'armonica' },
+    minvu_ipt_areas_verdes: { modo: 'categorizado', columnas: ['TIPO_EP', 'USO'], paletaCat: 'tierra' },
+    minvu_ipt_areas_riesgo: { modo: 'categorizado', columnas: ['NOM', 'ZONA', 'NOMBRE'], paletaCat: 'set1' },
+    minvu_ipt_resguardo_infraestructura: { modo: 'categorizado', columnas: ['UPREF', 'NOMBRE'], paletaCat: 'set2' },
+    ide_minvu_ipt_prms_riesgo: { modo: 'categorizado', columnas: ['NOMBRE', 'NORMA'], paletaCat: 'set1' },
+    semaforos_rm_uoct_2026: { modo: 'categorizado', columnas: ['marca_control', 'estado'], paletaCat: 'vibrante' },
+    bbdd_01: { modo: 'categorizado', columnas: ['ESTADO', 'ETAPA_MDS'], paletaCat: 'set2' },
+    bbdd_02: { modo: 'categorizado', columnas: ['CARPETA', 'CLASIFICAC'], paletaCat: 'tableau' },
+    bbdd_03: { modo: 'categorizado', columnas: ['TIPO_ESTAC', 'NOM_CUEN'], paletaCat: 'armonica' },
+    bbdd_04: { modo: 'categorizado', columnas: ['TIPOLOGIA', 'ESTADO'], paletaCat: 'set2' },
+    bbdd_06: { modo: 'categorizado', columnas: ['MODALIDAD', 'PROGRAMA_E'], paletaCat: 'set2' },
+    bbdd_07: { modo: 'categorizado', columnas: ['TIPO_ENTRA', 'CATEGORIA'], paletaCat: 'tableau' },
+    bbdd_10: { modo: 'categorizado', columnas: ['MODALIDAD', 'MACRONIVEL'], paletaCat: 'set2' },
+    bbdd_14: { modo: 'categorizado', columnas: ['TIPO_INST'], paletaCat: 'armonica' },
+    bbdd_17: { modo: 'categorizado', columnas: ['CLAS_OCDE', 'TIPO_COM'], paletaCat: 'tableau' },
+    bbdd_19: { modo: 'categorizado', columnas: ['VECINDARIO', 'COM'], paletaCat: 'set2' },
+    bbdd_21: { modo: 'categorizado', columnas: ['TIPO'], paletaCat: 'set1' },
+    energia_almacenamiento_rm: { modo: 'categorizado', columnas: ['TIPO_EQUIP', 'PROPIEDAD'], paletaCat: 'vibrante' },
+    energia_gasoducto_rm: { modo: 'categorizado', columnas: ['PROPIEDAD'], paletaCat: 'set1' },
+    energia_lineas_transmision_rm: { modo: 'categorizado', columnas: ['TENSION_KV', 'PROPIEDAD'], paletaCat: 'vibrante' },
+    energia_oleoducto_rm: { modo: 'categorizado', columnas: ['COMBUSTIBL', 'PROPIEDAD'], paletaCat: 'set1' },
+    energia_termoelectricas_rm: { modo: 'categorizado', columnas: ['COMBUSTIBL', 'ESTADO'], paletaCat: 'set1' },
+    bbdd_23: { modo: 'categorizado', columnas: ['DESIG'], paletaCat: 'tierra' },
+    bbdd_25: { modo: 'categorizado', columnas: ['NOM_CUEN', 'NOM_SUBC'], paletaCat: 'tableau' },
+    bbdd_26: { modo: 'categorizado', columnas: ['NOM_CUEN', 'NOM_SUBC'], paletaCat: 'tableau' },
+    bbdd_29: { modo: 'categorizado', columnas: ['NOM_CUEN'], paletaCat: 'armonica' },
+    bbdd_30: { modo: 'categorizado', columnas: ['CATEGORIA'], paletaCat: 'vibrante' },
+    bbdd_31: { modo: 'categorizado', columnas: ['ETAPA', 'CARTERA'], paletaCat: 'set2' },
+    bbdd_33: { modo: 'categorizado', columnas: ['PREFECTURA', 'CUA_TIPO'], paletaCat: 'tableau' },
+    bbdd_34: { modo: 'categorizado', columnas: ['KOPPEN_FIN', 'DENOMINACI'], paletaCat: 'tierra' },
+    bbdd_35: { modo: 'categorizado', columnas: ['TECNOLOGIA', 'ALIAS', 'TISO_DESCR'], paletaCat: 'vibrante' },
+    bbdd_37: { modo: 'categorizado', columnas: ['CARPETA', 'TIPO'], paletaCat: 'tableau' },
+    bbdd_38: { modo: 'categorizado', columnas: ['NOM_SS'], paletaCat: 'paired' },
+    bbdd_40: { modo: 'categorizado', columnas: ['Circuito'], paletaCat: 'vibrante' },
+    ccu_rm_1993: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    ccu_rm_2002: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    ccu_rm_2006: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    ccu_rm_2011: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    ccu_rm_2018: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    ccu_rm_2019: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    ccu_rm_2020: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    ccu_rm_2021: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    ccu_rm_2022: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    ccu_rm_2023: { modo: 'categorizado', columnas: ['PESO_ADMIN', 'TIPO'], paletaCat: 'set2' },
+    bbdd_42: { modo: 'categorizado', columnas: ['formacion'], paletaCat: 'tierra' },
+    bbdd_44: { modo: 'categorizado', columnas: ['scam'], paletaCat: 'armonica' },
+    bbdd_48: { modo: 'categorizado', columnas: ['habilitacn', 'complejo'], paletaCat: 'set1' },
+    bbdd_49: { modo: 'categorizado', columnas: ['NOM_CUEN', 'NOM_SUBC'], paletaCat: 'tableau' },
+    bbdd_51: { modo: 'categorizado', columnas: ['tipo_consu', 'urba_rural'], paletaCat: 'set2' },
+    bbdd_52: { modo: 'categorizado', columnas: ['institucio'], paletaCat: 'vibrante' },
+    bbdd_53: { modo: 'categorizado', columnas: ['industria', 'movilidad'], paletaCat: 'tierra' },
+    bbdd_55: { modo: 'categorizado', columnas: ['Categoria'], paletaCat: 'tierra' },
+    bbdd_59: { modo: 'categorizado', columnas: ['oua_tipo', 'f_trazado'], paletaCat: 'set2' },
+    bbdd_60: { modo: 'categorizado', columnas: ['uso', 'uso_tierra'], paletaCat: 'tierra' },
+    bbdd_62: { modo: 'categorizado', columnas: ['ESPECIE'], paletaCat: 'tierra' },
+    bbdd_64: { modo: 'categorizado', columnas: ['c_ig_com', 'c_ig_reg'], paletaCat: 'tierra' },
+    ine_permisos_edificacion_santiago: { modo: 'categorizado', columnas: ['USO_DESTINO', 'GLOSA_DESTINO'], paletaCat: 'tableau' },
+    munistgo_aseo_zonas_residuos_2026: { modo: 'categorizado', columnas: ['zona_aseo'], paletaCat: 'vibrante' },
+    barrios_santiago_con_zonas_aseo: { modo: 'categorizado', columnas: ['zona_aseo', 'AGRP'], paletaCat: 'vibrante' },
+    subdere_rsd_ciudades_poblacion_rm: { modo: 'categorizado', columnas: ['TIPO', 'CATEGORIA'], paletaCat: 'set2' },
+    subdere_rsd_criticidad_sitios_disposicion_rm: { modo: 'categorizado', columnas: ['Criticidad', 'Clase'], paletaCat: 'set1' },
+    subdere_rsd_recoleccion_transporte_operativo_rm: { modo: 'categorizado', columnas: ['ModRecoleccion', 'SistRecoleccion'], paletaCat: 'tableau' },
+    subdere_rsd_sdf_comunas_destino_rm: { modo: 'categorizado', columnas: ['SITIO', 'Clase'], paletaCat: 'tableau' },
+    subdere_rsd_sdf_municipios_puntos_rm: { modo: 'categorizado', columnas: ['SITIO', 'Clase'], paletaCat: 'tableau' },
+    subdere_rsd_sitios_disposicion_instalaciones_rm: { modo: 'categorizado', columnas: ['Clase', 'Estado'], paletaCat: 'set1' },
+
+    // --- Modo GRADUADO con método estadístico coherente con la distribución del dato ---
+    censo2024_localidades: { modo: 'graduado', columnas: ['n_per'], metodoCuant: 'jenks', numClases: 5, rampa: 'viridis' },
+    censo2024_zonal: { modo: 'graduado', columnas: ['n_per'], metodoCuant: 'jenks', numClases: 5, rampa: 'viridis' },
+    censo2024_manzanas: { modo: 'graduado', columnas: ['n_per'], metodoCuant: 'jenks', numClases: 5, rampa: 'viridis' },
+    censo2024_limite_urbano: { modo: 'graduado', columnas: ['n_per'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'viridis' },
+    ccu_rm_2017: { modo: 'graduado', columnas: ['PERS_HA', 'PERS'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'viridis' },
+    educacion_parvularia: { modo: 'graduado', columnas: ['N_TOTAL'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'blues' },
+    bbdd_12: { modo: 'graduado', columnas: ['MAT_TOTAL'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'blues' },
+    bbdd_13: { modo: 'graduado', columnas: ['N_TOTAL'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'blues' },
+    ide_minvu_campamentos: { modo: 'graduado', columnas: ['N_HOG', 'HECTAREAS'], metodoCuant: 'jenks', numClases: 5, rampa: 'ylorrd' },
+    bbdd_65: { modo: 'graduado', columnas: ['EBI_COSTO_TOTAL'], metodoCuant: 'jenks', numClases: 5, rampa: 'ylorrd' },
+    catastro_predial_sii: { modo: 'graduado', columnas: ['avaluo_fiscal', 'sup_construida_m2'], metodoCuant: 'jenks', numClases: 5, rampa: 'ylorrd' },
+    energia_hidroelectricas_rm: { modo: 'graduado', columnas: ['POTENCIAMW'], metodoCuant: 'jenks', numClases: 5, rampa: 'blues' },
+    energia_solares_rm: { modo: 'graduado', columnas: ['POTENCIAMW'], metodoCuant: 'jenks', numClases: 5, rampa: 'ylorrd' },
+    energia_bioenergia_rm: { modo: 'graduado', columnas: ['POTENCIAMW'], metodoCuant: 'pretty', numClases: 4, rampa: 'greens' },
+    energia_electrolineras_rm: { modo: 'graduado', columnas: ['Potencia_k'], metodoCuant: 'pretty', numClases: 5, rampa: 'plasma' },
+    bbdd_05: { modo: 'graduado', columnas: ['AVANCE_FIS'], metodoCuant: 'iguales', numClases: 5, rampa: 'greens' },
+    ine_crf_conjuntos_santiago: { modo: 'graduado', columnas: ['coeficiente_ocupacion_suelo_cos', 'densidad_neta_real_viv_ha'], metodoCuant: 'iguales', numClases: 5, rampa: 'ylorrd' },
+    bbdd_63: { modo: 'graduado', columnas: ['BIOMASA'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'greens' },
+    bbdd_67: { modo: 'graduado', columnas: ['total de personas con dependencia moderada o postradas - uv', 'total de personas postradas - uv'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'magma' },
+    bbdd_68: { modo: 'graduado', columnas: ['total de personas en tramo 0% - 40% - uv', 'total de personas - uv'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'ylorrd' },
+    bbdd_69: { modo: 'graduado', columnas: ['total - uv'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'blues' },
+    bbdd_70: { modo: 'graduado', columnas: ['total - uv'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'purples' },
+    bbdd_71: { modo: 'graduado', columnas: ['total - uv'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'viridis' },
+    bbdd_72: { modo: 'graduado', columnas: ['total - uv'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'blues' },
+    bbdd_73: { modo: 'graduado', columnas: ['total - uv'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'viridis' },
+    bbdd_74: { modo: 'graduado', columnas: ['número de ocupados - uv', 'número de ocupados dependientes - uv'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'greens' },
+    subdere_rsd_analisis_costos_comuna_rm: { modo: 'graduado', columnas: ['Aseo_Hab', 'Aseo_Ton'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'ylorrd' },
+    subdere_rsd_ppc_generacion_pta_rm: { modo: 'graduado', columnas: ['Ppc_corr', 'Ppc'], metodoCuant: 'cuartiles', numClases: 5, rampa: 'ylorrd' },
+    subdere_rsd_poblacion_atendida_pta_puntos_rm: { modo: 'graduado', columnas: ['PCA_PTA', 'PCA_Pob'], metodoCuant: 'iguales', numClases: 5, rampa: 'blues' },
+    subdere_rsd_poblacion_comunal_pta_poligonos_rm: { modo: 'graduado', columnas: ['PCA_PTA', 'PCA_Pob'], metodoCuant: 'iguales', numClases: 5, rampa: 'blues' },
+    subdere_rsd_gastos_ingresos_sinim_rm: { modo: 'graduado', columnas: ['Por_Aseo', 'PorDAseo'], metodoCuant: 'iguales', numClases: 5, rampa: 'purples' },
+    subdere_rsd_distancia_municipio_sdf_rm: { modo: 'graduado', columnas: ['Km'], metodoCuant: 'iguales', numClases: 5, rampa: 'oranges' }
+  };
+
+  function columnaTieneVariacionNumerica(features, col, minDistintos = 3) {
+    if (!col || !features || features.length === 0) return false;
+    const unicos = new Set();
+    const total = features.length;
+    const step = Math.max(1, Math.floor(total / 400));
+    for (let i = 0; i < total; i += step) {
+      const raw = features[i]?.properties?.[col];
+      if (raw !== undefined && raw !== null && raw !== '') {
+        const num = typeof raw === 'number' ? raw : Number(String(raw).replace(',', '.'));
+        if (Number.isFinite(num)) {
+          unicos.add(num);
+          if (unicos.size >= minDistintos) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function columnaTieneVariacionCategorica(features, col, minDistintos = 2) {
+    if (!col || !features || features.length === 0) return false;
+    const unicos = new Set();
+    let noNulos = 0;
+    const total = features.length;
+    const step = Math.max(1, Math.floor(total / 400));
+    for (let i = 0; i < total; i += step) {
+      const val = normalizarValorCategorico(features[i]?.properties?.[col]);
+      if (val !== '(Sin dato)') {
+        noNulos++;
+        unicos.add(val);
+        if (unicos.size >= minDistintos && noNulos >= minDistintos) return true;
+      }
+    }
+    return false;
+  }
+
+  function deducirColorSemanticoVGI(idCapa, opciones = {}) {
+    const idStr = String(idCapa || '').toLowerCase();
+    for (const regla of COLORES_VGI_SUBTIPO) {
+      if (regla.match.test(idStr)) return regla.color;
+    }
+    return opciones.color || COLORES_CATEGORIA[idCapa] || '#0891b2';
+  }
+
+  function resolverNombreColumnaCandidata(colsTodas, candidatas) {
+    if (!Array.isArray(candidatas)) return null;
+    for (const c of candidatas) {
+      if (colsTodas.includes(c)) return c;
+      const ins = colsTodas.find(x => x.toLowerCase() === String(c).toLowerCase());
+      if (ins) return ins;
+    }
+    return null;
+  }
+
   /**
-   * Determina de manera inteligente la simbología predeterminada según las
-   * características intrínsecas del conjunto de datos y su dimensión analítica.
-   * - Datos cuantitativos (índices, censos, áreas, inversiones, conteos): Graduado Jenks Natural Breaks (5 clases).
-   * - Datos cualitativos o de entidades (PRC, equipamientos, usos): Categorizado armónico diferenciado.
+   * Determina de manera racional y verificable la simbología predeterminada
+   * según la regla experta de la capa y la distribución real de sus datos.
    */
   function determinarSimbologiaPredeterminada(idCapa, geojson, opciones = {}) {
     const cols = inspeccionarColumnasGeoJSON(geojson);
     const features = (geojson && Array.isArray(geojson.features)) ? geojson.features : [];
-
-    // 1. Deducir la dimensión territorial
-    let dimension = opciones.dimension;
     const idStr = String(idCapa || '').toLowerCase();
 
+    // Deducir dimensión territorial para rampas de respaldo coherentes
+    let dimension = opciones.dimension;
     if (!dimension && typeof window !== 'undefined' && Array.isArray(window.CATALOGO_VGI_DESCENTRALIZADO)) {
       const vgi = window.CATALOGO_VGI_DESCENTRALIZADO.find(c => c.id === idCapa);
       if (vgi && vgi.dimension) dimension = vgi.dimension;
@@ -639,117 +918,163 @@ const ModuloMapa = (() => {
       }
     }
     if (!dimension) {
-      if (idStr.includes('censo') || idStr.includes('poblacion') || idStr.includes('edad') || idStr.includes('hogar')) dimension = 'sociodemografica';
-      else if (idStr.includes('comercio') || idStr.includes('inversion') || idStr.includes('predial') || idStr.includes('uf')) dimension = 'socioeconomica';
-      else if (idStr.includes('arbol') || idStr.includes('verde') || idStr.includes('calor') || idStr.includes('ruido') || idStr.includes('gbif')) dimension = 'socioambiental';
+      if (idStr.includes('censo') || idStr.includes('poblacion') || idStr.includes('rsh')) dimension = 'sociodemografica';
+      else if (idStr.includes('comercio') || idStr.includes('inversion') || idStr.includes('predial') || idStr.includes('bip')) dimension = 'socioeconomica';
+      else if (idStr.includes('arbol') || idStr.includes('verde') || idStr.includes('residuo') || idStr.includes('rsd') || idStr.includes('gbif') || idStr.includes('flora') || idStr.includes('fauna')) dimension = 'socioambiental';
       else if (idStr.includes('salud') || idStr.includes('farmacia') || idStr.includes('hospital') || idStr.includes('cesfam')) dimension = 'sociosanitaria';
       else dimension = 'sociourbana';
     }
 
-    // Rampas de color asociadas a la dimensión territorial
     const RAMPAS_DIMENSION = {
       sociodemografica: 'viridis',
       socioeconomica: 'ylorrd',
       socioambiental: 'greens',
       sociosanitaria: 'magma',
-      sociourbana: 'purples'
+      sociourbana: 'blues'
     };
     const rampaPredeterminada = RAMPAS_DIMENSION[dimension] || 'viridis';
 
-    // 2. Columnas prohibidas / identificadores que NUNCA deben usarse para clasificar
-    const COLUMNAS_IGNORADAS = new Set([
-      'fid', 'id', 'cartodb_id', 'objectid', 'gid', 'latitude', 'longitude', 'lat', 'lon', 'x', 'y',
-      'osm_id', 'node_id', 'way_id', 'cut', 'cut_reg', 'cut_prov', 'cut_com', 'codigo', 'cod_comuna',
-      'comuna', 'region', 'shape_leng', 'shape_area', 'shape_length', 'shape_len', 'st_length', 'st_area',
-      'meta_capa_id', 'meta_cita_apa', 'meta_contacto', 'meta_url_servicio', '_idoficial', '_fuente',
-      'version', 'timestamp', 'fecha', 'fecha_act', 'fecha_corte', 'ano', 'mes', 'dia'
+    // Capas vacías o unitarias -> Color único (Plano)
+    if (features.length <= 1) {
+      const reglaUnica = SIMBOLOGIA_EXPERTA[idCapa] || {};
+      return {
+        modo: 'plano',
+        colorPlano: reglaUnica.color || (idStr.startsWith('vgi_') ? deducirColorSemanticoVGI(idCapa, opciones) : (opciones.color || COLORES_CATEGORIA[idCapa] || '#35586B')),
+        columna: cols.numericas[0] || cols.categoricas[0] || null,
+        metodoCuant: 'cuartiles',
+        numClases: 5,
+        rampa: rampaPredeterminada,
+        orden: 'normal',
+        paletaCat: 'armonica'
+      };
+    }
+
+    // 1. Capas IGV / VGI descentralizadas: entidades homogéneas en Color Único semántico
+    if (idStr.startsWith('vgi_')) {
+      return {
+        modo: 'plano',
+        colorPlano: deducirColorSemanticoVGI(idCapa, opciones),
+        columna: cols.categoricas[0] || cols.numericas[0] || null,
+        metodoCuant: 'cuartiles',
+        numClases: 5,
+        rampa: rampaPredeterminada,
+        orden: 'normal',
+        paletaCat: 'armonica'
+      };
+    }
+
+    // 2. Regla experta verificada contra los atributos realmente presentes en el GeoJSON
+    const regla = SIMBOLOGIA_EXPERTA[idCapa];
+    if (regla) {
+      if (regla.modo === 'plano') {
+        return {
+          modo: 'plano',
+          colorPlano: regla.color || opciones.color || COLORES_CATEGORIA[idCapa] || '#35586B',
+          columna: cols.categoricas[0] || cols.numericas[0] || null,
+          metodoCuant: 'cuartiles',
+          numClases: 5,
+          rampa: rampaPredeterminada,
+          orden: 'normal',
+          paletaCat: 'armonica'
+        };
+      }
+
+      if (regla.modo === 'graduado') {
+        const colElegida = resolverNombreColumnaCandidata(cols.todas, regla.columnas);
+        if (colElegida && columnaTieneVariacionNumerica(features, colElegida, 3)) {
+          return {
+            modo: 'graduado',
+            columna: colElegida,
+            metodoCuant: regla.metodoCuant || 'cuartiles',
+            numClases: regla.numClases || 5,
+            rampa: regla.rampa || rampaPredeterminada,
+            orden: regla.orden || 'normal',
+            paletaCat: 'armonica'
+          };
+        }
+      }
+
+      if (regla.modo === 'categorizado') {
+        const colElegida = resolverNombreColumnaCandidata(cols.todas, regla.columnas);
+        if (colElegida && columnaTieneVariacionCategorica(features, colElegida, 2)) {
+          return {
+            modo: 'categorizado',
+            columna: colElegida,
+            metodoCuant: 'cuartiles',
+            numClases: 5,
+            rampa: rampaPredeterminada,
+            orden: regla.orden || 'normal',
+            paletaCat: regla.paletaCat || 'armonica'
+          };
+        }
+      }
+    }
+
+    // 3. Respaldo racional automático para capas externas / personalizadas del usuario
+    const COLUMNAS_EXCLUIDAS_HEURISTICA = new Set([
+      'superficie_m2', 'superficie_ha', 'point_x', 'point_y', 'latitud', 'longitud',
+      'lat', 'lon', 'x', 'y', 'utm_este', 'utm_norte', 'este_84', 'norte_84',
+      'x_coor', 'y_coor', 'coord_x', 'coord_y', 'coord_este', 'coord_nort',
+      'ano', 'año', 'agno', 'mes', 'dia', 'numero', 'folio', 'ruc', 'rol', 'rbd'
     ]);
 
-    // 3. Prioridad semántica para columnas cuantitativas
-    const PATRONES_CUANTITATIVOS = [
-      /^(valor_indice|indice|indicador|puntaje|score|igvust)$/i,
-      /^(personas|poblacion|habitantes|hogares|viviendas|total_viv)$/i,
-      /^(monto|inversion|costo|presupuesto|valor_uf|avaluo)$/i,
-      /^(superficie_m2|superficie|area_m2|area|m2|ha)$/i,
-      /^(arboles|n_arboles|densidad|tasa|porcentaje|pct)$/i,
-      /^(frecuencia|flujo|n_reclamos|capacidad|volumen|decibeles|temperatura|co2)$/i
-    ];
+    const PATRONES_TASAS_IGUALES = /^(tasa|pct|porcentaje|por_|cob_|avance|cos|indice|igvust|km)/i;
+    const PATRONES_TOTALES_JENKS = /^(n_per|personas|poblacion|habitantes|monto|inversion|costo|avaluo|ebi_costo|potenciamw|n_hog|hogares|viviendas)/i;
+    const PATRONES_ORDINAL_CUARTIL = /^(n_total|mat_total|biomasa|capacidad|superficie|densidad|area|total)/i;
 
-    let mejorColumnaCuant = null;
-    for (const pat of PATRONES_CUANTITATIVOS) {
-      const enc = cols.numericas.find(c => pat.test(c.trim()) && !COLUMNAS_IGNORADAS.has(c.toLowerCase()));
-      if (enc) {
-        mejorColumnaCuant = enc;
-        break;
-      }
-    }
+    const numericasValidas = cols.numericas.filter(c => {
+      const kl = c.toLowerCase();
+      if (esColumnaTecnica(c) || COLUMNAS_EXCLUIDAS_HEURISTICA.has(kl)) return false;
+      return columnaTieneVariacionNumerica(features, c, 3);
+    });
 
-    if (!mejorColumnaCuant && cols.numericas.length > 0) {
-      for (const c of cols.numericas) {
-        if (COLUMNAS_IGNORADAS.has(c.toLowerCase())) continue;
-        const vals = new Set();
-        for (const f of features.slice(0, 80)) {
-          const v = f.properties?.[c];
-          if (v !== undefined && v !== null && !isNaN(Number(v))) vals.add(Number(v));
-        }
-        if (vals.size >= 3) {
-          mejorColumnaCuant = c;
-          break;
-        }
-      }
-    }
-
-    // 4. Prioridad semántica para columnas categóricas / cualitativas
-    const PATRONES_CATEGORICOS = [
-      /^(subtipo|tipo_equipamiento|tipo_uso|tipo|tipologia)$/i,
-      /^(categoria|category|amenity|shop|landuse|leisure|building)$/i,
-      /^(zonificacion|zona|uso|destino|clase|jerarquia)$/i,
-      /^(nombre|nombre_equipamiento|nombre_est|denominacion)$/i,
-      /^(estado|gestion|administracion|organismo)$/i
-    ];
-
-    let mejorColumnaCat = null;
-    for (const pat of PATRONES_CATEGORICOS) {
-      const enc = cols.categoricas.find(c => pat.test(c.trim()) && !COLUMNAS_IGNORADAS.has(c.toLowerCase()));
-      if (enc) {
-        mejorColumnaCat = enc;
-        break;
-      }
-    }
-    if (!mejorColumnaCat && cols.categoricas.length > 0) {
-      mejorColumnaCat = cols.categoricas.find(c => !COLUMNAS_IGNORADAS.has(c.toLowerCase())) || cols.categoricas[0];
-    }
-
-    // Si encontramos una métrica cuantitativa real, aplicamos Natural Breaks (Jenks) de 5 clases
-    if (mejorColumnaCuant) {
+    const mejorTasa = numericasValidas.find(c => PATRONES_TASAS_IGUALES.test(c));
+    if (mejorTasa) {
       return {
-        modo: 'graduado',
-        columna: mejorColumnaCuant,
-        metodoCuant: 'jenks',
-        numClases: 5,
-        rampa: rampaPredeterminada,
-        orden: 'normal',
-        paletaCat: 'armonica'
+        modo: 'graduado', columna: mejorTasa, metodoCuant: 'iguales',
+        numClases: 5, rampa: rampaPredeterminada, orden: 'normal', paletaCat: 'armonica'
       };
     }
 
-    // Si es una cobertura de entidades o cualitativa, aplicamos categorizado
-    if (mejorColumnaCat) {
+    const mejorTotal = numericasValidas.find(c => PATRONES_TOTALES_JENKS.test(c));
+    if (mejorTotal) {
       return {
-        modo: 'categorizado',
-        columna: mejorColumnaCat,
-        metodoCuant: 'jenks',
-        numClases: 5,
-        rampa: rampaPredeterminada,
-        orden: 'normal',
-        paletaCat: 'armonica'
+        modo: 'graduado', columna: mejorTotal, metodoCuant: 'jenks',
+        numClases: 5, rampa: rampaPredeterminada, orden: 'normal', paletaCat: 'armonica'
       };
     }
 
+    const mejorCuartil = numericasValidas.find(c => PATRONES_ORDINAL_CUARTIL.test(c));
+    if (mejorCuartil) {
+      return {
+        modo: 'graduado', columna: mejorCuartil, metodoCuant: 'cuartiles',
+        numClases: 5, rampa: rampaPredeterminada, orden: 'normal', paletaCat: 'armonica'
+      };
+    }
+
+    const PATRONES_CAT = /^(subtipo|tipo_ep|tipo|tipologia|zona|zona_aseo|uso|categoria|clase|estado|etapa|linea|especie|formacion|scam|modalidad)$/i;
+    const categoricasValidas = cols.categoricas.filter(c => !esColumnaTecnica(c) && columnaTieneVariacionCategorica(features, c, 2));
+    const mejorCat = categoricasValidas.find(c => PATRONES_CAT.test(c)) || categoricasValidas[0];
+    if (mejorCat) {
+      return {
+        modo: 'categorizado', columna: mejorCat, metodoCuant: 'cuartiles',
+        numClases: 5, rampa: rampaPredeterminada, orden: 'normal', paletaCat: 'armonica'
+      };
+    }
+
+    if (numericasValidas.length > 0) {
+      return {
+        modo: 'graduado', columna: numericasValidas[0], metodoCuant: 'cuartiles',
+        numClases: 5, rampa: rampaPredeterminada, orden: 'normal', paletaCat: 'armonica'
+      };
+    }
+
+    // Último recurso racional: si ningún atributo varía de forma útil, Color Único
     return {
-      modo: cols.numericas.length > 0 ? 'graduado' : 'categorizado',
-      columna: cols.numericas[0] || cols.categoricas[0] || 'subtipo',
-      metodoCuant: 'jenks',
+      modo: 'plano',
+      colorPlano: opciones.color || COLORES_CATEGORIA[idCapa] || '#35586B',
+      columna: cols.todas[0] || null,
+      metodoCuant: 'cuartiles',
       numClases: 5,
       rampa: rampaPredeterminada,
       orden: 'normal',
@@ -757,29 +1082,34 @@ const ModuloMapa = (() => {
     };
   }
 
+  function normalizarValorCategorico(raw) {
+    if (raw === undefined || raw === null) return '(Sin dato)';
+    const s = String(raw).trim();
+    if (!s) return '(Sin dato)';
+    const sl = s.toLowerCase();
+    if (
+      sl === 'sin dato' || sl === 'sin datos' || sl === 'sin informacion' || sl === 'sin información' ||
+      sl === 'nan' || sl === 'null' || sl === 'undefined' || sl === 's/i' || sl === 's_i' ||
+      sl === 'n/a' || sl === 'no aplica' || sl === 'no especificado' || sl === '-'
+    ) {
+      return '(Sin dato)';
+    }
+    return s;
+  }
+
   function calcularClasificacionCapa(reg) {
-    if (!reg || !reg.geojson || !reg.geojson.features) return null;
+    if (!reg || !reg.geojson || !Array.isArray(reg.geojson.features)) return null;
     const cfg = reg.config || {};
     const features = reg.geojson.features;
 
-    if (cfg.modo === 'plano') {
-      const colorPlano = reg.opciones?.color || COLORES_CATEGORIA[reg.idCapa] || '#35586B';
+    if (cfg.modo === 'plano' || !cfg.modo) {
+      const colorPlano = cfg.colorPlano || reg.opciones?.color || COLORES_CATEGORIA[reg.idCapa] || '#35586B';
       return {
         modo: 'plano',
         colorPlano,
         totalValidos: features.length,
         itemsLeyenda: [
-          { color: colorPlano, label: 'Entidades (Color Plano)', conteo: features.length }
-        ]
-      };
-    }
-
-    if (cfg.modo === 'automatico') {
-      return {
-        modo: 'automatico',
-        totalValidos: features.length,
-        itemsLeyenda: [
-          { color: '#38bdf8', label: 'Detección Inteligente por Atributos', conteo: features.length }
+          { color: colorPlano, label: 'Entidades (Color Único)', conteo: features.length }
         ]
       };
     }
@@ -789,42 +1119,62 @@ const ModuloMapa = (() => {
       const conteos = {};
       let validos = 0;
 
-      features.forEach(f => {
-        const props = f.properties || {};
-        let val = props[col];
-        if (val === undefined || val === null || val === '') val = '(Sin dato)';
-        val = String(val).trim();
+      for (let i = 0; i < features.length; i++) {
+        const props = features[i]?.properties || {};
+        const val = normalizarValorCategorico(props[col]);
         conteos[val] = (conteos[val] || 0) + 1;
         validos++;
-      });
+      }
 
-      const categoriasOrdenadas = Object.keys(conteos).sort((a, b) => conteos[b] - conteos[a]);
+      const categoriasSinDato = conteos['(Sin dato)'] || 0;
+      const categoriasReales = Object.keys(conteos)
+        .filter(k => k !== '(Sin dato)')
+        .sort((a, b) => conteos[b] - conteos[a]);
+
       const esInvertido = cfg.orden === 'invertido';
       let paleta = PALETAS_CATEGORICAS[cfg.paletaCat] || PALETAS_CATEGORICAS.armonica;
       if (esInvertido) {
         paleta = [...paleta].reverse();
       }
 
+      const MAX_CLASES_CAT = 9;
+      const topReales = categoriasReales.slice(0, MAX_CLASES_CAT);
+      const restantesReales = categoriasReales.slice(MAX_CLASES_CAT);
+
       const asignacion = {};
       const itemsLeyenda = [];
 
-      categoriasOrdenadas.forEach((cat, idx) => {
+      topReales.forEach((cat, idx) => {
         const color = paleta[idx % paleta.length];
         asignacion[cat] = color;
-        if (itemsLeyenda.length < 15) {
-          itemsLeyenda.push({
-            color,
-            label: cat,
-            conteo: conteos[cat]
-          });
-        }
+        itemsLeyenda.push({
+          color,
+          label: cat,
+          conteo: conteos[cat]
+        });
       });
 
-      if (categoriasOrdenadas.length > 15) {
+      if (restantesReales.length > 0) {
+        const colorOtras = '#64748b';
+        let conteoOtras = 0;
+        restantesReales.forEach(cat => {
+          asignacion[cat] = colorOtras;
+          conteoOtras += conteos[cat];
+        });
         itemsLeyenda.push({
-          color: '#64748b',
-          label: `Otras (${categoriasOrdenadas.length - 15} categorías)`,
-          conteo: categoriasOrdenadas.slice(15).reduce((acc, c) => acc + conteos[c], 0)
+          color: colorOtras,
+          label: `Otras categorías (${restantesReales.length})`,
+          conteo: conteoOtras
+        });
+      }
+
+      if (categoriasSinDato > 0) {
+        const colorSinDato = '#cbd5e1';
+        asignacion['(Sin dato)'] = colorSinDato;
+        itemsLeyenda.push({
+          color: colorSinDato,
+          label: 'Sin dato',
+          conteo: categoriasSinDato
         });
       }
 
@@ -839,26 +1189,27 @@ const ModuloMapa = (() => {
 
     if (cfg.modo === 'graduado') {
       const col = cfg.columna || 'superficie_m2';
-      const numClases = Number(cfg.numClases) || 4;
+      const numClases = Number(cfg.numClases) || 5;
       const metodo = cfg.metodoCuant || 'cuartiles';
       const rampaKey = cfg.rampa || 'ylorrd';
 
       const valoresValidos = [];
-      features.forEach(f => {
-        const props = f.properties || {};
+      for (let i = 0; i < features.length; i++) {
+        const props = features[i]?.properties || {};
         const raw = props[col];
         if (raw !== undefined && raw !== null && raw !== '') {
           const num = typeof raw === 'number' ? raw : Number(String(raw).replace(',', '.'));
-          if (!isNaN(num)) valoresValidos.push(num);
+          if (Number.isFinite(num)) valoresValidos.push(num);
         }
-      });
+      }
 
       if (valoresValidos.length === 0) {
         return {
           modo: 'graduado',
           columna: col,
+          metodo,
           breaks: [0, 1],
-          colores: [RAMPAS_CUANTITATIVAS.ylorrd[0]],
+          colores: ['#94a3b8'],
           totalValidos: 0,
           itemsLeyenda: [{ color: '#94a3b8', label: 'Sin datos numéricos en esta columna', conteo: 0 }]
         };
@@ -884,18 +1235,19 @@ const ModuloMapa = (() => {
       const colores = interpolarRampa(rampaKey, numIntervalos, esInvertido);
 
       const conteosPorClase = new Array(numIntervalos).fill(0);
-      features.forEach(f => {
-        const props = f.properties || {};
+      for (let fIdx = 0; fIdx < features.length; fIdx++) {
+        const props = features[fIdx]?.properties || {};
         const raw = props[col];
         if (raw !== undefined && raw !== null && raw !== '') {
           const v = typeof raw === 'number' ? raw : Number(String(raw).replace(',', '.'));
-          if (!isNaN(v)) {
+          if (Number.isFinite(v)) {
             let idx = 0;
-            if (v <= breaks[1]) {
+            if (numIntervalos === 1 || v <= breaks[1]) {
               idx = 0;
             } else if (v >= breaks[breaks.length - 1]) {
               idx = numIntervalos - 1;
             } else {
+              idx = numIntervalos - 1;
               for (let i = 1; i < breaks.length - 1; i++) {
                 if (v <= breaks[i + 1]) {
                   idx = i;
@@ -906,7 +1258,7 @@ const ModuloMapa = (() => {
             conteosPorClase[idx]++;
           }
         }
-      });
+      }
 
       const itemsLeyenda = [];
       for (let i = 0; i < numIntervalos; i++) {
@@ -946,24 +1298,25 @@ const ModuloMapa = (() => {
    */
   function resolverColorFeature(feature, idCapa, colorBasePorDefecto) {
     const reg = registroCapasTematicas[idCapa];
-    if (!reg || !reg.config || reg.config.modo === 'automatico') {
-      return resolverColorSegunAtributo(feature, colorBasePorDefecto);
+    if (!reg || !reg.config) {
+      return colorBasePorDefecto || '#35586B';
     }
 
     const cfg = reg.config;
     const props = feature.properties || {};
 
     if (cfg.modo === 'plano') {
-      return reg.clasificacion?.colorPlano || colorBasePorDefecto || '#f59e0b';
+      return reg.clasificacion?.colorPlano || cfg.colorPlano || colorBasePorDefecto || '#35586B';
     }
 
     if (cfg.modo === 'categorizado') {
       const col = cfg.columna || 'subtipo';
-      let val = props[col];
-      if (val === undefined || val === null || val === '') val = '(Sin dato)';
-      val = String(val).trim();
-      const asignacion = reg.clasificacion?.asignacion || {};
-      return asignacion[val] || obtenerColorDePaleta(val, cfg.paletaCat, cfg.orden === 'invertido');
+      const val = normalizarValorCategorico(props[col]);
+      const asignacion = reg.clasificacion?.asignacion;
+      if (asignacion && Object.prototype.hasOwnProperty.call(asignacion, val)) {
+        return asignacion[val];
+      }
+      return val === '(Sin dato)' ? '#cbd5e1' : '#64748b';
     }
 
     if (cfg.modo === 'graduado') {
@@ -971,16 +1324,16 @@ const ModuloMapa = (() => {
       const raw = props[col];
       if (raw === undefined || raw === null || raw === '') return '#94a3b8';
       const v = typeof raw === 'number' ? raw : Number(String(raw).replace(',', '.'));
-      if (isNaN(v)) return '#94a3b8';
+      if (!Number.isFinite(v)) return '#94a3b8';
 
       const clasif = reg.clasificacion;
-      if (!clasif || !clasif.breaks || !clasif.colores) return colorBasePorDefecto || '#f59e0b';
+      if (!clasif || !clasif.breaks || !clasif.colores) return colorBasePorDefecto || '#35586B';
 
       const breaks = clasif.breaks;
       const colores = clasif.colores;
       const numInt = colores.length;
 
-      if (numInt === 1) return colores[0];
+      if (numInt <= 1) return colores[0] || '#35586B';
       if (v <= breaks[1]) return colores[0];
       if (v >= breaks[breaks.length - 1]) return colores[numInt - 1];
 
@@ -992,64 +1345,7 @@ const ModuloMapa = (() => {
       return colores[numInt - 1];
     }
 
-    return resolverColorSegunAtributo(feature, colorBasePorDefecto);
-  }
-
-  /**
-   * Resuelve dinámicamente un color categorizado o graduado según los atributos de la entidad (modo automático).
-   * Evita el monocolor plano en capas temáticas.
-   */
-  function resolverColorSegunAtributo(feature, colorBasePorDefecto) {
-    if (!feature || !feature.properties) return colorBasePorDefecto || '#f59e0b';
-    const props = feature.properties;
-
-    // 1. Escala graduada si existe atributo cuantitativo relevante (superficie, población, inversión)
-    const valNum = props.superficie_m2 ?? props.poblacion ?? props.personas ?? props.PERSONAS ?? props.TOTAL_VIV ?? props.monto;
-    if (typeof valNum === 'number' && !isNaN(valNum) && valNum > 0) {
-      if (props.superficie_m2) {
-        if (valNum < 150) return '#38bdf8'; // Celeste (< 150 m²)
-        if (valNum < 500) return '#10b981'; // Esmeralda (150 - 500 m²)
-        if (valNum < 1500) return '#f59e0b'; // Ámbar (500 - 1500 m²)
-        if (valNum < 5000) return '#f97316'; // Naranja (1500 - 5000 m²)
-        return '#ef4444'; // Rojo (> 5000 m²)
-      }
-      if (props.poblacion || props.personas || props.PERSONAS) {
-        if (valNum < 80) return '#60a5fa';
-        if (valNum < 250) return '#34d399';
-        if (valNum < 700) return '#fbbf24';
-        if (valNum < 1800) return '#f87171';
-        return '#c084fc';
-      }
-    }
-
-    // 2. Clasificación categórica por subtipo temático o taxonomía espacial
-    const catVal = props._subtipo || props.subtipo || props.fclass || props.amenity ||
-                   props.shop || props.highway || props.building || props.leisure ||
-                   props.historic || props.natural || props.landuse || props.railway ||
-                   props.rubro || props.tipo || props.clase || props.categoria ||
-                   props.clasificacion || props.species || props.especie || props.family ||
-                   props.genus || props.tramo || props.sector || props.estado ||
-                   props.etapa || props.uso_suelo || props.zonificacion || props.comuna;
-
-    if (catVal && typeof catVal === 'string') {
-      const s = catVal.trim().toLowerCase();
-      if (s.length > 0 && s !== 'yes' && s !== 'no' && s !== '*' && s !== 'oficial' && s !== 'entidad cartográfica') {
-        return obtenerColorDePaleta(s);
-      }
-    }
-
-    // 3. Diferenciación secundaria por nombre, operador o marca si la categoría genérica es uniforme
-    const secVal = props.operador || props.operator || props.brand || props.nombre || props.name || props.etiqueta;
-    if (secVal && typeof secVal === 'string' && secVal.trim().length > 0 && secVal !== 'Sin denominación') {
-      return obtenerColorDePaleta(secVal.trim().toLowerCase());
-    }
-
-    // 4. Si aún no hay atributo o es ID único
-    if (props.id || feature.id || props.osm_id) {
-      return obtenerColorDePaleta(String(props.id || feature.id || props.osm_id));
-    }
-
-    return colorBasePorDefecto || '#f59e0b';
+    return colorBasePorDefecto || '#35586B';
   }
 
   function aplicarSimbologiaACapa(idCapa, nuevaConfig = {}) {
@@ -1067,10 +1363,13 @@ const ModuloMapa = (() => {
       sublayer._atlasColor = nuevoColor;
 
       if (typeof sublayer.setStyle === 'function') {
-        if (feat.geometry && (feat.geometry.type === 'LineString' || feat.geometry.type === 'MultiLineString')) {
+        const gt = feat.geometry?.type;
+        if (gt === 'LineString' || gt === 'MultiLineString') {
           sublayer.setStyle({ color: nuevoColor, opacity: 0.9, weight: 3.5 });
+        } else if (gt === 'Point' || gt === 'MultiPoint') {
+          sublayer.setStyle({ fillColor: nuevoColor, color: '#1a1f18', fillOpacity: 0.9, weight: 1.5 });
         } else {
-          sublayer.setStyle({ fillColor: nuevoColor, color: '#1a1f18', fillOpacity: 0.88, weight: 1.5 });
+          sublayer.setStyle({ fillColor: nuevoColor, color: '#1a1f18', fillOpacity: 0.55, weight: 1.2 });
         }
       }
     });
@@ -1093,10 +1392,10 @@ const ModuloMapa = (() => {
     const modoNom = {
       graduado: 'Graduado',
       categorizado: 'Categorizado',
-      automatico: 'Automático',
-      plano: 'Plano'
-    }[reg.config.modo] || 'Automático';
-    badge.textContent = `${nombre} (${modoNom}: ${reg.config.columna || 'general'})`;
+      plano: 'Color Único'
+    }[reg.config.modo] || 'Color Único';
+    const sufijo = reg.config.modo === 'plano' ? 'entidades' : (reg.config.columna || 'general');
+    badge.textContent = `${nombre} (${modoNom}: ${sufijo})`;
     badge.style.color = '#38bdf8';
     badge.style.borderColor = 'rgba(56, 189, 248, 0.4)';
   }
@@ -1114,7 +1413,7 @@ const ModuloMapa = (() => {
 
     const clasif = reg.clasificacion;
     if (badgeConteo) {
-      badgeConteo.textContent = `${clasif.totalValidos || 0} entidades evaluadas`;
+      badgeConteo.textContent = `${Number(clasif.totalValidos || 0).toLocaleString('es-CL')} entidades evaluadas`;
     }
 
     if (!clasif.itemsLeyenda || clasif.itemsLeyenda.length === 0) {
@@ -1122,13 +1421,16 @@ const ModuloMapa = (() => {
       return;
     }
 
-    contenedor.innerHTML = clasif.itemsLeyenda.map(item => `
-      <div class="item-clase-simbologia" title="${item.label} · ${item.conteo} entidades">
+    contenedor.innerHTML = clasif.itemsLeyenda.map(item => {
+      const lbl = escaparHTML(item.label);
+      return `
+      <div class="item-clase-simbologia" title="${lbl} · ${item.conteo} entidades">
         <span class="swatch-color-clase" style="background-color: ${item.color};"></span>
-        <span class="label-rango-clase">${item.label}</span>
-        <span class="conteo-rango-clase">(${item.conteo})</span>
+        <span class="label-rango-clase">${lbl}</span>
+        <span class="conteo-rango-clase">(${Number(item.conteo || 0).toLocaleString('es-CL')})</span>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   /**
@@ -1184,10 +1486,8 @@ const ModuloMapa = (() => {
     } else if (cfg.modo === 'categorizado') {
       const ordenTxt = cfg.orden === 'invertido' ? ' (Invertido)' : '';
       modoDesc = `Categorizado${ordenTxt} · ${cfg.columna || 'general'}`;
-    } else if (cfg.modo === 'plano') {
-      modoDesc = 'Color Único';
     } else {
-      modoDesc = 'Detección Inteligente';
+      modoDesc = 'Color Único (Entidades)';
     }
 
     const elTitulo = document.getElementById('titulo-leyenda-cartografica-capa');
@@ -1199,13 +1499,16 @@ const ModuloMapa = (() => {
     if (elMetodo) elMetodo.textContent = modoDesc;
 
     if (elItems) {
-      elItems.innerHTML = clasif.itemsLeyenda.map(item => `
-        <div class="item-clase-cartografica" title="${item.label} (${Number(item.conteo || 0).toLocaleString('es-CL')} entidades)">
+      elItems.innerHTML = clasif.itemsLeyenda.map(item => {
+        const lbl = escaparHTML(item.label);
+        return `
+        <div class="item-clase-cartografica" title="${lbl} (${Number(item.conteo || 0).toLocaleString('es-CL')} entidades)">
           <span class="swatch-cartografico" style="background-color: ${item.color};"></span>
-          <span class="label-clase-cartografica">${item.label}</span>
+          <span class="label-clase-cartografica">${lbl}</span>
           <span class="conteo-clase-cartografica">${Number(item.conteo || 0).toLocaleString('es-CL')}</span>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     if (elConteo) {
@@ -1240,7 +1543,7 @@ const ModuloMapa = (() => {
       const reg = registroCapasTematicas[id];
       const nombre = reg.opciones?.nombre || id.toUpperCase();
       const sel = id === capaActivaSimbologiaId ? 'selected' : '';
-      return `<option value="${id}" ${sel}>${nombre} (${id})</option>`;
+      return `<option value="${id}" ${sel}>${escaparHTML(nombre)} (${id})</option>`;
     }).join('');
 
     sincronizarControlesConCapaActiva();
@@ -1267,19 +1570,18 @@ const ModuloMapa = (() => {
     const grupoColumna = document.getElementById('grupo-simbologia-columna');
 
     const cfg = reg.config;
-    if (selectModo) selectModo.value = cfg.modo;
-    if (selectMetodoCuant) selectMetodoCuant.value = cfg.metodoCuant;
-    if (selectNumClases) selectNumClases.value = String(cfg.numClases);
-    if (selectRampa) selectRampa.value = cfg.rampa;
+    if (selectModo) selectModo.value = cfg.modo || 'plano';
+    if (selectMetodoCuant) selectMetodoCuant.value = cfg.metodoCuant || 'cuartiles';
+    if (selectNumClases) selectNumClases.value = String(cfg.numClases || 5);
+    if (selectRampa) selectRampa.value = cfg.rampa || 'viridis';
     if (selectOrden) selectOrden.value = cfg.orden || 'normal';
-    if (selectPaleta) selectPaleta.value = cfg.paletaCat;
+    if (selectPaleta) selectPaleta.value = cfg.paletaCat || 'armonica';
 
     const esGraduado = cfg.modo === 'graduado';
     const esCategorizado = cfg.modo === 'categorizado';
-    const esAutomatico = cfg.modo === 'automatico';
     const esPlano = cfg.modo === 'plano';
 
-    if (grupoColumna) grupoColumna.style.display = (esPlano || esAutomatico) ? 'none' : '';
+    if (grupoColumna) grupoColumna.style.display = esPlano ? 'none' : '';
     if (grupoMetodoCuant) grupoMetodoCuant.style.display = esGraduado ? '' : 'none';
     if (grupoNumClases) grupoNumClases.style.display = esGraduado ? '' : 'none';
     if (grupoRampa) grupoRampa.style.display = esGraduado ? '' : 'none';
@@ -1433,11 +1735,11 @@ const ModuloMapa = (() => {
 
     const leerConfigDesdeUI = () => {
       return {
-        modo: selectModo ? selectModo.value : 'automatico',
+        modo: selectModo ? selectModo.value : 'plano',
         columna: selectColumna ? selectColumna.value : null,
         metodoCuant: selectMetodoCuant ? selectMetodoCuant.value : 'cuartiles',
-        numClases: selectNumClases ? Number(selectNumClases.value) : 4,
-        rampa: selectRampa ? selectRampa.value : 'ylorrd',
+        numClases: selectNumClases ? Number(selectNumClases.value) : 5,
+        rampa: selectRampa ? selectRampa.value : 'viridis',
         orden: selectOrden ? selectOrden.value : 'normal',
         paletaCat: selectPaleta ? selectPaleta.value : 'armonica'
       };
@@ -1453,7 +1755,6 @@ const ModuloMapa = (() => {
       selectCapa.onchange = () => {
         capaActivaSimbologiaId = selectCapa.value;
         sincronizarControlesConCapaActiva();
-        aplicarDesdeUI();
       };
     }
 
@@ -1509,13 +1810,151 @@ const ModuloMapa = (() => {
         if (!capaActivaSimbologiaId) return;
         const reg = registroCapasTematicas[capaActivaSimbologiaId];
         if (reg) {
-          reg.config.modo = 'automatico';
+          const def = determinarSimbologiaPredeterminada(reg.idCapa, reg.geojson, reg.opciones);
+          reg.config = def;
+          aplicarSimbologiaACapa(reg.idCapa, def);
           sincronizarControlesConCapaActiva();
-          aplicarDesdeUI();
           leyendaVisorCerradaManualmente = false;
           actualizarLeyendaCartograficaVisor(reg);
         }
       };
+    }
+  }
+
+  function construirContenidoPopupLazy(feature, layer, idCapa, opciones, colorFallback, icono) {
+    const props = feature.properties || {};
+    const colorFeature = layer._atlasColor || resolverColorFeature(feature, idCapa, colorFallback) || colorFallback;
+    const idCapaStrItem = (idCapa || '').toString().toLowerCase();
+    const esGbifItem = Boolean(
+      idCapaStrItem.includes('gbif') ||
+      (props.fuente && props.fuente.toString().toLowerCase().includes('gbif')) ||
+      (props._fuente && props._fuente.toString().toLowerCase().includes('gbif')) ||
+      props.datasetKey || props.taxonKey || props.scientificName || props.gbifID
+    );
+    const esOficial = !esGbifItem && !!(
+      props._idOficial ||
+      (window.ModuloIDEChile?.obtenerDefinicion && Boolean(window.ModuloIDEChile.obtenerDefinicion(idCapa))) ||
+      (idCapa && (
+        idCapaStrItem.startsWith('bbdd_') ||
+        idCapaStrItem.startsWith('ide_') ||
+        idCapaStrItem.startsWith('oficial_') ||
+        idCapaStrItem.includes('sii') ||
+        idCapaStrItem.includes('predial') ||
+        idCapaStrItem.includes('censo') ||
+        idCapaStrItem.includes('rsh') ||
+        idCapaStrItem.includes('bip') ||
+        idCapaStrItem.includes('igvust') ||
+        idCapaStrItem.includes('semaforos') ||
+        idCapaStrItem.includes('subdere') ||
+        idCapaStrItem.includes('munistgo') ||
+        idCapaStrItem.includes('mop')
+      ))
+    );
+    const nombre = props._nombre || props.nombre || props.name || props.NOM || props.NOMBRE || props.especie || 'Sin denominación';
+    let fuente = props._fuente || props.fuente || opciones.fuente;
+    if (!fuente) {
+      if (idCapaStrItem.includes('sii') || idCapaStrItem.includes('predial')) fuente = 'Servicio de Impuestos Internos (SII)';
+      else if (esOficial) fuente = 'Estado de Chile / IDE Chile';
+      else if (esGbifItem) fuente = 'GBIF / Ciencia Ciudadana';
+      else fuente = 'OpenStreetMap (API Overpass)';
+    }
+    let licencia = props._licencia || props.licencia || opciones.licencia;
+    if (!licencia) {
+      if (esOficial) licencia = 'Ley N° 20.285 de Transparencia';
+      else if (esGbifItem) licencia = 'CC-BY 4.0';
+      else if (fuente && fuente.includes('Geofabrik')) licencia = 'ODbL 1.0 (© colaboradores de OpenStreetMap / Geofabrik GmbH)';
+      else licencia = 'ODbL 1.0 (© colaboradores de OpenStreetMap)';
+    }
+    const subtipo = props._subtipo || props.subtipo || props.fclass || props.amenity || props.shop || props.highway || props.building || props.leisure || props.historic || props.natural || props.landuse || props.railway || props.rubro || (props._idOficial ? 'Oficial' : (esGbifItem ? 'Observación de Biodiversidad' : 'Entidad Cartográfica'));
+
+    let filasExtraInfo = '';
+    if (props._extraInfo) {
+      Object.keys(props._extraInfo).forEach(k => {
+        filasExtraInfo += `<tr><td style="color:#4B5142; width:45%;">${escaparHTML(k)}:</td><td><strong>${escaparHTML(props._extraInfo[k])}</strong></td></tr>`;
+      });
+    }
+
+    const geomType = feature.geometry?.type || 'Point';
+    const rotuloGeometria = (geomType === 'Point' || geomType === 'MultiPoint') ? 'Punto 📍' :
+                            (geomType === 'LineString' || geomType === 'MultiLineString') ? 'Línea 〰️' :
+                            'Polígono ⬡';
+
+    const idBotonDetalle = `btn-mas-detalle-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    layer._atlasIdBotonDetalle = idBotonDetalle;
+
+    return `
+      <div class="popup-vgi" style="font-family:Spectral, Georgia, serif; max-width:260px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+          <span style="font-size:0.75rem; color:${colorFeature}; font-weight:bold; font-family:'IBM Plex Mono',monospace;">
+            ${icono} ${escaparHTML(opciones.nombre || idCapa.toUpperCase())}
+          </span>
+          <span style="font-size:0.7rem; background:#EDE6D6; color:#4B5142; padding:1px 5px; border-radius:3px; font-weight:600;">
+            ${rotuloGeometria}
+          </span>
+        </div>
+        <h4 style="margin:4px 0 6px 0; font-size:1rem; border-bottom:1px solid #C9BFA0; padding-bottom:3px;">
+          ${escaparHTML(nombre)}
+        </h4>
+        <table style="width:100%; font-size:0.78rem; border-collapse:collapse;">
+          ${esOficial ? `<tr><td colspan="2" style="background:#1B4D3E; color:#FFF; font-size:0.68rem; font-family:'IBM Plex Mono',monospace; padding:2px 6px; font-weight:bold; letter-spacing:0.04em; margin-bottom:4px; display:block;">🏛️ CAPA OFICIAL DEL ESTADO DE CHILE</td></tr>` : ''}
+          ${props.id_ig ? `<tr><td style="color:#4B5142; width:38%;">ID IG:</td><td><code style="font-size:0.7rem; color:#06b6d4; font-family:'IBM Plex Mono',monospace; font-weight:700;">${escaparHTML(props.id_ig)}</code></td></tr>` : ''}
+          ${(props.id_igv || props.id_vgi) ? `<tr><td style="color:#4B5142; width:38%;">ID IGV:</td><td><code style="font-size:0.7rem; color:#06b6d4; font-family:'IBM Plex Mono',monospace; font-weight:700;">${escaparHTML(props.id_igv || props.id_vgi)}</code></td></tr>` : ''}
+          <tr><td style="color:#4B5142; width:38%;">Clasificación:</td><td><strong>${escaparHTML(subtipo)}</strong></td></tr>
+          ${filasExtraInfo}
+          ${props.operador ? `<tr><td style="color:#4B5142;">Operador:</td><td>${escaparHTML(props.operador)}</td></tr>` : ''}
+          ${props.direccion && !props._extraInfo?.['Dirección'] ? `<tr><td style="color:#4B5142;">Dirección:</td><td>${escaparHTML(props.direccion)}</td></tr>` : ''}
+          ${props.accesibilidad ? `<tr><td style="color:#4B5142;">Accesible:</td><td>${escaparHTML(props.accesibilidad)}</td></tr>` : ''}
+          ${props.superficie_m2 ? `<tr><td style="color:#4B5142;">Superficie:</td><td><strong>${Number(props.superficie_m2).toLocaleString('es-CL')} m²</strong> <span style="font-size:0.72rem; color:#8F3A2C; font-weight:600;" title="Calculada mediante reproyección conforme a EPSG:32719 (UTM 19S) + Gauss">(EPSG:32719)</span>${props.superficie_ha ? ` <small>(${Number(props.superficie_ha).toLocaleString('es-CL')} ha)</small>` : ''}</td></tr>` : ''}
+          <tr><td style="color:#4B5142;">Fuente:</td><td>${escaparHTML(fuente)}</td></tr>
+          <tr><td style="color:#4B5142;">Licencia:</td><td><small>${escaparHTML(licencia)}</small></td></tr>
+          ${props._declaracion ? `<tr><td colspan="2" style="font-size:0.68rem; color:#4B5142; padding-top:4px; border-top:1px dashed #C9BFA0; line-height:1.25;"><em>${escaparHTML(props._declaracion)}</em></td></tr>` : ''}
+          ${props._citaAPA ? `<tr><td colspan="2" style="font-size:0.65rem; color:#35586B; padding-top:2px; font-family:'IBM Plex Mono',monospace;"><strong>Cita:</strong> ${escaparHTML(props._citaAPA)}</td></tr>` : ''}
+        </table>
+        <div style="margin-top:8px; border-top:1px solid #C9BFA0; padding-top:6px; text-align:right;">
+          <button id="${idBotonDetalle}" class="btn-mas-detalles-popup" style="background:linear-gradient(135deg,#06b6d4,#0891b2); color:#000; border:none; border-radius:5px; padding:6px 14px; font-size:0.75rem; font-weight:700; cursor:pointer; font-family:'IBM Plex Mono',monospace; letter-spacing:0.03em; transition:all 0.2s; box-shadow:0 2px 6px rgba(6,182,212,0.3);">Más detalles →</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function encuadrarCapaDeFormaRacional(capa, opciones = {}) {
+    if (!mapa || !capa || opciones.ajustarVista === false) return;
+    if (typeof capa.getBounds !== 'function') return;
+    const b = capa.getBounds();
+    if (!b || !b.isValid()) return;
+
+    const aplicarEncuadre = () => {
+      try {
+        mapa.invalidateSize({ pan: false });
+        const sw = b.getSouthWest();
+        const ne = b.getNorthEast();
+        const latSpan = Math.abs(ne.lat - sw.lat);
+        const lngSpan = Math.abs(ne.lng - sw.lng);
+        const centroComuna = L.latLngBounds([-33.485, -70.705], [-33.420, -70.625]);
+
+        if (latSpan <= 0.45 && lngSpan <= 0.55) {
+          mapa.fitBounds(b, { padding: [40, 40], maxZoom: 16 });
+        } else if (b.intersects(centroComuna)) {
+          // Capa metropolitana o regional con cobertura en Santiago/Barrio Brasil:
+          // evitar alejar la cámara a escala nacional (zoom 6-8) o quedar bloqueado en zoom > 16
+          _pendingBboxBounds = null;
+          const vistaActual = mapa.getBounds ? mapa.getBounds() : null;
+          const zoomActual = mapa.getZoom ? mapa.getZoom() : 12;
+          if (!vistaActual || !centroComuna.intersects(vistaActual) || zoomActual < 12 || zoomActual > 16) {
+            mapa.fitBounds(L.latLngBounds([-33.470, -70.695], [-33.428, -70.635]), { padding: [20, 20], maxZoom: 14 });
+          }
+        } else {
+          mapa.fitBounds(b, { padding: [40, 40], maxZoom: 14 });
+        }
+        if (typeof capa.redraw === 'function') capa.redraw();
+      } catch (_) {}
+    };
+
+    const sz = mapa.getSize ? mapa.getSize() : null;
+    if (!sz || sz.x === 0 || sz.y === 0) {
+      setTimeout(aplicarEncuadre, 160);
+    } else {
+      aplicarEncuadre();
     }
   }
 
@@ -1532,7 +1971,7 @@ const ModuloMapa = (() => {
     const color = opciones.color || COLORES_CATEGORIA[idCapa] || COLORES_CATEGORIA.defecto;
     const icono = opciones.icono || '📍';
 
-    // Registrar o actualizar metadatos y configuración de simbología predeterminada inteligente
+    // Registrar o actualizar metadatos y configuración racional de simbología predeterminada
     if (!registroCapasTematicas[idCapa]) {
       const cols = inspeccionarColumnasGeoJSON(geojson);
       const configPredeterminada = determinarSimbologiaPredeterminada(idCapa, geojson, opciones);
@@ -1556,144 +1995,54 @@ const ModuloMapa = (() => {
       registroCapasTematicas[idCapa].clasificacion = calcularClasificacionCapa(registroCapasTematicas[idCapa]);
     }
 
+    const numFeatures = (geojson && Array.isArray(geojson.features)) ? geojson.features.length : 0;
+    const smoothPoligono = numFeatures > 5000 ? 1.5 : 1.0;
+
     const capa = L.geoJSON(geojson, {
       pointToLayer: (feature, latlng) => {
         const colorFeature = resolverColorFeature(feature, idCapa, color);
         return L.circleMarker(latlng, {
-          radius: 6,
+          radius: numFeatures > 10000 ? 4 : 6,
           fillColor: colorFeature,
           color: '#1a1f18',
-          weight: 1.5,
+          weight: numFeatures > 10000 ? 0.8 : 1.5,
           opacity: 1,
-          fillOpacity: 0.88
+          fillOpacity: 0.9
         });
       },
       style: (feature) => {
         const colorFeature = resolverColorFeature(feature, idCapa, color);
-        if (feature.geometry && (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString')) {
+        const gt = feature.geometry?.type;
+        if (gt === 'LineString' || gt === 'MultiLineString') {
           return {
             color: colorFeature,
-            weight: 3.5,
-            opacity: 0.88
+            weight: numFeatures > 10000 ? 2.2 : 3.5,
+            opacity: 0.88,
+            smoothFactor: smoothPoligono
           };
         }
         return {
           fillColor: colorFeature,
-          weight: 1.5,
+          weight: numFeatures > 5000 ? 0.8 : 1.4,
           opacity: 0.9,
           color: '#1a1f18',
-          fillOpacity: 0.42
+          fillOpacity: 0.55,
+          smoothFactor: smoothPoligono
         };
       },
       onEachFeature: (feature, layer) => {
         const props = feature.properties || {};
         const colorFeature = resolverColorFeature(feature, idCapa, color);
-        const idCapaStrItem = (idCapa || '').toString().toLowerCase();
-        const esGbifItem = Boolean(
-          idCapaStrItem.includes('gbif') ||
-          (props.fuente && props.fuente.toString().toLowerCase().includes('gbif')) ||
-          (props._fuente && props._fuente.toString().toLowerCase().includes('gbif')) ||
-          props.datasetKey || props.taxonKey || props.scientificName || props.gbifID
-        );
-        const esOficial = !esGbifItem && !!(
-          props._idOficial ||
-          (window.ModuloIDEChile?.obtenerDefinicion && Boolean(window.ModuloIDEChile.obtenerDefinicion(idCapa))) ||
-          (idCapa && (
-            idCapaStrItem.startsWith('bbdd_') ||
-            idCapaStrItem.startsWith('ide_') ||
-            idCapaStrItem.startsWith('oficial_') ||
-            idCapaStrItem.includes('sii') ||
-            idCapaStrItem.includes('predial') ||
-            idCapaStrItem.includes('censo') ||
-            idCapaStrItem.includes('rsh') ||
-            idCapaStrItem.includes('bip') ||
-            idCapaStrItem.includes('igvust') ||
-            idCapaStrItem.includes('semaforos') ||
-            idCapaStrItem.includes('subdere') ||
-            idCapaStrItem.includes('munistgo') ||
-            idCapaStrItem.includes('mop')
-          ))
-        );
-        const esOsmItem = Boolean(
-          !esGbifItem && !esOficial && (
-            idCapaStrItem.includes('osm') || idCapaStrItem.startsWith('cat-') || idCapaStrItem.startsWith('capa_osm') ||
-            (props.fuente && props.fuente.toString().toLowerCase().includes('osm')) ||
-            (props._fuente && props._fuente.toString().toLowerCase().includes('osm')) ||
-            props.osm_id || props.osm_type
-          )
-        );
-        const nombre = props._nombre || props.nombre || props.name || props.especie || 'Sin denominación';
-        let fuente = props._fuente || props.fuente || opciones.fuente;
-        if (!fuente) {
-          if (idCapaStrItem.includes('sii') || idCapaStrItem.includes('predial')) fuente = 'Servicio de Impuestos Internos (SII)';
-          else if (esOficial) fuente = 'Estado de Chile / IDE Chile';
-          else if (esGbifItem) fuente = 'GBIF / Ciencia Ciudadana';
-          else fuente = 'OpenStreetMap (API Overpass)';
-        }
-        let licencia = props._licencia || props.licencia || opciones.licencia;
-        if (!licencia) {
-          if (esOficial) licencia = 'Ley N° 20.285 de Transparencia';
-          else if (esGbifItem) licencia = 'CC-BY 4.0';
-          else if (fuente && fuente.includes('Geofabrik')) licencia = 'ODbL 1.0 (© colaboradores de OpenStreetMap / Geofabrik GmbH)';
-          else licencia = 'ODbL 1.0 (© colaboradores de OpenStreetMap)';
-        }
-        const fecha = props.fecha || props.fecha_registro || (idCapaStrItem.includes('sii') ? 'Segundo Semestre 2025' : (esOficial ? 'Oficial 2024' : 'No indicada'));
-        const subtipo = props._subtipo || props.subtipo || props.fclass || props.amenity || props.shop || props.highway || props.building || props.leisure || props.historic || props.natural || props.landuse || props.railway || props.rubro || (props._idOficial ? 'Oficial' : (esGbifItem ? 'Observación de Biodiversidad' : 'Entidad Cartográfica'));
 
-        let filasExtraInfo = '';
-        if (props._extraInfo) {
-          Object.keys(props._extraInfo).forEach(k => {
-            filasExtraInfo += `<tr><td style="color:#4B5142; width:45%;">${k}:</td><td><strong>${props._extraInfo[k]}</strong></td></tr>`;
-          });
-        }
-
-        const geomType = feature.geometry?.type || 'Point';
-        const rotuloGeometria = geomType === 'Point' ? 'Punto 📍' :
-                                (geomType === 'LineString' || geomType === 'MultiLineString') ? 'Línea 〰️' :
-                                'Polígono ⬡';
-
-        const idBotonDetalle = `btn-mas-detalle-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
-        const contenidoPopup = `
-          <div class="popup-vgi" style="font-family:Spectral, Georgia, serif; max-width:260px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
-              <span style="font-size:0.75rem; color:${colorFeature}; font-weight:bold; font-family:'IBM Plex Mono',monospace;">
-                ${icono} ${opciones.nombre || idCapa.toUpperCase()}
-              </span>
-              <span style="font-size:0.7rem; background:#EDE6D6; color:#4B5142; padding:1px 5px; border-radius:3px; font-weight:600;">
-                ${rotuloGeometria}
-              </span>
-            </div>
-            <h4 style="margin:4px 0 6px 0; font-size:1rem; border-bottom:1px solid #C9BFA0; padding-bottom:3px;">
-              ${nombre}
-            </h4>
-            <table style="width:100%; font-size:0.78rem; border-collapse:collapse;">
-              ${esOficial ? `<tr><td colspan="2" style="background:#1B4D3E; color:#FFF; font-size:0.68rem; font-family:'IBM Plex Mono',monospace; padding:2px 6px; font-weight:bold; letter-spacing:0.04em; margin-bottom:4px; display:block;">🏛️ CAPA OFICIAL DEL ESTADO DE CHILE</td></tr>` : ''}
-              ${props.id_ig ? `<tr><td style="color:#4B5142; width:38%;">ID IG:</td><td><code style="font-size:0.7rem; color:#06b6d4; font-family:'IBM Plex Mono',monospace; font-weight:700;">${props.id_ig}</code></td></tr>` : ''}
-              ${(props.id_igv || props.id_vgi) ? `<tr><td style="color:#4B5142; width:38%;">ID IGV:</td><td><code style="font-size:0.7rem; color:#06b6d4; font-family:'IBM Plex Mono',monospace; font-weight:700;">${props.id_igv || props.id_vgi}</code></td></tr>` : ''}
-              <tr><td style="color:#4B5142; width:38%;">Clasificación:</td><td><strong>${subtipo}</strong></td></tr>
-              ${filasExtraInfo}
-              ${props.operador ? `<tr><td style="color:#4B5142;">Operador:</td><td>${props.operador}</td></tr>` : ''}
-              ${props.direccion && !props._extraInfo?.['Dirección'] ? `<tr><td style="color:#4B5142;">Dirección:</td><td>${props.direccion}</td></tr>` : ''}
-              ${props.accesibilidad ? `<tr><td style="color:#4B5142;">Accesible:</td><td>${props.accesibilidad}</td></tr>` : ''}
-              ${props.superficie_m2 ? `<tr><td style="color:#4B5142;">Superficie:</td><td><strong>${props.superficie_m2.toLocaleString('es-CL')} m²</strong> <span style="font-size:0.72rem; color:#8F3A2C; font-weight:600;" title="Calculada mediante reproyección conforme a EPSG:32719 (UTM 19S) + Gauss">(EPSG:32719)</span>${props.superficie_ha ? ` <small>(${props.superficie_ha.toLocaleString('es-CL')} ha)</small>` : ''}</td></tr>` : ''}
-              <tr><td style="color:#4B5142;">Fuente:</td><td>${fuente}</td></tr>
-              <tr><td style="color:#4B5142;">Licencia:</td><td><small>${licencia}</small></td></tr>
-              ${props._declaracion ? `<tr><td colspan="2" style="font-size:0.68rem; color:#4B5142; padding-top:4px; border-top:1px dashed #C9BFA0; line-height:1.25;"><em>${props._declaracion}</em></td></tr>` : ''}
-              ${props._citaAPA ? `<tr><td colspan="2" style="font-size:0.65rem; color:#35586B; padding-top:2px; font-family:'IBM Plex Mono',monospace;"><strong>Cita:</strong> ${props._citaAPA}</td></tr>` : ''}
-            </table>
-            <div style="margin-top:8px; border-top:1px solid #C9BFA0; padding-top:6px; text-align:right;">
-              <button id="${idBotonDetalle}" class="btn-mas-detalles-popup" style="background:linear-gradient(135deg,#06b6d4,#0891b2); color:#000; border:none; border-radius:5px; padding:6px 14px; font-size:0.75rem; font-weight:700; cursor:pointer; font-family:'IBM Plex Mono',monospace; letter-spacing:0.03em; transition:all 0.2s; box-shadow:0 2px 6px rgba(6,182,212,0.3);" onmouseover="this.style.opacity='0.85'; this.style.transform='translateY(-1px)';" onmouseout="this.style.opacity='1'; this.style.transform='none';">Más detalles →</button>
-            </div>
-          </div>
-        `;
-        layer.bindPopup(contenidoPopup);
-
-        // Guardar referencias internas en la entidad vectorial
+        // Guardar referencias internas en la entidad vectorial (sin asignar HTML ni closures pesados por cada feature)
         layer._atlasProps = props;
         layer._atlasOpciones = opciones;
         layer._atlasIdCapa = idCapa;
         layer._atlasIcono = icono;
         layer._atlasColor = colorFeature;
+
+        // Construcción perezosa (lazy) del popup al hacer clic: ahorra cientos de MB en capas de 20k–264k entidades
+        layer.bindPopup(() => construirContenidoPopupLazy(feature, layer, idCapa, opciones, color, icono));
 
         // En Modo Inspector Normativo (PRC), reenviar el clic de entidad al evaluador sin abrir popup
         layer.on('click', (ev) => {
@@ -1714,19 +2063,18 @@ const ModuloMapa = (() => {
             return;
           }
           layerActivoPopup = layer;
-          const btn = document.getElementById(idBotonDetalle);
+          const btn = layer._atlasIdBotonDetalle ? document.getElementById(layer._atlasIdBotonDetalle) : null;
           if (btn) {
             btn.onclick = (e) => {
               if (e) {
                 e.preventDefault();
                 e.stopPropagation();
               }
-              abrirSidebarDetalle(props, opciones, idCapa, icono, colorFeature);
+              abrirSidebarDetalle(props, opciones, idCapa, icono, layer._atlasColor || colorFeature);
               layer.closePopup();
             };
           }
         });
-
       }
     });
 
@@ -1738,25 +2086,7 @@ const ModuloMapa = (() => {
     sincronizarSelectorCapasSimbologia(idCapa);
     actualizarLeyendaCartograficaVisor(registroCapasTematicas[idCapa]);
 
-    // Ajuste automático de encuadre para que las geometrías aparezcan inmediatamente en pantalla
-    if (opciones.ajustarVista !== false && capa.getBounds && capa.getBounds().isValid()) {
-      try {
-        mapa.fitBounds(capa.getBounds(), { padding: [40, 40], maxZoom: 16 });
-      } catch (_) {}
-
-      // Si el contenedor del mapa estaba oculto en una pestaña inactiva (size 0x0), recalcular al mostrarse
-      const sz = mapa.getSize ? mapa.getSize() : null;
-      if (!sz || sz.x === 0 || sz.y === 0) {
-        setTimeout(() => {
-          try {
-            mapa.invalidateSize();
-            if (capa.getBounds().isValid()) {
-              mapa.fitBounds(capa.getBounds(), { padding: [40, 40], maxZoom: 16 });
-            }
-          } catch (_) {}
-        }, 150);
-      }
-    }
+    encuadrarCapaDeFormaRacional(capa, opciones);
 
     return capa;
   }
@@ -1817,10 +2147,10 @@ const ModuloMapa = (() => {
           f.properties['stroke-width'] = 2;
           f.properties['simbologia_color'] = colorSimbologia;
           if (reg && reg.config) {
-            f.properties['simbologia_modo'] = reg.config.modo || 'automatico';
+            f.properties['simbologia_modo'] = reg.config.modo || 'plano';
             if (reg.config.columna) f.properties['simbologia_columna'] = reg.config.columna;
             if (reg.config.rampa) f.properties['simbologia_rampa'] = reg.config.rampa;
-            if (reg.config.paleta) f.properties['simbologia_paleta'] = reg.config.paleta;
+            if (reg.config.paletaCat) f.properties['simbologia_paleta'] = reg.config.paletaCat;
           }
 
           f.properties.categoria_capa = id;
@@ -1892,8 +2222,17 @@ const ModuloMapa = (() => {
     const refrescar = () => {
       try {
         mapa.invalidateSize({ pan: false });
+        const sz = mapa.getSize ? mapa.getSize() : null;
+        const visible = !!(sz && sz.x >= 50 && sz.y >= 50);
         if (bounds && bounds.isValid && bounds.isValid()) {
-          mapa.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
+          _pendingBboxBounds = null;
+          if (visible) {
+            mapa.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
+          }
+        } else if (_pendingBboxBounds && _pendingBboxBounds.isValid && _pendingBboxBounds.isValid() && visible) {
+          const pendiente = _pendingBboxBounds;
+          _pendingBboxBounds = null;
+          mapa.fitBounds(pendiente, { padding: [20, 20], maxZoom: 16 });
         }
       } catch (_) {}
     };
@@ -2686,10 +3025,10 @@ const ModuloMapa = (() => {
           f.properties['stroke-width'] = 2;
           f.properties['simbologia_color'] = colorSimbologia;
           if (reg && reg.config) {
-            f.properties['simbologia_modo'] = reg.config.modo || 'automatico';
+            f.properties['simbologia_modo'] = reg.config.modo || 'plano';
             if (reg.config.columna) f.properties['simbologia_columna'] = reg.config.columna;
             if (reg.config.rampa) f.properties['simbologia_rampa'] = reg.config.rampa;
-            if (reg.config.paleta) f.properties['simbologia_paleta'] = reg.config.paleta;
+            if (reg.config.paletaCat) f.properties['simbologia_paleta'] = reg.config.paletaCat;
           }
         });
       }
@@ -2750,6 +3089,10 @@ const ModuloMapa = (() => {
     inicializar,
     actualizarRectanguloBbox,
     encuadrarBbox,
+    encuadrarCapa: (id, ops = {}) => {
+      const reg = registroCapasTematicas[id];
+      if (reg && reg.capaLeaflet) encuadrarCapaDeFormaRacional(reg.capaLeaflet, ops);
+    },
     activarModoDibujoBbox,
     desactivarModoDibujoBbox,
     cargarCapaGeoJSON,
@@ -2767,12 +3110,17 @@ const ModuloMapa = (() => {
     removerCapaWMS,
     obtenerCapasWMSActivas,
     obtenerInstanciaMapa: () => mapa,
-    invalidarTamano,
     aplicarSimbologiaACapa,
+    determinarSimbologiaPredeterminada,
     restablecerSimbologia: (id) => {
-      if (registroCapasTematicas[id]) {
-        registroCapasTematicas[id].config.modo = 'automatico';
-        aplicarSimbologiaACapa(id, { modo: 'automatico' });
+      const reg = registroCapasTematicas[id];
+      if (reg) {
+        const def = determinarSimbologiaPredeterminada(reg.idCapa, reg.geojson, reg.opciones);
+        reg.config = def;
+        aplicarSimbologiaACapa(id, def);
+        if (capaActivaSimbologiaId === id) {
+          sincronizarControlesConCapaActiva();
+        }
       }
     },
     obtenerRegistroCapas: () => registroCapasTematicas,

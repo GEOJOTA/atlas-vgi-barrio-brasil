@@ -225,7 +225,7 @@ A continuación se presenta la transcripción y verificación exacta de las 51 r
 - Cita Breve: `(Fast & Rinner, 2014)`
 - Tipología: Artículo en Revista Científica Open Access
 - Enlace / Identificador: [https://doi.org/10.3390/ijgi3041278](https://doi.org/10.3390/ijgi3041278)
-- Pertinencia Territorial: Perspectiva sistémica de la Índice Global de Calidad VGI (IGV, promedio multicriterio ISO 19157 de las 134 capas; véase el glosario) analizando los flujos de información entre productores voluntarios, plataformas cartográficas y usuarios finales en la gestión pública.
+- Pertinencia Territorial: Perspectiva sistémica de la Información Geográfica Voluntaria (IGV) articulada bajo el perfil homologado de 17 atributos ISO 19157 sobre las 294 coberturas (`id_ig` / `id_igv`), analizando los flujos de información entre productores voluntarios, plataformas cartográficas y usuarios finales en la gestión pública.
 
 ### 25. Antoniou, V. (2023). “citizen science: A new paradigm for spatial data infrastructure?”. MDPI, land 2023, 12, 1928. HTTPS://Doi.org/10.3390/land12101928
 - Cita Breve: `(Antoniou & Skopeliti, 2015)`

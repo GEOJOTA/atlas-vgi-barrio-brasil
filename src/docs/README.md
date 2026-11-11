@@ -27,7 +27,7 @@ Desarrollar un Atlas para la Gestión Territorial reproducible, interoperable y 
 * **OE 2.** Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos.
   * *Componentes y entregables verificados:* Descarga, normalización y geoprocesamiento de las **294 coberturas vectoriales** (123 oficiales del Estado de Chile y 171 coberturas de IGV descentralizadas) en `EPSG:4326` y `EPSG:32719`; estructuración del perfil homologado de metadatos y calidad ISO 19157 de **17 atributos** diferenciando `id_ig` (información geográfica oficial) e `id_igv` (información geográfica voluntaria); cruces espaciales comunales y barriales en las 5 dimensiones analíticas (`src/data/*.geojson`, `docs/perfil_metadatos_vgi.xlsx` y matrices de síntesis territorial).
 * **OE 3.** Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.
-  * *Componentes y entregables verificados:* **Definición de un prototipo sintetizado para usuarios no técnicos:** prototipo más sintetizado que permita a usuarios sin experiencia técnica poder interactuar de forma más simple con la plataforma, estructurado en 3 módulos (*Módulo 01 Análisis*, *Módulo 02 Explorar Mapa* y *Módulo 03 Documentación*); visor cartográfico cuadrado (Leaflet 1.9.4) con mapas base abiertos de OpenStreetMap e imágenes satelitales de Bing, Microsoft y Esri, simbología estadística dinámica (*Natural Breaks* / Jenks) y panel inferior de **Detalles**; Inspector normativo del Plan Regulador Comunal (PRC) y OGUC; 4 ejes de diagnóstico geoestadístico (KDE y LISA) con 83 cartografías temáticas y despliegue continuo en Netlify (`src/index.html`, `src/css/estilos.css`, `src/js/modulos/mapa.js`, `evaluador_normativo.js`, `indicadores_analisis.js` y `netlify.toml`).
+  * *Componentes y entregables verificados:* **Definición de un prototipo sintetizado para usuarios no técnicos:** prototipo más sintetizado que permita a usuarios sin experiencia técnica poder interactuar de forma más simple con la plataforma, estructurado en 3 módulos (*Módulo 01 Análisis*, *Módulo 02 Explorar Mapa* y *Módulo 03 Documentación*); visor cartográfico cuadrado (Leaflet 1.9.4) con mapas base abiertos de OpenStreetMap e imágenes satelitales de Bing, Microsoft y Esri, simbología temática racional (Color Único, Categorizado y Graduado multi-método) y panel inferior de **Detalles**; Inspector normativo del Plan Regulador Comunal (PRC) y OGUC; 4 ejes de diagnóstico geoestadístico (KDE y LISA) con 83 cartografías temáticas y despliegue continuo en Netlify (`src/index.html`, `src/css/estilos.css`, `src/js/modulos/mapa.js`, `evaluador_normativo.js`, `indicadores_analisis.js` y `netlify.toml`).
 * **OE 4.** Evaluar la usabilidad y la pertinencia de la plataforma con distintos perfiles de actores territoriales y asegurar su transferibilidad técnica, metodológica y documental.
   * *Componentes y entregables verificados:* Evaluación de usabilidad (Modalidad 1) y conversaciones situadas con vecinos (Modalidad 2) en el Barrio Brasil; tutorial interactivo navegable de 18 pasos por módulo y glosario de siglas; documentación navegable dentro de la plataforma y en Git (`MANUAL_USO.md`, `MANUAL_ACTUALIZACION_ATLAS.md`, `ARQUITECTURA.md`); empaquetado de la geodatabase completa (`docs/geodatabase_completa_atlas_vgi.zip`) y verificación automatizada de las 294 capas (`scripts/verificar_conteo_capas.py`).
 
@@ -54,7 +54,7 @@ En coherencia con la Carta Gantt del proyecto (`Carta_Gantt_Atlas_VGI.pdf`), ún
 | **Hito 4** | `08 oct 2026` | `OE 2` | **E4 ·** Geodatabase de 294 capas GeoJSON, PostGIS y perfil de 17 atributos ISO (`id_ig` / `id_igv`) | `src/data/*.geojson`, `data/*.geojson`, `docs/perfil_metadatos_vgi.xlsx` y `scripts/db/` |
 | **Hito 5** | `19 oct 2026` | `OE 2` | **E5 ·** Matriz de síntesis barrial, catastro IGV e inversiones BIP | `data/matriz_sintesis_barrio_brasil_manzanas.geojson`, `data/resumen_catastro_vgi.csv` y `data/bip_inversiones_santiago.csv` |
 | **Hito 6** | `27 oct 2026` | `OE 3` | **E6 ·** Plataforma sintetizada en 3 módulos (*Análisis*, *Explorar mapa*, *Documentación*) y visor | `src/index.html`, `src/css/estilos.css`, `src/js/app.js` y `src/js/modulos/mapa.js` |
-| **Hito 7** | `04 nov 2026` | `OE 3` | **E7 ·** Inspector normativo PRC, simbología Jenks, panel *Detalles*, 83 mapas y despliegue | `src/js/modulos/evaluador_normativo.js`, `src/js/modulos/indicadores_analisis.js` y `netlify.toml` |
+| **Hito 7** | `04 nov 2026` | `OE 3` | **E7 ·** Inspector normativo PRC, simbología temática racional, panel *Detalles*, 83 mapas y despliegue | `src/js/modulos/evaluador_normativo.js`, `src/js/modulos/indicadores_analisis.js` y `netlify.toml` |
 | **Hito 8** | `09 nov 2026` | `OE 4` | **E8 ·** Evaluación de usabilidad, trazabilidad y Módulo 03 navegable | `docs/TRAZABILIDAD.md`, `MANUAL_USO.md` (`src/docs/`) y `src/js/modulos/manual.js` |
 | **Hito 9** | `12 nov 2026` | `OE 4` | **E9 ·** Manual de actualización técnica, paquete ZIP (542,35 MB) y verificación de integridad | `MANUAL_ACTUALIZACION_ATLAS.md`, `docs/geodatabase_completa_atlas_vgi.zip` y `scripts/verificar_integridad_despliegue.py` |
 
@@ -75,7 +75,7 @@ flowchart LR
 
     subgraph PROC["2. PROCESAMIENTO · Motores JS ES6+ y Scripts Python 3"]
         P1["Homologación de 17 Atributos e Identificadores<br/>id_ig (Oficiales) e id_igv (IGV) + Métricas ISO 19157"]
-        P2["Motor Geodésico y Simbología Estadística<br/>EPSG:4326 ↔ EPSG:32719 (UTM 19S) + Natural Breaks (Jenks)"]
+        P2["Motor Geodésico y Simbología Temática Racional<br/>EPSG:4326 ↔ EPSG:32719 (UTM 19S) + Plano / Categorizado / Graduado"]
         P3["Inspector Normativo PRC / OGUC<br/>Intersección espacial bajo demanda en el visor"]
         P4["Modelamiento KDE / LISA y Empaquetado<br/>4 Ejes (83 Cartografías) y paquete .zip de 294 capas"]
     end
@@ -109,7 +109,7 @@ flowchart TD
     subgraph M02["Módulo 02 · Explorar Mapa (#panel-inicio)"]
         BAR["Barra Centrada: Área de enfoque · Delimitar área · Reencuadrar<br/>Inspector normativo (PRC) · Ver Atlas · Exportar GeoJSON · Descargar .zip"]
         MAPA["Visor Cartográfico Cuadrado (Leaflet 1.9.4)<br/>Mapas base: OSM Estándar, OSM HOT, Bing/Microsoft Satelital e Híbrido, Esri"]
-        SIMB["Simbología Dinámica en Vivo<br/>Natural Breaks (Jenks), Cuantiles, Intervalos y Rampas Cromáticas"]
+        SIMB["Simbología Temática Dinámica en Vivo<br/>Plano, Categorizado, Cuartiles, Jenks, Intervalos Iguales y Rampas"]
         DET["Panel Inferior de Detalles (Ancho Completo)<br/>17 atributos homologados (id_ig / id_igv), calidad ISO 19157 y normativa PRC"]
     end
 
@@ -132,7 +132,7 @@ flowchart TD
 | N° | Módulo en la Interfaz (`src/index.html`) | ID del Panel DOM | Controladores Principales (`src/js/`) | Función Principal y Entregables Verificables |
 | :---: | :--- | :--- | :--- | :--- |
 | `01` | **Análisis** | `#panel-indicadores` | `modulos/indicadores_analisis.js`, `modulos/catalogo_vgi_descentralizado.js` | Diagnóstico territorial basado en 83 cartografías temáticas organizadas en 4 láminas (KDE, autocorrelación espacial LISA, demografía/habitabilidad y metabolismo urbano) y explorador de 294 coberturas (123 oficiales + 171 IGV descentralizadas) agrupadas en 5 dimensiones analíticas con activación directa en el visor. |
-| `02` | **Explorar Mapa** | `#panel-inicio` | `app.js`, `modulos/mapa.js`, `modulos/ide_chile.js`, `modulos/simbologia_dinamica.js`, `modulos/evaluador_normativo.js`, `modulos/geodesia.js` | Visor cartográfico de proporción cuadrada con 5 mapas base sin requerimiento de API (OpenStreetMap, Bing/Microsoft y Esri), barra de herramientas centrada y adaptable, simbología estadística Jenks, Inspector normativo PRC/OGUC bajo demanda y panel inferior de **Detalles** con perfil de 17 atributos (`id_ig` / `id_igv`). |
+| `02` | **Explorar Mapa** | `#panel-inicio` | `app.js`, `modulos/mapa.js`, `modulos/ide_chile.js`, `modulos/evaluador_normativo.js`, `modulos/geodesia.js` | Visor cartográfico de proporción cuadrada con 5 mapas base sin requerimiento de API (OpenStreetMap, Bing/Microsoft y Esri), barra de herramientas centrada y adaptable, simbología temática racional integrada (`mapa.js`), Inspector normativo PRC/OGUC bajo demanda y panel inferior de **Detalles** con perfil de 17 atributos (`id_ig` / `id_igv`). |
 | `03` | **Documentación** | `#panel-manual` | `modulos/manual.js`, `modulos/licencias.js` | Documentación interactiva estructurada en 6 capítulos navegables con buscador en tiempo real, marco de licencias abiertas, descarga de manuales (`.md`/`.docx`), catálogos en Excel (`.xlsx`), geodatabase completa (`.zip`) e inventario filtrable de las 294 capas. |
 
 ---
@@ -147,7 +147,7 @@ nodo-geoabierto/
 │   ├── js/                                   # Módulos JavaScript ES6+
 │   │   ├── config.js                         # Configuración global (áreas de enfoque, título canónico y 5 dimensiones)
 │   │   ├── app.js                            # Orquestador de navegación entre los 3 módulos y cabecera
-│   │   └── modulos/                          # Módulos operativos (mapa, tutorial_interactivo, manual, simbologia_dinamica, etc.)
+│   │   └── modulos/                          # Módulos operativos (mapa, tutorial_interactivo, manual, evaluador_normativo, etc.)
 │   ├── img/cartografias/                     # 83 cartografías temáticas (JPG) para las 4 láminas del Módulo 01
 │   ├── data/                                 # 294 coberturas GeoJSON (123 oficiales + 171 IGV descentralizadas)
 │   └── docs/                                 # Manuales (.md/.docx), catálogos Excel (.xlsx) y geodatabase (.zip)
@@ -172,7 +172,7 @@ nodo-geoabierto/
 
 Toda la documentación está sincronizada en la raíz del proyecto, en `docs/`, en `src/docs/` y es navegable desde el **Módulo 03 · Documentación**:
 
-1. [`MANUAL_USO.md`](MANUAL_USO.md) (`docs/MANUAL_USO.md` / `src/docs/MANUAL_USO.md`): Guía operativa de los 3 módulos, el tutorial interactivo de 18 pasos, las 5 dimensiones analíticas, los mapas base OSM/Bing/Microsoft/Esri, la simbología dinámica Jenks, el Inspector Normativo PRC y el panel inferior de **Detalles**.
+1. [`MANUAL_USO.md`](MANUAL_USO.md) (`docs/MANUAL_USO.md` / `src/docs/MANUAL_USO.md`): Guía operativa de los 3 módulos, el tutorial interactivo de 18 pasos, las 5 dimensiones analíticas, los mapas base OSM/Bing/Microsoft/Esri, la simbología temática racional, el Inspector Normativo PRC y el panel inferior de **Detalles**.
 2. [`MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md) (`docs/MANUAL_ACTUALIZACION_ATLAS.md` / `src/docs/MANUAL_ACTUALIZACION_ATLAS.md`): Manual de arquitectura, objetivos y entregables verificados, flujos de datos de las 294 capas y guía paso a paso para mantener o replicar el Atlas en otros territorios.
 3. [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) (`src/docs/ARQUITECTURA.md`): Especificación de la arquitectura de 3 módulos, flujos de trabajo y catálogo de componentes del sistema.
 4. [`docs/TRAZABILIDAD.md`](docs/TRAZABILIDAD.md) (`src/docs/TRAZABILIDAD.md`): Marco conceptual de la Información Geográfica Voluntaria (IGV), articulación en 5 dimensiones, homologación de 17 atributos y evaluación de usabilidad.

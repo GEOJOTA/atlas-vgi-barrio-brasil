@@ -35,7 +35,15 @@ if (typeof window !== 'undefined') {
 let ultimaConsultaRealizada = null;
 let capasCargadasPorCategoria = {};
 let capasOficialesCargadas = {};
+const capasCargandoEnCurso = {};
 const capasNormativasCache = {};
+
+function normalizarTextoBusqGIS(txt) {
+  return String(txt || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
 
 const DICCIONARIO_VALORES_OSM = {
   amenity: [
@@ -473,10 +481,6 @@ function inicializarAplicacion() {
   const cfg = window.NODO_CONFIG;
   if (!cfg) return;
 
-  if (window.ManifoldCanvas) {
-    try { window.ManifoldCanvas.init('manifold-bg-container'); } catch (_) {}
-  }
-
   configurarNavegacion();
   configurarSubpanelesDerecha();
   try { ModuloMapa.inicializar('mapa-atlas'); } catch (err) { console.error('[Error al inicializar ModuloMapa]:', err); }
@@ -495,14 +499,9 @@ function inicializarAplicacion() {
   }
   cargarResumenMetodologia();
 
-  // Inicializar Módulo 05: Indicadores de Análisis Multidimensional y Storyboards
+  // Inicializar Módulo 01: Indicadores de Análisis Multidimensional y Storyboards
   if (window.ModuloIndicadoresAnalisis) {
     window.ModuloIndicadoresAnalisis.inicializar();
-  }
-
-  // Inicializar Módulo 06: Evaluador Universal de Calidad Cuantitativa e Índice IGV (ISO 19157)
-  if (window.EvaluadorCalidadCuantitativa) {
-    window.EvaluadorCalidadCuantitativa.inicializarUI();
   }
 
   // Interceptar descargas en toda la interfaz para garantizar metadatos del catálogo
@@ -1223,9 +1222,6 @@ function configurarNavegacion() {
       }
       if (panelId === 'manual') {
         cargarResumenMetodologia();
-      }
-      if (panelId === 'calidad-ohsome' && window.EvaluadorCalidadCuantitativa) {
-        window.EvaluadorCalidadCuantitativa.invalidarTamanoMapa();
       }
       if (panelId === 'indicadores') {
         const cont = document.getElementById('contenedor-indicadores-analisis');
@@ -3099,8 +3095,9 @@ function actualizarTelemetriaCapasActivas() {
     return;
   }
 
-  // Auditar características de todas las capas activas
+  // Auditar características de todas las capas activas (con muestreo uniforme hasta 2.000 entidades/capa para evitar bloqueos en 264k predios)
   let totalFeatures = 0;
+  let featuresMuestreadas = 0;
   let featuresConGeometriaValida = 0;
   let totalCeldasAtributos = 0;
   let celdasAtributosLlenas = 0;
@@ -3125,9 +3122,11 @@ function actualizarTelemetriaCapasActivas() {
       }
     }
 
-    for (let i = 0; i < features.length; i++) {
+    const pasoMuestra = features.length > 2000 ? Math.max(1, Math.floor(features.length / 2000)) : 1;
+    for (let i = 0; i < features.length; i += pasoMuestra) {
       const f = features[i];
       if (!f) continue;
+      featuresMuestreadas++;
 
       // 1. Geometría
       const g = f.geometry;
@@ -3184,7 +3183,7 @@ function actualizarTelemetriaCapasActivas() {
   }
 
   // 1. Completitud espacial
-  const pctEspacial = totalFeatures > 0 ? (featuresConGeometriaValida / totalFeatures) * 100 : 0;
+  const pctEspacial = featuresMuestreadas > 0 ? (featuresConGeometriaValida / featuresMuestreadas) * 100 : 0;
   const califEspacial = pctEspacial >= 95 ? 'Alto' : (pctEspacial >= 80 ? 'Medio' : 'Bajo');
   if (elIcvCompletitud) {
     elIcvCompletitud.textContent = `${pctEspacial.toFixed(1)}% (${califEspacial})`;
@@ -3455,23 +3454,27 @@ function obtenerDimensionDeCapaOficial(def) {
   return 'sociourbana';
 }
 
-async function alternarCapaVGIDescentralizada(idCapa, btn) {
+async function alternarCapaVGIDescentralizada(idCapa, btn, opciones = {}) {
+  if (capasCargandoEnCurso[idCapa]) {
+    return capasCargandoEnCurso[idCapa];
+  }
+
   const card = document.getElementById(`card-vgi-${idCapa}`);
   const estadoTexto = document.getElementById('estado-carga-capas-oficiales');
   const badgeConteo = document.getElementById(`conteo-vgi-${idCapa}`) || (btn ? btn.querySelector('.conteo-entidades-gis') : null);
   const textoSwitch = btn ? btn.querySelector('.texto-switch') : null;
 
-  // Desactivar si ya está activa
-  if (btn && btn.classList.contains('activo')) {
+  // Desactivar si ya está activa (salvo activación programática forzada)
+  if (btn && btn.classList.contains('activo') && !opciones.forzarActivar) {
     if (window.ModuloMapa) ModuloMapa.removerCapa(idCapa);
     delete capasCargadasPorCategoria[idCapa];
     btn.classList.remove('activo');
     if (card) card.classList.remove('activo');
     if (textoSwitch) textoSwitch.textContent = 'Activar';
-    if (badgeConteo) badgeConteo.textContent = '—';
+    if (badgeConteo && !badgeConteo.classList.contains('sin-registros')) badgeConteo.textContent = '—';
     if (estadoTexto) estadoTexto.textContent = `Capa IGV "${idCapa}" desactivada.`;
     actualizarTelemetriaCapasActivas();
-    return;
+    return false;
   }
 
   const catalogoVGI = (typeof window !== 'undefined' && window.CATALOGO_VGI_DESCENTRALIZADO) ? window.CATALOGO_VGI_DESCENTRALIZADO : [];
@@ -3482,6 +3485,7 @@ async function alternarCapaVGIDescentralizada(idCapa, btn) {
       def = {
         id: idCapa,
         nombre: resDef.nombre || idCapa,
+        subtipo: resDef.subtipo || '',
         archivoLocal: resDef.archivoLocal,
         icono: '📍',
         institucion: resDef.institucion || 'Mapeo colaborativo OpenStreetMap / GBIF'
@@ -3502,74 +3506,114 @@ async function alternarCapaVGIDescentralizada(idCapa, btn) {
   if (card) card.classList.add('cargando');
   if (estadoTexto) estadoTexto.textContent = `Cargando cobertura colaborativa "${def.nombre}"…`;
 
-  try {
-    let geojson = null;
-    const rutas = [
-      def.archivoLocal,
-      `src/${def.archivoLocal}`,
-      `data/${idCapa}.geojson`,
-      `src/data/${idCapa}.geojson`,
-      `data/capa_${idCapa}.geojson`,
-      `src/data/capa_${idCapa}.geojson`,
-      `data/capa_${slugCat}.geojson`,
-      `src/data/capa_${slugCat}.geojson`
-    ];
-    for (const r of rutas) {
-      if (!r) continue;
-      try {
-        const resp = await fetch(r);
-        if (resp.ok) {
-          const data = await resp.json();
-          if (data && data.type === 'FeatureCollection' && Array.isArray(data.features)) {
-            geojson = data;
-            break;
+  const promesaCarga = (async () => {
+    try {
+      let geojson = null;
+      const rutas = [
+        def.archivoLocal,
+        `src/${def.archivoLocal}`,
+        `data/${idCapa}.geojson`,
+        `src/data/${idCapa}.geojson`,
+        `data/capa_${idCapa}.geojson`,
+        `src/data/capa_${idCapa}.geojson`,
+        `data/capa_${slugCat}.geojson`,
+        `src/data/capa_${slugCat}.geojson`
+      ];
+      for (const r of rutas) {
+        if (!r) continue;
+        try {
+          const resp = await fetch(r);
+          if (resp.ok) {
+            const data = await resp.json();
+            if (data && data.type === 'FeatureCollection' && Array.isArray(data.features)) {
+              geojson = data;
+              break;
+            }
           }
+        } catch (_) {}
+      }
+      if (!geojson) {
+        throw new Error(`No fue posible leer el archivo GeoJSON para "${def.nombre}" en ninguna ruta local.`);
+      }
+
+      const totalEnt = (geojson.features && geojson.features.length) ? geojson.features.length : 0;
+      if (totalEnt === 0) {
+        if (btn) {
+          btn.classList.remove('cargando');
+          btn.classList.remove('activo');
         }
-      } catch (_) {}
-    }
-    if (!geojson) {
-      throw new Error(`No fue posible leer el archivo GeoJSON para "${def.nombre}" en ninguna ruta local.`);
-    }
+        if (card) {
+          card.classList.remove('cargando');
+          card.classList.remove('activo');
+        }
+        if (textoSwitch) textoSwitch.textContent = 'Activar';
+        if (badgeConteo) {
+          badgeConteo.classList.add('sin-registros');
+          badgeConteo.textContent = '0 reg. locales';
+          badgeConteo.style.background = '#fef3c7';
+          badgeConteo.style.color = '#92400e';
+          badgeConteo.style.border = '1px solid #f59e0b';
+        }
+        if (estadoTexto) {
+          estadoTexto.innerHTML = `<span style="color:#b45309; font-weight:700;">[Sin registros en área]:</span> <strong>${def.nombre}</strong> posee 0 entidades registradas en Santiago / Barrio Brasil (catálogo homologado vacío).`;
+        }
+        if (typeof window.mostrarNotificacionAtlas === 'function') {
+          window.mostrarNotificacionAtlas(`La cobertura IGV <strong>${def.nombre}</strong> registra <strong>0 entidades locales</strong> en el área de estudio.`, 'aviso');
+        }
+        return false;
+      }
 
-    if (window.ModuloMapa) {
-      ModuloMapa.cargarCapaGeoJSON(idCapa, geojson, {
-        id: def.id,
-        nombre: def.nombre,
-        color: '#06b6d4',
-        icono: def.icono || '📍',
-        archivoLocal: def.archivoLocal
-      });
-    }
+      if (window.ModuloMapa) {
+        ModuloMapa.cargarCapaGeoJSON(idCapa, geojson, {
+          id: def.id,
+          nombre: def.nombre,
+          subtipo: def.subtipo || '',
+          dimension: def.dimension || '',
+          tag: def.tag || '',
+          color: '#06b6d4',
+          icono: def.icono || '📍',
+          archivoLocal: def.archivoLocal,
+          ajustarVista: opciones.ajustarVista
+        });
+      }
 
-    capasCargadasPorCategoria[idCapa] = geojson;
-    if (btn) {
-      btn.classList.remove('cargando');
-      btn.classList.add('activo');
-    }
-    if (card) {
-      card.classList.remove('cargando');
-      card.classList.add('activo');
-    }
-    if (textoSwitch) textoSwitch.textContent = 'En Mapa';
-    const totalEnt = (geojson.features && geojson.features.length) ? geojson.features.length : 0;
-    if (badgeConteo) badgeConteo.textContent = `${totalEnt.toLocaleString('es-CL')} ent.`;
+      capasCargadasPorCategoria[idCapa] = geojson;
+      if (btn) {
+        btn.classList.remove('cargando');
+        btn.classList.add('activo');
+      }
+      if (card) {
+        card.classList.remove('cargando');
+        card.classList.add('activo');
+      }
+      if (textoSwitch) textoSwitch.textContent = 'En Mapa';
+      if (badgeConteo) {
+        badgeConteo.classList.remove('sin-registros');
+        badgeConteo.textContent = `${totalEnt.toLocaleString('es-CL')} ent.`;
+      }
 
-    if (estadoTexto) {
-      estadoTexto.innerHTML = `
-        <span style="color:var(--musgo); font-weight:700;">[Capa IGV activa]:</span> 
-        <strong>${def.nombre}</strong> (${totalEnt.toLocaleString('es-CL')} entidades). 
-        <em>${def.institucion || 'Mapeo colaborativo OpenStreetMap / GBIF'}</em>.
-      `;
+      if (estadoTexto) {
+        estadoTexto.innerHTML = `
+          <span style="color:var(--musgo); font-weight:700;">[Capa IGV activa]:</span> 
+          <strong>${def.nombre}</strong> (${totalEnt.toLocaleString('es-CL')} entidades). 
+          <em>${def.institucion || 'Mapeo colaborativo OpenStreetMap / GBIF'}</em>.
+        `;
+      }
+      actualizarTelemetriaCapasActivas();
+      return true;
+    } catch (err) {
+      if (btn) btn.classList.remove('cargando');
+      if (card) card.classList.remove('cargando');
+      console.error(`Error al cargar capa VGI ${idCapa}:`, err);
+      if (estadoTexto) estadoTexto.textContent = `No se pudo cargar la cobertura "${def.nombre}". ${err.message}`;
+      return false;
+    } finally {
+      delete capasCargandoEnCurso[idCapa];
     }
-    actualizarTelemetriaCapasActivas();
-    return true;
-  } catch (err) {
-    if (btn) btn.classList.remove('cargando');
-    if (card) card.classList.remove('cargando');
-    console.error(`Error al cargar capa VGI ${idCapa}:`, err);
-    if (estadoTexto) estadoTexto.textContent = `No se pudo cargar la cobertura "${def.nombre}". ${err.message}`;
-    return false;
-  }
+  })();
+
+  capasCargandoEnCurso[idCapa] = promesaCarga;
+  return promesaCarga;
 }
 
 function inicializarControlesConsolaGIS() {
@@ -3578,8 +3622,9 @@ function inicializarControlesConsolaGIS() {
 
   if (inputBusqueda) {
     inputBusqueda.addEventListener('input', () => {
-      const q = inputBusqueda.value.trim().toLowerCase();
-      if (btnLimpiar) btnLimpiar.style.display = q.length > 0 ? 'block' : 'none';
+      const qRaw = inputBusqueda.value.trim();
+      const q = normalizarTextoBusqGIS(qRaw);
+      if (btnLimpiar) btnLimpiar.style.display = qRaw.length > 0 ? 'block' : 'none';
 
       const todasTarjetas = document.querySelectorAll('.tarjeta-capa-gis:not(.tarjeta-activa-resumen)');
       todasTarjetas.forEach(card => {
@@ -3587,12 +3632,12 @@ function inicializarControlesConsolaGIS() {
           card.style.display = '';
           return;
         }
-        const nombre = card.dataset.nombre || '';
-        const institucion = card.dataset.institucion || '';
-        const desc = card.dataset.desc || '';
-        const codigo = card.dataset.codigo || '';
-        const tag = card.dataset.tag || '';
-        const id = card.dataset.id || '';
+        const nombre = normalizarTextoBusqGIS(card.dataset.nombre);
+        const institucion = normalizarTextoBusqGIS(card.dataset.institucion);
+        const desc = normalizarTextoBusqGIS(card.dataset.desc);
+        const codigo = normalizarTextoBusqGIS(card.dataset.codigo);
+        const tag = normalizarTextoBusqGIS(card.dataset.tag);
+        const id = normalizarTextoBusqGIS(card.dataset.id);
 
         const coincide = nombre.includes(q) || institucion.includes(q) || desc.includes(q) || codigo.includes(q) || tag.includes(q) || id.includes(q);
         card.style.display = coincide ? '' : 'none';
@@ -3885,7 +3930,7 @@ function configurarCapasOficialesIDE() {
               <span class="texto-switch">Activar</span>
             </button>
             <div class="tarjeta-capa-acciones">
-              <span class="conteo-entidades-gis badge-conteo-vgi" id="conteo-vgi-${def.id}">—</span>
+              <span class="conteo-entidades-gis badge-conteo-vgi${def.totalEntidades === 0 ? ' sin-registros' : ''}" id="conteo-vgi-${def.id}"${def.totalEntidades === 0 ? ' style="background:#fef3c7;color:#92400e;border:1px solid #f59e0b;" title="Sin registros locales en Santiago / Barrio Brasil"' : ''}>${def.totalEntidades === 0 ? '0 reg. locales' : '—'}</span>
               <a href="${archDescarga}" download="${nombreArchDescarga}" data-id-capa="${def.id}" class="btn-accion-descarga-gis" title="Descargar archivo GeoJSON colaborativo (${nombreArchDescarga})" onclick="event.stopPropagation();">
                 <svg class="icono-dl-gis" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span>GeoJSON</span>
@@ -4156,15 +4201,18 @@ async function descargarColeccionOficialCompleta() {
   }
 }
 
-async function alternarCapaOficialIDE(idCapa, btn) {
+async function alternarCapaOficialIDE(idCapa, btn, opciones = {}) {
+  if (capasCargandoEnCurso[idCapa]) {
+    return capasCargandoEnCurso[idCapa];
+  }
+
   const card = document.getElementById(`card-oficial-${idCapa}`);
   const estadoTexto = document.getElementById('estado-carga-capas-oficiales');
   const badgeConteo = document.getElementById(`conteo-oficial-${idCapa}`) || (btn ? btn.querySelector('.badge-conteo-oficial') : null);
   const textoSwitch = btn ? btn.querySelector('.texto-switch') : null;
-  const bbox = null; // Cargar la capa ÍNTEGRA sin limitar por el BBox barrial
 
-  // Desactivar si ya está activa
-  if (btn && btn.classList.contains('activo')) {
+  // Desactivar si ya está activa (salvo activación programática forzada)
+  if (btn && btn.classList.contains('activo') && !opciones.forzarActivar) {
     if (window.ModuloMapa) ModuloMapa.removerCapa(idCapa);
     delete capasOficialesCargadas[idCapa];
     btn.classList.remove('activo');
@@ -4173,7 +4221,7 @@ async function alternarCapaOficialIDE(idCapa, btn) {
     if (badgeConteo) badgeConteo.textContent = '—';
     if (estadoTexto) estadoTexto.textContent = `Capa oficial "${idCapa}" desactivada.`;
     actualizarTelemetriaCapasActivas();
-    return;
+    return false;
   }
 
   // Activar y cargar datos
@@ -4186,59 +4234,67 @@ async function alternarCapaOficialIDE(idCapa, btn) {
     window.mostrarProgresoCargaCapa(nombrePrevio, idCapa, 45);
   }
 
-  try {
-    const res = await ModuloIDEChile.consultarCapaOficial(idCapa, null);
-    const def = res.def;
+  const promesaCarga = (async () => {
+    try {
+      const res = await ModuloIDEChile.consultarCapaOficial(idCapa, null);
+      const def = res.def;
 
-    if (typeof window.mostrarProgresoCargaCapa === 'function') {
-      window.mostrarProgresoCargaCapa(def.nombre, idCapa, 85);
-    }
+      if (typeof window.mostrarProgresoCargaCapa === 'function') {
+        window.mostrarProgresoCargaCapa(def.nombre, idCapa, 85);
+      }
 
-    if (window.ModuloMapa) {
-      ModuloMapa.cargarCapaGeoJSON(idCapa, res.geojson, {
-        id: def.id,
-        nombre: def.nombre,
-        color: def.color,
-        icono: def.icono,
-        archivoLocal: def.archivoLocal
-      });
-    }
+      if (window.ModuloMapa) {
+        ModuloMapa.cargarCapaGeoJSON(idCapa, res.geojson, {
+          id: def.id,
+          nombre: def.nombre,
+          color: def.color,
+          icono: def.icono,
+          archivoLocal: def.archivoLocal,
+          ajustarVista: opciones.ajustarVista
+        });
+      }
 
-    capasOficialesCargadas[idCapa] = res.geojson;
-    if (btn) {
-      btn.classList.remove('cargando');
-      btn.classList.add('activo');
-    }
-    if (card) {
-      card.classList.remove('cargando');
-      card.classList.add('activo');
-    }
-    if (textoSwitch) textoSwitch.textContent = 'En Mapa';
-    if (badgeConteo) badgeConteo.textContent = `${res.cantidad} ent.`;
-    if (typeof window.ocultarProgresoCargaCapa === 'function') {
-      window.ocultarProgresoCargaCapa();
-    }
+      capasOficialesCargadas[idCapa] = res.geojson;
+      if (btn) {
+        btn.classList.remove('cargando');
+        btn.classList.add('activo');
+      }
+      if (card) {
+        card.classList.remove('cargando');
+        card.classList.add('activo');
+      }
+      if (textoSwitch) textoSwitch.textContent = 'En Mapa';
+      if (badgeConteo) badgeConteo.textContent = `${Number(res.cantidad || 0).toLocaleString('es-CL')} ent.`;
+      if (typeof window.ocultarProgresoCargaCapa === 'function') {
+        window.ocultarProgresoCargaCapa();
+      }
 
-    if (estadoTexto) {
-      estadoTexto.innerHTML = `
-        <span style="color:var(--musgo); font-weight:700;">[Capa oficial activa]:</span> 
-        <strong>${def.nombre}</strong> (${res.cantidad.toLocaleString('es-CL')} registros). 
-        <em>${res.fuenteUsada}</em>. 
-        <span style="color:var(--tinta-suave); display:block; font-size:0.78rem; margin-top:2px;">${def.declaracion}</span>
-      `;
+      if (estadoTexto) {
+        estadoTexto.innerHTML = `
+          <span style="color:var(--musgo); font-weight:700;">[Capa oficial activa]:</span> 
+          <strong>${def.nombre}</strong> (${res.cantidad.toLocaleString('es-CL')} registros). 
+          <em>${res.fuenteUsada}</em>. 
+          <span style="color:var(--tinta-suave); display:block; font-size:0.78rem; margin-top:2px;">${def.declaracion}</span>
+        `;
+      }
+      actualizarTelemetriaCapasActivas();
+      return true;
+    } catch (err) {
+      if (btn) btn.classList.remove('cargando');
+      if (card) card.classList.remove('cargando');
+      if (typeof window.ocultarProgresoCargaCapa === 'function') {
+        window.ocultarProgresoCargaCapa();
+      }
+      console.error(`Error al cargar capa oficial ${idCapa}:`, err);
+      if (estadoTexto) estadoTexto.textContent = `No se pudo cargar la capa "${nombrePrevio}". Revisa tu conexión o inténtalo nuevamente (${err.message}).`;
+      return false;
+    } finally {
+      delete capasCargandoEnCurso[idCapa];
     }
-    actualizarTelemetriaCapasActivas();
-    return true;
-  } catch (err) {
-    if (btn) btn.classList.remove('cargando');
-    if (card) card.classList.remove('cargando');
-    if (typeof window.ocultarProgresoCargaCapa === 'function') {
-      window.ocultarProgresoCargaCapa();
-    }
-    console.error(`Error al cargar capa oficial ${idCapa}:`, err);
-    if (estadoTexto) estadoTexto.textContent = `No se pudo cargar la capa "${nombrePrevio}". Revisa tu conexión o inténtalo nuevamente (${err.message}).`;
-    return false;
-  }
+  })();
+
+  capasCargandoEnCurso[idCapa] = promesaCarga;
+  return promesaCarga;
 }
 
 /**
@@ -4267,13 +4323,22 @@ window.mostrarNotificacionAtlas = function(mensaje, tipo = 'info', duracion = 42
  */
 async function cargarYMostrarCapaEnVisor(idCapa, tipo = 'auto', opciones = {}) {
   if (!idCapa) return false;
+  if (typeof tipo === 'object' && tipo !== null) {
+    opciones = tipo;
+    tipo = 'auto';
+  }
 
-  // 1. Conmutar a pestaña 'inicio' (Módulo 02)
+  // 1. Conmutar a pestaña 'inicio' (Módulo 02) y esperar un frame para que #mapa-atlas tenga dimensiones reales
   if (typeof window.activarPanel === 'function') {
     window.activarPanel('inicio');
   }
+  await new Promise(resolve => requestAnimationFrame(() => resolve()));
 
-  // 2. Si la capa ya se encuentra cargada en el mapa, reencuadrar y notificar
+  if (window.ModuloMapa) {
+    window.ModuloMapa.invalidarTamano();
+  }
+
+  // 2. Si la capa ya se encuentra cargada en el mapa, reencuadrar de forma racional y notificar
   const yaEnOficial = Boolean(capasOficialesCargadas && capasOficialesCargadas[idCapa]);
   const yaEnVGI = Boolean(capasCargadasPorCategoria && capasCargadasPorCategoria[idCapa]);
   const regMapa = (window.ModuloMapa && typeof window.ModuloMapa.obtenerRegistroCapas === 'function')
@@ -4283,11 +4348,8 @@ async function cargarYMostrarCapaEnVisor(idCapa, tipo = 'auto', opciones = {}) {
   if ((yaEnOficial || yaEnVGI || regMapa) && regMapa && regMapa.capaLeaflet) {
     if (window.ModuloMapa) {
       window.ModuloMapa.invalidarTamano();
-      const mapInst = window.ModuloMapa.obtenerInstanciaMapa ? window.ModuloMapa.obtenerInstanciaMapa() : null;
-      if (mapInst && regMapa.capaLeaflet.getBounds && regMapa.capaLeaflet.getBounds().isValid()) {
-        try {
-          mapInst.fitBounds(regMapa.capaLeaflet.getBounds(), { padding: [40, 40], maxZoom: 16 });
-        } catch (_) {}
+      if (opciones.ajustarVista !== false && typeof window.ModuloMapa.encuadrarCapa === 'function') {
+        window.ModuloMapa.encuadrarCapa(idCapa, opciones);
       }
     }
     const nomb = regMapa.opciones?.nombre || idCapa;
@@ -4297,12 +4359,7 @@ async function cargarYMostrarCapaEnVisor(idCapa, tipo = 'auto', opciones = {}) {
     return true;
   }
 
-  // 3. Forzar invalidación inicial de dimensiones del lienzo Leaflet
-  if (window.ModuloMapa) {
-    window.ModuloMapa.invalidarTamano();
-  }
-
-  // 4. Determinar si es oficial o VGI
+  // 3. Determinar si es oficial o VGI
   let esOficial = (tipo === 'oficial');
   let esVGI = (tipo === 'vgi');
 
@@ -4319,26 +4376,23 @@ async function cargarYMostrarCapaEnVisor(idCapa, tipo = 'auto', opciones = {}) {
     }
   }
 
-  // 5. Cargar la capa
+  // 4. Cargar la capa respetando bloqueo de duplicados y encuadre racional
+  const opsCarga = { ...opciones, forzarActivar: true };
   let exito = false;
   if (esOficial) {
     const btn = document.getElementById(`btn-oficial-${idCapa}`);
-    exito = await alternarCapaOficialIDE(idCapa, btn);
+    exito = await alternarCapaOficialIDE(idCapa, btn, opsCarga);
   } else {
     const btn = document.getElementById(`btn-vgi-${idCapa}`);
-    exito = await alternarCapaVGIDescentralizada(idCapa, btn);
+    exito = await alternarCapaVGIDescentralizada(idCapa, btn, opsCarga);
   }
 
-  // 6. Recalcular tamaño y reencuadre en el mapa con retardos
+  // 5. Recalcular dimensiones del lienzo y reforzar encuadre racional tras estabilización DOM
   setTimeout(() => {
     if (window.ModuloMapa) {
       window.ModuloMapa.invalidarTamano();
-      const registro = window.ModuloMapa.obtenerRegistroCapas ? window.ModuloMapa.obtenerRegistroCapas()[idCapa] : null;
-      const mapInst = window.ModuloMapa.obtenerInstanciaMapa ? window.ModuloMapa.obtenerInstanciaMapa() : null;
-      if (mapInst && registro && registro.capaLeaflet && registro.capaLeaflet.getBounds && registro.capaLeaflet.getBounds().isValid()) {
-        try {
-          mapInst.fitBounds(registro.capaLeaflet.getBounds(), { padding: [40, 40], maxZoom: 16 });
-        } catch (_) {}
+      if (exito && opciones.ajustarVista !== false && typeof window.ModuloMapa.encuadrarCapa === 'function') {
+        window.ModuloMapa.encuadrarCapa(idCapa, opciones);
       }
     }
   }, 120);
@@ -4347,7 +4401,7 @@ async function cargarYMostrarCapaEnVisor(idCapa, tipo = 'auto', opciones = {}) {
     if (window.ModuloMapa) window.ModuloMapa.invalidarTamano();
   }, 350);
 
-  // 7. Notificación visual al usuario
+  // 6. Notificación visual al usuario
   const regFinal = window.ModuloMapa?.obtenerRegistroCapas ? window.ModuloMapa.obtenerRegistroCapas()[idCapa] : null;
   const nombreFinal = regFinal?.opciones?.nombre || (window.ModuloIDEChile?.obtenerDefinicion ? window.ModuloIDEChile.obtenerDefinicion(idCapa)?.nombre : null) || idCapa;
   const cantFinal = (regFinal?.geojson?.features && regFinal.geojson.features.length) ? regFinal.geojson.features.length : 0;

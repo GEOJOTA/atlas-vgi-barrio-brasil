@@ -250,24 +250,10 @@ const ModuloMetadatos = (() => {
 
   async function obtenerCatalogoMetadatosGlobal() {
     if (_matrizMetacalidadCache) return _matrizMetacalidadCache;
-    try {
-      let resp = await fetch('docs/matriz_metacalidad.json').catch(() => null);
-      if (!resp || !resp.ok) {
-        resp = await fetch('src/docs/matriz_metacalidad.json').catch(() => null) ||
-               await fetch('https://atlasvgiuah.netlify.app/docs/matriz_metacalidad.json').catch(() => null);
-      }
-      if (resp.ok) {
-        const datos = await resp.json();
-        if (datos && datos.capas) {
-          _matrizMetacalidadCache = {};
-          datos.capas.forEach(c => {
-            _matrizMetacalidadCache[c.id] = c;
-          });
-          return _matrizMetacalidadCache;
-        }
-      }
-    } catch (_) {}
-    return _matrizMetacalidadCache || {};
+    // Prototipo 02: los metadatos provienen directamente de ModuloIDEChile y CATALOGO_VGI_DESCENTRALIZADO
+    // (se evita consultar docs/matriz_metacalidad.json obsoleto para garantizar cero errores 404).
+    _matrizMetacalidadCache = {};
+    return _matrizMetacalidadCache;
   }
 
   function resolverMetadatosCapa(idCapa, fallbackInfo = {}) {
@@ -277,6 +263,11 @@ const ModuloMetadatos = (() => {
     let defOficial = null;
     if (typeof ModuloIDEChile !== 'undefined' && ModuloIDEChile.obtenerDefinicionCapa) {
       defOficial = ModuloIDEChile.obtenerDefinicionCapa(idCapa);
+    }
+
+    let defVGI = null;
+    if (!defOficial && typeof window !== 'undefined' && Array.isArray(window.CATALOGO_VGI_DESCENTRALIZADO)) {
+      defVGI = window.CATALOGO_VGI_DESCENTRALIZADO.find(c => c && (c.id === idCapa || (c.archivoLocal && c.archivoLocal.includes(idCapa)))) || null;
     }
 
     const id = idCapa || fallbackInfo.id || 'vgi_territorial';
@@ -297,14 +288,14 @@ const ModuloMetadatos = (() => {
       idLower.includes('munistgo')
     );
 
-    const titulo = cat.nombre || (defOficial ? defOficial.nombre : null) || (esSII ? 'Catastro Predial del Servicio de Impuestos Internos (Segundo Semestre 2025)' : null) || fallbackInfo.nombre || fallbackInfo.titulo || 'Capa Territorial Atlas VGI';
-    const institucion = cat.institucion || (defOficial ? defOficial.institucion : null) || (esSII ? 'Servicio de Impuestos Internos (SII)' : null) || fallbackInfo.institucion || 'Comunidad OpenStreetMap / IDE Chile';
+    const titulo = cat.nombre || (defOficial ? defOficial.nombre : null) || (defVGI ? defVGI.nombre : null) || (esSII ? 'Catastro Predial del Servicio de Impuestos Internos (Segundo Semestre 2025)' : null) || fallbackInfo.nombre || fallbackInfo.titulo || 'Capa Territorial Atlas';
+    const institucion = cat.institucion || (defOficial ? defOficial.institucion : null) || (defVGI ? defVGI.institucion : null) || (esSII ? 'Servicio de Impuestos Internos (SII)' : null) || fallbackInfo.institucion || 'Comunidad OpenStreetMap / IDE Chile';
     const ministerio = cat.ministerio || (defOficial ? defOficial.ministerio : null) || (esSII ? 'Ministerio de Hacienda' : null) || fallbackInfo.ministerio || 'Sector Público / Sociedad Civil';
-    const grupo = cat.grupo || (defOficial ? defOficial.grupo : null) || (esSII ? 'normativa_ipt' : null) || fallbackInfo.grupo || 'general';
-    const tipoFuente = cat.tipo_fuente || fallbackInfo.tipo_fuente || (esOficial ? 'Oficial (Estado de Chile)' : 'VGI (Comunitaria / Abierta)');
+    const grupo = cat.grupo || (defOficial ? defOficial.grupo : null) || (defVGI ? defVGI.dimension : null) || (esSII ? 'normativa_ipt' : null) || fallbackInfo.grupo || 'general';
+    const tipoFuente = cat.tipo_fuente || fallbackInfo.tipo_fuente || (esOficial ? 'Oficial (Estado de Chile)' : 'IGV (Comunitaria / Abierta)');
     const temporalidad = cat.temporalidad || (defOficial ? defOficial.temporalidad : null) || (esSII ? 'Segundo Semestre 2025' : null) || fallbackInfo.temporalidad || '2026';
     const licencia = cat.licencia || (defOficial ? defOficial.declaracion : null) || (esSII ? 'Información pública oficial — Ley N° 20.285 de Transparencia (Servicio de Impuestos Internos)' : null) || fallbackInfo.licencia || 'Open Database License (ODbL) 1.0 / Ley N° 20.285';
-    const citaApa = cat.cita_apa || (defOficial ? defOficial.citaAPA : null) || (esSII ? 'Servicio de Impuestos Internos [SII]. (2025). Catastro de Bienes Raíces (Segundo Semestre 2025). Ministerio de Hacienda, Gobierno de Chile. https://www.sii.cl' : null) || fallbackInfo.cita_apa || fallbackInfo.citaAPA || `Atlas VGI Territorial. (2026). ${titulo}. Nodo GeoAbierto.`;
+    const citaApa = cat.cita_apa || (defOficial ? defOficial.citaAPA : null) || (esSII ? 'Servicio de Impuestos Internos [SII]. (2025). Catastro de Bienes Raíces (Segundo Semestre 2025). Ministerio de Hacienda, Gobierno de Chile. https://www.sii.cl' : null) || fallbackInfo.cita_apa || fallbackInfo.citaAPA || `Atlas para la Gestión Territorial. (2026). ${titulo}. Nodo GeoAbierto.`;
     const crs = 'EPSG:4326 (WGS 84)';
     const igv = typeof cat.igv === 'number' ? cat.igv : (fallbackInfo.igv ? Number(fallbackInfo.igv) : 98.5);
     const grado = cat.grado || fallbackInfo.grado || (igv >= 95.0 ? 'A+ (Excelente)' : 'A (Muy Bueno)');

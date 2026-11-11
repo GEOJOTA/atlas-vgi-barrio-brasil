@@ -380,7 +380,7 @@ const ModuloIndicadoresAnalisis = (() => {
       imagenDestacada: 'img/storyboards/portada_analisis_kde.svg',
       piePortada: 'Ilustración síntesis de los núcleos de intensidad territorial VGI identificados en la Comuna de Santiago y el entorno de Barrio Brasil.',
       tags: ['Resultados KDE', 'Concentración VGI', 'Barrio Brasil', 'Semaforización UOCT', 'Permisos y CRF', '14 Cartografías'],
-      capasRelevantes: ['cat01_educacion', 'cat02_servicios', 'cat03_transporte', 'cat04_movilidad_activa', 'cat05_espacio_publico', 'cat06_patrimonio', 'cat07_accesibilidad', 'cat08_biodiversidad', 'cat09_edificaciones', 'cat10_cobertura_suelo', 'semaforos_rm_uoct_2026', 'ine_permisos_edificacion_santiago', 'ine_crf_conjuntos_santiago'],
+      capasRelevantes: ['semaforos_rm_uoct_2026', 'ine_permisos_edificacion_santiago', 'ine_crf_conjuntos_santiago', 'vgi_colegio', 'vgi_cafeteria', 'vgi_paradero_de_buses_red_movilidad', 'vgi_estacion_de_metro_de_santiago', 'vgi_monumento_publico'],
       contenido: {
         introduccion: `El análisis de la base de datos geográfica comunitaria consolidada del Atlas VGI —que integra 79.841 entidades geométricas vectoriales directas (36.954 puntos comunitarios, 15.913 líneas de infraestructura y 26.974 polígonos de equipamientos y edificaciones) y 112.264 entidades y nodos muestreados en el modelo continuo de densidad de kernel a 20 m— constata espacialmente que la provisión de infraestructura, servicios y atributos ambientales en los 27 barrios oficiales de la Comuna de Santiago no se distribuye de forma homogénea ni concéntrica. Los resultados de las superficies de densidad revelan una marcada estructura axial y policéntrica: mientras el corredor Alameda, Barrio Brasil (media simple de 6.924,1 ent/km² y media ponderada por área de 6.149,0 ent/km²), Santa Ana (1.728,2 ent/km² simple / 1.730,1 ponderada), Parque Almagro (790,6 ent/km² simple / 792,0 ponderada), Ejército (1.007,0 ent/km² simple / 582,5 ponderada) y Barrio Universitario (703,3 ent/km² simple / 379,2 ponderada) concentran los máximos de intensidad territorial, los barrios del arco periférico sur y suroriente exhiben notorios vacíos de equipamiento y cobertura colaborativa por debajo de 5 ent/km²: Bogotá (1,4 ent/km²), Sierra Bella (1,9 ent/km²), Matta Sur (2,1 ent/km²), Diez de Julio (2,5 ent/km²), Santa Isabel (2,9 ent/km²), Franklin (3,1 ent/km²), Santa Elena (4,9 ent/km²) y San Vicente (15,3 ent/km²).`,
         datosClave: [
@@ -636,7 +636,7 @@ const ModuloIndicadoresAnalisis = (() => {
       imagenDestacada: 'img/storyboards/portada_analisis_lisa.svg',
       piePortada: 'Ilustración conceptual de la polarización territorial entre conglomerados Alto-Alto (Hotspots), Bajo-Bajo (Coldspots) y anomalías espaciales en la trama de Santiago.',
       tags: ['Autocorrelación espacial local', 'Hotspots Alto-Alto', 'Coldspots Bajo-Bajo', 'Outliers Territoriales', '11 Cartografías'],
-      capasRelevantes: ['cat01_educacion', 'cat02_servicios', 'cat03_transporte', 'cat04_movilidad_activa', 'cat05_espacio_publico', 'censo2024_manzanas', 'minvu_ipt_prc_santiago'],
+      capasRelevantes: ['censo2024_manzanas', 'vgi_colegio', 'vgi_cafeteria', 'vgi_paradero_de_buses_red_movilidad', 'vgi_ciclovia_segregada_en_calzada', 'minvu_ipt_prc_santiago'],
       contenido: {
         introduccion: `El análisis de los Indicadores Locales de Asociación Espacial (LISA) sobre las 1.711 manzanas censales (unidades territoriales mínimas delimitadas por el INE, abreviadas comúnmente como mz) y los 27 barrios oficiales de la Comuna de Santiago demuestra que los atributos urbanos y colaborativos presentan una fuerte segregación territorial estadísticamente significativa. En el consolidado comunal, el 44,1% de las manzanas pertenece a conglomerados extremos: 140 manzanas (8,2%) conforman un núcleo compacto de alta concentración (Hotspot Alto-Alto) anclado en Barrio Brasil (63 manzanas), Santa Ana (23 manzanas), Yungay (17 manzanas), Parque Almagro (13 manzanas), Ejército (12 manzanas) y Barrio Universitario (9 manzanas), mientras 615 manzanas (35,9%) integran extensos bolsones de rezago (Coldspot Bajo-Bajo) en el sur, oriente y norponiente comunal, encabezados por Sierra Bella (90 manzanas), Bogotá (87 manzanas), Matta Sur (58 manzanas), Diez de Julio (52 manzanas), Matta Norte (50 manzanas), Santa Isabel (46 manzanas), San Eugenio (44 manzanas), Viel (39 manzanas) y Balmaceda (37 manzanas).`,
         datosClave: [
@@ -859,7 +859,7 @@ const ModuloIndicadoresAnalisis = (() => {
       imagenDestacada: 'img/storyboards/portada_analisis_sociourbano.svg',
       piePortada: 'Ilustración de los contrastes morfológicos y demográficos de Santiago: torres hiperdensas de arriendo frente a cités, casonas patrimoniales y barrios históricos.',
       tags: ['Resultados Censo 2024', '72,1% Arriendo', '92,7% Departamentos', 'Morfología Predial OGUC', 'Permisos y CRF', '34 Cartografías'],
-      capasRelevantes: ['censo2024_manzanas', 'catastro_predial_sii', 'minvu_patrimonio', 'minvu_ipt_prc_santiago', 'ine_permisos_edificacion_santiago', 'ine_crf_conjuntos_santiago', 'censo_manzanas_metricas_edificacion', 'bbdd_19', 'bbdd_64', 'bbdd_68', 'bbdd_74'],
+      capasRelevantes: ['censo2024_manzanas', 'ine_crf_conjuntos_santiago', 'minvu_patrimonio', 'minvu_ipt_prc_santiago', 'ine_permisos_edificacion_santiago', 'catastro_predial_sii', 'bbdd_19', 'bbdd_64', 'bbdd_68', 'bbdd_74'],
       contenido: {
         introduccion: `Los resultados consolidados de las 1.711 manzanas censales y los 27 barrios oficiales de la Comuna de Santiago registran una población de 432.081 habitantes (219.003 hombres y 213.078 mujeres) distribuidos en 203.830 hogares y 211.435 viviendas particulares ocupadas. El cruce de las 34 cartografías demuestra una profunda fractura socio-morfológica entre tres realidades territoriales: 1) un corredor hiperdensificado de torres en altura —encabezado por Santa Isabel (con 52.658 hab. y 650,5 hab/ha), Santa Ana (con 26.343 hab. y 618,0 hab/ha) y Parque Almagro (con 46.948 hab. y 442,3 hab/ha)— dominado por departamentos (92,7% comunal) y hogares unipersonales (40,8%); 2) barrios patrimoniales de escala media como Barrio Brasil, Yungay, Ejército y Barrio Universitario, donde el Plan Regulador Comunal (Zona B de Conservación Histórica) ha preservado la morfología de casonas y cités; y 3) sectores pericentrales del sur y poniente —como Franklin, Matta Sur, San Vicente, Bogotá y Sierra Bella— donde se concentran el arriendo informal sin contrato, el hacinamiento habitacional (hasta 17,5%) y la población en el tramo de mayor vulnerabilidad socioeconómica (0-40% RSH).`,
         datosClave: [
@@ -1270,7 +1270,7 @@ const ModuloIndicadoresAnalisis = (() => {
       imagenDestacada: 'img/storyboards/portada_analisis_socioambiental.svg',
       piePortada: 'Ilustración de los flujos de movilidad sustentable, accesibilidad peatonal a parques, paisaje acústico y metabolismo de residuos en Santiago.',
       tags: ['84,6% Movilidad Sustentable', 'Proximidad Peatonal', 'Ruido Urbano dBA', '5 Zonas de Aseo', '24 Cartografías'],
-      capasRelevantes: ['munistgo_aseo_zonas_residuos_2026', 'cat08_biodiversidad', 'cat04_movilidad_activa', 'cat05_espacio_publico', 'semaforos_rm_uoct_2026', 'estaciones_metro', 'establecimientos_salud'],
+      capasRelevantes: ['munistgo_aseo_zonas_residuos_2026', 'barrios_santiago_con_zonas_aseo', 'minvu_ipt_areas_verdes', 'vgi_peumo_cryptocarya_alba_arbol_nativo_esclerofilo', 'vgi_ciclovia_segregada_en_calzada', 'semaforos_rm_uoct_2026', 'estaciones_metro', 'establecimientos_salud'],
       contenido: {
         introduccion: `La evaluación espacial de las 24 cartografías socioambientales, de movilidad y de gestión de residuos revela cómo funciona el metabolismo cotidiano en los 27 barrios oficiales de la Comuna de Santiago. Por una parte, los datos censales de transporte confirman que el 84,6% de los 228.482 desplazamientos laborales y de estudio se realiza en modos sustentables (62,4% en transporte público, 17,0% a pie y 5,2% en bicicleta), frente a solo un 15,4% en modos motorizados privados (13,2% en automóvil y 2,2% en motocicleta). Sin embargo, esta alta caminabilidad convive con severas desigualdades ambientales: mientras barrios como Parque Almagro (con 1.092 árboles en un radio de 500 m), Ejército, Barrio Brasil y Santa Lucía Forestal gozan de acceso inmediato a áreas verdes y salud, sectores del surponiente y sur como San Vicente (795,7 m a espacio público), Sierra Bella (837,0 m a salud) y Barrio Judicial (965,8 m a salud) sufren déficits de proximidad, altos niveles de ruido vial (>68,6 dBA) y marcadas asimetrías en la dotación municipal de los 629 contenedores y 398 papeleros distribuidos en las 5 macro-zonas de aseo comunal.`,
         datosClave: [
@@ -1627,9 +1627,10 @@ const ModuloIndicadoresAnalisis = (() => {
         institucion: vgiFound.institucion || 'Comunidad OSM / GBIF',
         sigla: 'IGV',
         geometria: vgiFound.geometria || 'Vectorial',
-        descripcion: vgiFound.descripcion || `Catastro colaborativo VGI de ${vgiFound.nombre.toLowerCase()}.`,
+        descripcion: vgiFound.descripcion || `Catastro colaborativo IGV de ${vgiFound.nombre.toLowerCase()}.`,
         archivoLocal: vgiFound.archivoLocal,
-        nombreDescarga: vgiFound.archivoLocal.split('/').pop()
+        nombreDescarga: vgiFound.archivoLocal.split('/').pop(),
+        totalEntidades: Number.isFinite(vgiFound.totalEntidades) ? vgiFound.totalEntidades : null
       };
     }
 
@@ -1734,7 +1735,7 @@ const ModuloIndicadoresAnalisis = (() => {
     const contenedor = document.getElementById(contenedorId);
     if (!contenedor) return;
 
-    const totalCapasAtlas = 133;
+    const totalCapasAtlas = 294;
     
     contenedor.innerHTML = `
       <div class="modulo-indicadores-analisis-wrapper">
@@ -1925,6 +1926,7 @@ const ModuloIndicadoresAnalisis = (() => {
             <span class="pill-dim-codigo">${info.codigo}</span>
             <span class="pill-dim-origen ${info.tipo}">${origenIcon} ${info.sigla}</span>
             <span class="pill-dim-geom"><span style="opacity:0.75; margin-right:3px;">${geomIcon}</span>${info.geometria}</span>
+            ${info.totalEntidades === 0 ? '<span class="pill-dim-vacio" title="Cobertura sin registros locales en el área de estudio" style="background:#fef3c7;color:#92400e;border:1px solid #f59e0b;padding:2px 6px;border-radius:999px;font-size:0.7rem;font-weight:700;">⚠️ 0 reg. locales</span>' : ''}
           </div>
           <h5 class="nombre-capa-dim">${info.nombre}</h5>
           <p class="desc-capa-dim">${info.descripcion}</p>
@@ -1971,7 +1973,7 @@ const ModuloIndicadoresAnalisis = (() => {
           <div class="filtros-tipo-acordeon">
             <button type="button" class="btn-filtro-tipo activo" data-filtro="todos" onclick="ModuloIndicadoresAnalisis.filtrarPorTipo('todos')">Todas (${totalCapasDim})</button>
             <button type="button" class="btn-filtro-tipo" data-filtro="oficial" onclick="ModuloIndicadoresAnalisis.filtrarPorTipo('oficial')">🏛️ Oficiales Estado (${conteoOficiales})</button>
-            <button type="button" class="btn-filtro-tipo" data-filtro="vgi" onclick="ModuloIndicadoresAnalisis.filtrarPorTipo('vgi')">👥 VGI Comunitario (${conteoVGI})</button>
+            <button type="button" class="btn-filtro-tipo" data-filtro="vgi" onclick="ModuloIndicadoresAnalisis.filtrarPorTipo('vgi')">👥 IGV Comunitaria (${conteoVGI})</button>
           </div>
         </div>
 
@@ -2839,7 +2841,7 @@ const ModuloIndicadoresAnalisis = (() => {
   /**
    * Activa las capas representativas de un storyboard en el mapa
    */
-  function activarCapasDeHistoria(storyboardId) {
+  async function activarCapasDeHistoria(storyboardId) {
     const sb = STORYBOARDS.find(s => s && s.id === storyboardId);
     if (!sb || !sb.capasRelevantes) return;
 
@@ -2847,18 +2849,21 @@ const ModuloIndicadoresAnalisis = (() => {
 
     if (typeof window.activarPanel === 'function') {
       window.activarPanel('inicio');
+      if (window.ModuloMapa && typeof window.ModuloMapa.invalidarTamano === 'function') {
+        window.ModuloMapa.invalidarTamano();
+      }
     }
 
-    // Activar las 2 primeras capas representativas directamente en el visor
-    sb.capasRelevantes.slice(0, 2).forEach((cId, idx) => {
-      setTimeout(() => {
-        if (typeof window.cargarYMostrarCapaEnVisor === 'function') {
-          window.cargarYMostrarCapaEnVisor(cId);
-        } else {
-          activarCapaEnMapa(cId);
-        }
-      }, idx * 250);
-    });
+    // Activar secuencialmente las 2 primeras capas representativas sin condiciones de carrera
+    const iniciales = sb.capasRelevantes.slice(0, 2);
+    for (let i = 0; i < iniciales.length; i++) {
+      const cId = iniciales[i];
+      if (typeof window.cargarYMostrarCapaEnVisor === 'function') {
+        await window.cargarYMostrarCapaEnVisor(cId, { ajustarVista: i === 0 });
+      } else {
+        activarCapaEnMapa(cId);
+      }
+    }
   }
 
   return {

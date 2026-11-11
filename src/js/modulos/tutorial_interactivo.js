@@ -151,8 +151,8 @@
       esPresentacionModulo: false,
       accionPrevia: 'abrirSimbologia',
       insignia: 'Módulo 02 · Componente 4',
-      titulo: 'Motor de Simbología Estadística (Natural Breaks / Jenks)',
-      texto: 'Aunque cada capa se carga con una representación predefinida según su naturaleza cuantitativa o cualitativa, este panel permite reclasificar en vivo cualquier variable numérica mediante intervalos de Jenks (Natural Breaks), cuantiles o intervalos iguales, así como cambiar la paleta cromática.'
+      titulo: 'Motor de Simbología Estadística Coherente',
+      texto: 'Cada una de las 294 capas se carga automáticamente con una simbología racional acorde a la estructura real de sus datos (Color Único para hitos y redes IGV puntuales, Categorizado para zonificaciones y tipos de equipamiento, o Graduado mediante Cuartiles, Jenks, Intervalos Iguales o Pretty Breaks para variables continuas), permitiéndote además reclasificar columnas y paletas en vivo.'
     },
     {
       id: 'paso-13-visor-leaflet',

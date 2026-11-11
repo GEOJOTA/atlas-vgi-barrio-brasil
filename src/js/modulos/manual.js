@@ -155,7 +155,7 @@ const ModuloManual = (() => {
                 <strong style="color:#c084fc; font-size:0.9rem;">OE 3 · Geoportal web accesible e interoperable</strong>
                 <ul style="margin:8px 0 0 0; padding-left:18px; font-size:0.84rem; color:var(--tinta-suave); line-height:1.6;">
                   <li><strong>Definición de un prototipo sintetizado para usuarios no técnicos:</strong> prototipo más sintetizado que permita a usuarios sin experiencia técnica poder interactuar de forma más simple con la plataforma, articulado en 3 módulos (<em>Módulo 01 Análisis</em>, <em>Módulo 02 Explorar Mapa</em> y <em>Módulo 03 Documentación</em>).</li>
-                  <li>Visor cartográfico cuadrado (Leaflet 1.9.4) con 5 mapas base abiertos sin requerimiento de clave API (OpenStreetMap Estándar y HOT, e imágenes satelitales de Bing/Microsoft y Esri), simbología estadística dinámica (<em>Natural Breaks</em> / Jenks) y panel inferior de <strong>Detalles</strong>.</li>
+                  <li>Visor cartográfico cuadrado (Leaflet 1.9.4) con 5 mapas base abiertos sin requerimiento de clave API (OpenStreetMap Estándar y HOT, e imágenes satelitales de Bing/Microsoft y Esri), motor de <strong>Simbología Temática Racional</strong> (Color Único, Categorizado y Graduado multi-método) y panel inferior de <strong>Detalles</strong>.</li>
                   <li>Inspector normativo del Plan Regulador Comunal (PRC) y OGUC bajo demanda, y 4 ejes de diagnóstico geoestadístico con 83 cartografías temáticas.</li>
                   <li><em>Entregables verificados:</em> <code>src/index.html</code>, <code>src/css/estilos.css</code>, <code>src/js/modulos/mapa.js</code>, <code>evaluador_normativo.js</code>, <code>indicadores_analisis.js</code> y <code>netlify.toml</code>.</li>
                 </ul>
@@ -230,7 +230,7 @@ const ModuloManual = (() => {
               <div style="background:rgba(2,6,23,0.5); border-left:3px solid #c084fc; border-radius:6px; padding:12px;">
                 <strong style="color:#c084fc; font-size:0.88rem;">🎓 Investigadores, Docentes, Estudiantes y ONG</strong>
                 <p style="font-size:0.82rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.55;">
-                  Explore las 83 cartografías de alta resolución del <strong>Módulo 01</strong> (Censo 2024, LISA, KDE y metabolismo urbano), utilice el motor de <strong>Simbología Dinámica (Jenks)</strong> en el <strong>Módulo 02</strong> para clasificar variables en vivo y diríjase al capítulo <strong>DOC · 04</strong> de este módulo para descargar la geodatabase completa (<code>.zip</code> de 542,35 MB) y los catálogos en Excel.
+                  Explore las 83 cartografías de alta resolución del <strong>Módulo 01</strong> (Censo 2024, LISA, KDE y metabolismo urbano), utilice el motor de <strong>Simbología Dinámica</strong> (Color Único, Categorizado y Graduado por Cuartiles, Jenks, Intervalos Iguales o Pretty Breaks) en el <strong>Módulo 02</strong> y diríjase al capítulo <strong>DOC · 04</strong> de este módulo para descargar la geodatabase completa (<code>.zip</code> de 542,35 MB) y los catálogos en Excel.
                 </p>
               </div>
             </div>
@@ -397,7 +397,7 @@ const ModuloManual = (() => {
         numero: 'DOC · 03',
         icono: '🗺️',
         titulo: 'Guía en Profundidad del Módulo 02: Explorar Mapa, Herramientas, Simbología y Panel de Detalles',
-        subtitulo: 'Manual paso a paso del visor cuadrado (Leaflet 1.9.4), los 5 mapas base sin API, la barra de herramientas, el Inspector Normativo PRC, la simbología Jenks y los 17 atributos ISO 19157.',
+        subtitulo: 'Manual paso a paso del visor cuadrado (Leaflet 1.9.4), los 5 mapas base sin API, la barra de herramientas, el Inspector Normativo PRC, la simbología temática racional y los 17 atributos ISO 19157.',
         html: `
           <div style="display:flex; flex-direction:column; gap:16px;">
             <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:18px;">
@@ -473,16 +473,17 @@ const ModuloManual = (() => {
             </div>
 
             <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(16,185,129,0.4); border-radius:10px; padding:18px;">
-              <h4 style="margin:0 0 10px 0; color:#34d399; font-size:1.05rem;">3. Cómo funciona la Simbología Estadística Dinámica (Natural Breaks / Jenks y otros métodos)</h4>
+              <h4 style="margin:0 0 10px 0; color:#34d399; font-size:1.05rem;">3. Cómo funciona la Simbología Temática Racional (Plano, Categorizado y Graduado multi-método)</h4>
               <p style="margin:0 0 12px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                Cuando usted activa una capa en el Módulo 02, puede abrir el panel de <strong>Simbología Dinámica</strong> para colorear el mapa según cualquiera de sus variables numéricas o categóricas. Para ayudarle a elegir el método de clasificación más adecuado, aquí se explica qué hace cada uno:
+                Cada capa del Atlas se representa por defecto con el modo cartográfico que corresponde a la naturaleza estadística y geométrica real de su atributo principal, evitando forzar clasificaciones artificiales sobre identificadores o variables categóricas. Además, el panel de <strong>Simbología Dinámica</strong> permite personalizar en vivo la variable, el método y la paleta cromática:
               </p>
               <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.68;">
-                <li><strong>Cortes Naturales (Jenks / <em>Natural Breaks</em>):</strong> Es el método recomendado por defecto. Un algoritmo estadístico busca dónde se producen los "saltos" o agrupamientos naturales en los datos, agrupando valores similares entre sí y separando los valores muy distintos. Es ideal para datos urbanos desiguales (como densidad poblacional o avalúo fiscal).</li>
-                <li><strong>Cuantiles (<em>Quantiles</em>):</strong> Divide el total de manzanas o unidades en grupos con exactamente la misma cantidad de elementos (por ejemplo, el 20 % más bajo, el 20 % medio-bajo, etc.). Es muy útil para comparar rankings relativos entre manzanas o unidades vecinales.</li>
-                <li><strong>Intervalos Iguales (<em>Equal Intervals</em>):</strong> Divide el rango entre el valor mínimo y el máximo en tramos del mismo tamaño numérico (por ejemplo, de 0 a 25 %, de 25 a 50 %, etc.). Se recomienda para porcentajes o índices que ya están en una escala uniforme.</li>
-                <li><strong>Desviación Estándar:</strong> Muestra qué tan por encima o por debajo del promedio comunal se encuentra cada manzana, destacando valores atípicos extremos.</li>
-                <li><strong>Categorizado (Valores únicos):</strong> Asigna un color distinto a cada categoría de texto (por ejemplo, cada zona del Plan Regulador Comunal o cada tipo de establecimiento de salud).</li>
+                <li><strong>Color Único (Plano):</strong> Asigna un color semántico uniforme a todas las entidades. Es el estándar predeterminado para las 171 coberturas temáticas de Información Geográfica Voluntaria (<code>id_igv</code>), hitos puntuales y redes homogéneas (por ejemplo luminarias, paraderos o áreas sin atributo diferenciador).</li>
+                <li><strong>Categorizado (Valores Únicos):</strong> Asigna colores discretos por texto o clase nominal (mostrando hasta las 9 categorías principales más «Otras categorías»). Se aplica por defecto a zonificaciones normativas (<code>ZONA</code> del PRC, <code>zona_aseo</code>), líneas de Metro, tipos de áreas verdes o estado de proyectos BIP.</li>
+                <li><strong>Cortes Naturales (Jenks / <em>Natural Breaks</em>):</strong> Agrupa valores continuos muy desiguales o asimétricos identificando los saltos naturales de la distribución (ideal para totales censales por manzana, avalúos o catastro predial).</li>
+                <li><strong>Cuantiles (<em>Quantiles</em>):</strong> Divide los elementos en grupos de igual tamaño muestral. Se aplica por defecto a conteos y porcentajes comparativos como los quintiles e indicadores territoriales del Registro Social de Hogares (RSH).</li>
+                <li><strong>Intervalos Iguales y <em>Pretty Breaks</em>:</strong> Dividen el rango entre mínimo y máximo en tramos uniformes o límites redondeados legibles (ideales para densidades lineales, frecuencias de eventos o potencias instaladas sin valores atípicos extremos).</li>
+                <li><strong>Desviación Estándar:</strong> Muestra cuán por encima o por debajo del promedio comunal se sitúa cada entidad respecto a la media y su dispersión.</li>
               </ul>
             </div>
 
@@ -726,7 +727,7 @@ const ModuloManual = (() => {
                     <div style="font-size:0.75rem; font-weight:800; color:#c084fc;">3. FUNCIONES DEL VISOR</div>
                     <p style="font-size:0.8rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.5;">
                       • <strong>Medición métrica:</strong> Superficies en <code>m²</code> y <code>ha</code>.<br>
-                      • <strong>Simbología:</strong> Jenks, Cuantiles e Intervalos.<br>
+                      • <strong>Simbología:</strong> Plano, Categorizado, Cuartiles, Jenks e Intervalos.<br>
                       • <strong>Inspector PRC:</strong> Consulta urbanística por predio.
                     </p>
                   </div>
@@ -768,8 +769,8 @@ const ModuloManual = (() => {
                     <tr>
                       <td><strong>Módulo 02 · Explorar Mapa</strong></td>
                       <td><code>#panel-inicio</code></td>
-                      <td><code>modulos/mapa.js</code>, <code>modulos/ide_chile.js</code>, <code>modulos/simbologia_dinamica.js</code>, <code>modulos/evaluador_normativo.js</code>, <code>modulos/geodesia.js</code></td>
-                      <td>Gestiona el visor cuadrado Leaflet 1.9.4, los 5 mapas base sin requerimiento de API (OpenStreetMap Estándar y HOT, Bing/Microsoft Satelital e Híbrido y Esri World Imagery), la barra superior centrada, la medición de áreas, el Inspector PRC bajo demanda, la simbología Jenks y el panel inferior <strong>Detalles</strong> (17 atributos con <code>id_ig</code> / <code>id_igv</code>).</td>
+                      <td><code>modulos/mapa.js</code>, <code>modulos/ide_chile.js</code>, <code>modulos/evaluador_normativo.js</code>, <code>modulos/geodesia.js</code></td>
+                      <td>Gestiona el visor cuadrado Leaflet 1.9.4, los 5 mapas base sin requerimiento de API (OpenStreetMap Estándar y HOT, Bing/Microsoft Satelital e Híbrido y Esri World Imagery), la barra superior centrada, la medición de áreas, el Inspector PRC bajo demanda, la simbología temática coherente (Plano, Categorizado y Graduado multi-método) y el panel inferior <strong>Detalles</strong> (17 atributos con <code>id_ig</code> / <code>id_igv</code>).</td>
                     </tr>
                     <tr>
                       <td><strong>Módulo 03 · Documentación</strong></td>
@@ -862,7 +863,7 @@ const ModuloManual = (() => {
                     <tr>
                       <td><strong>Módulos JavaScript</strong></td>
                       <td><code>src/js/modulos/*.js</code></td>
-                      <td>Archivos individuales que controlan el visor (<code>mapa.js</code>), los análisis (<code>indicadores_analisis.js</code>), el Inspector PRC (<code>evaluador_normativo.js</code>), las capas (<code>ide_chile.js</code> y <code>catalogo_vgi_descentralizado.js</code>), la simbología (<code>simbologia_dinamica.js</code>), la medición métrica (<code>geodesia.js</code>) y los manuales (<code>manual.js</code>).</td>
+                      <td>Archivos individuales que controlan el visor y su simbología temática racional (<code>mapa.js</code>), los análisis (<code>indicadores_analisis.js</code>), el Inspector PRC (<code>evaluador_normativo.js</code>), las capas (<code>ide_chile.js</code> y <code>catalogo_vgi_descentralizado.js</code>), la medición métrica (<code>geodesia.js</code>) y los manuales (<code>manual.js</code>).</td>
                     </tr>
                     <tr>
                       <td><strong>294 Coberturas GeoJSON</strong></td>
@@ -996,7 +997,7 @@ const ModuloManual = (() => {
           </div>
         </div>
         <div>
-          <input type="search" id="buscador-general-manual" value="${textoBusquedaManual.replace(/"/g, '&quot;')}" placeholder="Buscar en los 6 capítulos de documentación (ej: entregables, dimensiones, KDE, LISA, id_igv, inspector normativo, Jenks, arquitectura)..." oninput="ModuloManual.filtrarManual(this.value)" style="width:100%; padding:10px 14px; border-radius:6px; border:1px solid var(--linea-fuerte); background:var(--papel); color:var(--tinta); font-size:0.92rem;">
+          <input type="search" id="buscador-general-manual" value="${textoBusquedaManual.replace(/"/g, '&quot;')}" placeholder="Buscar en los 6 capítulos de documentación (ej: entregables, dimensiones, KDE, LISA, id_igv, inspector normativo, simbología, arquitectura)..." oninput="ModuloManual.filtrarManual(this.value)" style="width:100%; padding:10px 14px; border-radius:6px; border:1px solid var(--linea-fuerte); background:var(--papel); color:var(--tinta); font-size:0.92rem;">
         </div>
       </div>
 

@@ -212,4 +212,4 @@ if fallos == 0:
     sys.exit(0)
 else:
     print(f'⚠️ Se detectaron {fallos} incidencias.')
-    sys.exit(0)
+    sys.exit(1)

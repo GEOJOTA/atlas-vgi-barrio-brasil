@@ -73,7 +73,7 @@ flowchart TD
 
     subgraph MOD02["Módulo 02 · Explorar mapa (mapa.js y evaluador_normativo.js)"]
         MP1["Mantener los 5 mapas base sin clave API\n(OSM Estándar, OSM HOT, Bing/Microsoft Satelital e Híbrido y Esri)"]
-        MP2["Actualizar reglas del Inspector normativo (PRC),\nsimbología dinámica Jenks o panel Detalles"]
+        MP2["Actualizar reglas del Inspector normativo (PRC),\nsimbología temática racional (mapa.js) o panel Detalles"]
     end
 
     subgraph MOD03["Módulo 03 · Documentación (manual.js y docs/*.md)"]

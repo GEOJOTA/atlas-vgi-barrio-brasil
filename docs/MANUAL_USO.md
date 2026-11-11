@@ -155,12 +155,13 @@ En la esquina del visor (o en el selector de mapa base) puede elegir en cualquie
 ### 4.3. Cómo personalizar colores y clasificaciones con la `Simbología Dinámica`
 En el panel lateral del Módulo 02 se encuentra la herramienta **Simbología Dinámica**, que permite cambiar en vivo cómo se colorean los datos de cualquier capa activa:
 * **Elección de variable (atributo):** Seleccione el campo numérico o de texto que desea representar (por ejemplo, total de población, porcentaje de hogares vulnerables, avalúo o tipo de zona).
-* **Métodos de clasificación estadística disponibles:**
-  * **Cortes Naturales de Jenks (*Natural Breaks*):** Agrupa automáticamente los valores similares y separa los valores distintos identificando los "saltos naturales" de la distribución estadística. Es la opción recomendada para datos urbanos con fuertes contrastes.
-  * **Cuantiles (*Quantiles*):** Divide las manzanas o entidades en grupos con igual cantidad de elementos (por ejemplo, quintiles del 20 % cada uno).
-  * **Intervalos Iguales (*Equal Intervals*):** Divide el rango entre el mínimo y el máximo en tramos idénticos.
+* **Métodos de clasificación estadística y representación disponibles (asignación predeterminada racional según los datos):**
+  * **Color Único (*Plano*):** Asigna un color semántico uniforme a toda la capa (predeterminado para las 171 capas colaborativas IGV puntuales o lineales y coberturas sin variable de clasificación).
+  * **Categorizado (*Valores únicos*):** Asigna un color diferente a cada categoría nominal hasta las 9 clases principales más «Otras categorías» (predeterminado para zonas del PRC, zonas de aseo, líneas de Metro o tipos de áreas verdes).
+  * **Cuantiles (*Quantiles*):** Divide las manzanas o entidades en grupos con igual cantidad de elementos (predeterminado para porcentajes y quintiles comparativos del RSH).
+  * **Cortes Naturales de Jenks (*Natural Breaks*):** Agrupa valores continuos muy desiguales separando saltos naturales de la distribución (predeterminado para totales censales por manzana, avalúos y catastro predial).
+  * **Intervalos Iguales y *Pretty Breaks*:** Dividen el rango entre el mínimo y el máximo en tramos idénticos o límites redondeados legibles (predeterminado para densidades lineales, conteos de eventos o potencia instalada).
   * **Desviación Estándar:** Destaca qué unidades se alejan por encima o por debajo del promedio comunal.
-  * **Categorizado:** Asigna un color diferente a cada categoría nominal (como zonas del PRC o tipos de equipamiento).
 * **Número de clases y paletas de colores:** Permite elegir entre `3` y `7` clases y aplicar rampas cromáticas accesibles (*Viridis*, *Amarillo-Naranja-Rojo*, *Azules*, *Verdes*, *Púrpuras* o *Espectral*), actualizando al instante el mapa y su leyenda.
 
 ### 4.4. Cómo consultar qué se puede construir o proteger con el `Inspector Normativo (PRC)`
