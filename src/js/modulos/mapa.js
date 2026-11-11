@@ -192,7 +192,8 @@ const ModuloMapa = (() => {
         weight: 2,
         dashArray: '5, 5',
         fillColor: '#A97722',
-        fillOpacity: 0.08
+        fillOpacity: 0.08,
+        interactive: false
       }).addTo(mapa);
       capaBbox.bindTooltip(textoTooltip, { permanent: false, direction: 'top' });
     }
@@ -1694,8 +1695,24 @@ const ModuloMapa = (() => {
         layer._atlasIcono = icono;
         layer._atlasColor = colorFeature;
 
+        // En Modo Inspector Normativo (PRC), reenviar el clic de entidad al evaluador sin abrir popup
+        layer.on('click', (ev) => {
+          const inspActivo = Boolean(window.__inspectorNormativoActivo || document.getElementById('btn-inspector-normativo')?.classList.contains('activo'));
+          if (inspActivo && ev && ev.latlng) {
+            try { layer.closePopup(); } catch (_) {}
+            if (typeof window.ejecutarConsultaInspector === 'function') {
+              window.ejecutarConsultaInspector(ev.latlng.lat, ev.latlng.lng);
+            }
+          }
+        });
+
         // Vincular el botón «Más detalles» cada vez que el popup esté activo
         layer.on('popupopen', () => {
+          const inspActivo = Boolean(window.__inspectorNormativoActivo || document.getElementById('btn-inspector-normativo')?.classList.contains('activo'));
+          if (inspActivo) {
+            setTimeout(() => { try { layer.closePopup(); } catch (_) {} }, 0);
+            return;
+          }
           layerActivoPopup = layer;
           const btn = document.getElementById(idBotonDetalle);
           if (btn) {

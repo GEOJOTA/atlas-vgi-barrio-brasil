@@ -35,6 +35,13 @@ const ModuloDBClient = (() => {
    */
   async function cargarConfiguracionRemota() {
     if (dbConfig.url && dbConfig.anonKey) return dbConfig;
+    if (typeof window !== 'undefined') {
+      const proto = window.location?.protocol || '';
+      const host = window.location?.hostname || '';
+      if (proto === 'file:' || ['localhost', '127.0.0.1', '::1', ''].includes(host) || host.endsWith('.github.io')) {
+        return dbConfig;
+      }
+    }
     try {
       const resp = await fetch('/api/db-config');
       if (resp.ok) {

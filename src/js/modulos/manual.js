@@ -1084,14 +1084,22 @@ const ModuloManual = (() => {
     }
   }
 
+  function normalizarTexto(txt) {
+    return String(txt || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim();
+  }
+
   function filtrarTablaCatalogo(termino) {
-    const q = String(termino || '').trim().toLowerCase();
+    const q = normalizarTexto(termino);
     const filas = document.querySelectorAll('.fila-catalogo-manual');
     filas.forEach(fila => {
       if (!q) {
         fila.style.display = '';
       } else {
-        const data = fila.getAttribute('data-busqueda') || '';
+        const data = normalizarTexto(fila.getAttribute('data-busqueda'));
         fila.style.display = data.includes(q) ? '' : 'none';
       }
     });

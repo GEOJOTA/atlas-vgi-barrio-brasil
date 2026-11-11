@@ -35,6 +35,7 @@ if (typeof window !== 'undefined') {
 let ultimaConsultaRealizada = null;
 let capasCargadasPorCategoria = {};
 let capasOficialesCargadas = {};
+const capasNormativasCache = {};
 
 const DICCIONARIO_VALORES_OSM = {
   amenity: [
@@ -3474,12 +3475,28 @@ async function alternarCapaVGIDescentralizada(idCapa, btn) {
   }
 
   const catalogoVGI = (typeof window !== 'undefined' && window.CATALOGO_VGI_DESCENTRALIZADO) ? window.CATALOGO_VGI_DESCENTRALIZADO : [];
-  const def = catalogoVGI.find(c => c.id === idCapa) || {
-    id: idCapa,
-    nombre: idCapa,
-    archivoLocal: `data/capa_${idCapa}.geojson`,
-    icono: '📍'
-  };
+  let def = catalogoVGI.find(c => c.id === idCapa);
+  if (!def && typeof window !== 'undefined' && window.ModuloIndicadoresAnalisis?.resolverDefinicionCapa) {
+    const resDef = window.ModuloIndicadoresAnalisis.resolverDefinicionCapa(idCapa);
+    if (resDef && resDef.archivoLocal) {
+      def = {
+        id: idCapa,
+        nombre: resDef.nombre || idCapa,
+        archivoLocal: resDef.archivoLocal,
+        icono: '📍',
+        institucion: resDef.institucion || 'Mapeo colaborativo OpenStreetMap / GBIF'
+      };
+    }
+  }
+  const slugCat = typeof idCapa === 'string' ? idCapa.replace(/^cat\d\d_/, '') : idCapa;
+  if (!def) {
+    def = {
+      id: idCapa,
+      nombre: idCapa,
+      archivoLocal: `data/capa_${slugCat}.geojson`,
+      icono: '📍'
+    };
+  }
 
   if (btn) btn.classList.add('cargando');
   if (card) card.classList.add('cargando');
@@ -3493,7 +3510,9 @@ async function alternarCapaVGIDescentralizada(idCapa, btn) {
       `data/${idCapa}.geojson`,
       `src/data/${idCapa}.geojson`,
       `data/capa_${idCapa}.geojson`,
-      `src/data/capa_${idCapa}.geojson`
+      `src/data/capa_${idCapa}.geojson`,
+      `data/capa_${slugCat}.geojson`,
+      `src/data/capa_${slugCat}.geojson`
     ];
     for (const r of rutas) {
       if (!r) continue;
@@ -3708,7 +3727,6 @@ function inicializarControlesConsolaGIS() {
 
 function configurarCapasOficialesIDE() {
   const contenedor = document.getElementById('contenedor-acordeones-dimensiones');
-  if (!contenedor) return;
 
   const todasOficiales = (window.ModuloIDEChile && typeof window.ModuloIDEChile.obtenerCapasDisponibles === 'function')
     ? window.ModuloIDEChile.obtenerCapasDisponibles()
@@ -3721,7 +3739,8 @@ function configurarCapasOficialesIDE() {
   const kpiTotalEl = document.getElementById('kpi-total-capas');
   if (kpiTotalEl) kpiTotalEl.textContent = String(totalCapas);
 
-  contenedor.innerHTML = '';
+  if (contenedor) {
+    contenedor.innerHTML = '';
 
   DIMENSIONES_CONSOLA.forEach((dim, idx) => {
     const oficialesEnDim = todasOficiales.filter(c => obtenerDimensionDeCapaOficial(c) === dim.id);
@@ -3910,8 +3929,9 @@ function configurarCapasOficialesIDE() {
     </div>
     <span class="badge-conteo-oficial" style="background:#8F3A2C; color:#FFF;">WMS</span>
   `;
-  btnWMS.addEventListener('click', () => alternarCapaWMSOficial('minvu_patrimonio', btnWMS));
-  contenedor.appendChild(btnWMS);
+    btnWMS.addEventListener('click', () => alternarCapaWMSOficial('minvu_patrimonio', btnWMS));
+    contenedor.appendChild(btnWMS);
+  }
 
   // Inicializar controles de la consola GIS
   inicializarControlesConsolaGIS();
@@ -3965,7 +3985,11 @@ function inicializarInspectorNormativo() {
 
   btnInspector.addEventListener('click', () => {
     modoInspectorNormativoActivo = !modoInspectorNormativoActivo;
+    window.__inspectorNormativoActivo = modoInspectorNormativoActivo;
     btnInspector.classList.toggle('activo', modoInspectorNormativoActivo);
+    const mapaInst = ModuloMapa.obtenerInstanciaMapa && ModuloMapa.obtenerInstanciaMapa();
+    const mapaCont = mapaInst && mapaInst.getContainer ? mapaInst.getContainer() : null;
+    if (mapaCont) mapaCont.style.cursor = modoInspectorNormativoActivo ? 'crosshair' : '';
 
     if (modoInspectorNormativoActivo) {
       contInspector.style.display = 'block';
@@ -3993,7 +4017,17 @@ function inicializarInspectorNormativo() {
   }
 }
 
+let _ultimaConsultaInspectorTs = 0;
+let _ultimaConsultaInspectorKey = '';
 async function ejecutarConsultaInspector(lat, lng) {
+  const ahora = Date.now();
+  const keyCoord = `${lat.toFixed(5)},${lng.toFixed(5)}`;
+  if (keyCoord === _ultimaConsultaInspectorKey && (ahora - _ultimaConsultaInspectorTs) < 250) {
+    return;
+  }
+  _ultimaConsultaInspectorTs = ahora;
+  _ultimaConsultaInspectorKey = keyCoord;
+
   const contInspector = document.getElementById('contenedor-inspector-normativo');
   if (!contInspector || !window.ModuloEvaluadorNormativo) return;
 
@@ -4001,6 +4035,7 @@ async function ejecutarConsultaInspector(lat, lng) {
   contInspector.innerHTML = `<div class="ficha-normativa-hud" style="text-align:center; padding:18px;">⏳ Auditando normativa urbanística para lat: ${lat.toFixed(5)}, lng: ${lng.toFixed(5)}...</div>`;
 
   const capasRequeridas = [
+    'bbdd_43',
     'minvu_ipt_prc_santiago',
     'minvu_ipt_prms_usosuelo',
     'minvu_ipt_limite_urbano',
@@ -4012,22 +4047,22 @@ async function ejecutarConsultaInspector(lat, lng) {
     'censo2024_manzanas',
     'ine_permisos_edificacion_santiago',
     'ine_crf_conjuntos_santiago',
-    'ide_minvu_campamentos',
-    'ide_minvu_inventario_humedales'
+    'ide_minvu_campamentos'
   ];
 
   await Promise.all(capasRequeridas.map(async (cId) => {
-    if (!capasOficialesCargadas[cId] && window.ModuloIDEChile) {
+    if (!capasOficialesCargadas[cId] && !capasNormativasCache[cId] && window.ModuloIDEChile) {
       try {
         const res = await ModuloIDEChile.consultarCapaOficial(cId);
         if (res && res.geojson) {
-          capasOficialesCargadas[cId] = res.geojson;
+          capasNormativasCache[cId] = res.geojson;
         }
       } catch (_) {}
     }
   }));
 
   const todasLasCapas = {
+    ...capasNormativasCache,
     ...capasCargadasPorCategoria,
     ...capasOficialesCargadas
   };
@@ -4050,6 +4085,7 @@ async function ejecutarConsultaInspector(lat, lng) {
     URL.revokeObjectURL(url);
   });
 }
+window.ejecutarConsultaInspector = ejecutarConsultaInspector;
 
 function abrirModalDescargaBaseDatos() {
   const overlay = document.getElementById('modal-descarga-bd-overlay');
@@ -4079,8 +4115,8 @@ async function descargarColeccionOficialCompleta() {
   if (estadoTexto) {
     estadoTexto.innerHTML = `
       <span style="color:var(--esmeralda,#10b981); font-weight:700;">📦 [INICIANDO DESCARGA]:</span> 
-      Descargando la base de datos completa del Atlas VGI en archivo comprimido (<code>docs/geodatabase_completa_atlas_vgi.zip</code>, 542,35 MB). 
-      Incluye las 133 capas del visor (10 macrocategorías VGI + 123 capas oficiales), extractos regionales de Geofabrik RM, los 3 libros maestros Excel (.xlsx), 4 datasets CSV, esquemas SQL PostGIS y metadatos ISO (257 archivos totales en 7 subcarpetas, ~3,33 GB descomprimido).
+      Descargando la base de datos consolidada del Atlas para la Gestión Territorial (<code>docs/geodatabase_completa_atlas_vgi.zip</code>, 542,35 MB). 
+      Incluye coberturas IGV y oficiales, extractos regionales de Geofabrik RM, los 3 libros maestros Excel (.xlsx), datasets CSV, esquemas SQL PostGIS y manuales (256 archivos en 7 subcarpetas, ~3,32 GB descomprimido).
     `;
   }
 
@@ -4101,14 +4137,14 @@ async function descargarColeccionOficialCompleta() {
     if (estadoTexto) {
       estadoTexto.innerHTML = `
         <span style="color:var(--esmeralda,#10b981); font-weight:700;">✅ [DESCARGA INICIADA]:</span> 
-        Archivo <code>docs/geodatabase_completa_atlas_vgi.zip</code> (542,35 MB en red / ~3,33 GB descomprimido) descargándose en el equipo. 
-        Contiene 7 subcarpetas estructuradas (257 archivos totales): <strong>01_vgi_comunitario_osm/</strong>, <strong>02_ide_chile_ministerios/</strong>, <strong>03_censo_2024_ine/</strong>, <strong>04_observatorio_urbano_stgo/</strong>, <strong>05_medioambiente_residuos_subdere/</strong>, <strong>06_transporte_y_telecomunicaciones/</strong> y <strong>07_metadatos_y_gobernanza/</strong>.
+        Archivo <code>docs/geodatabase_completa_atlas_vgi.zip</code> (542,35 MB comprimido / ~3,32 GB descomprimido) descargándose en el equipo. 
+        Contiene 7 subcarpetas estructuradas (256 archivos totales): <strong>01_vgi_comunitario_osm/</strong>, <strong>02_geofabrik_chile_rm/</strong>, <strong>03_capas_oficiales_estado/</strong>, <strong>04_repositorio_cartografico_completo/</strong>, <strong>05_catalogos_matrices_excel/</strong>, <strong>06_datos_consolidados_csv/</strong> y <strong>07_metadatos_y_gobernanza/</strong>.
       `;
     }
   } catch (err) {
     console.error('[-] Error al iniciar descarga de base de datos:', err);
     if (estadoTexto) {
-      estadoTexto.innerHTML = `<span style="color:#ef4444; font-weight:700;">❌ [ERROR]:</span> No se pudo iniciar la descarga automática. <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261026_v13" download="geodatabase_completa_atlas_vgi.zip" style="color:var(--musgo); text-decoration:underline;">Haz clic aquí para descarga manual</a>.`;
+      estadoTexto.innerHTML = `<span style="color:#ef4444; font-weight:700;">❌ [ERROR]:</span> No se pudo iniciar la descarga automática. <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261110_v69" download="geodatabase_completa_atlas_vgi.zip" style="color:var(--musgo); text-decoration:underline;">Haz clic aquí para descarga manual</a>.`;
     }
   } finally {
     setTimeout(() => {
@@ -4619,8 +4655,12 @@ function configurarImportadorCapas() {
             const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const codZona = (inf.prc && (inf.prc.codigo || inf.prc.zona)) ? (inf.prc.codigo || inf.prc.zona).replace(/\s+/g, '_') : 'SANTIAGO';
-            a.download = `Certificado_Normativo_VGI_${codZona}.txt`;
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Certificado_Normativo_IGV_${codZona}.txt`;
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
             URL.revokeObjectURL(url);
           });
         }

@@ -2012,11 +2012,19 @@ const ModuloIndicadoresAnalisis = (() => {
     });
   }
 
+  function normalizarTextoBusqueda(txt) {
+    return String(txt || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim();
+  }
+
   /**
-   * Filtra las capas del acordeón en tiempo real según texto
+   * Filtra las capas del acordeón en tiempo real según texto (insensible a tildes y mayúsculas)
    */
   function filtrarCapasAcordeon(query) {
-    queryFiltroActual = (query || '').toLowerCase().trim();
+    queryFiltroActual = normalizarTextoBusqueda(query);
     aplicarFiltrosCombinados();
   }
 
@@ -2040,11 +2048,11 @@ const ModuloIndicadoresAnalisis = (() => {
 
     items.forEach(el => {
       const tipo = el.dataset.tipo;
-      const nombre = el.dataset.nombre || '';
-      const subtipo = el.dataset.subtipo || '';
-      const descripcion = el.dataset.descripcion || '';
-      const institucion = el.dataset.institucion || '';
-      const codigo = el.dataset.codigo || '';
+      const nombre = normalizarTextoBusqueda(el.dataset.nombre);
+      const subtipo = normalizarTextoBusqueda(el.dataset.subtipo);
+      const descripcion = normalizarTextoBusqueda(el.dataset.descripcion);
+      const institucion = normalizarTextoBusqueda(el.dataset.institucion);
+      const codigo = normalizarTextoBusqueda(el.dataset.codigo);
 
       const coincideTipo = (filtroTipoActivo === 'todos') || (tipo === filtroTipoActivo);
       const coincideTexto = !queryFiltroActual || 

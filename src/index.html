@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261110_v68">
+  <link rel="stylesheet" href="css/estilos.css?v=20261110_v69">
 </head>
 <body>
 
@@ -724,44 +724,44 @@
           <div style="flex:1;">
             <strong>Descarga de la geodatabase completa iniciada en el navegador.</strong>
             <p style="margin:2px 0 0 0; font-size:0.82rem; color:var(--tinta-suave);">
-              Archivo: <code>docs/geodatabase_completa_atlas_vgi.zip</code> · Peso: <strong>542,35 MB comprimido</strong> (<strong>~3,32 GB</strong> de datos vectoriales y tabulares descomprimidos; incluye las <strong>133 capas del visor</strong> y <strong>256 archivos totales</strong>).
+              Archivo: <code>docs/geodatabase_completa_atlas_vgi.zip</code> · Peso: <strong>542,35 MB comprimido</strong> (<strong>~3,32 GB</strong> de datos vectoriales y tabulares descomprimidos; <strong>256 archivos totales</strong> en 7 carpetas estructuradas).
             </p>
           </div>
-          <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261104_v26" download="geodatabase_completa_atlas_vgi.zip" class="accion btn-reintentar-descarga-zip" style="text-decoration:none; white-space:nowrap;">
+          <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261110_v69" download="geodatabase_completa_atlas_vgi.zip" class="accion btn-reintentar-descarga-zip" style="text-decoration:none; white-space:nowrap;">
             ⬇️ Reintentar Descarga (.zip)
           </a>
         </div>
 
         <!-- Desglose de Contenidos Incluidos -->
-        <h4 style="margin:8px 0 4px 0; color:var(--musgo); font-size:0.95rem;">Contenido Íntegro del Paquete Comprimido (133 Capas del Visor / 256 Archivos / ~3,32 GB):</h4>
+        <h4 style="margin:8px 0 4px 0; color:var(--musgo); font-size:0.95rem;">Contenido Íntegro del Paquete Comprimido (7 Carpetas / 256 Archivos / ~3,32 GB):</h4>
         <div class="modal-bd-grid-carpetas">
           <div class="tarjeta-carpeta-bd">
             <div class="carpeta-icono">📁 01_vgi_comunitario_osm/</div>
-            <p><strong>10 Macrocategorías VGI Barriales y Regionales RM:</strong> Subcarpeta <code>barrio_brasil/</code> (<code>capa_educacion.geojson</code> a <code>capa_cobertura_suelo.geojson</code>, <code>atlas_vgi_barrio_brasil_uah_completo.geojson</code>, <code>resumen_catastro_vgi.csv</code>) y subcarpeta <code>region_metropolitana_geofabrik/</code> (<code>capa_osm_rm_cat01_educacion.geojson</code> a <code>cat10_cobertura_suelo.geojson</code> y <code>capa_osm_rm_completo_vgi.geojson</code>).</p>
+            <p><strong>Coberturas IGV Comunitarias de Barrio Brasil:</strong> Colecciones vectoriales normalizadas bajo el perfil ISO 19157 (<code>capa_educacion.geojson</code> a <code>capa_cobertura_suelo.geojson</code> y consolidado barrial <code>atlas_vgi_barrio_brasil_uah_completo.geojson</code>).</p>
           </div>
           <div class="tarjeta-carpeta-bd">
-            <div class="carpeta-icono">📁 02_ide_chile_ministerios/</div>
-            <p><strong>Coberturas Oficiales Ministeriales (IDE Chile / SNIT):</strong> Plan Regulador Comunal (<code>ide_minvu_ipt_prc_santiago.geojson</code>), Patrimonio Urbano MINVU/CMN (<code>ide_minvu_patrimonio_urbano.geojson</code>, <code>ide_monumentos_nacionales.geojson</code>), Catastro Predial SII (<code>ide_sii_catastro_predial.geojson</code>), Salud DEIS, Educación MINEDUC, MOP y Bienes Nacionales.</p>
+            <div class="carpeta-icono">📁 02_geofabrik_chile_rm/</div>
+            <p><strong>Extractos Regionales Geofabrik (Región Metropolitana):</strong> Coberturas temáticas metropolitanas (<code>capa_osm_rm_cat01_educacion.geojson</code> a <code>cat10_cobertura_suelo.geojson</code>), consolidado regional y guía de importación a QGIS.</p>
           </div>
           <div class="tarjeta-carpeta-bd">
-            <div class="carpeta-icono">📁 03_censo_2024_ine/</div>
-            <p><strong>Censo de Población y Vivienda INE 2024:</strong> Manzanas Censales de Santiago (<code>ide_censo2024_manzanas.geojson</code>), Comunas RM (<code>censo2024_comunas_rm.geojson</code>), Provincias RM (<code>censo2024_provincias_rm.geojson</code>), Región RM y Límite Urbano Censal en WGS84 (EPSG:4326).</p>
+            <div class="carpeta-icono">📁 03_capas_oficiales_estado/</div>
+            <p><strong>Coberturas Oficiales del Estado (IDE Chile / INE / MINVU):</strong> Censo de Población y Vivienda 2024, Plan Regulador Comunal, Patrimonio Urbano, Registro Social de Hogares (RSH), Salud DEIS, Educación MINEDUC, Semáforos UOCT y Seguridad.</p>
           </div>
           <div class="tarjeta-carpeta-bd">
-            <div class="carpeta-icono">📁 04_observatorio_urbano_stgo/</div>
-            <p><strong>Series Comunales de Santiago y BIP MIDESO:</strong> Coberturas comunales y barriales (<code>bbdd_01_santiago.geojson</code> a <code>bbdd_91_santiago.geojson</code>, <code>barrios_santiago_19_27.geojson</code>) y base tabular de proyectos de inversión pública (<code>bip_inversiones_santiago.csv</code>).</p>
+            <div class="carpeta-icono">📁 04_repositorio_cartografico_completo/</div>
+            <p><strong>Repositorio Cartográfico Integrado:</strong> Series comunales y barriales de Santiago (observatorio urbano, zonas de aseo municipal, residuos sólidos domiciliarios SUBDERE RSD y capas temáticas de respaldo en EPSG:4326).</p>
           </div>
           <div class="tarjeta-carpeta-bd">
-            <div class="carpeta-icono">📁 05_medioambiente_residuos_subdere/</div>
-            <p><strong>Medio Ambiente, Aseo Municipal y SUBDERE RSD:</strong> Catastro de Residuos Sólidos Domiciliarios SUBDERE (<code>subdere_rsd_*.geojson</code>), Zonas de Aseo, Contenedores y Papeleros de Santiago (<code>zonas_aseo_contenedores_papeleros_santiago.geojson</code>), Ruido Ambiental MMA (<code>mma_ruido_ambiental_santiago.geojson</code>) y Áreas Verdes.</p>
+            <div class="carpeta-icono">📁 05_catalogos_matrices_excel/</div>
+            <p><strong>Libros Maestros Excel OpenXML (.xlsx):</strong> Catálogo taxonómico (<code>categorias_tematicas_osm.xlsx</code>), inventario de fuentes geográficas (<code>catalogo_fuentes_vgi.xlsx</code>) y perfil homologado de 17 atributos (<code>perfil_metadatos_vgi.xlsx</code>).</p>
           </div>
           <div class="tarjeta-carpeta-bd">
-            <div class="carpeta-icono">📁 06_transporte_y_telecomunicaciones/</div>
-            <p><strong>Movilidad, Semáforos UOCT y Telecomunicaciones:</strong> Red de cruces semaforizados UOCT 2026 (<code>semaforos_rm_uoct_2026.geojson</code>, <code>ide_mtt_semaforos_uoct.geojson</code>), Estaciones de Metro (<code>ide_estaciones_metro.geojson</code>), Paradas DTPM Red y Antenas SUBTEL (<code>subtel_antenas_rm_2026.geojson</code>).</p>
+            <div class="carpeta-icono">📁 06_datos_consolidados_csv/</div>
+            <p><strong>Tablas Consolidadas y Series de Inversión (CSV):</strong> Base de iniciativas de inversión pública BIP Santiago (<code>bip_inversiones_santiago.csv</code>) y resumen tabular del catastro colaborativo (<code>resumen_catastro_vgi.csv</code>).</p>
           </div>
           <div class="tarjeta-carpeta-bd" style="grid-column: 1 / -1;">
-            <div class="carpeta-icono">📁 07_metadatos_y_gobernanza/ &amp; LEEME_ESTRUCTURA_BASE_DE_DATOS.txt</div>
-            <p><strong>Libros Excel OpenXML, Reportes ISO 19157, Esquemas SQL y Documentación:</strong> Los 3 libros Excel maestros (<code>categorias_tematicas_osm.xlsx</code>, <code>catalogo_fuentes_vgi.xlsx</code>, <code>perfil_metadatos_vgi.xlsx</code>), reportes de metacalidad (<code>wlc_metacalidad_resultado.json</code>, <code>matriz_metacalidad.json</code>, <code>correlacion_dimensiones_calidad.csv</code>), esquemas PostGIS (<code>01_schema_postgis.sql</code>, <code>02_seed_metadata.sql</code>) y manuales completos (<code>MANUAL_ACTUALIZACION_ATLAS.md</code>, <code>MANUAL_USO.md</code>, <code>ANALISIS_METACALIDAD.md</code>, <code>BIBLIOGRAFIA_SEMINARIO_Y_ATLAS.md</code>).</p>
+            <div class="carpeta-icono">📁 07_metadatos_y_gobernanza/ &amp; LEEME_PRIMERO_ATLAS_VGI.txt</div>
+            <p><strong>Manuales Técnicos, Licencias y Trazabilidad:</strong> Inventario general (<code>INVENTARIO_GENERAL_ATLAS_VGI.json</code>), arquitectura, manual de uso, manual de actualización, bibliografía APA 7ª ed., guía de respaldo PostGIS y licencia del proyecto.</p>
           </div>
         </div>
 
@@ -834,29 +834,29 @@
 <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261110_v68"></script>
-<script src="js/modulos/db_client.js?v=20261110_v68"></script>
-<script src="js/modulos/geodesia.js?v=20261110_v68"></script>
-<script src="js/modulos/mapa.js?v=20261110_v68"></script>
-<script src="js/modulos/importador_capas.js?v=20261110_v68"></script>
-<script src="js/modulos/ide_chile.js?v=20261110_v68"></script>
-<script src="js/modulos/evaluador_normativo.js?v=20261110_v68"></script>
-<script src="js/modulos/osm.js?v=20261110_v68"></script>
-<script src="js/modulos/ohsome.js?v=20261110_v68"></script>
-<script src="js/modulos/gbif.js?v=20261110_v68"></script>
-<script src="js/modulos/umap.js?v=20261110_v68"></script>
-<script src="js/modulos/metadatos.js?v=20261110_v68"></script>
-<script src="js/modulos/licencias.js?v=20261110_v68"></script>
-<script src="js/modulos/manual.js?v=20261110_v68"></script>
-<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261110_v68"></script>
-<script src="js/modulos/indicadores_analisis.js?v=20261110_v68"></script>
-<script src="js/modulos/taginfo.js?v=20261110_v68"></script>
-<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261110_v68"></script>
-<script src="js/modulos/calidad_analyst.js?v=20261110_v68"></script>
-<script src="js/modulos/diccionario.js?v=20261110_v68"></script>
-<script src="js/modulos/manifold_canvas.js?v=20261110_v68"></script>
-<script src="js/modulos/leyenda_atajos.js?v=20261110_v68"></script>
-<script src="js/modulos/tutorial_interactivo.js?v=20261110_v68"></script>
-<script src="js/app.js?v=20261110_v68"></script>
+<script src="js/config.js?v=20261110_v69"></script>
+<script src="js/modulos/db_client.js?v=20261110_v69"></script>
+<script src="js/modulos/geodesia.js?v=20261110_v69"></script>
+<script src="js/modulos/mapa.js?v=20261110_v69"></script>
+<script src="js/modulos/importador_capas.js?v=20261110_v69"></script>
+<script src="js/modulos/ide_chile.js?v=20261110_v69"></script>
+<script src="js/modulos/evaluador_normativo.js?v=20261110_v69"></script>
+<script src="js/modulos/osm.js?v=20261110_v69"></script>
+<script src="js/modulos/ohsome.js?v=20261110_v69"></script>
+<script src="js/modulos/gbif.js?v=20261110_v69"></script>
+<script src="js/modulos/umap.js?v=20261110_v69"></script>
+<script src="js/modulos/metadatos.js?v=20261110_v69"></script>
+<script src="js/modulos/licencias.js?v=20261110_v69"></script>
+<script src="js/modulos/manual.js?v=20261110_v69"></script>
+<script src="js/modulos/catalogo_vgi_descentralizado.js?v=20261110_v69"></script>
+<script src="js/modulos/indicadores_analisis.js?v=20261110_v69"></script>
+<script src="js/modulos/taginfo.js?v=20261110_v69"></script>
+<script src="js/modulos/evaluador_calidad_cuantitativa.js?v=20261110_v69"></script>
+<script src="js/modulos/calidad_analyst.js?v=20261110_v69"></script>
+<script src="js/modulos/diccionario.js?v=20261110_v69"></script>
+<script src="js/modulos/manifold_canvas.js?v=20261110_v69"></script>
+<script src="js/modulos/leyenda_atajos.js?v=20261110_v69"></script>
+<script src="js/modulos/tutorial_interactivo.js?v=20261110_v69"></script>
+<script src="js/app.js?v=20261110_v69"></script>
 </body>
 </html>
