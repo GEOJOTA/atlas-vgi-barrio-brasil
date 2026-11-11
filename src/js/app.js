@@ -4720,9 +4720,15 @@ function configurarImportadorCapas() {
     });
   }
 
-  // Clic en la dropzone para activar selector de archivos
+  // Clic o teclado en la dropzone para activar selector de archivos
   dropZone.addEventListener('click', (e) => {
     if (e.target.tagName !== 'LABEL' && e.target.tagName !== 'INPUT') {
+      fileInput.click();
+    }
+  });
+  dropZone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
       fileInput.click();
     }
   });
@@ -4745,17 +4751,18 @@ function configurarImportadorCapas() {
   });
 
   dropZone.addEventListener('drop', (e) => {
-    const archivos = e.dataTransfer.files;
-    if (archivos && archivos.length > 0) {
+    const archivos = Array.from(e.dataTransfer.files || []);
+    if (archivos.length > 0) {
       procesarListaArchivos(archivos);
     }
   });
 
   fileInput.addEventListener('change', (e) => {
-    const archivos = e.target.files;
-    if (archivos && archivos.length > 0) {
-      procesarListaArchivos(archivos);
+    // Copiar FileList antes de limpiar fileInput.value (FileList es una vista viva que se vacía al resetear)
+    const archivos = Array.from(e.target.files || []);
+    if (archivos.length > 0) {
       fileInput.value = ''; // Reset para permitir subir el mismo archivo si fue editado
+      procesarListaArchivos(archivos);
     }
   });
 

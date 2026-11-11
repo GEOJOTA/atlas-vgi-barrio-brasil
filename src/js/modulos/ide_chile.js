@@ -105,7 +105,7 @@ const ModuloIDEChile = (() => {
       icono: '⬚',
       geometria: 'Polígonos (Manzanas Censales)',
       grupo: 'social_demografia',
-      descripcion: 'Microdatos censales oficiales georreferenciados a nivel de manzana para la totalidad de la Región Metropolitana de Santiago (66.873 manzanas censales con 217 variables demográficas del INE).',
+      descripcion: 'Microdatos censales oficiales georreferenciados a nivel de manzana para la Comuna de Santiago (1.711 manzanas censales con 219 atributos y variables demográficas del INE).',
       declaracion: 'Microdatos oficiales provistos por el Instituto Nacional de Estadísticas (INE) y la Secretaría Ejecutiva SNIT / IDE Chile. Licencia de Datos Abiertos del Estado de Chile conforme a la Ley N° 20.285.',
       citaAPA: 'Instituto Nacional de Estadísticas [INE]. (2024). Censo de Población y Vivienda 2024: Microdatos Georreferenciados a Nivel de Manzana (Región Metropolitana). IDE Chile. https://www.ine.gob.cl'
     },
@@ -2311,434 +2311,577 @@ const ModuloIDEChile = (() => {
       throw new Error(`No fue posible cargar la capa oficial "${def.nombre}" ni en vivo ni desde la base de datos ni desde el repositorio local.`);
     }
 
+    // Utilidades compartidas de normalización y extracción exhaustiva de atributos de dominio
+    const CLAVES_SISTEMA_EXCLUIR = new Set([
+      'id_ig', 'id_igv', 'id_vgi', 'categoria', 'subtipo', 'operador', 'accesibilidad',
+      'fuente', 'metodo_adquisicion', 'licencia', 'fecha_registro', 'srs_superficie',
+      'coordenadas', 'bbox', 'geom_wkt', 'OBJECTID', 'OBJECTID_1', 'OBJECTID_12', 'FID',
+      'meta_cita_apa', 'meta_contacto', 'meta_url_servicio', 'meta_titulo', 'meta_temporalidad',
+      'meta_crs', 'meta_grupo', 'meta_capa_id', 'meta_licencia', 'meta_tipo_fuente',
+      'meta_ministerio', 'meta_institucion'
+    ]);
+
+    const ES_CODIGO_SIN_MILES = /(^|_)(id|cod|cut|manzent|rol|bip|retc|rbd|anio|año|agno|fecha|vigencia|f_operacio|latitud|longitud|coord|point_|norte|este|utm|zoom|periodo|t_id_|t_reg_ca|t_prov_ca|t_com|uv_carto|reg|com|prv)$/i;
+
+    function primerValor(props, claves, fallback = '') {
+      for (let i = 0; i < claves.length; i++) {
+        const val = props[claves[i]];
+        if (val !== undefined && val !== null && val !== '' && val !== 'Sin dato' && val !== 'NaN') {
+          return val;
+        }
+      }
+      return fallback;
+    }
+
+    function fmtNum(val, clave = '') {
+      if (val === undefined || val === null || val === '' || val === 'Sin dato') return '-';
+      const n = Number(val);
+      if (!Number.isFinite(n)) return String(val);
+      if (ES_CODIGO_SIN_MILES.test(clave)) return Number.isInteger(n) ? String(n) : String(val);
+      return Number.isInteger(n)
+        ? n.toLocaleString('es-CL')
+        : n.toLocaleString('es-CL', { maximumFractionDigits: 2 });
+    }
+
+    function agregarDato(extraInfo, clave, valor, subfijo = '') {
+      if (valor === undefined || valor === null || valor === '' || valor === 'Sin dato' || valor === 'NaN') return;
+      const texto = (typeof valor === 'number' ? fmtNum(valor, clave) : String(valor).trim());
+      if (!texto || texto === 'Sin dato') return;
+      extraInfo[clave] = subfijo ? `${texto}${subfijo}` : texto;
+    }
+
+    function anexarAtributosAccesibles(extraInfo, props, geomType = '') {
+      const yaCubiertosNorm = new Set(
+        Object.entries(extraInfo).flatMap(([k, v]) => [k.toLowerCase(), String(v).toLowerCase()])
+      );
+      const esPunto = geomType === 'Point' || geomType === 'MultiPoint';
+
+      for (const [k, v] of Object.entries(props)) {
+        if (!k || k.startsWith('_') || k.startsWith('meta_') || CLAVES_SISTEMA_EXCLUIR.has(k)) continue;
+        if (v === undefined || v === null || v === '' || v === 'Sin dato' || v === 'NaN') continue;
+        if (esPunto && (k === 'superficie_m2' || k === 'superficie_ha') && Number(v) === 0) continue;
+        if (Object.prototype.hasOwnProperty.call(extraInfo, k)) continue;
+
+        let valorStr;
+        if (Array.isArray(v)) {
+          valorStr = v.filter(x => x !== null && x !== undefined && x !== '').join(', ');
+        } else if (typeof v === 'object') {
+          try {
+            valorStr = Object.entries(v)
+              .filter(([, sv]) => sv !== null && sv !== undefined && sv !== '')
+              .map(([sk, sv]) => `${sk}: ${sv}`)
+              .join(' | ');
+          } catch (_) {
+            valorStr = String(v);
+          }
+        } else if (typeof v === 'boolean') {
+          valorStr = v ? 'Sí' : 'No';
+        } else if (typeof v === 'number') {
+          valorStr = fmtNum(v, k);
+        } else {
+          valorStr = String(v).trim();
+        }
+
+        if (!valorStr || valorStr === 'Sin dato') continue;
+        if (k === 'nombre' && yaCubiertosNorm.has(valorStr.toLowerCase())) continue;
+        extraInfo[k] = valorStr;
+      }
+    }
+
     // Normalizar atributos de cada feature para visualización y popup estándar
+    const totalFeats = (geojson.features || []).length;
     geojson.features = (geojson.features || []).map((feat, idx) => {
       const props = feat.properties || {};
+      const geomType = feat.geometry?.type || '';
 
       let nombreEntidad = 'Entidad Oficial';
       let detalleTipo = def.nombre;
-      let extraInfo = {};
+      const extraInfo = {};
 
       if (idCapa === 'censo2024_regional') {
-        const regionNom = props.REGION || 'Región Metropolitana de Santiago';
-        const codReg = props.COD_REGION || '13';
+        const regionNom = primerValor(props, ['REGION'], 'Región Metropolitana de Santiago');
+        const codReg = primerValor(props, ['COD_REGION'], '13');
         nombreEntidad = `Marco Regional: ${regionNom}`;
         detalleTipo = 'Límite Político-Administrativo y Censal RM';
-        extraInfo = {
-          'Región': regionNom,
-          'Código Región': String(codReg),
-          'Unidad': 'Marco Macroterritorial Censo 2024',
-          'Fuente': 'Instituto Nacional de Estadísticas (INE)'
-        };
+        agregarDato(extraInfo, 'Región', regionNom);
+        agregarDato(extraInfo, 'Código Región', String(codReg));
+        agregarDato(extraInfo, 'Unidad', 'Marco Macroterritorial Censo 2024');
+        agregarDato(extraInfo, 'Fuente Oficial', 'Instituto Nacional de Estadísticas (INE)');
       } else if (idCapa === 'censo2024_limite_urbano') {
-        const nomUrb = props.LOCALIDAD || props.COMUNA || props.ENTIDAD || `Área Urbana ${idx + 1}`;
-        const poblacion = props.n_per !== undefined ? Number(props.n_per).toLocaleString('es-CL') : 'No disp.';
-        const hombres = props.n_hombres !== undefined ? Number(props.n_hombres).toLocaleString('es-CL') : '-';
-        const mujeres = props.n_mujeres !== undefined ? Number(props.n_mujeres).toLocaleString('es-CL') : '-';
-        const viviendas = props.n_viv !== undefined ? Number(props.n_viv).toLocaleString('es-CL') : (props.n_viv_par !== undefined ? Number(props.n_viv_par).toLocaleString('es-CL') : '-');
+        const nomUrb = primerValor(props, ['LOCALIDAD', 'ENTIDAD', 'COMUNA'], `Área Urbana ${idx + 1}`);
+        const poblacion = fmtNum(props.n_per);
+        const vivVal = primerValor(props, ['n_vp', 'n_vp_ocupada', 'n_viv', 'n_viv_par'], '');
         nombreEntidad = `Límite Urbano: ${nomUrb}`;
         detalleTipo = `Población: ${poblacion} hab. | Comuna: ${props.COMUNA || '-'}`;
-        extraInfo = {
-          'Área / Localidad': nomUrb,
-          'Comuna': props.COMUNA || '-',
-          'Provincia': props.PROVINCIA || 'Santiago',
-          'Población Total': `${poblacion} personas`,
-          'Hombres': hombres,
-          'Mujeres': mujeres,
-          'Viviendas': viviendas,
-          'Código CUT': props.CUT || '-'
-        };
+        agregarDato(extraInfo, 'Área / Localidad', nomUrb);
+        agregarDato(extraInfo, 'Comuna', props.COMUNA);
+        agregarDato(extraInfo, 'Provincia', props.PROVINCIA);
+        agregarDato(extraInfo, 'Población Total', poblacion !== '-' ? `${poblacion} personas` : 'No disp.');
+        agregarDato(extraInfo, 'Hombres', fmtNum(props.n_hombres));
+        agregarDato(extraInfo, 'Mujeres', fmtNum(props.n_mujeres));
+        agregarDato(extraInfo, 'Viviendas Particulares', vivVal !== '' ? fmtNum(vivVal) : '-');
+        agregarDato(extraInfo, 'Viviendas Ocupadas', fmtNum(props.n_vp_ocupada));
+        agregarDato(extraInfo, 'Viviendas Desocupadas', fmtNum(props.n_vp_desocupada));
+        agregarDato(extraInfo, 'Hogares', fmtNum(props.n_hog));
+        agregarDato(extraInfo, 'Conurbación', props.CONURBACION);
+        agregarDato(extraInfo, 'Código CUT', props.CUT ? String(props.CUT) : '');
       } else if (idCapa === 'censo2024_localidades') {
-        const nomLoc = props.LOCALIDAD || props.ENTIDAD || `Localidad ${idx + 1}`;
-        const poblacion = props.n_per !== undefined ? Number(props.n_per).toLocaleString('es-CL') : 'No disp.';
-        const hombres = props.n_hombres !== undefined ? Number(props.n_hombres).toLocaleString('es-CL') : '-';
-        const mujeres = props.n_mujeres !== undefined ? Number(props.n_mujeres).toLocaleString('es-CL') : '-';
-        const viviendas = props.n_viv !== undefined ? Number(props.n_viv).toLocaleString('es-CL') : (props.n_viv_par !== undefined ? Number(props.n_viv_par).toLocaleString('es-CL') : '-');
+        const nomLoc = primerValor(props, ['LOCALIDAD', 'ENTIDAD', 'COMUNA'], `Localidad ${idx + 1}`);
+        const poblacion = fmtNum(props.n_per);
+        const vivVal = primerValor(props, ['n_vp', 'n_viv', 'n_viv_par'], '');
+        const areaCat = primerValor(props, ['CATEGORIA', 'AREA_C'], 'Entidad Poblada');
         nombreEntidad = `Localidad: ${nomLoc}`;
-        detalleTipo = `Categoría: ${props.CATEGORIA || 'Entidad'} | ${poblacion} hab.`;
-        extraInfo = {
-          'Localidad / Asentamiento': nomLoc,
-          'Categoría': props.CATEGORIA || 'Entidad Poblada',
-          'Comuna': props.COMUNA || '-',
-          'Provincia': props.PROVINCIA || '-',
-          'Población Total': `${poblacion} personas`,
-          'Hombres': hombres,
-          'Mujeres': mujeres,
-          'Viviendas': viviendas,
-          'Conurbación': props.CONURBACION || '-'
-        };
+        detalleTipo = `Área ${areaCat} | Comuna: ${props.COMUNA || '-'} | ${poblacion} hab.`;
+        agregarDato(extraInfo, 'Localidad / Asentamiento', nomLoc);
+        agregarDato(extraInfo, 'Área Censal', areaCat);
+        agregarDato(extraInfo, 'Comuna', props.COMUNA);
+        agregarDato(extraInfo, 'Provincia', props.PROVINCIA);
+        agregarDato(extraInfo, 'Población Total', poblacion !== '-' ? `${poblacion} personas` : 'No disp.');
+        agregarDato(extraInfo, 'Hombres', fmtNum(props.n_hombres));
+        agregarDato(extraInfo, 'Mujeres', fmtNum(props.n_mujeres));
+        agregarDato(extraInfo, 'Viviendas Particulares', vivVal !== '' ? fmtNum(vivVal) : '-');
+        agregarDato(extraInfo, 'Hogares', fmtNum(props.n_hog));
       } else if (idCapa === 'censo2024_zonal') {
-        const dist = props.DISTRITO || props.COD_DISTRITO || props.COD_ZONA || `Zona ${idx + 1}`;
-        const poblacion = props.n_per !== undefined ? Number(props.n_per).toLocaleString('es-CL') : 'No disp.';
-        const hombres = props.n_hombres !== undefined ? Number(props.n_hombres).toLocaleString('es-CL') : '-';
-        const mujeres = props.n_mujeres !== undefined ? Number(props.n_mujeres).toLocaleString('es-CL') : '-';
-        const viviendas = props.n_viv !== undefined ? Number(props.n_viv).toLocaleString('es-CL') : (props.n_viv_par !== undefined ? Number(props.n_viv_par).toLocaleString('es-CL') : '-');
+        const dist = primerValor(props, ['DISTRITO', 'LOCALIDAD', 'COD_DISTRITO', 'COD_ZONA'], `Zona ${idx + 1}`);
+        const poblacion = fmtNum(props.n_per);
+        const vivVal = primerValor(props, ['n_vp', 'n_viv', 'n_viv_par'], '');
         nombreEntidad = `Distrito/Zona: ${dist}`;
         detalleTipo = `Comuna: ${props.COMUNA || '-'} | Población: ${poblacion} hab.`;
-        extraInfo = {
-          'Distrito Censal': props.DISTRITO || props.COD_DISTRITO || '-',
-          'Código Zona': props.COD_ZONA || '-',
-          'Comuna': props.COMUNA || '-',
-          'Provincia': props.PROVINCIA || '-',
-          'Población Total': `${poblacion} personas`,
-          'Hombres': hombres,
-          'Mujeres': mujeres,
-          'Viviendas': viviendas,
-          'Inmigrantes': props.n_inmigrantes !== undefined ? Number(props.n_inmigrantes).toLocaleString('es-CL') : '-'
-        };
+        agregarDato(extraInfo, 'Distrito Censal', primerValor(props, ['DISTRITO', 'COD_DISTRITO']));
+        agregarDato(extraInfo, 'Código Zona', props.COD_ZONA);
+        agregarDato(extraInfo, 'Comuna', props.COMUNA);
+        agregarDato(extraInfo, 'Provincia', props.PROVINCIA);
+        agregarDato(extraInfo, 'Población Total', poblacion !== '-' ? `${poblacion} personas` : 'No disp.');
+        agregarDato(extraInfo, 'Hombres', fmtNum(props.n_hombres));
+        agregarDato(extraInfo, 'Mujeres', fmtNum(props.n_mujeres));
+        agregarDato(extraInfo, 'Viviendas Particulares', vivVal !== '' ? fmtNum(vivVal) : '-');
+        agregarDato(extraInfo, 'Hogares', fmtNum(props.n_hog));
+        agregarDato(extraInfo, 'Inmigrantes', fmtNum(props.n_inmigrantes));
       } else if (idCapa === 'censo2024_manzanas') {
-        const codManzana = props.MANZENT || props.COD_ENTIDAD_MANZANA || props.MANZANA || props.ID_NIVEL_CENSAL || `MZ-${idx + 1}`;
-        const poblacion = props.n_per !== undefined ? Number(props.n_per).toLocaleString('es-CL') : 'No disp.';
-        const hombres = props.n_hombres !== undefined ? Number(props.n_hombres).toLocaleString('es-CL') : '-';
-        const mujeres = props.n_mujeres !== undefined ? Number(props.n_mujeres).toLocaleString('es-CL') : '-';
-        const viviendas = props.n_viv !== undefined ? Number(props.n_viv).toLocaleString('es-CL') : (props.n_viv_par !== undefined ? Number(props.n_viv_par).toLocaleString('es-CL') : 'No disp.');
-
+        const codManzana = primerValor(props, ['MANZENT', 'COD_MANZANA', 'COD_ENTIDAD'], `MZ-${idx + 1}`);
+        const poblacion = fmtNum(props.n_per);
+        const vivVal = primerValor(props, ['n_vp', 'n_viv', 'n_viv_par'], '');
+        const viviendas = vivVal !== '' ? fmtNum(vivVal) : 'No disp.';
         nombreEntidad = `Manzana Censal ${codManzana}`;
         detalleTipo = `Población: ${poblacion} hab. | Viviendas: ${viviendas}`;
-        extraInfo = {
-          'Población Total': `${poblacion} personas`,
-          'Hombres': hombres,
-          'Mujeres': mujeres,
-          'Viviendas Particulares': viviendas,
-          'Comuna': props.COMUNA || 'Santiago',
-          'Código Manzana': codManzana,
-          'NNA (0-17 años)': (props.n_edad_0_5 !== undefined && props.n_edad_6_13 !== undefined && props.n_edad_14_17 !== undefined)
-            ? Number(props.n_edad_0_5 + props.n_edad_6_13 + props.n_edad_14_17).toLocaleString('es-CL') : '-',
-          'Adultos Mayores (60+)': props.n_edad_60_mas !== undefined ? Number(props.n_edad_60_mas).toLocaleString('es-CL') : '-',
-          'Población Inmigrante': props.n_inmigrantes !== undefined ? Number(props.n_inmigrantes).toLocaleString('es-CL') : '-'
-        };
+        agregarDato(extraInfo, 'Población Total', poblacion !== '-' ? `${poblacion} personas` : 'No disp.');
+        agregarDato(extraInfo, 'Hombres', fmtNum(props.n_hombres));
+        agregarDato(extraInfo, 'Mujeres', fmtNum(props.n_mujeres));
+        agregarDato(extraInfo, 'Viviendas Particulares', viviendas);
+        agregarDato(extraInfo, 'Viviendas Ocupadas', fmtNum(props.n_vp_ocupada));
+        agregarDato(extraInfo, 'Viviendas Desocupadas', fmtNum(props.n_vp_desocupada));
+        agregarDato(extraInfo, 'Hogares', fmtNum(props.n_hog));
+        agregarDato(extraInfo, 'Comuna', props.COMUNA || 'SANTIAGO');
+        agregarDato(extraInfo, 'Distrito', props.DISTRITO);
+        agregarDato(extraInfo, 'Código Manzana (MANZENT)', String(codManzana));
+        if (props.n_edad_0_5 !== undefined && props.n_edad_6_13 !== undefined && props.n_edad_14_17 !== undefined) {
+          extraInfo['NNA (0-17 años)'] = fmtNum(Number(props.n_edad_0_5) + Number(props.n_edad_6_13) + Number(props.n_edad_14_17));
+        }
+        agregarDato(extraInfo, 'Adultos Mayores (60+)', fmtNum(props.n_edad_60_mas));
+        agregarDato(extraInfo, 'Población Inmigrante', fmtNum(props.n_inmigrantes));
       } else if (idCapa === 'minvu_patrimonio') {
-        nombreEntidad = props.NOMBRE || props.DENOMINACION || props.DIRECCION || 'Inmueble Patrimonial';
-        detalleTipo = props.CATEGORIA || (props.ZCH ? 'Zona de Conservación Histórica' : 'Inmueble de Conservación Histórica');
-        extraInfo = {
-          'Categoría IPT': detalleTipo,
-          'Dirección': props.DIRECCION || 'No indicada',
-          'Comuna': props.COMUNA || 'Santiago',
-          'Región': props.REGION || 'Metropolitana'
-        };
+        nombreEntidad = primerValor(props, ['NOMBRE', 'NOM', 'DIRECCION', 'Capa', 'layer'], 'Inmueble / Zona Patrimonial');
+        detalleTipo = primerValor(props, ['REGIMEN', 'CAL_JURID', 'layer', 'Capa'], 'Patrimonio IPT (ICH / ZCH)');
+        agregarDato(extraInfo, 'Régimen / Categoría', primerValor(props, ['REGIMEN', 'CAL_JURID', 'layer', 'Capa']));
+        agregarDato(extraInfo, 'Estado Conservación', props.EST_CONS);
+        agregarDato(extraInfo, 'Dirección', props.DIRECCION);
+        agregarDato(extraInfo, 'Sector / Zona', primerValor(props, ['SECTOR', 'NOM']));
+        agregarDato(extraInfo, 'ROL SII', props.ROL);
+        agregarDato(extraInfo, 'Año Construcción', props.AGNO_CONS);
+        agregarDato(extraInfo, 'Superficie Edificada', props.SUP_EDI_M2 ? `${fmtNum(props.SUP_EDI_M2)} m²` : '');
+        agregarDato(extraInfo, 'Instrumento / Decreto', `${primerValor(props, ['DOC', 'DO'], 'IPT')} ${primerValor(props, ['N_DOC', 'N_DO'])}`.trim());
+        agregarDato(extraInfo, 'Comuna', primerValor(props, ['COMUNA', 'COM'], 'Santiago'));
+        agregarDato(extraInfo, 'Región', props.REGION || 'Metropolitana');
       } else if (idCapa === 'minvu_parques') {
-        nombreEntidad = props.NOMBRE || 'Parque Urbano';
+        nombreEntidad = primerValor(props, ['NOMBRE', 'nombre'], 'Parque Urbano');
         detalleTipo = 'Parque Urbano Catastrado (MINVU)';
-        extraInfo = {
-          'Superficie Oficial': props.SUPERFICIE ? `${Number(props.SUPERFICIE).toLocaleString('es-CL')} m²` : 'No indicada',
-          'Dirección': props.DIRECCION || 'Barrio Brasil / Yungay',
-          'Comuna': props.COM || props.COMUNA || 'Santiago'
-        };
+        agregarDato(extraInfo, 'Superficie Oficial', props.SUPERFICIE ? `${fmtNum(props.SUPERFICIE)} m²` : '');
+        agregarDato(extraInfo, 'Dirección', props.DIRECCION);
+        agregarDato(extraInfo, 'Comuna', primerValor(props, ['COM', 'COMUNA'], 'Santiago'));
       } else if (idCapa === 'minvu_barrios_historicos') {
         nombreEntidad = `Barrio Histórico ${props.BARRIO || 'Yungay - Brasil'}`;
         detalleTipo = `Programa ${props.TIPO || 'Patrimonial'} — Quiero Mi Barrio`;
-        extraInfo = {
-          'Estado Programa': props.ESTADO_CB || 'Consolidado',
-          'Habitantes Estimados': props.NRO_HAB ? Number(props.NRO_HAB).toLocaleString('es-CL') : '-',
-          'Viviendas': props.NRO_VIV || '-',
-          'Año Inicio': props.A_INICIO || '2012'
-        };
-      } else if (idCapa === 'educacion_parvularia') {
-        nombreEntidad = props.NOM_EST || props.NOMBRE || 'Jardín Infantil';
-        detalleTipo = props.ADMIN || props.TIPO || 'Educación Parvularia';
-        extraInfo = {
-          'Administración': detalleTipo,
-          'Dirección': `${props.DIRECCION || ''} ${props.NUMERO || ''}`.trim() || 'Santiago',
-          'Comuna': props.COMUNA || 'Santiago'
-        };
+        agregarDato(extraInfo, 'Estado Programa', props.ESTADO_CB || 'Consolidado');
+        agregarDato(extraInfo, 'Habitantes Estimados', props.NRO_HAB ? fmtNum(props.NRO_HAB) : '');
+        agregarDato(extraInfo, 'Viviendas', props.NRO_VIV);
+        agregarDato(extraInfo, 'Año Inicio', props.A_INICIO);
+      } else if (idCapa === 'educacion_parvularia' || idCapa === 'bbdd_13') {
+        nombreEntidad = primerValor(props, ['NOM_ESTAB', 'NOMBRE', 'nombre'], 'Jardín Infantil / Sala Cuna');
+        const dep = primerValor(props, ['DEPENDENCI', 'ORIGEN'], 'Educación Parvularia');
+        detalleTipo = `${dep} — ${primerValor(props, ['NOM_COM_ES', 'NOM_DEPROV'], 'RM')}`;
+        agregarDato(extraInfo, 'Dependencia / Origen', dep);
+        agregarDato(extraInfo, 'Dirección', `${props.DIRECCION || ''} ${props.NUMERO || ''}`.trim() || props.REFERENCIA);
+        agregarDato(extraInfo, 'Comuna', props.NOM_COM_ES);
+        agregarDato(extraInfo, 'DEPROV', props.NOM_DEPROV);
+        agregarDato(extraInfo, 'Matrícula Total', fmtNum(props.N_TOTAL));
+        agregarDato(extraInfo, 'Año Catastro', props.AGNO);
       } else if (idCapa === 'establecimientos_salud') {
-        nombreEntidad = props.nombre || props.NOMBRE || 'Centro de Salud';
-        detalleTipo = props.tipo || 'Atención Primaria / Hospitalaria';
-        extraInfo = {
-          'Tipo Establecimiento': detalleTipo,
-          'Dependencia': props.dependencia || '-',
-          'Dirección': props.direccion || 'Santiago',
-          'Comuna': props.comuna || 'Santiago'
-        };
+        nombreEntidad = primerValor(props, ['nombre', 'NOMBRE'], 'Centro de Salud');
+        detalleTipo = primerValor(props, ['tipo', 'dependencia'], 'Atención de Salud');
+        agregarDato(extraInfo, 'Tipo Establecimiento', props.tipo);
+        agregarDato(extraInfo, 'Dependencia', props.dependencia);
+        agregarDato(extraInfo, 'Dirección', props.direccion);
+        agregarDato(extraInfo, 'Comuna', props.comuna);
       } else if (idCapa === 'bomberos') {
-        nombreEntidad = props.NOMBRE || props.CIA || props.COMPANIA || 'Compañía de Bomberos';
-        detalleTipo = 'Cuerpo de Bomberos de Santiago (CBS)';
-        extraInfo = {
-          'Cuerpo': props.CUERPO || 'Santiago',
-          'Dirección': props.DIRECCION || 'Santiago',
-          'Comuna': props.COMUNA || 'Santiago'
-        };
+        nombreEntidad = primerValor(props, ['NOMBRE_UNI', 'nombre'], 'Compañía de Bomberos');
+        detalleTipo = primerValor(props, ['TIPO_DE_UN', 'TIPO'], 'Cuerpo de Bomberos');
+        const dirB = [props.TIPO_DE_VI, props.NOMBRE_DE, props.NUMERO].filter(Boolean).join(' ').trim();
+        agregarDato(extraInfo, 'Unidad / Tipo', props.TIPO_DE_UN);
+        agregarDato(extraInfo, 'Dirección', dirB);
+        agregarDato(extraInfo, 'Comuna', props.NOMBRE_COM);
+        agregarDato(extraInfo, 'Provincia', props.NOMBRE_PRO);
       } else if (idCapa === 'carabineros') {
-        nombreEntidad = props.NOMBRE || props.UNIDAD || 'Cuartel de Carabineros';
-        detalleTipo = props.TIPO || 'Comisaría / Prefectura';
-        extraInfo = {
-          'Prefectura': props.PREFECTURA || 'Santiago Central',
-          'Dirección': props.DIRECCION || 'Santiago',
-          'Comuna': props.COMUNA || 'Santiago'
-        };
+        nombreEntidad = primerValor(props, ['NOMBRE_UNI', 'nombre'], 'Cuartel de Carabineros');
+        detalleTipo = primerValor(props, ['TIPO_DE_UN', 'TIPO'], 'Comisaría / Prefectura');
+        const dirC = [props.TIPO_DE_VI, props.NOMBRE_DE, props.NUMERO].filter(Boolean).join(' ').trim();
+        agregarDato(extraInfo, 'Prefectura', props.PREFECTURA);
+        agregarDato(extraInfo, 'Zona', props.ZONA);
+        agregarDato(extraInfo, 'Dirección', dirC);
+        agregarDato(extraInfo, 'Comuna', props.NOMBRE_COM);
       } else if (idCapa === 'estaciones_metro') {
-        nombreEntidad = props.nombre || 'Estación de Metro';
+        nombreEntidad = primerValor(props, ['nombre', 'NOMBRE'], 'Estación de Metro');
         detalleTipo = `Línea ${props.linea || 'Metro'}`;
-        extraInfo = {
-          'Línea': props.linea || '-',
-          'Dirección': props.direccion || '-',
-          'Comuna': props.comuna || 'Santiago'
-        };
+        agregarDato(extraInfo, 'Línea', props.linea);
+        agregarDato(extraInfo, 'Tipo', props.tipo);
+        agregarDato(extraInfo, 'Dirección', props.direccion);
+        agregarDato(extraInfo, 'Comuna', props.comuna);
       } else if (idCapa === 'red_ferroviaria') {
-        nombreEntidad = props.NOMBRE || props.TRAMO || 'Trazado Ferroviario EFE';
-        detalleTipo = props.TIPO || 'Vía Férrea Principal';
-        extraInfo = {
-          'Estado': props.ESTADO || 'En Operación',
-          'Operador': 'EFE Central'
-        };
+        nombreEntidad = primerValor(props, ['OBEJTO', 'nombre'], 'Trazado Ferroviario EFE');
+        detalleTipo = `Red Ferroviaria (${primerValor(props, ['ACTIV_2016'], 'Vía Férrea')})`;
+        agregarDato(extraInfo, 'Actividad / Estado', props.ACTIV_2016);
+        agregarDato(extraInfo, 'Largo Tramo', props.LARGO_KM ? `${fmtNum(props.LARGO_KM)} km` : '');
+        agregarDato(extraInfo, 'Operador', 'EFE Central');
       } else if (idCapa === 'cmn_sitios_memoria') {
-        nombreEntidad = props.nombre || 'Sitio de Memoria CMN';
-        detalleTipo = props.tipo_declaratoria || 'Monumento Histórico';
-        extraInfo = {
-          'Decreto': props.decreto || 'No indicado',
-          'Dirección': props.direccion || 'Santiago',
-          'Comuna': props.comuna || 'Santiago'
-        };
+        nombreEntidad = primerValor(props, ['nombre', 'NOMBRE'], 'Sitio de Memoria CMN');
+        detalleTipo = primerValor(props, ['tipo_declaratoria'], 'Monumento Histórico');
+        agregarDato(extraInfo, 'Decreto', props.decreto);
+        agregarDato(extraInfo, 'Dirección', props.direccion);
+        agregarDato(extraInfo, 'Comuna', props.comuna);
       } else if (idCapa === 'minvu_ipt_prc_santiago') {
-        const zonaCodigo = props.ZONA || '';
-        const zonaNom = props.NOM || '';
-        nombreEntidad = zonaCodigo ? `Zona ${zonaCodigo}: ${zonaNom}` : (zonaNom || 'Zona Normativa PRC');
-        detalleTipo = `Plan Regulador Comunal de Santiago (${props.T_DO || 'Res.'} ${props.N_DOC || ''})`;
-        extraInfo = {
-          'Zona Normativa': zonaCodigo,
-          'Nombre Zona': zonaNom,
-          'Usos Permitidos': props.UPERM || 'Ver ordenanza local',
-          'Usos Prohibidos': props.UPROH || 'Ver ordenanza local',
-          'Fecha D.O.': props.P_DO || '-',
-          'Instrumento': `${props.T_DO || 'Resolución'} N° ${props.N_DOC || ''}`
-        };
-      } else if (idCapa === 'catastro_predial_sii' || idCapa.startsWith('catastro_sii')) {
-        const rolStr = props.rol || (props.manzana ? `${props.manzana}-${props.predio}` : 'Sin ROL');
-        const dirStr = props.direccion || props.rc_direccion || props.dc_direccion || 'Sin dirección registrada';
-        const comStr = props.comuna || 'Santiago';
-        const avaluoVal = props.avaluo_fiscal || props.rc_avaluo_total || props.dc_avaluo_fiscal;
-        const avaluoStr = avaluoVal ? `$${Number(avaluoVal).toLocaleString('es-CL')}` : 'No disponible';
-        const nivelGeo = (props.geocod_nivel || 'v4').toUpperCase();
+        const zonaCodigo = primerValor(props, ['ZONA', 'Zonas']);
+        const zonaNom = primerValor(props, ['NOMBRE', 'NOM', 'SECTOR'], 'Zona Normativa PRC');
+        nombreEntidad = zonaCodigo && !String(zonaNom).includes(String(zonaCodigo))
+          ? `Zona ${zonaCodigo}: ${zonaNom}`
+          : String(zonaNom);
+        detalleTipo = `${primerValor(props, ['Capa'], 'Plan Regulador Comunal')} (${primerValor(props, ['COMUNA', 'COM'], 'RM')})`;
+        agregarDato(extraInfo, 'Comuna', primerValor(props, ['COMUNA', 'COM']));
+        agregarDato(extraInfo, 'Sector', props.SECTOR);
+        agregarDato(extraInfo, 'Zona Normativa', zonaCodigo);
+        agregarDato(extraInfo, 'Nombre Zona', zonaNom);
+        agregarDato(extraInfo, 'Uso Preferente', props.UPREF);
+        agregarDato(extraInfo, 'Usos Permitidos', props.UPERM);
+        agregarDato(extraInfo, 'Usos Prohibidos', props.UPROH);
+        agregarDato(extraInfo, 'Instrumento / Capa', props.Capa);
+        agregarDato(extraInfo, 'Decreto / DO', `${primerValor(props, ['DECRETO', 'N_DOC'])} ${primerValor(props, ['DO', 'P_DO'])}`.trim());
+      } else if (idCapa === 'catastro_predial_sii' || idCapa.startsWith('catastro_sii') || idCapa === 'bbdd_46') {
+        const rolStr = props.rol || (props.manzana ? `${props.manzana}-${props.predio}` : (props.CUT_COM ? `Predio CUT ${props.CUT_COM}` : 'Sin ROL'));
+        const dirStr = primerValor(props, ['direccion', 'rc_direccion', 'dc_direccion']);
+        const comStr = primerValor(props, ['comuna', 'COMUNA'], 'Santiago');
+        const avaluoVal = primerValor(props, ['avaluo_fiscal', 'rc_avaluo_total', 'dc_avaluo_fiscal'], null);
+        const avaluoStr = avaluoVal !== null ? `$${fmtNum(avaluoVal)}` : '';
+        const nivelGeo = props.geocod_nivel ? String(props.geocod_nivel).toUpperCase() : '';
 
-        nombreEntidad = `Predio ROL SII ${rolStr}`;
-        detalleTipo = `Dirección: ${dirStr} | Avalúo: ${avaluoStr} | Geocod: ${nivelGeo}`;
-        extraInfo = {
-          'ROL SII': rolStr,
-          'Dirección Catastral': dirStr,
-          'Comuna (Código/Nombre)': comStr,
-          'Avalúo Fiscal Total': avaluoStr,
-          'Superficie Terreno (m²)': props.sup_terreno_m2 ? `${Number(props.sup_terreno_m2).toLocaleString('es-CL')} m²` : '-',
-          'Superficie Construida (m²)': props.sup_construida_m2 ? `${Number(props.sup_construida_m2).toLocaleString('es-CL')} m²` : '-',
-          'Nivel Geocodificación': nivelGeo,
-          'Temporalidad': 'Segundo Semestre 2025',
-          'Fuente de Origen': 'Servicio de Impuestos Internos (SII) — Catastro Oficial (Segundo Semestre 2025)',
-          'Alerta Cobertura Web': 'Visualización activa para Región Metropolitana por peso de archivo. Datos nacionales completos (1.380.649 predios todo Chile) disponibles en el repositorio.',
-          'Nota / Calidad': 'Geocodificación automatizada sujeta a margen de error (según nivel) y/o vacíos de origen.'
-        };
+        nombreEntidad = props.rol ? `Predio ROL SII ${rolStr}` : `Predio Catastral (${comStr})`;
+        detalleTipo = [dirStr, avaluoStr ? `Avalúo: ${avaluoStr}` : '', nivelGeo ? `Geocod: ${nivelGeo}` : ''].filter(Boolean).join(' | ') || def.nombre;
+        agregarDato(extraInfo, 'ROL SII', props.rol);
+        agregarDato(extraInfo, 'Dirección Catastral', dirStr);
+        agregarDato(extraInfo, 'Comuna', comStr);
+        agregarDato(extraInfo, 'Avalúo Fiscal Total', avaluoStr);
+        agregarDato(extraInfo, 'Superficie Terreno', props.sup_terreno_m2 ? `${fmtNum(props.sup_terreno_m2)} m²` : '');
+        agregarDato(extraInfo, 'Superficie Construida', props.sup_construida_m2 ? `${fmtNum(props.sup_construida_m2)} m²` : '');
+        agregarDato(extraInfo, 'Nivel Geocodificación', nivelGeo);
       } else if (idCapa === 'minvu_ipt_prms_usosuelo') {
-        nombreEntidad = props.NOMBRE || props.Capa || 'Uso de Suelo Metropolitano';
-        detalleTipo = props.UPREF || 'Zonificación PRMS (Metropolitano)';
-        extraInfo = {
-          'Uso Preferente': props.UPREF || '-',
-          'Uso Permitido': props.UPERM || '-',
-          'Normativa PRMS': props.NORMA || 'Ordenanza PRMS',
-          'Superficie (ha)': props.SUP_HA ? `${props.SUP_HA} ha` : '-',
-          'Comuna': props.COMUNA || 'Santiago'
-        };
+        nombreEntidad = primerValor(props, ['NOMBRE', 'ZONA', 'Capa'], 'Uso de Suelo Metropolitano');
+        detalleTipo = primerValor(props, ['UPREF', 'NORMA'], 'Zonificación PRMS (Metropolitano)');
+        agregarDato(extraInfo, 'Uso Preferente', props.UPREF);
+        agregarDato(extraInfo, 'Uso Permitido', props.UPERM);
+        agregarDato(extraInfo, 'Uso Prohibido', props.UPROH);
+        agregarDato(extraInfo, 'Sector / Zona', `${primerValor(props, ['SECTOR'])} ${primerValor(props, ['ZONA'])}`.trim());
+        agregarDato(extraInfo, 'Normativa PRMS', props.NORMA);
+        agregarDato(extraInfo, 'Superficie', primerValor(props, ['SUP_HA', 'HA', 'superficie_ha']), ' ha');
+        agregarDato(extraInfo, 'Comuna', props.COMUNA);
       } else if (idCapa === 'minvu_ipt_areas_verdes') {
-        nombreEntidad = props.NOMBRE || 'Área Verde Normada (IPT)';
-        detalleTipo = `Área Verde Normativa (${props.TIPO_AV || 'IPT'})`;
-        extraInfo = {
-          'Tipo de Área Verde': props.TIPO_AV || 'Área Verde',
-          'Zona Normativa': props.Zona || '-',
-          'Superficie Normativa': props.Ha ? `${Number(props.Ha).toFixed(2)} ha` : '-',
-          'Comuna': props.COMUNA || 'Santiago'
-        };
+        nombreEntidad = primerValor(props, ['NOMBRE_EP', 'nombre'], 'Área Verde Normada (MINVU/INE)');
+        const tipoAv = primerValor(props, ['TIPO_EP', 'GRUPO_URB'], 'Espacio Público');
+        detalleTipo = `${tipoAv} (${primerValor(props, ['TIPO_TAMAN', 'COMUNA'], 'RM')})`;
+        agregarDato(extraInfo, 'Nombre Área Verde', props.NOMBRE_EP);
+        agregarDato(extraInfo, 'Tipo de Espacio Público', props.TIPO_EP);
+        agregarDato(extraInfo, 'Escala / Tamaño', props.TIPO_TAMAN);
+        agregarDato(extraInfo, 'Uso', props.USO);
+        agregarDato(extraInfo, 'Administración', props.ADM);
+        agregarDato(extraInfo, 'Superficie Total (m²)', fmtNum(props.SUP_TOTAL_), ' m²');
+        agregarDato(extraInfo, 'Superficie Vegetación (m²)', fmtNum(props.SUP_VEGETA), ' m²');
+        if (props.superficie_ha > 0) agregarDato(extraInfo, 'Superficie Geométrica', fmtNum(props.superficie_ha), ' ha');
+        agregarDato(extraInfo, 'Área Censal', props.AREA_C);
+        agregarDato(extraInfo, 'Comuna', props.COMUNA);
+        agregarDato(extraInfo, 'Observación', props.OBSERVACIO);
       } else if (idCapa === 'minvu_ipt_areas_riesgo') {
-        nombreEntidad = props.NOM || props.NOMBRE || 'Área de Riesgo Normativa';
-        detalleTipo = props.CAT || props.Capa || 'Restricción por Riesgo (Art. 2.1.17 OGUC)';
-        extraInfo = {
-          'Tipo / Categoría de Riesgo': props.CAT || props.NOMBRE || 'Restricción',
-          'Condición Normativa': props.UPROH || props.NORMA || 'Restricción constructiva según OGUC',
-          'Comuna': props.COM || props.COMUNA || 'Santiago'
-        };
+        nombreEntidad = primerValor(props, ['NOM', 'NOMBRE', 'ZONA'], 'Área de Riesgo Normativa');
+        detalleTipo = primerValor(props, ['CAT', 'Capa', 'NORMA'], 'Restricción por Riesgo (Art. 2.1.17 OGUC)');
+        agregarDato(extraInfo, 'Tipo / Categoría de Riesgo', primerValor(props, ['CAT', 'NOMBRE']));
+        agregarDato(extraInfo, 'Normativa', props.NORMA);
+        agregarDato(extraInfo, 'Usos Permitidos', props.UPERM);
+        agregarDato(extraInfo, 'Usos Prohibidos', props.UPROH);
+        agregarDato(extraInfo, 'Superficie', props.SUP_km2 ? `${fmtNum(props.SUP_km2)} km²` : '');
+        agregarDato(extraInfo, 'Comuna / Localidad', `${primerValor(props, ['COM'])} ${primerValor(props, ['LOC'])}`.trim());
       } else if (idCapa === 'minvu_ipt_resguardo_infraestructura') {
-        nombreEntidad = props.NOMBRE || props.Capa || 'Faja de Resguardo PRMS';
-        detalleTipo = 'Resguardo de Infraestructura Metropolitana';
-        extraInfo = {
-          'Infraestructura': props.NOMBRE || 'Corredor Metropolitano',
-          'Norma': props.NORMA || 'Cap. 8.4 PRMS',
-          'Capa': props.Capa || 'Faja de Resguardo'
-        };
+        nombreEntidad = primerValor(props, ['NOMBRE', 'Capa'], 'Faja de Resguardo PRMS');
+        detalleTipo = primerValor(props, ['NORMA', 'Capa'], 'Resguardo de Infraestructura Metropolitana');
+        agregarDato(extraInfo, 'Infraestructura', props.NOMBRE);
+        agregarDato(extraInfo, 'Norma', props.NORMA);
+        agregarDato(extraInfo, 'Uso Preferente', props.UPREF);
+        agregarDato(extraInfo, 'Comuna', props.COM);
       } else if (idCapa === 'minvu_ipt_limite_urbano') {
-        nombreEntidad = `Límite Urbano Oficial Comuna de Santiago`;
-        detalleTipo = 'Límite Urbano Normativo PRC';
-        extraInfo = {
-          'Instrumento': props.INSTRUM || 'Plan Regulador Comunal de Santiago',
-          'Publicación D.O.': props.P_DO || '-',
-          'Norma Legal': `${props.T_DO || 'Resolución'} N° ${props.N_DO || ''}`,
-          'Administración': props.ADMIN || 'SEREMI MINVU / Municipalidad'
-        };
+        nombreEntidad = primerValor(props, ['NOM', 'COM'], 'Límite Urbano Oficial');
+        detalleTipo = primerValor(props, ['INSTRUMENT', 'T_DOC'], 'Límite Urbano Normativo');
+        agregarDato(extraInfo, 'Instrumento', props.INSTRUMENT);
+        agregarDato(extraInfo, 'Publicación D.O.', props.DO);
+        agregarDato(extraInfo, 'Norma Legal', `${primerValor(props, ['T_DOC'], 'Doc.')} N° ${primerValor(props, ['N_DOC'])}`.trim());
+        agregarDato(extraInfo, 'Administración', props.ADMIN);
+        agregarDato(extraInfo, 'Comuna', props.COM);
+        agregarDato(extraInfo, 'Superficie', props.SUP_HA ? `${fmtNum(props.SUP_HA)} ha` : '');
       } else if (idCapa === 'ide_minvu_campamentos') {
-        nombreEntidad = props.Nombre_Campamento || props.NOMBRE || 'Campamento Precario';
-        detalleTipo = 'Asentamiento Precario (Catastro Oficial 2024)';
-        extraInfo = {
-          'Hogares': props.N_HOGARES || props.HOGARES || '-',
-          'Tipo de Terreno': props.TIPO_TERRENO || 'Fiscal / Privado',
-          'Estrategia MINVU': props.ESTRATEGIA || 'Radicación / Relocalización',
-          'Comuna': props.COMUNA || 'Santiago'
-        };
+        nombreEntidad = primerValor(props, ['NOMBRE', 'nombre'], 'Campamento Catastrado');
+        detalleTipo = `Asentamiento Precario (Catastro MINVU ${props.AN_CAT || '2024'})`;
+        agregarDato(extraInfo, 'Folio MINVU', props.FOLIO);
+        agregarDato(extraInfo, 'Hogares Catastrados', fmtNum(props.N_HOG));
+        agregarDato(extraInfo, 'Superficie (ha)', props.HECTAREAS ? `${fmtNum(props.HECTAREAS)} ha` : '');
+        agregarDato(extraInfo, 'Año Catastro', props.AN_CAT);
+        agregarDato(extraInfo, 'Fuente', props.FUENTE);
+        agregarDato(extraInfo, 'Observaciones', props.OBS);
+        agregarDato(extraInfo, 'Comuna', props.COMUNA);
+        agregarDato(extraInfo, 'Provincia', props.PROVINCIA);
       } else if (idCapa === 'bbdd_66' || idCapa === 'ide_minvu_unidades_vecinales_rsh') {
-        nombreEntidad = `Unidad Vecinal N° ${props.uv_carto || props.t_uv_nom || props.OBJECTID || props.nombre || props.uv || 'S/N'}`;
-        detalleTipo = 'Unidad Vecinal Oficial (MDS / RSH 2026)';
-        extraInfo = {
-          'Comuna': props.t_com_nom || props.COMUNA || props.comuna || 'Santiago',
-          'Provincia': props.t_prov_nom || props.provincia || 'Santiago',
-          'ID Cartográfico': props.t_id_uv_ca || props.id || '-'
-        };
+        nombreEntidad = `Unidad Vecinal N° ${primerValor(props, ['t_uv_nom', 'uv_carto', 't_id_uv_ca'], 'S/N')}`;
+        detalleTipo = `Comuna: ${props.t_com_nom || 'Santiago'} — UV Oficial 2026`;
+        agregarDato(extraInfo, 'Unidad Vecinal', props.t_uv_nom || props.uv_carto);
+        agregarDato(extraInfo, 'UV Cartográfica', props.uv_carto);
+        agregarDato(extraInfo, 'ID UV (MDS/INE)', props.t_id_uv_ca);
+        agregarDato(extraInfo, 'Comuna', props.t_com_nom);
+        agregarDato(extraInfo, 'Provincia', props.t_prov_nom);
       } else if (idCapa === 'ide_minvu_ipt_prms_riesgo') {
-        nombreEntidad = `Zona de Riesgo PRMS: ${props.ZONA || props.DESCRIP || 'Riesgo Natural'}`;
-        detalleTipo = 'Área de Riesgo Metropolitano (Art. 2.1.17 OGUC)';
-        extraInfo = {
-          'Tipo de Riesgo': props.TIPO_RIESGO || props.DESCRIP || 'Inundación / Remoción en Masa',
-          'Marco Normativo': 'Art. 2.1.17 OGUC / PRMS',
-          'Instrumento': 'Plan Regulador Metropolitano de Santiago'
-        };
+        nombreEntidad = `Riesgo PRMS: ${primerValor(props, ['NOMBRE', 'Capa'], 'Área de Riesgo')}`;
+        detalleTipo = primerValor(props, ['NORMA', 'Capa'], 'Área de Riesgo Metropolitano (Art. 2.1.17 OGUC)');
+        agregarDato(extraInfo, 'Nombre / Zona', props.NOMBRE);
+        agregarDato(extraInfo, 'Instrumento / Capa', props.Capa);
+        agregarDato(extraInfo, 'Norma PRMS', props.NORMA);
+        agregarDato(extraInfo, 'Localidad / Comuna', `${primerValor(props, ['LOCALIDAD'])} (${primerValor(props, ['COM'], '-')})`.trim());
       } else if (idCapa === 'bbdd_43' || idCapa === 'capa_bbdd_43') {
-        nombreEntidad = `Comuna de ${props.NOM_COMUNA || props.COMUNA || 'Santiago'}`;
+        nombreEntidad = `Comuna de ${primerValor(props, ['COMUNA', 'NOM_COMUNA'], 'RM')}`;
         detalleTipo = 'División Política Administrativa 2023';
-        extraInfo = {
-          'Código CUT': props.CUT || props.CUT_COM || '-',
-          'Provincia': props.NOM_PROVINCIA || props.PROVINCIA || '-',
-          'Región': props.NOM_REGION || props.REGION || 'Metropolitana de Santiago'
-        }
+        agregarDato(extraInfo, 'Comuna', props.COMUNA);
+        agregarDato(extraInfo, 'Código CUT', String(primerValor(props, ['CUT_COM', 'CUT'])));
+        agregarDato(extraInfo, 'Provincia', props.PROVINCIA);
+        agregarDato(extraInfo, 'Región', props.REGION);
+        agregarDato(extraInfo, 'Superficie', props.SUPERFICIE ? fmtNum(props.SUPERFICIE) : '');
+      } else if (idCapa === 'munistgo_aseo_zonas_residuos_2026' || idCapa === 'barrios_santiago_con_zonas_aseo') {
+        nombreEntidad = props.BARRIO ? `Barrio ${props.BARRIO} (Zona ${props.zona_aseo || ''})` : `Macro-Zona de Aseo: ${props.zona_aseo || 'Comuna de Santiago'}`;
+        const capL = props.capacidad_total_litros || props.zona_capacidad_litros;
+        detalleTipo = `Capacidad: ${capL ? fmtNum(capL) : '0'} L | Contenedores: ${props.contenedores_tot ?? props.zona_contenedores_tot ?? 0}`;
+        agregarDato(extraInfo, 'Macro-Zona Operativa', props.zona_aseo);
+        agregarDato(extraInfo, 'Código de Zona', props.zona_codigo);
+        agregarDato(extraInfo, 'Barrio / Sector', props.BARRIO || (props.barrios_integrantes ? `${props.n_barrios_agrupados || ''} barrios (${props.barrios_integrantes})` : ''));
+        agregarDato(extraInfo, 'Contenedores Totales', `${props.contenedores_tot ?? props.zona_contenedores_tot ?? 0} unid. (${props.pct_contenedores_comunal ?? props.zona_pct_cont_comunal ?? 0}%)`);
+        agregarDato(extraInfo, 'Papeleros Peatonales', `${props.papeleros_tot ?? props.zona_papeleros_tot ?? 0} unid. (${props.pct_papeleros_comunal ?? props.zona_pct_pap_comunal ?? 0}%)`);
+        agregarDato(extraInfo, 'Capacidad de Acopio', `${capL ? fmtNum(capL) : '0'} L`);
+        agregarDato(extraInfo, 'Volumetría (240L/360L/770L)', `${props.cont_240l ?? props.zona_cont_240l ?? 0} / ${props.cont_360l ?? props.zona_cont_360l ?? 0} / ${props.cont_770l ?? props.zona_cont_770l ?? 0}`);
+        agregarDato(extraInfo, 'Tasa Operatividad', `${props.tasa_operativo_pct ?? props.zona_tasa_operativo_pct ?? 0}%`);
+        agregarDato(extraInfo, 'Tasa Deterioro Físico', `${props.tasa_deterioro_pct ?? props.zona_tasa_deterioro_pct ?? 0}%`);
+        agregarDato(extraInfo, 'Tasa Pérdida / No está', `${props.tasa_perdida_pct ?? props.zona_tasa_perdida_pct ?? 0}%`);
+        agregarDato(extraInfo, 'Densidad Contenedores', `${props.densidad_contenedores_km2 ?? props.zona_densidad_cont_km2 ?? 0} cont/km²`);
+        agregarDato(extraInfo, 'Diagnóstico Técnico', props.nota_estado || props.zona_nota_estado);
+      } else if (idCapa === 'semaforos_rm_uoct_2026') {
+        nombreEntidad = `Cruce ${props.codigo_junction || idx + 1}: ${props.acceso_1 || ''} / ${props.acceso_2 || ''}`;
+        detalleTipo = `UOCT · ${props.comuna || 'RM'} (${props.estado || 'Operativo'})`;
+        agregarDato(extraInfo, 'Código Junction', props.codigo_junction);
+        agregarDato(extraInfo, 'Acceso 1', props.acceso_1);
+        agregarDato(extraInfo, 'Acceso 2', props.acceso_2);
+        agregarDato(extraInfo, 'Comuna', props.comuna);
+        agregarDato(extraInfo, 'Estado Operativo', props.estado);
+        agregarDato(extraInfo, 'Controlador', `${props.marca_control || ''} ${props.modelo || ''}`.trim());
+        agregarDato(extraInfo, 'Tipo Cabezal', props.tipo_cabezal);
+        agregarDato(extraInfo, 'Comunicación', props.tipo_comunicacion);
+        agregarDato(extraInfo, 'GPS / UPS', `${props.gps || '-'} / ${props.ups || '-'}`);
+        agregarDato(extraInfo, 'Vigencia', props.vigencia);
+      } else if (idCapa === 'ine_permisos_edificacion_santiago') {
+        nombreEntidad = `${props.GLOSA_DESTINO || 'Permiso Edificación'} (${props['AÑO'] || ''})`;
+        detalleTipo = `${props.USO_DESTINO || 'Permiso DOM'} · Barrio ${props.nombre_barrio || 'Santiago'}`;
+        agregarDato(extraInfo, 'Año Permiso', props['AÑO']);
+        agregarDato(extraInfo, 'Destino', props.GLOSA_DESTINO);
+        agregarDato(extraInfo, 'Uso', props.USO_DESTINO);
+        agregarDato(extraInfo, 'Pisos', fmtNum(props.NUM_PISOS));
+        agregarDato(extraInfo, 'Unidades Aprobadas', fmtNum(props.CANTIDAD_UNIDAD));
+        agregarDato(extraInfo, 'Superficie Autorizada', props.SUPERFICIE ? `${fmtNum(props.SUPERFICIE)} m²` : '');
+        agregarDato(extraInfo, 'Barrio', props.nombre_barrio);
+        agregarDato(extraInfo, 'Zona PRC', `${props.zona_prc || ''} ${props.nombre_zona_prc ? `(${props.nombre_zona_prc})` : ''}`.trim());
+        agregarDato(extraInfo, 'Precisión Geocodificación', props.PRECISION);
+      } else if (idCapa === 'ine_crf_conjuntos_santiago') {
+        nombreEntidad = `Conjunto CRF ${props['AÑO_EMISION'] || ''} — ${props.nombre_barrio || 'Santiago'} (${props.N_VIVIENDA || 0} viv.)`;
+        detalleTipo = `Densidad Real: ${fmtNum(props.densidad_neta_real_viv_ha)} viv/ha | Zona PRC: ${props.zona_prc || '-'}`;
+        agregarDato(extraInfo, 'Año Emisión CRF', props['AÑO_EMISION']);
+        agregarDato(extraInfo, 'Viviendas Recepcionadas', fmtNum(props.N_VIVIENDA));
+        agregarDato(extraInfo, 'Superficie Terreno', props.sup_terreno_m2 ? `${fmtNum(props.sup_terreno_m2)} m²` : '');
+        agregarDato(extraInfo, 'Densidad Neta Real', props.densidad_neta_real_viv_ha !== undefined ? `${fmtNum(props.densidad_neta_real_viv_ha)} viv/ha` : '');
+        agregarDato(extraInfo, 'Ocupación Suelo (COS)', props.coeficiente_ocupacion_suelo_cos !== undefined ? fmtNum(props.coeficiente_ocupacion_suelo_cos) : '');
+        agregarDato(extraInfo, 'Suelo Libre / Patio', props.porcentaje_patio_suelo_libre !== undefined ? `${fmtNum(props.porcentaje_patio_suelo_libre)}%` : '');
+        agregarDato(extraInfo, 'Frente / Fondo Predial', `${fmtNum(props.frente_predial_oguc_m)} m × ${fmtNum(props.fondo_predial_oguc_m)} m`);
+        agregarDato(extraInfo, 'Barrio', props.nombre_barrio);
+        agregarDato(extraInfo, 'Zona PRC', `${props.zona_prc || ''} ${props.nombre_zona_prc ? `(${props.nombre_zona_prc})` : ''}`.trim());
       } else if (idCapa.startsWith('subdere_rsd_')) {
-        const nomComuna = props.COMUNA || props.Comuna || props.NOM_COM || props.Nombre_Sit || props.NOMBRE_SDF || props.NOMBRE || props.ENTIDAD || props.CIUDAD || props.Municipio || 'Región Metropolitana';
+        const nomComuna = primerValor(props, ['COMUNA', 'Comuna', 'NOM_COM', 'NOMBRE', 'ENTIDAD', 'SITIO', 'COMUNA_QUE_DISPONE'], 'Región Metropolitana');
         nombreEntidad = `${def.nombre}: ${nomComuna}`;
         detalleTipo = `${def.geometria} | SUBDERE Residuos Sólidos 2024`;
 
         if (idCapa === 'subdere_rsd_analisis_costos_comuna_rm') {
-          const aseoAnual = props.Aseo_año ?? props['Aseo_a\u00f1o'] ?? props['Aseo_ao'] ?? props.Aseo_ano;
-          const rtAnual = props.RT_año ?? props['RT_a\u00f1o'] ?? props['RT_ao'] ?? props.RT_ano;
-          const dfAnual = props.DF_año ?? props['DF_a\u00f1o'] ?? props['DF_ao'] ?? props.DF_ano;
-          extraInfo = {
-            'Comuna': nomComuna,
-            'Población Comunal': props.Pobl_INE ? Number(props.Pobl_INE).toLocaleString('es-CL') + ' hab.' : '-',
-            'Residuos Anuales (RSDyA)': props.RSDyA ? Number(props.RSDyA).toLocaleString('es-CL') + ' Ton/año' : '-',
-            'Costo Total Aseo Anual': aseoAnual ? '$' + Number(aseoAnual).toLocaleString('es-CL') : '-',
-            'Costo Anual por Habitante': props.Aseo_Hab ? '$' + Number(props.Aseo_Hab).toLocaleString('es-CL') + '/hab' : '-',
-            'Costo por Tonelada Dispuesto': props.Aseo_Ton ? '$' + Number(props.Aseo_Ton).toLocaleString('es-CL') + '/Ton' : '-',
-            'Costo Recolección y Transporte': rtAnual ? '$' + Number(rtAnual).toLocaleString('es-CL') : '-',
-            'Costo Disposición Final': dfAnual ? '$' + Number(dfAnual).toLocaleString('es-CL') : '-'
-          };
-        } else if (idCapa.includes('poblacion') || idCapa.includes('pta')) {
-          extraInfo = {
-            'Comuna': nomComuna,
-            'Población Total Atendida (PTA)': props.PTA !== undefined ? Number(props.PTA).toLocaleString('es-CL') + ' hab.' : (props.PTA_ATENDI !== undefined ? Number(props.PTA_ATENDI).toLocaleString('es-CL') + ' hab.' : '-'),
-            'Población Comunal Atendida (PCA)': props.PCA !== undefined ? Number(props.PCA).toLocaleString('es-CL') + ' hab.' : '-',
-            'Población Flotante Turística (PFP)': props.PFP !== undefined ? Number(props.PFP).toLocaleString('es-CL') + ' hab.' : '-',
-            'Cobertura Urbana': props.Cob_Urb !== undefined ? props.Cob_Urb + '%' : '-',
-            'Cobertura Rural': props.Cob_Rur !== undefined ? props.Cob_Rur + '%' : '-'
-          };
+          const aseoAnual = primerValor(props, ['Aseo_año', 'Aseo_ao', 'Aseo_ano'], null);
+          const rtAnual = primerValor(props, ['RT_año', 'RT_ao', 'RT_ano'], null);
+          const dfAnual = primerValor(props, ['DF_año', 'DF_ao', 'DF_ano'], null);
+          agregarDato(extraInfo, 'Comuna', nomComuna);
+          agregarDato(extraInfo, 'Población Comunal', props.Pobl_INE ? `${fmtNum(props.Pobl_INE)} hab.` : '');
+          agregarDato(extraInfo, 'Residuos Anuales (RSDyA)', props.RSDyA ? `${fmtNum(props.RSDyA)} Ton/año` : '');
+          if (aseoAnual !== null) agregarDato(extraInfo, 'Costo Total Aseo Anual', `$${fmtNum(aseoAnual)}`);
+          if (props.Aseo_Hab) agregarDato(extraInfo, 'Costo Anual por Habitante', `$${fmtNum(props.Aseo_Hab)}/hab`);
+          if (props.Aseo_Ton) agregarDato(extraInfo, 'Costo por Tonelada', `$${fmtNum(props.Aseo_Ton)}/Ton`);
+          if (rtAnual !== null) agregarDato(extraInfo, 'Costo Recolección y Transporte', `$${fmtNum(rtAnual)}`);
+          if (dfAnual !== null) agregarDato(extraInfo, 'Costo Disposición Final', `$${fmtNum(dfAnual)}`);
+        } else if (idCapa === 'subdere_rsd_ciudades_poblacion_rm') {
+          nombreEntidad = `${primerValor(props, ['ENTIDAD', 'COMUNA'], nomComuna)} (${props.CATEGORIA || 'Ciudad'})`;
+          agregarDato(extraInfo, 'Entidad Urbana', props.ENTIDAD);
+          agregarDato(extraInfo, 'Categoría Censal', props.CATEGORIA);
+          agregarDato(extraInfo, 'Comuna', props.COMUNA);
+          agregarDato(extraInfo, 'Provincia', props.PROVINCIA);
+          agregarDato(extraInfo, 'Capital Provincial', props.CAP_PROV);
         } else if (idCapa === 'subdere_rsd_ppc_generacion_pta_rm') {
-          extraInfo = {
-            'Comuna': nomComuna,
-            'Generación Anual (RSDyA 2022)': props.RSDyA_22 !== undefined ? Number(props.RSDyA_22).toLocaleString('es-CL') + ' Ton/año' : '-',
-            'Población Atendida (PTA)': props.PTA_22 !== undefined ? Number(props.PTA_22).toLocaleString('es-CL') + ' hab.' : '-',
-            'PPC Residente (Ppc)': props.Ppc !== undefined ? props.Ppc + ' kg/hab·día' : '-',
-            'PPC Corregida Flotante (Ppc_corr)': props.Ppc_corr !== undefined ? props.Ppc_corr + ' kg/hab·día' : '-',
-            'Fuente de Información': props.Fuente || 'SUBDERE RSD 2024'
-          };
-        } else if (idCapa.includes('criticidad') || idCapa.includes('sitios_disposicion')) {
-          extraInfo = {
-            'Relleno Sanitario / Sitio': props.NOMBRE || props.Nombre_Sit || nomComuna,
-            'Comuna Emplazamiento': props.COMUNA || props.Comuna || '-',
-            'Clase de Sitio': props.Clase || 'Relleno Sanitario',
-            'Estado Operativo': props.Estado || 'Operativo',
-            'Vida Útil Remanente': props.VidaUtil !== undefined ? props.VidaUtil + ' años' : '-',
-            'Índice de Criticidad': props.Criticidad || 'Evaluado',
-            'Empresa Operadora': props.Operador || props.Propieta || '-',
-            'RCA': props.RCA || 'Autorizada'
-          };
+          agregarDato(extraInfo, 'Comuna', nomComuna);
+          agregarDato(extraInfo, 'Generación Anual (RSDyA 22)', props.RSDyA_22 !== undefined ? `${fmtNum(props.RSDyA_22)} Ton/año` : '');
+          agregarDato(extraInfo, 'Población Atendida (PTA 22)', props.PTA_22 !== undefined ? `${fmtNum(props.PTA_22)} hab.` : '');
+          agregarDato(extraInfo, 'PPC Residente (Ppc)', props.Ppc !== undefined ? `${props.Ppc} kg/hab·día` : '');
+          agregarDato(extraInfo, 'PPC Corregida Flotante', props.Ppc_corr !== undefined ? `${props.Ppc_corr} kg/hab·día` : '');
+          agregarDato(extraInfo, 'Fuente', props.Fuente);
+        } else if (idCapa.includes('poblacion') || idCapa.includes('pta')) {
+          agregarDato(extraInfo, 'Comuna', nomComuna);
+          agregarDato(extraInfo, 'Población Total 2022', props.Pob_2022 !== undefined ? `${fmtNum(props.Pob_2022)} hab.` : '');
+          agregarDato(extraInfo, 'Población Total Atendida (PTA)', props.PTA !== undefined ? `${fmtNum(props.PTA)} hab.` : '');
+          agregarDato(extraInfo, 'Población Comunal Atendida (PCA)', props.PCA !== undefined ? `${fmtNum(props.PCA)} hab.` : '');
+          agregarDato(extraInfo, 'Población Flotante (PFP)', props.PFP !== undefined ? `${fmtNum(props.PFP)} hab.` : '');
+          agregarDato(extraInfo, 'Cobertura Urbana', props.Cob_Urb !== undefined ? `${props.Cob_Urb}%` : '');
+          agregarDato(extraInfo, 'Cobertura Rural', props.Cob_Rur !== undefined ? `${props.Cob_Rur}%` : '');
+        } else if (idCapa.includes('criticidad') || idCapa.includes('sitios_disposicion') || idCapa.includes('sitios_intermedios')) {
+          nombreEntidad = primerValor(props, ['NOMBRE', 'Clase'], nomComuna);
+          agregarDato(extraInfo, 'Instalación / Sitio', props.NOMBRE);
+          agregarDato(extraInfo, 'Comuna Emplazamiento', props.COMUNA);
+          agregarDato(extraInfo, 'Clase de Sitio', props.Clase);
+          agregarDato(extraInfo, 'Estado Operativo', props.Estado);
+          agregarDato(extraInfo, 'Vida Útil Remanente', props.VidaUtil !== undefined ? `${props.VidaUtil} años` : '');
+          agregarDato(extraInfo, 'Criticidad Global', props.Criticidad);
+          agregarDato(extraInfo, 'Operador / Propietario', `${primerValor(props, ['Operador'])} / ${primerValor(props, ['Propieta'])}`.replace(/^ \/ | \/ $/g, ''));
+          agregarDato(extraInfo, 'RCA', props.RCA);
         } else if (idCapa.includes('recoleccion_transporte')) {
-          extraInfo = {
-            'Comuna': nomComuna,
-            'Modalidad del Servicio': props.TipoServicio || 'Concesionado',
-            'Sistema de Recolección': props.SistRecoleccion || 'Puerta a puerta',
-            'Modo de Recolección': props.ModRecoleccion || '-',
-            'Frecuencia Urbana': props.FrecUrbana || '-',
-            'Frecuencia Rural': props.FrecRural || '-',
-            'Recolección Diferenciada': props.RecDiferenciada || 'No',
-            'Distancia al SDF': props.DistSDF !== undefined ? props.DistSDF + ' km' : '-'
-          };
+          agregarDato(extraInfo, 'Comuna', nomComuna);
+          agregarDato(extraInfo, 'Modalidad del Servicio', props.TipoServicio);
+          agregarDato(extraInfo, 'Sistema de Recolección', props.SistRecoleccion);
+          agregarDato(extraInfo, 'Modo de Recolección', props.ModRecoleccion);
+          agregarDato(extraInfo, 'Frecuencia Urbana', props.FrecUrbana);
+          agregarDato(extraInfo, 'Frecuencia Rural', props.FrecRural);
+          agregarDato(extraInfo, 'Recolección Diferenciada', props.RecDiferenciada);
+          agregarDato(extraInfo, 'Distancia al SDF', props.DistSDF !== undefined ? `${props.DistSDF} km` : '');
         } else if (idCapa.includes('distancia')) {
-          extraInfo = {
-            'Municipio / Comuna Origen': props.Comuna || nomComuna,
-            'Distancia al Relleno Sanitario': props.Km !== undefined ? props.Km + ' km' : '-'
-          };
+          agregarDato(extraInfo, 'Comuna Origen', props.Comuna || nomComuna);
+          agregarDato(extraInfo, 'Distancia al Relleno Sanitario', props.Km !== undefined ? `${fmtNum(props.Km)} km` : '');
         } else if (idCapa.includes('sinim')) {
-          extraInfo = {
-            'Comuna': nomComuna,
-            'Gasto en Aseo SINIM': props.Aseo_SINIM ? '$' + Number(props.Aseo_SINIM).toLocaleString('es-CL') : '-',
-            'Porcentaje de Aseo sobre Gasto': props.Por_Aseo ? props.Por_Aseo + '%' : '-',
-            'Ingresos Propios Permanentes (IPP)': props.IPP ? '$' + Number(props.IPP).toLocaleString('es-CL') : '-',
-            'Aporte Fondo Común Municipal (FCM)': props.Ing_FCM ? '$' + Number(props.Ing_FCM).toLocaleString('es-CL') : '-',
-            'Recaudación Derechos de Aseo': props.DerAseo ? '$' + Number(props.DerAseo).toLocaleString('es-CL') : '-'
-          };
-        } else if (idCapa.includes('aseo') || idCapa.includes('residuos_2026')) {
-          nombreEntidad = props.BARRIO ? `Barrio ${props.BARRIO} (Zona ${props.zona_aseo || ''})` : `Macro-Zona de Aseo: ${props.zona_aseo || 'Comuna de Santiago'}`;
-          detalleTipo = `Capacidad: ${(props.capacidad_total_litros || props.zona_capacidad_litros ? Number(props.capacidad_total_litros || props.zona_capacidad_litros).toLocaleString('es-CL') : '0')} L | Contenedores: ${props.contenedores_tot || props.zona_contenedores_tot || 0}`;
-          extraInfo = {
-            'Macro-Zona Operativa': props.zona_aseo || '-',
-            'Código de Zona': props.zona_codigo || '-',
-            'Barrio / Sector': props.BARRIO || ((props.n_barrios_agrupados || '') + ' barrios (' + (props.barrios_integrantes || '') + ')'),
-            'Superficie Territorial': (props.superficie_ha || props.SUP_HA || 0) + ' ha (' + (props.superficie_km2 || props.SUP_KM || 0) + ' km²)',
-            'Contenedores Totales': (props.contenedores_tot || props.zona_contenedores_tot || 0) + ' unidades (' + (props.pct_contenedores_comunal || props.zona_pct_cont_comunal || 0) + '%)',
-            'Papeleros Peatonales': (props.papeleros_tot || props.zona_papeleros_tot || 0) + ' unidades (' + (props.pct_papeleros_comunal || props.zona_pct_pap_comunal || 0) + '%)',
-            'Total Elementos Aseo': (props.elementos_tot || props.zona_elementos_tot || 0) + ' unidades',
-            'Capacidad de Acopio': (props.capacidad_total_litros || props.zona_capacidad_litros ? Number(props.capacidad_total_litros || props.zona_capacidad_litros).toLocaleString('es-CL') : '0') + ' L',
-            'Volumetría Contenedores': '240L: ' + (props.cont_240l || props.zona_cont_240l || 0) + ' | 360L: ' + (props.cont_360l || props.zona_cont_360l || 0) + ' | 770L: ' + (props.cont_770l || props.zona_cont_770l || 0),
-            'Tasa Deterioro Físico': (props.tasa_deterioro_pct || props.zona_tasa_deterioro_pct || 0) + '%',
-            'Tasa Operatividad': (props.tasa_operativo_pct || props.zona_tasa_operativo_pct || 0) + '%',
-            'Tasa Pérdida / No está': (props.tasa_perdida_pct || props.zona_tasa_perdida_pct || 0) + '%',
-            'Densidad Contenedores': (props.densidad_contenedores_km2 || props.zona_densidad_cont_km2 || 0) + ' cont/km²',
-            'Densidad Capacidad': (props.densidad_capacidad_litros_ha || props.zona_densidad_cap_litros_ha || 0) + ' L/ha',
-            'Ratio Contenedores / Papeleros': props.ratio_contenedores_papeleros || '0',
-            'Diagnóstico Técnico': props.nota_estado || props.zona_nota_estado || '-'
-          };
+          agregarDato(extraInfo, 'Comuna', nomComuna);
+          if (props.Aseo_SINIM) agregarDato(extraInfo, 'Gasto en Aseo SINIM', `$${fmtNum(props.Aseo_SINIM)}`);
+          if (props.Por_Aseo !== undefined) agregarDato(extraInfo, '% Aseo sobre Gasto Municipal', `${props.Por_Aseo}%`);
+          if (props.IPP) agregarDato(extraInfo, 'Ingresos Propios Permanentes (IPP)', `$${fmtNum(props.IPP)}`);
+          if (props.Ing_FCM) agregarDato(extraInfo, 'Fondo Común Municipal (FCM)', `$${fmtNum(props.Ing_FCM)}`);
+          if (props.DerAseo) agregarDato(extraInfo, 'Derechos de Aseo', `$${fmtNum(props.DerAseo)}`);
         } else if (idCapa.includes('sdf_comunas') || idCapa.includes('sdf_municipios')) {
-          extraInfo = {
-            'Comuna Evaluada': nomComuna,
-            'Relleno Sanitario Receptor': props.SITIO || '-',
-            'Comuna Emplazamiento': props.COMUNA_QUE_DISPONE || '-',
-            'Distancia de Transporte': props.Dist_SDF !== undefined ? props.Dist_SDF + ' km' : '-',
-            'Costo Anual Disposición': props.Costo_a ? '$' + Number(props.Costo_a).toLocaleString('es-CL') : '-',
-            'Costo por Tonelada': props.Costo_Ton ? '$' + Number(props.Costo_Ton).toLocaleString('es-CL') + '/Ton' : '-'
-          };
-        } else {
-          extraInfo = {
-            'Comuna / Entidad': nomComuna,
-            'Categoría': props.CATEGORIA || props.TIPO || def.geometria,
-            'Fuente Oficial': 'SUBDERE - Catastro RSD 2024'
-          };
+          agregarDato(extraInfo, 'Comuna Evaluada', nomComuna);
+          agregarDato(extraInfo, 'Relleno Sanitario Receptor', props.SITIO);
+          agregarDato(extraInfo, 'Comuna de Disposición', props.COMUNA_QUE_DISPONE);
+          agregarDato(extraInfo, 'Distancia Transporte', props.Dist_SDF !== undefined ? `${fmtNum(props.Dist_SDF)} km` : '');
+          if (props.Costo_a) agregarDato(extraInfo, 'Costo Anual Disposición', `$${fmtNum(props.Costo_a)}`);
+          if (props.Costo_Ton) agregarDato(extraInfo, 'Costo por Tonelada', `$${fmtNum(props.Costo_Ton)}/Ton`);
         }
-;
+      } else if (idCapa.startsWith('energia_')) {
+        const titEnergia = primerValor(props, ['NOMBRE', 'Lugar', 'Empresa_', 'TRAMO'], def.nombre);
+        nombreEntidad = String(titEnergia);
+        detalleTipo = `${def.nombre} · ${primerValor(props, ['COMUNA', 'Comuna', 'PROPIEDAD', 'Empresa_'], 'RM')}`;
+        agregarDato(extraInfo, 'Instalación / Empresa', primerValor(props, ['NOMBRE', 'Empresa_']));
+        agregarDato(extraInfo, 'Lugar / Dirección', primerValor(props, ['Lugar', 'Direccion']));
+        agregarDato(extraInfo, 'Comuna', primerValor(props, ['COMUNA', 'Comuna']));
+        if (props.POTENCIAMW !== undefined) agregarDato(extraInfo, 'Potencia Instalada', `${fmtNum(props.POTENCIAMW)} MW`);
+        if (props.Potencia_k !== undefined) agregarDato(extraInfo, 'Potencia Cargador', `${fmtNum(props.Potencia_k)} kW`);
+        if (props.TENSION_KV !== undefined) agregarDato(extraInfo, 'Tensión Eléctrica', `${fmtNum(props.TENSION_KV)} kV`);
+        agregarDato(extraInfo, 'Corriente (AC/DC)', props.AC_DC);
+        agregarDato(extraInfo, 'Combustible / Tecnología', primerValor(props, ['COMBUSTIBL', 'MEDIO_GENE', 'TIPO']));
+        agregarDato(extraInfo, 'Propietario', props.PROPIEDAD);
+        agregarDato(extraInfo, 'Estado / Operación', `${primerValor(props, ['ESTADO'])} ${primerValor(props, ['F_OPERACIO'])}`.trim());
+      } else if (idCapa.startsWith('ccu_rm_')) {
+        nombreEntidad = `${primerValor(props, ['NOMBRE'], 'Entidad Urbana')} (${idCapa.replace('ccu_rm_', '')})`;
+        detalleTipo = `${props.TIPO || 'Continuo de Construcciones Urbanas'} — ${props.REGION || 'RM'}`;
+        agregarDato(extraInfo, 'Entidad Urbana', props.NOMBRE);
+        agregarDato(extraInfo, 'Tipo', props.TIPO);
+        agregarDato(extraInfo, 'Peso Administrativo', props.PESO_ADMIN);
+        agregarDato(extraInfo, 'Superficie CCU', fmtNum(primerValor(props, ['SUPERFICIE', 'SUERFICIE'])), ' ha');
+        if (props.VIV !== undefined) agregarDato(extraInfo, 'Viviendas', fmtNum(props.VIV));
+        if (props.VIV_HA !== undefined) agregarDato(extraInfo, 'Densidad Viviendas', `${fmtNum(props.VIV_HA)} viv/ha`);
+        if (props.PERS !== undefined) agregarDato(extraInfo, 'Población', fmtNum(props.PERS));
+        if (props.PERS_HA !== undefined) agregarDato(extraInfo, 'Densidad Poblacional', `${fmtNum(props.PERS_HA)} hab/ha`);
+      } else if (idCapa === 'bbdd_65') {
+        nombreEntidad = primerValor(props, ['EBI_NOMBRE', 'COMUNA'], `Iniciativa BIP ${idx + 1}`);
+        detalleTipo = `BIP ${props.EBI_CODIGO || ''} · ${props.COMUNA || ''} (${props.EBI_ANO_POSTULA || '-'} · ${props.EBI_ETAPA_POSTULA || '-'})`;
+        agregarDato(extraInfo, 'Código BIP', props.EBI_CODIGO);
+        agregarDato(extraInfo, 'Nombre Iniciativa', props.EBI_NOMBRE);
+        agregarDato(extraInfo, 'Comuna', props.COMUNA);
+        agregarDato(extraInfo, 'Año Postulación', props.EBI_ANO_POSTULA);
+        agregarDato(extraInfo, 'Etapa Postulación', props.EBI_ETAPA_POSTULA);
+        agregarDato(extraInfo, 'Costo Etapa (M$)', fmtNum(props.EBI_COSTO_ETAPA_M));
+        agregarDato(extraInfo, 'Aporte Directo (M$)', fmtNum(props.EBI_MONTO_APORTE_DIRECTO_M));
+        agregarDato(extraInfo, 'Ejecución Presupuestaria', props.EBI_EJECUCION_PRESUPUESTARIA);
+        agregarDato(extraInfo, 'Institución Responsable', props.EBI_INSTIT_USU_ULT_MOD);
+      } else if (idCapa === 'bbdd_64' || (idCapa.startsWith('bbdd_') && Number(idCapa.split('_')[1]) >= 67)) {
+        const uvNom = primerValor(props, ['t_uv_nom', 'uv_carto'], 'S/N');
+        const comNom = primerValor(props, ['t_com_nom', 'Comuna'], 'RM');
+        nombreEntidad = `Unidad Vecinal ${uvNom} (${comNom})`;
+        detalleTipo = `${def.nombre}${props.periodo ? ` · Periodo ${props.periodo}` : ''}`;
+        agregarDato(extraInfo, 'Unidad Vecinal', uvNom);
+        agregarDato(extraInfo, 'ID UV', props.t_id_uv_ca);
+        agregarDato(extraInfo, 'Comuna', comNom);
+        agregarDato(extraInfo, 'Provincia', props.t_prov_nom);
+        agregarDato(extraInfo, 'Periodo RSH', props.periodo);
+        if (props.pob_rsh_uv !== undefined) agregarDato(extraInfo, 'Población RSH UV', fmtNum(props.pob_rsh_uv));
+        if (props.hog_uv !== undefined) agregarDato(extraInfo, 'Hogares UV', fmtNum(props.hog_uv));
+        if (props.rank_nac !== undefined) agregarDato(extraInfo, 'Ranking Nacional IGVUST', fmtNum(props.rank_nac));
+      } else {
+        // Resolución inteligente para bbdd_01..63 y cualquier otra capa oficial del Estado
+        const nombreResuelto = primerValor(props, [
+          'NOMBRE', 'nombre', 'NOM_RBD', 'NOM_ESTAB', 'NOMBRE_INS', 'NOMBRE_CEN',
+          'NOMBRE_CTT', 'NOMBRE_CAM', 'NOMBRE_APR', 'NOMCAN', 'nomcan', 'nom_vivero',
+          'estacion', 'mercado', 'Unidad', 'NOMBRE_EST', 'ORIG_NAME', 'piso',
+          'EJE_VIA', 'Circuito', 'NOM_CUEN', 'KOPPEN_FIN', 'ALIAS', 'NOM_SS',
+          'NAME', 'TITULO', 'COMUNA', 'comuna', 'NOM_COM', 't_uv_nom', 'ubicacion'
+        ], '');
+        nombreEntidad = nombreResuelto ? String(nombreResuelto) : `${def.nombre} (#${idx + 1})`;
+        const ctxComuna = primerValor(props, ['COMUNA', 'comuna', 'NOM_COM_RB', 'NOM_COM_ES', 'NOM_COM', 'nom_com', 'Comuna']);
+        detalleTipo = ctxComuna ? `${def.nombre} · ${ctxComuna}` : def.nombre;
+      }
+
+      // En capas de gran volumen (>5.000 features), mapa.js extrae perezosamente los atributos extra al hacer clic para no sobrecargar RAM
+      if (totalFeats <= 5000) {
+        anexarAtributosAccesibles(extraInfo, props, geomType);
       }
 
       props._idOficial = idCapa;
       props._nombre = nombreEntidad;
       props._subtipo = detalleTipo;
+      props._tituloCapa = def.nombre;
       props._institucion = def.institucion;
       props._fuente = fuenteUsada;
       props._licencia = 'Ley N° 20.285 / Datos Abiertos Estado de Chile';
       props._citaAPA = def.citaAPA;
       props._declaracion = def.declaracion;
       props._archivoLocal = def.archivoLocal;
-      
-      if (Object.keys(extraInfo).length === 0) {
-        let count = 0;
-        for (const [k, v] of Object.entries(props)) {
-          if (!k.startsWith('_') && v !== null && v !== undefined && v !== '' && count < 4) {
-            extraInfo[k] = String(v);
-            count++;
-          }
-        }
-        if (count === 0) {
-          extraInfo['Entidad'] = props.NOMBRE || props.nombre || props.ID || props.t_uv_nom || def.nombre;
-          extraInfo['Institución'] = def.institucion;
-        }
-      }
-
       props._extraInfo = extraInfo;
       props._color = def.color;
       props._icono = def.icono;

@@ -19,6 +19,7 @@ const ModuloImportadorCapas = (() => {
     '#DB2777', '#0891B2', '#4B5563', '#4F46E5', '#16A34A'
   ];
   let indiceColor = 0;
+  let contadorIdCapa = 0;
 
   function obtenerSiguienteColor() {
     const color = PALETA_COLORES_IMPORTACION[indiceColor % PALETA_COLORES_IMPORTACION.length];
@@ -34,7 +35,7 @@ const ModuloImportadorCapas = (() => {
 
     const nombreArchivo = file.name;
     const extension = nombreArchivo.split('.').pop().toLowerCase();
-    const idCapa = `usr_${Date.now()}_${extension}`;
+    const idCapa = `usr_${Date.now()}_${++contadorIdCapa}_${extension}`;
     const color = obtenerSiguienteColor();
 
     let geojson = null;
@@ -54,8 +55,8 @@ const ModuloImportadorCapas = (() => {
       geojson = parsearGPX(texto);
     } else if (extension === 'csv' || extension === 'tsv') {
       const texto = await file.text();
-      geojson = parsearCSV(texto, extension === 'tsv' ? '\t' : ',');
-      formatoDetectado = 'CSV / Delimitado';
+      geojson = parsearCSV(texto, extension === 'tsv' ? '\t' : null);
+      formatoDetectado = extension === 'tsv' ? 'TSV (Tabulado)' : 'CSV / Delimitado';
     } else {
       throw new Error(`Formato ".${extension}" no soportado. Formatos válidos: .geojson, .json, .kml, .kmz, .gpx, .csv, .tsv.`);
     }
@@ -186,13 +187,94 @@ const ModuloImportadorCapas = (() => {
   /**
    * Parser CSV / TSV a GeoJSON Point FeatureCollection
    */
-  function parsearCSV(texto, delimitador = ',') {
-    const lineas = texto.trim().split(/\r?\n/).filter(l => l.trim().length > 0);
+  function convertirValorCSV(raw, delimitador) {
+    if (raw === undefined || raw === null) return null;
+    const s = String(raw).trim();
+    if (s === '') return null;
+    const normalizado = (delimitador === ';' || delimitador === '\t') && /^\-?\d+,\d+$/.test(s)
+      ? s.replace(',', '.')
+      : s;
+    if (/^-?(?:0|[1-9]\d*)(?:\.\d+)?$/.test(normalizado) && normalizado.replace(/[-.]/g, '').length <= 15) {
+      const n = Number(normalizado);
+      if (Number.isFinite(n)) return n;
+    }
+    return s;
+  }
+
+  function parsearWKTSimple(wktRaw) {
+    if (!wktRaw || typeof wktRaw !== 'string') return null;
+    const limpio = wktRaw.trim().replace(/^SRID=\d+;\s*/i, '');
+    const m = limpio.match(/^(POINT|MULTIPOINT|LINESTRING|MULTILINESTRING|POLYGON|MULTIPOLYGON)\s*(?:ZM|Z|M)?\s*\(([\s\S]+)\)$/i);
+    if (!m) return null;
+    const tipo = m[1].toUpperCase();
+    const cuerpo = m[2].trim();
+
+    function parsePar(txt) {
+      const partes = txt.trim().replace(/^\(|\)$/g, '').trim().split(/\s+/);
+      if (partes.length < 2) return null;
+      const x = parseFloat(partes[0]);
+      const y = parseFloat(partes[1]);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+      return [x, y];
+    }
+
+    function parseListaPares(txt) {
+      return txt.split(',').map(parsePar).filter(Boolean);
+    }
+
+    if (tipo === 'POINT') {
+      const pt = parsePar(cuerpo);
+      return pt ? { type: 'Point', coordinates: pt } : null;
+    }
+    if (tipo === 'MULTIPOINT') {
+      const pts = parseListaPares(cuerpo);
+      return pts.length ? { type: 'MultiPoint', coordinates: pts } : null;
+    }
+    if (tipo === 'LINESTRING') {
+      const coords = parseListaPares(cuerpo);
+      return coords.length >= 2 ? { type: 'LineString', coordinates: coords } : null;
+    }
+    if (tipo === 'MULTILINESTRING' || tipo === 'POLYGON') {
+      const anillos = cuerpo.replace(/^\(|\)$/g, '').split(/\)\s*,\s*\(/).map(parseListaPares).filter(a => a.length >= 2);
+      if (!anillos.length) return null;
+      return {
+        type: tipo === 'POLYGON' ? 'Polygon' : 'MultiLineString',
+        coordinates: anillos
+      };
+    }
+    if (tipo === 'MULTIPOLYGON') {
+      const polys = cuerpo
+        .replace(/^\(\(|\)\)$/g, '')
+        .split(/\)\)\s*,\s*\(\(/)
+        .map(p => p.split(/\)\s*,\s*\(/).map(parseListaPares).filter(a => a.length >= 3))
+        .filter(p => p.length > 0);
+      return polys.length ? { type: 'MultiPolygon', coordinates: polys } : null;
+    }
+    return null;
+  }
+
+  function parsearCSV(texto, delimitador = null) {
+    const textoLimpio = String(texto || '').replace(/^\uFEFF/, '');
+    const lineas = textoLimpio.trim().split(/\r?\n/).filter(l => l.trim().length > 0);
     if (lineas.length < 2) {
       throw new Error('El archivo CSV debe tener al menos una cabecera y una fila de datos.');
     }
 
-    // Parser simple de línea CSV considerando comillas
+    if (!delimitador) {
+      const cabecera = lineas[0];
+      const conteos = { ';': 0, '\t': 0, ',': 0 };
+      let enComillas = false;
+      for (let i = 0; i < cabecera.length; i++) {
+        const ch = cabecera[i];
+        if (ch === '"') enComillas = !enComillas;
+        else if (!enComillas && conteos[ch] !== undefined) conteos[ch]++;
+      }
+      if (conteos[';'] > 0 && conteos[';'] >= conteos[','] && conteos[';'] >= conteos['\t']) delimitador = ';';
+      else if (conteos['\t'] > 0 && conteos['\t'] >= conteos[',']) delimitador = '\t';
+      else delimitador = ',';
+    }
+
+    // Parser de línea CSV considerando comillas y comillas escapadas ("")
     function dividirLinea(linea) {
       const resultado = [];
       let actual = '';
@@ -200,7 +282,12 @@ const ModuloImportadorCapas = (() => {
       for (let i = 0; i < linea.length; i++) {
         const c = linea[i];
         if (c === '"') {
-          enComillas = !enComillas;
+          if (enComillas && linea[i + 1] === '"') {
+            actual += '"';
+            i++;
+          } else {
+            enComillas = !enComillas;
+          }
         } else if (c === delimitador && !enComillas) {
           resultado.push(actual.trim().replace(/^"|"$/g, ''));
           actual = '';
@@ -212,49 +299,62 @@ const ModuloImportadorCapas = (() => {
       return resultado;
     }
 
-    const cabeceras = dividirLinea(lineas[0]).map(h => h.toLowerCase().replace(/[\s_]/g, ''));
-    
-    // Identificar columnas de latitud y longitud
-    const variantesLat = ['lat', 'latitude', 'latitud', 'y', 'latwgs84', 'coordy', 'norte'];
-    const variantesLon = ['lon', 'lng', 'long', 'longitude', 'longitud', 'x', 'lonwgs84', 'coordx', 'este'];
+    const cabecerasOriginales = dividirLinea(lineas[0]);
+    const cabeceras = cabecerasOriginales.map(h =>
+      h.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\s_.-]/g, '')
+    );
 
-    let idxLat = cabeceras.findIndex(h => variantesLat.includes(h));
-    let idxLon = cabeceras.findIndex(h => variantesLon.includes(h));
+    // Identificar columnas de latitud/longitud o WKT
+    const variantesLat = ['lat', 'latitude', 'latitud', 'y', 'latwgs84', 'coordy', 'norte', 'latitudy'];
+    const variantesLon = ['lon', 'lng', 'long', 'longitude', 'longitud', 'x', 'lonwgs84', 'coordx', 'este', 'longitudx'];
+    const variantesWkt = ['wkt', 'geom', 'geometry', 'geometria', 'thegeom', 'geomwkt', 'shape'];
 
-    if (idxLat === -1 || idxLon === -1) {
-      throw new Error(`No se pudieron detectar columnas de latitud y longitud en el CSV. Cabeceras encontradas: ${cabeceras.join(', ')}.`);
+    const idxLat = cabeceras.findIndex(h => variantesLat.includes(h));
+    const idxLon = cabeceras.findIndex(h => variantesLon.includes(h));
+    const idxWkt = (idxLat === -1 || idxLon === -1)
+      ? cabeceras.findIndex(h => variantesWkt.includes(h))
+      : -1;
+
+    if ((idxLat === -1 || idxLon === -1) && idxWkt === -1) {
+      throw new Error(`No se pudieron detectar columnas de latitud/longitud ni geometría WKT en el CSV. Cabeceras encontradas: ${cabecerasOriginales.join(', ')}.`);
     }
 
     const features = [];
-    const cabecerasOriginales = dividirLinea(lineas[0]);
 
     for (let i = 1; i < lineas.length; i++) {
       const fila = dividirLinea(lineas[i]);
-      if (fila.length <= Math.max(idxLat, idxLon)) continue;
+      let geom = null;
 
-      // Reemplazar comas por puntos decimales si aplica
-      const latStr = fila[idxLat].replace(',', '.');
-      const lonStr = fila[idxLon].replace(',', '.');
-      const lat = parseFloat(latStr);
-      const lon = parseFloat(lonStr);
-
-      if (isNaN(lat) || isNaN(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) {
-        continue; // Ignorar fila inválida
+      if (idxWkt !== -1) {
+        if (fila.length <= idxWkt) continue;
+        geom = parsearWKTSimple(fila[idxWkt]);
+        if (!geom) continue;
+      } else {
+        if (fila.length <= Math.max(idxLat, idxLon)) continue;
+        // Reemplazar comas por puntos decimales si aplica
+        const latStr = fila[idxLat].replace(',', '.');
+        const lonStr = fila[idxLon].replace(',', '.');
+        const lat = parseFloat(latStr);
+        const lon = parseFloat(lonStr);
+        if (isNaN(lat) || isNaN(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) {
+          continue; // Ignorar fila inválida
+        }
+        geom = {
+          type: 'Point',
+          coordinates: [lon, lat]
+        };
       }
 
       const props = {};
       cabecerasOriginales.forEach((c, idx) => {
-        if (idx !== idxLat && idx !== idxLon && fila[idx] !== undefined) {
-          props[c] = fila[idx];
+        if (idx !== idxLat && idx !== idxLon && idx !== idxWkt && fila[idx] !== undefined) {
+          props[c] = convertirValorCSV(fila[idx], delimitador);
         }
       });
 
       features.push({
         type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [lon, lat]
-        },
+        geometry: geom,
         properties: props
       });
     }
@@ -327,6 +427,8 @@ const ModuloImportadorCapas = (() => {
       const geom = f.geometry || {};
       props._capaId = idCapa;
       props._idUsuario = `${idCapa}_${idx}`;
+      props._esImportada = true;
+      props._tituloCapa = nombreArchivo;
       props._fuente = `Capa Importada: ${nombreArchivo}`;
       props._color = color;
       props._nombre = props.name || props.nombre || props.Name || props.NOMBRE || props.title || `Entidad #${idx + 1}`;

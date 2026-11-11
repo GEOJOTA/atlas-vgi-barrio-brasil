@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="css/estilos.css?v=20261111_v72">
+  <link rel="stylesheet" href="css/estilos.css?v=20261111_v73">
 </head>
 <body>
 
@@ -135,6 +135,10 @@
         <button type="button" class="accion secundaria" id="btn-abrir-indicadores-directo" data-panel="indicadores" title="Ir al Módulo 01: Atlas de Análisis Territorial">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
           <span>Ver Atlas de Análisis</span>
+        </button>
+        <button type="button" class="accion secundaria" id="btn-abrir-importador" title="Subir archivos espaciales o tablas desde tu computador (.geojson, .kml, .kmz, .gpx, .csv, .tsv) y visualizar todos sus atributos">
+          <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span>Subir capa</span>
         </button>
         <button type="button" class="accion secundaria" id="btn-exportar-geojson-mapa" title="Descargar las capas actualmente visibles en el mapa en formato GeoJSON">
           <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -375,6 +379,45 @@
           <p style="color:var(--tinta-suave); font-size:0.88rem; text-align:center; padding:28px 16px; grid-column:1/-1; line-height:1.6;">
             Haz clic en cualquier elemento cartográfico en el mapa y luego pulsa en <strong style="color:var(--musgo)">Más detalles →</strong> dentro de la ventana emergente para inspeccionar todas sus variables, atributos, tipologías y metadatos con máxima amplitud horizontal.
           </p>
+        </div>
+      </div>
+
+      <!-- Importador Local de Capas Vectoriales y Tablas (Sesión Local en Navegador) -->
+      <div id="seccion-importador-capas" class="seccion-importador-capas" role="region" aria-label="Importador de capas propias">
+        <div class="importador-cabecera">
+          <div class="importador-titulo-grupo">
+            <h4>
+              <svg class="icono-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span>Subir capas propias al visor</span>
+              <span class="badge-formato-capa">GeoJSON · KML · KMZ · GPX · CSV/WKT · TSV</span>
+            </h4>
+            <p class="importador-bajada">Procesamiento local en tu navegador: visualiza todas las entidades y consulta el 100% de sus atributos originales junto a la normativa del PRC en el visor y en <strong>Detalles</strong>.</p>
+          </div>
+          <label for="input-archivo-capa" class="accion secundaria importador-btn-elegir" style="cursor:pointer;">
+            <svg class="icono-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Seleccionar archivo(s)</span>
+          </label>
+        </div>
+
+        <div id="zona-drop-importacion" class="zona-drop-importacion" tabindex="0" role="button" aria-label="Arrastrar o seleccionar archivos espaciales">
+          <input type="file" id="input-archivo-capa" multiple accept=".geojson,.json,.kml,.kmz,.gpx,.csv,.tsv" style="display:none;">
+          <div class="zona-drop-icono" aria-hidden="true">📂</div>
+          <div class="zona-drop-texto">
+            <strong>Arrastra y suelta tus archivos aquí</strong> o haz clic para seleccionarlos
+            <span>Soporta coordenadas WGS84 (lat/lon), geometrías WKT en CSV/TSV y capas vectoriales estándar.</span>
+          </div>
+        </div>
+
+        <div id="estado-importacion-capas" class="estado-importacion-capas" role="status" aria-live="polite">
+          Listo para cargar capas locales (.geojson, .kml, .kmz, .gpx, .csv, .tsv).
+        </div>
+
+        <div id="contenedor-capas-importadas" class="contenedor-capas-importadas" style="display:none;">
+          <div class="capas-importadas-toolbar">
+            <span>Capas cargadas en esta sesión: <strong id="contador-capas-importadas">0</strong></span>
+            <button type="button" id="btn-limpiar-capas-importadas" class="accion secundaria" style="padding:5px 10px; font-size:0.78rem;">Limpiar todas</button>
+          </div>
+          <div id="grilla-capas-importadas" class="grilla-capas-importadas"></div>
         </div>
       </div>
     </section>
@@ -848,9 +891,9 @@
 <script src="js/config.js?v=20261111_v72"></script>
 <script src="js/modulos/db_client.js?v=20261111_v72"></script>
 <script src="js/modulos/geodesia.js?v=20261111_v72"></script>
-<script src="js/modulos/mapa.js?v=20261111_v72"></script>
-<script src="js/modulos/importador_capas.js?v=20261111_v72"></script>
-<script src="js/modulos/ide_chile.js?v=20261111_v72"></script>
+<script src="js/modulos/mapa.js?v=20261111_v73"></script>
+<script src="js/modulos/importador_capas.js?v=20261111_v73"></script>
+<script src="js/modulos/ide_chile.js?v=20261111_v73"></script>
 <script src="js/modulos/evaluador_normativo.js?v=20261111_v72"></script>
 <script src="js/modulos/osm.js?v=20261111_v72"></script>
 <script src="js/modulos/gbif.js?v=20261111_v72"></script>
@@ -862,6 +905,6 @@
 <script src="js/modulos/diccionario.js?v=20261111_v72"></script>
 <script src="js/modulos/leyenda_atajos.js?v=20261111_v72"></script>
 <script src="js/modulos/tutorial_interactivo.js?v=20261111_v72"></script>
-<script src="js/app.js?v=20261111_v72"></script>
+<script src="js/app.js?v=20261111_v73"></script>
 </body>
 </html>
