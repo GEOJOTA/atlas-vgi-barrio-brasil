@@ -78,7 +78,7 @@ const ModuloLicencias = (() => {
             </p>
           </div>
           <div>
-            <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261112_v76" download="geodatabase_completa_atlas_vgi.zip" class="accion primaria-cta">
+            <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261112_v77" download="geodatabase_completa_atlas_vgi.zip" class="accion primaria-cta">
               Descargar base de datos completa (.zip · 542 MB)
             </a>
           </div>

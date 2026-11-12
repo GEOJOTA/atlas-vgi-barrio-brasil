@@ -4500,7 +4500,7 @@ async function descargarColeccionOficialCompleta() {
   } catch (err) {
     console.error('[-] Error al iniciar descarga de base de datos:', err);
     if (estadoTexto) {
-      estadoTexto.innerHTML = `<span style="color:#ef4444; font-weight:700;">❌ [ERROR]:</span> No se pudo iniciar la descarga automática. <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261112_v76" download="geodatabase_completa_atlas_vgi.zip" style="color:var(--musgo); text-decoration:underline;">Haz clic aquí para descarga manual</a>.`;
+      estadoTexto.innerHTML = `<span style="color:#ef4444; font-weight:700;">❌ [ERROR]:</span> No se pudo iniciar la descarga automática. <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261112_v77" download="geodatabase_completa_atlas_vgi.zip" style="color:var(--musgo); text-decoration:underline;">Haz clic aquí para descarga manual</a>.`;
     }
   } finally {
     setTimeout(() => {

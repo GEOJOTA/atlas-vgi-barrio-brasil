@@ -481,7 +481,7 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 
 .cabecera-fila-marca {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   position: relative;
   gap: 12px 20px;
@@ -552,21 +552,6 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   line-height: 1.25;
   white-space: normal;
   text-align: center;
-}
-
-.separador-titulo-subtitulo {
-  color: rgba(255, 255, 255, 0.45);
-  font-weight: 300;
-  font-size: 1.15rem;
-  line-height: 1;
-  user-select: none;
-  display: inline-block;
-}
-
-@media (max-width: 900px) {
-  .separador-titulo-subtitulo {
-    display: none;
-  }
 }
 
 .marca p,
@@ -7349,9 +7334,11 @@ table.tabla-datos-institucional td {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  justify-self: start;
   position: static;
   transform: none;
   z-index: 10;
+  min-width: 0;
   max-width: 100%;
 }
 
@@ -7360,11 +7347,13 @@ table.tabla-datos-institucional td {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  justify-self: end;
   gap: 10px;
   position: static;
   transform: none;
   z-index: 10;
   flex-wrap: wrap;
+  min-width: 0;
   max-width: 100%;
 }
 
@@ -9469,16 +9458,16 @@ table.tabla-datos-institucional,
   max-width: 100%;
 }
 
-/* Cabecera: apilar título y subtítulo compactos en .marca y evitar colisiones horizontales */
+/* Cabecera: apilar título y subtítulo centrados dinámicamente en .marca y evitar colisiones horizontales */
 .marca-texto-lineal {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 2px;
   min-width: 0;
   max-width: 100%;
-  text-align: left;
+  text-align: center;
   flex: 0 1 auto;
 }
 
