@@ -97,13 +97,16 @@ body, p, h1, h2, h3, h4, h5, h6, li, td, th, span, div, a {
   word-break: break-word;
 }
 
+html {
+  font-size: calc(clamp(16.8px, 16px + 0.25vw, 19.2px) * var(--escala-texto, 1));
+}
+
 html, body {
   margin: 0;
   padding: 0;
   background: var(--fondo-app);
   color: var(--tinta);
   font-family: var(--fuente-lectura);
-  font-size: 16px;              /* Base Font Size Ampliada */
   line-height: 1.68;            /* Espaciado Holgado */
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -111,6 +114,10 @@ html, body {
   overflow-wrap: break-word;
   word-break: normal;
   overflow-x: hidden;
+}
+
+body {
+  font-size: 1rem;
 }
 
 /* Reglas universales de prevención contra corte y truncamiento de textos */
@@ -7334,12 +7341,57 @@ table.tabla-datos-institucional td {
 .cabecera-accion-der {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   position: absolute;
   right: 24px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
+  flex-wrap: wrap;
+}
+
+.grupo-tamano-letra {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  padding: 4px 8px;
+  border-radius: 9px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.etiqueta-tamano-letra {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--agua);
+  margin-right: 2px;
+  white-space: nowrap;
+}
+
+.btn-tamano-letra {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  line-height: 1.3;
+}
+
+.btn-tamano-letra:hover {
+  background: rgba(56, 189, 248, 0.22);
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.btn-tamano-letra.activo {
+  background: linear-gradient(135deg, #0284c7, #0d9488);
+  border-color: #7dd3fc;
+  color: #ffffff;
 }
 
 .control-perfil-cabecera {

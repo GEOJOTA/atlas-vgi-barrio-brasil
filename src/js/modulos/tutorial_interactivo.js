@@ -131,7 +131,7 @@
       esPresentacionModulo: false,
       insignia: 'Módulo 02 · Componente 2',
       titulo: 'Inspector Normativo del Plan Regulador Comunal (PRC)',
-      texto: 'Esta herramienta convierte el visor en un consultor urbanístico: al activarla y pulsar sobre cualquier manzana o predio del mapa, evalúa espacialmente la zonificación del PRC de Santiago y las normas de la OGUC para emitir al instante un reporte de condiciones edificatorias y patrimoniales.'
+      texto: 'Esta herramienta convierte el visor en un consultor urbanístico: al activarla y pulsar sobre cualquier manzana o predio del mapa, evalúa espacialmente la zonificación del PRC de Santiago y las normas de la OGUC para emitir un reporte de condiciones edificatorias y patrimoniales, y luego se desactiva automáticamente manteniendo visibles el marcador y la ficha para evitar nuevas consultas accidentales.'
     },
     {
       id: 'paso-11-exportacion-geodatos',
@@ -152,7 +152,7 @@
       accionPrevia: 'abrirSimbologia',
       insignia: 'Módulo 02 · Componente 4',
       titulo: 'Motor de Simbología Estadística Coherente',
-      texto: 'Cada una de las 294 capas se carga automáticamente con una simbología racional acorde a la estructura real de sus datos (Color Único para hitos y redes IGV puntuales, Categorizado para zonificaciones y tipos de equipamiento, o Graduado mediante Cuartiles, Jenks, Intervalos Iguales o Pretty Breaks para variables continuas), permitiéndote además reclasificar columnas y paletas en vivo.'
+      texto: 'Cada una de las 294 capas se carga automáticamente con una simbología temática acorde a la estructura real de sus datos (Color Único para hitos y redes IGV puntuales, Categorizado para zonificaciones y tipos de equipamiento, o Graduado mediante Cuartiles, Jenks, Intervalos Iguales o Pretty Breaks para variables continuas), permitiéndote además cambiar el mapa base, reclasificar columnas y ajustar paletas cromáticas en vivo.'
     },
     {
       id: 'paso-13-visor-leaflet',
@@ -219,8 +219,8 @@
       grupoNav: 'general',
       esPresentacionModulo: false,
       insignia: 'Utilidad Transversal · Consulta Rápida',
-      titulo: 'Glosario Permanente de Siglas y Conceptos Técnicos',
-      texto: 'Disponible en todo momento en el extremo superior derecho, este botón abre una ventana de consulta rápida que explica en lenguaje claro cada sigla utilizada en el Atlas (VGI, IGV, KDE, LISA, PRC, OGUC, RSH, SINIM, IDE), acompañando la lectura sin interrumpir tu sesión de trabajo.'
+      titulo: 'Control de Letra (A / A+ / A++) y Glosario Permanente de Siglas',
+      texto: 'Disponibles en todo momento en el extremo superior derecho, estos controles te permiten aumentar dinámicamente el tamaño de la tipografía en toda la plataforma y abrir una ventana de consulta rápida que explica cada sigla utilizada en el Atlas (VGI, IGV, KDE, LISA, PRC, OGUC, RSH, SINIM, IDE) sin interrumpir tu sesión.'
     }
   ];
 

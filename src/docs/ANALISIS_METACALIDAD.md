@@ -13,25 +13,29 @@ Este perfil se consulta directamente en el panel inferior de **Detalles** del **
 
 ---
 
-## 2. Flujo de trabajo de estandarización e inspección en el panel `Detalles`
+## 2. Procedimiento de estandarización hacia entregables verificados en el panel `Detalles`
 
 ```mermaid
 flowchart LR
-    subgraph FUENTES["1. Fuentes Cartográficas (294 Capas)"]
-        F1["123 Capas Oficiales del Estado\n(IDE Chile, INE, MINVU, SUBDERE, SII, Munistgo)\nIdentificador: id_ig"]
-        F2["171 Capas Descentralizadas de IGV\n(OpenStreetMap ODbL 1.0 y GBIF CC BY 4.0)\nIdentificador: id_igv"]
+    classDef subproc fill:#1e293b,stroke:#94a3b8,stroke-dasharray:4 3,color:#e2e8f0
+    classDef proc fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#e2e8f0
+    classDef ent fill:#064e3b,stroke:#10b981,stroke-width:2.5px,color:#ecfdf5
+
+    subgraph FUENTES["1. SUBPROCEDIMIENTOS DE CAPTURA (294 Capas)"]
+        F1["Subprocedimiento SP1 · Fuentes Oficiales\n123 Capas del Estado (IDE Chile, INE, MINVU, SUBDERE, SII)\nIdentificador: id_ig"]:::subproc
+        F2["Subprocedimiento SP2 · Extracción IGV\n171 Capas Descentralizadas (OSM ODbL 1.0 y GBIF CC BY 4.0)\nIdentificador: id_igv"]:::subproc
     end
 
-    subgraph PROCESO["2. Homologación ISO 19115 / ISO 19157"]
-        P1["scripts/enriquecer_base_datos_metadatos.py\nValidación topológica OGC Simple Features\ne inyección de los 17 atributos estandarizados"]
+    subgraph PROCESO["2. PROCEDIMIENTO PR-04.2 · Homologación ISO 19115 / ISO 19157"]
+        P1["scripts/enriquecer_base_datos_metadatos.py\nValidación topológica OGC Simple Features\ne inyección de los 17 atributos estandarizados"]:::proc
     end
 
-    subgraph CONSULTA["3. Consulta en Plataforma (Módulo 02 y Módulo 03)"]
-        C1["Módulo 02 · Panel inferior 'Detalles'\nConmutación entre atributos nativos y los\n17 atributos ISO 19157 + Descarga GeoJSON / CSV"]
-        C2["Módulo 03 · Capítulos DOC · 04 y DOC · 05\nDescarga de perfil_metadatos_vgi.xlsx y\nconsulta filtrable de las 294 capas"]
+    subgraph CONSULTA["3. ENTREGABLES VERIFICADOS EN REPOSITORIO Y PLATAFORMA"]
+        C1(["Entregable E4 · Panel 'Detalles' (Módulo 02)\nConmutación entre atributos nativos y los\n17 atributos ISO 19157 + Descarga GeoJSON / CSV"]):::ent
+        C2(["Entregable E4 / DOC · 04 y 05 (Módulo 03)\nLibro perfil_metadatos_vgi.xlsx y\ncatálogo filtrable de las 294 capas"]):::ent
     end
 
-    F1 & F2 --> P1 --> C1 & C2
+    F1 & F2 -->|"integran"| P1 -->|"genera"| C1 & C2
 ```
 
 ---

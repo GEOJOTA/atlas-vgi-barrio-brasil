@@ -53,6 +53,33 @@ const ModuloMapa = (() => {
   let capasWMSActivas = {};
   let layerActivoPopup = null;
   let _pendingBboxBounds = null;
+  let mapasBase = {};
+  let mapaBaseActivaNombre = 'OpenStreetMap Estándar (Predeterminado)';
+
+  function sincronizarSelectorMapaBase() {
+    const selMapaBase = typeof document !== 'undefined'
+      ? document.getElementById('select-simbologia-mapabase')
+      : null;
+    if (selMapaBase && mapaBaseActivaNombre) {
+      selMapaBase.value = mapaBaseActivaNombre;
+    }
+  }
+
+  function cambiarMapaBase(nombreMapaBase) {
+    if (!mapa || !mapasBase || !mapasBase[nombreMapaBase]) return false;
+    Object.entries(mapasBase).forEach(([nombre, capa]) => {
+      if (nombre !== nombreMapaBase && mapa.hasLayer(capa)) {
+        mapa.removeLayer(capa);
+      }
+    });
+    const capaDestino = mapasBase[nombreMapaBase];
+    if (!mapa.hasLayer(capaDestino)) {
+      capaDestino.addTo(mapa);
+    }
+    mapaBaseActivaNombre = nombreMapaBase;
+    sincronizarSelectorMapaBase();
+    return true;
+  }
 
   function inicializar(idContenedor = 'mapa-atlas') {
     const el = document.getElementById(idContenedor);
@@ -118,16 +145,25 @@ const ModuloMapa = (() => {
       preferCanvas: true
     });
 
-    const mapasBase = {
+    mapasBase = {
       'OpenStreetMap Estándar (Predeterminado)': osmEstandar,
       'OpenStreetMap Humanitario (HOT)': osmHumanitario,
       'Imagen Satelital (Bing / Microsoft)': satelitalBingMicrosoft,
       'Satelital Híbrido con Calles (Bing / Microsoft)': satelitalBingHibrido,
       'Imagen Satelital (Esri World Imagery)': satelitalEsri
     };
+    mapaBaseActivaNombre = 'OpenStreetMap Estándar (Predeterminado)';
 
     L.control.layers(mapasBase, null, { position: 'topright' }).addTo(mapa);
     L.control.scale({ imperial: false, metric: true, position: 'bottomleft' }).addTo(mapa);
+
+    mapa.on('baselayerchange', (ev) => {
+      if (ev && ev.name && mapasBase[ev.name]) {
+        mapaBaseActivaNombre = ev.name;
+        sincronizarSelectorMapaBase();
+      }
+    });
+    sincronizarSelectorMapaBase();
 
     // Observador reactivo de redimensionamiento del contenedor del visor Leaflet
     if (window.ResizeObserver && el) {
@@ -723,7 +759,7 @@ const ModuloMapa = (() => {
     { match: /(agua|grifo|hidrante|incendio|basurero|punto_limpio|reciclaje|energia|luminaria)/i, color: '#0d9488' }
   ];
 
-  // Tabla experta de simbología predeterminada racional coherente con la naturaleza de cada capa
+  // Tabla experta de simbología temática predeterminada coherente con la naturaleza de cada capa
   const SIMBOLOGIA_EXPERTA = {
     // --- Modo PLANO (conjuntos homogéneos, límites administrativos o indicadores únicos) ---
     censo2024_regional: { modo: 'plano', color: '#475569' },
@@ -909,7 +945,7 @@ const ModuloMapa = (() => {
   }
 
   /**
-   * Determina de manera racional y verificable la simbología predeterminada
+   * Determina de manera verificable la simbología temática predeterminada
    * según la regla experta de la capa y la distribución real de sus datos.
    */
   function determinarSimbologiaPredeterminada(idCapa, geojson, opciones = {}) {
@@ -1024,7 +1060,7 @@ const ModuloMapa = (() => {
       }
     }
 
-    // 3. Respaldo racional automático para capas externas / personalizadas del usuario
+    // 3. Respaldo automático para capas externas / personalizadas del usuario
     const COLUMNAS_EXCLUIDAS_HEURISTICA = new Set([
       'superficie_m2', 'superficie_ha', 'point_x', 'point_y', 'latitud', 'longitud',
       'lat', 'lon', 'x', 'y', 'utm_este', 'utm_norte', 'este_84', 'norte_84',
@@ -1083,7 +1119,7 @@ const ModuloMapa = (() => {
       };
     }
 
-    // Último recurso racional: si ningún atributo varía de forma útil, Color Único
+    // Último recurso técnico: si ningún atributo varía de forma útil, Color Único
     return {
       modo: 'plano',
       colorPlano: opciones.color || COLORES_CATEGORIA[idCapa] || '#35586B',
@@ -1736,6 +1772,7 @@ const ModuloMapa = (() => {
       };
     }
 
+    const selectMapaBase = document.getElementById('select-simbologia-mapabase');
     const selectCapa = document.getElementById('select-simbologia-capa');
     const selectModo = document.getElementById('select-simbologia-modo');
     const selectColumna = document.getElementById('select-simbologia-columna');
@@ -1746,6 +1783,13 @@ const ModuloMapa = (() => {
     const selectPaleta = document.getElementById('select-simbologia-paleta');
     const btnAplicar = document.getElementById('btn-aplicar-simbologia');
     const btnRestablecer = document.getElementById('btn-restablecer-simbologia');
+
+    if (selectMapaBase) {
+      sincronizarSelectorMapaBase();
+      selectMapaBase.onchange = () => {
+        cambiarMapaBase(selectMapaBase.value);
+      };
+    }
 
     const leerConfigDesdeUI = () => {
       return {
@@ -2056,7 +2100,7 @@ const ModuloMapa = (() => {
     `;
   }
 
-  function encuadrarCapaDeFormaRacional(capa, opciones = {}) {
+  function encuadrarCapaDeFormaAutomatica(capa, opciones = {}) {
     if (!mapa || !capa || opciones.ajustarVista === false) return;
     if (typeof capa.getBounds !== 'function') return;
     const b = capa.getBounds();
@@ -2110,7 +2154,7 @@ const ModuloMapa = (() => {
     const color = opciones.color || COLORES_CATEGORIA[idCapa] || COLORES_CATEGORIA.defecto;
     const icono = opciones.icono || '📍';
 
-    // Registrar o actualizar metadatos y configuración racional de simbología predeterminada
+    // Registrar o actualizar metadatos y configuración de simbología temática predeterminada
     if (!registroCapasTematicas[idCapa]) {
       const cols = inspeccionarColumnasGeoJSON(geojson);
       const configPredeterminada = determinarSimbologiaPredeterminada(idCapa, geojson, opciones);
@@ -2237,7 +2281,7 @@ const ModuloMapa = (() => {
     sincronizarSelectorCapasSimbologia(idCapa);
     actualizarLeyendaCartograficaVisor(registroCapasTematicas[idCapa]);
 
-    encuadrarCapaDeFormaRacional(capa, opciones);
+    encuadrarCapaDeFormaAutomatica(capa, opciones);
 
     return capa;
   }
@@ -3323,7 +3367,7 @@ const ModuloMapa = (() => {
     encuadrarBbox,
     encuadrarCapa: (id, ops = {}) => {
       const reg = registroCapasTematicas[id];
-      if (reg && reg.capaLeaflet) encuadrarCapaDeFormaRacional(reg.capaLeaflet, ops);
+      if (reg && reg.capaLeaflet) encuadrarCapaDeFormaAutomatica(reg.capaLeaflet, ops);
     },
     activarModoDibujoBbox,
     desactivarModoDibujoBbox,
@@ -3359,6 +3403,9 @@ const ModuloMapa = (() => {
     sincronizarSelectorCapasSimbologia,
     actualizarLeyendaCartograficaVisor,
     inicializarControlSimbologia,
+    cambiarMapaBase,
+    obtenerMapaBaseActiva: () => mapaBaseActivaNombre,
+    sincronizarSelectorMapaBase,
     RAMPAS_CUANTITATIVAS,
     PALETAS_CATEGORICAS,
     COLORES_CATEGORIA

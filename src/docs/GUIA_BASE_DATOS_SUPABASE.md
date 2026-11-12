@@ -17,29 +17,33 @@ Esta arquitectura asegura que el **Módulo 02 (`Explorar mapa`)** opere con cero
 
 ## 2. Flujos de trabajo de la base de datos espacial
 
-### 2.1. Inicialización del esquema PostGIS y carga del catálogo de 294 capas
+### 2.1. Procedimiento de inicialización PostGIS y entregables verificados en Supabase y respaldo ZIP
 
 ```mermaid
 flowchart LR
-    subgraph IN["1. ENTRADA (Scripts SQL en Git)"]
-        S1["scripts/db/01_schema_postgis.sql\nExtensiones postgis, postgis_topology, pg_trgm"]
-        S2["scripts/db/02_seed_metadata.sql\nCatálogo de las 294 capas (123 id_ig + 171 id_igv)\ny perfil de 17 atributos ISO 19115 / ISO 19157"]
+    classDef subproc fill:#1e293b,stroke:#94a3b8,stroke-dasharray:4 3,color:#e2e8f0
+    classDef proc fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#e2e8f0
+    classDef ent fill:#064e3b,stroke:#10b981,stroke-width:2.5px,color:#ecfdf5
+
+    subgraph IN["1. INSUMOS SQL Y METADATOS EN GIT"]
+        S1["Subprocedimiento SP1 · Script DDL\nscripts/db/01_schema_postgis.sql\n(Extensiones postgis, postgis_topology, pg_trgm)"]:::subproc
+        S2["Subprocedimiento SP2 · Semilla de Catálogo\nscripts/db/02_seed_metadata.sql\n(294 capas: 123 id_ig + 171 id_igv · 17 atrib. ISO)"]:::subproc
     end
 
-    subgraph PROC["2. PROCESAMIENTO (Motor PostgreSQL 17 / PostGIS 3.3)"]
-        P1["Creación de Tablas Relacionales y Espaciales\ncatalogo_capas | entidades_territoriales"]
-        P2["Indexación Espacial y Semántica\nÍndices GiST sobre geom (EPSG:4326 y EPSG:32719)\nÍndices GIN sobre atributos JSONB (id_ig / id_igv)"]
-        P3["Seguridad Row Level Security (RLS) y Funciones RPC\nPolíticas SELECT públicas (anon)\nRPC obtener_entidades_en_bbox()"]
+    subgraph PROC["2. PROCEDIMIENTO PR-DB · Ejecución en PostgreSQL 17 / PostGIS 3.3"]
+        P1["Subprocedimiento PR-DB.1 · Creación de Tablas\ncatalogo_capas | entidades_territoriales"]:::subproc
+        P2["Subprocedimiento PR-DB.2 · Indexación GiST/GIN\nÍndices espaciales EPSG:4326 / 32719 y JSONB"]:::subproc
+        P3["Subprocedimiento PR-DB.3 · RLS y RPC\nPolíticas SELECT anon + RPC obtener_entidades_en_bbox()"]:::proc
     end
 
-    subgraph OUT["3. SALIDA Y RESPALDO"]
-        O1["API REST PostgREST + Endpoints RPC Activos"]
-        O2["Respaldo en Paquete Maestro\ndocs/geodatabase_completa_atlas_vgi.zip\n(542,35 MB)"]
+    subgraph OUT["3. ENTREGABLES VERIFICADOS"]
+        O1(["Entregable Verificado E-DB1:\nAPI REST PostgREST + Endpoints RPC Activos"]):::ent
+        O2(["Entregable Verificado E-DB2:\nRespaldo maestro geodatabase_completa_atlas_vgi.zip (542,35 MB)"]):::ent
     end
 
-    S1 --> P1 --> P2 --> P3 --> O1
-    S2 --> P1
-    P3 --> O2
+    S1 & S2 -->|"ejecutan"| P1 -->|"habilita"| P2 -->|"culmina en"| P3
+    P3 -->|"publica"| O1
+    P3 -->|"respalda en"| O2
 ```
 
 ---

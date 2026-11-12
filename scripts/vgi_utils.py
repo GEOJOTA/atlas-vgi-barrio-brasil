@@ -258,9 +258,10 @@ def actualizar_catalogo_vgi_js(actualizaciones):
                     f"en {fuente} dentro de la Región Metropolitana de Santiago."
                 )
             else:
+                sust_entidad = 'entidad' if rm_c == 1 else 'entidades'
                 item['descripcion'] = (
                     f"Catastro colaborativo IGV de {item['nombreCorto']} ({fuente}): "
-                    f"{rm_c:,} entidades en la Región Metropolitana ({br_c:,} en Barrio Brasil)."
+                    f"{rm_c:,} {sust_entidad} en la Región Metropolitana ({br_c:,} en Barrio Brasil)."
                 ).replace(',', '.')
 
     nuevo_json = json.dumps(entries, indent=2, ensure_ascii=False)

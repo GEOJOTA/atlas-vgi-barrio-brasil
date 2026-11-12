@@ -16,22 +16,28 @@ El **Atlas para la Gestión Territorial (Análisis y Exploración | Municipio de
 
 ```mermaid
 flowchart LR
-    subgraph PROB["1. Brecha Territorial Detectada (OE 1)"]
-        B1["Cartografía Oficial del Estado\nAlta validez normativa pero menor\nfrecuencia de actualización barrial"]
-        B2["Información Geográfica Voluntaria (IGV)\nAlta resolución cotidiana en OSM y GBIF\npero dispersa en etiquetas técnicas"]
+    classDef subproc fill:#1e293b,stroke:#94a3b8,stroke-dasharray:4 3,color:#e2e8f0
+    classDef proc fill:#0f172a,stroke:#38bdf8,stroke-width:1.8px,color:#e2e8f0
+    classDef ent fill:#064e3b,stroke:#10b981,stroke-width:2.5px,color:#ecfdf5
+
+    subgraph PROB["1. PROCEDIMIENTO DE DIAGNÓSTICO DE BRECHAS (OE 1 · PR-01 a PR-03)"]
+        B1["Subprocedimiento SP1 · Análisis de Fuentes Estatales\nAlta validez normativa pero menor\nfrecuencia de actualización barrial"]:::subproc
+        B2["Subprocedimiento SP2 · Análisis de Fuentes IGV\nAlta resolución cotidiana en OSM y GBIF\npero dispersa en etiquetas técnicas"]:::subproc
+        ENT_OE1(["Entregables Verificados E1–E3:\nARQUITECTURA.md + Matriz de Brechas + Catálogos"]):::ent
     end
 
-    subgraph SOL["2. Armonización y Síntesis en el Atlas (OE 2 y OE 3)"]
-        S1["5 Dimensiones Analíticas\n123 Capas Oficiales (id_ig) +\n171 Capas IGV Descentralizadas (id_igv)"]
-        S2["Perfil Homologado de 17 Atributos\nNormas ISO 19115 e ISO 19157\nen el panel inferior Detalles"]
-        S3["Prototipo Sintetizado en 3 Módulos\n01 Análisis (83 mapas) · 02 Explorar Mapa ·\n03 Documentación (6 capítulos)"]
+    subgraph SOL["2. PROCEDIMIENTOS DE ARMONIZACIÓN Y PLATAFORMA (OE 2 y OE 3 · PR-04 a PR-07)"]
+        S1["Procedimiento PR-04 · Normalización en 5 Dimensiones\n123 Capas Oficiales (id_ig) + 171 Capas IGV (id_igv)\ncon Perfil de 17 Atributos ISO 19115 / ISO 19157"]:::proc
+        S2["Procedimiento PR-06 y PR-07 · Geoportal en 3 Módulos\n01 Análisis (83 mapas) · 02 Mapa (Simbología Temática,\n5 Mapas Base, Inspector PRC) · 03 Documentación"]:::proc
+        ENT_OE23(["Entregables Verificados E4–E7:\n294 GeoJSON + Matrices + Geoportal en Producción"]):::ent
     end
 
-    subgraph IMP["3. Uso y Transferibilidad (OE 4)"]
-        U1["4 Perfiles de Actores Territoriales\nInstituciones · Vecinos ·\nMapeadores · Investigación"]
+    subgraph IMP["3. PROCEDIMIENTO DE VALIDACIÓN Y TRANSFERENCIA (OE 4 · PR-08 y PR-09)"]
+        U1["Procedimientos PR-08 y PR-09 · Evaluación y Empaquetado\nPruebas M1/M2, Tutorial 18 pasos, Manuales y Auditoría"]:::proc
+        ENT_OE4(["Entregables Verificados E8–E9:\nTRAZABILIDAD.md + Manuales + ZIP (542,35 MB)"]):::ent
     end
 
-    B1 & B2 --> S1 --> S2 --> S3 --> U1
+    B1 & B2 -->|"emiten diagnóstico"| ENT_OE1 -->|"fundamenta"| S1 -->|"habilita"| S2 -->|"publica"| ENT_OE23 -->|"evalúa y documenta"| U1 -->|"entrega"| ENT_OE4
 ```
 
 ---
@@ -64,21 +70,21 @@ Para que la integración entre capas estatales y colaborativas sea transparente 
 
 ---
 
-## 4. Matriz maestra de trazabilidad: Objetivos Específicos, los 9 Hitos con Entregable Verificado y Verificación en Producción
+## 4. Matriz maestra de trazabilidad: Objetivos Específicos, Procedimientos (`PR`) y Entregables Verificados (`E1`–`E9`)
 
-En estricta correspondencia con la Carta Gantt oficial del proyecto (`Carta_Gantt_Atlas_VGI.pdf`), a continuación se presenta la trazabilidad completa entre los cuatro Objetivos Específicos (`OE 1` a `OE 4`), los **9 Hitos que cuentan con un entregable verificado asociado (`Hito 1 / E1` a `Hito 9 / E9`)** y los archivos físicos auditables en el repositorio y en la plataforma web:
+En estricta correspondencia con la Carta Gantt oficial del proyecto (`Carta_Gantt_Atlas_VGI.pdf`), a continuación se presenta la trazabilidad completa que vincula cada Objetivo Específico (`OE 1` a `OE 4`) con el **Procedimiento ejecutado (`PR-01` a `PR-09`)**, su **Entregable verificado resultante (`Hito 1 / E1` a `Hito 9 / E9`)** y los archivos físicos auditables en el repositorio y la web:
 
-| Objetivo Específico | Hito y Fecha ($\blacklozenge$) | Código y Nombre del Entregable Verificado | Archivos Verificables en el Repositorio y en la Web | Módulo de Consulta en la Plataforma |
-| :--- | :---: | :--- | :--- | :---: |
-| **OE 1.** Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales. | **Hito 1**<br>`03 sep 2026` | **E1 ·** Arquitectura del sistema y catálogo inicial de fuentes | [`docs/ARQUITECTURA.md`](ARQUITECTURA.md), [`docs/catalogo_fuentes_vgi.xlsx`](catalogo_fuentes_vgi.xlsx) | **Módulo 03**<br>(`DOC · 01`, `DOC · 04` y `DOC · 06`) |
-| **OE 1.** *(continuación)* | **Hito 2**<br>`09 sep 2026` | **E2 ·** Cinco dimensiones analíticas, etiquetas IGV y configuración territorial | [`docs/categorias_tematicas_osm.xlsx`](categorias_tematicas_osm.xlsx), [`src/js/config.js`](../js/config.js) | **Módulo 01** y **Módulo 03**<br>(`DOC · 02` y `DOC · 04`) |
-| **OE 1.** *(continuación)* | **Hito 3**<br>`16 sep 2026` | **E3 ·** Inventario consolidado de 294 fuentes y matriz de brechas | [`docs/catalogo_fuentes_vgi.xlsx`](catalogo_fuentes_vgi.xlsx), [`docs/TRAZABILIDAD.md`](TRAZABILIDAD.md) | **Módulo 03**<br>(`DOC · 01` y `DOC · 05`) |
-| **OE 2.** Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos. | **Hito 4**<br>`08 oct 2026` | **E4 ·** Geodatabase de 294 capas GeoJSON, esquema PostGIS y perfil de 17 atributos ISO (`id_ig` / `id_igv`) | `src/data/*.geojson` (294 archivos), [`docs/perfil_metadatos_vgi.xlsx`](perfil_metadatos_vgi.xlsx), `scripts/db/01_schema_postgis.sql` | **Módulo 02** (Panel *Detalles*) y **Módulo 03** (`DOC · 03` y `DOC · 05`) |
-| **OE 2.** *(continuación)* | **Hito 5**<br>`19 oct 2026` | **E5 ·** Matriz de síntesis barrial por manzana, catastro IGV e inversiones BIP | `data/matriz_sintesis_barrio_brasil_manzanas.geojson`, `data/resumen_catastro_vgi.csv`, `data/bip_inversiones_santiago.csv` | **Módulo 01** y **Módulo 02** |
-| **OE 3.** Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.<br>*(Incluye la definición de un prototipo sintetizado para usuarios no técnicos: prototipo más sintetizado que permita a usuarios sin experiencia técnica poder interactuar de forma más simple con la plataforma).* | **Hito 6**<br>`27 oct 2026` | **E6 ·** Plataforma sintetizada en 3 módulos (*Análisis*, *Explorar Mapa*, *Documentación*) y visor cartográfico cuadrado con 5 mapas base sin API | [`src/index.html`](../index.html), [`src/css/estilos.css`](../css/estilos.css), [`src/js/app.js`](../js/app.js), [`src/js/modulos/mapa.js`](../js/modulos/mapa.js) | **Módulos 01, 02 y 03** |
-| **OE 3.** *(continuación)* | **Hito 7**<br>`04 nov 2026` | **E7 ·** Inspector normativo PRC/OGUC, simbología temática racional, panel *Detalles*, 83 cartografías temáticas y despliegue en Netlify | [`src/js/modulos/evaluador_normativo.js`](../js/modulos/evaluador_normativo.js), [`src/js/modulos/mapa.js`](../js/modulos/mapa.js), [`src/js/modulos/indicadores_analisis.js`](../js/modulos/indicadores_analisis.js), `src/img/cartografias/`, `netlify.toml` | **Módulo 01** y **Módulo 02** |
-| **OE 4.** Evaluar la usabilidad y la pertinencia de la plataforma con distintos perfiles de actores territoriales y asegurar su transferibilidad técnica, metodológica y documental. | **Hito 8**<br>`09 nov 2026` | **E8 ·** Evaluación de usabilidad, trazabilidad, Tutorial interactivo de 18 pasos y Módulo 03 navegable | [`docs/TRAZABILIDAD.md`](TRAZABILIDAD.md), [`docs/MANUAL_USO.md`](MANUAL_USO.md), [`src/js/modulos/tutorial_interactivo.js`](../js/modulos/tutorial_interactivo.js), [`src/js/modulos/manual.js`](../js/modulos/manual.js) | **Cabecera** y **Módulo 03** (`DOC · 01` a `DOC · 06`) |
-| **OE 4.** *(continuación)* | **Hito 9**<br>`12 nov 2026` | **E9 ·** Manual de actualización técnica, paquete maestro ZIP (`542,35 MB`) y scripts de verificación de integridad | [`docs/MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md), [`docs/geodatabase_completa_atlas_vgi.zip`](geodatabase_completa_atlas_vgi.zip), `scripts/verificar_conteo_capas.py`, `scripts/verificar_integridad_despliegue.py` | **Módulo 02** y **Módulo 03** (`DOC · 04` y `DOC · 06`) |
+| Objetivo Específico | Hito y Fecha ($\blacklozenge$) | Procedimiento Ejecutado (`PR`) | Entregable Verificado Resultante (`E1`–`E9`) | Archivos Verificables y Módulo en la Plataforma |
+| :--- | :---: | :--- | :--- | :--- |
+| **OE 1.** Caracterizar la disponibilidad, la cobertura y los vacíos de información geográfica del área de estudio, y definir las bases taxonómicas y de diseño centrado en el usuario que permitan integrar datos colaborativos e institucionales. | **Hito 1**<br>`03 sep 2026` | **`PR-01` ·** Relevamiento de fuentes abiertas (OSM/GBIF/IDE) y diseño de arquitectura web | **E1 ·** Arquitectura del sistema y catálogo inicial de fuentes | [`docs/ARQUITECTURA.md`](ARQUITECTURA.md), [`docs/catalogo_fuentes_vgi.xlsx`](catalogo_fuentes_vgi.xlsx)<br>*(Módulo 03: `DOC · 01`, `04`, `06`)* |
+| **OE 1.** *(continuación)* | **Hito 2**<br>`09 sep 2026` | **`PR-02` ·** Taxonomía en 5 dimensiones analíticas y configuración territorial | **E2 ·** Cinco dimensiones analíticas, etiquetas IGV y configuración territorial | [`docs/categorias_tematicas_osm.xlsx`](categorias_tematicas_osm.xlsx), [`src/js/config.js`](../js/config.js)<br>*(Módulo 01 y Módulo 03: `DOC · 02`, `04`)* |
+| **OE 1.** *(continuación)* | **Hito 3**<br>`16 sep 2026` | **`PR-03` ·** Auditoría de cobertura comunal/barrial e inventario de brechas | **E3 ·** Inventario consolidado de 294 fuentes y matriz de brechas | [`docs/catalogo_fuentes_vgi.xlsx`](catalogo_fuentes_vgi.xlsx), [`docs/TRAZABILIDAD.md`](TRAZABILIDAD.md)<br>*(Módulo 03: `DOC · 01`, `05`)* |
+| **OE 2.** Consolidar una geodatabase multipropósito que armonice coberturas oficiales e información voluntaria bajo estándares internacionales de calidad y metadatos. | **Hito 4**<br>`08 oct 2026` | **`PR-04` ·** Descarga exhaustiva RM/Brasil, normalización `EPSG:4326` e inyección ISO 19157 | **E4 ·** Geodatabase de 294 capas GeoJSON, esquema PostGIS y perfil de 17 atributos (`id_ig` / `id_igv`) | `src/data/*.geojson`, [`docs/perfil_metadatos_vgi.xlsx`](perfil_metadatos_vgi.xlsx), `scripts/db/01_schema_postgis.sql`<br>*(Módulo 02 Panel Detalles y `DOC · 03`, `05`)* |
+| **OE 2.** *(continuación)* | **Hito 5**<br>`19 oct 2026` | **`PR-05` ·** Cruce espacial censal (1.711 mz), RSH, IGV e inversión BIP | **E5 ·** Matriz de síntesis barrial por manzana, catastro IGV e inversiones BIP | `data/matriz_sintesis_barrio_brasil_manzanas.geojson`, `data/resumen_catastro_vgi.csv`, `data/bip_inversiones_santiago.csv`<br>*(Módulo 01 y Módulo 02)* |
+| **OE 3.** Implementar un geoportal web accesible e interoperable que permita visualizar cartografía multinivel, consultar el territorio en tiempo real y descargar geodatos abiertos.<br>*(Prototipo sintetizado para usuarios no técnicos en 3 módulos).* | **Hito 6**<br>`27 oct 2026` | **`PR-06` ·** Maquetación del prototipo en 3 módulos, escalado `A/A+/A++` y visor de 5 mapas base | **E6 ·** Plataforma sintetizada en 3 módulos (*Análisis*, *Explorar Mapa*, *Documentación*) y visor cuadrado | [`src/index.html`](../index.html), [`src/css/estilos.css`](../css/estilos.css), [`src/js/app.js`](../js/app.js), [`src/js/modulos/mapa.js`](../js/modulos/mapa.js)<br>*(Módulos 01, 02 y 03)* |
+| **OE 3.** *(continuación)* | **Hito 7**<br>`04 nov 2026` | **`PR-07` ·** Desarrollo de Inspector PRC puntual, simbología temática, panel Detalles y 83 mapas | **E7 ·** Inspector normativo PRC/OGUC, simbología temática, panel *Detalles*, 83 mapas y Netlify | [`src/js/modulos/evaluador_normativo.js`](../js/modulos/evaluador_normativo.js), [`src/js/modulos/mapa.js`](../js/modulos/mapa.js), [`src/js/modulos/indicadores_analisis.js`](../js/modulos/indicadores_analisis.js), `netlify.toml`<br>*(Módulo 01 y Módulo 02)* |
+| **OE 4.** Evaluar la usabilidad y la pertinencia de la plataforma con distintos perfiles de actores territoriales y asegurar su transferibilidad técnica, metodológica y documental. | **Hito 8**<br>`09 nov 2026` | **`PR-08` ·** Evaluación participativa (Modalidad 1 y 2), Tutorial (18 pasos) y Módulo 03 | **E8 ·** Evaluación de usabilidad, trazabilidad, Tutorial interactivo y Módulo 03 navegable | [`docs/TRAZABILIDAD.md`](TRAZABILIDAD.md), [`docs/MANUAL_USO.md`](MANUAL_USO.md), [`src/js/modulos/tutorial_interactivo.js`](../js/modulos/tutorial_interactivo.js), [`src/js/modulos/manual.js`](../js/modulos/manual.js)<br>*(Cabecera y `DOC · 01` a `06`)* |
+| **OE 4.** *(continuación)* | **Hito 9**<br>`12 nov 2026` | **`PR-09` ·** Redacción técnica con catálogo de repositorio, empaquetado ZIP y verificación Python | **E9 ·** Manual de actualización técnica, paquete ZIP (`542,35 MB`) y auditoría de integridad | [`docs/MANUAL_ACTUALIZACION_ATLAS.md`](MANUAL_ACTUALIZACION_ATLAS.md), [`docs/geodatabase_completa_atlas_vgi.zip`](geodatabase_completa_atlas_vgi.zip), `scripts/verificar_conteo_capas.py`<br>*(Módulo 02 y `DOC · 04`, `06`)* |
 
 ---
 
@@ -89,17 +95,17 @@ Para verificar que el **Prototipo 02** responda efectivamente a las necesidades 
 ### 5.1. Los dos instrumentos de evaluación aplicada
 1. **Modalidad 1 (`FO-M1`) — Prueba de Usabilidad con Tareas Guiadas sobre la Plataforma:**
    * Evalúa la experiencia práctica de navegación a través de **5 tareas representativas del Prototipo 02**:
-     * **Tarea T1 (Cabecera e Inducción):** Apertura del *Tutorial Interactivo* (a la izquierda del título) para recorrer la presentación de cada módulo y consulta de términos en el *Glosario de siglas* (a la derecha del título).
+     * **Tarea T1 (Cabecera, Lectura e Inducción):** Ajuste dinámico del tamaño de letra (`A` / `A+` / `A++`), apertura del *Tutorial Interactivo* (a la izquierda del título) para recorrer cada módulo y consulta de términos en el *Glosario de siglas* (a la derecha del título).
      * **Tarea T2 (Módulo 01 · Análisis):** Exploración de los 4 ejes geoestadísticos (`KDE`, `LISA`, `Demografía Censo 2024` y `Metabolismo Urbano`), apertura de una de las 83 cartografías temáticas y búsqueda de una cobertura dentro de las **5 Dimensiones Analíticas** para activarla directamente en el visor.
-     * **Tarea T3 (Módulo 02 · Explorar Mapa y Simbología):** Conmutación entre los **5 mapas base sin API** (`OpenStreetMap Estándar`, `HOT`, `Bing/Microsoft Satelital`, `Bing/Microsoft Híbrido` y `Esri World Imagery`), uso de `Delimitar área` en proyección `EPSG:32719` y personalización de la **Simbología Temática Racional** (`Plano`, `Categorizado` y `Graduado` multi-método).
-     * **Tarea T4 (Módulo 02 · Inspector PRC y Panel Detalles):** Activación bajo demanda del **Inspector normativo (PRC)** sobre una manzana del Barrio Brasil y lectura del perfil homologado de **17 atributos (`id_ig` / `id_igv`)** en el panel inferior **Detalles**.
+     * **Tarea T3 (Módulo 02 · Explorar Mapa, Mapas Base y Simbología):** Conmutación entre los **5 mapas base sin API** (`OpenStreetMap Estándar`, `HOT`, `Bing/Microsoft Satelital`, `Bing/Microsoft Híbrido` y `Esri World Imagery`) tanto desde el mapa como directamente dentro de **Simbología Dinámica**, uso de `Delimitar área` en proyección `EPSG:32719` y personalización de la **Simbología Temática** (`Plano`, `Categorizado` y `Graduado` multi-método).
+     * **Tarea T4 (Módulo 02 · Inspector PRC y Panel Detalles):** Activación bajo demanda del **Inspector normativo (PRC)** sobre una manzana del Barrio Brasil (auditando un punto y verificando la desactivación automática de captura conservando la ficha visible) y lectura del perfil homologado de **17 atributos (`id_ig` / `id_igv`)** en el panel inferior **Detalles**.
      * **Tarea T5 (Módulo 03 · Documentación y Descargas):** Uso del buscador en tiempo real entre los 6 capítulos (`DOC · 01` a `DOC · 06`), filtrado del inventario de las 294 capas y descarga de los libros Excel (`.xlsx`) o de la geodatabase completa (`.zip`).
 2. **Modalidad 2 (`FO-M2`) — Protocolo de Conversación Situada con Vecinas, Vecinos y Actores Locales del Barrio Brasil:**
    * Diálogo semiestructurado apoyado en cartografías del barrio para recoger percepciones sobre habitabilidad en cités, conservación patrimonial (`ZCH`/`ICH`), seguridad peatonal, ruido ambiental, arbolado y prioridades de inversión barrial.
 
 ### 5.2. Síntesis de mejoras incorporadas en el Prototipo 02 a partir de la evaluación centrada en el usuario
 * **Simplificación de la navegación principal a 3 módulos claros:** Reducción de la carga visual agrupando todo el flujo en *01 Análisis*, *02 Explorar Mapa* y *03 Documentación*.
-* **Separación espacial de la ayuda en cabecera:** Ubicación del *Tutorial Interactivo* a la izquierda del título y del *Glosario de siglas* a la derecha del título para impedir que sus recuadros se superpongan.
+* **Separación espacial de la ayuda en cabecera y control de lectura (`A / A+ / A++`):** Ubicación del *Tutorial Interactivo* a la izquierda del título y del selector de escala tipográfica junto al *Glosario de siglas* a la derecha, mejorando la legibilidad general sin superposición de botones.
 * **Tutorial interactivo pedagógico por módulos (18 pasos en 4 bloques):** Rediseño del recorrido guiado para presentar primero qué es y para qué sirve cada módulo antes de detallar sus herramientas individuales.
-* **Visor cuadrado amplio y panel inferior `Detalles` de ancho completo:** Reubicación de las tablas de los 17 atributos (`id_ig` / `id_igv`) y de la ficha normativa del PRC debajo del mapa (y mostrando el PRC sólo cuando el usuario activa el inspector), evitando paneles flotantes que oculten la cartografía.
+* **Visor cuadrado amplio, selector de mapa base en Simbología Dinámica e Inspector PRC puntual:** Incorporación de cambio directo de mapa base dentro de *Simbología Dinámica* para agilizar la fotointerpretación, auto-pausa del **Inspector normativo (PRC)** tras consultar un punto (evitando re-auditorías involuntarias mientras mantiene la ficha en pantalla) y reubicación de tablas en el panel inferior `Detalles`.
 * **Mapas base 100 % abiertos y satelitales sin claves de API:** Sustitución de los antiguos mapas de Carto por **OpenStreetMap Estándar**, **OpenStreetMap HOT**, **Bing / Microsoft (Satelital e Híbrido)** y **Esri World Imagery**.

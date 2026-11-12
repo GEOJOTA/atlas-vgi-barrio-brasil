@@ -102,7 +102,7 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "icono": "👥",
     "geometria": "Polígonos",
     "totalEntidades": 1,
-    "descripcion": "Catastro colaborativo IGV de Residencia Universitaria (OpenStreetMap (Geofabrik + Overpass RM)): 1 entidades en la Región Metropolitana (0 en Barrio Brasil).",
+    "descripcion": "Catastro colaborativo IGV de Residencia Universitaria (OpenStreetMap (Geofabrik + Overpass RM)): 1 entidad en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -131,8 +131,8 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "archivoLocal": "data/capa_vgi_conservatorio.geojson",
     "icono": "🎒",
     "geometria": "Polígonos",
-    "totalEntidades": 5,
-    "descripcion": "Catastro colaborativo IGV de Conservatorio (OpenStreetMap (Geofabrik + Overpass RM)): 5 entidades en la Región Metropolitana (0 en Barrio Brasil).",
+    "totalEntidades": 7,
+    "descripcion": "Catastro colaborativo IGV de Conservatorio (OpenStreetMap (Geofabrik + Overpass RM)): 7 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -837,7 +837,7 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "icono": "📍",
     "geometria": "Puntos",
     "totalEntidades": 1,
-    "descripcion": "Catastro colaborativo IGV de Radar Pedagógico de Velocidad Vial (OpenStreetMap (Geofabrik + Overpass RM)): 1 entidades en la Región Metropolitana (0 en Barrio Brasil).",
+    "descripcion": "Catastro colaborativo IGV de Radar Pedagógico de Velocidad Vial (OpenStreetMap (Geofabrik + Overpass RM)): 1 entidad en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1300,9 +1300,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "SENCE / Ministerio del Trabajo y Previsión Social",
     "archivoLocal": "data/capa_vgi_centro_de_capacitacion_laboral.geojson",
     "icono": "📍",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Cobertura colaborativa IGV de Centro de Capacitación Laboral sin registros georreferenciados verificados en OpenStreetMap (Geofabrik + Overpass RM) dentro de la Región Metropolitana de Santiago.",
+    "geometria": "Mixta",
+    "totalEntidades": 15,
+    "descripcion": "Catastro colaborativo IGV de Centro de Capacitación Laboral (OpenStreetMap (Geofabrik + Overpass RM)): 15 entidades en la Región Metropolitana (2 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1315,9 +1315,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "MINSAL / Red Asistencial Rural",
     "archivoLocal": "data/capa_vgi_posta_de_salud_rural_psr.geojson",
     "icono": "🏪",
-    "geometria": "Puntos",
-    "totalEntidades": 3,
-    "descripcion": "Catastro colaborativo IGV de Posta de Salud Rural (PSR) (OpenStreetMap (Geofabrik + Overpass RM)): 3 entidades en la Región Metropolitana (0 en Barrio Brasil).",
+    "geometria": "Mixta",
+    "totalEntidades": 52,
+    "descripcion": "Catastro colaborativo IGV de Posta de Salud Rural (PSR) (OpenStreetMap (Geofabrik + Overpass RM)): 52 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1375,9 +1375,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Corporación Nacional Forestal (CONAF) / SENAPRED",
     "archivoLocal": "data/capa_vgi_torre_de_deteccion_de_incendios_forestales.geojson",
     "icono": "🏪",
-    "geometria": "Puntos",
-    "totalEntidades": 0,
-    "descripcion": "Cobertura colaborativa IGV de Torre de Detección de Incendios Forestales sin registros georreferenciados verificados en OpenStreetMap (Geofabrik + Overpass RM) dentro de la Región Metropolitana de Santiago.",
+    "geometria": "Mixta",
+    "totalEntidades": 3,
+    "descripcion": "Catastro colaborativo IGV de Torre de Detección de Incendios Forestales (OpenStreetMap (Geofabrik + Overpass RM)): 3 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {
@@ -1510,9 +1510,9 @@ const CATALOGO_VGI_DESCENTRALIZADO = [
     "institucion": "Consejo de Monumentos Nacionales (Patrimonio Cultural Inmaterial)",
     "archivoLocal": "data/capa_vgi_animita_de_carretera.geojson",
     "icono": "📍",
-    "geometria": "Puntos",
-    "totalEntidades": 13,
-    "descripcion": "Catastro colaborativo IGV de Animita de Carretera (OpenStreetMap (Geofabrik + Overpass RM)): 13 entidades en la Región Metropolitana (0 en Barrio Brasil).",
+    "geometria": "Mixta",
+    "totalEntidades": 46,
+    "descripcion": "Catastro colaborativo IGV de Animita de Carretera (OpenStreetMap (Geofabrik + Overpass RM)): 46 entidades en la Región Metropolitana (0 en Barrio Brasil).",
     "tipo": "Colaborativa VGI"
   },
   {

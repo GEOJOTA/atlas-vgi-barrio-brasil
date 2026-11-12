@@ -535,6 +535,9 @@ function inicializarAplicacion() {
     });
   }
 
+  // Inicializar control dinámico de tamaño de letra (A / A+ / A++)
+  inicializarControlTamanoLetra();
+
   // Inicializar selector de actor territorial / perfil
   const selPerfil = document.getElementById('sel-perfil-usuario');
   if (selPerfil) {
@@ -4203,6 +4206,60 @@ function vincularEventosFichaNormativa(resultado, lat, lng, prefixArchivo = 'Cer
   });
 }
 
+function inicializarControlTamanoLetra() {
+  const claveStorage = 'atlas_vgi_escala_texto';
+  const botones = Array.from(document.querySelectorAll('.btn-tamano-letra[data-escala-texto]'));
+
+  const aplicarEscala = (valorEscala, persistir = false) => {
+    const num = Number(valorEscala);
+    const escalaValida = Number.isFinite(num) && num >= 0.9 && num <= 1.35 ? String(num) : '1';
+    document.documentElement.style.setProperty('--escala-texto', escalaValida);
+    botones.forEach(btn => {
+      const activo = btn.getAttribute('data-escala-texto') === escalaValida;
+      btn.classList.toggle('activo', activo);
+      btn.setAttribute('aria-pressed', activo ? 'true' : 'false');
+    });
+    if (persistir) {
+      try { localStorage.setItem(claveStorage, escalaValida); } catch (_) {}
+    }
+    if (window.ModuloMapa && typeof window.ModuloMapa.invalidarTamano === 'function') {
+      setTimeout(() => {
+        try { window.ModuloMapa.invalidarTamano(); } catch (_) {}
+      }, 60);
+    }
+  };
+
+  let escalaInicial = '1';
+  try {
+    const guardada = localStorage.getItem(claveStorage);
+    if (guardada && ['1', '1.09', '1.18'].includes(guardada)) {
+      escalaInicial = guardada;
+    }
+  } catch (_) {}
+  aplicarEscala(escalaInicial, false);
+
+  botones.forEach(btn => {
+    btn.addEventListener('click', () => {
+      aplicarEscala(btn.getAttribute('data-escala-texto') || '1', true);
+    });
+  });
+}
+
+function desactivarCapturaInspectorConservandoResultados() {
+  const btnInspector = document.getElementById('btn-inspector-normativo');
+  modoInspectorNormativoActivo = false;
+  window.__inspectorNormativoActivo = false;
+  if (btnInspector) {
+    btnInspector.classList.remove('activo');
+  }
+  const mapaInst = ModuloMapa.obtenerInstanciaMapa && ModuloMapa.obtenerInstanciaMapa();
+  const mapaCont = mapaInst && mapaInst.getContainer ? mapaInst.getContainer() : null;
+  if (mapaCont) {
+    mapaCont.classList.remove('mapa-inspector-activo');
+    mapaCont.style.cursor = '';
+  }
+}
+
 function alternarModoInspectorNormativo(forzarEstado = null, { silencioso = false } = {}) {
   const btnInspector = document.getElementById('btn-inspector-normativo');
   const contInspector = document.getElementById('contenedor-inspector-normativo');
@@ -4305,7 +4362,8 @@ async function ejecutarConsultaInspector(lat, lng, opciones = {}) {
   contInspector.style.display = 'block';
   contInspector.innerHTML = `<div class="ficha-normativa-hud" style="text-align:center; padding:18px;">⏳ Auditando normativa urbanística para lat: ${lat.toFixed(5)}, lng: ${lng.toFixed(5)}...</div>`;
 
-  if (modoInspectorNormativoActivo) {
+  const estabaEnCapturaInteractiva = Boolean(modoInspectorNormativoActivo);
+  if (estabaEnCapturaInteractiva) {
     actualizarBannerInspector(
       `⏳ Auditando normativa en <strong>${lat.toFixed(5)}, ${lng.toFixed(5)}</strong>…`,
       { mostrarBtnFicha: false }
@@ -4318,56 +4376,64 @@ async function ejecutarConsultaInspector(lat, lng, opciones = {}) {
     `);
   }
 
-  await cargarIndicesNormativosRapidos();
+  let resultado;
+  try {
+    await cargarIndicesNormativosRapidos();
 
-  const todasLasCapas = {
-    ...capasNormativasCache,
-    ...capasCargadasPorCategoria,
-    ...capasOficialesCargadas
-  };
+    const todasLasCapas = {
+      ...capasNormativasCache,
+      ...capasCargadasPorCategoria,
+      ...capasOficialesCargadas
+    };
 
-  const resultado = ModuloEvaluadorNormativo.consultarPuntoNormativo(lat, lng, todasLasCapas);
-  const elapsedMs = Math.max(1, Math.round(performance.now() - t0));
+    resultado = ModuloEvaluadorNormativo.consultarPuntoNormativo(lat, lng, todasLasCapas);
+    const elapsedMs = Math.max(1, Math.round(performance.now() - t0));
 
-  contInspector.innerHTML = ModuloEvaluadorNormativo.renderizarFichaNormativaHTML(resultado);
-  vincularEventosFichaNormativa(resultado, lat, lng);
+    contInspector.innerHTML = ModuloEvaluadorNormativo.renderizarFichaNormativaHTML(resultado);
+    vincularEventosFichaNormativa(resultado, lat, lng);
 
-  const comuna = resultado.comunaEspecifica || (resultado.prc ? resultado.prc.comuna : 'Región Metropolitana');
-  const zonaTexto = resultado.prc
-    ? `${resultado.prc.zona}${resultado.prc.nombreZona && resultado.prc.nombreZona !== resultado.prc.zona ? ` — ${resultado.prc.nombreZona}` : ''}`
-    : (resultado.prms ? `PRMS: ${resultado.prms.macroZona}` : 'Sin zonificación PRC local');
-  const alturaTexto = resultado.prc && resultado.prc.alturaMax ? resultado.prc.alturaMax : 'Según OGUC';
-  const riesgoBadge = resultado.areasRiesgo.length > 0
-    ? `<span style="color:#dc2626; font-weight:700;">⚠️ Riesgo: ${resultado.areasRiesgo.map(r => r.tipo).slice(0, 2).join(', ')}</span>`
-    : `<span style="color:#059669; font-weight:600;">✓ Sin área de riesgo declarada</span>`;
-  const patTexto = resultado.patrimonio.length > 0
-    ? `<div style="margin-top:3px; color:#6d28d9; font-weight:600;">🏛️ Patrimonio: ${resultado.patrimonio.slice(0, 2).map(p => p.nombre).join(' · ')}</div>`
-    : '';
-  const avTexto = resultado.areasVerdes.length > 0
-    ? `<div style="margin-top:3px; color:#047857; font-weight:600;">🌳 Área Verde: ${resultado.areasVerdes[0].nombre} (${resultado.areasVerdes[0].superficie})</div>`
-    : '';
+    const comuna = resultado.comunaEspecifica || (resultado.prc ? resultado.prc.comuna : 'Región Metropolitana');
+    const zonaTexto = resultado.prc
+      ? `${resultado.prc.zona}${resultado.prc.nombreZona && resultado.prc.nombreZona !== resultado.prc.zona ? ` — ${resultado.prc.nombreZona}` : ''}`
+      : (resultado.prms ? `PRMS: ${resultado.prms.macroZona}` : 'Sin zonificación PRC local');
+    const alturaTexto = resultado.prc && resultado.prc.alturaMax ? resultado.prc.alturaMax : 'Según OGUC';
+    const riesgoBadge = resultado.areasRiesgo.length > 0
+      ? `<span style="color:#dc2626; font-weight:700;">⚠️ Riesgo: ${resultado.areasRiesgo.map(r => r.tipo).slice(0, 2).join(', ')}</span>`
+      : `<span style="color:#059669; font-weight:600;">✓ Sin área de riesgo declarada</span>`;
+    const patTexto = resultado.patrimonio.length > 0
+      ? `<div style="margin-top:3px; color:#6d28d9; font-weight:600;">🏛️ Patrimonio: ${resultado.patrimonio.slice(0, 2).map(p => p.nombre).join(' · ')}</div>`
+      : '';
+    const avTexto = resultado.areasVerdes.length > 0
+      ? `<div style="margin-top:3px; color:#047857; font-weight:600;">🌳 Área Verde: ${resultado.areasVerdes[0].nombre} (${resultado.areasVerdes[0].superficie})</div>`
+      : '';
 
-  if (modoInspectorNormativoActivo) {
-    actualizarBannerInspector(
-      `✅ <strong>${comuna}</strong> · <strong>${zonaTexto}</strong> · ${resultado.capasConsultadas.length} coberturas evaluadas (${elapsedMs} ms)`,
-      { mostrarBtnFicha: true }
-    );
-    actualizarPinInspectorMapa(lat, lng, `
-      <div style="font-family:var(--fuente-lectura); min-width:230px; line-height:1.45; color:#0f172a;">
-        <div style="font-weight:800; color:#047857; font-size:0.94rem; border-bottom:1px solid #d1d5db; padding-bottom:4px; margin-bottom:6px;">
-          ⚖️ ${comuna} · ${resultado.limiteUrbano ? 'Urbano' : 'Extensión/Rural'}
+    if (estabaEnCapturaInteractiva) {
+      actualizarBannerInspector(
+        `✅ Punto auditado: <strong>${comuna}</strong> · <strong>${zonaTexto}</strong> · ${resultado.capasConsultadas.length} coberturas evaluadas (${elapsedMs} ms) — <em>Captura pausada automáticamente; vuelve a presionar «Inspector Normativo (PRC)» para auditar otro punto</em>`,
+        { mostrarBtnFicha: true }
+      );
+      actualizarPinInspectorMapa(lat, lng, `
+        <div style="font-family:var(--fuente-lectura); min-width:230px; line-height:1.45; color:#0f172a;">
+          <div style="font-weight:800; color:#047857; font-size:0.94rem; border-bottom:1px solid #d1d5db; padding-bottom:4px; margin-bottom:6px;">
+            ⚖️ ${comuna} · ${resultado.limiteUrbano ? 'Urbano' : 'Extensión/Rural'}
+          </div>
+          <div style="font-size:0.84rem;"><strong>Zonificación:</strong> ${zonaTexto}</div>
+          <div style="font-size:0.82rem; color:#334155;"><strong>Altura máx.:</strong> ${alturaTexto}</div>
+          ${patTexto}
+          ${avTexto}
+          <div style="font-size:0.8rem; margin-top:4px;">${riesgoBadge}</div>
+          <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+            <button type="button" class="btn-banner-inspector" id="btn-ir-ficha-inspector-popup">Ver ficha completa ↓</button>
+            <span style="font-size:0.72rem; color:#64748b;">${lat.toFixed(4)}, ${lng.toFixed(4)}</span>
+          </div>
         </div>
-        <div style="font-size:0.84rem;"><strong>Zonificación:</strong> ${zonaTexto}</div>
-        <div style="font-size:0.82rem; color:#334155;"><strong>Altura máx.:</strong> ${alturaTexto}</div>
-        ${patTexto}
-        ${avTexto}
-        <div style="font-size:0.8rem; margin-top:4px;">${riesgoBadge}</div>
-        <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
-          <button type="button" class="btn-banner-inspector" id="btn-ir-ficha-inspector-popup">Ver ficha completa ↓</button>
-          <span style="font-size:0.72rem; color:#64748b;">${lat.toFixed(4)}, ${lng.toFixed(4)}</span>
-        </div>
-      </div>
-    `);
+      `);
+    }
+  } finally {
+    if (estabaEnCapturaInteractiva) {
+      // Desactivar automáticamente la captura tras auditar el punto para evitar auditorías accidentales en clics posteriores
+      desactivarCapturaInspectorConservandoResultados();
+    }
   }
 
   return resultado;
@@ -4431,7 +4497,7 @@ async function descargarColeccionOficialCompleta() {
   } catch (err) {
     console.error('[-] Error al iniciar descarga de base de datos:', err);
     if (estadoTexto) {
-      estadoTexto.innerHTML = `<span style="color:#ef4444; font-weight:700;">❌ [ERROR]:</span> No se pudo iniciar la descarga automática. <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261110_v69" download="geodatabase_completa_atlas_vgi.zip" style="color:var(--musgo); text-decoration:underline;">Haz clic aquí para descarga manual</a>.`;
+      estadoTexto.innerHTML = `<span style="color:#ef4444; font-weight:700;">❌ [ERROR]:</span> No se pudo iniciar la descarga automática. <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261112_v74" download="geodatabase_completa_atlas_vgi.zip" style="color:var(--musgo); text-decoration:underline;">Haz clic aquí para descarga manual</a>.`;
     }
   } finally {
     setTimeout(() => {
@@ -4580,7 +4646,7 @@ async function cargarYMostrarCapaEnVisor(idCapa, tipo = 'auto', opciones = {}) {
     window.ModuloMapa.invalidarTamano();
   }
 
-  // 2. Si la capa ya se encuentra cargada en el mapa, reencuadrar de forma racional y notificar
+  // 2. Si la capa ya se encuentra cargada en el mapa, reencuadrar automáticamente y notificar
   const yaEnOficial = Boolean(capasOficialesCargadas && capasOficialesCargadas[idCapa]);
   const yaEnVGI = Boolean(capasCargadasPorCategoria && capasCargadasPorCategoria[idCapa]);
   const regMapa = (window.ModuloMapa && typeof window.ModuloMapa.obtenerRegistroCapas === 'function')
@@ -4618,7 +4684,7 @@ async function cargarYMostrarCapaEnVisor(idCapa, tipo = 'auto', opciones = {}) {
     }
   }
 
-  // 4. Cargar la capa respetando bloqueo de duplicados y encuadre racional
+  // 4. Cargar la capa respetando bloqueo de duplicados y encuadre automático
   const opsCarga = { ...opciones, forzarActivar: true };
   let exito = false;
   if (esOficial) {
@@ -4629,7 +4695,7 @@ async function cargarYMostrarCapaEnVisor(idCapa, tipo = 'auto', opciones = {}) {
     exito = await alternarCapaVGIDescentralizada(idCapa, btn, opsCarga);
   }
 
-  // 5. Recalcular dimensiones del lienzo y reforzar encuadre racional tras estabilización DOM
+  // 5. Recalcular dimensiones del lienzo y reforzar encuadre automático tras estabilización DOM
   setTimeout(() => {
     if (window.ModuloMapa) {
       window.ModuloMapa.invalidarTamano();

@@ -17,28 +17,31 @@ Para que cualquier persona —tanto si es vecina o dirigente barrial sin experie
 
 ```mermaid
 flowchart LR
-    subgraph CAB["Cabecera Superior Permanente"]
-        TUT["Izquierda del Título:\nTutorial Interactivo\n(18 pasos navegables en 4 bloques)"]
-        TIT["Centro:\nAtlas para la Gestión Territorial\nAnálisis y Exploración | Municipio de Santiago y Barrio Brasil"]
-        GLO["Derecha del Título:\nGlosario de Siglas\n(Buscador instantáneo)"]
+    classDef proc fill:#0f172a,stroke:#38bdf8,stroke-width:1.8px,color:#e2e8f0
+    classDef ent fill:#064e3b,stroke:#10b981,stroke-width:2.5px,color:#ecfdf5
+
+    subgraph CAB["Cabecera Superior Permanente (#cabecera-atlas)"]
+        TUT["Izquierda:\nTutorial Interactivo\n(18 pasos en 4 bloques)"]:::proc
+        TIT(["Centro:\nAtlas para la Gestión Territorial\nMunicipio de Santiago y Barrio Brasil"]):::ent
+        GLO["Derecha:\nTamaño de Letra (A / A+ / A++)\ny Glosario de Siglas"]:::proc
     end
 
-    subgraph MODS["Los 3 Módulos Operativos de la Plataforma"]
-        M1["Módulo 01 · Análisis\n4 Ejes Geoestadísticos (83 mapas)\n5 Dimensiones Analíticas\nAcordeón de 294 Capas"]
-        M2["Módulo 02 · Explorar Mapa\nVisor cuadrado Leaflet 1.9.4\n5 Mapas Base sin API · Inspector PRC\nSimbología Jenks · Panel Detalles"]
-        M3["Módulo 03 · Documentación\n6 Capítulos Navegables (DOC·01 a 06)\nDescarga de 3 Libros Excel y ZIP\nInventario Filtrable de 294 Capas"]
+    subgraph MODS["Procedimientos de Consulta en los 3 Módulos → Productos Verificables"]
+        M1["Módulo 01 · Análisis\n83 Mapas Geoestadísticos\n5 Dimensiones y 294 Capas"]:::proc
+        M2["Módulo 02 · Explorar Mapa\nVisor Leaflet · 5 Mapas Base · Simbología Temática\nInspector PRC (1 punto) → Panel Detalles"]:::proc
+        M3(["Módulo 03 · Documentación\n6 Capítulos (DOC·01 a 06) · 3 Excel ·\nGeodatabase .zip e Inventario 294 Capas"]):::ent
     end
 
     CAB --> MODS
     M1 <-->|"Activar capa en el mapa /\nVer Atlas de Análisis"| M2
-    M2 <-->|"Consultar manual o\ndescargar base .zip"| M3
+    M2 <-->|"Consultar guía o\ndescargar entregables (.xlsx / .zip)"| M3
 ```
 
 ---
 
-## 2. Cómo empezar: La Cabecera Superior, el Tutorial Interactivo y el Glosario de Siglas
+## 2. Cómo empezar: La Cabecera Superior, Tamaño de Letra, Tutorial Interactivo y Glosario
 
-En la franja superior de la pantalla encontrará siempre visibles el título oficial de la plataforma y dos botones de apoyo ubicados en extremos opuestos para que nunca se superpongan entre sí:
+En la franja superior de la pantalla encontrará siempre visibles el título oficial de la plataforma, los controles de accesibilidad y los botones de apoyo ubicados en extremos opuestos para que nunca se superpongan entre sí:
 
 ### 2.1. El Tutorial Interactivo (a la izquierda del título)
 Si es la primera vez que ingresa al Atlas, le recomendamos pulsar el botón **Tutorial Interactivo** situado a la izquierda del título principal.
@@ -46,20 +49,27 @@ Si es la primera vez que ingresa al Atlas, le recomendamos pulsar el botón **Tu
 * **Presentación de cada módulo antes de sus herramientas:** Antes de mostrar botones específicos, el tutorial explica primero qué es cada módulo y para qué sirve en la gestión territorial, cambiando automáticamente de pestaña a medida que usted avanza.
 * **Navegación libre:** Usted puede usar los botones *Anterior* y *Siguiente*, saltar directamente a cualquiera de los 4 bloques desde la barra superior de la tarjeta del tutorial, o cerrarlo en cualquier momento con `Cerrar (Esc)`.
 
-### 2.2. El Glosario de Siglas (a la derecha del título)
-En la planificación urbana y en las bases de datos públicas es habitual encontrar siglas técnicas (`IGV`, `IDE`, `PRC`, `OGUC`, `ZCH`, `ICH`, `KDE`, `LISA`, `RSH`, `BIP`, `SUBDERE`, `CESFAM`, `ODbL`).
-* **¿Para qué sirve?** Al pulsar el botón **Glosario de siglas** a la derecha del título, se despliega un recuadro con buscador instantáneo donde cada sigla está explicada en lenguaje claro y directo, sin necesidad de salir de la vista en la que esté trabajando.
+### 2.2. Control dinámico de tamaño de letra (`A` / `A+` / `A++`) y Glosario de Siglas (a la derecha del título)
+Para facilitar la lectura en cualquier pantalla o necesidad visual, junto al **Glosario de siglas** se incluye un control interactivo de escala tipográfica:
+* **Ajuste dinámico de tamaño de letra (`A`, `A+`, `A++`):** Además de adaptar proporcionalmente el tamaño de texto según el ancho de pantalla, puede pulsar `A` (estándar), `A+` (lectura ampliada) o `A++` (lectura máxima) para aumentar dinámicamente las letras en todos los módulos y paneles. Su preferencia queda guardada en el navegador.
+* **Glosario de Siglas:** Al pulsar **Glosario de siglas**, se despliega un recuadro con buscador instantáneo donde siglas técnicas como `IGV`, `IDE`, `PRC`, `OGUC`, `ZCH`, `ICH`, `KDE`, `LISA`, `RSH`, `BIP`, `SUBDERE`, `CESFAM` u `ODbL` están explicadas en lenguaje claro sin abandonar su vista actual.
 
 ```mermaid
 flowchart LR
-    subgraph TUT_BLOQUES["Estructura de los 18 Pasos del Tutorial Interactivo (4 Bloques Navegables)"]
-        B_GEN["Bloque 1 · Visión General\n(Pasos 1 a 3)\nPropósito del Atlas, navegación\nen 3 módulos y uso del Glosario"]
-        B_M01["Bloque 2 · Módulo 01 Análisis\n(Pasos 4 a 8)\nPresenta el Módulo 01 completo,\n4 láminas (83 mapas) y 5 Dimensiones"]
-        B_M02["Bloque 3 · Módulo 02 Mapa\n(Pasos 9 a 14)\nPresenta el Módulo 02 completo, barra\nsuperior, 5 mapas base, Jenks, PRC y Detalles"]
-        B_M03["Bloque 4 · Módulo 03 Documentación\n(Pasos 15 a 18)\nPresenta el Módulo 03 completo, 6 capítulos,\ndescargas Excel/ZIP e inventario de 294 capas"]
+    classDef subproc fill:#1e293b,stroke:#94a3b8,stroke-dasharray:4 3,color:#e2e8f0
+    classDef proc fill:#0f172a,stroke:#38bdf8,stroke-width:1.8px,color:#e2e8f0
+    classDef ent fill:#064e3b,stroke:#10b981,stroke-width:2.5px,color:#ecfdf5
+
+    subgraph TUT_BLOQUES["Procedimiento de Inducción en 4 Bloques (18 Pasos)"]
+        B_GEN["Bloque 1 · Visión General (Pasos 1-2)\nPropósito y navegación modular"]:::subproc
+        B_M01["Bloque 2 · Módulo 01 (Pasos 3-7)\n4 láminas (83 mapas) y 5 Dimensiones"]:::subproc
+        B_M02["Bloque 3 · Módulo 02 (Pasos 8-14)\n5 mapas base, Simbología, PRC y Detalles"]:::subproc
+        B_M03["Bloque 4 · Módulo 03 (Pasos 15-18)\n6 capítulos, descargas e inventario"]:::proc
     end
 
-    B_GEN --> B_M01 --> B_M02 --> B_M03
+    ENT_TUT(["Resultado Verificable en Usuario:\nComprensión autónoma y lectura adaptada (A / A+ / A++)"]):::ent
+
+    B_GEN --> B_M01 --> B_M02 --> B_M03 -->|"culmina en"| ENT_TUT
 ```
 
 ---
@@ -93,14 +103,18 @@ Debajo de las cuatro láminas geoestadísticas, el Módulo 01 organiza la totali
 
 ```mermaid
 flowchart TD
-    subgraph M01_FLUJO["Flujo de Exploración en el Módulo 01 · Análisis (#panel-indicadores)"]
-        EJE["1. Cuatro Ejes Geoestadísticos\n83 Cartografías Temáticas en Visor Lightbox\n(KDE · LISA · Censo 2024/RSH · Metabolismo Urbano)"]
-        DIM["2. Cinco Dimensiones Analíticas\n1. Sociodemográfica · 2. Socioeconómica · 3. Socioambiental\n4. Sociosanitaria · 5. Sociourbana y Normativa"]
-        ACO["3. Acordeón Buscador de las 294 Capas\n123 Oficiales (id_ig) + 171 IGV (id_igv)"]
+    classDef proc fill:#0f172a,stroke:#38bdf8,stroke-width:1.8px,color:#e2e8f0
+    classDef ent fill:#064e3b,stroke:#10b981,stroke-width:2.5px,color:#ecfdf5
+
+    subgraph M01_FLUJO["Procedimientos de Diagnóstico y Selección en Módulo 01 · Análisis (#panel-indicadores)"]
+        EJE["1. Revisar 4 Ejes Geoestadísticos\n83 Cartografías Temáticas en Visor Lightbox\n(KDE · LISA · Censo 2024/RSH · Metabolismo Urbano)"]:::proc
+        DIM["2. Seleccionar una de las 5 Dimensiones Analíticas\nSociodemográfica · Socioeconómica · Socioambiental · Sociosanitaria · Sociourbana"]:::proc
+        ACO["3. Buscar en Acordeón de 294 Capas\n(123 Oficiales id_ig + 171 IGV id_igv)"]:::proc
     end
 
-    EJE --> DIM --> ACO
-    ACO -->|"Clic en 'Activar en el mapa'"| VIS["Salto automático al Módulo 02 (Explorar Mapa)\ncon la capa encendida y centrada"]
+    VIS(["Producto Verificable en Visor (Módulo 02):\nCobertura encendida, centrada y con simbología temática"]):::ent
+
+    EJE -->|"contextualiza"| DIM -->|"filtra"| ACO -->|"Clic en 'Activar en el mapa' produce"| VIS
 ```
 
 ---
@@ -111,24 +125,28 @@ El **Módulo 02 · Explorar Mapa** (`#panel-inicio`) es el entorno interactivo p
 
 ```mermaid
 flowchart TD
-    subgraph BARRA["1. Barra Superior Centrada (#barra-herramientas-mapa)"]
-        B1["Área de enfoque:\nBarrio Brasil / Comuna de Santiago"]
-        B2["Delimitar área:\nCálculo métrico EPSG:32719 (m² y ha)"]
-        B3["Reencuadrar vista"]
-        B4["Inspector normativo (PRC):\nConsulta punto en polígono bajo demanda"]
-        B5["Exportar vista GeoJSON /\nDescargar base .zip"]
+    classDef proc fill:#0f172a,stroke:#38bdf8,stroke-width:1.8px,color:#e2e8f0
+    classDef ent fill:#064e3b,stroke:#10b981,stroke-width:2.5px,color:#ecfdf5
+
+    subgraph BARRA["1. Procedimientos desde la Barra Superior Centrada (#barra-herramientas-mapa)"]
+        B1["Área de enfoque · Reencuadrar vista\n(Barrio Brasil / Comuna de Santiago)"]:::proc
+        B2["Delimitar área (EPSG:32719) /\nInspector normativo PRC (audita 1 punto y se desactiva)"]:::proc
     end
 
-    subgraph CENTRO["2. Cuerpo Central del Módulo 02"]
-        LAT["Panel Lateral Izquierdo:\nBuscador de las 294 Capas por las\n5 Dimensiones + Simbología Dinámica (Jenks)"]
-        VISOR["Lienzo Cartográfico Cuadrado (Leaflet 1.9.4)\n5 Mapas Base sin API:\nOSM Estándar · OSM HOT · Bing Satelital ·\nBing Híbrido con Calles · Esri World Imagery"]
+    subgraph CENTRO["2. Procedimientos de Visualización y Simbología en Módulo 02"]
+        LAT["Panel Lateral + Simbología Dinámica:\nSelector de 294 Capas · Selector de 5 Mapas Base ·\nSimbología Temática (Plano, Categorizado, Graduado)"]:::proc
+        VISOR["Lienzo Cartográfico Cuadrado (Leaflet 1.9.4)\nOSM Estándar · OSM HOT · Bing Satelital · Bing Híbrido · Esri"]:::proc
     end
 
-    subgraph INF["3. Panel Inferior de Ancho Completo: 'Detalles'"]
-        DET["Atributos Nativos de la Entidad + Perfil Homologado de 17 Atributos ISO 19115 / 19157\n(Clave id_ig para las 123 capas oficiales | Clave id_igv para las 171 capas colaborativas IGV)\n+ Ficha del Inspector Normativo PRC (cuando se activa la consulta normativa)"]
+    subgraph ENT["3. Entregables Verificables para el Usuario"]
+        DET(["Panel Inferior 'Detalles' (Ancho Completo):\n17 atributos ISO (id_ig / id_igv) + Ficha PRC + Certificado .txt"]):::ent
+        EXP(["Archivos Exportables Verificables:\nVista actual en GeoJSON + Geodatabase Completa (.zip)"]):::ent
     end
 
-    BARRA --> CENTRO --> INF
+    BARRA --> CENTRO
+    LAT <--> VISOR
+    VISOR -->|"genera consulta"| DET
+    BARRA -->|"exporta"| EXP
 ```
 
 ### 4.1. Cómo usar los controles de la Barra Superior Centrada
@@ -136,13 +154,13 @@ Encima del visor encontrará una barra de herramientas centrada y adaptable a cu
 1. **Selector `Área de enfoque` (*Barrio Brasil Completo* / *Comuna de Santiago*):** Permite alternar con un clic entre el encuadre cercano de las manzanas del Barrio Brasil y la vista general de las 26 unidades vecinales de la Comuna de Santiago.
 2. **Botón `Delimitar área` (Medición geodésica en `EPSG:32719`):** Al activarlo y arrastrar el cursor sobre el mapa, usted dibuja un polígono de análisis. La plataforma transforma automáticamente las coordenadas geográficas (`EPSG:4326`) al sistema métrico oficial de Chile (**SIRGAS-Chile / UTM Huso 19 Sur, `EPSG:32719`**) y calcula con precisión su superficie en metros cuadrados (`m²`) y hectáreas (`ha`), filtrando los elementos que caen dentro del recuadro.
 3. **Botón `Reencuadrar`:** Si hizo mucho zoom o desplazó el mapa lejos del área de estudio, pulse este botón para volver de inmediato al encuadre óptimo.
-4. **Botón `Inspector normativo (PRC)`:** Activa el modo de consulta urbanística sobre el Plan Regulador Comunal de Santiago (véase la sección 4.4 más abajo).
+4. **Botón `Inspector normativo (PRC)`:** Activa el modo de consulta urbanística puntual sobre el Plan Regulador Comunal de Santiago; **tras auditar un punto**, se desactiva automáticamente manteniendo visibles el pin y la ficha para evitar auditorías accidentales (véase la sección 4.4 más abajo).
 5. **Botón `Ver Atlas de Análisis`:** Regresa al Módulo 01 conservando las capas que usted dejó encendidas en el mapa.
 6. **Botón `Exportar vista (GeoJSON)`:** Descarga en su equipo un archivo `.geojson` con las capas activas en ese momento, incluyendo sus colores y estilos para abrirlo directamente en QGIS o ArcGIS.
 7. **Botón `Descargar base de datos (.zip)`:** Descarga el paquete completo de `542,35 MB` con las 294 coberturas, catálogos Excel y documentación.
 
 ### 4.2. Cómo elegir entre los 5 Mapas Base Abiertos y Satelitales (Sin clave de API)
-En la esquina del visor (o en el selector de mapa base) puede elegir en cualquier momento el fondo cartográfico sobre el cual se dibujan las capas. En el Prototipo 02 se utilizan exclusivamente **5 mapas base estables que no requieren claves de API comerciales** (habiendo eliminado los antiguos fondos de Carto):
+Puede elegir en cualquier momento el fondo cartográfico desde dos lugares sincronizados: el **selector integrado dentro del panel `Simbología Dinámica`** (pensado para un acceso más rápido e intuitivo) o el control de capas en la esquina superior derecha del visor. En el Prototipo 02 se utilizan exclusivamente **5 mapas base estables que no requieren claves de API comerciales** (habiendo eliminado los antiguos fondos de Carto):
 
 | N° | Nombre del Mapa Base | Proveedor | ¿Para qué tipo de lectura o tarea se recomienda? |
 | :---: | :--- | :--- | :--- |
@@ -152,10 +170,11 @@ En la esquina del visor (o en el selector de mapa base) puede elegir en cualquie
 | `04` | **Satelital Híbrido con Calles (Bing / Microsoft)** | Microsoft VirtualEarth | Combina la imagen satelital de alta resolución de Bing/Microsoft con los nombres de las calles y avenidas superpuestos en español para no perder la orientación. |
 | `05` | **Imagen Satelital (Esri World Imagery)** | Esri / Maxar / Earthstar Geographics | Mosaico satelital alternativo de alta definición, muy útil para comparar el estado de las edificaciones y áreas verdes entre distintas tomas satelitales. |
 
-### 4.3. Cómo personalizar colores y clasificaciones con la `Simbología Dinámica`
-En el panel lateral del Módulo 02 se encuentra la herramienta **Simbología Dinámica**, que permite cambiar en vivo cómo se colorean los datos de cualquier capa activa:
-* **Elección de variable (atributo):** Seleccione el campo numérico o de texto que desea representar (por ejemplo, total de población, porcentaje de hogares vulnerables, avalúo o tipo de zona).
-* **Métodos de clasificación estadística y representación disponibles (asignación predeterminada racional según los datos):**
+### 4.3. Cómo personalizar el mapa base y los colores con la `Simbología Dinámica`
+En el panel lateral del Módulo 02 se encuentra la herramienta **Simbología Dinámica**, la cual ofrece un control unificado tanto sobre el fondo cartográfico como sobre la representación temática de cada capa activa:
+* **Mapa base del visor:** Selector rápido desplegable dentro de *Simbología Dinámica* para cambiar al instante entre los 5 mapas base abiertos y satelitales sin tener que buscar el icono en la esquina del mapa.
+* **Elección de variable (atributo):** Seleccione el campo numérico o de texto de la capa que desea representar (por ejemplo, total de población, porcentaje de hogares vulnerables, avalúo o tipo de zona).
+* **Métodos de clasificación estadística y simbología temática disponibles (asignación predeterminada acorde con la estructura estadística y geométrica de los datos):**
   * **Color Único (*Plano*):** Asigna un color semántico uniforme a toda la capa (predeterminado para las 171 capas colaborativas IGV puntuales o lineales y coberturas sin variable de clasificación).
   * **Categorizado (*Valores únicos*):** Asigna un color diferente a cada categoría nominal hasta las 9 clases principales más «Otras categorías» (predeterminado para zonas del PRC, zonas de aseo, líneas de Metro o tipos de áreas verdes).
   * **Cuantiles (*Quantiles*):** Divide las manzanas o entidades en grupos con igual cantidad de elementos (predeterminado para porcentajes y quintiles comparativos del RSH).
@@ -166,13 +185,14 @@ En el panel lateral del Módulo 02 se encuentra la herramienta **Simbología Din
 
 ### 4.4. Cómo consultar qué se puede construir o proteger con el `Inspector Normativo (PRC)`
 El **Inspector normativo (PRC)** traduce la normativa urbanística del **Plan Regulador Comunal de Santiago** y la **Ordenanza General de Urbanismo y Construcciones (OGUC)** a una ficha clara y fácil de leer:
-1. Pulse el botón **Inspector normativo (PRC)** en la barra superior del Módulo 02 para activarlo.
-2. Haga clic sobre cualquier manzana, lote o plaza del mapa.
-3. En el panel inferior se desplegará automáticamente la ficha normativa de ese punto exacto (mientras no se active el inspector, esta ficha permanece oculta para no recargar la vista), informando:
+1. Pulse el botón **Inspector normativo (PRC)** en la barra superior del Módulo 02 para activar el modo de captura (aparecerá un indicador superior informando que puede hacer clic sobre el punto de interés).
+2. Haga clic sobre el predio, manzana o plaza específica que desea auditar.
+3. **Desactivación automática tras auditar un punto:** Inmediatamente después de calcular el punto elegido, el inspector **coloca el pin identificador, abre el resumen flotante, despliega la ficha normativa en el panel inferior y desactiva automáticamente la captura** para evitar que otros clics accidentales al recorrer el mapa reemplacen su consulta. Si desea evaluar un segundo punto distinto, solo debe volver a pulsar el botón **Inspector normativo (PRC)**; y para limpiar la ficha o cerrar el resumen, pulse *Cerrar* en el banner.
+4. Mientras no se realice una consulta normativa, esta ficha permanece oculta para mantener despejada la vista. Cuando se despliega, informa como **entregables consultables**:
    * **Zona del Plan Regulador Comunal** (por ejemplo, `Zona A`, `Zona B`, `Zona D - Zona de Conservación Histórica`, `Sector Especial`).
    * **Normas de edificación:** Altura máxima permitida en metros y pisos aproximados, coeficiente de constructibilidad, porcentaje máximo de ocupación de suelo y sistema de agrupamiento (continuo, pareado o aislado).
    * **Usos de suelo permitidos y prohibidos:** Residencial, equipamiento (salud, educación, cultura, comercio), actividades productivas o área verde.
-   * **Protección patrimonial:** Indica si el predio corresponde a un **Inmueble de Conservación Histórica (`ICH`)**, se ubica dentro de una **Zona de Conservación Histórica (`ZCH`)** o es **Monumento Histórico / Zona Típica (CMN)**, además de permitir descargar un **Certificado de Informaciones Normativas (`.txt`)** de referencia y consultar el expediente histórico de modificaciones del PRC en el Barrio Brasil (1990–2024).
+   * **Protección patrimonial:** Indica si el predio corresponde a un **Inmueble de Conservación Histórica (`ICH`)**, se ubica dentro de una **Zona de Conservación Histórica (`ZCH`)** o es **Monumento Histórico / Zona Típica (CMN)**, además de permitir descargar un **Certificado de Informaciones Normativas (`.txt`)** verificable y consultar el expediente histórico de modificaciones del PRC en el Barrio Brasil (1990–2024).
 
 ### 4.5. Cómo leer el panel inferior de `Detalles` y los 17 atributos homologados (`id_ig` / `id_igv`)
 Debajo del lienzo cuadrado del mapa se ubica el panel de ancho completo llamado **Detalles**. Cada vez que usted hace clic sobre un punto, una línea o un polígono en el visor, este panel muestra tanto los **atributos propios de la capa** como su **ficha estandarizada de 17 atributos de metadatos y calidad espacial (normas ISO 19115 e ISO 19157)**:
@@ -210,24 +230,27 @@ El **Módulo 03 · Documentación** (`#panel-manual`) integra dentro de la misma
 
 | Capítulo en la Plataforma | Título del Capítulo | ¿Qué puede consultar o descargar en él? |
 | :---: | :--- | :--- |
-| **`DOC · 01`** | **Fundamentación, Objetivos, Hitos con Entregables Verificados y Perfiles de Uso** | Explica qué problema resuelve el Atlas, presenta el Objetivo General y los Objetivos Específicos (`OE 1` a `OE 4`), detalla la tabla de los **9 Hitos con entregable verificado asociado (`Hito 1 / E1` a `Hito 9 / E9`)** y orienta a cada uno de los 4 perfiles de usuarios sobre cómo recorrer la plataforma. |
+| **`DOC · 01`** | **Fundamentación, Objetivos, Procedimientos (`PR`) y Entregables Verificados (`E1`–`E9`)** | Explica qué problema resuelve el Atlas, distingue claramente entre procedimientos ejecutados y entregables verificados para cada Objetivo Específico (`OE 1` a `OE 4`), detalla la tabla de los **9 Hitos (`Hito 1 / E1` a `Hito 9 / E9`)** y orienta a cada uno de los 4 perfiles de usuarios. |
 | **`DOC · 02`** | **Guía en Profundidad del Módulo 01 (Análisis)** | Explica de manera pedagógica cómo leer los mapas de densidad **KDE**, cómo interpretar los clústeres **LISA** (`Alto-Alto`, `Bajo-Bajo`, `Alto-Bajo`, `Bajo-Alto`), qué muestran los mapas del Censo 2024, RSH y metabolismo urbano, y cómo usar las 5 Dimensiones Analíticas. |
-| **`DOC · 03`** | **Guía en Profundidad del Módulo 02 (Explorar Mapa)** | Detalla cada botón de la barra superior, las características de los **5 mapas base sin API**, los métodos de clasificación de la **Simbología Dinámica (Jenks, Cuantiles, Intervalos)** y el diccionario completo de los **17 atributos homologados (`id_ig` / `id_igv`)** del panel **Detalles**. |
+| **`DOC · 03`** | **Guía en Profundidad del Módulo 02 (Explorar Mapa)** | Detalla los controles de lectura adaptativa (`A` / `A+` / `A++`), los botones de la barra superior, el **Inspector normativo (PRC)** de consulta puntual con pausa automática, el **cambio de los 5 mapas base sin API dentro de `Simbología Dinámica`**, la **simbología temática** y el diccionario de los **17 atributos homologados (`id_ig` / `id_igv`)** del panel **Detalles**. |
 | **`DOC · 04`** | **Licencias Abiertas, Descarga de Geodatabase (.zip) y Catálogos en Excel** | Permite descargar con un clic el paquete completo `geodatabase_completa_atlas_vgi.zip` (`542,35 MB`), los 3 libros maestros en formato Excel (`categorias_tematicas_osm.xlsx`, `perfil_metadatos_vgi.xlsx` y `catalogo_fuentes_vgi.xlsx`), la bibliografía APA 7ª ed., y explica qué permite hacer cada licencia abierta (`CC BY 4.0`, `ODbL 1.0`, `Ley N.° 20.285` y `GNU AGPLv3`). |
 | **`DOC · 05`** | **Inventario General Filtrable de las 294 Coberturas** | Tabla interactiva con filtro en vivo donde se listan las **123 capas oficiales (`id_ig`)** y las **171 capas colaborativas de IGV (`id_igv`)**, indicando su código, archivo `.geojson`, organismo o comunidad custodia y descripción temática. |
-| **`DOC · 06`** | **Arquitectura del Sistema, Flujo de Datos y Guía de Actualización del Atlas** | Describe cómo están organizados los 3 módulos del Atlas, cómo fluyen los datos desde las fuentes hasta el navegador y resume los criterios generales para mantener actualizada la plataforma. |
+| **`DOC · 06`** | **Arquitectura del Sistema, Procedimientos de Actualización y Catálogo del Repositorio** | Explica los componentes de la plataforma, la relación estricta **Procedimiento / Subprocedimiento → Entregable Verificado** para actualizar el Atlas sin archivos huérfanos y el catálogo completo de archivos del repositorio. |
 
 ```mermaid
 flowchart LR
-    M03["Módulo 03 · Documentación\n(#panel-manual)"]
+    classDef proc fill:#0f172a,stroke:#38bdf8,stroke-width:1.8px,color:#e2e8f0
+    classDef ent fill:#064e3b,stroke:#10b981,stroke-width:2.5px,color:#ecfdf5
 
-    C1["DOC · 01\nObjetivos, 9 Hitos (E1-E9)\ny 4 Perfiles de Uso"]
-    C2["DOC · 02\nGuía Módulo 01:\n83 Mapas (KDE/LISA) y\n5 Dimensiones"]
-    C3["DOC · 03\nGuía Módulo 02:\n5 Mapas Base, Jenks,\nPRC y 17 Atributos"]
-    C4["DOC · 04\nLicencias Abiertas,\n3 Libros Excel (.xlsx) y\nGeodatabase (.zip 542 MB)"]
-    C5["DOC · 05\nInventario Filtrable de\nlas 294 Capas\n(123 id_ig + 171 id_igv)"]
-    C6["DOC · 06\nArquitectura, Flujos y\nGuía de Actualización"]
+    M03["Procedimiento de Consulta en\nMódulo 03 · Documentación (#panel-manual)"]:::proc
 
-    M03 --> C1 & C2 & C3 & C4 & C5 & C6
+    C1(["DOC · 01\nObjetivos, Procedimientos (PR-01 a 09)\ny Entregables Verificados (E1-E9)"]):::ent
+    C2(["DOC · 02\nGuía Módulo 01:\n83 Mapas y 5 Dimensiones"]):::ent
+    C3(["DOC · 03\nGuía Módulo 02:\nSimbología Temática, 5 Mapas Base,\nPRC puntual y 17 Atributos"]):::ent
+    C4(["DOC · 04\nEntregables Descargables:\n3 Libros .xlsx, Bibliografía APA\ny Geodatabase (.zip 542 MB)"]):::ent
+    C5(["DOC · 05\nInventario Filtrable Verificado\nde 294 Capas (123 id_ig + 171 id_igv)"]):::ent
+    C6(["DOC · 06\nArquitectura, Procedimientos\nde Actualización y Catálogo de Archivos"]):::ent
+
+    M03 -->|"entrega acceso directo a"| C1 & C2 & C3 & C4 & C5 & C6
 ```
 

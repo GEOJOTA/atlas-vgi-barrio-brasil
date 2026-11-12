@@ -103,8 +103,8 @@ const ModuloManual = (() => {
         id: 'cap-uso-01',
         numero: 'DOC · 01',
         icono: '🏛️',
-        titulo: 'Fundamentación, Objetivos, Hitos con Entregables Verificados y Perfiles de Uso',
-        subtitulo: 'Qué es el Atlas para la Gestión Territorial, cómo articula la información del Estado con la cartografía ciudadana (IGV), cuáles son sus objetivos y cómo aprovecharlo según cada perfil de usuario.',
+        titulo: 'Fundamentación, Objetivos, Procedimientos (PR) y Entregables Verificados (E1–E9)',
+        subtitulo: 'Qué es el Atlas para la Gestión Territorial, cómo cada procedimiento (o subprocedimiento) culmina en un entregable verificado (E1–E9), y cómo aprovechar el prototipo según cada perfil de usuario.',
         html: `
           <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:18px; margin-bottom:16px;">
             <h4 style="margin:0 0 8px 0; color:#38bdf8; font-size:1.05rem;">1. ¿Qué es el Atlas para la Gestión Territorial y qué problema resuelve?</h4>
@@ -131,73 +131,69 @@ const ModuloManual = (() => {
           </div>
 
           <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:18px; margin-bottom:16px;">
-            <h4 style="margin:0 0 10px 0; color:#fbbf24; font-size:1.05rem;">3. Componentes ejecutados y entregables verificados por objetivo específico</h4>
+            <h4 style="margin:0 0 8px 0; color:#fbbf24; font-size:1.05rem;">3. Procedimientos Ejecutados (PR) y Entregables Verificados Resultantes por Objetivo</h4>
+            <p style="font-size:0.86rem; color:var(--tinta-suave); margin:0 0 12px 0; line-height:1.6;">
+              <strong>Criterio de trazabilidad:</strong> Todo <strong>procedimiento</strong> (integrado cuando corresponde por <em>subprocedimientos</em> técnicos) produce explícitamente al menos un <strong>entregable verificado (<code>E1</code>–<code>E9</code>)</strong> en el repositorio y en la plataforma web.
+            </p>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
               <div style="background:rgba(2,6,23,0.55); border:1px solid rgba(56,189,248,0.25); border-radius:8px; padding:14px;">
-                <strong style="color:#38bdf8; font-size:0.9rem;">OE 1 · Caracterización y diseño centrado en el usuario</strong>
+                <strong style="color:#38bdf8; font-size:0.9rem;">OE 1 · Procedimientos PR-01 a PR-03 → Entregables E1–E3</strong>
                 <ul style="margin:8px 0 0 0; padding-left:18px; font-size:0.84rem; color:var(--tinta-suave); line-height:1.6;">
-                  <li>Revisión sistemática de plataformas de geodatos abiertos (OpenStreetMap, GBIF e IDE Chile).</li>
-                  <li>Organización temática del catálogo en las <strong>5 dimensiones analíticas</strong> del territorio.</li>
-                  <li>Caracterización de los cuatro perfiles de actores territoriales e identificación de brechas de información entre fuentes estatales y comunitarias.</li>
-                  <li><em>Entregables verificados:</em> <code>docs/ARQUITECTURA.md</code>, <code>docs/TRAZABILIDAD.md</code>, <code>docs/catalogo_fuentes_vgi.xlsx</code> y <code>docs/categorias_tematicas_osm.xlsx</code>.</li>
+                  <li><strong>Procedimiento PR-01:</strong> Relevamiento de plataformas abiertas (OpenStreetMap, GBIF, IDE Chile) y arquitectura web → <em>Entregable E1:</em> <code>docs/ARQUITECTURA.md</code> y catálogo inicial.</li>
+                  <li><strong>Procedimiento PR-02:</strong> Clasificación temática en <strong>5 dimensiones analíticas</strong> y encuadres territoriales → <em>Entregable E2:</em> <code>docs/categorias_tematicas_osm.xlsx</code> y <code>config.js</code>.</li>
+                  <li><strong>Procedimiento PR-03:</strong> Inventario exhaustivo y caracterización de los cuatro perfiles y brechas → <em>Entregable E3:</em> <code>docs/catalogo_fuentes_vgi.xlsx</code> y <code>docs/TRAZABILIDAD.md</code>.</li>
                 </ul>
               </div>
               <div style="background:rgba(2,6,23,0.55); border:1px solid rgba(52,211,153,0.25); border-radius:8px; padding:14px;">
-                <strong style="color:#34d399; font-size:0.9rem;">OE 2 · Geodatabase multipropósito y calidad espacial</strong>
+                <strong style="color:#34d399; font-size:0.9rem;">OE 2 · Procedimientos PR-04 y PR-05 → Entregables E4–E5</strong>
                 <ul style="margin:8px 0 0 0; padding-left:18px; font-size:0.84rem; color:var(--tinta-suave); line-height:1.6;">
-                  <li>Descarga, normalización y geoprocesamiento de las <strong>294 coberturas vectoriales</strong> (123 oficiales del Estado de Chile y 171 coberturas descentralizadas de Información Geográfica Voluntaria, IGV) en los sistemas de referencia <code>EPSG:4326</code> y <code>EPSG:32719</code>.</li>
-                  <li>Homologación del perfil de metadatos y calidad ISO 19157 de <strong>17 atributos</strong> en todas las capas, diferenciando <code>id_ig</code> (información geográfica oficial) e <code>id_igv</code> (información geográfica voluntaria).</li>
-                  <li>Cruces espaciales a escala comunal (1.711 manzanas) y barrial (Barrio Brasil) sintetizados en las 5 dimensiones analíticas.</li>
-                  <li><em>Entregables verificados:</em> <code>src/data/*.geojson</code> (294 capas), <code>docs/perfil_metadatos_vgi.xlsx</code> y matrices de síntesis territorial.</li>
+                  <li><strong>Procedimiento PR-04 (Subprocedimientos 04.1 y 04.2):</strong> Extracción exhaustiva RM/Barrio Brasil de <strong>294 coberturas vectoriales</strong> (123 oficiales + 171 IGV descentralizadas) en <code>EPSG:4326</code>/<code>32719</code> e inyección ISO 19157 (<code>id_ig</code> / <code>id_igv</code>) → <em>Entregable E4:</em> <code>src/data/*.geojson</code>, PostGIS y <code>docs/perfil_metadatos_vgi.xlsx</code>.</li>
+                  <li><strong>Procedimiento PR-05:</strong> Cruces espaciales comunales (1.711 mz) y barriales → <em>Entregable E5:</em> matrices de síntesis territorial y catastro BIP/IGV.</li>
                 </ul>
               </div>
               <div style="background:rgba(2,6,23,0.55); border:1px solid rgba(168,85,247,0.25); border-radius:8px; padding:14px;">
-                <strong style="color:#c084fc; font-size:0.9rem;">OE 3 · Geoportal web accesible e interoperable</strong>
+                <strong style="color:#c084fc; font-size:0.9rem;">OE 3 · Procedimientos PR-06 y PR-07 → Entregables E6–E7</strong>
                 <ul style="margin:8px 0 0 0; padding-left:18px; font-size:0.84rem; color:var(--tinta-suave); line-height:1.6;">
-                  <li><strong>Definición de un prototipo sintetizado para usuarios no técnicos:</strong> prototipo más sintetizado que permita a usuarios sin experiencia técnica poder interactuar de forma más simple con la plataforma, articulado en 3 módulos (<em>Módulo 01 Análisis</em>, <em>Módulo 02 Explorar Mapa</em> y <em>Módulo 03 Documentación</em>).</li>
-                  <li>Visor cartográfico cuadrado (Leaflet 1.9.4) con 5 mapas base abiertos sin requerimiento de clave API (OpenStreetMap Estándar y HOT, e imágenes satelitales de Bing/Microsoft y Esri), motor de <strong>Simbología Temática Racional</strong> (Color Único, Categorizado y Graduado multi-método) y panel inferior de <strong>Detalles</strong>.</li>
-                  <li>Inspector normativo del Plan Regulador Comunal (PRC) y OGUC bajo demanda, y 4 ejes de diagnóstico geoestadístico con 83 cartografías temáticas.</li>
-                  <li><em>Entregables verificados:</em> <code>src/index.html</code>, <code>src/css/estilos.css</code>, <code>src/js/modulos/mapa.js</code>, <code>evaluador_normativo.js</code>, <code>indicadores_analisis.js</code> y <code>netlify.toml</code>.</li>
+                  <li><strong>Procedimiento PR-06:</strong> Diseño del prototipo sintetizado en 3 módulos para usuarios no técnicos, control dinámico de texto (<code>A / A+ / A++</code>) y visor cuadrado con 5 mapas base sin API → <em>Entregable E6:</em> <code>src/index.html</code>, <code>estilos.css</code>, <code>app.js</code> y <code>mapa.js</code>.</li>
+                  <li><strong>Procedimiento PR-07:</strong> Motor de <strong>Simbología Temática</strong> con cambio de mapa base integrado, Inspector PRC puntual con pausa automática tras la consulta, panel <strong>Detalles</strong> y 4 ejes (83 mapas) → <em>Entregable E7:</em> <code>evaluador_normativo.js</code>, <code>indicadores_analisis.js</code> y sitio en Netlify.</li>
                 </ul>
               </div>
               <div style="background:rgba(2,6,23,0.55); border:1px solid rgba(245,158,11,0.25); border-radius:8px; padding:14px;">
-                <strong style="color:#fbbf24; font-size:0.9rem;">OE 4 · Evaluación de usabilidad y transferibilidad</strong>
+                <strong style="color:#fbbf24; font-size:0.9rem;">OE 4 · Procedimientos PR-08 y PR-09 → Entregables E8–E9</strong>
                 <ul style="margin:8px 0 0 0; padding-left:18px; font-size:0.84rem; color:var(--tinta-suave); line-height:1.6;">
-                  <li>Instrumentos de evaluación de usabilidad con tareas guiadas (Modalidad 1) y conversaciones situadas con vecinos (Modalidad 2) para los cuatro perfiles de actores territoriales.</li>
-                  <li>Tutorial interactivo navegable de 18 pasos (a la izquierda del título) que presenta cada módulo antes de recorrer sus herramientas, y glosario permanente de siglas (a la derecha del título).</li>
-                  <li>Documentación navegable en la plataforma y en Git (Manual de uso, Manual de actualización y Arquitectura) y empaquetado de la geodatabase completa (<code>.zip</code>).</li>
-                  <li><em>Entregables verificados:</em> <code>docs/MANUAL_USO.md</code>, <code>docs/MANUAL_ACTUALIZACION_ATLAS.md</code>, <code>src/js/modulos/tutorial_interactivo.js</code> y <code>docs/geodatabase_completa_atlas_vgi.zip</code>.</li>
+                  <li><strong>Procedimiento PR-08:</strong> Evaluación de usabilidad (M1/M2), Tutorial interactivo (18 pasos), Glosario y Módulo 03 navegable → <em>Entregable E8:</em> <code>docs/TRAZABILIDAD.md</code>, <code>docs/MANUAL_USO.md</code> y <code>tutorial_interactivo.js</code>.</li>
+                  <li><strong>Procedimiento PR-09:</strong> Redacción del Manual de actualización con catálogo completo, empaquetado <code>.zip</code> y auditoría Python → <em>Entregable E9:</em> <code>docs/MANUAL_ACTUALIZACION_ATLAS.md</code>, <code>geodatabase_completa_atlas_vgi.zip</code> y scripts verificadores.</li>
                 </ul>
               </div>
             </div>
           </div>
 
           <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:18px; margin-bottom:16px;">
-            <h4 style="margin:0 0 10px 0; color:#38bdf8; font-size:1.05rem;">4. Los 9 Hitos del Proyecto con Entregable Verificado Asociado (Hito 1 / E1 a Hito 9 / E9)</h4>
+            <h4 style="margin:0 0 10px 0; color:#38bdf8; font-size:1.05rem;">4. Los 9 Hitos: Flujo Procedimiento (PR) → Entregable Verificado (E1 a E9)</h4>
             <p style="font-size:0.86rem; color:var(--tinta-suave); margin:0 0 12px 0; line-height:1.6;">
-              En total coherencia con la Carta Gantt oficial del proyecto, el cronograma conserva exclusivamente los <strong>9 hitos que tienen un entregable físico y verificable asociado</strong> en el repositorio Git y en la plataforma en producción:
+              En total coherencia con la Carta Gantt oficial del proyecto, cada uno de los <strong>9 procedimientos principales</strong> desemboca en un <strong>hito con entregable físico y verificable asociado</strong> en el repositorio Git y en la plataforma en producción:
             </p>
             <div style="overflow-x:auto;">
               <table class="tabla-metadatos" style="width:100%; border-collapse:collapse; font-size:0.83rem;">
                 <thead>
                   <tr style="background:rgba(15,23,42,0.85); color:#38bdf8;">
-                    <th style="padding:8px; text-align:left;">Hito</th>
-                    <th style="padding:8px; text-align:left;">Fecha (♦)</th>
+                    <th style="padding:8px; text-align:left;">Hito y Fecha (♦)</th>
                     <th style="padding:8px; text-align:left;">OE</th>
-                    <th style="padding:8px; text-align:left;">Entregable verificado asociado</th>
+                    <th style="padding:8px; text-align:left;">Procedimiento Ejecutado (PR)</th>
+                    <th style="padding:8px; text-align:left;">Entregable verificado resultante</th>
                     <th style="padding:8px; text-align:left;">Localización verificable en repositorio y web</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td style="padding:7px 8px;"><strong>Hito 1</strong></td><td style="padding:7px 8px;">03 sep 2026 ♦</td><td style="padding:7px 8px;">OE 1</td><td style="padding:7px 8px;"><strong>E1 ·</strong> Arquitectura y catálogo inicial de fuentes</td><td style="padding:7px 8px;"><code>docs/ARQUITECTURA.md</code>, <code>docs/catalogo_fuentes_vgi.xlsx</code></td></tr>
-                  <tr><td style="padding:7px 8px;"><strong>Hito 2</strong></td><td style="padding:7px 8px;">09 sep 2026 ♦</td><td style="padding:7px 8px;">OE 1</td><td style="padding:7px 8px;"><strong>E2 ·</strong> Cinco dimensiones analíticas y etiquetas IGV</td><td style="padding:7px 8px;"><code>docs/categorias_tematicas_osm.xlsx</code>, <code>src/js/config.js</code></td></tr>
-                  <tr><td style="padding:7px 8px;"><strong>Hito 3</strong></td><td style="padding:7px 8px;">16 sep 2026 ♦</td><td style="padding:7px 8px;">OE 1</td><td style="padding:7px 8px;"><strong>E3 ·</strong> Inventario de 294 fuentes y matriz de brechas</td><td style="padding:7px 8px;"><code>docs/catalogo_fuentes_vgi.xlsx</code>, <code>docs/TRAZABILIDAD.md</code></td></tr>
-                  <tr><td style="padding:7px 8px;"><strong>Hito 4</strong></td><td style="padding:7px 8px;">08 oct 2026 ♦</td><td style="padding:7px 8px;">OE 2</td><td style="padding:7px 8px;"><strong>E4 ·</strong> Geodatabase de 294 capas y 17 atributos ISO (<code>id_ig</code> / <code>id_igv</code>)</td><td style="padding:7px 8px;"><code>src/data/*.geojson</code>, <code>docs/perfil_metadatos_vgi.xlsx</code>, <code>scripts/db/</code></td></tr>
-                  <tr><td style="padding:7px 8px;"><strong>Hito 5</strong></td><td style="padding:7px 8px;">19 oct 2026 ♦</td><td style="padding:7px 8px;">OE 2</td><td style="padding:7px 8px;"><strong>E5 ·</strong> Matriz de síntesis barrial, catastro IGV e inversiones BIP</td><td style="padding:7px 8px;"><code>data/matriz_sintesis_barrio_brasil_manzanas.geojson</code>, <code>data/bip_inversiones_santiago.csv</code></td></tr>
-                  <tr><td style="padding:7px 8px;"><strong>Hito 6</strong></td><td style="padding:7px 8px;">27 oct 2026 ♦</td><td style="padding:7px 8px;">OE 3</td><td style="padding:7px 8px;"><strong>E6 ·</strong> Plataforma en 3 módulos y visor cartográfico cuadrado</td><td style="padding:7px 8px;"><code>src/index.html</code>, <code>src/css/estilos.css</code>, <code>src/js/modulos/mapa.js</code></td></tr>
-                  <tr><td style="padding:7px 8px;"><strong>Hito 7</strong></td><td style="padding:7px 8px;">04 nov 2026 ♦</td><td style="padding:7px 8px;">OE 3</td><td style="padding:7px 8px;"><strong>E7 ·</strong> Inspector PRC, Detalles, 83 mapas y despliegue en Netlify</td><td style="padding:7px 8px;"><code>evaluador_normativo.js</code>, <code>indicadores_analisis.js</code>, <code>netlify.toml</code></td></tr>
-                  <tr><td style="padding:7px 8px;"><strong>Hito 8</strong></td><td style="padding:7px 8px;">09 nov 2026 ♦</td><td style="padding:7px 8px;">OE 4</td><td style="padding:7px 8px;"><strong>E8 ·</strong> Trazabilidad de usabilidad y Módulo 03 navegable</td><td style="padding:7px 8px;"><code>docs/TRAZABILIDAD.md</code>, <code>MANUAL_USO.md</code>, <code>src/js/modulos/manual.js</code></td></tr>
-                  <tr><td style="padding:7px 8px;"><strong>Hito 9</strong></td><td style="padding:7px 8px;">12 nov 2026 ♦</td><td style="padding:7px 8px;">OE 4</td><td style="padding:7px 8px;"><strong>E9 ·</strong> Manual técnico, paquete ZIP (542,35 MB) y verificación</td><td style="padding:7px 8px;"><code>MANUAL_ACTUALIZACION_ATLAS.md</code>, <code>docs/geodatabase_completa_atlas_vgi.zip</code></td></tr>
+                  <tr><td style="padding:7px 8px;"><strong>Hito 1</strong> · 03 sep 2026 ♦</td><td style="padding:7px 8px;">OE 1</td><td style="padding:7px 8px;"><strong>PR-01 ·</strong> Relevamiento abierto y diseño</td><td style="padding:7px 8px;"><strong>E1 ·</strong> Arquitectura y catálogo inicial de fuentes</td><td style="padding:7px 8px;"><code>docs/ARQUITECTURA.md</code>, <code>docs/catalogo_fuentes_vgi.xlsx</code></td></tr>
+                  <tr><td style="padding:7px 8px;"><strong>Hito 2</strong> · 09 sep 2026 ♦</td><td style="padding:7px 8px;">OE 1</td><td style="padding:7px 8px;"><strong>PR-02 ·</strong> Taxonomía multidimensional</td><td style="padding:7px 8px;"><strong>E2 ·</strong> Cinco dimensiones analíticas y etiquetas IGV</td><td style="padding:7px 8px;"><code>docs/categorias_tematicas_osm.xlsx</code>, <code>src/js/config.js</code></td></tr>
+                  <tr><td style="padding:7px 8px;"><strong>Hito 3</strong> · 16 sep 2026 ♦</td><td style="padding:7px 8px;">OE 1</td><td style="padding:7px 8px;"><strong>PR-03 ·</strong> Auditoría de cobertura y brechas</td><td style="padding:7px 8px;"><strong>E3 ·</strong> Inventario de 294 fuentes y matriz de brechas</td><td style="padding:7px 8px;"><code>docs/catalogo_fuentes_vgi.xlsx</code>, <code>docs/TRAZABILIDAD.md</code></td></tr>
+                  <tr><td style="padding:7px 8px;"><strong>Hito 4</strong> · 08 oct 2026 ♦</td><td style="padding:7px 8px;">OE 2</td><td style="padding:7px 8px;"><strong>PR-04 ·</strong> Extracción RM/Brasil e ISO 19157</td><td style="padding:7px 8px;"><strong>E4 ·</strong> Geodatabase de 294 capas y 17 atributos (<code>id_ig</code> / <code>id_igv</code>)</td><td style="padding:7px 8px;"><code>src/data/*.geojson</code>, <code>docs/perfil_metadatos_vgi.xlsx</code>, <code>scripts/db/</code></td></tr>
+                  <tr><td style="padding:7px 8px;"><strong>Hito 5</strong> · 19 oct 2026 ♦</td><td style="padding:7px 8px;">OE 2</td><td style="padding:7px 8px;"><strong>PR-05 ·</strong> Cruce espacial comunal y barrial</td><td style="padding:7px 8px;"><strong>E5 ·</strong> Matriz de síntesis barrial, catastro IGV e inversiones BIP</td><td style="padding:7px 8px;"><code>data/matriz_sintesis_barrio_brasil_manzanas.geojson</code>, <code>data/bip_inversiones_santiago.csv</code></td></tr>
+                  <tr><td style="padding:7px 8px;"><strong>Hito 6</strong> · 27 oct 2026 ♦</td><td style="padding:7px 8px;">OE 3</td><td style="padding:7px 8px;"><strong>PR-06 ·</strong> Maquetación en 3 módulos y texto <code>A/A+/A++</code></td><td style="padding:7px 8px;"><strong>E6 ·</strong> Plataforma en 3 módulos y visor cartográfico cuadrado</td><td style="padding:7px 8px;"><code>src/index.html</code>, <code>src/css/estilos.css</code>, <code>src/js/modulos/mapa.js</code></td></tr>
+                  <tr><td style="padding:7px 8px;"><strong>Hito 7</strong> · 04 nov 2026 ♦</td><td style="padding:7px 8px;">OE 3</td><td style="padding:7px 8px;"><strong>PR-07 ·</strong> Inspector PRC puntual, Simbología y 83 mapas</td><td style="padding:7px 8px;"><strong>E7 ·</strong> Inspector PRC, Simbología Temática, Detalles y Netlify</td><td style="padding:7px 8px;"><code>evaluador_normativo.js</code>, <code>mapa.js</code>, <code>indicadores_analisis.js</code>, <code>netlify.toml</code></td></tr>
+                  <tr><td style="padding:7px 8px;"><strong>Hito 8</strong> · 09 nov 2026 ♦</td><td style="padding:7px 8px;">OE 4</td><td style="padding:7px 8px;"><strong>PR-08 ·</strong> Validación M1/M2 y Tutorial (18 pasos)</td><td style="padding:7px 8px;"><strong>E8 ·</strong> Trazabilidad de usabilidad y Módulo 03 navegable</td><td style="padding:7px 8px;"><code>docs/TRAZABILIDAD.md</code>, <code>MANUAL_USO.md</code>, <code>src/js/modulos/manual.js</code></td></tr>
+                  <tr><td style="padding:7px 8px;"><strong>Hito 9</strong> · 12 nov 2026 ♦</td><td style="padding:7px 8px;">OE 4</td><td style="padding:7px 8px;"><strong>PR-09 ·</strong> Manual de actualización, ZIP y auditoría</td><td style="padding:7px 8px;"><strong>E9 ·</strong> Manual técnico, paquete ZIP (542,35 MB) y verificación</td><td style="padding:7px 8px;"><code>MANUAL_ACTUALIZACION_ATLAS.md</code>, <code>docs/geodatabase_completa_atlas_vgi.zip</code></td></tr>
                 </tbody>
               </table>
             </div>
@@ -397,7 +393,7 @@ const ModuloManual = (() => {
         numero: 'DOC · 03',
         icono: '🗺️',
         titulo: 'Guía en Profundidad del Módulo 02: Explorar Mapa, Herramientas, Simbología y Panel de Detalles',
-        subtitulo: 'Manual paso a paso del visor cuadrado (Leaflet 1.9.4), los 5 mapas base sin API, la barra de herramientas, el Inspector Normativo PRC, la simbología temática racional y los 17 atributos ISO 19157.',
+        subtitulo: 'Manual paso a paso del visor cuadrado (Leaflet 1.9.4), lectura adaptable (A/A+/A++), 5 mapas base conmutables en Simbología Dinámica, Inspector PRC de consulta puntual y 17 atributos ISO 19157.',
         html: `
           <div style="display:flex; flex-direction:column; gap:16px;">
             <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:18px;">
@@ -434,8 +430,8 @@ const ModuloManual = (() => {
                       <td>Después de hacer zoom muy cercano sobre un predio o calle específica.</td>
                     </tr>
                     <tr>
-                      <td><strong>Inspector normativo (PRC)</strong></td>
-                      <td>Activa o desactiva el modo de consulta urbanística sobre el <strong>Plan Regulador Comunal de Santiago (PRC)</strong> y la <strong>OGUC</strong>. Para mantener limpia la pantalla, su ficha regulatoria se despliega en el panel inferior <em>únicamente cuando usted lo activa y hace clic sobre un predio o manzana</em>.</td>
+                      <td><strong>Inspector normativo (PRC)</strong><br><small>(Consulta de 1 punto y pausa)</small></td>
+                      <td>Activa la consulta urbanística sobre el <strong>Plan Regulador Comunal de Santiago (PRC)</strong> y la <strong>OGUC</strong>. Tras hacer clic en un punto y emitir la ficha en el panel inferior (junto al marcador y banner), <strong>el modo captura se desactiva automáticamente</strong> para evitar auditorías accidentales mientras recorre el mapa; vuelva a pulsar el botón si desea consultar otro predio.</td>
                       <td>Para conocer la zona del PRC, altura máxima permitida, usos de suelo, constructibilidad o si un inmueble es de Conservación Histórica (ICH/ZCH).</td>
                     </tr>
                     <tr>
@@ -461,7 +457,7 @@ const ModuloManual = (() => {
             <div style="background:rgba(15,23,42,0.55); border:1px solid var(--linea-tarjeta); border-radius:10px; padding:18px;">
               <h4 style="margin:0 0 10px 0; color:#34d399; font-size:1.05rem;">2. Los 5 Mapas Base Abiertos y Satelitales (Sin requerimiento de clave de API)</h4>
               <p style="margin:0 0 12px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                Para garantizar que el visor funcione siempre sin bloqueos comerciales ni límites de visualización, en el Prototipo 02 se eliminaron los antiguos mapas de Carto (que solicitan clave de API) y se configuraron <strong>5 mapas base de acceso directo</strong> que puede alternar desde el control de capas del visor:
+                Para garantizar que el visor funcione siempre sin bloqueos comerciales ni límites de visualización, en el Prototipo 02 se eliminaron los antiguos mapas de Carto (que solicitan clave de API) y se configuraron <strong>5 mapas base de acceso directo</strong> que puede alternar tanto desde el control de capas del visor como directamente dentro del panel <strong>Simbología Dinámica</strong>:
               </p>
               <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.68;">
                 <li><strong>1. OpenStreetMap Estándar (Predeterminado):</strong> Muestra con gran nitidez el nombre de las calles, el sentido del tránsito, la numeración domiciliaria, los pasajes interiores, las plazas y los equipamientos comunitarios. Ideal para ubicarse rápidamente a nivel de cuadra.</li>
@@ -473,9 +469,9 @@ const ModuloManual = (() => {
             </div>
 
             <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(16,185,129,0.4); border-radius:10px; padding:18px;">
-              <h4 style="margin:0 0 10px 0; color:#34d399; font-size:1.05rem;">3. Cómo funciona la Simbología Temática Racional (Plano, Categorizado y Graduado multi-método)</h4>
+              <h4 style="margin:0 0 10px 0; color:#34d399; font-size:1.05rem;">3. Cómo funciona la Simbología Temática y el selector rápido de Mapa Base</h4>
               <p style="margin:0 0 12px 0; color:var(--tinta-suave); font-size:0.89rem; line-height:1.65;">
-                Cada capa del Atlas se representa por defecto con el modo cartográfico que corresponde a la naturaleza estadística y geométrica real de su atributo principal, evitando forzar clasificaciones artificiales sobre identificadores o variables categóricas. Además, el panel de <strong>Simbología Dinámica</strong> permite personalizar en vivo la variable, el método y la paleta cromática:
+                El panel <strong>Simbología Dinámica</strong> centraliza tanto el selector rápido <strong>Mapa base del visor</strong> (para cambiar al instante entre OpenStreetMap, Bing/Microsoft y Esri sin buscar iconos externos) como la personalización de la <strong>Simbología Temática</strong>. Además, cada capa se carga por defecto con el modo estadístico que corresponde a la naturaleza real de sus datos:
               </p>
               <ul style="margin:0; padding-left:20px; color:var(--tinta-suave); font-size:0.88rem; line-height:1.68;">
                 <li><strong>Color Único (Plano):</strong> Asigna un color semántico uniforme a todas las entidades. Es el estándar predeterminado para las 171 coberturas temáticas de Información Geográfica Voluntaria (<code>id_igv</code>), hitos puntuales y redes homogéneas (por ejemplo luminarias, paraderos o áreas sin atributo diferenciador).</li>
@@ -702,42 +698,40 @@ const ModuloManual = (() => {
                 El <strong>Atlas para la Gestión Territorial</strong> está construido sobre una estructura web estática en <strong>HTML5 semántico, CSS3 adaptable y JavaScript modular</strong> que funciona directamente en el navegador sin requerir instalaciones complejas ni servidores propietarios. Esta organización permite que la plataforma cargue con rapidez, opere de manera estable en producción y pueda ser consultada o mantenida con facilidad por equipos municipales, académicos o comunitarios:
               </p>
 
-              <!-- Diagrama Visual de Arquitectura de 4 Etapas -->
+              <!-- Diagrama Visual de Procedimientos -> Entregables Verificados -->
               <div style="background:rgba(2,6,23,0.65); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:16px; margin-bottom:14px;">
                 <div style="font-size:0.78rem; font-weight:800; color:#38bdf8; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">
-                  📐 Flujo General de Datos del Prototipo 02 (Fuentes → Homologación → Herramientas del Visor → 3 Módulos)
+                  📐 Flujo Estructurado: Subprocedimientos y Procedimientos → Entregables Verificados
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px; align-items:stretch;">
-                  <div style="background:rgba(15,23,42,0.85); border-left:4px solid #34d399; border-radius:6px; padding:12px;">
-                    <div style="font-size:0.75rem; font-weight:800; color:#34d399;">1. FUENTES · 294 CAPAS</div>
+                  <div style="background:rgba(15,23,42,0.85); border-left:4px solid #38bdf8; border-radius:6px; padding:12px;">
+                    <div style="font-size:0.74rem; font-weight:800; color:#38bdf8;">1. SUBPROCEDIMIENTOS · CAPTURA</div>
                     <p style="font-size:0.8rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.5;">
-                      • <strong>123 Capas Oficiales (<code>id_ig</code>):</strong> IDE Chile, INE Censo 2024, MINVU PRC, RSH 2026, SUBDERE RSD, SII, CMN, MuniStgo.<br>
-                      • <strong>171 Capas IGV (<code>id_igv</code>):</strong> OpenStreetMap (ODbL 1.0) y GBIF (52 especies).
+                      • <strong>123 Capas Oficiales (<code>id_ig</code>):</strong> IDE Chile, INE Censo 2024, MINVU, RSH 2026, SUBDERE.<br>
+                      • <strong>171 Capas IGV (<code>id_igv</code>):</strong> Extracción exhaustiva RM y Barrio Brasil (OSM y GBIF).<br>
+                      <em>(Insumo directo del Procedimiento 2).</em>
                     </p>
                   </div>
                   <div style="background:rgba(15,23,42,0.85); border-left:4px solid #fbbf24; border-radius:6px; padding:12px;">
-                    <div style="font-size:0.75rem; font-weight:800; color:#fbbf24;">2. HOMOLOGACIÓN DE DATOS</div>
+                    <div style="font-size:0.74rem; font-weight:800; color:#fbbf24;">2. PROCEDIMIENTO · HOMOLOGACIÓN → ENTREGABLE E4/E5</div>
                     <p style="font-size:0.8rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.5;">
-                      • Coordenadas en <code>EPSG:4326</code> y <code>EPSG:32719</code>.<br>
-                      • Estandarización de los <strong>17 atributos ISO 19115 / 19157</strong>.<br>
-                      • Organización en 3 libros <code>.xlsx</code> y paquete <code>.zip</code> (542,35 MB).
+                      • Normalización en <code>EPSG:4326</code> / <code>EPSG:32719</code>.<br>
+                      • Inyección de <strong>17 atributos ISO 19157</strong>.<br>
+                      • <strong>Entrega verificada:</strong> 294 GeoJSON, 3 Excel (<code>.xlsx</code>) y paquete <code>.zip</code>.
                     </p>
                   </div>
                   <div style="background:rgba(15,23,42,0.85); border-left:4px solid #c084fc; border-radius:6px; padding:12px;">
-                    <div style="font-size:0.75rem; font-weight:800; color:#c084fc;">3. FUNCIONES DEL VISOR</div>
+                    <div style="font-size:0.74rem; font-weight:800; color:#c084fc;">3. PROCEDIMIENTO · CONSULTA VISOR → ENTREGABLE E6/E7</div>
                     <p style="font-size:0.8rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.5;">
-                      • <strong>Medición métrica:</strong> Superficies en <code>m²</code> y <code>ha</code>.<br>
-                      • <strong>Simbología:</strong> Plano, Categorizado, Cuartiles, Jenks e Intervalos.<br>
-                      • <strong>Inspector PRC:</strong> Consulta urbanística por predio.
+                      • <strong>Simbología Temática:</strong> Conmutación de 5 mapas base y métodos.<br>
+                      • <strong>Inspector PRC:</strong> Consulta 1 punto y pausa captura → <em>Entrega Ficha y Certificado .txt</em>.
                     </p>
                   </div>
-                  <div style="background:rgba(15,23,42,0.85); border-left:4px solid #38bdf8; border-radius:6px; padding:12px;">
-                    <div style="font-size:0.75rem; font-weight:800; color:#38bdf8;">4. NAVEGACIÓN · 3 MÓDULOS</div>
+                  <div style="background:rgba(15,23,42,0.85); border-left:4px solid #10b981; border-radius:6px; padding:12px;">
+                    <div style="font-size:0.74rem; font-weight:800; color:#34d399;">4. ENTREGABLE EN PRODUCCIÓN · 3 MÓDULOS</div>
                     <p style="font-size:0.8rem; color:var(--tinta-suave); margin:6px 0 0 0; line-height:1.5;">
-                      • <strong>Cabecera:</strong> Tutorial (18 pasos) + Glosario.<br>
-                      • <strong>Módulo 01:</strong> 83 mapas (KDE/LISA) + 5 Dimensiones.<br>
-                      • <strong>Módulo 02:</strong> Visor cuadrado + 5 mapas base + Detalles.<br>
-                      • <strong>Módulo 03:</strong> 6 capítulos + Descargas.
+                      • <strong>Cabecera:</strong> Tutorial (18 pasos), <code>A / A+ / A++</code> y Glosario.<br>
+                      • <strong>M01 / M02 / M03:</strong> 83 mapas, visor + Detalles, 6 capítulos y descargas abiertas.
                     </p>
                   </div>
                 </div>
@@ -758,7 +752,7 @@ const ModuloManual = (() => {
                       <td><strong>Cabecera Transversal</strong></td>
                       <td><code>#cabecera-atlas</code></td>
                       <td><code>config.js</code>, <code>app.js</code>, <code>modulos/tutorial_interactivo.js</code></td>
-                      <td>Mantiene visible el título y subtítulo oficial y ubica en extremos opuestos el <strong>Tutorial Interactivo</strong> de 18 pasos en 4 bloques (a la izquierda del título) y el <strong>Glosario de siglas</strong> con buscador (a la derecha del título) para evitar cualquier superposición.</td>
+                      <td>Mantiene visible el título oficial y ubica a la izquierda el <strong>Tutorial Interactivo</strong> (18 pasos en 4 bloques) y a la derecha el <strong>selector dinámico de tamaño de letra (<code>A / A+ / A++</code>)</strong> junto al <strong>Glosario de siglas</strong> sin superposiciones.</td>
                     </tr>
                     <tr>
                       <td><strong>Módulo 01 · Análisis</strong></td>
@@ -770,7 +764,7 @@ const ModuloManual = (() => {
                       <td><strong>Módulo 02 · Explorar Mapa</strong></td>
                       <td><code>#panel-inicio</code></td>
                       <td><code>modulos/mapa.js</code>, <code>modulos/ide_chile.js</code>, <code>modulos/evaluador_normativo.js</code>, <code>modulos/geodesia.js</code></td>
-                      <td>Gestiona el visor cuadrado Leaflet 1.9.4, los 5 mapas base sin requerimiento de API (OpenStreetMap Estándar y HOT, Bing/Microsoft Satelital e Híbrido y Esri World Imagery), la barra superior centrada, la medición de áreas, el Inspector PRC bajo demanda, la simbología temática coherente (Plano, Categorizado y Graduado multi-método) y el panel inferior <strong>Detalles</strong> (17 atributos con <code>id_ig</code> / <code>id_igv</code>).</td>
+                      <td>Gestiona el visor cuadrado Leaflet 1.9.4, los 5 mapas base sin API (conmutables también dentro de <strong>Simbología Dinámica</strong>), la barra superior centrada, la medición métrica de áreas, el <strong>Inspector PRC</strong> puntual (se desactiva tras auditar un punto), la <strong>simbología temática</strong> (Plano, Categorizado y Graduado multi-método) y el panel inferior <strong>Detalles</strong> (17 atributos con <code>id_ig</code> / <code>id_igv</code>).</td>
                     </tr>
                     <tr>
                       <td><strong>Módulo 03 · Documentación</strong></td>
@@ -784,44 +778,44 @@ const ModuloManual = (() => {
             </div>
 
             <div style="background:rgba(15,23,42,0.55); border:1px solid rgba(245,158,11,0.35); border-radius:10px; padding:18px;">
-              <h4 style="margin:0 0 8px 0; color:#fbbf24; font-size:1.05rem;">2. Criterios Generales para la Actualización y Mantención del Atlas</h4>
+              <h4 style="margin:0 0 8px 0; color:#fbbf24; font-size:1.05rem;">2. Procedimientos de Actualización y Entregables Verificados Resultantes</h4>
               <p style="margin:0 0 12px 0; color:var(--tinta-suave); font-size:0.88rem; line-height:1.65;">
-                Para mantener actualizadas las coberturas espaciales, las cartografías temáticas y los documentos del <strong>Prototipo 02</strong>, el proyecto contempla cuatro pasos ordenados y verificables:
+                Cada procedimiento de actualización (<code>PR-MNT-01</code> a <code>PR-MNT-04</code>) integra subprocedimientos específicos y concluye siempre en un <strong>entregable verificado</strong> tanto en el repositorio Git como en la web publicada:
               </p>
               <div style="overflow-x:auto;">
-                <table class="tabla-datos" style="width:100%; font-size:0.83rem; min-width:680px;">
+                <table class="tabla-datos" style="width:100%; font-size:0.83rem; min-width:740px;">
                   <thead>
                     <tr>
-                      <th style="width:75px;">Etapa</th>
-                      <th style="width:230px;">Actividad de Actualización</th>
-                      <th style="width:210px;">Ubicación en el Repositorio</th>
-                      <th>Descripción Clara del Proceso</th>
+                      <th style="width:95px;">Procedimiento</th>
+                      <th style="width:210px;">Subprocedimientos Ejecutados</th>
+                      <th style="width:190px;">Ubicación en el Repositorio</th>
+                      <th>Entregable Verificado Resultante</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><strong>Paso 01</strong></td>
+                      <td><strong>PR-MNT-01</strong></td>
                       <td><strong>Incorporación o actualización de coberturas GeoJSON</strong></td>
                       <td><code>data/</code> y <code>src/data/</code><br><code>ide_chile.js</code> / <code>catalogo_vgi_descentralizado.js</code></td>
-                      <td>Guardar el archivo <code>.geojson</code> en coordenadas <code>EPSG:4326</code> (codificación UTF-8) tanto en <code>data/</code> como en <code>src/data/</code>, registrarlo en una de las <strong>5 Dimensiones Analíticas</strong> y completar sus <strong>17 atributos homologados</strong> (<code>id_ig</code> para fuentes estatales o <code>id_igv</code> para fuentes colaborativas de IGV).</td>
+                      <td><strong>E-MNT-01:</strong> Archivo <code>.geojson</code> paritario en <code>EPSG:4326</code> (UTF-8) registrado en una de las <strong>5 Dimensiones Analíticas</strong> con sus <strong>17 atributos homologados</strong> (<code>id_ig</code> oficial o <code>id_igv</code> IGV). *(Alimenta PR-MNT-03 y PR-MNT-04).*</td>
                     </tr>
                     <tr>
-                      <td><strong>Paso 02</strong></td>
-                      <td><strong>Actualización de cartografías temáticas o reglas normativas PRC</strong></td>
-                      <td><code>src/img/cartografias/</code><br><code>indicadores_analisis.js</code> / <code>evaluador_normativo.js</code></td>
-                      <td>Las láminas del <strong>Módulo 01</strong> se actualizan incorporando las imágenes <code>.jpg</code> en <code>src/img/cartografias/</code> y su descripción en <code>indicadores_analisis.js</code>. Las reglas urbanísticas del <strong>Módulo 02</strong> se actualizan en el diccionario de zonas del Plan Regulador en <code>evaluador_normativo.js</code>.</td>
+                      <td><strong>PR-MNT-02</strong></td>
+                      <td><strong>Actualización de mapas base, simbología temática, reglas PRC o láminas</strong></td>
+                      <td><code>src/img/cartografias/</code><br><code>mapa.js</code> / <code>indicadores_analisis.js</code> / <code>evaluador_normativo.js</code></td>
+                      <td><strong>E-MNT-02:</strong> Imágenes <code>.jpg</code> actualizadas en Módulo 01 y herramientas operativas en Módulo 02 (simbología temática, selector de mapa base e Inspector PRC puntual con Certificado <code>.txt</code>). *(Alimenta PR-MNT-03 y PR-MNT-04).*</td>
                     </tr>
                     <tr>
-                      <td><strong>Paso 03</strong></td>
+                      <td><strong>PR-MNT-03</strong></td>
                       <td><strong>Sincronización de catálogos Excel, paquete ZIP y manuales</strong></td>
                       <td><code>docs/</code> y <code>src/docs/</code><br><code>src/js/modulos/manual.js</code></td>
-                      <td>Mantener sincronizados los archivos de documentación (<code>MANUAL_USO.md</code>, <code>MANUAL_ACTUALIZACION_ATLAS.md</code>, <code>ARQUITECTURA.md</code> y <code>TRAZABILIDAD.md</code>), los 3 libros Excel (<code>.xlsx</code>) y el paquete descargable <code>geodatabase_completa_atlas_vgi.zip</code> con los 6 capítulos de este módulo.</td>
+                      <td><strong>E-MNT-03:</strong> Manuales (<code>.md</code>) idénticos en raíz, <code>docs/</code> y <code>src/docs/</code>, 3 libros Excel (<code>.xlsx</code>), capítulos <code>DOC·01–06</code> actualizados y paquete <code>geodatabase_completa_atlas_vgi.zip</code>. *(Alimenta PR-MNT-04).*</td>
                     </tr>
                     <tr>
-                      <td><strong>Paso 04</strong></td>
-                      <td><strong>Verificación de las 294 capas y publicación web</strong></td>
-                      <td><code>scripts/verificar_conteo_capas.py</code><br><code>src/index.html</code> y <code>netlify.toml</code></td>
-                      <td>Comprobar que las 294 capas (123 oficiales + 171 IGV) estén completas, actualizar el identificador de versión en <code>src/index.html</code> y <code>src/js/config.js</code> y publicar los cambios hacia el repositorio principal en producción.</td>
+                      <td><strong>PR-MNT-04</strong></td>
+                      <td><strong>Auditoría de 294 capas, control <code>?v=...</code> y despliegue web</strong></td>
+                      <td><code>scripts/verificar_conteo_capas.py</code><br><code>verificar_integridad_despliegue.py</code>, <code>index.html</code></td>
+                      <td><strong>E-MNT-04 (Final):</strong> Reporte <code>PASS</code> de las 294 capas (123 oficiales + 171 IGV), control de caché actualizado y plataforma en producción verificada en Netlify y GitHub Pages.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -863,7 +857,7 @@ const ModuloManual = (() => {
                     <tr>
                       <td><strong>Módulos JavaScript</strong></td>
                       <td><code>src/js/modulos/*.js</code></td>
-                      <td>Archivos individuales que controlan el visor y su simbología temática racional (<code>mapa.js</code>), los análisis (<code>indicadores_analisis.js</code>), el Inspector PRC (<code>evaluador_normativo.js</code>), las capas (<code>ide_chile.js</code> y <code>catalogo_vgi_descentralizado.js</code>), la medición métrica (<code>geodesia.js</code>) y los manuales (<code>manual.js</code>).</td>
+                      <td>Archivos individuales que controlan el visor, el mapa base y su simbología temática (<code>mapa.js</code>), los análisis (<code>indicadores_analisis.js</code>), el Inspector PRC (<code>evaluador_normativo.js</code>), las capas (<code>ide_chile.js</code> y <code>catalogo_vgi_descentralizado.js</code>), la medición métrica (<code>geodesia.js</code>) y los manuales (<code>manual.js</code>).</td>
                     </tr>
                     <tr>
                       <td><strong>294 Coberturas GeoJSON</strong></td>
