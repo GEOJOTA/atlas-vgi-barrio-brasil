@@ -7471,15 +7471,18 @@ table.tabla-datos-institucional td {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(5px, 0.6vw, 8px);
-  padding: 8px clamp(10px, 1.1vw, 18px);
+  gap: clamp(6px, 0.7vw, 10px);
+  min-width: 68px;
+  min-height: 40px;
+  padding: 8px clamp(16px, 1.8vw, 26px);
   background: rgba(26, 43, 75, 0.82);
   border: 1.5px solid rgba(255, 255, 255, 0.28);
   border-radius: 10px;
   color: var(--tinta-suave);
   font-family: var(--fuente-titulos);
-  font-size: clamp(0.78rem, 0.88vw, 0.92rem);
-  font-weight: 700;
+  font-size: clamp(0.84rem, 0.95vw, 0.98rem);
+  font-weight: 800;
+  letter-spacing: 0.03em;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -8015,63 +8018,34 @@ table.tabla-datos {
 @media (max-width: 1024px) {
   .barra-grupos-tarea {
     padding: 8px 16px;
-    gap: 8px;
+    gap: 10px;
   }
   .btn-grupo-tarea {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(5px, 0.6vw, 8px);
-  padding: 8px clamp(10px, 1.1vw, 18px);
-  background: rgba(26, 43, 75, 0.82);
-  border: 1.5px solid rgba(255, 255, 255, 0.28);
-  border-radius: 10px;
-  color: var(--tinta-suave);
-  font-family: var(--fuente-titulos);
-  font-size: clamp(0.78rem, 0.88vw, 0.92rem);
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  white-space: nowrap;
-  flex: 0 1 auto;
-}
+    min-width: 64px;
+    padding: 8px 18px;
+  }
 }
 
 /* Tablet y Móvil (<= 992px) */
 @media (max-width: 992px) {
   .barra-grupos-tarea {
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: center;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     padding: 8px 12px;
-    gap: 8px;
+    gap: 10px;
   }
   .barra-grupos-tarea::-webkit-scrollbar {
     display: none;
   }
   .btn-grupo-tarea {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(5px, 0.6vw, 8px);
-  padding: 8px clamp(10px, 1.1vw, 18px);
-  background: rgba(26, 43, 75, 0.82);
-  border: 1.5px solid rgba(255, 255, 255, 0.28);
-  border-radius: 10px;
-  color: var(--tinta-suave);
-  font-family: var(--fuente-titulos);
-  font-size: clamp(0.78rem, 0.88vw, 0.92rem);
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  white-space: nowrap;
-  flex: 0 1 auto;
-}
+    min-width: 62px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
   .barra-migas-subnavegacion {
     flex-direction: column;
     align-items: stretch;

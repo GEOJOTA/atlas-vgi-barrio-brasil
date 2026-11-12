@@ -26,10 +26,10 @@ flowchart LR
         GLO["Derecha:\nTamaño de Letra (A / A+ / A++)\ny Glosario de Siglas"]:::proc
     end
 
-    subgraph MODS["Procedimientos de Consulta en los 3 Módulos → Productos Verificables"]
-        M1["Módulo 01 · Análisis\n83 Mapas Geoestadísticos\n5 Dimensiones y 294 Capas"]:::proc
-        M2["Módulo 02 · Explorar Mapa\nVisor Leaflet · 5 Mapas Base · Simbología Temática\nInspector PRC (1 punto) → Panel Detalles"]:::proc
-        M3(["Módulo 03 · Documentación\n6 Capítulos (DOC·01 a 06) · 3 Excel ·\nGeodatabase .zip e Inventario 294 Capas"]):::ent
+    subgraph MODS["Procedimientos de Consulta en los 3 Módulos (Botones 1, 2 y 3) → Productos Verificables"]
+        M1["Botón 1 · Módulo 01 (Análisis)\n83 Mapas Geoestadísticos\n5 Dimensiones y 294 Capas"]:::proc
+        M2["Botón 2 · Módulo 02 (Explorar Mapa)\nVisor Leaflet · 5 Mapas Base · Simbología Temática\nInspector PRC (1 punto) → Panel Detalles"]:::proc
+        M3(["Botón 3 · Módulo 03 (Documentación)\n6 Capítulos (DOC·01 a 06) · 3 Excel ·\nGeodatabase .zip e Inventario 294 Capas"]):::ent
     end
 
     CAB --> MODS

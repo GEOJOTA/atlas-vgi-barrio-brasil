@@ -39,7 +39,7 @@
       esPresentacionModulo: false,
       insignia: 'Visión General · Flujo de Trabajo',
       titulo: 'Navegación Articulada en 3 Módulos',
-      texto: 'Estos tres botones estructuran la secuencia metodológica del sistema: primero comprender los fenómenos territoriales ya modelados (Análisis), luego inspeccionar y cruzar coberturas sobre el territorio (Explorar Mapa) y finalmente consultar el respaldo metodológico, licencias y descargas maestras (Documentación).'
+      texto: 'Estos tres botones numerados (1, 2 y 3) estructuran la secuencia metodológica del sistema sin repetir el titular de cada módulo: primero comprender los fenómenos territoriales ya modelados (1 · Módulo 01: Análisis), luego inspeccionar y cruzar coberturas sobre el territorio (2 · Módulo 02: Explorar Mapa) y finalmente consultar el respaldo metodológico, licencias y descargas maestras (3 · Módulo 03: Documentación).'
     },
 
     // =========================================================================
