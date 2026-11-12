@@ -358,35 +358,71 @@
     elementoSpotlight.style.display = 'block';
 
     // 2. Posicionar tarjeta tooltip
+    elementoTooltip.style.display = 'flex';
+    elementoTooltip.style.maxHeight = '';
     const cardRect = elementoTooltip.getBoundingClientRect();
-    const cardWidth = cardRect.width || 480;
+    const cardWidth = Math.min(cardRect.width || 480, window.innerWidth - 24);
     const cardHeight = cardRect.height || 290;
 
     let cardTop = 0;
     let cardLeft = 0;
+    let maxAlturaAplicada = '';
 
     const espacioAbajo = window.innerHeight - (topSpot + heightSpot);
     const espacioArriba = topSpot;
+    const espacioDerecha = window.innerWidth - (leftSpot + widthSpot);
+    const espacioIzquierda = leftSpot;
+
+    const centroObjetivo = leftSpot + widthSpot / 2;
+    cardLeft = centroObjetivo - cardWidth / 2;
 
     if (espacioAbajo >= cardHeight + 18) {
       cardTop = topSpot + heightSpot + 14;
     } else if (espacioArriba >= cardHeight + 18) {
       cardTop = topSpot - cardHeight - 14;
+    } else if (espacioDerecha >= cardWidth + 24) {
+      cardLeft = leftSpot + widthSpot + 14;
+      const alturaTope = window.innerHeight - 24;
+      maxAlturaAplicada = `${alturaTope}px`;
+      cardTop = Math.max(12, Math.min(window.innerHeight - Math.min(cardHeight, alturaTope) - 12, topSpot));
+    } else if (espacioIzquierda >= cardWidth + 24) {
+      cardLeft = leftSpot - cardWidth - 14;
+      const alturaTope = window.innerHeight - 24;
+      maxAlturaAplicada = `${alturaTope}px`;
+      cardTop = Math.max(12, Math.min(window.innerHeight - Math.min(cardHeight, alturaTope) - 12, topSpot));
+    } else if (Math.max(espacioAbajo, espacioArriba) >= 210) {
+      if (espacioAbajo >= espacioArriba) {
+        const alturaMax = Math.max(200, espacioAbajo - 24);
+        maxAlturaAplicada = `${alturaMax}px`;
+        cardTop = topSpot + heightSpot + 12;
+      } else {
+        const alturaMax = Math.max(200, espacioArriba - 24);
+        maxAlturaAplicada = `${alturaMax}px`;
+        cardTop = Math.max(12, topSpot - Math.min(cardHeight, alturaMax) - 12);
+      }
     } else {
-      cardTop = Math.max(12, window.innerHeight - cardHeight - 18);
+      const alturaMax = window.innerHeight - 24;
+      maxAlturaAplicada = `${alturaMax}px`;
+      cardTop = Math.max(12, window.innerHeight - Math.min(cardHeight, alturaMax) - 14);
     }
 
-    const centroObjetivo = leftSpot + widthSpot / 2;
-    cardLeft = centroObjetivo - cardWidth / 2;
+    if (maxAlturaAplicada) {
+      elementoTooltip.style.maxHeight = maxAlturaAplicada;
+    }
 
-    if (cardLeft < 16) cardLeft = 16;
-    if (cardLeft + cardWidth > window.innerWidth - 16) {
-      cardLeft = Math.max(16, window.innerWidth - cardWidth - 16);
+    if (cardLeft < 12) cardLeft = 12;
+    if (cardLeft + cardWidth > window.innerWidth - 12) {
+      cardLeft = Math.max(12, window.innerWidth - cardWidth - 12);
+    }
+    const altoFinal = Math.min(cardHeight, elementoTooltip.getBoundingClientRect().height || cardHeight);
+    if (cardTop < 12) cardTop = 12;
+    if (!maxAlturaAplicada && cardTop + altoFinal > window.innerHeight - 12) {
+      cardTop = Math.max(12, window.innerHeight - altoFinal - 12);
     }
 
     elementoTooltip.style.top = `${cardTop}px`;
     elementoTooltip.style.left = `${cardLeft}px`;
-    elementoTooltip.style.display = 'block';
+    elementoTooltip.style.display = 'flex';
   }
 
   /**
@@ -490,8 +526,9 @@
       ejecutarAccionPrevia(paso.accionPrevia);
     }
 
-    // 3. Renderizar de inmediato el contenido de la tarjeta para respuesta instantánea
+    // 3. Renderizar de inmediato el contenido de la tarjeta y recolocar sin solape
     renderizarPaso();
+    actualizarPosiciones();
 
     // 4. Desplazar suavemente hacia el objetivo y reajustar posiciones del spotlight
     temporizadorTransicion = setTimeout(() => {
@@ -510,19 +547,33 @@
       actualizarPosiciones();
       temporizadorTransicion = setTimeout(() => {
         if (tutorialActivo) actualizarPosiciones();
-      }, 220);
-    }, 100);
+      }, 360);
+    }, 80);
+  }
+
+  function manejarClickModalExterno(e) {
+    if (tutorialActivo && e.target && e.target.closest('#btn-abrir-glosario-rapido, #btn-descargar-bd-mapa')) {
+      detener();
+    }
   }
 
   /**
    * Inicia el tutorial desde el paso 0
    */
   function iniciar() {
+    if (typeof window.cerrarGlosarioSiglas === 'function') {
+      window.cerrarGlosarioSiglas();
+    }
+    const modalBd = document.getElementById('modal-descarga-bd-overlay');
+    if (modalBd && modalBd.style.display !== 'none') {
+      modalBd.style.display = 'none';
+    }
     asegurarElementosDOM();
     tutorialActivo = true;
     window.addEventListener('keydown', manejarTeclas);
     window.addEventListener('resize', actualizarPosiciones);
     window.addEventListener('scroll', actualizarPosiciones, { passive: true });
+    document.addEventListener('click', manejarClickModalExterno, true);
     irAPaso(0);
   }
 
@@ -554,6 +605,7 @@
     window.removeEventListener('keydown', manejarTeclas);
     window.removeEventListener('resize', actualizarPosiciones);
     window.removeEventListener('scroll', actualizarPosiciones);
+    document.removeEventListener('click', manejarClickModalExterno, true);
 
     if (elementoSpotlight) {
       elementoSpotlight.style.display = 'none';

@@ -448,15 +448,16 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
   max-width: 1560px;
   width: 100%;
   margin: 0 auto;
-  padding: 18px 32px 14px 32px;
+  padding: 16px clamp(14px, 2.5vw, 32px) 12px clamp(14px, 2.5vw, 32px);
   position: relative;
   z-index: 5;
   transition: padding 0.2s ease;
+  box-sizing: border-box;
 }
 
-@media (max-width: 1560px) {
+@media (max-width: 768px) {
   .cabecera-interior {
-    padding: 16px clamp(52px, 4.5vw, 68px) 12px clamp(52px, 4.5vw, 68px);
+    padding: 12px 12px 10px 12px;
   }
 }
 
@@ -479,27 +480,32 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 }
 
 .cabecera-fila-marca {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   position: relative;
-  gap: 24px;
+  gap: 12px 20px;
   width: 100%;
 }
 
 .marca {
   padding: 0;
   border-bottom: none;
-  margin: 0 auto;
+  margin: 0;
+  min-width: 0;
+  max-width: 100%;
   background: transparent;
   text-align: center;
+  justify-self: center;
 }
 
 .marca-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  max-width: 100%;
   text-align: center;
 }
 
@@ -6772,14 +6778,15 @@ table.tabla-datos-institucional td {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 480px;
+  max-height: min(400px, 60vh);
   overflow-y: auto;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
 }
 
 .grilla-controles-simbologia {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
   gap: 10px;
 }
 
@@ -6787,6 +6794,8 @@ table.tabla-datos-institucional td {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .label-simbologia {
@@ -6795,9 +6804,16 @@ table.tabla-datos-institucional td {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: #94a3b8;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .select-simbologia {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
   background: #1e293b;
   border: 1px solid #475569;
   border-radius: 6px;
@@ -6946,11 +6962,12 @@ table.tabla-datos-institucional td {
 /* ========================================================================== */
 .leyenda-cartografica-visor {
   position: absolute;
-  bottom: 28px;
-  left: 16px;
+  bottom: 54px;
+  left: 14px;
   z-index: 950;
-  max-width: 320px;
-  min-width: 240px;
+  max-width: min(310px, calc(100% - 28px));
+  min-width: min(220px, calc(100% - 28px));
+  max-height: calc(100% - 140px);
   background: rgba(15, 23, 42, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -6961,7 +6978,8 @@ table.tabla-datos-institucional td {
   color: #f8fafc;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   transition: max-width 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
   user-select: none;
   pointer-events: auto;
@@ -7330,24 +7348,24 @@ table.tabla-datos-institucional td {
 .cabecera-accion-izq {
   display: flex;
   align-items: center;
-  position: absolute;
-  left: 24px;
-  top: 50%;
-  transform: translateY(-50%);
+  justify-content: flex-start;
+  position: static;
+  transform: none;
   z-index: 10;
+  max-width: 100%;
 }
 
 .cabecera-acciones-utilidad,
 .cabecera-accion-der {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
-  position: absolute;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
+  position: static;
+  transform: none;
   z-index: 10;
   flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .grupo-tamano-letra {
@@ -7776,14 +7794,15 @@ a.accion.primaria-cta:hover {
 /* Notificación flotante / Toast en el visor cartográfico */
 .toast-notificacion-atlas {
   position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
+  bottom: 38px;
+  right: 14px;
+  left: auto;
+  transform: translateY(16px);
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(12px);
   border: 1.5px solid rgba(6, 182, 212, 0.65);
   color: #f8fafc;
-  padding: 10px 20px;
+  padding: 10px 18px;
   border-radius: 10px;
   font-family: var(--fuente-datos, monospace);
   font-size: 0.84rem;
@@ -7795,14 +7814,14 @@ a.accion.primaria-cta:hover {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.28s ease, transform 0.28s ease;
-  max-width: min(640px, 92%);
+  max-width: min(420px, calc(100% - 356px));
   text-align: left;
   line-height: 1.4;
 }
 
 .toast-notificacion-atlas.visible {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
   pointer-events: auto;
 }
 
@@ -8138,6 +8157,7 @@ table.tabla-datos {
     touch-action: manipulation;
   }
   .cabecera-fila-marca {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
@@ -8146,10 +8166,11 @@ table.tabla-datos {
   .cabecera-acciones-utilidad,
   .cabecera-accion-der {
     width: auto;
+    max-width: 100%;
     justify-content: center;
     position: static;
     transform: none;
-    margin-top: 4px;
+    margin-top: 2px;
     gap: 8px;
   }
   .control-perfil-cabecera {
@@ -9430,4 +9451,282 @@ table.tabla-datos-institucional,
   color: #b91c1c;
   background: rgba(220, 38, 38, 0.08);
 }
+
+/* ============================================================================
+   BLINDAJE ANTI-SUPERPOSICIÓN BAJO ESCALADO TIPOGRÁFICO (A / A+ / A++)
+   ============================================================================ */
+
+/* Escenario estricto del visor: aísla los overlays del banner normativo y barras de progreso */
+.visor-mapa-escenario {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.mapa-canvas-marco {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Cabecera: apilar título y subtítulo compactos en .marca y evitar colisiones horizontales */
+.marca-texto-lineal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  max-width: 100%;
+  text-align: left;
+  flex: 0 1 auto;
+}
+
+.marca-texto-lineal h1,
+.titulo-atlas,
+.marca-texto-lineal p,
+.subtitulo-atlas {
+  white-space: normal;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.btn-utilidad-cabecera {
+  max-width: 100%;
+  flex-shrink: 0;
+}
+
+.grupo-tamano-letra {
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 1360px) {
+  .cabecera-fila-marca {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px 16px;
+  }
+
+  .marca {
+    flex: 1 1 100%;
+    order: -1;
+    margin: 0 auto;
+  }
+
+  .marca-texto-lineal {
+    align-items: center;
+    text-align: center;
+  }
+
+  .cabecera-accion-izq,
+  .cabecera-acciones-utilidad,
+  .cabecera-accion-der {
+    flex: 0 1 auto;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .btn-utilidad-cabecera {
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* Cajón flotante "Apartados": anclado en esquina inferior derecha en TODAS las resoluciones
+   para nunca superponerse sobre la cabecera ni los módulos 1-3 ni las barras de herramientas */
+.leyenda-atajos-flotante {
+  top: auto !important;
+  bottom: 18px;
+  right: 16px;
+}
+
+.btn-toggle-leyenda-atajos {
+  top: auto !important;
+  bottom: 18px;
+  right: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 8px 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
+}
+
+.caja-leyenda-atajos {
+  max-height: min(68vh, calc(100vh - 96px));
+  overflow-y: auto;
+}
+
+/* Cabecera interna de Simbología Dinámica: título, insignia y botón nunca colisionan */
+.header-simbologia-dinamica {
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+
+.titulo-simbologia-dinamica {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1 1 180px;
+}
+
+.texto-titulo-simbologia {
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.badge-simbologia-capa {
+  max-width: 100%;
+}
+
+.acciones-header-simbologia {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* En escritorio (> 860px), Simbología respeta el control de zoom izquierdo y capas derecho */
+@media (min-width: 861px) {
+  .panel-simbologia-dinamica {
+    left: 58px;
+    right: 62px;
+    width: auto;
+    max-width: 780px;
+  }
+}
+
+/* En pantallas medianas/móviles (<= 860px), acoplar Simbología arriba y Leyenda debajo del visor
+   para garantizar 0 superposición con zoom, selector de capas y escala métrica */
+@media (max-width: 860px) {
+  .panel-simbologia-dinamica,
+  .panel-simbologia-dinamica.colapsado {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    left: auto;
+    right: auto;
+    top: auto;
+    margin: 0 0 10px 0;
+    transform: none;
+  }
+
+  .cuerpo-simbologia-dinamica {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .leyenda-cartografica-visor {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    bottom: auto;
+    left: auto;
+    max-height: none;
+    margin: 10px 0 0 0;
+  }
+
+  .toast-notificacion-atlas {
+    left: 12px;
+    right: 12px;
+    bottom: 40px;
+    max-width: none;
+    transform: translateY(16px);
+  }
+
+  .toast-notificacion-atlas.visible {
+    transform: translateY(0);
+  }
+}
+
+/* Modales y tutorial interactivo: contención estricta y envoltura segura ante letras A++ */
+.modal-bd-overlay {
+  overflow-y: auto;
+}
+
+.modal-bd-titulo-grupo {
+  min-width: 0;
+  flex: 1;
+}
+
+.modal-bd-cerrar {
+  flex-shrink: 0;
+}
+
+.modal-bd-footer {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tutorial-card-tooltip {
+  flex-direction: column;
+  max-width: min(500px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  overflow: hidden;
+  padding: 12px 16px;
+  box-sizing: border-box;
+}
+
+.tutorial-card-header {
+  flex-shrink: 0;
+  margin-bottom: 6px;
+}
+
+.tutorial-nav-modulos {
+  flex-shrink: 0;
+  margin-bottom: 6px;
+}
+
+.tutorial-nav-pasos {
+  flex-shrink: 0;
+  margin-bottom: 6px;
+}
+
+.tutorial-card-barra-progreso {
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+.tutorial-card-titulo {
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+
+.tutorial-card-texto {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-bottom: 10px;
+}
+
+.tutorial-card-footer {
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 600px), (max-height: 780px) {
+  .tutorial-nav-modulos {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .tutorial-nav-pasos {
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    gap: 3px;
+  }
+  .tutorial-nav-pasos .tutorial-pill-paso {
+    min-width: 0;
+    width: 100%;
+    padding: 0;
+    height: 19px;
+  }
+}
+
 

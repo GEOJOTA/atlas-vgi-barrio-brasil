@@ -10,6 +10,9 @@ if (typeof window !== 'undefined') {
     }
   };
   window.abrirGlosarioSiglas = window.abrirGlosarioSiglas || function() {
+    if (window.ModuloTutorialInteractivo && typeof window.ModuloTutorialInteractivo.detener === 'function') {
+      window.ModuloTutorialInteractivo.detener();
+    }
     const m = document.getElementById('modal-glosario-siglas');
     if (m) { m.style.display = 'flex'; m.setAttribute('aria-hidden', 'false'); }
   };
@@ -4497,7 +4500,7 @@ async function descargarColeccionOficialCompleta() {
   } catch (err) {
     console.error('[-] Error al iniciar descarga de base de datos:', err);
     if (estadoTexto) {
-      estadoTexto.innerHTML = `<span style="color:#ef4444; font-weight:700;">❌ [ERROR]:</span> No se pudo iniciar la descarga automática. <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261112_v75" download="geodatabase_completa_atlas_vgi.zip" style="color:var(--musgo); text-decoration:underline;">Haz clic aquí para descarga manual</a>.`;
+      estadoTexto.innerHTML = `<span style="color:#ef4444; font-weight:700;">❌ [ERROR]:</span> No se pudo iniciar la descarga automática. <a href="docs/geodatabase_completa_atlas_vgi.zip?v=20261112_v76" download="geodatabase_completa_atlas_vgi.zip" style="color:var(--musgo); text-decoration:underline;">Haz clic aquí para descarga manual</a>.`;
     }
   } finally {
     setTimeout(() => {
@@ -4614,7 +4617,7 @@ window.mostrarNotificacionAtlas = function(mensaje, tipo = 'info', duracion = 42
     toast = document.createElement('div');
     toast.id = 'toast-notificacion-atlas';
     toast.className = 'toast-notificacion-atlas';
-    const area = document.querySelector('.area-mapa-principal') || document.getElementById('panel-inicio') || document.body;
+    const area = document.querySelector('.mapa-canvas-marco') || document.querySelector('.visor-mapa-escenario') || document.querySelector('.area-mapa-principal') || document.getElementById('panel-inicio') || document.body;
     area.appendChild(toast);
   }
   toast.className = `toast-notificacion-atlas visible ${tipo}`;
